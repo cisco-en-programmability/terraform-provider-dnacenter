@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	dnac "dnacenter-go-sdk/sdk"
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -1755,7 +1755,7 @@ func constructAddSystemResetWorkflowTasks(wTasks []interface{}) *[]dnac.AddDevic
 			workflowTask.Type = v.(string)
 		}
 		if v, ok := wts["work_item_list"]; ok {
-			if w := constructAddSystemResetWorkflowTasksWorkItemList(v.([]interface{})); v != nil {
+			if w := constructAddSystemResetWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
 		}
@@ -1794,7 +1794,7 @@ func constructAddSystemWorkflowTasks(wTasks []interface{}) *[]dnac.AddDeviceToPn
 			workflowTask.Type = v.(string)
 		}
 		if v, ok := wts["work_item_list"]; ok {
-			if w := constructAddSystemWorkflowTasksWorkItemList(v.([]interface{})); v != nil {
+			if w := constructAddSystemWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
 		}
@@ -1833,7 +1833,7 @@ func constructAddWorkflowTasks(wTasks []interface{}) *[]dnac.AddDeviceToPnpDatab
 			workflowTask.Type = v.(string)
 		}
 		if v, ok := wts["work_item_list"]; ok {
-			if w := constructAddWorkflowTasksWorkItemList(v.([]interface{})); v != nil {
+			if w := constructAddWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
 		}
@@ -1889,7 +1889,7 @@ func constructAddSystemResetWorkflow(workflows []interface{}) *dnac.AddDeviceToP
 			workflowItem.State = v.(string)
 		}
 		if v, ok := ws["tasks"]; ok {
-			if w := constructAddSystemResetWorkflowTasks(v.([]interface{})); v != nil {
+			if w := constructAddSystemResetWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
@@ -1956,7 +1956,7 @@ func constructAddSystemWorkflow(workflows []interface{}) *dnac.AddDeviceToPnpDat
 			workflowItem.State = v.(string)
 		}
 		if v, ok := ws["tasks"]; ok {
-			if w := constructAddSystemWorkflowTasks(v.([]interface{})); v != nil {
+			if w := constructAddSystemWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
@@ -2023,7 +2023,7 @@ func constructAddWorkflow(workflows []interface{}) *dnac.AddDeviceToPnpDatabaseR
 			workflowItem.State = v.(string)
 		}
 		if v, ok := ws["tasks"]; ok {
-			if w := constructAddWorkflowTasks(v.([]interface{})); v != nil {
+			if w := constructAddWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
@@ -2090,7 +2090,7 @@ func constructAddPnPDevice(pnpRequest map[string]interface{}) *dnac.AddDeviceToP
 		request.TypeID = v.(string)
 	}
 	if v, ok := pnpRequest["day_zero_config"]; ok {
-		if w := constructAddZeroConfig(v.([]interface{})); v != nil {
+		if w := constructAddZeroConfig(v.([]interface{})); w != nil {
 			request.DayZeroConfig = *w
 		}
 	}
@@ -2098,22 +2098,22 @@ func constructAddPnPDevice(pnpRequest map[string]interface{}) *dnac.AddDeviceToP
 		request.DayZeroConfigPreview = v.(string)
 	}
 	if v, ok := pnpRequest["device_info"]; ok {
-		if w := constructAddDeviceInfo(v.([]interface{})); v != nil {
+		if w := constructAddDeviceInfo(v.([]interface{})); w != nil {
 			request.DeviceInfo = *w
 		}
 	}
 	if v, ok := pnpRequest["run_summary_list"]; ok {
-		if w := constructAddRunSummaryList(v.([]interface{})); v != nil {
+		if w := constructAddRunSummaryList(v.([]interface{})); w != nil {
 			request.RunSummaryList = *w
 		}
 	}
 	if v, ok := pnpRequest["system_reset_workflow"]; ok {
-		if w := constructAddSystemResetWorkflow(v.([]interface{})); v != nil {
+		if w := constructAddSystemResetWorkflow(v.([]interface{})); w != nil {
 			request.SystemResetWorkflow = *w
 		}
 	}
 	if v, ok := pnpRequest["system_workflow"]; ok {
-		if w := constructAddSystemWorkflow(v.([]interface{})); v != nil {
+		if w := constructAddSystemWorkflow(v.([]interface{})); w != nil {
 			request.SystemWorkflow = *w
 		}
 	}
@@ -2124,12 +2124,12 @@ func constructAddPnPDevice(pnpRequest map[string]interface{}) *dnac.AddDeviceToP
 		request.Version = v.(float64)
 	}
 	if v, ok := pnpRequest["workflow"]; ok {
-		if w := constructAddWorkflow(v.([]interface{})); v != nil {
+		if w := constructAddWorkflow(v.([]interface{})); w != nil {
 			request.Workflow = *w
 		}
 	}
 	if v, ok := pnpRequest["workflow_parameters"]; ok {
-		if w := constructAddWorkflowParams(v.([]interface{})); v != nil {
+		if w := constructAddWorkflowParams(v.([]interface{})); w != nil {
 			request.WorkflowParameters = *w
 		}
 	}
@@ -2825,7 +2825,7 @@ func constructUpdateSystemResetWorkflowTasks(wTasks []interface{}) *[]dnac.Updat
 			workflowTask.Type = v.(string)
 		}
 		if v, ok := wts["work_item_list"]; ok {
-			if w := constructUpdateSystemResetWorkflowTasksWorkItemList(v.([]interface{})); v != nil {
+			if w := constructUpdateSystemResetWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
 		}
@@ -2864,7 +2864,7 @@ func constructUpdateSystemWorkflowTasks(wTasks []interface{}) *[]dnac.UpdateDevi
 			workflowTask.Type = v.(string)
 		}
 		if v, ok := wts["work_item_list"]; ok {
-			if w := constructUpdateSystemWorkflowTasksWorkItemList(v.([]interface{})); v != nil {
+			if w := constructUpdateSystemWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
 		}
@@ -2903,7 +2903,7 @@ func constructUpdateWorkflowTasks(wTasks []interface{}) *[]dnac.UpdateDeviceRequ
 			workflowTask.Type = v.(string)
 		}
 		if v, ok := wts["work_item_list"]; ok {
-			if w := constructUpdateWorkflowTasksWorkItemList(v.([]interface{})); v != nil {
+			if w := constructUpdateWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
 		}
@@ -2959,7 +2959,7 @@ func constructUpdateSystemResetWorkflow(workflows []interface{}) *dnac.UpdateDev
 			workflowItem.State = v.(string)
 		}
 		if v, ok := ws["tasks"]; ok {
-			if w := constructUpdateSystemResetWorkflowTasks(v.([]interface{})); v != nil {
+			if w := constructUpdateSystemResetWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
@@ -3026,7 +3026,7 @@ func constructUpdateSystemWorkflow(workflows []interface{}) *dnac.UpdateDeviceRe
 			workflowItem.State = v.(string)
 		}
 		if v, ok := ws["tasks"]; ok {
-			if w := constructUpdateSystemWorkflowTasks(v.([]interface{})); v != nil {
+			if w := constructUpdateSystemWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
@@ -3093,7 +3093,7 @@ func constructUpdateWorkflow(workflows []interface{}) *dnac.UpdateDeviceRequestW
 			workflowItem.State = v.(string)
 		}
 		if v, ok := ws["tasks"]; ok {
-			if w := constructUpdateWorkflowTasks(v.([]interface{})); v != nil {
+			if w := constructUpdateWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
@@ -3160,7 +3160,7 @@ func constructUpdatePnPDevice(pnpRequest map[string]interface{}) *dnac.UpdateDev
 		request.TypeID = v.(string)
 	}
 	if v, ok := pnpRequest["day_zero_config"]; ok {
-		if w := constructUpdateZeroConfig(v.([]interface{})); v != nil {
+		if w := constructUpdateZeroConfig(v.([]interface{})); w != nil {
 			request.DayZeroConfig = *w
 		}
 	}
@@ -3168,22 +3168,22 @@ func constructUpdatePnPDevice(pnpRequest map[string]interface{}) *dnac.UpdateDev
 		request.DayZeroConfigPreview = v.(string)
 	}
 	if v, ok := pnpRequest["device_info"]; ok {
-		if w := constructUpdateDeviceInfo(v.([]interface{})); v != nil {
+		if w := constructUpdateDeviceInfo(v.([]interface{})); w != nil {
 			request.DeviceInfo = *w
 		}
 	}
 	if v, ok := pnpRequest["run_summary_list"]; ok {
-		if w := constructUpdateRunSummaryList(v.([]interface{})); v != nil {
+		if w := constructUpdateRunSummaryList(v.([]interface{})); w != nil {
 			request.RunSummaryList = *w
 		}
 	}
 	if v, ok := pnpRequest["system_reset_workflow"]; ok {
-		if w := constructUpdateSystemResetWorkflow(v.([]interface{})); v != nil {
+		if w := constructUpdateSystemResetWorkflow(v.([]interface{})); w != nil {
 			request.SystemResetWorkflow = *w
 		}
 	}
 	if v, ok := pnpRequest["system_workflow"]; ok {
-		if w := constructUpdateSystemWorkflow(v.([]interface{})); v != nil {
+		if w := constructUpdateSystemWorkflow(v.([]interface{})); w != nil {
 			request.SystemWorkflow = *w
 		}
 	}
@@ -3194,12 +3194,12 @@ func constructUpdatePnPDevice(pnpRequest map[string]interface{}) *dnac.UpdateDev
 		request.Version = v.(float64)
 	}
 	if v, ok := pnpRequest["workflow"]; ok {
-		if w := constructUpdateWorkflow(v.([]interface{})); v != nil {
+		if w := constructUpdateWorkflow(v.([]interface{})); w != nil {
 			request.Workflow = *w
 		}
 	}
 	if v, ok := pnpRequest["workflow_parameters"]; ok {
-		if w := constructUpdateWorkflowParams(v.([]interface{})); v != nil {
+		if w := constructUpdateWorkflowParams(v.([]interface{})); w != nil {
 			request.WorkflowParameters = *w
 		}
 	}

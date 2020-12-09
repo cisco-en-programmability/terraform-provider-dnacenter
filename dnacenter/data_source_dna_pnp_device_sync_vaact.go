@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	dnac "dnacenter-go-sdk/sdk"
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -289,7 +289,7 @@ func constructSyncVirtualAccountDevicesRequestSyncResult(response []interface{})
 	if len(response) > 0 {
 		sr := response[0].(map[string]interface{})
 		if v, ok := sr["sync_list"]; ok {
-			if w := constructSyncVirtualAccountDevicesRequestSyncResultSyncList(v.([]interface{})); v != nil {
+			if w := constructSyncVirtualAccountDevicesRequestSyncResultSyncList(v.([]interface{})); w != nil {
 				result.SyncList = *w
 			}
 		}
@@ -350,7 +350,7 @@ func constructSyncVirtualAccountDevicesRequest(response []interface{}) *dnac.Syn
 			result.LastSync = v.(int)
 		}
 		if v, ok := dr["profile"]; ok {
-			if w := constructSyncVirtualAccountDevicesRequestProfile(v.([]interface{})); v != nil {
+			if w := constructSyncVirtualAccountDevicesRequestProfile(v.([]interface{})); w != nil {
 				result.Profile = *w
 			}
 		}
@@ -358,7 +358,7 @@ func constructSyncVirtualAccountDevicesRequest(response []interface{}) *dnac.Syn
 			result.SmartAccountID = v.(string)
 		}
 		if v, ok := dr["sync_result"]; ok {
-			if w := constructSyncVirtualAccountDevicesRequestSyncResult(v.([]interface{})); v != nil {
+			if w := constructSyncVirtualAccountDevicesRequestSyncResult(v.([]interface{})); w != nil {
 				result.SyncResult = *w
 			}
 		}

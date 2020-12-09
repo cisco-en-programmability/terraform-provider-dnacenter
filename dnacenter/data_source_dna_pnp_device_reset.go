@@ -2,7 +2,7 @@ package dnacenter
 
 import (
 	"context"
-	dnac "dnacenter-go-sdk/sdk"
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strconv"
 	"time"
 
@@ -127,7 +127,7 @@ func constructDataPnPDeviceResetDeviceResetListConfigList(response []interface{}
 		ci := item.(map[string]interface{})
 		configItem := dnac.ResetDeviceRequestDeviceResetListConfigList{}
 		if v, ok := ci["config_parameters"]; ok {
-			if w := constructDataPnPDeviceResetDeviceResetListConfigListConfigParameters(v.([]interface{})); v != nil {
+			if w := constructDataPnPDeviceResetDeviceResetListConfigListConfigParameters(v.([]interface{})); w != nil {
 				configItem.ConfigParameters = *w
 			}
 		}
@@ -145,7 +145,7 @@ func constructDataPnPDeviceResetDeviceResetList(response []interface{}) *[]dnac.
 		ci := item.(map[string]interface{})
 		resetItem := dnac.ResetDeviceRequestDeviceResetList{}
 		if v, ok := ci["config_list"]; ok {
-			if w := constructDataPnPDeviceResetDeviceResetListConfigList(v.([]interface{})); v != nil {
+			if w := constructDataPnPDeviceResetDeviceResetListConfigList(v.([]interface{})); w != nil {
 				resetItem.ConfigList = *w
 			}
 		}
@@ -173,7 +173,7 @@ func dataSourcePnPDeviceResetRead(ctx context.Context, d *schema.ResourceData, m
 
 	resetDeviceRequest := dnac.ResetDeviceRequest{}
 	if v, ok := d.GetOk("device_reset_list"); ok {
-		if w := constructDataPnPDeviceResetDeviceResetList(v.([]interface{})); v != nil {
+		if w := constructDataPnPDeviceResetDeviceResetList(v.([]interface{})); w != nil {
 			resetDeviceRequest.DeviceResetList = *w
 		}
 	}

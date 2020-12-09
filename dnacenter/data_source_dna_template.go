@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	dnac "dnacenter-go-sdk/sdk"
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"

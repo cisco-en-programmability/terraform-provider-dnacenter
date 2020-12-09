@@ -1,7 +1,7 @@
 package dnacenter
 
 import (
-	dnac "dnacenter-go-sdk/sdk"
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strconv"
 	"strings"
 )
@@ -2723,3 +2723,689 @@ func flattenPnPDeviceSyncVacctItem(response *dnac.SyncVirtualAccountDevicesRespo
 }
 
 ///// end other pnp elements
+///// start discovery other elements
+
+func flattenDiscoveryJobsReadItems(response *dnac.GetDiscoveryJobsByIPResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(response.Response), len(response.Response))
+
+		for i, job := range response.Response {
+			oi := make(map[string]interface{})
+
+			oi["attribute_info"] = job.AttributeInfo
+			oi["cli_status"] = job.CliStatus
+			oi["discovery_status"] = job.DiscoveryStatus
+			oi["end_time"] = job.EndTime
+			oi["http_status"] = job.HTTPStatus
+			oi["id"] = job.ID
+			oi["inventory_collection_status"] = job.InventoryCollectionStatus
+			oi["inventory_reachability_status"] = job.InventoryReachabilityStatus
+			oi["ip_address"] = job.IPAddress
+			oi["job_status"] = job.JobStatus
+			oi["name"] = job.Name
+			oi["netconf_status"] = job.NetconfStatus
+			oi["ping_status"] = job.PingStatus
+			oi["snmp_status"] = job.SNMPStatus
+			oi["start_time"] = job.StartTime
+			oi["task_id"] = job.TaskID
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenDiscoveryReadItems(response *dnac.GetGlobalCredentialsResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(response.Response), len(response.Response))
+
+		for i, discoveryResponse := range response.Response {
+			oi := make(map[string]interface{})
+
+			oi["comments"] = discoveryResponse.Comments
+			oi["credential_type"] = discoveryResponse.CredentialType
+			oi["description"] = discoveryResponse.Description
+			oi["id"] = discoveryResponse.ID
+			oi["instance_tenant_id"] = discoveryResponse.InstanceTenantID
+			oi["instance_uuid"] = discoveryResponse.InstanceUUID
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenDiscoveryDevicesReadItems(response *dnac.GetDiscoveredNetworkDevicesByDiscoveryIDResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(response.Response), len(response.Response))
+
+		for i, item := range response.Response {
+			oi := make(map[string]interface{})
+
+			oi["anchor_wlc_for_ap"] = item.AnchorWlcForAp
+			oi["auth_model_id"] = item.AuthModelID
+			oi["avg_update_frequency"] = item.AvgUpdateFrequency
+			oi["boot_date_time"] = item.BootDateTime
+			oi["cli_status"] = item.CliStatus
+			oi["duplicate_device_id"] = item.DuplicateDeviceID
+			oi["error_code"] = item.ErrorCode
+			oi["error_description"] = item.ErrorDescription
+			oi["family"] = item.Family
+			oi["hostname"] = item.Hostname
+			oi["http_status"] = item.HTTPStatus
+			oi["id"] = item.ID
+			oi["image_name"] = item.ImageName
+			oi["ingress_queue_config"] = item.IngressQueueConfig
+			oi["interface_count"] = item.InterfaceCount
+			oi["inventory_collection_status"] = item.InventoryCollectionStatus
+			oi["inventory_reachability_status"] = item.InventoryReachabilityStatus
+			oi["last_updated"] = item.LastUpdated
+			oi["line_card_count"] = item.LineCardCount
+			oi["line_card_id"] = item.LineCardID
+			oi["location"] = item.Location
+			oi["location_name"] = item.LocationName
+			oi["mac_address"] = item.MacAddress
+			oi["management_ip_address"] = item.ManagementIPAddress
+			oi["memory_size"] = item.MemorySize
+			oi["netconf_status"] = item.NetconfStatus
+			oi["num_updates"] = item.NumUpdates
+			oi["ping_status"] = item.PingStatus
+			oi["platform_id"] = item.PlatformID
+			oi["port_range"] = item.PortRange
+			oi["qos_status"] = item.QosStatus
+			oi["reachability_failure_reason"] = item.ReachabilityFailureReason
+			oi["reachability_status"] = item.ReachabilityStatus
+			oi["role"] = item.Role
+			oi["role_source"] = item.RoleSource
+			oi["serial_number"] = item.SerialNumber
+			oi["snmp_contact"] = item.SNMPContact
+			oi["snmp_location"] = item.SNMPLocation
+			oi["snmp_status"] = item.SNMPStatus
+			oi["software_version"] = item.SoftwareVersion
+			oi["tag"] = item.Tag
+			oi["tag_count"] = item.TagCount
+			oi["type"] = item.Type
+			oi["up_time"] = item.UpTime
+			oi["vendor"] = item.Vendor
+			oi["wlc_ap_device_status"] = item.WlcApDeviceStatus
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenDiscoveryDevicesByRangeReadItems(response *dnac.GetDiscoveredDevicesByRangeResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(response.Response), len(response.Response))
+
+		for i, item := range response.Response {
+			oi := make(map[string]interface{})
+
+			oi["anchor_wlc_for_ap"] = item.AnchorWlcForAp
+			oi["auth_model_id"] = item.AuthModelID
+			oi["avg_update_frequency"] = item.AvgUpdateFrequency
+			oi["boot_date_time"] = item.BootDateTime
+			oi["cli_status"] = item.CliStatus
+			oi["duplicate_device_id"] = item.DuplicateDeviceID
+			oi["error_code"] = item.ErrorCode
+			oi["error_description"] = item.ErrorDescription
+			oi["family"] = item.Family
+			oi["hostname"] = item.Hostname
+			oi["http_status"] = item.HTTPStatus
+			oi["id"] = item.ID
+			oi["image_name"] = item.ImageName
+			oi["ingress_queue_config"] = item.IngressQueueConfig
+			oi["interface_count"] = item.InterfaceCount
+			oi["inventory_collection_status"] = item.InventoryCollectionStatus
+			oi["inventory_reachability_status"] = item.InventoryReachabilityStatus
+			oi["last_updated"] = item.LastUpdated
+			oi["line_card_count"] = item.LineCardCount
+			oi["line_card_id"] = item.LineCardID
+			oi["location"] = item.Location
+			oi["location_name"] = item.LocationName
+			oi["mac_address"] = item.MacAddress
+			oi["management_ip_address"] = item.ManagementIPAddress
+			oi["memory_size"] = item.MemorySize
+			oi["netconf_status"] = item.NetconfStatus
+			oi["num_updates"] = item.NumUpdates
+			oi["ping_status"] = item.PingStatus
+			oi["platform_id"] = item.PlatformID
+			oi["port_range"] = item.PortRange
+			oi["qos_status"] = item.QosStatus
+			oi["reachability_failure_reason"] = item.ReachabilityFailureReason
+			oi["reachability_status"] = item.ReachabilityStatus
+			oi["role"] = item.Role
+			oi["role_source"] = item.RoleSource
+			oi["serial_number"] = item.SerialNumber
+			oi["snmp_contact"] = item.SNMPContact
+			oi["snmp_location"] = item.SNMPLocation
+			oi["snmp_status"] = item.SNMPStatus
+			oi["software_version"] = item.SoftwareVersion
+			oi["tag"] = item.Tag
+			oi["tag_count"] = item.TagCount
+			oi["type"] = item.Type
+			oi["up_time"] = item.UpTime
+			oi["vendor"] = item.Vendor
+			oi["wlc_ap_device_status"] = item.WlcApDeviceStatus
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenDiscoveryJobReadItems(response *dnac.GetListOfDiscoveriesByDiscoveryIDResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(response.Response), len(response.Response))
+
+		for i, job := range response.Response {
+			oi := make(map[string]interface{})
+
+			oi["attribute_info"] = job.AttributeInfo
+			oi["cli_status"] = job.CliStatus
+			oi["discovery_status"] = job.DiscoveryStatus
+			oi["end_time"] = job.EndTime
+			oi["http_status"] = job.HTTPStatus
+			oi["id"] = job.ID
+			oi["inventory_collection_status"] = job.InventoryCollectionStatus
+			oi["inventory_reachability_status"] = job.InventoryReachabilityStatus
+			oi["ip_address"] = job.IPAddress
+			oi["job_status"] = job.JobStatus
+			oi["name"] = job.Name
+			oi["netconf_status"] = job.NetconfStatus
+			oi["ping_status"] = job.PingStatus
+			oi["snmp_status"] = job.SNMPStatus
+			oi["start_time"] = job.StartTime
+			oi["task_id"] = job.TaskID
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenDiscoveryByRangeReadItems(response *dnac.GetDiscoveriesByRangeResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(response.Response), len(response.Response))
+
+		for i, item := range response.Response {
+			oi := make(map[string]interface{})
+
+			// REVIEW: AttributeInfo type
+			//oi["attribute_info"] =item.AttributeInfo
+			oi["cdp_level"] = item.CdpLevel
+			oi["device_ids"] = item.DeviceIDs
+			oi["discovery_condition"] = item.DiscoveryCondition
+			oi["discovery_status"] = item.DiscoveryStatus
+			oi["discovery_type"] = item.DiscoveryType
+			oi["enable_password_list"] = strings.Split(item.EnablePasswordList, ",") // Tf expects TypeList, change to []string
+			oi["global_credential_id_list"] = item.GlobalCredentialIDList            // Already []string
+			oi["id"] = item.ID
+			oi["ip_address_list"] = item.IPAddressList
+			oi["ip_filter_list"] = strings.Split(item.IPFilterList, ",")
+			oi["is_auto_cdp"] = item.IsAutoCdp
+			oi["lldp_level"] = item.LldpLevel
+			oi["name"] = item.Name
+			oi["netconf_port"] = item.NetconfPort
+			oi["num_devices"] = item.NumDevices
+			oi["parent_discovery_id"] = item.ParentDiscoveryID
+			oi["password_list"] = strings.Split(item.PasswordList, ",")
+			oi["preferred_mgmt_ip_method"] = item.PreferredMgmtIPMethod
+			oi["protocol_order"] = item.ProtocolOrder
+			oi["retry"] = item.RetryCount
+			oi["snmp_auth_passphrase"] = item.SNMPAuthPassphrase
+			oi["snmp_auth_protocol"] = item.SNMPAuthProtocol
+			oi["snmp_mode"] = item.SNMPMode
+			oi["snmp_priv_passphrase"] = item.SNMPPrivPassphrase
+			oi["snmp_priv_protocol"] = item.SNMPPrivProtocol
+			oi["snmp_ro_community"] = item.SNMPRoCommunity
+			oi["snmp_ro_community_desc"] = item.SNMPRoCommunityDesc
+			oi["snmp_rw_community"] = item.SNMPRwCommunity
+			oi["snmp_rw_community_desc"] = item.SNMPRwCommunityDesc
+			oi["snmp_user_name"] = item.SNMPUserName
+			oi["timeout"] = item.TimeOut
+			oi["update_mgmt_ip"] = item.UpdateMgmtIP
+			oi["user_name_list"] = strings.Split(item.UserNameList, ",")
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSNMPPropertiesRangeReadItems(response *dnac.GetSNMPPropertiesResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(response.Response), len(response.Response))
+
+		for i, item := range response.Response {
+			oi := make(map[string]interface{})
+
+			oi["id"] = item.ID
+			oi["instance_tenant_id"] = item.InstanceTenantID
+			oi["instance_uuid"] = item.InstanceUUID
+			oi["int_value"] = item.IntValue
+			oi["system_property_name"] = item.SystemPropertyName
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenNetworkReadItems(response *dnac.GetNetworkResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(response.Response), len(response.Response))
+
+		for i, item := range response.Response {
+			oi := make(map[string]interface{})
+
+			oi["group_uuid"] = item.GroupUUID
+			oi["inherited_group_name"] = item.InheritedGroupName
+			oi["inherited_group_uuid"] = item.InheritedGroupUUID
+			oi["instance_type"] = item.InstanceType
+			oi["instance_uuid"] = item.InstanceUUID
+			oi["key"] = item.Key
+			oi["namespace"] = item.Namespace
+			oi["type"] = item.Type
+			oi["value"] = convertSliceInterfaceToString(item.Value)
+			oi["version"] = item.Version
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenNetworkDeviceCredentialReadItemsCli(response *[]dnac.GetDeviceCredentialDetailsResponseCli) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["comments"] = item.Comments
+			oi["credential_type"] = item.CredentialType
+			oi["description"] = item.Description
+			oi["enable_password"] = item.EnablePassword
+			oi["id"] = item.ID
+			oi["instance_tenant_id"] = item.InstanceTenantID
+			oi["instance_uuid"] = item.InstanceUUID
+			oi["password"] = item.Password
+			oi["username"] = item.Username
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+func flattenNetworkDeviceCredentialReadItemsHTTPRead(response *[]dnac.GetDeviceCredentialDetailsResponseHTTPRead) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["comments"] = item.Comments
+			oi["credential_type"] = item.CredentialType
+			oi["description"] = item.Description
+			oi["id"] = item.ID
+			oi["instance_tenant_id"] = item.InstanceTenantID
+			oi["instance_uuid"] = item.InstanceUUID
+			oi["password"] = item.Password
+			oi["port"] = item.Port
+			oi["secure"] = item.Secure
+			oi["username"] = item.Username
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+func flattenNetworkDeviceCredentialReadItemsHTTPWrite(response *[]dnac.GetDeviceCredentialDetailsResponseHTTPWrite) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["comments"] = item.Comments
+			oi["credential_type"] = item.CredentialType
+			oi["description"] = item.Description
+			oi["id"] = item.ID
+			oi["instance_tenant_id"] = item.InstanceTenantID
+			oi["instance_uuid"] = item.InstanceUUID
+			oi["password"] = item.Password
+			oi["port"] = item.Port
+			oi["secure"] = item.Secure
+			oi["username"] = item.Username
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+func flattenNetworkDeviceCredentialReadItemsSNMPV2Read(response *[]dnac.GetDeviceCredentialDetailsResponseSNMPv2Read) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["comments"] = item.Comments
+			oi["credential_type"] = item.CredentialType
+			oi["description"] = item.Description
+			oi["id"] = item.ID
+			oi["instance_tenant_id"] = item.InstanceTenantID
+			oi["instance_uuid"] = item.InstanceUUID
+			oi["read_community"] = item.ReadCommunity
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+func flattenNetworkDeviceCredentialReadItemsSNMPV2Write(response *[]dnac.GetDeviceCredentialDetailsResponseSNMPv2Write) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["comments"] = item.Comments
+			oi["credential_type"] = item.CredentialType
+			oi["description"] = item.Description
+			oi["id"] = item.ID
+			oi["instance_tenant_id"] = item.InstanceTenantID
+			oi["instance_uuid"] = item.InstanceUUID
+			oi["write_community"] = item.WriteCommunity
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+func flattenNetworkDeviceCredentialReadItemsSNMPV3(response *[]dnac.GetDeviceCredentialDetailsResponseSNMPv3) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["auth_password"] = item.AuthPassword
+			oi["auth_type"] = item.AuthType
+			oi["comments"] = item.Comments
+			oi["credential_type"] = item.CredentialType
+			oi["description"] = item.Description
+			oi["id"] = item.ID
+			oi["instance_tenant_id"] = item.InstanceTenantID
+			oi["instance_uuid"] = item.InstanceUUID
+			oi["privacy_password"] = item.PrivacyPassword
+			oi["privacy_type"] = item.PrivacyType
+			oi["snmp_mode"] = item.SNMPMode
+			oi["username"] = item.Username
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenNetworkDeviceCredentialReadItems(response *dnac.GetDeviceCredentialDetailsResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["cli"] = flattenNetworkDeviceCredentialReadItemsCli(&response.Cli)
+		oi["http_read"] = flattenNetworkDeviceCredentialReadItemsHTTPRead(&response.HTTPRead)
+		oi["http_write"] = flattenNetworkDeviceCredentialReadItemsHTTPWrite(&response.HTTPWrite)
+		oi["snmp_v2_read"] = flattenNetworkDeviceCredentialReadItemsSNMPV2Read(&response.SNMPV2Read)
+		oi["snmp_v2_write"] = flattenNetworkDeviceCredentialReadItemsSNMPV2Write(&response.SNMPV2Write)
+		oi["snmp_v3"] = flattenNetworkDeviceCredentialReadItemsSNMPV3(&response.SNMPV3)
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenNetworkGlobalIPPoolReadItemsContext(response *[]dnac.GetGlobalPoolResponseResponseContext) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["context_key"] = item.ContextKey
+			oi["context_value"] = item.ContextValue
+			oi["owner"] = item.Owner
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenNetworkGlobalIPPoolReadItem(item *dnac.GetGlobalPoolResponseResponse) []interface{} {
+	ois := make([]interface{}, 1, 1)
+	oi := make(map[string]interface{})
+	if item != nil {
+		oi["client_options"] = convertInterfaceToString(item.ClientOptions)
+		oi["configure_external_dhcp"] = item.ConfigureExternalDhcp
+		oi["context"] = flattenNetworkGlobalIPPoolReadItemsContext(&item.Context)
+		oi["create_time"] = item.CreateTime
+		oi["dhcp_server_ips"] = item.DhcpServerIPs
+		oi["dns_server_ips"] = item.DNSServerIPs
+		oi["gateways"] = item.Gateways
+		oi["id"] = item.ID
+		oi["ip_pool_cidr"] = item.IPPoolCidr
+		oi["ip_pool_name"] = item.IPPoolName
+		oi["ipv6"] = item.IPv6
+		oi["last_update_time"] = item.LastUpdateTime
+		oi["overlapping"] = item.Overlapping
+		oi["owner"] = item.Owner
+		oi["parent_uuid"] = item.ParentUUID
+		oi["shared"] = item.Shared
+		oi["total_ip_address_count"] = item.TotalIPAddressCount
+		oi["used_ip_address_count"] = item.UsedIPAddressCount
+		oi["used_percentage"] = item.UsedPercentage
+	}
+	ois[0] = oi
+	return ois
+}
+
+func flattenNetworkGlobalIPPoolReadItems(response *dnac.GetGlobalPoolResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(response.Response), len(response.Response))
+
+		for i, item := range response.Response {
+			oi := flattenNetworkGlobalIPPoolReadItem(&item)[0]
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+///// end discovery other elements
+///// start network settings
+
+func flattenNetworkServiceProviderProfileReadItemsValue(response *[]dnac.GetServiceProviderDetailsResponseResponseValue) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["sla_profile_name"] = item.SLAProfileName
+			oi["sp_profile_name"] = item.SpProfileName
+			oi["wan_provider"] = item.WanProvider
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenNetworkServiceProviderProfileReadItems(response *dnac.GetServiceProviderDetailsResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(response.Response), len(response.Response))
+
+		for i, item := range response.Response {
+			oi := make(map[string]interface{})
+
+			oi["group_uuid"] = item.GroupUUID
+			oi["inherited_group_name"] = item.InheritedGroupName
+			oi["inherited_group_uuid"] = item.InheritedGroupUUID
+			oi["instance_type"] = item.InstanceType
+			oi["instance_uuid"] = item.InstanceUUID
+			oi["key"] = item.Key
+			oi["namespace"] = item.Namespace
+			oi["type"] = item.Type
+			oi["value"] = flattenNetworkServiceProviderProfileReadItemsValue(&item.Value)
+			oi["version"] = item.Version
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenNetworkReadItemClientAndEndpointAAA(response *dnac.CreateNetworkRequestSettingsClientAndEndpointAAA) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["ip_address"] = response.IPAddress
+		oi["network"] = response.Network
+		oi["protocol"] = response.Protocol
+		oi["servers"] = response.Servers
+		oi["shared_secret"] = response.SharedSecret
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+func flattenNetworkReadItemDNSServer(response *dnac.CreateNetworkRequestSettingsDNSServer) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["domain_name"] = response.DomainName
+		oi["primary_ip_address"] = response.PrimaryIPAddress
+		oi["secondary_ip_address"] = response.SecondaryIPAddress
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+func flattenNetworkReadItemMessageOfTheday(response *dnac.CreateNetworkRequestSettingsMessageOfTheday) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["banner_message"] = response.BannerMessage
+		oi["retain_existing_banner"] = response.RetainExistingBanner
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+func flattenNetworkReadItemNetflowcollector(response *dnac.CreateNetworkRequestSettingsNetflowcollector) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["ip_address"] = response.IPAddress
+		oi["port"] = response.Port
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+func flattenNetworkReadItemNetworkAAA(response *dnac.CreateNetworkRequestSettingsNetworkAAA) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["ip_address"] = response.IPAddress
+		oi["network"] = response.Network
+		oi["protocol"] = response.Protocol
+		oi["servers"] = response.Servers
+		oi["shared_secret"] = response.SharedSecret
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+func flattenNetworkReadItemSNMPServer(response *dnac.CreateNetworkRequestSettingsSNMPServer) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["configure_dnac_ip"] = response.ConfigureDnacIP
+		oi["ip_addresses"] = response.IPAddresses
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+func flattenNetworkReadItemSyslogServer(response *dnac.CreateNetworkRequestSettingsSyslogServer) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["configure_dnac_ip"] = response.ConfigureDnacIP
+		oi["ip_addresses"] = response.IPAddresses
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenNetworkReadItem(response *dnac.CreateNetworkRequest) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["client_and_endpoint_aaa"] = flattenNetworkReadItemClientAndEndpointAAA(&response.Settings.ClientAndEndpointAAA)
+		oi["dhcp_server"] = response.Settings.DhcpServer
+		oi["dns_server"] = flattenNetworkReadItemDNSServer(&response.Settings.DNSServer)
+		oi["message_of_theday"] = flattenNetworkReadItemMessageOfTheday(&response.Settings.MessageOfTheday)
+		oi["netflowcollector"] = flattenNetworkReadItemNetflowcollector(&response.Settings.Netflowcollector)
+		oi["network_aaa"] = flattenNetworkReadItemNetworkAAA(&response.Settings.NetworkAAA)
+		oi["ntp_server"] = response.Settings.NtpServer
+		oi["snmp_server"] = flattenNetworkReadItemSNMPServer(&response.Settings.SNMPServer)
+		oi["syslog_server"] = flattenNetworkReadItemSyslogServer(&response.Settings.SyslogServer)
+		oi["timezone"] = response.Settings.Timezone
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+///// end network settings

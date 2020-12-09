@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	dnac "dnacenter-go-sdk/sdk"
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -391,7 +391,7 @@ func constructUpdatePnPSettingsSavaMappingListSyncResult(response []interface{})
 	if len(response) > 0 {
 		p := response[0].(map[string]interface{})
 		if v, ok := p["sync_list"]; ok {
-			if w := constructUpdatePnPSettingsSavaMappingListSyncResultSyncList(v.([]interface{})); v != nil {
+			if w := constructUpdatePnPSettingsSavaMappingListSyncResultSyncList(v.([]interface{})); w != nil {
 				result.SyncList = *w
 			}
 		}
@@ -420,7 +420,7 @@ func constructUpdatePnPSettingsSavaMappingList(response []interface{}) *[]dnac.U
 			savaMappingItem.LastSync = v.(int)
 		}
 		if v, ok := smi["profile"]; ok {
-			if w := constructUpdatePnPSettingsSavaMappingListProfile(v.([]interface{})); v != nil {
+			if w := constructUpdatePnPSettingsSavaMappingListProfile(v.([]interface{})); w != nil {
 				savaMappingItem.Profile = *w
 			}
 		}
@@ -428,7 +428,7 @@ func constructUpdatePnPSettingsSavaMappingList(response []interface{}) *[]dnac.U
 			savaMappingItem.SmartAccountID = v.(string)
 		}
 		if v, ok := smi["sync_result"]; ok {
-			if w := constructUpdatePnPSettingsSavaMappingListSyncResult(v.([]interface{})); v != nil {
+			if w := constructUpdatePnPSettingsSavaMappingListSyncResult(v.([]interface{})); w != nil {
 				savaMappingItem.SyncResult = *w
 			}
 		}
@@ -480,7 +480,7 @@ func constructUpdatePnPSettings(ws map[string]interface{}) *dnac.UpdatePnPGlobal
 		SettingsItem.TypeID = v.(string)
 	}
 	if v, ok := ws["aaa_credentials"]; ok {
-		if w := constructUpdatePnPSettingsAAACredentials(v.([]interface{})); v != nil {
+		if w := constructUpdatePnPSettingsAAACredentials(v.([]interface{})); w != nil {
 			SettingsItem.AAACredentials = *w
 		}
 	}
@@ -488,17 +488,17 @@ func constructUpdatePnPSettings(ws map[string]interface{}) *dnac.UpdatePnPGlobal
 		SettingsItem.AcceptEula = v.(bool)
 	}
 	if v, ok := ws["default_profile"]; ok {
-		if w := constructUpdatePnPSettingsDefaultProfile(v.([]interface{})); v != nil {
+		if w := constructUpdatePnPSettingsDefaultProfile(v.([]interface{})); w != nil {
 			SettingsItem.DefaultProfile = *w
 		}
 	}
 	if v, ok := ws["sava_mapping_list"]; ok {
-		if w := constructUpdatePnPSettingsSavaMappingList(v.([]interface{})); v != nil {
+		if w := constructUpdatePnPSettingsSavaMappingList(v.([]interface{})); w != nil {
 			SettingsItem.SavaMappingList = *w
 		}
 	}
 	if v, ok := ws["task_time_outs"]; ok {
-		if w := constructUpdatePnPSettingsTaskTimeOuts(v.([]interface{})); v != nil {
+		if w := constructUpdatePnPSettingsTaskTimeOuts(v.([]interface{})); w != nil {
 			SettingsItem.TaskTimeOuts = *w
 		}
 	}

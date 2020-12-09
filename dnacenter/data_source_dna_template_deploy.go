@@ -2,7 +2,7 @@ package dnacenter
 
 import (
 	"context"
-	dnac "dnacenter-go-sdk/sdk"
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strconv"
 	"time"
 

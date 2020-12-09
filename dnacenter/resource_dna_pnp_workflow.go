@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	dnac "dnacenter-go-sdk/sdk"
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -284,7 +284,7 @@ func constructAddPnPWorkflowTasks(wTasks []interface{}) *[]dnac.AddAWorkflowRequ
 			workflowTask.Type = v.(string)
 		}
 		if v, ok := wts["work_item_list"]; ok {
-			if w := constructAddPnPWorkflowTasksWorkItemList(v.([]interface{})); v != nil {
+			if w := constructAddPnPWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
 		}
@@ -338,7 +338,7 @@ func constructAddPnPWorkflow(ws map[string]interface{}) *dnac.AddAWorkflowReques
 		workflowItem.State = v.(string)
 	}
 	if v, ok := ws["tasks"]; ok {
-		if w := constructAddPnPWorkflowTasks(v.([]interface{})); v != nil {
+		if w := constructAddPnPWorkflowTasks(v.([]interface{})); w != nil {
 			workflowItem.Tasks = *w
 		}
 	}
@@ -418,7 +418,7 @@ func constructUpdatePnPWorkflowTasks(wTasks []interface{}) *[]dnac.UpdateWorkflo
 			workflowTask.Type = v.(string)
 		}
 		if v, ok := wts["work_item_list"]; ok {
-			if w := constructUpdatePnPWorkflowTasksWorkItemList(v.([]interface{})); v != nil {
+			if w := constructUpdatePnPWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
 		}
@@ -472,7 +472,7 @@ func constructUpdatePnPWorkflow(ws map[string]interface{}) *dnac.UpdateWorkflowR
 		workflowItem.State = v.(string)
 	}
 	if v, ok := ws["tasks"]; ok {
-		if w := constructUpdatePnPWorkflowTasks(v.([]interface{})); v != nil {
+		if w := constructUpdatePnPWorkflowTasks(v.([]interface{})); w != nil {
 			workflowItem.Tasks = *w
 		}
 	}

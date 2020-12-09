@@ -2,7 +2,7 @@ package dnacenter
 
 import (
 	"context"
-	dnac "dnacenter-go-sdk/sdk"
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strconv"
 	"time"
 
@@ -151,7 +151,7 @@ func constructDataPnPClaimDeviceClaimListConfigList(response []interface{}) *[]d
 		ci := item.(map[string]interface{})
 		configItem := dnac.ClaimDeviceRequestDeviceClaimListConfigList{}
 		if v, ok := ci["config_parameters"]; ok {
-			if w := constructDataPnPClaimDeviceClaimListConfigListConfigParameters(v.([]interface{})); v != nil {
+			if w := constructDataPnPClaimDeviceClaimListConfigListConfigParameters(v.([]interface{})); w != nil {
 				configItem.ConfigParameters = *w
 			}
 		}
@@ -169,7 +169,7 @@ func constructDataPnPClaimDeviceClaimList(response []interface{}) *[]dnac.ClaimD
 		ci := item.(map[string]interface{})
 		claimItem := dnac.ClaimDeviceRequestDeviceClaimList{}
 		if v, ok := ci["config_list"]; ok {
-			if w := constructDataPnPClaimDeviceClaimListConfigList(v.([]interface{})); v != nil {
+			if w := constructDataPnPClaimDeviceClaimListConfigList(v.([]interface{})); w != nil {
 				claimItem.ConfigList = *w
 			}
 		}
@@ -204,7 +204,7 @@ func dataSourcePnPDeviceClaimRead(ctx context.Context, d *schema.ResourceData, m
 		claimDeviceRequest.ConfigID = v.(string)
 	}
 	if v, ok := d.GetOk("device_claim_list"); ok {
-		if w := constructDataPnPClaimDeviceClaimList(v.([]interface{})); v != nil {
+		if w := constructDataPnPClaimDeviceClaimList(v.([]interface{})); w != nil {
 			claimDeviceRequest.DeviceClaimList = *w
 		}
 	}

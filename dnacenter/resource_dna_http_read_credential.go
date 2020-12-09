@@ -2,8 +2,8 @@ package dnacenter
 
 import (
 	"context"
-	dnac "dnacenter-go-sdk/sdk"
 	"fmt"
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strings"
 	"time"
 
