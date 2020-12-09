@@ -130,7 +130,7 @@ In the docs directory you can find the documentation.
 
 Ongoing development efforts and contributions to this provider are tracked as issues in this repository.
 
-We welcome community contributions to this project. If you find problems, need an enhancement or need a new data-source or resource, please open an issue or create a PR against the [Terraform Provider for DNACenter repository](https://github.com/cisco-en-programmability/terraform-provider-dnacenter.git/issues).
+We welcome community contributions to this project. If you find problems, need an enhancement or need a new data-source or resource, please open an issue or create a PR against the [Terraform Provider for DNACenter repository](https://github.com/cisco-en-programmability/terraform-provider-dnacenter/issues).
 
 ## License
 
