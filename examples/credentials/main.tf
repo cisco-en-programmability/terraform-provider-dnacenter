@@ -68,7 +68,7 @@ resource "dna_snmpv2_write_community_credential" "response" {
   provider = dnacenter
   item {
     description     = "SNMP WO test 1"
-    read_community  = "ThisI5aP4s_sW0rd"
+    write_community = "ThisI5aP4s_sW0rd"
     credential_type = "APP"
   }
 }

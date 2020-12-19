@@ -21,11 +21,11 @@ output "dna_pnp_workflow_count_response" {
 
 data "dna_pnp_device_sync_result_vacct" "response" {
   provider = dnacenter
+  name     = ""
+  domain   = ""
 }
 output "dna_pnp_device_sync_result_vacct_response" {
-  value  = data.dna_pnp_device_sync_result_vacct.response
-  name   = ""
-  domain = ""
+  value = data.dna_pnp_device_sync_result_vacct.response
 }
 
 

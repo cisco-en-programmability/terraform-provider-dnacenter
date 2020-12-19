@@ -35,3 +35,12 @@ data "dna_site_health" "response" {
 output "dna_site_health_response" {
   value = data.dna_site_health.response
 }
+
+
+data "dna_site_membership" "response" {
+  provider = dnacenter
+  site_id  = "a013dd15-69a3-423f-82dc-c6a10eba2cb7"
+}
+output "dna_site_membership_response" {
+  value = data.dna_site_membership.response
+}
