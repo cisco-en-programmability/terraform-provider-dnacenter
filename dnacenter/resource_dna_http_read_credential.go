@@ -300,6 +300,19 @@ func resourceHTTPReadCredentialUpdate(ctx context.Context, d *schema.ResourceDat
 
 	credentialID := d.Id()
 
+	credentialSubTypeCompare := "HTTPRead"
+	searchResponse, _, err := client.Discovery.GetCredentialSubTypeByCredentialID(credentialID)
+	if err != nil || searchResponse == nil {
+		// Resource does not exist
+		d.SetId("") // Set the ID to an empty string so Terraform "destroys" the resource in state.
+		return diags
+	}
+	if !strings.HasPrefix(searchResponse.Response, credentialSubTypeCompare) {
+		// it does not have the same credentialSubType
+		d.SetId("") // Set the ID to an empty string so Terraform "destroys" the resource in state.
+		return diags
+	}
+
 	// Check if properties inside resource has changes
 	if d.HasChange("item") {
 		item := d.Get("item").([]interface{})[0]
@@ -344,8 +357,12 @@ func resourceHTTPReadCredentialDelete(ctx context.Context, d *schema.ResourceDat
 	var diags diag.Diagnostics
 
 	credentialID := d.Id()
+	searchResponse, _, err := client.Discovery.GetCredentialSubTypeByCredentialID(credentialID)
+	if err != nil || searchResponse == nil {
+		return diags
+	}
 
-	// Call function to delete tag resource
+	// Call function to delete resource
 	response, _, err := client.Discovery.DeleteGlobalCredentialsByID(credentialID)
 	if err != nil {
 		return diag.FromErr(err)

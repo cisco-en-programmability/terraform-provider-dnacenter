@@ -23,18 +23,22 @@ func dataSourceDiscoverySummary() *schema.Resource {
 			"task_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+				Optional: true,
 			},
 			"sort_by": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+				Optional: true,
 			},
 			"sort_order": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+				Optional: true,
 			},
 			"ip_address": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -42,6 +46,7 @@ func dataSourceDiscoverySummary() *schema.Resource {
 			"ping_status": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -49,6 +54,7 @@ func dataSourceDiscoverySummary() *schema.Resource {
 			"snmp_status": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -56,6 +62,7 @@ func dataSourceDiscoverySummary() *schema.Resource {
 			"cli_status": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -63,6 +70,7 @@ func dataSourceDiscoverySummary() *schema.Resource {
 			"netconf_status": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -70,6 +78,7 @@ func dataSourceDiscoverySummary() *schema.Resource {
 			"http_status": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},

@@ -1,9 +1,10 @@
 package dnacenter
 
 import (
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strconv"
 	"strings"
+
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 )
 
 ///// start application
@@ -64,6 +65,49 @@ func flattenApplicationsReadItems(appItems *[]dnac.GetApplicationsResponseRespon
 		return ais
 	}
 
+	return make([]interface{}, 0)
+}
+
+func flattenApplicationSetReadItemIDentitySource(response *dnac.GetApplicationSetsResponseResponseIDentitySource) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["id"] = response.ID
+		oi["type"] = response.Type
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenApplicationSetReadItem(response *dnac.GetApplicationSetsResponseResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["id"] = response.ID
+		oi["name"] = response.Name
+		oi["identity_source"] = flattenApplicationSetReadItemIDentitySource(&response.IDentitySource)
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenApplicationsSetReadItems(response *[]dnac.GetApplicationSetsResponseResponse) []interface{} {
+	if response != nil {
+		appSets := *response
+		ois := make([]interface{}, len(appSets), len(appSets))
+		for i, appSet := range appSets {
+			if v := flattenApplicationSetReadItem(&appSet); len(v) > 0 {
+				ois[i] = v[0]
+			}
+		}
+		return ois
+	}
 	return make([]interface{}, 0)
 }
 
@@ -306,6 +350,74 @@ func flattenSiteHealthReadItem(siteHealth *dnac.GetSiteHealthResponse) []interfa
 			oi["application_health_stats"] = stats
 			ois[i] = oi
 		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSiteMembershipReadItemDevice(response *[]dnac.GetMembershipResponseDevice) []interface{} {
+	if response != nil {
+		devices := *response
+		ois := make([]interface{}, len(devices), len(devices))
+		for i, device := range devices {
+			oi := make(map[string]interface{})
+
+			oi["response"] = convertSliceInterfaceToString(device.Response)
+			oi["site_id"] = device.SiteID
+			oi["version"] = device.Version
+			oi["message"] = device.Message
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSiteMembershipReadItemSiteResponse(response *[]dnac.GetMembershipResponseSiteResponse) []interface{} {
+	if response != nil {
+		sites := *response
+		ois := make([]interface{}, len(sites), len(sites))
+		for i, site := range sites {
+			oi := make(map[string]interface{})
+
+			oi["parent_id"] = site.ParentID
+			oi["additional_info"] = convertSliceInterfaceToString(site.AdditionalInfo)
+			oi["group_type_list"] = site.GroupTypeList
+			oi["group_hierarchy"] = site.GroupHierarchy
+			oi["group_name_hierarchy"] = site.GroupNameHierarchy
+			oi["name"] = site.Name
+			oi["instance_tenant_id"] = site.InstanceTenantID
+			oi["id"] = site.ID
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSiteMembershipReadItemSite(response *dnac.GetMembershipResponseSite) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["response"] = flattenSiteMembershipReadItemSiteResponse(&response.Response)
+		oi["version"] = response.Version
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSiteMembershipReadItem(response *dnac.GetMembershipResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+		oi["device"] = flattenSiteMembershipReadItemDevice(&response.Device)
+		oi["site"] = flattenSiteMembershipReadItemSite(&response.Site)
+		ois[0] = oi
 		return ois
 	}
 	return make([]interface{}, 0)
@@ -3409,3 +3521,255 @@ func flattenNetworkReadItem(response *dnac.CreateNetworkRequest) []interface{} {
 }
 
 ///// end network settings
+///// start sda
+
+func flattenSDAFabricBorderDeviceDeviceSettingsExtConnectivitySettingsL3HandoffVirtualNetwork(response *dnac.GetsBorderDeviceDetailFromSDAFabricResponsePayloadDeviceSettingsExtConnectivitySettingsL3HandoffVirtualNetwork) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+		oi["id_ref"] = response.IDRef
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSDAFabricBorderDeviceDeviceSettingsExtConnectivitySettingsL3Handoff(response *[]dnac.GetsBorderDeviceDetailFromSDAFabricResponsePayloadDeviceSettingsExtConnectivitySettingsL3Handoff) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["deploy_pending"] = item.DeployPending
+			oi["display_name"] = item.DisplayName
+			oi["id"] = item.ID
+			oi["instance_id"] = item.InstanceID
+			oi["instance_tenant_id"] = item.InstanceTenantID
+			oi["instance_version"] = item.InstanceVersion
+			oi["local_ip_address"] = item.LocalIPAddress
+			oi["remote_ip_address"] = item.RemoteIPAddress
+			oi["virtual_network"] = flattenSDAFabricBorderDeviceDeviceSettingsExtConnectivitySettingsL3HandoffVirtualNetwork(&item.VirtualNetwork)
+			oi["vlan_id"] = item.VLANID
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSDAFabricBorderDeviceDeviceSettingsExtConnectivitySettings(response *[]dnac.GetsBorderDeviceDetailFromSDAFabricResponsePayloadDeviceSettingsExtConnectivitySettings) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["deploy_pending"] = item.DeployPending
+			oi["display_name"] = item.DisplayName
+			oi["external_domain_protocol_number"] = item.ExternalDomainProtocolNumber
+			oi["id"] = item.ID
+			oi["instance_id"] = item.InstanceID
+			oi["instance_tenant_id"] = item.InstanceTenantID
+			oi["instance_version"] = item.InstanceVersion
+			oi["interface_uuid"] = item.InterfaceUUID
+			oi["l2_handoff"] = item.L2Handoff
+			oi["l3_handoff"] = flattenSDAFabricBorderDeviceDeviceSettingsExtConnectivitySettingsL3Handoff(&item.L3Handoff)
+			oi["policy_propagation_enabled"] = item.PolicyPropagationEnabled
+			oi["policy_sgt_tag"] = item.PolicySgtTag
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSDAFabricBorderDeviceDeviceSettings(response *dnac.GetsBorderDeviceDetailFromSDAFabricResponsePayloadDeviceSettings) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["connected_to"] = response.ConnectedTo
+		oi["cpu"] = response.CPU
+		oi["deploy_pending"] = response.DeployPending
+		oi["dhcp_enabled"] = response.DhcpEnabled
+		oi["display_name"] = response.DisplayName
+		oi["ext_connectivity_settings"] = flattenSDAFabricBorderDeviceDeviceSettingsExtConnectivitySettings(&response.ExtConnectivitySettings)
+		oi["external_connectivity_ip_pool"] = response.ExternalConnectivityIPPool
+		oi["external_domain_routing_protocol"] = response.ExternalDomainRoutingProtocol
+		oi["id"] = response.ID
+		oi["instance_id"] = response.InstanceID
+		oi["instance_tenant_id"] = response.InstanceTenantID
+		oi["instance_version"] = response.InstanceVersion
+		oi["internal_domain_protocol_number"] = response.InternalDomainProtocolNumber
+		oi["memory"] = response.Memory
+		oi["node_type"] = response.NodeType
+		oi["storage"] = response.Storage
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSDAFabricBorderDeviceNetworkWideSettingsDhcpIPAddress(response *dnac.GetsBorderDeviceDetailFromSDAFabricResponsePayloadNetworkWideSettingsDhcpIPAddress) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["address"] = response.Address
+		oi["address_type"] = response.AddressType
+		oi["id"] = response.ID
+		oi["padded_address"] = response.PaddedAddress
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSDAFabricBorderDeviceNetworkWideSettingsDhcp(response *[]dnac.GetsBorderDeviceDetailFromSDAFabricResponsePayloadNetworkWideSettingsDhcp) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["id"] = item.ID
+			oi["ip_address"] = flattenSDAFabricBorderDeviceNetworkWideSettingsDhcpIPAddress(&item.IPAddress)
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSDAFabricBorderDeviceNetworkWideSettingsDNSIP(response *dnac.GetsBorderDeviceDetailFromSDAFabricResponsePayloadNetworkWideSettingsDNSIP) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["address"] = response.Address
+		oi["address_type"] = response.AddressType
+		oi["id"] = response.ID
+		oi["padded_address"] = response.PaddedAddress
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSDAFabricBorderDeviceNetworkWideSettingsDNS(response *[]dnac.GetsBorderDeviceDetailFromSDAFabricResponsePayloadNetworkWideSettingsDNS) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+
+			oi["domain_name"] = item.DomainName
+			oi["id"] = item.ID
+			oi["ip"] = flattenSDAFabricBorderDeviceNetworkWideSettingsDNSIP(&item.IP)
+
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSDAFabricBorderDeviceNetworkWideSettings(response *dnac.GetsBorderDeviceDetailFromSDAFabricResponsePayloadNetworkWideSettings) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		oi["aaa"] = response.AAA
+		oi["cmx"] = response.Cmx
+		oi["deploy_pending"] = response.DeployPending
+		oi["dhcp"] = flattenSDAFabricBorderDeviceNetworkWideSettingsDhcp(&response.Dhcp)
+		oi["display_name"] = response.DisplayName
+		oi["dns"] = flattenSDAFabricBorderDeviceNetworkWideSettingsDNS(&response.DNS)
+		oi["id"] = response.ID
+		oi["instance_id"] = response.InstanceID
+		oi["instance_tenant_id"] = response.InstanceTenantID
+		oi["instance_version"] = response.InstanceVersion
+		oi["ldap"] = response.Ldap
+		oi["native_vlan"] = response.NativeVLAN
+		oi["netflow"] = response.Netflow
+		oi["ntp"] = response.Ntp
+		oi["snmp"] = response.SNMP
+		oi["syslog"] = response.Syslogs
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSDAFabricBorderDeviceTransitNetworks(response *[]dnac.GetsBorderDeviceDetailFromSDAFabricResponsePayloadTransitNetworks) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, len(*response), len(*response))
+
+		for i, item := range *response {
+			oi := make(map[string]interface{})
+			oi["id_ref"] = item.IDRef
+			ois[i] = oi
+		}
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+func flattenSDAFabricBorderDevice(response *dnac.GetsBorderDeviceDetailFromSDAFabricResponse) []interface{} {
+	if response != nil {
+		ois := make([]interface{}, 1, 1)
+		oi := make(map[string]interface{})
+
+		item := response.Payload
+
+		oi["akc_settings_cfs"] = item.AkcSettingsCfs
+		oi["auth_entity_class"] = item.AuthEntityClass
+		oi["auth_entity_id"] = item.AuthEntityID
+		oi["cfs_change_info"] = item.CfsChangeInfo
+		oi["configs"] = item.Configs
+		oi["create_time"] = item.CreateTime
+		oi["custom_provisions"] = item.CustomProvisions
+		oi["deploy_pending"] = item.DeployPending
+		oi["deployed"] = item.Deployed
+		oi["device_interface_info"] = item.DeviceInterfaceInfo
+		oi["device_settings"] = flattenSDAFabricBorderDeviceDeviceSettings(&item.DeviceSettings)
+		oi["display_name"] = item.DisplayName
+		oi["id"] = item.ID
+		oi["instance_id"] = item.InstanceID
+		oi["instance_tenant_id"] = item.InstanceTenantID
+		oi["instance_version"] = item.InstanceVersion
+		oi["is_seeded"] = item.IsSeeded
+		oi["is_stale"] = item.IsStale
+		oi["last_update_time"] = item.LastUpdateTime
+		oi["managed_sites"] = item.ManagedSites
+		oi["name"] = item.Name
+		oi["namespace"] = item.Namespace
+		oi["network_device_id"] = item.NetworkDeviceID
+		oi["network_wide_settings"] = flattenSDAFabricBorderDeviceNetworkWideSettings(&item.NetworkWideSettings)
+		oi["other_device"] = item.OtherDevice
+		oi["provisioning_state"] = item.ProvisioningState
+		oi["resource_version"] = item.ResourceVersion
+		oi["roles"] = item.Roles
+		oi["save_wan_connectivity_details_only"] = item.SaveWanConnectivityDetailsOnly
+		oi["site_id"] = item.SiteID
+		oi["target_id_list"] = item.TargetIDList
+		oi["transit_networks"] = flattenSDAFabricBorderDeviceTransitNetworks(&item.TransitNetworks)
+		oi["type"] = item.Type
+		oi["virtual_network"] = item.VirtualNetwork
+		oi["wlan"] = item.WLAN
+
+		ois[0] = oi
+		return ois
+	}
+	return make([]interface{}, 0)
+}
+
+///// end sda

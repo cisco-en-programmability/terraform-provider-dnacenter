@@ -3,9 +3,10 @@ package dnacenter
 import (
 	"context"
 	"fmt"
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strings"
 	"time"
+
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -61,7 +62,7 @@ func resourceSNMPWriteCommunityCredential() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 						},
-						"read_community": &schema.Schema{
+						"write_community": &schema.Schema{
 							Type:      schema.TypeString,
 							Required:  true,
 							Sensitive: true,
@@ -88,7 +89,7 @@ func constructUpdateSNMPWriteCommunityCredentialsRequest(prevID string, credenti
 	if v, ok := credential["instance_uuid"]; ok {
 		credentialRequest.InstanceUUID = v.(string)
 	}
-	credentialRequest.WriteCommunity = credential["read_community"].(string)
+	credentialRequest.WriteCommunity = credential["write_community"].(string)
 	credentialRequest.Description = credential["description"].(string)
 	return &credentialRequest
 }
@@ -170,7 +171,7 @@ func resourceSNMPWriteCommunityCredentialCreate(ctx context.Context, d *schema.R
 	if v, ok := credential["instance_uuid"]; ok {
 		credentialRequest.InstanceUUID = v.(string)
 	}
-	credentialRequest.WriteCommunity = credential["read_community"].(string)
+	credentialRequest.WriteCommunity = credential["write_community"].(string)
 	credentialRequest.Description = credential["description"].(string)
 
 	credentialRequests := []dnac.CreateSNMPWriteCommunityRequest{credentialRequest}
@@ -273,6 +274,20 @@ func resourceSNMPWriteCommunityCredentialUpdate(ctx context.Context, d *schema.R
 
 	credentialID := d.Id()
 
+	credentialSubTypeCompare := "SNMPv2WriteCommunity"
+	// Call function to read tag.id
+	searchResponse, _, err := client.Discovery.GetCredentialSubTypeByCredentialID(credentialID)
+	if err != nil || searchResponse == nil {
+		// Resource does not exist
+		d.SetId("") // Set the ID to an empty string so Terraform "destroys" the resource in state.
+		return diags
+	}
+	if !strings.HasPrefix(searchResponse.Response, credentialSubTypeCompare) {
+		// it does not have the same credentialSubType
+		d.SetId("") // Set the ID to an empty string so Terraform "destroys" the resource in state.
+		return diags
+	}
+
 	// Check if properties inside resource has changes
 	if d.HasChange("item") {
 		item := d.Get("item").([]interface{})[0]
@@ -317,8 +332,12 @@ func resourceSNMPWriteCommunityCredentialDelete(ctx context.Context, d *schema.R
 	var diags diag.Diagnostics
 
 	credentialID := d.Id()
+	searchResponse, _, err := client.Discovery.GetCredentialSubTypeByCredentialID(credentialID)
+	if err != nil || searchResponse == nil {
+		return diags
+	}
 
-	// Call function to delete tag resource
+	// Call function to delete resource
 	response, _, err := client.Discovery.DeleteGlobalCredentialsByID(credentialID)
 	if err != nil {
 		return diag.FromErr(err)

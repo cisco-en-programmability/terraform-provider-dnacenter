@@ -158,9 +158,21 @@ func resourceNetworkServiceProviderProfileRead(ctx context.Context, d *schema.Re
 func resourceNetworkServiceProviderProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnac.Client)
 
+	var diags diag.Diagnostics
+
 	profileName := d.Id()
 	model := d.Get("model").(string)
 	wanProvider := d.Get("wan_provider").(string)
+
+	searchResponse, _, err := client.NetworkSettings.GetServiceProviderDetails()
+	if err != nil {
+		return diag.FromErr(err)
+	}
+	_, _, foundValue := hasServiceProvider(searchResponse, profileName, "", "")
+	if foundValue == nil {
+		d.SetId("")
+		return diags
+	}
 
 	// Check if properties inside resource has changes
 	if d.HasChanges("model", "wan_provider") {
@@ -195,8 +207,17 @@ func resourceNetworkServiceProviderProfileDelete(ctx context.Context, d *schema.
 
 	profileName := d.Id()
 
+	searchResponse, _, err := client.NetworkSettings.GetServiceProviderDetails()
+	if err == nil && searchResponse != nil {
+		// Check if element already exists
+		_, _, foundValue := hasServiceProvider(searchResponse, profileName, "", "")
+		if foundValue == nil {
+			return diags
+		}
+	}
+
 	// Call function to delete resource
-	_, _, err := client.NetworkSettings.DeleteSPProfile(profileName)
+	_, _, err = client.NetworkSettings.DeleteSPProfile(profileName)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -204,7 +225,7 @@ func resourceNetworkServiceProviderProfileDelete(ctx context.Context, d *schema.
 	// Wait for execution status to complete
 	time.Sleep(5 * time.Second)
 
-	searchResponse, _, err := client.NetworkSettings.GetServiceProviderDetails()
+	searchResponse, _, err = client.NetworkSettings.GetServiceProviderDetails()
 	if err == nil && searchResponse != nil {
 		// Check if element already exists
 		_, _, foundValue := hasServiceProvider(searchResponse, profileName, "", "")

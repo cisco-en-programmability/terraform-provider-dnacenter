@@ -433,7 +433,8 @@ func resourceNetworkCredentialSiteAssignmentRead(ctx context.Context, d *schema.
 	queryParams := dnac.GetDeviceCredentialDetailsQueryParams{SiteID: siteID}
 	searchResponse, _, err := client.NetworkSettings.GetDeviceCredentialDetails(&queryParams)
 	if err != nil {
-		return diag.FromErr(err)
+		d.SetId("")
+		return diags
 	}
 
 	networkCredentialSiteAssignmentSimplified := networkCredentialSiteAssignmentSimplify(searchResponse)
@@ -463,7 +464,17 @@ func resourceNetworkCredentialSiteAssignmentRead(ctx context.Context, d *schema.
 func resourceNetworkCredentialSiteAssignmentUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnac.Client)
 
+	var diags diag.Diagnostics
+
 	siteID := d.Id()
+
+	queryParams := dnac.GetDeviceCredentialDetailsQueryParams{SiteID: siteID}
+	searchResponse, _, err := client.NetworkSettings.GetDeviceCredentialDetails(&queryParams)
+	if err != nil || searchResponse == nil {
+		d.SetId("")
+		return diags
+	}
+
 	requestData := NetworkCredentialSiteAssignmentParams{}
 	if d.HasChanges("cli", "http_read", "http_write", "snmp_v2_read", "snmp_v2_write", "snmp_v3") {
 		if v, ok := d.GetOk("cli"); ok && v != nil {

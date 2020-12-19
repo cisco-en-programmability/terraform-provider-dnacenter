@@ -161,8 +161,7 @@ func pnpWorkflowWorkflow() *schema.Resource {
 			},
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Required: true,
 			},
 			"start_time": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -501,6 +500,28 @@ func resourcePnPWorkflowCreate(ctx context.Context, d *schema.ResourceData, m in
 	item := d.Get("item").([]interface{})[0]
 	pnpRequest := item.(map[string]interface{})
 
+	name := pnpRequest["name"].(string)
+	queryParam := dnac.GetWorkflowsQueryParams{Name: []string{name}}
+
+	searchResponse, _, err := client.DeviceOnboardingPnP.GetWorkflows(&queryParam)
+	if err == nil && searchResponse != nil {
+		workflows := *searchResponse
+		if len(workflows) > 0 {
+			workflowID := workflows[0].TypeID
+			updateRequest := constructUpdatePnPWorkflow(pnpRequest)
+			_, _, err = client.DeviceOnboardingPnP.UpdateWorkflow(workflowID, updateRequest)
+			if err != nil {
+				return diag.FromErr(err)
+			}
+
+			// Update resource id
+			d.SetId(workflowID)
+			// Update resource on Terraform
+			resourcePnPWorkflowRead(ctx, d, m)
+			return diags
+		}
+	}
+
 	request := constructAddPnPWorkflow(pnpRequest)
 
 	response, _, err := client.DeviceOnboardingPnP.AddAWorkflow(request)
@@ -543,9 +564,18 @@ func resourcePnPWorkflowRead(ctx context.Context, d *schema.ResourceData, m inte
 func resourcePnPWorkflowUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnac.Client)
 
+	var diags diag.Diagnostics
+
+	workflowID := d.Id()
+	searchResponse, _, err := client.DeviceOnboardingPnP.GetWorkflowByID(workflowID)
+	if err != nil || searchResponse == nil {
+		// Resource does not exist
+		d.SetId("") // Set the ID to an empty string so Terraform "destroys" the resource in state.
+		return diags
+	}
+
 	// Check if properties inside resource has changes
 	if d.HasChange("item") {
-		workflowID := d.Id()
 		item := d.Get("item").([]interface{})[0]
 		pnpRequest := item.(map[string]interface{})
 		request := constructUpdatePnPWorkflow(pnpRequest)
@@ -568,13 +598,18 @@ func resourcePnPWorkflowDelete(ctx context.Context, d *schema.ResourceData, m in
 	var diags diag.Diagnostics
 
 	workflowID := d.Id()
+	response, _, err := client.DeviceOnboardingPnP.GetWorkflowByID(workflowID)
+	if err != nil || response == nil {
+		return diags
+	}
+
 	// Call function to delete application resource
-	_, _, err := client.DeviceOnboardingPnP.DeleteWorkflowByID(workflowID)
+	_, _, err = client.DeviceOnboardingPnP.DeleteWorkflowByID(workflowID)
 	if err != nil {
 		return diag.FromErr(err)
 	}
 
-	response, _, err := client.DeviceOnboardingPnP.GetWorkflowByID(workflowID)
+	response, _, err = client.DeviceOnboardingPnP.GetWorkflowByID(workflowID)
 	if err != nil || response == nil {
 		return diags
 	}

@@ -334,7 +334,8 @@ func resourceNetworkGlobalIPPoolRead(ctx context.Context, d *schema.ResourceData
 	poolID := d.Id()
 	searchResponse, _, err := client.NetworkSettings.GetGlobalPool(&dnac.GetGlobalPoolQueryParams{})
 	if err != nil {
-		return diag.FromErr(err)
+		d.SetId("")
+		return diags
 	}
 	userRequest := globalPoolCompare{ID: poolID}
 	_, _, foundValue := hasGlobalPool(searchResponse, &userRequest)
@@ -355,10 +356,25 @@ func resourceNetworkGlobalIPPoolRead(ctx context.Context, d *schema.ResourceData
 func resourceNetworkGlobalIPPoolUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnac.Client)
 
+	var diags diag.Diagnostics
+
+	id := d.Id()
+
+	poolID := id
+	searchResponse, _, err := client.NetworkSettings.GetGlobalPool(&dnac.GetGlobalPoolQueryParams{})
+	if err != nil {
+		d.SetId("")
+		return diags
+	}
+	userRequest := globalPoolCompare{ID: poolID}
+	_, _, foundValue := hasGlobalPool(searchResponse, &userRequest)
+	if foundValue == nil {
+		d.SetId("")
+		return diags
+	}
+
 	// Check if properties inside resource has changes
 	if d.HasChange("item") {
-
-		id := d.Id()
 
 		items := d.Get("item").([]interface{})[0]
 		item := items.(map[string]interface{})
@@ -413,9 +429,18 @@ func resourceNetworkGlobalIPPoolDelete(ctx context.Context, d *schema.ResourceDa
 	var diags diag.Diagnostics
 
 	poolID := d.Id()
+	searchResponse, _, err := client.NetworkSettings.GetGlobalPool(&dnac.GetGlobalPoolQueryParams{})
+	if err == nil && searchResponse != nil {
+		// Check if element already exists
+		userRequest := globalPoolCompare{ID: poolID}
+		_, _, foundValue := hasGlobalPool(searchResponse, &userRequest)
+		if foundValue == nil {
+			return diags
+		}
+	}
 
 	// Call function to delete resource
-	_, _, err := client.NetworkSettings.DeleteGlobalIPPool(poolID)
+	_, _, err = client.NetworkSettings.DeleteGlobalIPPool(poolID)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -423,7 +448,7 @@ func resourceNetworkGlobalIPPoolDelete(ctx context.Context, d *schema.ResourceDa
 	// Wait for execution status to complete
 	time.Sleep(5 * time.Second)
 
-	searchResponse, _, err := client.NetworkSettings.GetGlobalPool(&dnac.GetGlobalPoolQueryParams{})
+	searchResponse, _, err = client.NetworkSettings.GetGlobalPool(&dnac.GetGlobalPoolQueryParams{})
 	if err == nil && searchResponse != nil {
 		// Check if element already exists
 		userRequest := globalPoolCompare{ID: poolID}

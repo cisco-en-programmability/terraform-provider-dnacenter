@@ -899,8 +899,9 @@ func resourceNetworkRead(ctx context.Context, d *schema.ResourceData, m interfac
 	siteID := d.Id()
 
 	searchResponse, _, err := client.NetworkSettings.GetNetwork(&dnac.GetNetworkQueryParams{SiteID: siteID})
-	if err != nil {
-		return diag.FromErr(err)
+	if err != nil || searchResponse == nil {
+		d.SetId("")
+		return diags
 	}
 
 	networkSimplified := networkSimplified(searchResponse)
@@ -920,10 +921,18 @@ func resourceNetworkRead(ctx context.Context, d *schema.ResourceData, m interfac
 func resourceNetworkUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnac.Client)
 
+	siteID := d.Id()
+
+	var diags diag.Diagnostics
+
+	searchResponse, _, err := client.NetworkSettings.GetNetwork(&dnac.GetNetworkQueryParams{SiteID: siteID})
+	if err != nil || searchResponse == nil {
+		d.SetId("")
+		return diags
+	}
+
 	// Check if properties inside resource has changes
 	if d.HasChange("item") {
-
-		siteID := d.Id()
 		items := d.Get("item").([]interface{})
 		updateRequest := constructUpdateNetwork(items)
 

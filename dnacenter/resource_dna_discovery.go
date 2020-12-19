@@ -729,6 +729,12 @@ func resourceDiscoveryUpdate(ctx context.Context, d *schema.ResourceData, m inte
 	var diags diag.Diagnostics
 
 	discoveryID := d.Id()
+	searchResponse, _, err := client.Discovery.GetDiscoveryByID(discoveryID)
+	if err != nil || searchResponse == nil {
+		// Resource does not exist
+		d.SetId("") // Set the ID to an empty string so Terraform "destroys" the resource in state.
+		return diags
+	}
 
 	// Check if properties inside resource has changes
 	if d.HasChange("item") {
@@ -752,6 +758,9 @@ func resourceDiscoveryUpdate(ctx context.Context, d *schema.ResourceData, m inte
 		if err != nil {
 			return diag.FromErr(err)
 		}
+
+		// Wait for execution status to complete
+		time.Sleep(5 * time.Second)
 
 		// Call function to check task
 		taskID := response.Response.TaskID
@@ -785,11 +794,19 @@ func resourceDiscoveryDelete(ctx context.Context, d *schema.ResourceData, m inte
 
 	discoveryID := d.Id()
 
-	// Call function to delete tag resource
+	searchResponse, _, err := client.Discovery.GetDiscoveryByID(discoveryID)
+	if err != nil || searchResponse == nil {
+		return diags
+	}
+
+	// Call function to delete resource
 	response, _, err := client.Discovery.DeleteDiscoveryByID(discoveryID)
 	if err != nil {
 		return diag.FromErr(err)
 	}
+
+	// Wait for execution status to complete
+	time.Sleep(5 * time.Second)
 
 	// Call function to check task
 	taskID := response.Response.TaskID

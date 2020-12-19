@@ -108,30 +108,63 @@ func resourceTag() *schema.Resource {
 	}
 }
 
-func resourceTagCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnac.Client)
-
-	var diags diag.Diagnostics
-
-	item := d.Get("item").([]interface{})[0]
-	tag := item.(map[string]interface{})
-
-	// Check if element already exists
-	tagName := tag["name"].(string)
-	tagQueryParams := &dnac.GetTagQueryParams{
-		Name: tagName,
-	}
-	searchResponse, _, err := client.Tag.GetTag(tagQueryParams)
-	if err == nil && searchResponse != nil && len(searchResponse.Response) > 0 {
-		searchTagResponse := searchResponse.Response[0]
-		// Update resource id
-		d.SetId(searchTagResponse.ID)
-		// Update resource data (on Terraform and DNAC)
-		resourceTagUpdate(ctx, d, m)
-		return diags
+func constructUpdateTag(tagID string, tag map[string]interface{}) *dnac.UpdateTagRequest {
+	tagRequest := dnac.UpdateTagRequest{
+		ID:               tagID,
+		SystemTag:        tag["system_tag"].(bool),
+		Description:      tag["description"].(string),
+		Name:             tag["name"].(string),
+		InstanceTenantID: tag["instance_tenant_id"].(string),
 	}
 
-	// Construct payload from resource schema (item)
+	if _, ok := tag["dynamic_rules"]; ok {
+		dynamicRules := tag["dynamic_rules"].([]interface{})
+
+		if len(dynamicRules) > 0 {
+			for _, dynamicRule := range dynamicRules {
+				dR := dynamicRule.(map[string]interface{})
+
+				tdr := dnac.UpdateTagRequestDynamicRules{
+					MemberType: dR["member_type"].(string),
+				}
+				if drRules, ok := dR["rules"]; ok {
+					ru := drRules.([]interface{})[0]
+					rules := ru.(map[string]interface{})
+
+					if rulesName, ok := rules["name"]; ok {
+						tdr.Rules.Name = rulesName.(string)
+					}
+					if rulesOp, ok := rules["operation"]; ok {
+						tdr.Rules.Operation = rulesOp.(string)
+					}
+					if rulesValue, ok := rules["value"]; ok {
+						tdr.Rules.Value = rulesValue.(string)
+					}
+					if rulesItems, ok := rules["items"]; ok {
+						items := rulesItems.([]interface{})
+						if len(items) > 0 {
+							for _, item := range items {
+								tdr.Rules.Items = append(tdr.Rules.Items, item.(string))
+							}
+						}
+					}
+					if rulesValues, ok := rules["values"]; ok {
+						values := rulesValues.([]interface{})
+						if len(values) > 0 {
+							for _, value := range values {
+								tdr.Rules.Values = append(tdr.Rules.Values, value.(string))
+							}
+						}
+					}
+				}
+				tagRequest.DynamicRules = append(tagRequest.DynamicRules, tdr)
+			}
+		}
+	}
+	return &tagRequest
+}
+
+func constructCreateTag(tag map[string]interface{}) *dnac.CreateTagRequest {
 	tagRequest := dnac.CreateTagRequest{
 		SystemTag:        tag["system_tag"].(bool),
 		Description:      tag["description"].(string),
@@ -183,15 +216,53 @@ func resourceTagCreate(ctx context.Context, d *schema.ResourceData, m interface{
 			}
 		}
 	}
+	return &tagRequest
+}
+
+func resourceTagCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnac.Client)
+
+	var diags diag.Diagnostics
+
+	item := d.Get("item").([]interface{})[0]
+	tag := item.(map[string]interface{})
+
+	// Check if element already exists
+	tagName := tag["name"].(string)
+	tagQueryParams := &dnac.GetTagQueryParams{
+		Name: tagName,
+	}
+	searchResponse, _, err := client.Tag.GetTag(tagQueryParams)
+	if err == nil && searchResponse != nil && len(searchResponse.Response) > 0 {
+		searchTagResponse := searchResponse.Response[0]
+
+		updateTagRequest := constructUpdateTag(searchTagResponse.ID, tag)
+		_, _, err := client.Tag.UpdateTag(updateTagRequest)
+		if err != nil {
+			return diag.FromErr(err)
+		}
+
+		// Wait for execution status to complete
+		time.Sleep(5 * time.Second)
+
+		// Update resource id
+		d.SetId(searchTagResponse.ID)
+		// Update resource data (on Terraform and DNAC)
+		resourceTagRead(ctx, d, m)
+		return diags
+	}
+
+	// Construct payload from resource schema (item)
+	tagRequest := constructCreateTag(tag)
 
 	// Call function to create tag resource
-	response, _, err := client.Tag.CreateTag(&tagRequest)
+	response, _, err := client.Tag.CreateTag(tagRequest)
 	if err != nil {
 		return diag.FromErr(err)
 	}
 
 	// Wait for execution status to complete
-	time.Sleep(10 * time.Second)
+	time.Sleep(5 * time.Second)
 
 	// Call function to check task
 	taskID := response.Response.TaskID
@@ -247,6 +318,11 @@ func resourceTagUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 	var diags diag.Diagnostics
 
 	tagID := d.Id()
+	_, _, err := client.Tag.GetTagByID(tagID)
+	if err != nil {
+		d.SetId("")
+		return diags
+	}
 
 	// Check if properties inside resource has changes
 	if d.HasChange("item") {
@@ -254,64 +330,16 @@ func resourceTagUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 		tag := item.(map[string]interface{})
 
 		// Construct payload from resource schema (item)
-		tagRequest := dnac.UpdateTagRequest{
-			ID:               tagID,
-			SystemTag:        tag["system_tag"].(bool),
-			Description:      tag["description"].(string),
-			Name:             tag["name"].(string),
-			InstanceTenantID: tag["instance_tenant_id"].(string),
-		}
-
-		if _, ok := tag["dynamic_rules"]; ok {
-			dynamicRules := tag["dynamic_rules"].([]interface{})
-
-			if len(dynamicRules) > 0 {
-				for _, dynamicRule := range dynamicRules {
-					dR := dynamicRule.(map[string]interface{})
-
-					tdr := dnac.UpdateTagRequestDynamicRules{
-						MemberType: dR["member_type"].(string),
-					}
-					if drRules, ok := dR["rules"]; ok {
-						ru := drRules.([]interface{})[0]
-						rules := ru.(map[string]interface{})
-
-						if rulesName, ok := rules["name"]; ok {
-							tdr.Rules.Name = rulesName.(string)
-						}
-						if rulesOp, ok := rules["operation"]; ok {
-							tdr.Rules.Operation = rulesOp.(string)
-						}
-						if rulesValue, ok := rules["value"]; ok {
-							tdr.Rules.Value = rulesValue.(string)
-						}
-						if rulesItems, ok := rules["items"]; ok {
-							items := rulesItems.([]interface{})
-							if len(items) > 0 {
-								for _, item := range items {
-									tdr.Rules.Items = append(tdr.Rules.Items, item.(string))
-								}
-							}
-						}
-						if rulesValues, ok := rules["values"]; ok {
-							values := rulesValues.([]interface{})
-							if len(values) > 0 {
-								for _, value := range values {
-									tdr.Rules.Values = append(tdr.Rules.Values, value.(string))
-								}
-							}
-						}
-					}
-					tagRequest.DynamicRules = append(tagRequest.DynamicRules, tdr)
-				}
-			}
-		}
+		tagRequest := constructUpdateTag(tagID, tag)
 
 		// Call function to update tag resource
-		response, _, err := client.Tag.UpdateTag(&tagRequest)
+		response, _, err := client.Tag.UpdateTag(tagRequest)
 		if err != nil {
 			return diag.FromErr(err)
 		}
+
+		// Wait for execution status to complete
+		time.Sleep(5 * time.Second)
 
 		// Call function to check task
 		taskID := response.Response.TaskID
@@ -345,11 +373,14 @@ func resourceTagDelete(ctx context.Context, d *schema.ResourceData, m interface{
 
 	tagID := d.Id()
 
-	// Call function to delete tag resource
+	// Call function to delete resource
 	response, _, err := client.Tag.DeleteTag(tagID)
 	if err != nil {
 		return diag.FromErr(err)
 	}
+
+	// Wait for execution status to complete
+	time.Sleep(5 * time.Second)
 
 	// Call function to check task
 	taskID := response.Response.TaskID

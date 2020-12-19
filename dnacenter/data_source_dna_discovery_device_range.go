@@ -25,12 +25,12 @@ func dataSourceDiscoveryDevicesRange() *schema.Resource {
 			},
 			"start_index": &schema.Schema{
 				Type:         schema.TypeInt,
-				Optional:     true,
+				Required:     true,
 				ValidateFunc: validateIntegerGeqThan(0),
 			},
 			"records_to_return": &schema.Schema{
 				Type:         schema.TypeInt,
-				Optional:     true,
+				Required:     true,
 				ValidateFunc: validateIntegerInRange(0, 500),
 			},
 			"items": &schema.Schema{

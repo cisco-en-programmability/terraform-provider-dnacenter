@@ -293,33 +293,201 @@ func resourceTemplate() *schema.Resource {
 	}
 }
 
-func resourceTemplateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnac.Client)
-
-	var diags diag.Diagnostics
-
-	item := d.Get("item").([]interface{})[0]
-	template := item.(map[string]interface{})
-
+func constructUpdateTemplate(templateID string, template map[string]interface{}) *dnac.UpdateTemplateRequest {
 	projectID := template["project_id"].(string)
 	name := template["name"].(string)
 
-	// REVIEW: Use 'get project templates' to check resource, and remove
-	searchResponse, _, err := client.ConfigurationTemplates.GetsTheTemplatesAvailable(&dnac.GetsTheTemplatesAvailableQueryParams{
-		ProjectID: projectID,
-	})
-	if err == nil && searchResponse != nil {
-		for _, templateAvailable := range *searchResponse {
-			if templateAvailable.Name == name {
-				// Update resource id
-				d.SetId(templateAvailable.TemplateID)
-				// Update resource data
-				resourceTemplateRead(ctx, d, m)
-				return diags
-			}
-		}
+	softwareType := template["software_type"].(string)
+	updateTemplateRequest := dnac.UpdateTemplateRequest{Name: name, SoftwareType: softwareType}
+
+	updateTemplateRequest.ID = templateID
+	updateTemplateRequest.ProjectID = projectID
+	if v, ok := template["author"]; ok {
+		updateTemplateRequest.Author = v.(string)
+	}
+	if v, ok := template["composite"]; ok {
+		updateTemplateRequest.Composite = v.(bool)
+	}
+	if v, ok := template["create_time"]; ok {
+		updateTemplateRequest.CreateTime = v.(int)
+	}
+	if v, ok := template["description"]; ok {
+		updateTemplateRequest.Description = v.(string)
+	}
+	if v, ok := template["failure_policy"]; ok {
+		updateTemplateRequest.FailurePolicy = v.(string)
+	}
+	if v, ok := template["last_update_time"]; ok {
+		updateTemplateRequest.LastUpdateTime = v.(int)
+	}
+	if v, ok := template["parent_template_id"]; ok {
+		updateTemplateRequest.ParentTemplateID = v.(string)
+	}
+	if v, ok := template["project_name"]; ok {
+		updateTemplateRequest.ProjectName = v.(string)
+	}
+	if v, ok := template["rollback_template_content"]; ok {
+		updateTemplateRequest.RollbackTemplateContent = v.(string)
+	}
+	if v, ok := template["software_variant"]; ok {
+		updateTemplateRequest.SoftwareVariant = v.(string)
+	}
+	if v, ok := template["software_version"]; ok {
+		updateTemplateRequest.SoftwareVersion = v.(string)
+	}
+	if v, ok := template["template_content"]; ok {
+		updateTemplateRequest.TemplateContent = v.(string)
+	}
+	if v, ok := template["version"]; ok {
+		updateTemplateRequest.Version = v.(string)
 	}
 
+	deviceTypes := template["device_types"].([]interface{})
+	for _, deviceType := range deviceTypes {
+		dT := deviceType.(map[string]interface{})
+		deviceTypeObject := dnac.UpdateTemplateRequestDeviceTypes{}
+		if v, ok := dT["product_family"]; ok {
+			deviceTypeObject.ProductFamily = v.(string)
+		}
+		if v, ok := dT["product_series"]; ok {
+			deviceTypeObject.ProductSeries = v.(string)
+		}
+		if v, ok := dT["product_type"]; ok {
+			deviceTypeObject.ProductType = v.(string)
+		}
+		updateTemplateRequest.DeviceTypes = append(updateTemplateRequest.DeviceTypes, deviceTypeObject)
+	}
+	if v, ok := template["containing_templates"]; ok {
+		containingTemplates := v.([]interface{})
+		for _, containingTemplate := range containingTemplates {
+			cT := containingTemplate.(map[string]interface{})
+			containingTemplateObject := dnac.UpdateTemplateRequestContainingTemplates{}
+			if v, ok := cT["composite"]; ok {
+				containingTemplateObject.Composite = v.(bool)
+			}
+			if v, ok := cT["id"]; ok {
+				containingTemplateObject.ID = v.(string)
+			}
+			if v, ok := cT["name"]; ok {
+				containingTemplateObject.Name = v.(string)
+			}
+			if v, ok := cT["version"]; ok {
+				containingTemplateObject.Version = v.(string)
+			}
+			updateTemplateRequest.ContainingTemplates = append(updateTemplateRequest.ContainingTemplates, containingTemplateObject)
+		}
+	}
+	if v, ok := template["rollback_template_params"]; ok {
+		rollbackTemplateParams := v.([]interface{})
+		for _, rollbackTemplateParam := range rollbackTemplateParams {
+			tP := rollbackTemplateParam.(map[string]interface{})
+			tPParams := dnac.UpdateTemplateRequestRollbackTemplateParams{}
+			if v, ok := tP["binding"]; ok {
+				tPParams.Binding = v.(string)
+			}
+			if v, ok := tP["data_type"]; ok {
+				tPParams.DataType = v.(string)
+			}
+			if v, ok := tP["default_value"]; ok {
+				tPParams.DefaultValue = v.(string)
+			}
+			if v, ok := tP["description"]; ok {
+				tPParams.Description = v.(string)
+			}
+			if v, ok := tP["display_name"]; ok {
+				tPParams.DisplayName = v.(string)
+			}
+			if v, ok := tP["group"]; ok {
+				tPParams.Group = v.(string)
+			}
+			if v, ok := tP["id"]; ok {
+				tPParams.ID = v.(string)
+			}
+			if v, ok := tP["instruction_text"]; ok {
+				tPParams.InstructionText = v.(string)
+			}
+			if v, ok := tP["key"]; ok {
+				tPParams.Key = v.(string)
+			}
+			if v, ok := tP["not_param"]; ok {
+				tPParams.NotParam = v.(bool)
+			}
+			if v, ok := tP["order"]; ok {
+				tPParams.Order = v.(int)
+			}
+			if v, ok := tP["param_array"]; ok {
+				tPParams.ParamArray = v.(bool)
+			}
+			if v, ok := tP["parameter_name"]; ok {
+				tPParams.ParameterName = v.(string)
+			}
+			if v, ok := tP["provider"]; ok {
+				tPParams.Provider = v.(string)
+			}
+			if v, ok := tP["required"]; ok {
+				tPParams.Required = v.(bool)
+			}
+			updateTemplateRequest.RollbackTemplateParams = append(updateTemplateRequest.RollbackTemplateParams, tPParams)
+		}
+	}
+	if v, ok := template["template_params"]; ok {
+		templateParams := v.([]interface{})
+		for _, templateParam := range templateParams {
+			tP := templateParam.(map[string]interface{})
+			tPParams := dnac.UpdateTemplateRequestTemplateParams{}
+			if v, ok := tP["binding"]; ok {
+				tPParams.Binding = v.(string)
+			}
+			if v, ok := tP["data_type"]; ok {
+				tPParams.DataType = v.(string)
+			}
+			if v, ok := tP["default_value"]; ok {
+				tPParams.DefaultValue = v.(string)
+			}
+			if v, ok := tP["description"]; ok {
+				tPParams.Description = v.(string)
+			}
+			if v, ok := tP["display_name"]; ok {
+				tPParams.DisplayName = v.(string)
+			}
+			if v, ok := tP["group"]; ok {
+				tPParams.Group = v.(string)
+			}
+			if v, ok := tP["id"]; ok {
+				tPParams.ID = v.(string)
+			}
+			if v, ok := tP["instruction_text"]; ok {
+				tPParams.InstructionText = v.(string)
+			}
+			if v, ok := tP["key"]; ok {
+				tPParams.Key = v.(string)
+			}
+			if v, ok := tP["not_param"]; ok {
+				tPParams.NotParam = v.(bool)
+			}
+			if v, ok := tP["order"]; ok {
+				tPParams.Order = v.(int)
+			}
+			if v, ok := tP["param_array"]; ok {
+				tPParams.ParamArray = v.(bool)
+			}
+			if v, ok := tP["parameter_name"]; ok {
+				tPParams.ParameterName = v.(string)
+			}
+			if v, ok := tP["provider"]; ok {
+				tPParams.Provider = v.(string)
+			}
+			if v, ok := tP["required"]; ok {
+				tPParams.Required = v.(bool)
+			}
+			updateTemplateRequest.TemplateParams = append(updateTemplateRequest.TemplateParams, tPParams)
+		}
+	}
+	return &updateTemplateRequest
+}
+
+func constructCreateTemplate(template map[string]interface{}) *dnac.CreateTemplateRequest {
+	name := template["name"].(string)
 	softwareType := template["software_type"].(string)
 	createTemplateRequest := dnac.CreateTemplateRequest{Name: name, SoftwareType: softwareType}
 
@@ -507,8 +675,44 @@ func resourceTemplateCreate(ctx context.Context, d *schema.ResourceData, m inter
 			createTemplateRequest.TemplateParams = append(createTemplateRequest.TemplateParams, tPParams)
 		}
 	}
+	return &createTemplateRequest
+}
 
-	response, _, err := client.ConfigurationTemplates.CreateTemplate(projectID, &createTemplateRequest)
+func resourceTemplateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnac.Client)
+
+	var diags diag.Diagnostics
+
+	item := d.Get("item").([]interface{})[0]
+	template := item.(map[string]interface{})
+
+	projectID := template["project_id"].(string)
+	name := template["name"].(string)
+
+	// REVIEW: Use 'get project templates' to check resource, and remove
+	searchResponse, _, err := client.ConfigurationTemplates.GetsTheTemplatesAvailable(&dnac.GetsTheTemplatesAvailableQueryParams{
+		ProjectID: projectID,
+	})
+	if err == nil && searchResponse != nil {
+		for _, templateAvailable := range *searchResponse {
+			if templateAvailable.Name == name {
+
+				updateTemplateRequest := constructUpdateTemplate(templateAvailable.TemplateID, template)
+				_, _, err = client.ConfigurationTemplates.UpdateTemplate(updateTemplateRequest)
+				if err != nil {
+					return diag.FromErr(err)
+				}
+
+				// Update resource id
+				d.SetId(templateAvailable.TemplateID)
+				// Update resource data
+				resourceTemplateRead(ctx, d, m)
+				return diags
+			}
+		}
+	}
+	createTemplateRequest := constructCreateTemplate(template)
+	response, _, err := client.ConfigurationTemplates.CreateTemplate(projectID, createTemplateRequest)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -587,197 +791,8 @@ func resourceTemplateUpdate(ctx context.Context, d *schema.ResourceData, m inter
 		item := d.Get("item").([]interface{})[0]
 		template := item.(map[string]interface{})
 
-		projectID := template["project_id"].(string)
-		name := template["name"].(string)
-
-		softwareType := template["software_type"].(string)
-		updateTemplateRequest := dnac.UpdateTemplateRequest{Name: name, SoftwareType: softwareType}
-
-		updateTemplateRequest.ID = templateID
-		updateTemplateRequest.ProjectID = projectID
-		if v, ok := template["author"]; ok {
-			updateTemplateRequest.Author = v.(string)
-		}
-		if v, ok := template["composite"]; ok {
-			updateTemplateRequest.Composite = v.(bool)
-		}
-		if v, ok := template["create_time"]; ok {
-			updateTemplateRequest.CreateTime = v.(int)
-		}
-		if v, ok := template["description"]; ok {
-			updateTemplateRequest.Description = v.(string)
-		}
-		if v, ok := template["failure_policy"]; ok {
-			updateTemplateRequest.FailurePolicy = v.(string)
-		}
-		if v, ok := template["last_update_time"]; ok {
-			updateTemplateRequest.LastUpdateTime = v.(int)
-		}
-		if v, ok := template["parent_template_id"]; ok {
-			updateTemplateRequest.ParentTemplateID = v.(string)
-		}
-		if v, ok := template["project_name"]; ok {
-			updateTemplateRequest.ProjectName = v.(string)
-		}
-		if v, ok := template["rollback_template_content"]; ok {
-			updateTemplateRequest.RollbackTemplateContent = v.(string)
-		}
-		if v, ok := template["software_variant"]; ok {
-			updateTemplateRequest.SoftwareVariant = v.(string)
-		}
-		if v, ok := template["software_version"]; ok {
-			updateTemplateRequest.SoftwareVersion = v.(string)
-		}
-		if v, ok := template["template_content"]; ok {
-			updateTemplateRequest.TemplateContent = v.(string)
-		}
-		if v, ok := template["version"]; ok {
-			updateTemplateRequest.Version = v.(string)
-		}
-
-		deviceTypes := template["device_types"].([]interface{})
-		for _, deviceType := range deviceTypes {
-			dT := deviceType.(map[string]interface{})
-			deviceTypeObject := dnac.UpdateTemplateRequestDeviceTypes{}
-			if v, ok := dT["product_family"]; ok {
-				deviceTypeObject.ProductFamily = v.(string)
-			}
-			if v, ok := dT["product_series"]; ok {
-				deviceTypeObject.ProductSeries = v.(string)
-			}
-			if v, ok := dT["product_type"]; ok {
-				deviceTypeObject.ProductType = v.(string)
-			}
-			updateTemplateRequest.DeviceTypes = append(updateTemplateRequest.DeviceTypes, deviceTypeObject)
-		}
-		if v, ok := template["containing_templates"]; ok {
-			containingTemplates := v.([]interface{})
-			for _, containingTemplate := range containingTemplates {
-				cT := containingTemplate.(map[string]interface{})
-				containingTemplateObject := dnac.UpdateTemplateRequestContainingTemplates{}
-				if v, ok := cT["composite"]; ok {
-					containingTemplateObject.Composite = v.(bool)
-				}
-				if v, ok := cT["id"]; ok {
-					containingTemplateObject.ID = v.(string)
-				}
-				if v, ok := cT["name"]; ok {
-					containingTemplateObject.Name = v.(string)
-				}
-				if v, ok := cT["version"]; ok {
-					containingTemplateObject.Version = v.(string)
-				}
-				updateTemplateRequest.ContainingTemplates = append(updateTemplateRequest.ContainingTemplates, containingTemplateObject)
-			}
-		}
-		if v, ok := template["rollback_template_params"]; ok {
-			rollbackTemplateParams := v.([]interface{})
-			for _, rollbackTemplateParam := range rollbackTemplateParams {
-				tP := rollbackTemplateParam.(map[string]interface{})
-				tPParams := dnac.UpdateTemplateRequestRollbackTemplateParams{}
-				if v, ok := tP["binding"]; ok {
-					tPParams.Binding = v.(string)
-				}
-				if v, ok := tP["data_type"]; ok {
-					tPParams.DataType = v.(string)
-				}
-				if v, ok := tP["default_value"]; ok {
-					tPParams.DefaultValue = v.(string)
-				}
-				if v, ok := tP["description"]; ok {
-					tPParams.Description = v.(string)
-				}
-				if v, ok := tP["display_name"]; ok {
-					tPParams.DisplayName = v.(string)
-				}
-				if v, ok := tP["group"]; ok {
-					tPParams.Group = v.(string)
-				}
-				if v, ok := tP["id"]; ok {
-					tPParams.ID = v.(string)
-				}
-				if v, ok := tP["instruction_text"]; ok {
-					tPParams.InstructionText = v.(string)
-				}
-				if v, ok := tP["key"]; ok {
-					tPParams.Key = v.(string)
-				}
-				if v, ok := tP["not_param"]; ok {
-					tPParams.NotParam = v.(bool)
-				}
-				if v, ok := tP["order"]; ok {
-					tPParams.Order = v.(int)
-				}
-				if v, ok := tP["param_array"]; ok {
-					tPParams.ParamArray = v.(bool)
-				}
-				if v, ok := tP["parameter_name"]; ok {
-					tPParams.ParameterName = v.(string)
-				}
-				if v, ok := tP["provider"]; ok {
-					tPParams.Provider = v.(string)
-				}
-				if v, ok := tP["required"]; ok {
-					tPParams.Required = v.(bool)
-				}
-				updateTemplateRequest.RollbackTemplateParams = append(updateTemplateRequest.RollbackTemplateParams, tPParams)
-			}
-		}
-		if v, ok := template["template_params"]; ok {
-			templateParams := v.([]interface{})
-			for _, templateParam := range templateParams {
-				tP := templateParam.(map[string]interface{})
-				tPParams := dnac.UpdateTemplateRequestTemplateParams{}
-				if v, ok := tP["binding"]; ok {
-					tPParams.Binding = v.(string)
-				}
-				if v, ok := tP["data_type"]; ok {
-					tPParams.DataType = v.(string)
-				}
-				if v, ok := tP["default_value"]; ok {
-					tPParams.DefaultValue = v.(string)
-				}
-				if v, ok := tP["description"]; ok {
-					tPParams.Description = v.(string)
-				}
-				if v, ok := tP["display_name"]; ok {
-					tPParams.DisplayName = v.(string)
-				}
-				if v, ok := tP["group"]; ok {
-					tPParams.Group = v.(string)
-				}
-				if v, ok := tP["id"]; ok {
-					tPParams.ID = v.(string)
-				}
-				if v, ok := tP["instruction_text"]; ok {
-					tPParams.InstructionText = v.(string)
-				}
-				if v, ok := tP["key"]; ok {
-					tPParams.Key = v.(string)
-				}
-				if v, ok := tP["not_param"]; ok {
-					tPParams.NotParam = v.(bool)
-				}
-				if v, ok := tP["order"]; ok {
-					tPParams.Order = v.(int)
-				}
-				if v, ok := tP["param_array"]; ok {
-					tPParams.ParamArray = v.(bool)
-				}
-				if v, ok := tP["parameter_name"]; ok {
-					tPParams.ParameterName = v.(string)
-				}
-				if v, ok := tP["provider"]; ok {
-					tPParams.Provider = v.(string)
-				}
-				if v, ok := tP["required"]; ok {
-					tPParams.Required = v.(bool)
-				}
-				updateTemplateRequest.TemplateParams = append(updateTemplateRequest.TemplateParams, tPParams)
-			}
-		}
-
-		response, _, err := client.ConfigurationTemplates.UpdateTemplate(&updateTemplateRequest)
+		updateTemplateRequest := constructUpdateTemplate(templateID, template)
+		response, _, err := client.ConfigurationTemplates.UpdateTemplate(updateTemplateRequest)
 		if err != nil {
 			return diag.FromErr(err)
 		}

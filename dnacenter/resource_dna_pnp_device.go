@@ -267,8 +267,8 @@ func resourcePnPDevice() *schema.Resource {
 							Computed: true,
 						},
 						"device_info": &schema.Schema{
-							Type: schema.TypeList,
-							// MaxItems: 1,
+							Type:     schema.TypeList,
+							MaxItems: 1,
 							Required: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -3234,19 +3234,14 @@ func resourcePnPDeviceRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	var diags diag.Diagnostics
 	deviceID := d.Id()
-	response, _, err := client.DeviceOnboardingPnP.GetDeviceByID(deviceID)
-	if err != nil {
-		// Resource does not exist
-		d.SetId("") // Set the ID to an empty string so Terraform "destroys" the resource in state.
-		return diags
-	}
-	if response == nil {
+	searchResponse, _, err := client.DeviceOnboardingPnP.GetDeviceByID(deviceID)
+	if err != nil || searchResponse == nil {
 		// Resource does not exist
 		d.SetId("") // Set the ID to an empty string so Terraform "destroys" the resource in state.
 		return diags
 	}
 
-	deviceItem := flattenPnPDeviceReadItem(response)
+	deviceItem := flattenPnPDeviceReadItem(searchResponse)
 	if err := d.Set("item", deviceItem); err != nil {
 		return diag.FromErr(err)
 	}
@@ -3256,10 +3251,18 @@ func resourcePnPDeviceRead(ctx context.Context, d *schema.ResourceData, m interf
 
 func resourcePnPDeviceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnac.Client)
+	var diags diag.Diagnostics
+
+	deviceID := d.Id()
+	searchResponse, _, err := client.DeviceOnboardingPnP.GetDeviceByID(deviceID)
+	if err != nil || searchResponse == nil {
+		// Resource does not exist
+		d.SetId("") // Set the ID to an empty string so Terraform "destroys" the resource in state.
+		return diags
+	}
 
 	// Check if properties inside resource has changes
 	if d.HasChange("item") {
-		deviceID := d.Id()
 		item := d.Get("item").([]interface{})[0]
 		pnpRequest := item.(map[string]interface{})
 		request := constructUpdatePnPDevice(pnpRequest)
@@ -3282,14 +3285,19 @@ func resourcePnPDeviceDelete(ctx context.Context, d *schema.ResourceData, m inte
 	var diags diag.Diagnostics
 
 	deviceID := d.Id()
+	searchResponse, _, err := client.DeviceOnboardingPnP.GetDeviceByID(deviceID)
+	if err != nil || searchResponse == nil {
+		return diags
+	}
+
 	// Call function to delete application resource
-	_, _, err := client.DeviceOnboardingPnP.DeleteDeviceByIDFromPnP(deviceID)
+	_, _, err = client.DeviceOnboardingPnP.DeleteDeviceByIDFromPnP(deviceID)
 	if err != nil {
 		return diag.FromErr(err)
 	}
 
-	response, _, err := client.DeviceOnboardingPnP.GetDeviceByID(deviceID)
-	if err != nil || response == nil {
+	searchResponse, _, err = client.DeviceOnboardingPnP.GetDeviceByID(deviceID)
+	if err != nil || searchResponse == nil {
 		return diags
 	}
 
