@@ -1,6 +1,6 @@
 ---
 page_title: "dna_site Resource - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Sites"
 description: |-
   The dna_site resource allows you to configure a DNACenter site.
 ---
@@ -13,7 +13,7 @@ The dna_site resource allows you to configure a DNACenter site.
 
 ### Area
 
-```terraform
+```hcl
 resource "dna_site" "area" {
   provider = dnacenter
   item {
@@ -26,7 +26,7 @@ resource "dna_site" "area" {
 
 ### Building
 
-```terraform
+```hcl
 resource "dna_site" "building" {
   provider = dnacenter
   depends_on = [ dna_site.area ]
@@ -43,7 +43,7 @@ resource "dna_site" "building" {
 
 ### Floor
 
-```terraform
+```hcl
 resource "dna_site" "floor" {
   provider = dnacenter
   depends_on = [ dna_site.building ]
@@ -67,9 +67,9 @@ resource "dna_site" "floor" {
 
 Each site item contains `type`, `name` and `parent_name`.
 
-- `type` - (Required) The site's type, available values are **area**, **building** and **floor**. If it's changed this resource necessitates the creation of a new resource.
-- `name` - (Required) The site's name. If it's changed this resource necessitates the creation of a new resource.
-- `parent_name` - (Required) The site's parent name. If it's changed this resource necessitates the creation of a new resource.
+- `type` - (Required) The site's type, available values are **area**, **building** and **floor**. If it's changed it forces the creation of a new resource.
+- `name` - (Required) The site's name. If it's changed it forces the creation of a new resource.
+- `parent_name` - (Required) The site's parent name. If it's changed it forces the creation of a new resource.
 
 Each site item of type **building** contains `address`, `latitude` and `longitude`.
 
@@ -88,8 +88,9 @@ Each site item of type **floor** contains `height`, `length`, `rf_model` and `wi
 
 In addition to all the arguments above, the following attributes are exported.
 
-- `last_updated` - (Computed) The site's updated time with format time.RFC850.
+- `last_updated` - The site's updated time with format RFC850.
+- `item` - Item in a DNACenter site. See [Site item](#site-item-1) below for details.
 
 ### Site item
 
-- `id` - (Computed) The site's id.
+- `id` - The site's id.

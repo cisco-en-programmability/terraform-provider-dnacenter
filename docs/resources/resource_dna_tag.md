@@ -1,6 +1,6 @@
 ---
 page_title: "dna_tag Resource - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Tag"
 description: |-
   The dna_tag resource allows you to configure a DNACenter tag.
 ---
@@ -11,7 +11,7 @@ The dna_tag resource allows you to configure a DNACenter tag.
 
 ## Example Usage
 
-```terraform
+```hcl
 resource "dna_tag" "data" {
   provider = dnacenter
   item {
@@ -62,4 +62,4 @@ Each tag item contains `system_tag`, `description`, `name`, `instance_tenant_id`
 
 In addition to all the arguments above, the following attributes are exported.
 
-- `last_updated` - (Computed) The tag's updated time with format time.RFC850.
+- `last_updated` - The tag's updated time with format RFC850.

@@ -11,7 +11,7 @@ The tag member data source allows you to count the amount of DNACenter tag's mem
 
 ## Example Usage
 
-```terraform
+```hcl
 data "dna_tag_member_count" "amount" {
   provider = dnacenter
   id = ""
@@ -28,6 +28,6 @@ data "dna_tag_member_count" "amount" {
 
 ## Attributes Reference
 
-In addition to all the arguments above, the following attributes are exported.
+The following attributes are exported.
 
-- `response` - (Computed) DNACenter tag's member count.
+- `response` - DNACenter tag's member count.

@@ -11,7 +11,7 @@ The applications data source allows you to count the amount of DNACenter applica
 
 ## Example Usage
 
-```terraform
+```hcl
 data "dna_applications_count" "amount" {
   provider = dnacenter
 }
@@ -21,4 +21,4 @@ data "dna_applications_count" "amount" {
 
 The following attributes are exported.
 
-- `response` - (Computed) DNACenter applications count.
+- `response` - DNACenter applications count.

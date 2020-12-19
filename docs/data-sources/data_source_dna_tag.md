@@ -11,7 +11,7 @@ The tag data source allows you to retrieve information about a particular DNACen
 
 ## Example Usage
 
-```terraform
+```hcl
 data "dna_tag" "found" {
   provider = dnacenter
   sort_by = "name"
@@ -35,29 +35,29 @@ data "dna_tag" "found" {
 
 ## Attributes Reference
 
-In addition to all the arguments above, the following attributes are exported.
+The following attributes are exported.
 
-- `items` - (Computed) Items in a DNACenter tag. See [Tag items](#tag-items) below for details.
+- `items` - Items in a DNACenter tag. See [Tag items](#tag-items) below for details.
 
 ### Tag items
 
 Each tag item contains `system_tag`, `description`, `name`, `instance_tenant_id` and the `dynamic_rules` list.
 
-- `system_tag` - (Computed) The tag's systemTag flag.
-- `description` - (Computed) The tag's description.
-- `name` - (Computed) The tag's name.
-- `instance_tenant_id` - (Computed) The tag's instanceTenantId.
-- `dynamic_rules` - (Computed) The tag's dynamic rules. See [Dynamic Rules](#dynamic-rules) below for details.
+- `system_tag` - The tag's systemTag flag.
+- `description` - The tag's description.
+- `name` - The tag's name.
+- `instance_tenant_id` - The tag's instanceTenantId.
+- `dynamic_rules` - The tag's dynamic rules. See [Dynamic Rules](#dynamic-rules) below for details.
 
 #### Dynamic Rules
 
-- `member_type` - (Computed) The dynamic rule's member type.
-- `rules` - (Computed) The dynamic rule's rules definition. See [Rules](#rules) below for details.
+- `member_type` - The dynamic rule's member type.
+- `rules` - The dynamic rule's rules definition. See [Rules](#rules) below for details.
 
 ##### Rules
 
-- `name` - (Computed) The rule's name.
-- `operation` - (Computed) The rule's operation.
-- `value` - (Computed) The rule's value.
-- `values` - (Computed) The rule's values, a list of strings.
-- `items` - (Computed) The rule's items, a list of strings.
+- `name` - The rule's name.
+- `operation` - The rule's operation.
+- `value` - The rule's value.
+- `values` - The rule's values, a list of strings.
+- `items` - The rule's items, a list of strings.

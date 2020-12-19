@@ -11,7 +11,7 @@ The tag member type data source allows you to list DNACenter tag member types.
 
 ## Example Usage
 
-```terraform
+```hcl
 data "dna_tag_member_type" "list" {
   provider = dnacenter
 }
@@ -21,4 +21,4 @@ data "dna_tag_member_type" "list" {
 
 The following attributes are exported.
 
-- `response` - (Computed) DNACenter tag member types.
+- `response` - DNACenter tag member types.

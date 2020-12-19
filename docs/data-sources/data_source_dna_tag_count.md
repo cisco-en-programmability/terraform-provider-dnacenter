@@ -11,7 +11,7 @@ The tag data source allows you to count the amount of DNACenter tags.
 
 ## Example Usage
 
-```terraform
+```hcl
 data "dna_tag_count" "amount" {
   provider = dnacenter
   name = "Tag012"
@@ -29,6 +29,6 @@ data "dna_tag_count" "amount" {
 
 ## Attributes Reference
 
-In addition to all the arguments above, the following attributes are exported.
+The following attributes are exported.
 
-- `response` - (Computed) DNACenter tags count.
+- `response` - DNACenter tags count.

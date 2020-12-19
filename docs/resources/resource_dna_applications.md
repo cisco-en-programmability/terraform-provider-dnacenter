@@ -1,6 +1,6 @@
 ---
 page_title: "dna_applications Resource - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Application Policy"
 description: |-
   The dna_applications resource allows you to configure a DNACenter application.
 ---
@@ -11,7 +11,7 @@ The dna_applications resource allows you to configure a DNACenter application.
 
 ## Example Usage
 
-```terraform
+```hcl
 resource "dna_applications" "data" {
   provider = dnacenter
   name = ""
@@ -50,7 +50,7 @@ resource "dna_applications" "data" {
 
 The following arguments are supported:
 
-- `name` - (Required) The application's name.
+- `name` - (Required) The application's name. If it's changed it forces the creation of a new resource.
 - `items` - (Required) The application's items. See [Application items](#application-items) below for details.
 
 ### Application items
@@ -58,10 +58,10 @@ The following arguments are supported:
 Each application item contains `application_set_id`, `application_network_applications` and `application_network_identity`.
 
 - `application_set_id` - (Required) The tag's instanceTenantId.
-- `application_network_applications` - (List, Optional) The application's network applications. See [Network Applications](#network-applications) below for details.
-- `application_network_identity` - (List, Optional) The tag's dynamic rules. See [Network Identity](#network-identity) below for details.
+- `application_network_applications` - (Optional) List the application's network applications. See [Application Network Applications](#application-network-applications) below for details.
+- `application_network_identity` - (Optional) List the tag's dynamic rules. See [Application Network Identity](#application-network-identity) below for details.
 
-#### Network Applications
+#### Application Network Applications
 
 - `app_protocol` - (Required) The network application's app protocol.
 - `application_subtype` - (Required) The network application's application subtype.
@@ -80,7 +80,7 @@ Each application item contains `application_set_id`, `application_network_applic
 - `traffic_class` - (Required) The network application's traffic class.
 - `url` - (Required) The network application's url.
 
-#### Network Identity
+#### Application Network Identity
 
 - `display_name` - (Required) The network identity's display name.
 - `lower_port` - (Required) The network identity's lower port.
@@ -92,12 +92,20 @@ Each application item contains `application_set_id`, `application_network_applic
 
 In addition to all the arguments above, the following attributes are exported.
 
+- `last_updated` - The site's updated time with format RFC850.
+- `items` - The application's items. See [Application items](#application-items-1) below for details.
+
 ### Application items
 
-#### Network Applications
+Each application item contains `application_set_id`, `application_network_applications` and `application_network_identity`.
 
-- `id` - (Computed) The network applications's id.
+- `application_network_applications` - List the application's network applications. See [Application Network Applications](#application-network-applications-1) below for details.
+- `application_network_identity` - List the tag's dynamic rules. See [Application Network Identity](#application-network-identity-1) below for details.
 
-#### Network Identity
+#### Application Network Applications
 
-- `id` - (Computed) The network identity's id.
+- `id` - The network applications's id.
+
+#### Application Network Identity
+
+- `id` - The network identity's id.
