@@ -1,6 +1,6 @@
 ---
 page_title: "dna_tag_member_count Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Tag"
 description: |-
   The tag member data source allows you to count the amount of DNACenter tag's members.
 ---

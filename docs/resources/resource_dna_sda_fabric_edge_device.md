@@ -14,8 +14,8 @@ The dna_sda_fabric_edge_device resource allows you to configure a DNACenter SDA 
 ```hcl
 resource "dna_sda_fabric_edge_device" "response" {
   provider   = dnacenter
-  device_management_ip_address = device.device_ip_address
-  site_name_hierarchy = device.site_name_hierarchy
+  device_management_ip_address = var.device_ip_address
+  site_name_hierarchy = var.site_name_hierarchy
 }
 ```
 

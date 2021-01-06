@@ -1,6 +1,6 @@
 ---
 page_title: "dna_tag_member_type Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Tag"
 description: |-
   The tag member type data source allows you to list DNACenter tag member types.
 ---

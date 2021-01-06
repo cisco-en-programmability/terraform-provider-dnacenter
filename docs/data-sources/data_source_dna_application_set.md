@@ -1,6 +1,6 @@
 ---
 page_title: "dna_application_set Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Application Policy"
 description: |-
   The dna_application_set data source allows you to retrieve information about a particular DNACenter application set.
 ---

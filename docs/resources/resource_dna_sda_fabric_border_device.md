@@ -16,13 +16,13 @@ resource "dna_sda_fabric_border_device" "response" {
   provider   = dnacenter
   item {
   }
-  device_ip_address = device.device_ip_address
-  site_name_hierarchy = device.site_name_hierarchy
-  external_domain_routing_protocol_name = device.external_domain_routing_protocol_name
-  external_connectivity_ip_pool_name = device.external_connectivity_ip_pool_name
-  internal_autonomous_system_number = device.internal_autonomous_system_number
-  border_session_type = device.border_session_type
-  connected_to_internet = device.connected_to_internet
+  device_ip_address = var.device_ip_address
+  site_name_hierarchy = var.site_name_hierarchy
+  external_domain_routing_protocol_name = var.external_domain_routing_protocol_name
+  external_connectivity_ip_pool_name = var.external_connectivity_ip_pool_name
+  internal_autonomous_system_number = var.internal_autonomous_system_number
+  border_session_type = var.border_session_type
+  connected_to_internet = var.connected_to_internet
   external_connectivity_settings {
     interface_name = "InterfaceName"
     external_autonomous_system_number = 1

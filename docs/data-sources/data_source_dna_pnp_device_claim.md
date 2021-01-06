@@ -1,6 +1,6 @@
 ---
 page_title: "dna_pnp_device_claim Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Device Onboarding PnP"
 description: |-
   The dna_pnp_device_claim data source allows you to claim a DNACenter PnP device.
 ---
@@ -14,10 +14,10 @@ The dna_pnp_device_claim data source allows you to claim a DNACenter PnP device.
 ```hcl
 data "dna_pnp_device_claim" "response" {
   provider   = dnacenter
-  config_id = pnp_device.config_id
-  image_id = pnp_device.image_id
-  project_id = pnp_device.project_id
-  workflow_id = pnp_device.workflow_id
+  config_id = var.pnp_device_config_id
+  image_id = var.pnp_device_image_id
+  project_id = var.pnp_device_project_id
+  workflow_id = var.pnp_device_workflow_id
 }
 ```
 

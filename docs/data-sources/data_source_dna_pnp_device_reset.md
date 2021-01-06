@@ -1,6 +1,6 @@
 ---
 page_title: "dna_pnp_device_config_preview Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Device Onboarding PnP"
 description: |-
   The dna_pnp_device_config_preview data source allows you to preview a DNACenter PnP device config.
 ---
@@ -14,8 +14,8 @@ The dna_pnp_device_config_preview data source allows you to preview a DNACenter 
 ```hcl
 data "dna_pnp_device_config_preview" "result" {
   provider = dnacenter
-  device_id = "<device_id>"
-  site_id = "<site_id>"
+  device_id = var.device_id
+  site_id = var.site_id
   type = "Default"
 }
 ```

@@ -1,13 +1,13 @@
 ---
 page_title: "dna_site_count Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Sites"
 description: |-
   The dna_site_count data source allows you to count the amount of DNACenter sites.
 ---
 
 # Data Source dna_site_count
 
-The applications data source allows you to count the amount of DNACenter sites.
+The dna_site_count data source allows you to count the amount of DNACenter sites.
 
 ## Example Usage
 

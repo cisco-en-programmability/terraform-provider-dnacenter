@@ -1,6 +1,6 @@
 ---
 page_title: "dna_discovery_device_count Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Discovery"
 description: |-
   The dna_discovery_device_count data source allows you to count the amount of DNACenter discovery devices jobs.
 ---

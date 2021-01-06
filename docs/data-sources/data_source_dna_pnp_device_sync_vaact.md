@@ -1,6 +1,6 @@
 ---
 page_title: "dna_pnp_device_sync_vaact Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Device Onboarding PnP"
 description: |-
   The dna_pnp_device_sync_vaact data source allows you to sync a DNACenter PnP Virtual Account devices.
 ---

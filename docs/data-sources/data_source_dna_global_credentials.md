@@ -1,6 +1,6 @@
 ---
 page_title: "dna_global_credentials Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Discovery"
 description: |-
   The dna_global_credentials data source allows you to retrieve information about a particular DNACenter global credentials.
 ---

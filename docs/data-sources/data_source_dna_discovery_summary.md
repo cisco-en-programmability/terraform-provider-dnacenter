@@ -1,20 +1,20 @@
 ---
 page_title: "dna_discovery_summary Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Discovery"
 description: |-
   The dna_discovery_summary data source allows you to count the devices from a discovery job based on given filters.
 ---
 
 # Data Source dna_discovery_summary
 
-The applications data source allows you to count the devices from a discovery job based on given filters.
+The dna_discovery_summary data source allows you to count the devices from a discovery job based on given filters.
 
 ## Example Usage
 
 ```hcl
 data "dna_discovery_summary" "amount" {
   provider = dnacenter
-  id = discovery.id
+  id = var.discovery_id
 }
 ```
 

@@ -1,6 +1,6 @@
 ---
 page_title: "dna_tag_member Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Tag"
 description: |-
   The dna_tag_member data source allows you to retrieve information about a particular DNACenter tag member.
 ---
@@ -14,15 +14,15 @@ The dna_tag_member data source allows you to retrieve information about a partic
 ```hcl
 data "dna_tag_member" "response" {
   provider    = dnacenter
-  tag_id      = "tag_id"
-  member_type = "member_type"
+  tag_id      = dna_tag.data.id
+  member_type = "networkdevice"
 }
 ```
 
 ## Argument Reference
 
 - `tag_id` - (Required) The tag_id param.
-- `member_type` - (Required) The member_type param.
+- `member_type` - (Required) The member_type param. A value of dna_tag_member_type.
 - `member_association_type` - (Optional) The member_association_type param.
 - `level` - (Optional) The level param.
 - `offset` - (Optional) The offset param.
@@ -32,4 +32,4 @@ data "dna_tag_member" "response" {
 
 The following attributes are exported.
 
-- `items` - The items response.
+- `items` - The items response. This is a JSON response.

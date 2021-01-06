@@ -1,6 +1,6 @@
 ---
 page_title: "dna_discovery_jobs Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Discovery"
 description: |-
   The dna_discovery_jobs data source allows you to retrieve information about a particular DNACenter discovery jobs.
 ---
@@ -14,7 +14,7 @@ The dna_discovery_jobs data source allows you to retrieve information about a pa
 ```hcl
 data "dna_discovery_jobs" "response" {
   provider = dnacenter
-  name = discovery.name
+  ip_address = var.ip_address
 }
 ```
 
@@ -23,7 +23,7 @@ data "dna_discovery_jobs" "response" {
 - `name` - (Optional) The name param.
 - `offset` - (Optional) The offset param.
 - `limit` - (Optional) The limit param.
-- `ip_address` - (Optional) The ip_address param.
+- `ip_address` - (Required) The ip_address param.
 
 ## Attributes Reference
 

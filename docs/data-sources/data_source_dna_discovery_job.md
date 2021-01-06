@@ -1,6 +1,6 @@
 ---
 page_title: "dna_discovery_job Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Discovery"
 description: |-
   The dna_discovery_job data source allows you to retrieve information about a particular DNACenter discovery job by id.
 ---
@@ -9,12 +9,14 @@ description: |-
 
 The dna_discovery_job data source allows you to retrieve information about a particular DNACenter discovery job by id.
 
+Returns the list of discovery jobs for the given Discovery ID. The results can be optionally filtered based on IP.
+
 ## Example Usage
 
 ```hcl
 data "dna_discovery_job" "response" {
   provider = dnacenter
-  id = discovery.id
+  id = var.discovery_id
 }
 ```
 

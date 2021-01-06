@@ -1,6 +1,6 @@
 ---
 page_title: "dna_command_runner_keywords Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Command Runner"
 description: |-
   The command runner keywords data source allows you to list DNACenter command runner keywords.
 ---

@@ -34,7 +34,7 @@ Each CLI credential item contains `comments`, `credential_type`, `description`, 
 - `comments` - (Required) The CLI credential's comments.
 - `credential_type` - (Required) The CLI credential's credential type. Available values are "GLOBAL" and "APP".
 - `description` - (Required) The CLI credential's description.
-- `enable_password` - (Required) The CLI credential's enable password.
+- `enable_password` - (Optional) The CLI credential's enable password.
 - `id` - (Optional) The CLI credential's id.
 - `instance_tenant_id` - (Optional) The CLI credential's instance tenant id.
 - `instance_uuid` - (Optional) The CLI credential's instance uuid.

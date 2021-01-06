@@ -14,9 +14,9 @@ The dna_sda_fabric_authentication_profile resource allows you to configure a DNA
 ```hcl
 resource "dna_sda_fabric_authentication_profile" "template_1" {
   provider   = dnacenter
-  site_name_hierarchy = sda_auth.site_name_hierarchy
-  authenticate_template_name = sda_auth.authenticate_template_name
-  authenticate_template_id = sda_auth.authenticate_template_id
+  site_name_hierarchy = var.sda_auth_site_name_hierarchy
+  authenticate_template_name = var.sda_auth_authenticate_template_name
+  authenticate_template_id = var.sda_auth_authenticate_template_id
 }
 ```
 

@@ -1,6 +1,6 @@
 ---
 page_title: "dna_pnp_device_saact Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Device Onboarding PnP"
 description: |-
   The dna_pnp_device_saact data source allows you to list DNACenter Smart Accounts.
 ---

@@ -14,14 +14,14 @@ The dna_sda_fabric_ip_pool_in_vn resource allows you to configure a DNACenter SD
 ```hcl
 resource "dna_sda_fabric_ip_pool_in_vn" "response" {
   provider   = dnacenter
-  virtual_network_name = pool.virtual_network_name
-  ip_pool_name = pool.ip_pool_name
-  traffic_type = pool.traffic_type
-  authentication_policy_name = pool.authentication_policy_name
-  scalable_group_name = pool.scalable_group_name
-  is_l2_flooding_enabled = pool.is_l2_flooding_enabled
-  is_this_critical_pool = pool.is_this_critical_pool
-  pool_type = pool.pool_type
+  virtual_network_name = var.virtual_network_name
+  ip_pool_name = var.ip_pool_name
+  traffic_type = var.traffic_type
+  authentication_policy_name = var.authentication_policy_name
+  scalable_group_name = var.scalable_group_name
+  is_l2_flooding_enabled = var.is_l2_flooding_enabled
+  is_this_critical_pool = var.is_this_critical_pool
+  pool_type = var.pool_type
 }
 ```
 

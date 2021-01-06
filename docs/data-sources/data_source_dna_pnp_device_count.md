@@ -1,13 +1,13 @@
 ---
 page_title: "dna_pnp_device_count Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Device Onboarding PnP"
 description: |-
   The dna_pnp_device_count data source allows you to count the amount of DNACenter discoveries discovered.
 ---
 
 # Data Source dna_pnp_device_count
 
-The applications data source allows you to count the amount of DNACenter discoveries discovered.
+The dna_pnp_device_count data source allows you to count the amount of DNACenter discoveries discovered.
 
 ## Example Usage
 

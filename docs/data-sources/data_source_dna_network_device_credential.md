@@ -1,6 +1,6 @@
 ---
 page_title: "dna_network_device_credential Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Network Settings"
 description: |-
   The dna_network_device_credential data source allows you to retrieve information about a particular DNACenter network device credentials.
 ---

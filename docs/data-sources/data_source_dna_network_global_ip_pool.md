@@ -1,6 +1,6 @@
 ---
 page_title: "dna_network_global_ip_pool Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Network Settings"
 description: |-
   The dna_network_global_ip_pool data source allows you to retrieve information about a particular DNACenter global IP pools.
 ---
@@ -14,6 +14,8 @@ The dna_network_global_ip_pool data source allows you to retrieve information ab
 ```hcl
 data "dna_network_global_ip_pool" "response" {
   provider = dnacenter
+  # offset = 0
+  # limit = 4
 }
 ```
 

@@ -14,8 +14,8 @@ The dna_sda_fabric_site resource allows you to configure a DNACenter SDA site.
 ```hcl
 resource "dna_sda_fabric_site" "response" {
   provider   = dnacenter
-  site_name_hierarchy = site.site_name_hierarchy
-  fabric_name = site.fabric_name
+  site_name_hierarchy = var.site_name_hierarchy
+  fabric_name = var.fabric_name
 }
 ```
 

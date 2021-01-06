@@ -1,6 +1,6 @@
 ---
 page_title: "dna_tag_count Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Tag"
 description: |-
   The tag data source allows you to count the amount of DNACenter tags.
 ---

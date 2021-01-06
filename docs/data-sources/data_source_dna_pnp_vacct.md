@@ -1,6 +1,6 @@
 ---
 page_title: "dna_pnp_vaact Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Device Onboarding PnP"
 description: |-
   The dna_pnp_vaact data source allows you to list DNACenter Virtual Accounts.
 ---
@@ -14,7 +14,7 @@ The dna_pnp_vaact data source allows you to list DNACenter Virtual Accounts.
 ```hcl
 data "dna_pnp_vaact" "list" {
   provider = dnacenter
-  domain = "<domain>"
+  domain = var.domain
 }
 ```
 

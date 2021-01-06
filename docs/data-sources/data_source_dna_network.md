@@ -1,6 +1,6 @@
 ---
 page_title: "dna_network Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Network Settings"
 description: |-
   The dna_network data source allows you to retrieve information about a particular DNACenter networks.
 ---
@@ -14,7 +14,7 @@ The dna_network data source allows you to retrieve information about a particula
 ```hcl
 data "dna_network" "response" {
   provider = dnacenter
-  credential_sub_type = "CLI"
+  # site_id  = "b85fe0be-d971-4eb7-92a9-3498356ad87f"
 }
 ```
 

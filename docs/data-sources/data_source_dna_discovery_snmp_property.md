@@ -1,6 +1,6 @@
 ---
 page_title: "dna_discovery_snmp_property Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Discovery"
 description: |-
   The dna_discovery_snmp_property data source allows you to retrieve information about a particular DNACenter discovery SNMP properties.
 ---

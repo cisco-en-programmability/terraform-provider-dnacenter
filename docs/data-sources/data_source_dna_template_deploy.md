@@ -1,6 +1,6 @@
 ---
 page_title: "dna_template_deploy Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Configuration Templates"
 description: |-
   The dna_template_deploy data source allows you to deploy a DNACenter template.
 ---

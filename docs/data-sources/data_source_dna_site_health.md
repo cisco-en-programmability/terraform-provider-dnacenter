@@ -1,6 +1,6 @@
 ---
 page_title: "dna_site_health Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Sites"
 description: |-
   The dna_site_health data source allows you to retrieve information about a particular DNACenter site health.
 ---

@@ -14,13 +14,13 @@ The dna_sda_fabric_port_assignment_for_user_device resource allows you to assign
 ```hcl
 resource "dna_sda_fabric_port_assignment_for_user_device" "response" {
   provider   = dnacenter
-  site_name_hierarchy = assigment.site_name_hierarchy
-  device_management_ip_address = assigment.device_management_ip_address
-  interface_name = assigment.interface_name
-  data_ip_address_pool_name = assigment.data_ip_address_pool_name
-  voice_ip_address_pool_name = assigment.voice_ip_address_pool_name
-  authenticate_template_name = assigment.authenticate_template_name
-  scalable_group_name = assigment.scalable_group_name
+  site_name_hierarchy = var.site_name_hierarchy
+  device_management_ip_address = var.device_management_ip_address
+  interface_name = var.interface_name
+  data_ip_address_pool_name = var.data_ip_address_pool_name
+  voice_ip_address_pool_name = var.voice_ip_address_pool_name
+  authenticate_template_name = var.authenticate_template_name
+  scalable_group_name = var.scalable_group_name
 }
 ```
 

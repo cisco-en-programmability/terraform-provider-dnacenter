@@ -1,6 +1,6 @@
 ---
 page_title: "dna_discovery_device Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Discovery"
 description: |-
   The dna_discovery_device data source allows you to retrieve information about a particular DNACenter discovery device by id.
 ---
@@ -14,7 +14,7 @@ The dna_discovery_device data source allows you to retrieve information about a 
 ```hcl
 data "dna_discovery_device" "response" {
   provider = dnacenter
-  id = discovery.id
+  id = var.discovery_id
 }
 ```
 

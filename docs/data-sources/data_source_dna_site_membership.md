@@ -1,6 +1,6 @@
 ---
 page_title: "dna_site_membership Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Sites"
 description: |-
   The dna_site_membership data source allows you to retrieve information about a particular DNACenter site membership
 ---

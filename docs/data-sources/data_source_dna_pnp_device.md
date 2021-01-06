@@ -1,6 +1,6 @@
 ---
 page_title: "dna_pnp_device Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Device Onboarding PnP"
 description: |-
   The dna_pnp_device data source allows you to retrieve information about a particular DNACenter PnP device.
 ---

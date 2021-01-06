@@ -1,6 +1,6 @@
 ---
 page_title: "dna_pnp_workflow_count Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Device Onboarding PnP"
 description: |-
   The dna_pnp_workflow_count data source allows you to count the amount of DNACenter workflows.
 ---

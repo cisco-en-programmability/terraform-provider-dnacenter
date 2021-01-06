@@ -14,7 +14,7 @@ The dna_sda_fabric_virtual_network resource allows you to configure a DNACenter 
 ```hcl
 resource "dna_sda_fabric_virtual_network" "response" {
   provider   = dnacenter
-  fabric_name = site.fabric_name
+  fabric_name = var.fabric_name
 }
 ```
 

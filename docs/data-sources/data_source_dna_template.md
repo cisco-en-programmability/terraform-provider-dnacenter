@@ -1,6 +1,6 @@
 ---
 page_title: "dna_template Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Configuration Templates"
 description: |-
   The dna_template data source allows you to retrieve information about a particular DNACenter template.
 ---

@@ -1,6 +1,6 @@
 ---
 page_title: "dna_service_provider_profile Data Source - terraform-provider-dnacenter"
-subcategory: ""
+subcategory: "Network Settings"
 description: |-
   The dna_service_provider_profile data source allows you to retrieve information about a particular DNACenter service provider profiles.
 ---
