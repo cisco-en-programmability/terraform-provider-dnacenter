@@ -40,38 +40,37 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			// "dna_tag_member":                      resourceTagMember(), //REVIEW: Missing documentation for POST operation
-			"dna_applications":                                resourceApplication(),                           //Done. CRUD.
-			"dna_application_set":                             resourceApplicationSet(),                        //Done. CRUD.
-			"dna_tag":                                         resourceTag(),                                   //Done. CRUD.
-			"dna_site":                                        resourceSite(),                                  //Done. CRUD.
-			"dna_template":                                    resourceTemplate(),                              //Done. CRUD.
-			"dna_template_project":                            resourceTemplateProject(),                       //Done. CRUD. Update did not update anything besides name, and their times.
-			"dna_cli_credential":                              resourceCLICredential(),                         //Done. CRUD.
-			"dna_http_read_credential":                        resourceHTTPReadCredential(),                    //Done. CRUD.
-			"dna_http_write_credential":                       resourceHTTPWriteCredential(),                   //Done. CRUD.
-			"dna_snmpv2_read_community_credential":            resourceSNMPReadCommunityCredential(),           //Done. CRUD.
-			"dna_snmpv2_write_community_credential":           resourceSNMPWriteCommunityCredential(),          //Done. CRUD.
-			"dna_snmpv3_credential":                           resourceSNMPv3Credential(),                      //Done. CRUD.
-			"dna_netconf_credential":                          resourceNetconfCredential(),                     //Done. CRUD.
-			"dna_discovery":                                   resourceDiscovery(),                             //Done. CRUD.
-			"dna_pnp_device":                                  resourcePnPDevice(),                             //Done. CRUD. May require API definition to search PnP device
-			"dna_pnp_workflow":                                resourcePnPWorkflow(),                           //Done. CRUD.
-			"dna_pnp_global_settings":                         resourcePnPGlobalSettings(),                     //Done. Read Update operations. Create & Delete only for Terraform.
-			"dna_network":                                     resourceNetwork(),                               //Done. Create Read Update operations. Delete only for Terraform. May require to change to pointers for all properties & changes in mapping.
-			"dna_network_credential_site_assignment":          resourceNetworkCredentialSiteAssignment(),       //Done. Create Read Update operations. Delete only for Terraform.
-			"dna_network_global_ip_pool":                      resourceNetworkGlobalIPPool(),                   //Done. CRUD. Could not test well because unable to create one.
-			"dna_network_service_provider_profile":            resourceNetworkServiceProviderProfile(),         //Done. CRUD.
-			"dna_sda_fabric":                                  resourceSDAFabric(),                             //Done. Only has Create Read Delete operations. Pending tests
-			"dna_sda_fabric_virtual_network":                  resourceSDAFabricVirtualNetwork(),               //Done. Only has Create Read Delete operations. Pending tests
-			"dna_sda_fabric_edge_device":                      resourceSDAFabricEdgeDevice(),                   //Done. Only has Create Read Delete operations. Pending tests
-			"dna_sda_fabric_port_assignment_for_access_point": resourceSDAFabricPortAssignmentForAccessPoint(), //Done. Only has Create Read Delete operations. Pending tests
-			"dna_sda_fabric_ip_pool_in_vn":                    resourceSDAFabricIPPoolInVN(),                   //Done. Only has Create Read Delete operations. Pending tests
-			"dna_sda_fabric_site":                             resourceSDAFabricSite(),                         //Done. Only has Create Read Delete operations. Pending tests
-			"dna_sda_fabric_border_device":                    resourceSDAFabricBorderDevice(),                 //
-			"dna_sda_fabric_control_plane_device":             resourceSDAFabricControlPlaneDevice(),           //
-			"dna_sda_fabric_port_assignment_for_user_device":  resourceSDAFabricPortAssignmentForUserDevice(),  //
-			"dna_sda_fabric_authentication_profile":           resourceSDAFabricAuthenticationProfile(),        //
+			"dna_applications":                                resourceApplication(),
+			"dna_application_set":                             resourceApplicationSet(),
+			"dna_tag":                                         resourceTag(),
+			"dna_site":                                        resourceSite(),
+			"dna_template":                                    resourceTemplate(),
+			"dna_template_project":                            resourceTemplateProject(),
+			"dna_cli_credential":                              resourceCLICredential(),
+			"dna_http_read_credential":                        resourceHTTPReadCredential(),
+			"dna_http_write_credential":                       resourceHTTPWriteCredential(),
+			"dna_snmpv2_read_community_credential":            resourceSNMPReadCommunityCredential(),
+			"dna_snmpv2_write_community_credential":           resourceSNMPWriteCommunityCredential(),
+			"dna_snmpv3_credential":                           resourceSNMPv3Credential(),
+			"dna_netconf_credential":                          resourceNetconfCredential(),
+			"dna_discovery":                                   resourceDiscovery(),
+			"dna_pnp_device":                                  resourcePnPDevice(),
+			"dna_pnp_workflow":                                resourcePnPWorkflow(),
+			"dna_pnp_global_settings":                         resourcePnPGlobalSettings(),
+			"dna_network":                                     resourceNetwork(),
+			"dna_network_credential_site_assignment":          resourceNetworkCredentialSiteAssignment(),
+			"dna_network_global_ip_pool":                      resourceNetworkGlobalIPPool(),
+			"dna_network_service_provider_profile":            resourceNetworkServiceProviderProfile(),
+			"dna_sda_fabric":                                  resourceSDAFabric(),
+			"dna_sda_fabric_virtual_network":                  resourceSDAFabricVirtualNetwork(),
+			"dna_sda_fabric_edge_device":                      resourceSDAFabricEdgeDevice(),
+			"dna_sda_fabric_port_assignment_for_access_point": resourceSDAFabricPortAssignmentForAccessPoint(),
+			"dna_sda_fabric_ip_pool_in_vn":                    resourceSDAFabricIPPoolInVN(),
+			"dna_sda_fabric_site":                             resourceSDAFabricSite(),
+			"dna_sda_fabric_border_device":                    resourceSDAFabricBorderDevice(),
+			"dna_sda_fabric_control_plane_device":             resourceSDAFabricControlPlaneDevice(),
+			"dna_sda_fabric_port_assignment_for_user_device":  resourceSDAFabricPortAssignmentForUserDevice(),
+			"dna_sda_fabric_authentication_profile":           resourceSDAFabricAuthenticationProfile(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"dna_tag_count":                        dataSourceTagCount(),
@@ -125,9 +124,9 @@ func Provider() *schema.Provider {
 			"dna_network_device_credential":        dataSourceNetworkDeviceCredential(),
 			"dna_network_global_ip_pool":           dataSourceNetworkGlobalIPPool(),
 			"dna_network_service_provider_profile": dataSourceNetworkServiceProviderProfile(),
-
-			"dna_command_runner_keywords": dataSourceCommandRunnerKeywords(),
-			// "dna_command_runner_run_command": dataSourceCommandRunnerRunCommand(), //REVIEW: For full potential requires Task, Network-Device, File data sources
+			"dna_command_runner_keywords":          dataSourceCommandRunnerKeywords(),
+			"dna_command_runner_run_command":       dataSourceCommandRunnerRunCommand(),
+			"dna_task":                             dataSourceTask(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}
