@@ -50,7 +50,7 @@ func dataSourceDiscoveryJob() *schema.Resource {
 							Computed: true,
 						},
 						"end_time": &schema.Schema{
-							Type:     schema.TypeInt,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"http_status": &schema.Schema{
@@ -94,7 +94,7 @@ func dataSourceDiscoveryJob() *schema.Resource {
 							Computed: true,
 						},
 						"start_time": &schema.Schema{
-							Type:     schema.TypeInt,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"task_id": &schema.Schema{

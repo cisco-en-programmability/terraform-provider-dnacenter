@@ -16,7 +16,7 @@ func dataSourceTagMemberCount() *schema.Resource {
 		ReadContext: dataSourceTagMemberCountRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeInt,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"member_type": &schema.Schema{
