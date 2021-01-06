@@ -10,17 +10,15 @@ terraform {
 provider "dnacenter" {
 }
 
-# > Tag Query
-data "dna_tag" "found" {
+data "dna_tag" "list" {
   provider = dnacenter
   sort_by  = "name"
   order    = "des"
 }
-output "tag_found_list" {
-  value = data.dna_tag.found
+output "tag_list_first_element" {
+  value = data.dna_tag.list.items.0
 }
 
-# > Tag
 resource "dna_tag" "data" {
   provider = dnacenter
   item {
@@ -42,7 +40,6 @@ output "tag_data" {
   value = dna_tag.data
 }
 
-# > Tag Member Types
 data "dna_tag_member_type" "list" {
   provider = dnacenter
 }
@@ -51,10 +48,10 @@ output "tag_member_list" {
 }
 
 
-# > Tag Count
 data "dna_tag_count" "amount" {
-  provider = dnacenter
-  name     = "Tag012"
+  provider   = dnacenter
+  depends_on = [dna_tag.data]
+  # name     = "Tag012"
   # system_tag = "False"
   # level = "0"
   # attribute_name = "1"
@@ -63,3 +60,25 @@ output "tag_amount" {
   value = data.dna_tag_count.amount
 }
 
+
+data "dna_tag_member" "response" {
+  provider    = dnacenter
+  depends_on  = [dna_tag.data]
+  tag_id      = dna_tag.data.id
+  member_type = "networkdevice"
+  # member_type = data.dna_tag_member_type.list.items.0
+}
+
+output "tag_member_response" {
+  value = data.dna_tag_member.response
+}
+
+data "dna_tag_member_count" "amount" {
+  provider    = dnacenter
+  depends_on  = [dna_tag.data]
+  id          = dna_tag.data.id
+  member_type = "networkdevice"
+}
+output "tag_member_count_amount" {
+  value = data.dna_tag_member_count.amount.response
+}

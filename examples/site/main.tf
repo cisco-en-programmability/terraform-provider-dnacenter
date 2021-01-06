@@ -10,7 +10,6 @@ terraform {
 provider "dnacenter" {
 }
 
-# > Site
 resource "dna_site" "area" {
   provider = dnacenter
   item {

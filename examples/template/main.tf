@@ -10,7 +10,6 @@ terraform {
 provider "dnacenter" {
 }
 
-# > Site
 resource "dna_template_project" "project_1" {
   provider = dnacenter
   item {
@@ -40,22 +39,4 @@ resource "dna_template" "template_1" {
 
 output "dna_template_1" {
   value = dna_template.template_1
-}
-
-
-resource "dna_template" "template_2" {
-  provider   = dnacenter
-  depends_on = [dna_template_project.project_1]
-  item {
-    project_id = dna_template_project.project_1.item.0.id
-    name       = "DMVPN Spoke for Branch Router - System Default for Test Project 1"
-    device_types {
-      product_family = "Switches and Hubs"
-    }
-    software_type = "IOS-XE"
-  }
-}
-
-output "dna_template_2" {
-  value = dna_template.template_2
 }

@@ -10,27 +10,16 @@ terraform {
 provider "dnacenter" {
 }
 
-
-# > Applications
 data "dna_applications_count" "amount" {
   provider = dnacenter
-}
-output "amount" {
-  value = data.dna_applications_count.amount
 }
 
 data "dna_applications" "list" {
   provider = dnacenter
-  offset   = 0
-  limit    = 4
+  name     = "itunes-video"
 }
 
-output "application_list" {
-  value = data.dna_applications.list
-}
-
-
-resource "dna_applications" "test" {
+resource "dna_applications" "response" {
   provider = dnacenter
   name     = "itunes-video"
   items {
@@ -61,9 +50,4 @@ resource "dna_applications" "test" {
       upper_port   = 0
     }
   }
-}
-
-
-output "app_test" {
-  value = dna_applications.test
 }
