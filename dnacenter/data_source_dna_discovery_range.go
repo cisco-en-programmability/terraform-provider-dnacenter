@@ -64,12 +64,12 @@ func dataSourceDiscoveryRange() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"start_index": &schema.Schema{
 				Type:         schema.TypeInt,
-				Optional:     true,
+				Required:     true,
 				ValidateFunc: validateIntegerGeqThan(0),
 			},
 			"records_to_return": &schema.Schema{
 				Type:         schema.TypeInt,
-				Optional:     true,
+				Required:     true,
 				ValidateFunc: validateIntegerGeqThan(0),
 			},
 

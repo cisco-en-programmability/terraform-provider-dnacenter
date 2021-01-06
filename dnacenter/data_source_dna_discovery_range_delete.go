@@ -15,11 +15,6 @@ func dataSourceDiscoveryRangeDelete() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceDiscoveryRangeDeleteRead,
 		Schema: map[string]*schema.Schema{
-			"confirm": &schema.Schema{
-				Type:        schema.TypeBool,
-				Description: "Confirm deletion",
-				Required:    true,
-			},
 			"start_index": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
@@ -37,13 +32,8 @@ func dataSourceDiscoveryRangeDeleteRead(ctx context.Context, d *schema.ResourceD
 
 	var diags diag.Diagnostics
 
-	confirmed := d.Get("confirm").(bool)
 	startIndex := d.Get("start_index").(int)
 	recordsToDelete := d.Get("records_to_delete").(int)
-
-	if !confirmed {
-		return diags
-	}
 
 	// Prepare Request
 	response, _, err := client.Discovery.DeleteDiscoveryBySpecifiedRange(startIndex, recordsToDelete)

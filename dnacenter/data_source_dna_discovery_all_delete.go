@@ -14,13 +14,7 @@ import (
 func dataSourceDiscoveryAllDelete() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceDiscoveryAllDeleteRead,
-		Schema: map[string]*schema.Schema{
-			"confirm": &schema.Schema{
-				Type:        schema.TypeBool,
-				Description: "Confirm deletion",
-				Required:    true,
-			},
-		},
+		Schema:      map[string]*schema.Schema{},
 	}
 }
 
@@ -28,12 +22,6 @@ func dataSourceDiscoveryAllDeleteRead(ctx context.Context, d *schema.ResourceDat
 	client := m.(*dnac.Client)
 
 	var diags diag.Diagnostics
-
-	confirmed := d.Get("confirm").(bool)
-
-	if !confirmed {
-		return diags
-	}
 
 	// Prepare Request
 	response, _, err := client.Discovery.DeleteAllDiscovery()
