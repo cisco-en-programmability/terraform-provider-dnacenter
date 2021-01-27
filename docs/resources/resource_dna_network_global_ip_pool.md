@@ -2,12 +2,12 @@
 page_title: "dna_network_global_ip_pool Resource - terraform-provider-dnacenter"
 subcategory: "Network Settings"
 description: |-
-  The dna_network_global_ip_pool resource allows you to configure a DNACenter global IP pool.
+  The dna_network_global_ip_pool resource allows you to configure a Cisco DNA Center global IP pool.
 ---
 
 # Resource dna_network_global_ip_pool
 
-The dna_network_global_ip_pool resource allows you to configure a DNACenter global IP pool.
+The dna_network_global_ip_pool resource allows you to configure a Cisco DNA Center global IP pool.
 
 ## Example Usage
 
@@ -28,7 +28,7 @@ resource "dna_network_global_ip_pool" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter Global IP Pool. See [Global IP Pool item](#global-ip-pool-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center Global IP Pool. See [Global IP Pool item](#global-ip-pool-item) below for details.
 - `type` - (Required) The Global IP pool's type.
 - `gateway` - (Required) The Global IP pool's gateway.
 - `ip_address_space` - (Required) The Global IP pool's IP address space.
@@ -46,7 +46,7 @@ resource "dna_network_global_ip_pool" "response" {
 In addition to all the arguments above, the following attributes are exported.
 
 - `last_updated` - The Global IP pool's updated time with format RFC850.
-- `item` - Item in a DNACenter Global IP Pool. See [Global IP Pool item](#global-ip-pool-item-1) below for details.
+- `item` - Item in a Cisco DNA Center Global IP Pool. See [Global IP Pool item](#global-ip-pool-item-1) below for details.
 
 ### global ip pool item
 

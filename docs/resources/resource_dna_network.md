@@ -2,12 +2,12 @@
 page_title: "dna_network Resource - terraform-provider-dnacenter"
 subcategory: "Network Settings"
 description: |-
-  The dna_network resource allows you to configure a DNACenter network.
+  The dna_network resource allows you to configure a Cisco DNA Center network.
 ---
 
 # Resource dna_network
 
-The dna_network resource allows you to configure a DNACenter network.
+The dna_network resource allows you to configure a Cisco DNA Center network.
 
 ## Example Usage
 
@@ -60,7 +60,7 @@ resource "dna_network" "response1" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter Network. See [Network item](#network-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center Network. See [Network item](#network-item) below for details.
 
 ### Network item
 

@@ -2,12 +2,12 @@
 page_title: "dna_sda_fabric_port_assignment_for_access_point Resource - terraform-provider-dnacenter"
 subcategory: "SDA"
 description: |-
-  The dna_sda_fabric_port_assignment_for_access_point resource allows you to assign a DNACenter SDA port for an accces point.
+  The dna_sda_fabric_port_assignment_for_access_point resource allows you to assign a Cisco DNA Center SDA port for an accces point.
 ---
 
 # Resource dna_sda_fabric_port_assignment_for_access_point
 
-The dna_sda_fabric_port_assignment_for_access_point resource allows you to assign a DNACenter SDA port for an accces point.
+The dna_sda_fabric_port_assignment_for_access_point resource allows you to assign a Cisco DNA Center SDA port for an accces point.
 
 ## Example Usage
 

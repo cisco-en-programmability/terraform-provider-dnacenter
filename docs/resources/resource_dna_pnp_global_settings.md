@@ -2,12 +2,12 @@
 page_title: "dna_pnp_global_settings Resource - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_global_settings resource allows you to configure a DNACenter PnP's settings.
+  The dna_pnp_global_settings resource allows you to configure a Cisco DNA Center PnP's settings.
 ---
 
 # Resource dna_pnp_global_settings
 
-The dna_pnp_global_settings resource allows you to configure a DNACenter PnP's settings.
+The dna_pnp_global_settings resource allows you to configure a Cisco DNA Center PnP's settings.
 
 ## Example Usage
 
@@ -46,7 +46,7 @@ resource "dna_pnp_global_settings" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in the DNACenter global settings. See [Settings item](#settings-item) below for details.
+- `item` - (Required) Item in the Cisco DNA Center global settings. See [Settings item](#settings-item) below for details.
 
 ### Settings item
 

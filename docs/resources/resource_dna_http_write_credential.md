@@ -2,12 +2,12 @@
 page_title: "dna_http_write_credential Resource - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_http_write_credential resource allows you to configure a DNACenter HTTP Write credential.
+  The dna_http_write_credential resource allows you to configure a Cisco DNA Center HTTP Write credential.
 ---
 
 # Resource dna_http_write_credential
 
-The dna_http_write_credential resource allows you to configure a DNACenter HTTP Write credential.
+The dna_http_write_credential resource allows you to configure a Cisco DNA Center HTTP Write credential.
 
 ## Example Usage
 
@@ -26,7 +26,7 @@ resource "dna_http_write_credential" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter HTTP Write credential. See [Credential item](#credential-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center HTTP Write credential. See [Credential item](#credential-item) below for details.
 
 ### Credential item
 

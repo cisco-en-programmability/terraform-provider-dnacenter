@@ -2,12 +2,12 @@
 page_title: "dna_netconf_credential Resource - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_netconf_credential resource allows you to configure a DNACenter Netconf credential.
+  The dna_netconf_credential resource allows you to configure a Cisco DNA Center Netconf credential.
 ---
 
 # Resource dna_netconf_credential
 
-The dna_netconf_credential resource allows you to configure a DNACenter Netconf credential.
+The dna_netconf_credential resource allows you to configure a Cisco DNA Center Netconf credential.
 
 ## Example Usage
 
@@ -23,7 +23,7 @@ resource "dna_netconf_credential" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter Netconf credential. See [Credential item](#credential-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center Netconf credential. See [Credential item](#credential-item) below for details.
 
 ### Credential item
 

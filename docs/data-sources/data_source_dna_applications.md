@@ -2,12 +2,12 @@
 page_title: "dna_applications Data Source - terraform-provider-dnacenter"
 subcategory: "Application Policy"
 description: |-
-  The application data source allows you to retrieve information about a particular DNACenter application.
+  The application data source allows you to retrieve information about a particular Cisco DNA Center application.
 ---
 
 # Data Source dna_applications
 
-The application data source allows you to retrieve information about a particular DNACenter application.
+The application data source allows you to retrieve information about a particular Cisco DNA Center application.
 
 ## Example Usage
 
@@ -21,15 +21,15 @@ data "dna_applications" "list" {
 
 ## Argument Reference
 
-- `name` - (Optional) DNACenter application name.
-- `offset` - (Optional) DNACenter application offset.
-- `limit` - (Optional) DNACenter application limit.
+- `name` - (Optional) Cisco DNA Center application name.
+- `offset` - (Optional) Cisco DNA Center application offset.
+- `limit` - (Optional) Cisco DNA Center application limit.
 
 ## Attributes Reference
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter app. See [Application items](#application-items) below for details.
+- `items` - Items in a Cisco DNA Center app. See [Application items](#application-items) below for details.
 
 ### Application items
 

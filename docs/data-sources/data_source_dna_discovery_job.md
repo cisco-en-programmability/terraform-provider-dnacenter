@@ -2,12 +2,12 @@
 page_title: "dna_discovery_job Data Source - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_discovery_job data source allows you to retrieve information about a particular DNACenter discovery job by id.
+  The dna_discovery_job data source allows you to retrieve information about a particular Cisco DNA Center discovery job by id.
 ---
 
 # Data Source dna_discovery_job
 
-The dna_discovery_job data source allows you to retrieve information about a particular DNACenter discovery job by id.
+The dna_discovery_job data source allows you to retrieve information about a particular Cisco DNA Center discovery job by id.
 
 Returns the list of discovery jobs for the given Discovery ID. The results can be optionally filtered based on IP.
 
@@ -31,7 +31,7 @@ data "dna_discovery_job" "response" {
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter discovery job. See [Items](#items) below for details.
+- `items` - Items in a Cisco DNA Center discovery job. See [Items](#items) below for details.
 
 ### Items
 

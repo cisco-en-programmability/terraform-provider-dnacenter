@@ -2,12 +2,12 @@
 page_title: "dna_snmpv3_credential Resource - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_snmpv3_credential resource allows you to configure a DNACenter SNMPv3 credential.
+  The dna_snmpv3_credential resource allows you to configure a Cisco DNA Center SNMPv3 credential.
 ---
 
 # Resource dna_snmpv3_credential
 
-The dna_snmpv3_credential resource allows you to configure a DNACenter SNMPv3 credential.
+The dna_snmpv3_credential resource allows you to configure a Cisco DNA Center SNMPv3 credential.
 
 ## Example Usage
 
@@ -23,7 +23,7 @@ resource "dna_snmpv3_credential" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter SNMPv3 credential. See [Credential item](#credential-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center SNMPv3 credential. See [Credential item](#credential-item) below for details.
 
 ### Credential item
 

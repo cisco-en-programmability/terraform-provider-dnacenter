@@ -2,12 +2,12 @@
 page_title: "dna_discovery_range Data Source - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_discovery_range data source allows you to retrieve information about DNACenter discoveries device by range.
+  The dna_discovery_range data source allows you to retrieve information about Cisco DNA Center discoveries device by range.
 ---
 
 # Data Source dna_discovery_range
 
-The dna_discovery_range data source allows you to retrieve information about DNACenter discoveries device by range.
+The dna_discovery_range data source allows you to retrieve information about Cisco DNA Center discoveries device by range.
 
 ## Example Usage
 
@@ -28,7 +28,7 @@ data "dna_discovery_range" "response" {
 
 In addition to all the attributes above, the following attributes are exported.
 
-- `items` - Item in a DNACenter Discovery. See [Discovery item](#discovery-item) below for details.
+- `items` - Item in a Cisco DNA Center Discovery. See [Discovery item](#discovery-item) below for details.
 
 ### Discovery item
 
@@ -93,7 +93,7 @@ Each HTTP credential contains the following attributes.
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter discovery device. See [Items](#items) below for details.
+- `items` - Items in a Cisco DNA Center discovery device. See [Items](#items) below for details.
 
 ### Items
 

@@ -2,12 +2,12 @@
 page_title: "dna_discovery Resource - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_discovery resource allows you to configure a DNACenter Discovery.
+  The dna_discovery resource allows you to configure a Cisco DNA Center Discovery.
 ---
 
 # Resource dna_discovery
 
-The dna_discovery resource allows you to configure a DNACenter Discovery.
+The dna_discovery resource allows you to configure a Cisco DNA Center Discovery.
 
 ## Example Usage
 
@@ -28,7 +28,7 @@ resource "dna_discovery" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter Discovery. See [Discovery item](#discovery-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center Discovery. See [Discovery item](#discovery-item) below for details.
 
 ### Discovery item
 

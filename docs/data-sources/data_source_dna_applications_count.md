@@ -2,12 +2,12 @@
 page_title: "dna_applications_count Data Source - terraform-provider-dnacenter"
 subcategory: "Application Policy"
 description: |-
-  The applications data source allows you to count the amount of DNACenter applications.
+  The applications data source allows you to count the amount of Cisco DNA Center applications.
 ---
 
 # Data Source dna_applications_count
 
-The applications data source allows you to count the amount of DNACenter applications.
+The applications data source allows you to count the amount of Cisco DNA Center applications.
 
 ## Example Usage
 
@@ -21,4 +21,4 @@ data "dna_applications_count" "amount" {
 
 The following attributes are exported.
 
-- `response` - DNACenter applications count.
+- `response` - Cisco DNA Center applications count.

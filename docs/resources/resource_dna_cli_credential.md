@@ -2,12 +2,12 @@
 page_title: "dna_cli_credential Resource - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_cli_credential resource allows you to configure a DNACenter CLI credential.
+  The dna_cli_credential resource allows you to configure a Cisco DNA Center CLI credential.
 ---
 
 # Resource dna_cli_credential
 
-The dna_cli_credential resource allows you to configure a DNACenter CLI credential.
+The dna_cli_credential resource allows you to configure a Cisco DNA Center CLI credential.
 
 ## Example Usage
 
@@ -25,7 +25,7 @@ resource "dna_cli_credential" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter CLI credential. See [CLI Credential item](#cli-credential-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center CLI credential. See [CLI Credential item](#cli-credential-item) below for details.
 
 ### CLI Credential item
 

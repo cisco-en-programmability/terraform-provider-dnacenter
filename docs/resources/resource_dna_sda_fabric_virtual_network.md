@@ -2,12 +2,12 @@
 page_title: "dna_sda_fabric_virtual_network Resource - terraform-provider-dnacenter"
 subcategory: "SDA"
 description: |-
-  The dna_sda_fabric_virtual_network resource allows you to configure a DNACenter SDA virtual network.
+  The dna_sda_fabric_virtual_network resource allows you to configure a Cisco DNA Center SDA virtual network.
 ---
 
 # Resource dna_sda_fabric_virtual_network
 
-The dna_sda_fabric_virtual_network resource allows you to configure a DNACenter SDA virtual network.
+The dna_sda_fabric_virtual_network resource allows you to configure a Cisco DNA Center SDA virtual network.
 
 ## Example Usage
 

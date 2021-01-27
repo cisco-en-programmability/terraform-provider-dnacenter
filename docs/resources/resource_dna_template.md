@@ -2,12 +2,12 @@
 page_title: "dna_template Resource - terraform-provider-dnacenter"
 subcategory: "Configuration Templates"
 description: |-
-  The dna_template resource allows you to configure a DNACenter template.
+  The dna_template resource allows you to configure a Cisco DNA Center template.
 ---
 
 # Resource dna_template
 
-The dna_template resource allows you to configure a DNACenter template.
+The dna_template resource allows you to configure a Cisco DNA Center template.
 
 ## Example Usage
 
@@ -28,7 +28,7 @@ resource "dna_template" "template_1" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in the DNACenter template. See [Template item](#template-item) below for details.
+- `item` - (Required) Item in the Cisco DNA Center template. See [Template item](#template-item) below for details.
 
 ### Template item
 

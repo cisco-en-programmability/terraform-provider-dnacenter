@@ -2,12 +2,12 @@
 page_title: "dna_pnp_global_settings Data Source - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_global_settings data source allows you to retrieve information about a particular DNACenter PnP global settings.
+  The dna_pnp_global_settings data source allows you to retrieve information about a particular Cisco DNA Center PnP global settings.
 ---
 
 # Data Source dna_pnp_global_settings
 
-The dna_pnp_global_settings data source allows you to retrieve information about a particular DNACenter PnP global settings.
+The dna_pnp_global_settings data source allows you to retrieve information about a particular Cisco DNA Center PnP global settings.
 
 ## Example Usage
 

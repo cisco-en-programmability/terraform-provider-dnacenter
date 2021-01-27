@@ -2,12 +2,12 @@
 page_title: "dna_discovery_snmp_property_add Data Source - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_discovery_snmp_property_add data source allows you to add/update information about a particular DNACenter discovery SNMP property.
+  The dna_discovery_snmp_property_add data source allows you to add/update information about a particular Cisco DNA Center discovery SNMP property.
 ---
 
 # Data Source dna_discovery_snmp_property_add
 
-The dna_discovery_snmp_property_add data source allows you to add/update information about a particular DNACenter discovery SNMP property.
+The dna_discovery_snmp_property_add data source allows you to add/update information about a particular Cisco DNA Center discovery SNMP property.
 
 ## Example Usage
 
@@ -22,7 +22,7 @@ data "dna_discovery_snmp_property_add" "response" {
 
 ## Argument Reference
 
-- `items` - (Required) Items in a DNACenter discovery SNMP property. See [Items](#items) below for details.
+- `items` - (Required) Items in a Cisco DNA Center discovery SNMP property. See [Items](#items) below for details.
 
 ### Items
 

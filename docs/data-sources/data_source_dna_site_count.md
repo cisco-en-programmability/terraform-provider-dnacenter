@@ -2,12 +2,12 @@
 page_title: "dna_site_count Data Source - terraform-provider-dnacenter"
 subcategory: "Sites"
 description: |-
-  The dna_site_count data source allows you to count the amount of DNACenter sites.
+  The dna_site_count data source allows you to count the amount of Cisco DNA Center sites.
 ---
 
 # Data Source dna_site_count
 
-The dna_site_count data source allows you to count the amount of DNACenter sites.
+The dna_site_count data source allows you to count the amount of Cisco DNA Center sites.
 
 ## Example Usage
 
@@ -26,4 +26,4 @@ data "dna_site_count" "response" {
 
 The following attributes are exported.
 
-- `response` - DNACenter sites count.
+- `response` - Cisco DNA Center sites count.

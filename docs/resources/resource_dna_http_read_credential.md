@@ -2,12 +2,12 @@
 page_title: "dna_http_read_credential Resource - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_http_read_credential resource allows you to configure a DNACenter HTTP Read credential.
+  The dna_http_read_credential resource allows you to configure a Cisco DNA Center HTTP Read credential.
 ---
 
 # Resource dna_http_read_credential
 
-The dna_http_read_credential resource allows you to configure a DNACenter HTTP Read credential.
+The dna_http_read_credential resource allows you to configure a Cisco DNA Center HTTP Read credential.
 
 ## Example Usage
 
@@ -25,7 +25,7 @@ resource "dna_http_read_credential" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter HTTP Read credential. See [Credential item](#credential-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center HTTP Read credential. See [Credential item](#credential-item) below for details.
 
 ### Credential item
 

@@ -2,12 +2,12 @@
 page_title: "dna_pnp_workflow Data Source - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_workflow data source allows you to retrieve information about a particular DNACenter PnP workflow.
+  The dna_pnp_workflow data source allows you to retrieve information about a particular Cisco DNA Center PnP workflow.
 ---
 
 # Data Source dna_pnp_workflow
 
-The dna_pnp_workflow data source allows you to retrieve information about a particular DNACenter PnP workflow.
+The dna_pnp_workflow data source allows you to retrieve information about a particular Cisco DNA Center PnP workflow.
 
 ## Example Usage
 

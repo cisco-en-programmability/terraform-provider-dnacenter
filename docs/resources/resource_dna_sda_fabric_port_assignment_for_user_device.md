@@ -2,12 +2,12 @@
 page_title: "dna_sda_fabric_port_assignment_for_user_device Resource - terraform-provider-dnacenter"
 subcategory: "SDA"
 description: |-
-  The dna_sda_fabric_port_assignment_for_user_device resource allows you to assign a DNACenter SDA port for a user device.
+  The dna_sda_fabric_port_assignment_for_user_device resource allows you to assign a Cisco DNA Center SDA port for a user device.
 ---
 
 # Resource dna_sda_fabric_port_assignment_for_user_device
 
-The dna_sda_fabric_port_assignment_for_user_device resource allows you to assign a DNACenter SDA port for a user device.
+The dna_sda_fabric_port_assignment_for_user_device resource allows you to assign a Cisco DNA Center SDA port for a user device.
 
 ## Example Usage
 

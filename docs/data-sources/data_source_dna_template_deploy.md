@@ -2,12 +2,12 @@
 page_title: "dna_template_deploy Data Source - terraform-provider-dnacenter"
 subcategory: "Configuration Templates"
 description: |-
-  The dna_template_deploy data source allows you to deploy a DNACenter template.
+  The dna_template_deploy data source allows you to deploy a Cisco DNA Center template.
 ---
 
 # Data Source dna_template_deploy
 
-The dna_template_deploy data source allows you to deploy a DNACenter template.
+The dna_template_deploy data source allows you to deploy a Cisco DNA Center template.
 
 ## Example Usage
 

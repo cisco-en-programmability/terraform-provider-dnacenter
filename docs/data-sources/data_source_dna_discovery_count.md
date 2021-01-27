@@ -2,12 +2,12 @@
 page_title: "dna_discovery_count Data Source - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_discovery_count data source allows you to count the amount of DNACenter discoveries discovered.
+  The dna_discovery_count data source allows you to count the amount of Cisco DNA Center discoveries discovered.
 ---
 
 # Data Source dna_discovery_count
 
-The dna_discovery_count data source allows you to count the amount of DNACenter discoveries discovered.
+The dna_discovery_count data source allows you to count the amount of Cisco DNA Center discoveries discovered.
 
 ## Example Usage
 
@@ -27,4 +27,4 @@ data "dna_discovery_count" "amount" {
 
 The following attributes are exported.
 
-- `response` - DNACenter discoveries discovered count.
+- `response` - Cisco DNA Center discoveries discovered count.

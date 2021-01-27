@@ -2,12 +2,12 @@
 page_title: "dna_command_runner_keywords Data Source - terraform-provider-dnacenter"
 subcategory: "Command Runner"
 description: |-
-  The command runner keywords data source allows you to list DNACenter command runner keywords.
+  The command runner keywords data source allows you to list Cisco DNA Center command runner keywords.
 ---
 
 # Data Source dna_command_runner_keywords
 
-The command runner keywords data source allows you to list DNACenter command runner keywords.
+The command runner keywords data source allows you to list Cisco DNA Center command runner keywords.
 
 ## Example Usage
 
@@ -21,4 +21,4 @@ data "dna_command_runner_keywords" "list" {
 
 The following attributes are exported.
 
-- `response` - DNACenter command runner keywords.
+- `response` - Cisco DNA Center command runner keywords.

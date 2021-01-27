@@ -2,12 +2,12 @@
 page_title: "dna_network_service_provider_profile Resource - terraform-provider-dnacenter"
 subcategory: "Network Settings"
 description: |-
-  The dna_network_service_provider_profile resource allows you to configure a DNACenter Service Provider profile.
+  The dna_network_service_provider_profile resource allows you to configure a Cisco DNA Center Service Provider profile.
 ---
 
 # Resource dna_network_service_provider_profile
 
-The dna_network_service_provider_profile resource allows you to configure a DNACenter Service Provider profile.
+The dna_network_service_provider_profile resource allows you to configure a Cisco DNA Center Service Provider profile.
 
 ## Example Usage
 

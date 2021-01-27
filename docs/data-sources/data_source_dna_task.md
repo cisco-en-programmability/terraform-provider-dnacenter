@@ -2,12 +2,12 @@
 page_title: "dna_task Data Source - terraform-provider-dnacenter"
 subcategory: "Task"
 description: |-
-  The dna_task data source allows you to get the result of a DNACenter task.
+  The dna_task data source allows you to get the result of a Cisco DNA Center task.
 ---
 
 # Data Source dna_task
 
-The dna_task data source allows you to get the result of a DNACenter task.
+The dna_task data source allows you to get the result of a Cisco DNA Center task.
 
 ## Example Usage
 
@@ -21,10 +21,10 @@ data "dna_task" "response" {
 
 ## Argument Reference
 
-- `task_id` - (Optional) DNACenter task_id.
+- `task_id` - (Optional) Cisco DNA Center task_id.
 
 ## Attributes Reference
 
 The following attributes are exported.
 
-- `response` - DNACenter task's JSON response.
+- `response` - Cisco DNA Center task's JSON response.

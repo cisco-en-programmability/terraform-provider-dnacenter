@@ -35,4 +35,4 @@ data "dna_discovery_summary" "amount" {
 
 The following attributes are exported.
 
-- `response` - DNACenter discovery devices count.
+- `response` - Cisco DNA Center discovery devices count.

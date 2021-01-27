@@ -2,12 +2,12 @@
 page_title: "dna_network_global_ip_pool Data Source - terraform-provider-dnacenter"
 subcategory: "Network Settings"
 description: |-
-  The dna_network_global_ip_pool data source allows you to retrieve information about a particular DNACenter global IP pools.
+  The dna_network_global_ip_pool data source allows you to retrieve information about a particular Cisco DNA Center global IP pools.
 ---
 
 # Data Source dna_network_global_ip_pool
 
-The dna_network_global_ip_pool data source allows you to retrieve information about a particular DNACenter global IP pools.
+The dna_network_global_ip_pool data source allows you to retrieve information about a particular Cisco DNA Center global IP pools.
 
 ## Example Usage
 
@@ -28,7 +28,7 @@ data "dna_network_global_ip_pool" "response" {
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter global IP pool. See [Global IP Pool item](#global-ip-pool-item-1) below for details.
+- `items` - Items in a Cisco DNA Center global IP pool. See [Global IP Pool item](#global-ip-pool-item-1) below for details.
 
 ### global ip pool item
 

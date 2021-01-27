@@ -2,12 +2,12 @@
 page_title: "dna_pnp_device_claim Data Source - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_device_claim data source allows you to claim a DNACenter PnP device.
+  The dna_pnp_device_claim data source allows you to claim a Cisco DNA Center PnP device.
 ---
 
 # Data Source dna_pnp_device_claim
 
-The dna_pnp_device_claim data source allows you to claim a DNACenter PnP device.
+The dna_pnp_device_claim data source allows you to claim a Cisco DNA Center PnP device.
 
 ## Example Usage
 

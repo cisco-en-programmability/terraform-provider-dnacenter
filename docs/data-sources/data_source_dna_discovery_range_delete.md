@@ -2,12 +2,12 @@
 page_title: "dna_discovery_range_delete Data Source - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_discovery_range_delete data source allows you to delete DNACenter discovery by specified range.
+  The dna_discovery_range_delete data source allows you to delete Cisco DNA Center discovery by specified range.
 ---
 
 # Data Source dna_discovery_range_delete
 
-The dna_discovery_range_delete data source allows you to delete DNACenter discovery by specified range.
+The dna_discovery_range_delete data source allows you to delete Cisco DNA Center discovery by specified range.
 
 ## Example Usage
 

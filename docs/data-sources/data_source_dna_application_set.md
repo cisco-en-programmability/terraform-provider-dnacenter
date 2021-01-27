@@ -2,12 +2,12 @@
 page_title: "dna_application_set Data Source - terraform-provider-dnacenter"
 subcategory: "Application Policy"
 description: |-
-  The dna_application_set data source allows you to retrieve information about a particular DNACenter application set.
+  The dna_application_set data source allows you to retrieve information about a particular Cisco DNA Center application set.
 ---
 
 # Data Source dna_application_set
 
-The dna_application_set data source allows you to retrieve information about a particular DNACenter application set.
+The dna_application_set data source allows you to retrieve information about a particular Cisco DNA Center application set.
 
 ## Example Usage
 
@@ -21,15 +21,15 @@ data "dna_application_set" "list" {
 
 ## Argument Reference
 
-- `name` - (Optional) DNACenter application set's name.
-- `offset` - (Optional) DNACenter application set's offset.
-- `limit` - (Optional) DNACenter application set's limit.
+- `name` - (Optional) Cisco DNA Center application set's name.
+- `offset` - (Optional) Cisco DNA Center application set's offset.
+- `limit` - (Optional) Cisco DNA Center application set's limit.
 
 ## Attributes Reference
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter app set. See [Application Set items](#application-set-items) below for details.
+- `items` - Items in a Cisco DNA Center app set. See [Application Set items](#application-set-items) below for details.
 
 ### Application Set items
 

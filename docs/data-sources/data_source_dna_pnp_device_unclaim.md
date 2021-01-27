@@ -2,12 +2,12 @@
 page_title: "dna_pnp_device_unclaim Data Source - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_device_unclaim data source allows you to unclaim a DNACenter PnP device.
+  The dna_pnp_device_unclaim data source allows you to unclaim a Cisco DNA Center PnP device.
 ---
 
 # Data Source dna_pnp_device_unclaim
 
-The dna_pnp_device_unclaim data source allows you to unclaim a DNACenter PnP device.
+The dna_pnp_device_unclaim data source allows you to unclaim a Cisco DNA Center PnP device.
 
 ## Example Usage
 

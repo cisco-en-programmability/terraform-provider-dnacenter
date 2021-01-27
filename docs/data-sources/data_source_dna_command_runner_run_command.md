@@ -2,12 +2,12 @@
 page_title: "dna_command_runner_run_command Data Source - terraform-provider-dnacenter"
 subcategory: "Command Runner"
 description: |-
-  The dna_command_runner_run_command data source allows you to run a DNACenter command.
+  The dna_command_runner_run_command data source allows you to run a Cisco DNA Center command.
 ---
 
 # Data Source dna_command_runner_run_command
 
-The dna_command_runner_run_command data source allows you to run a DNACenter command.
+The dna_command_runner_run_command data source allows you to run a Cisco DNA Center command.
 
 ## Example Usage
 
@@ -21,14 +21,14 @@ data "dna_command_runner_run_command" "list" {
 
 ## Argument Reference
 
-- `commands` - (Optional) DNACenter commands.
-- `device_uuids` - (Optional) DNACenter device uuids.
-- `description` - (Optional) DNACenter description.
-- `timeout` - (Optional) DNACenter timeout.
-- `name` - (Optional) DNACenter name.
+- `commands` - (Optional) Cisco DNA Center commands.
+- `device_uuids` - (Optional) Cisco DNA Center device uuids.
+- `description` - (Optional) Cisco DNA Center description.
+- `timeout` - (Optional) Cisco DNA Center timeout.
+- `name` - (Optional) Cisco DNA Center name.
 
 ## Attributes Reference
 
 The following attributes are exported.
 
-- `task_id` - DNACenter command runner task_id.
+- `task_id` - Cisco DNA Center command runner task_id.

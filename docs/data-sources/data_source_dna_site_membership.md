@@ -2,12 +2,12 @@
 page_title: "dna_site_membership Data Source - terraform-provider-dnacenter"
 subcategory: "Sites"
 description: |-
-  The dna_site_membership data source allows you to retrieve information about a particular DNACenter site membership
+  The dna_site_membership data source allows you to retrieve information about a particular Cisco DNA Center site membership
 ---
 
 # Data Source dna_site_membership
 
-The dna_site_membership data source allows you to retrieve information about a particular DNACenter site membership
+The dna_site_membership data source allows you to retrieve information about a particular Cisco DNA Center site membership
 
 ## Example Usage
 

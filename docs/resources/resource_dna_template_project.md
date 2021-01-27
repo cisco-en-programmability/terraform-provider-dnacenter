@@ -2,12 +2,12 @@
 page_title: "dna_template_project Resource - terraform-provider-dnacenter"
 subcategory: "Configuration Templates"
 description: |-
-  The dna_template_project resource allows you to configure a DNACenter Template project.
+  The dna_template_project resource allows you to configure a Cisco DNA Center Template project.
 ---
 
 # Resource dna_template_project
 
-The dna_template_project resource allows you to configure a DNACenter Template project.
+The dna_template_project resource allows you to configure a Cisco DNA Center Template project.
 
 ## Example Usage
 
@@ -23,7 +23,7 @@ resource "dna_template_project" "project_1" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in the DNACenter template project. See [Project item](#project-item) below for details.
+- `item` - (Required) Item in the Cisco DNA Center template project. See [Project item](#project-item) below for details.
 
 ### Project item
 
@@ -35,7 +35,7 @@ resource "dna_template_project" "project_1" {
 In addition to all the arguments above, the following attributes are exported.
 
 - `last_updated` - The Template project's updated time with format RFC850.
-- `item` - Item in the DNACenter template project. See [Project item](#project-item-1) below for details.
+- `item` - Item in the Cisco DNA Center template project. See [Project item](#project-item-1) below for details.
 
 ### Project item
 

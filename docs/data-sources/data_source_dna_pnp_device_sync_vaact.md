@@ -2,12 +2,12 @@
 page_title: "dna_pnp_device_sync_vaact Data Source - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_device_sync_vaact data source allows you to sync a DNACenter PnP Virtual Account devices.
+  The dna_pnp_device_sync_vaact data source allows you to sync a Cisco DNA Center PnP Virtual Account devices.
 ---
 
 # Data Source dna_pnp_device_sync_vaact
 
-The dna_pnp_device_sync_vaact data source allows you to sync a DNACenter PnP Virtual Account devices.
+The dna_pnp_device_sync_vaact data source allows you to sync a Cisco DNA Center PnP Virtual Account devices.
 
 ## Example Usage
 

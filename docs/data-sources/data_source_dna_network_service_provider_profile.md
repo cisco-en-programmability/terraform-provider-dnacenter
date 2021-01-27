@@ -2,12 +2,12 @@
 page_title: "dna_service_provider_profile Data Source - terraform-provider-dnacenter"
 subcategory: "Network Settings"
 description: |-
-  The dna_service_provider_profile data source allows you to retrieve information about a particular DNACenter service provider profiles.
+  The dna_service_provider_profile data source allows you to retrieve information about a particular Cisco DNA Center service provider profiles.
 ---
 
 # Data Source dna_service_provider_profile
 
-The dna_service_provider_profile data source allows you to retrieve information about a particular DNACenter service provider profiles.
+The dna_service_provider_profile data source allows you to retrieve information about a particular Cisco DNA Center service provider profiles.
 
 ## Example Usage
 
@@ -21,7 +21,7 @@ data "dna_service_provider_profile" "response" {
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter service provider profile. See [Items](#items) below for details.
+- `items` - Items in a Cisco DNA Center service provider profile. See [Items](#items) below for details.
 
 ### Items
 

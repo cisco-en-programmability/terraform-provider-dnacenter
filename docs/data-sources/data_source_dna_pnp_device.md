@@ -2,12 +2,12 @@
 page_title: "dna_pnp_device Data Source - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_device data source allows you to retrieve information about a particular DNACenter PnP device.
+  The dna_pnp_device data source allows you to retrieve information about a particular Cisco DNA Center PnP device.
 ---
 
 # Data Source dna_pnp_device
 
-The dna_pnp_device data source allows you to retrieve information about a particular DNACenter PnP device.
+The dna_pnp_device data source allows you to retrieve information about a particular Cisco DNA Center PnP device.
 
 ## Example Usage
 

@@ -2,12 +2,12 @@
 page_title: "dna_template_preview Data Source - terraform-provider-dnacenter"
 subcategory: "Configuration Templates"
 description: |-
-  The dna_template_preview data source allows you to preview a DNACenter template.
+  The dna_template_preview data source allows you to preview a Cisco DNA Center template.
 ---
 
 # Data Source dna_template_preview
 
-The dna_template_preview data source allows you to preview a DNACenter template.
+The dna_template_preview data source allows you to preview a Cisco DNA Center template.
 
 ## Example Usage
 

@@ -2,12 +2,12 @@
 page_title: "dna_pnp_vaact Data Source - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_vaact data source allows you to list DNACenter Virtual Accounts.
+  The dna_pnp_vaact data source allows you to list Cisco DNA Center Virtual Accounts.
 ---
 
 # Data Source dna_pnp_vaact
 
-The dna_pnp_vaact data source allows you to list DNACenter Virtual Accounts.
+The dna_pnp_vaact data source allows you to list Cisco DNA Center Virtual Accounts.
 
 ## Example Usage
 
@@ -26,4 +26,4 @@ data "dna_pnp_vaact" "list" {
 
 The following attributes are exported.
 
-- `items` - DNACenter Virtual Accounts.
+- `items` - Cisco DNA Center Virtual Accounts.

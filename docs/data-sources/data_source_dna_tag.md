@@ -2,12 +2,12 @@
 page_title: "dna_tag Data Source - terraform-provider-dnacenter"
 subcategory: "Tag"
 description: |-
-  The tag data source allows you to retrieve information about a particular DNACenter tag.
+  The tag data source allows you to retrieve information about a particular Cisco DNA Center tag.
 ---
 
 # Data Source dna_tag
 
-The tag data source allows you to retrieve information about a particular DNACenter order.
+The tag data source allows you to retrieve information about a particular Cisco DNA Center order.
 
 ## Example Usage
 
@@ -21,23 +21,23 @@ data "dna_tag" "found" {
 
 ## Argument Reference
 
-- `name` - (Optional) DNACenter tag name.
-- `name_space` - (Optional) DNACenter tag nameSpace.
-- `attributes` - (Optional) DNACenter tag attributes.
-- `level` - (Optional) DNACenter tag level.
-- `offset` - (Optional) DNACenter tag offset.
-- `limit` - (Optional) DNACenter tag limit.
-- `size` - (Optional) DNACenter tag size.
-- `field` - (Optional) DNACenter tag field.
-- `sort_by` - (Optional) DNACenter tag sortBy.
-- `order` - (Optional) DNACenter tag order.
-- `system_tag` - (Optional) DNACenter tag systemTag.
+- `name` - (Optional) Cisco DNA Center tag name.
+- `name_space` - (Optional) Cisco DNA Center tag nameSpace.
+- `attributes` - (Optional) Cisco DNA Center tag attributes.
+- `level` - (Optional) Cisco DNA Center tag level.
+- `offset` - (Optional) Cisco DNA Center tag offset.
+- `limit` - (Optional) Cisco DNA Center tag limit.
+- `size` - (Optional) Cisco DNA Center tag size.
+- `field` - (Optional) Cisco DNA Center tag field.
+- `sort_by` - (Optional) Cisco DNA Center tag sortBy.
+- `order` - (Optional) Cisco DNA Center tag order.
+- `system_tag` - (Optional) Cisco DNA Center tag systemTag.
 
 ## Attributes Reference
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter tag. See [Tag items](#tag-items) below for details.
+- `items` - Items in a Cisco DNA Center tag. See [Tag items](#tag-items) below for details.
 
 ### Tag items
 

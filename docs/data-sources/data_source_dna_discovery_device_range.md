@@ -2,12 +2,12 @@
 page_title: "dna_discovery_device_range Data Source - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_discovery_device_range data source allows you to retrieve information about a particular DNACenter discovery device by range.
+  The dna_discovery_device_range data source allows you to retrieve information about a particular Cisco DNA Center discovery device by range.
 ---
 
 # Data Source dna_discovery_device_range
 
-The dna_discovery_device_range data source allows you to retrieve information about a particular DNACenter discovery device by range.
+The dna_discovery_device_range data source allows you to retrieve information about a particular Cisco DNA Center discovery device by range.
 
 ## Example Usage
 
@@ -31,7 +31,7 @@ data "dna_discovery_device_range" "list" {
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter discovery device. See [Items](#items) below for details.
+- `items` - Items in a Cisco DNA Center discovery device. See [Items](#items) below for details.
 
 ### Items
 

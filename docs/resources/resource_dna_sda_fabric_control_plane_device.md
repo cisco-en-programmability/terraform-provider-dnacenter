@@ -2,12 +2,12 @@
 page_title: "dna_sda_fabric_control_plane_device Resource - terraform-provider-dnacenter"
 subcategory: "SDA"
 description: |-
-  The dna_sda_fabric_control_plane_device resource allows you to configure a DNACenter SDA control plane device.
+  The dna_sda_fabric_control_plane_device resource allows you to configure a Cisco DNA Center SDA control plane device.
 ---
 
 # Resource dna_sda_fabric_control_plane_device
 
-The dna_sda_fabric_control_plane_device resource allows you to configure a DNACenter SDA control plane device.
+The dna_sda_fabric_control_plane_device resource allows you to configure a Cisco DNA Center SDA control plane device.
 
 ## Example Usage
 

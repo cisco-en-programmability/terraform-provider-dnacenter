@@ -2,12 +2,12 @@
 page_title: "dna_network_device_credential Data Source - terraform-provider-dnacenter"
 subcategory: "Network Settings"
 description: |-
-  The dna_network_device_credential data source allows you to retrieve information about a particular DNACenter network device credentials.
+  The dna_network_device_credential data source allows you to retrieve information about a particular Cisco DNA Center network device credentials.
 ---
 
 # Data Source dna_network_device_credential
 
-The dna_network_device_credential data source allows you to retrieve information about a particular DNACenter network device credentials.
+The dna_network_device_credential data source allows you to retrieve information about a particular Cisco DNA Center network device credentials.
 
 ## Example Usage
 
@@ -26,7 +26,7 @@ data "dna_network_device_credential" "response" {
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter network device credential. See [Items](#items) below for details.
+- `items` - Items in a Cisco DNA Center network device credential. See [Items](#items) below for details.
 
 ### Items
 

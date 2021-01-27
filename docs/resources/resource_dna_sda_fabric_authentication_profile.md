@@ -2,12 +2,12 @@
 page_title: "dna_sda_fabric_authentication_profile Resource - terraform-provider-dnacenter"
 subcategory: "SDA"
 description: |-
-  The dna_sda_fabric_authentication_profile resource allows you to configure a DNACenter SDA auth profile.
+  The dna_sda_fabric_authentication_profile resource allows you to configure a Cisco DNA Center SDA auth profile.
 ---
 
 # Resource dna_sda_fabric_authentication_profile
 
-The dna_sda_fabric_authentication_profile resource allows you to configure a DNACenter SDA auth profile.
+The dna_sda_fabric_authentication_profile resource allows you to configure a Cisco DNA Center SDA auth profile.
 
 ## Example Usage
 

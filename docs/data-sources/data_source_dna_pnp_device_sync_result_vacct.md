@@ -2,12 +2,12 @@
 page_title: "dna_pnp_device_sync_result_vacct Data Source - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_device_sync_result_vacct data source retrieves the sync result for DNACenter Virtual Account.
+  The dna_pnp_device_sync_result_vacct data source retrieves the sync result for Cisco DNA Center Virtual Account.
 ---
 
 # Data Source dna_pnp_device_sync_result_vacct
 
-The dna_pnp_device_sync_result_vacct data source retrieves the sync result for DNACenter Virtual Account.
+The dna_pnp_device_sync_result_vacct data source retrieves the sync result for Cisco DNA Center Virtual Account.
 
 ## Example Usage
 

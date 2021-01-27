@@ -2,12 +2,12 @@
 page_title: "dna_applications Resource - terraform-provider-dnacenter"
 subcategory: "Application Policy"
 description: |-
-  The dna_applications resource allows you to configure a DNACenter application.
+  The dna_applications resource allows you to configure a Cisco DNA Center application.
 ---
 
 # Resource dna_applications
 
-The dna_applications resource allows you to configure a DNACenter application.
+The dna_applications resource allows you to configure a Cisco DNA Center application.
 
 ## Example Usage
 

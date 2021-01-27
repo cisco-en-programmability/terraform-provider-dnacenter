@@ -1,13 +1,13 @@
 ---
-page_title: "Provider: DNACenter"
+page_title: "Provider: Cisco DNA Center"
 subcategory: ""
 description: |-
-  Terraform provider for interacting with DNACenter SDK.
+  Terraform provider for interacting with Cisco DNA Center SDK.
 ---
 
-# DNACenter Provider
+# Cisco DNA Center Provider
 
-The DNACenter provider is used to interact with Cisco DNA Center APIs. The provider needs to be configured with the proper credentials before it can be used.
+The Cisco DNA Center provider is used to interact with Cisco DNA Center APIs. The provider needs to be configured with the proper credentials before it can be used.
 
 Use the navigation to the left to read about the available resources.
 
@@ -71,8 +71,8 @@ Do not keep your authentication password in HashiCorp for production environment
 
 ## Argument Reference
 
-- **username** - (Optional) - Username to authenticate to DNACenter API
-- **password** - (Optional) - Password to authenticate to DNACenter API
-- **base_url** - (Optional) - DNACenter address
-- **debug** - (Optional) - debug flag for DNACenter (defaults to `false`)
-- **ssl_verify** - (Optional) - ssl_verify flag for DNACenter (defaults to `true`)
+- **username** - (Optional) - Username to authenticate to Cisco DNA Center API
+- **password** - (Optional) - Password to authenticate to Cisco DNA Center API
+- **base_url** - (Optional) - Cisco DNA Center address
+- **debug** - (Optional) - debug flag for Cisco DNA Center (defaults to `false`)
+- **ssl_verify** - (Optional) - ssl_verify flag for Cisco DNA Center (defaults to `true`)

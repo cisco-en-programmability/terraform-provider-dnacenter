@@ -2,12 +2,12 @@
 page_title: "dna_pnp_workflow_count Data Source - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_workflow_count data source allows you to count the amount of DNACenter workflows.
+  The dna_pnp_workflow_count data source allows you to count the amount of Cisco DNA Center workflows.
 ---
 
 # Data Source dna_pnp_workflow_count
 
-The dna_pnp_workflow_count data source allows you to count the amount of DNACenter workflows.
+The dna_pnp_workflow_count data source allows you to count the amount of Cisco DNA Center workflows.
 
 ## Example Usage
 
@@ -26,4 +26,4 @@ data "dna_pnp_workflow_count" "amount" {
 
 The following attributes are exported.
 
-- `response` - DNACenter workflows count.
+- `response` - Cisco DNA Center workflows count.

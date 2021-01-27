@@ -2,12 +2,12 @@
 page_title: "dna_snmpv2_write_community_credential Resource - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_snmpv2_write_community_credential resource allows you to configure a DNACenter SNMPv2 write community credential.
+  The dna_snmpv2_write_community_credential resource allows you to configure a Cisco DNA Center SNMPv2 write community credential.
 ---
 
 # Resource dna_snmpv2_write_community_credential
 
-The dna_snmpv2_write_community_credential resource allows you to configure a DNACenter SNMPv2 write community credential.
+The dna_snmpv2_write_community_credential resource allows you to configure a Cisco DNA Center SNMPv2 write community credential.
 
 ## Example Usage
 
@@ -25,7 +25,7 @@ resource "dna_snmpv2_write_community_credential" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter SNMPv2 write community credential. See [Credential item](#credential-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center SNMPv2 write community credential. See [Credential item](#credential-item) below for details.
 
 ### Credential item
 

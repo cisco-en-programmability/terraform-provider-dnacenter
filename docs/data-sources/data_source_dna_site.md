@@ -2,12 +2,12 @@
 page_title: "dna_site Data Source - terraform-provider-dnacenter"
 subcategory: "Sites"
 description: |-
-  The dna_site data source allows you to retrieve information about a particular DNACenter site.
+  The dna_site data source allows you to retrieve information about a particular Cisco DNA Center site.
 ---
 
 # Data Source dna_site
 
-The dna_site data source allows you to retrieve information about a particular DNACenter site.
+The dna_site data source allows you to retrieve information about a particular Cisco DNA Center site.
 
 ## Example Usage
 

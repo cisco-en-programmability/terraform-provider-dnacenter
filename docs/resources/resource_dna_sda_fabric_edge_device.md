@@ -2,12 +2,12 @@
 page_title: "dna_sda_fabric_edge_device Resource - terraform-provider-dnacenter"
 subcategory: "SDA"
 description: |-
-  The dna_sda_fabric_edge_device resource allows you to configure a DNACenter SDA edge device.
+  The dna_sda_fabric_edge_device resource allows you to configure a Cisco DNA Center SDA edge device.
 ---
 
 # Resource dna_sda_fabric_edge_device
 
-The dna_sda_fabric_edge_device resource allows you to configure a DNACenter SDA edge device.
+The dna_sda_fabric_edge_device resource allows you to configure a Cisco DNA Center SDA edge device.
 
 ## Example Usage
 

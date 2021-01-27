@@ -2,12 +2,12 @@
 page_title: "dna_pnp_workflow Resource - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_workflow resource allows you to configure a DNACenter PnP workflow.
+  The dna_pnp_workflow resource allows you to configure a Cisco DNA Center PnP workflow.
 ---
 
 # Resource dna_pnp_workflow
 
-The dna_pnp_workflow resource allows you to configure a DNACenter PnP workflow.
+The dna_pnp_workflow resource allows you to configure a Cisco DNA Center PnP workflow.
 
 ## Example Usage
 
@@ -32,7 +32,7 @@ resource "dna_pnp_workflow" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in the DNACenter PnP workflow. See [Workflow item](#workflow-item) below for details.
+- `item` - (Required) Item in the Cisco DNA Center PnP workflow. See [Workflow item](#workflow-item) below for details.
 
 ### Workflow item
 

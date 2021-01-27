@@ -2,12 +2,12 @@
 page_title: "dna_tag Resource - terraform-provider-dnacenter"
 subcategory: "Tag"
 description: |-
-  The dna_tag resource allows you to configure a DNACenter tag.
+  The dna_tag resource allows you to configure a Cisco DNA Center tag.
 ---
 
 # Resource dna_tag
 
-The dna_tag resource allows you to configure a DNACenter tag.
+The dna_tag resource allows you to configure a Cisco DNA Center tag.
 
 ## Example Usage
 
@@ -33,7 +33,7 @@ resource "dna_tag" "data" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter tag. See [Tag item](#tag-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center tag. See [Tag item](#tag-item) below for details.
 
 ### Tag item
 

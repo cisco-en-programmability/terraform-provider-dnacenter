@@ -2,12 +2,12 @@
 page_title: "dna_pnp_device_config_preview Data Source - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_device_config_preview data source allows you to preview a DNACenter PnP device config.
+  The dna_pnp_device_config_preview data source allows you to preview a Cisco DNA Center PnP device config.
 ---
 
 # Data Source dna_pnp_device_config_preview
 
-The dna_pnp_device_config_preview data source allows you to preview a DNACenter PnP device config.
+The dna_pnp_device_config_preview data source allows you to preview a Cisco DNA Center PnP device config.
 
 ## Example Usage
 

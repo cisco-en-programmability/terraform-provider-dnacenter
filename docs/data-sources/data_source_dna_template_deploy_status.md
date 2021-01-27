@@ -2,12 +2,12 @@
 page_title: "dna_template_deploy_status Data Source - terraform-provider-dnacenter"
 subcategory: "Configuration Templates"
 description: |-
-  The dna_template_deploy_status data source allows you to retrieve information about a particular DNACenter template deploy status.
+  The dna_template_deploy_status data source allows you to retrieve information about a particular Cisco DNA Center template deploy status.
 ---
 
 # Data Source dna_template_deploy_status
 
-The dna_template_deploy_status data source allows you to retrieve information about a particular DNACenter template deploy status.
+The dna_template_deploy_status data source allows you to retrieve information about a particular Cisco DNA Center template deploy status.
 
 ## Example Usage
 

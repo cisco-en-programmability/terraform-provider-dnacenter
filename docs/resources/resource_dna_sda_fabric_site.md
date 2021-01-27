@@ -2,12 +2,12 @@
 page_title: "dna_sda_fabric_site Resource - terraform-provider-dnacenter"
 subcategory: "SDA"
 description: |-
-  The dna_sda_fabric_site resource allows you to configure a DNACenter SDA site.
+  The dna_sda_fabric_site resource allows you to configure a Cisco DNA Center SDA site.
 ---
 
 # Resource dna_sda_fabric_site
 
-The dna_sda_fabric_site resource allows you to configure a DNACenter SDA site.
+The dna_sda_fabric_site resource allows you to configure a Cisco DNA Center SDA site.
 
 ## Example Usage
 

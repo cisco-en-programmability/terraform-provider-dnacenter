@@ -26,7 +26,7 @@ resource "dna_network_credential_site_assignment" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter assignment. See [Credential item](#credential-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center assignment. See [Credential item](#credential-item) below for details.
 
 - `site_id` - (Required) The site id.
 - `cli` - (Optional) The CLI credential to assign. See [Credential item](#credential-item) below for details.

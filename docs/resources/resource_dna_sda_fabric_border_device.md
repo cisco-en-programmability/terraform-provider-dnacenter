@@ -2,12 +2,12 @@
 page_title: "dna_sda_fabric_border_device Resource - terraform-provider-dnacenter"
 subcategory: "SDA"
 description: |-
-  The dna_sda_fabric_border_device resource allows you to configure a DNACenter SDA border device.
+  The dna_sda_fabric_border_device resource allows you to configure a Cisco DNA Center SDA border device.
 ---
 
 # Resource dna_sda_fabric_border_device
 
-The dna_sda_fabric_border_device resource allows you to configure a DNACenter SDA border device.
+The dna_sda_fabric_border_device resource allows you to configure a Cisco DNA Center SDA border device.
 
 ## Example Usage
 
@@ -49,7 +49,7 @@ resource "dna_sda_fabric_border_device" "response" {
 
 ### Device item
 
-All of this elements are computed. Check the GET method for fabric border device from the DNACenter API for more details.
+All of this elements are computed. Check the GET method for fabric border device from the Cisco DNA Center API for more details.
 
 ### external_connectivity_settings
 

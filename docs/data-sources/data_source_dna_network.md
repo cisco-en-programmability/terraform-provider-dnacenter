@@ -2,12 +2,12 @@
 page_title: "dna_network Data Source - terraform-provider-dnacenter"
 subcategory: "Network Settings"
 description: |-
-  The dna_network data source allows you to retrieve information about a particular DNACenter networks.
+  The dna_network data source allows you to retrieve information about a particular Cisco DNA Center networks.
 ---
 
 # Data Source dna_network
 
-The dna_network data source allows you to retrieve information about a particular DNACenter networks.
+The dna_network data source allows you to retrieve information about a particular Cisco DNA Center networks.
 
 ## Example Usage
 
@@ -26,7 +26,7 @@ data "dna_network" "response" {
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter network. See [Items](#items) below for details.
+- `items` - Items in a Cisco DNA Center network. See [Items](#items) below for details.
 
 ### Items
 

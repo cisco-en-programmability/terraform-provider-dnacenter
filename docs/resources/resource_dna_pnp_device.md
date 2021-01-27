@@ -2,12 +2,12 @@
 page_title: "dna_pnp_device Resource - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_device resource allows you to configure a DNACenter PnP device.
+  The dna_pnp_device resource allows you to configure a Cisco DNA Center PnP device.
 ---
 
 # Resource dna_pnp_device
 
-The dna_pnp_device resource allows you to configure a DNACenter PnP device.
+The dna_pnp_device resource allows you to configure a Cisco DNA Center PnP device.
 
 ## Example Usage
 
@@ -24,7 +24,7 @@ resource "dna_pnp_device" "response" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter PnP device. See [Device item](#device-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center PnP device. See [Device item](#device-item) below for details.
 
 ### Device item
 

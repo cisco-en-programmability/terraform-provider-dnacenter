@@ -2,12 +2,12 @@
 page_title: "dna_pnp_device_history Data Source - terraform-provider-dnacenter"
 subcategory: "Device Onboarding PnP"
 description: |-
-  The dna_pnp_device_history data source allows you to retrieve information about a particular DNACenter PnP device history.
+  The dna_pnp_device_history data source allows you to retrieve information about a particular Cisco DNA Center PnP device history.
 ---
 
 # Data Source dna_pnp_device_history
 
-The dna_pnp_device_history data source allows you to retrieve information about a particular DNACenter PnP device history.
+The dna_pnp_device_history data source allows you to retrieve information about a particular Cisco DNA Center PnP device history.
 
 ## Example Usage
 
@@ -28,7 +28,7 @@ data "dna_pnp_device_history" "response" {
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter PnP device history. See [Items](#items) below for details.
+- `items` - Items in a Cisco DNA Center PnP device history. See [Items](#items) below for details.
 
 ### Items
 

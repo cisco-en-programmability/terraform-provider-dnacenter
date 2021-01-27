@@ -2,12 +2,12 @@
 page_title: "dna_tag_member Data Source - terraform-provider-dnacenter"
 subcategory: "Tag"
 description: |-
-  The dna_tag_member data source allows you to retrieve information about a particular DNACenter tag member.
+  The dna_tag_member data source allows you to retrieve information about a particular Cisco DNA Center tag member.
 ---
 
 # Data Source dna_tag_member
 
-The dna_tag_member data source allows you to retrieve information about a particular DNACenter tag member.
+The dna_tag_member data source allows you to retrieve information about a particular Cisco DNA Center tag member.
 
 ## Example Usage
 

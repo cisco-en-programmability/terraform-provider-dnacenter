@@ -2,12 +2,12 @@
 page_title: "dna_site Resource - terraform-provider-dnacenter"
 subcategory: "Sites"
 description: |-
-  The dna_site resource allows you to configure a DNACenter site.
+  The dna_site resource allows you to configure a Cisco DNA Center site.
 ---
 
 # Resource dna_site
 
-The dna_site resource allows you to configure a DNACenter site.
+The dna_site resource allows you to configure a Cisco DNA Center site.
 
 ## Example Usage
 
@@ -61,7 +61,7 @@ resource "dna_site" "floor" {
 
 ## Argument Reference
 
-- `item` - (Required) Item in a DNACenter site. See [Site item](#site-item) below for details.
+- `item` - (Required) Item in a Cisco DNA Center site. See [Site item](#site-item) below for details.
 
 ### Site item
 
@@ -89,7 +89,7 @@ Each site item of type **floor** contains `height`, `length`, `rf_model` and `wi
 In addition to all the arguments above, the following attributes are exported.
 
 - `last_updated` - The site's updated time with format RFC850.
-- `item` - Item in a DNACenter site. See [Site item](#site-item-1) below for details.
+- `item` - Item in a Cisco DNA Center site. See [Site item](#site-item-1) below for details.
 
 ### Site item
 

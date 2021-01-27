@@ -2,12 +2,12 @@
 page_title: "dna_discovery_snmp_property Data Source - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_discovery_snmp_property data source allows you to retrieve information about a particular DNACenter discovery SNMP properties.
+  The dna_discovery_snmp_property data source allows you to retrieve information about a particular Cisco DNA Center discovery SNMP properties.
 ---
 
 # Data Source dna_discovery_snmp_property
 
-The dna_discovery_snmp_property data source allows you to retrieve information about a particular DNACenter discovery SNMP properties.
+The dna_discovery_snmp_property data source allows you to retrieve information about a particular Cisco DNA Center discovery SNMP properties.
 
 ## Example Usage
 
@@ -21,7 +21,7 @@ data "dna_discovery_snmp_property" "response" {
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter discovery SNMP property. See [Items](#items) below for details.
+- `items` - Items in a Cisco DNA Center discovery SNMP property. See [Items](#items) below for details.
 
 ### Items
 

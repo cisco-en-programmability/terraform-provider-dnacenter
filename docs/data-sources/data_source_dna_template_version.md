@@ -2,12 +2,12 @@
 page_title: "dna_template_version Data Source - terraform-provider-dnacenter"
 subcategory: "Configuration Templates"
 description: |-
-  The dna_template_version data source allows you to retrieve information about a particular DNACenter template version.
+  The dna_template_version data source allows you to retrieve information about a particular Cisco DNA Center template version.
 ---
 
 # Data Source dna_template_version
 
-The dna_template_version data source allows you to retrieve information about a particular DNACenter template version.
+The dna_template_version data source allows you to retrieve information about a particular Cisco DNA Center template version.
 
 ## Example Usage
 

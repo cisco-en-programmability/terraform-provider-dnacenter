@@ -2,12 +2,12 @@
 page_title: "dna_sda_fabric_ip_pool_in_vn Resource - terraform-provider-dnacenter"
 subcategory: "SDA"
 description: |-
-  The dna_sda_fabric_ip_pool_in_vn resource allows you to configure a DNACenter SDA IP pool in Virtual Network.
+  The dna_sda_fabric_ip_pool_in_vn resource allows you to configure a Cisco DNA Center SDA IP pool in Virtual Network.
 ---
 
 # Resource dna_sda_fabric_ip_pool_in_vn
 
-The dna_sda_fabric_ip_pool_in_vn resource allows you to configure a DNACenter SDA IP pool in Virtual Network.
+The dna_sda_fabric_ip_pool_in_vn resource allows you to configure a Cisco DNA Center SDA IP pool in Virtual Network.
 
 ## Example Usage
 

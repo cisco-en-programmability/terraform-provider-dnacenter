@@ -2,12 +2,12 @@
 page_title: "dna_global_credentials Data Source - terraform-provider-dnacenter"
 subcategory: "Discovery"
 description: |-
-  The dna_global_credentials data source allows you to retrieve information about a particular DNACenter global credentials.
+  The dna_global_credentials data source allows you to retrieve information about a particular Cisco DNA Center global credentials.
 ---
 
 # Data Source dna_global_credentials
 
-The dna_global_credentials data source allows you to retrieve information about a particular DNACenter global credentials.
+The dna_global_credentials data source allows you to retrieve information about a particular Cisco DNA Center global credentials.
 
 ## Example Usage
 
@@ -28,7 +28,7 @@ data "dna_global_credentials" "response" {
 
 The following attributes are exported.
 
-- `items` - Items in a DNACenter global credential. See [Items](#items) below for details.
+- `items` - Items in a Cisco DNA Center global credential. See [Items](#items) below for details.
 
 ### Items
 
