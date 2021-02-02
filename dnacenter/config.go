@@ -23,8 +23,8 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 		if err != nil {
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
-				Summary:  "Unable to create DNA Center client",
-				Detail:   "Unable to authorize user for DNA Center client",
+				Summary:  "Unable to create Cisco DNA Center client",
+				Detail:   "Unable to authorize user for Cisco DNA Center client",
 			})
 			return nil, diags
 		}
@@ -36,8 +36,8 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Unable to create DNA Center client",
-			Detail:   "Unable to auth user for DNA Center client. Required values are baseURL, username, password",
+			Summary:  "Unable to create Cisco DNA Center client",
+			Detail:   "Unable to auth user for Cisco DNA Center client. Required values are baseURL, username, password",
 		})
 		return nil, diags
 	}
