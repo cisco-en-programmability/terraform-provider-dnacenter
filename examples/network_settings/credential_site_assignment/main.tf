@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      versions = ["0.2"]
+      versions = ["0.0.3"]
       source   = "hashicorp.com/edu/dnacenter"
     }
   }
