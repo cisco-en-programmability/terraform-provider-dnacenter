@@ -38,6 +38,9 @@ override.tf.json
 terraform.rc
 terraform
 
+# Ignore terraform init lock files
+*.terraform.lock.hcl
+
 # Ignore Go vendor
 vendor/
 
