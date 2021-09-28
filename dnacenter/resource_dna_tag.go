@@ -49,7 +49,7 @@ func resourceTag() *schema.Resource {
 						},
 						"instance_tenant_id": &schema.Schema{
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"dynamic_rules": &schema.Schema{
 							Type:     schema.TypeList,
@@ -110,11 +110,14 @@ func resourceTag() *schema.Resource {
 
 func constructUpdateTag(tagID string, tag map[string]interface{}) *dnac.UpdateTagRequest {
 	tagRequest := dnac.UpdateTagRequest{
-		ID:               tagID,
-		SystemTag:        tag["system_tag"].(bool),
-		Description:      tag["description"].(string),
-		Name:             tag["name"].(string),
-		InstanceTenantID: tag["instance_tenant_id"].(string),
+		ID:          tagID,
+		SystemTag:   tag["system_tag"].(bool),
+		Description: tag["description"].(string),
+		Name:        tag["name"].(string),
+	}
+	dataInstanceTenantID, okInstanceTenantID := tag["instance_tenant_id"]
+	if okInstanceTenantID {
+		tagRequest.InstanceTenantID = dataInstanceTenantID.(string)
 	}
 
 	if _, ok := tag["dynamic_rules"]; ok {
@@ -166,10 +169,13 @@ func constructUpdateTag(tagID string, tag map[string]interface{}) *dnac.UpdateTa
 
 func constructCreateTag(tag map[string]interface{}) *dnac.CreateTagRequest {
 	tagRequest := dnac.CreateTagRequest{
-		SystemTag:        tag["system_tag"].(bool),
-		Description:      tag["description"].(string),
-		Name:             tag["name"].(string),
-		InstanceTenantID: tag["instance_tenant_id"].(string),
+		SystemTag:   tag["system_tag"].(bool),
+		Description: tag["description"].(string),
+		Name:        tag["name"].(string),
+	}
+	dataInstanceTenantID, okInstanceTenantID := tag["instance_tenant_id"]
+	if okInstanceTenantID {
+		tagRequest.InstanceTenantID = dataInstanceTenantID.(string)
 	}
 
 	if _, ok := tag["dynamic_rules"]; ok {
