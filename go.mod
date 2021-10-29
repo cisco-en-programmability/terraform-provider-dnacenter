@@ -3,7 +3,7 @@ module terraform-provider-dnacenter
 go 1.17
 
 require (
-	github.com/cisco-en-programmability/dnacenter-go-sdk v0.0.0-20210304164737-86a561b1c56b
+	github.com/cisco-en-programmability/dnacenter-go-sdk v0.1.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.8.0
 )
 
@@ -17,10 +17,10 @@ require (
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fatih/color v1.7.0 // indirect
-	github.com/go-resty/resty/v2 v2.3.0 // indirect
+	github.com/go-resty/resty/v2 v2.6.0 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
-	github.com/google/go-querystring v1.0.0 // indirect
+	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.0.5 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-checkpoint v0.5.0 // indirect
@@ -58,7 +58,7 @@ require (
 	golang.org/x/crypto v0.0.0-20210421170649-83a5a9bb288b // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/mod v0.3.0 // indirect
-	golang.org/x/net v0.0.0-20210326060303-6b1517762897 // indirect
+	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4 // indirect
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d // indirect
 	golang.org/x/sys v0.0.0-20210502180810-71e4cd670f79 // indirect
 	golang.org/x/text v0.3.5 // indirect
