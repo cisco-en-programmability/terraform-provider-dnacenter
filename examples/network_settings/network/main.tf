@@ -23,7 +23,7 @@ output "dna_network_response" {
 resource "dna_network" "response1" {
   provider = dnacenter
   item {
-    site_id = "a013dd15-69a3-423f-82dc-c6a10eba2cb7"
+    site_id = "2397da83-4e12-4d04-9bd3-a57b2ad91652"
     # client_and_endpoint_aaa {
     #   ip_address    = ""
     #   network       = ""

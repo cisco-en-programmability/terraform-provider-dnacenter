@@ -2,10 +2,11 @@ package dnacenter
 
 import (
 	"context"
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"log"
 	"strings"
 	"time"
+
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -205,7 +206,7 @@ func resourceNetworkGlobalIPPoolCreate(ctx context.Context, d *schema.ResourceDa
 	item := items.(map[string]interface{})
 
 	var id string
-	if v, ok := item["id"]; ok {
+	if v, ok := item["id"]; ok && v != nil {
 		id = v.(string)
 	}
 	ipPoolName := item["ip_pool_name"].(string)
@@ -215,12 +216,12 @@ func resourceNetworkGlobalIPPoolCreate(ctx context.Context, d *schema.ResourceDa
 	ipAddressSpace := d.Get("ip_address_space").(string)
 
 	var dhcpServerIPs *[]string
-	if v, ok := item["dhcp_server_ips"]; ok {
+	if v, ok := item["dhcp_server_ips"]; ok && v != nil {
 		dhcpServerIPtmp := convertSliceInterfaceToSliceString(v.([]interface{}))
 		dhcpServerIPs = &dhcpServerIPtmp
 	}
 	var dnsServerIPs *[]string
-	if v, ok := item["dns_server_ips"]; ok {
+	if v, ok := item["dns_server_ips"]; ok && v != nil {
 		dnsServerIPstmp := convertSliceInterfaceToSliceString(v.([]interface{}))
 		dnsServerIPs = &dnsServerIPstmp
 	}
@@ -239,7 +240,7 @@ func resourceNetworkGlobalIPPoolCreate(ctx context.Context, d *schema.ResourceDa
 		// Check if element already exists
 		_, performUpdate, foundValue := hasGlobalPool(searchResponse, &userRequest)
 		log.Printf("performUpdate %v, foundValue %v", performUpdate, foundValue)
-		if performUpdate {
+		if performUpdate && foundValue != nil {
 			id = foundValue.ID
 			updateRequest := dnac.UpdateGlobalPoolRequest{
 				Settings: dnac.UpdateGlobalPoolRequestSettings{
@@ -312,11 +313,12 @@ func resourceNetworkGlobalIPPoolCreate(ctx context.Context, d *schema.ResourceDa
 
 	if err == nil && searchResponse2 != nil {
 		_, _, foundValue2 := hasGlobalPool(searchResponse2, &userRequest)
-
-		// Update resource id
-		d.SetId(foundValue2.ID)
-		resourceNetworkGlobalIPPoolRead(ctx, d, m)
-		return diags
+		if foundValue2 != nil {
+			// Update resource id
+			d.SetId(foundValue2.ID)
+			resourceNetworkGlobalIPPoolRead(ctx, d, m)
+			return diags
+		}
 	}
 
 	diags = append(diags, diag.Diagnostic{
@@ -383,12 +385,12 @@ func resourceNetworkGlobalIPPoolUpdate(ctx context.Context, d *schema.ResourceDa
 		gateways := d.Get("gateway").(string)
 
 		var dhcpServerIPs *[]string
-		if v, ok := item["dhcp_server_ips"]; ok {
+		if v, ok := item["dhcp_server_ips"]; ok && v != nil {
 			dhcpServerIPtmp := convertSliceInterfaceToSliceString(v.([]interface{}))
 			dhcpServerIPs = &dhcpServerIPtmp
 		}
 		var dnsServerIPs *[]string
-		if v, ok := item["dns_server_ips"]; ok {
+		if v, ok := item["dns_server_ips"]; ok && v != nil {
 			dnsServerIPstmp := convertSliceInterfaceToSliceString(v.([]interface{}))
 			dnsServerIPs = &dnsServerIPstmp
 		}

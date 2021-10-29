@@ -3,11 +3,12 @@ package dnacenter
 import (
 	"context"
 	"fmt"
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"log"
 	"strconv"
 	"strings"
 	"time"
+
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -250,19 +251,19 @@ func constructUpdateNetworkClientAndEndpointAAA(response []interface{}) *dnac.Up
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["ip_address"]; ok {
+		if v, ok := ci["ip_address"]; ok && v != nil {
 			result.IPAddress = v.(string)
 		}
-		if v, ok := ci["network"]; ok {
+		if v, ok := ci["network"]; ok && v != nil {
 			result.Network = v.(string)
 		}
-		if v, ok := ci["protocol"]; ok {
+		if v, ok := ci["protocol"]; ok && v != nil {
 			result.Protocol = v.(string)
 		}
-		if v, ok := ci["servers"]; ok {
+		if v, ok := ci["servers"]; ok && v != nil {
 			result.Servers = v.(string)
 		}
-		if v, ok := ci["shared_secret"]; ok {
+		if v, ok := ci["shared_secret"]; ok && v != nil {
 			result.SharedSecret = v.(string)
 		}
 		return &result
@@ -275,13 +276,13 @@ func constructUpdateNetworkDNSServer(response []interface{}) *dnac.UpdateNetwork
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["domain_name"]; ok {
+		if v, ok := ci["domain_name"]; ok && v != nil {
 			result.DomainName = v.(string)
 		}
-		if v, ok := ci["primary_ip_address"]; ok {
+		if v, ok := ci["primary_ip_address"]; ok && v != nil {
 			result.PrimaryIPAddress = v.(string)
 		}
-		if v, ok := ci["secondary_ip_address"]; ok {
+		if v, ok := ci["secondary_ip_address"]; ok && v != nil {
 			result.SecondaryIPAddress = v.(string)
 		}
 		return &result
@@ -294,10 +295,10 @@ func constructUpdateNetworkMessageOfTheday(response []interface{}) *dnac.UpdateN
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["banner_message"]; ok {
+		if v, ok := ci["banner_message"]; ok && v != nil {
 			result.BannerMessage = v.(string)
 		}
-		if v, ok := ci["retain_existing_banner"]; ok {
+		if v, ok := ci["retain_existing_banner"]; ok && v != nil {
 			result.RetainExistingBanner = v.(bool)
 		}
 
@@ -311,10 +312,10 @@ func constructUpdateNetworkNetflowcollector(response []interface{}) *dnac.Update
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["ip_address"]; ok {
+		if v, ok := ci["ip_address"]; ok && v != nil {
 			result.IPAddress = v.(string)
 		}
-		if v, ok := ci["port"]; ok {
+		if v, ok := ci["port"]; ok && v != nil {
 			result.Port = v.(float64)
 		}
 
@@ -328,19 +329,19 @@ func constructUpdateNetworkNetworkAAA(response []interface{}) *dnac.UpdateNetwor
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["ip_address"]; ok {
+		if v, ok := ci["ip_address"]; ok && v != nil {
 			result.IPAddress = v.(string)
 		}
-		if v, ok := ci["network"]; ok {
+		if v, ok := ci["network"]; ok && v != nil {
 			result.Network = v.(string)
 		}
-		if v, ok := ci["protocol"]; ok {
+		if v, ok := ci["protocol"]; ok && v != nil {
 			result.Protocol = v.(string)
 		}
-		if v, ok := ci["servers"]; ok {
+		if v, ok := ci["servers"]; ok && v != nil {
 			result.Servers = v.(string)
 		}
-		if v, ok := ci["shared_secret"]; ok {
+		if v, ok := ci["shared_secret"]; ok && v != nil {
 			result.SharedSecret = v.(string)
 		}
 
@@ -354,7 +355,7 @@ func constructUpdateNetworkSNMPServer(response []interface{}) *dnac.UpdateNetwor
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["configure_dnac_ip"]; ok {
+		if v, ok := ci["configure_dnac_ip"]; ok && v != nil {
 			result.ConfigureDnacIP = v.(bool)
 		}
 		if v, ok := ci["ip_addresses"]; ok && v != nil {
@@ -371,7 +372,7 @@ func constructUpdateNetworkSyslogServer(response []interface{}) *dnac.UpdateNetw
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["configure_dnac_ip"]; ok {
+		if v, ok := ci["configure_dnac_ip"]; ok && v != nil {
 			result.ConfigureDnacIP = v.(bool)
 		}
 		if v, ok := ci["ip_addresses"]; ok && v != nil {
@@ -389,7 +390,7 @@ func constructUpdateNetwork(response []interface{}) *dnac.UpdateNetworkRequest {
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["client_and_endpoint_aaa"]; ok {
+		if v, ok := ci["client_and_endpoint_aaa"]; ok && v != nil {
 			if w := constructUpdateNetworkClientAndEndpointAAA(v.([]interface{})); w != nil {
 				resultSettings.ClientAndEndpointAAA = w
 			}
@@ -397,22 +398,22 @@ func constructUpdateNetwork(response []interface{}) *dnac.UpdateNetworkRequest {
 		if v, ok := ci["dhcp_server"]; ok && v != nil {
 			resultSettings.DhcpServer = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := ci["dns_server"]; ok {
+		if v, ok := ci["dns_server"]; ok && v != nil {
 			if w := constructUpdateNetworkDNSServer(v.([]interface{})); w != nil {
 				resultSettings.DNSServer = w
 			}
 		}
-		if v, ok := ci["message_of_theday"]; ok {
+		if v, ok := ci["message_of_theday"]; ok && v != nil {
 			if w := constructUpdateNetworkMessageOfTheday(v.([]interface{})); w != nil {
 				resultSettings.MessageOfTheday = w
 			}
 		}
-		if v, ok := ci["netflowcollector"]; ok {
+		if v, ok := ci["netflowcollector"]; ok && v != nil {
 			if w := constructUpdateNetworkNetflowcollector(v.([]interface{})); w != nil {
 				resultSettings.Netflowcollector = w
 			}
 		}
-		if v, ok := ci["network_aaa"]; ok {
+		if v, ok := ci["network_aaa"]; ok && v != nil {
 			if w := constructUpdateNetworkNetworkAAA(v.([]interface{})); w != nil {
 				resultSettings.NetworkAAA = w
 			}
@@ -420,17 +421,17 @@ func constructUpdateNetwork(response []interface{}) *dnac.UpdateNetworkRequest {
 		if v, ok := ci["ntp_server"]; ok && v != nil {
 			resultSettings.NtpServer = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := ci["snmp_server"]; ok {
+		if v, ok := ci["snmp_server"]; ok && v != nil {
 			if w := constructUpdateNetworkSNMPServer(v.([]interface{})); w != nil {
 				resultSettings.SNMPServer = w
 			}
 		}
-		if v, ok := ci["syslog_server"]; ok {
+		if v, ok := ci["syslog_server"]; ok && v != nil {
 			if w := constructUpdateNetworkSyslogServer(v.([]interface{})); w != nil {
 				resultSettings.SyslogServer = w
 			}
 		}
-		if v, ok := ci["timezone"]; ok {
+		if v, ok := ci["timezone"]; ok && v != nil {
 			resultSettings.Timezone = v.(string)
 		}
 	}
@@ -444,19 +445,19 @@ func constructCreateNetworkClientAndEndpointAAA(response []interface{}) *dnac.Cr
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["ip_address"]; ok {
+		if v, ok := ci["ip_address"]; ok && v != nil {
 			result.IPAddress = v.(string)
 		}
-		if v, ok := ci["network"]; ok {
+		if v, ok := ci["network"]; ok && v != nil {
 			result.Network = v.(string)
 		}
-		if v, ok := ci["protocol"]; ok {
+		if v, ok := ci["protocol"]; ok && v != nil {
 			result.Protocol = v.(string)
 		}
-		if v, ok := ci["servers"]; ok {
+		if v, ok := ci["servers"]; ok && v != nil {
 			result.Servers = v.(string)
 		}
-		if v, ok := ci["shared_secret"]; ok {
+		if v, ok := ci["shared_secret"]; ok && v != nil {
 			result.SharedSecret = v.(string)
 		}
 		return &result
@@ -469,13 +470,13 @@ func constructCreateNetworkDNSServer(response []interface{}) *dnac.CreateNetwork
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["domain_name"]; ok {
+		if v, ok := ci["domain_name"]; ok && v != nil {
 			result.DomainName = v.(string)
 		}
-		if v, ok := ci["primary_ip_address"]; ok {
+		if v, ok := ci["primary_ip_address"]; ok && v != nil {
 			result.PrimaryIPAddress = v.(string)
 		}
-		if v, ok := ci["secondary_ip_address"]; ok {
+		if v, ok := ci["secondary_ip_address"]; ok && v != nil {
 			result.SecondaryIPAddress = v.(string)
 		}
 		return &result
@@ -488,10 +489,10 @@ func constructCreateNetworkMessageOfTheday(response []interface{}) *dnac.CreateN
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["banner_message"]; ok {
+		if v, ok := ci["banner_message"]; ok && v != nil {
 			result.BannerMessage = v.(string)
 		}
-		if v, ok := ci["retain_existing_banner"]; ok {
+		if v, ok := ci["retain_existing_banner"]; ok && v != nil {
 			result.RetainExistingBanner = v.(bool)
 		}
 
@@ -505,10 +506,10 @@ func constructCreateNetworkNetflowcollector(response []interface{}) *dnac.Create
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["ip_address"]; ok {
+		if v, ok := ci["ip_address"]; ok && v != nil {
 			result.IPAddress = v.(string)
 		}
-		if v, ok := ci["port"]; ok {
+		if v, ok := ci["port"]; ok && v != nil {
 			result.Port = v.(float64)
 		}
 
@@ -522,19 +523,19 @@ func constructCreateNetworkNetworkAAA(response []interface{}) *dnac.CreateNetwor
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["ip_address"]; ok {
+		if v, ok := ci["ip_address"]; ok && v != nil {
 			result.IPAddress = v.(string)
 		}
-		if v, ok := ci["network"]; ok {
+		if v, ok := ci["network"]; ok && v != nil {
 			result.Network = v.(string)
 		}
-		if v, ok := ci["protocol"]; ok {
+		if v, ok := ci["protocol"]; ok && v != nil {
 			result.Protocol = v.(string)
 		}
-		if v, ok := ci["servers"]; ok {
+		if v, ok := ci["servers"]; ok && v != nil {
 			result.Servers = v.(string)
 		}
-		if v, ok := ci["shared_secret"]; ok {
+		if v, ok := ci["shared_secret"]; ok && v != nil {
 			result.SharedSecret = v.(string)
 		}
 
@@ -548,7 +549,7 @@ func constructCreateNetworkSNMPServer(response []interface{}) *dnac.CreateNetwor
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["configure_dnac_ip"]; ok {
+		if v, ok := ci["configure_dnac_ip"]; ok && v != nil {
 			result.ConfigureDnacIP = v.(bool)
 		}
 		if v, ok := ci["ip_addresses"]; ok && v != nil {
@@ -565,7 +566,7 @@ func constructCreateNetworkSyslogServer(response []interface{}) *dnac.CreateNetw
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["configure_dnac_ip"]; ok {
+		if v, ok := ci["configure_dnac_ip"]; ok && v != nil {
 			result.ConfigureDnacIP = v.(bool)
 		}
 		if v, ok := ci["ip_addresses"]; ok && v != nil {
@@ -583,7 +584,7 @@ func constructCreateNetwork(response []interface{}) *dnac.CreateNetworkRequest {
 		item := response[0]
 		ci := item.(map[string]interface{})
 
-		if v, ok := ci["client_and_endpoint_aaa"]; ok {
+		if v, ok := ci["client_and_endpoint_aaa"]; ok && v != nil {
 			if w := constructCreateNetworkClientAndEndpointAAA(v.([]interface{})); w != nil {
 				resultSettings.ClientAndEndpointAAA = *w
 			}
@@ -591,22 +592,22 @@ func constructCreateNetwork(response []interface{}) *dnac.CreateNetworkRequest {
 		if v, ok := ci["dhcp_server"]; ok && v != nil {
 			resultSettings.DhcpServer = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := ci["dns_server"]; ok {
+		if v, ok := ci["dns_server"]; ok && v != nil {
 			if w := constructCreateNetworkDNSServer(v.([]interface{})); w != nil {
 				resultSettings.DNSServer = *w
 			}
 		}
-		if v, ok := ci["message_of_theday"]; ok {
+		if v, ok := ci["message_of_theday"]; ok && v != nil {
 			if w := constructCreateNetworkMessageOfTheday(v.([]interface{})); w != nil {
 				resultSettings.MessageOfTheday = *w
 			}
 		}
-		if v, ok := ci["netflowcollector"]; ok {
+		if v, ok := ci["netflowcollector"]; ok && v != nil {
 			if w := constructCreateNetworkNetflowcollector(v.([]interface{})); w != nil {
 				resultSettings.Netflowcollector = *w
 			}
 		}
-		if v, ok := ci["network_aaa"]; ok {
+		if v, ok := ci["network_aaa"]; ok && v != nil {
 			if w := constructCreateNetworkNetworkAAA(v.([]interface{})); w != nil {
 				resultSettings.NetworkAAA = *w
 			}
@@ -614,17 +615,17 @@ func constructCreateNetwork(response []interface{}) *dnac.CreateNetworkRequest {
 		if v, ok := ci["ntp_server"]; ok && v != nil {
 			resultSettings.NtpServer = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := ci["snmp_server"]; ok {
+		if v, ok := ci["snmp_server"]; ok && v != nil {
 			if w := constructCreateNetworkSNMPServer(v.([]interface{})); w != nil {
 				resultSettings.SNMPServer = *w
 			}
 		}
-		if v, ok := ci["syslog_server"]; ok {
+		if v, ok := ci["syslog_server"]; ok && v != nil {
 			if w := constructCreateNetworkSyslogServer(v.([]interface{})); w != nil {
 				resultSettings.SyslogServer = *w
 			}
 		}
-		if v, ok := ci["timezone"]; ok {
+		if v, ok := ci["timezone"]; ok && v != nil {
 			resultSettings.Timezone = v.(string)
 		}
 	}
@@ -639,25 +640,25 @@ func networkSimplified(response *dnac.GetNetworkResponse) *dnac.CreateNetworkReq
 			if strings.HasPrefix(item.Key, "aaa.endpoint.server") {
 				if len(item.Value) > 0 {
 					valueM := item.Value[0].(map[string]interface{})
-					if v, ok := valueM["ipAddress"]; ok {
+					if v, ok := valueM["ipAddress"]; ok && v != nil {
 						if result.ClientAndEndpointAAA.IPAddress != "" {
 							result.ClientAndEndpointAAA.IPAddress += ","
 						}
 						result.ClientAndEndpointAAA.IPAddress += v.(string)
 					}
-					if v, ok := valueM["network"]; ok {
+					if v, ok := valueM["network"]; ok && v != nil {
 						if result.ClientAndEndpointAAA.Network != "" {
 							result.ClientAndEndpointAAA.Network += ","
 						}
 						result.ClientAndEndpointAAA.Network += v.(string)
 					}
-					if v, ok := valueM["protocol"]; ok {
+					if v, ok := valueM["protocol"]; ok && v != nil {
 						if result.ClientAndEndpointAAA.Protocol != "" {
 							result.ClientAndEndpointAAA.Protocol += ","
 						}
 						result.ClientAndEndpointAAA.Protocol += v.(string)
 					}
-					if v, ok := valueM["sharedSecret"]; ok {
+					if v, ok := valueM["sharedSecret"]; ok && v != nil {
 						if result.ClientAndEndpointAAA.SharedSecret != "" {
 							result.ClientAndEndpointAAA.SharedSecret += ","
 						}
@@ -677,13 +678,13 @@ func networkSimplified(response *dnac.GetNetworkResponse) *dnac.CreateNetworkReq
 			if strings.EqualFold(item.Key, "dns.server") {
 				if len(item.Value) > 0 {
 					valueM := item.Value[0].(map[string]interface{})
-					if v, ok := valueM["domainName"]; ok {
+					if v, ok := valueM["domainName"]; ok && v != nil {
 						result.DNSServer.DomainName = v.(string)
 					}
-					if v, ok := valueM["primaryIpAddress"]; ok {
+					if v, ok := valueM["primaryIpAddress"]; ok && v != nil {
 						result.DNSServer.PrimaryIPAddress = v.(string)
 					}
-					if v, ok := valueM["secondaryIpAddress"]; ok {
+					if v, ok := valueM["secondaryIpAddress"]; ok && v != nil {
 						result.DNSServer.SecondaryIPAddress = v.(string)
 					}
 				}
@@ -694,10 +695,10 @@ func networkSimplified(response *dnac.GetNetworkResponse) *dnac.CreateNetworkReq
 				if len(item.Value) > 0 {
 					valueM := item.Value[0].(map[string]interface{})
 
-					if v, ok := valueM["bannerMessage"]; ok {
+					if v, ok := valueM["bannerMessage"]; ok && v != nil {
 						result.MessageOfTheday.BannerMessage = v.(string)
 					}
-					if v, ok := valueM["retainExistingBanner"]; ok {
+					if v, ok := valueM["retainExistingBanner"]; ok && v != nil {
 						result.MessageOfTheday.RetainExistingBanner = v.(bool)
 					}
 				}
@@ -708,10 +709,10 @@ func networkSimplified(response *dnac.GetNetworkResponse) *dnac.CreateNetworkReq
 				if len(item.Value) > 0 {
 					valueM := item.Value[0].(map[string]interface{})
 
-					if v, ok := valueM["ipAddress"]; ok {
+					if v, ok := valueM["ipAddress"]; ok && v != nil {
 						result.Netflowcollector.IPAddress = v.(string)
 					}
-					if v, ok := valueM["port"]; ok {
+					if v, ok := valueM["port"]; ok && v != nil {
 						if f, err := strconv.ParseFloat(fmt.Sprintf("%v", v), 64); err != nil {
 							result.Netflowcollector.Port = f
 						}
@@ -723,25 +724,25 @@ func networkSimplified(response *dnac.GetNetworkResponse) *dnac.CreateNetworkReq
 			if strings.HasPrefix(item.Key, "aaa.network.server") {
 				if len(item.Value) > 0 {
 					valueM := item.Value[0].(map[string]interface{})
-					if v, ok := valueM["ipAddress"]; ok {
+					if v, ok := valueM["ipAddress"]; ok && v != nil {
 						if result.NetworkAAA.IPAddress != "" {
 							result.NetworkAAA.IPAddress += ","
 						}
 						result.NetworkAAA.IPAddress += v.(string)
 					}
-					if v, ok := valueM["network"]; ok {
+					if v, ok := valueM["network"]; ok && v != nil {
 						if result.NetworkAAA.Network != "" {
 							result.NetworkAAA.Network += ","
 						}
 						result.NetworkAAA.Network += v.(string)
 					}
-					if v, ok := valueM["protocol"]; ok {
+					if v, ok := valueM["protocol"]; ok && v != nil {
 						if result.NetworkAAA.Protocol != "" {
 							result.NetworkAAA.Protocol += ","
 						}
 						result.NetworkAAA.Protocol += v.(string)
 					}
-					if v, ok := valueM["sharedSecret"]; ok {
+					if v, ok := valueM["sharedSecret"]; ok && v != nil {
 						if result.NetworkAAA.SharedSecret != "" {
 							result.NetworkAAA.SharedSecret += ","
 						}
@@ -764,7 +765,7 @@ func networkSimplified(response *dnac.GetNetworkResponse) *dnac.CreateNetworkReq
 				if len(item.Value) > 0 {
 					valueM := item.Value[0].(map[string]interface{})
 
-					if v, ok := valueM["configureDnacIP"]; ok {
+					if v, ok := valueM["configureDnacIP"]; ok && v != nil {
 						result.SNMPServer.ConfigureDnacIP = v.(bool)
 					}
 					if v, ok := valueM["ipAddresses"]; ok && v != nil {
@@ -778,7 +779,7 @@ func networkSimplified(response *dnac.GetNetworkResponse) *dnac.CreateNetworkReq
 				if len(item.Value) > 0 {
 					valueM := item.Value[0].(map[string]interface{})
 
-					if v, ok := valueM["configureDnacIP"]; ok {
+					if v, ok := valueM["configureDnacIP"]; ok && v != nil {
 						result.SyslogServer.ConfigureDnacIP = v.(bool)
 					}
 					if v, ok := valueM["ipAddresses"]; ok && v != nil {

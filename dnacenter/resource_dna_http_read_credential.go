@@ -3,9 +3,10 @@ package dnacenter
 import (
 	"context"
 	"fmt"
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strings"
 	"time"
+
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -88,23 +89,23 @@ func resourceHTTPReadCredential() *schema.Resource {
 
 func constructUpdateHTTPReadCredentialsRequest(prevID string, credential map[string]interface{}) *dnac.UpdateHTTPReadCredentialRequest {
 	credentialRequest := dnac.UpdateHTTPReadCredentialRequest{}
-	if v, ok := credential["comments"]; ok {
+	if v, ok := credential["comments"]; ok && v != nil {
 		credentialRequest.Comments = v.(string)
 	}
-	if v, ok := credential["credential_type"]; ok {
+	if v, ok := credential["credential_type"]; ok && v != nil {
 		credentialRequest.CredentialType = v.(string)
 	}
-	if v, ok := credential["description"]; ok {
+	if v, ok := credential["description"]; ok && v != nil {
 		credentialRequest.Description = v.(string)
 	}
 	credentialRequest.ID = prevID
-	if v, ok := credential["instance_tenant_id"]; ok {
+	if v, ok := credential["instance_tenant_id"]; ok && v != nil {
 		credentialRequest.InstanceTenantID = v.(string)
 	}
-	if v, ok := credential["instance_uuid"]; ok {
+	if v, ok := credential["instance_uuid"]; ok && v != nil {
 		credentialRequest.InstanceUUID = v.(string)
 	}
-	if v, ok := credential["secure"]; ok {
+	if v, ok := credential["secure"]; ok && v != nil {
 		credentialRequest.Secure = v.(bool)
 	}
 	credentialRequest.Port = credential["port"].(int)
@@ -175,25 +176,25 @@ func resourceHTTPReadCredentialCreate(ctx context.Context, d *schema.ResourceDat
 
 	// Construct payload from resource schema (item)
 	credentialRequest := dnac.CreateHTTPReadCredentialsRequest{}
-	if v, ok := credential["comments"]; ok {
+	if v, ok := credential["comments"]; ok && v != nil {
 		credentialRequest.Comments = v.(string)
 	}
-	if v, ok := credential["credential_type"]; ok {
+	if v, ok := credential["credential_type"]; ok && v != nil {
 		credentialRequest.CredentialType = v.(string)
 	}
-	if v, ok := credential["description"]; ok {
+	if v, ok := credential["description"]; ok && v != nil {
 		credentialRequest.Description = v.(string)
 	}
-	if v, ok := credential["id"]; ok {
+	if v, ok := credential["id"]; ok && v != nil {
 		credentialRequest.ID = v.(string)
 	}
-	if v, ok := credential["instance_tenant_id"]; ok {
+	if v, ok := credential["instance_tenant_id"]; ok && v != nil {
 		credentialRequest.InstanceTenantID = v.(string)
 	}
-	if v, ok := credential["instance_uuid"]; ok {
+	if v, ok := credential["instance_uuid"]; ok && v != nil {
 		credentialRequest.InstanceUUID = v.(string)
 	}
-	if v, ok := credential["secure"]; ok {
+	if v, ok := credential["secure"]; ok && v != nil {
 		credentialRequest.Secure = v.(bool)
 	}
 	credentialRequest.Port = credential["port"].(int)

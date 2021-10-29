@@ -2,9 +2,10 @@ package dnacenter
 
 import (
 	"context"
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strconv"
 	"time"
+
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -204,33 +205,33 @@ func dataSourceTemplateDeploy() *schema.Resource {
 
 func getDeployTemplateRequest(deployTemplate map[string]interface{}) *dnac.DeployTemplateRequest {
 	deployTemplateRequest := dnac.DeployTemplateRequest{}
-	if v, ok := deployTemplate["force_push_template"]; ok {
+	if v, ok := deployTemplate["force_push_template"]; ok && v != nil {
 		deployTemplateRequest.ForcePushTemplate = v.(bool)
 	}
-	if v, ok := deployTemplate["is_composite"]; ok {
+	if v, ok := deployTemplate["is_composite"]; ok && v != nil {
 		deployTemplateRequest.IsComposite = v.(bool)
 	}
-	if v, ok := deployTemplate["main_template_id"]; ok {
+	if v, ok := deployTemplate["main_template_id"]; ok && v != nil {
 		deployTemplateRequest.MainTemplateID = v.(string)
 	}
-	if v, ok := deployTemplate["template_id"]; ok {
+	if v, ok := deployTemplate["template_id"]; ok && v != nil {
 		deployTemplateRequest.TemplateID = v.(string)
 	}
-	if v, ok := deployTemplate["target_info"]; ok {
+	if v, ok := deployTemplate["target_info"]; ok && v != nil {
 		targetInfoList := v.([]interface{})
 		for _, ti := range targetInfoList {
 			targetInfo := ti.(map[string]interface{})
 			targetInfoRequest := dnac.DeployTemplateRequestTargetInfo{}
-			if v, ok := targetInfo["hostname"]; ok {
+			if v, ok := targetInfo["hostname"]; ok && v != nil {
 				targetInfoRequest.HostName = v.(string)
 			}
-			if v, ok := targetInfo["id"]; ok {
+			if v, ok := targetInfo["id"]; ok && v != nil {
 				targetInfoRequest.ID = v.(string)
 			}
-			if v, ok := targetInfo["params"]; ok {
+			if v, ok := targetInfo["params"]; ok && v != nil {
 				targetInfoRequest.Params = v.(map[string]interface{})
 			}
-			if v, ok := targetInfo["type"]; ok {
+			if v, ok := targetInfo["type"]; ok && v != nil {
 				targetInfoRequest.Type = v.(string)
 			}
 			deployTemplateRequest.TargetInfo = append(deployTemplateRequest.TargetInfo, targetInfoRequest)

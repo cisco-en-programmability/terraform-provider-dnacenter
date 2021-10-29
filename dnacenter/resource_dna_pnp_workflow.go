@@ -230,22 +230,22 @@ func constructAddPnPWorkflowTasksWorkItemList(itemList []interface{}) *[]dnac.Ad
 	for _, item := range itemList {
 		is := item.(map[string]interface{})
 		var workItem dnac.AddAWorkflowRequestTasksWorkItemList
-		if v, ok := is["command"]; ok {
+		if v, ok := is["command"]; ok && v != nil {
 			workItem.Command = v.(string)
 		}
-		if v, ok := is["end_time"]; ok {
+		if v, ok := is["end_time"]; ok && v != nil {
 			workItem.EndTime = v.(int)
 		}
-		if v, ok := is["output_str"]; ok {
+		if v, ok := is["output_str"]; ok && v != nil {
 			workItem.OutputStr = v.(string)
 		}
-		if v, ok := is["start_time"]; ok {
+		if v, ok := is["start_time"]; ok && v != nil {
 			workItem.StartTime = v.(int)
 		}
-		if v, ok := is["state"]; ok {
+		if v, ok := is["state"]; ok && v != nil {
 			workItem.State = v.(string)
 		}
-		if v, ok := is["time_taken"]; ok {
+		if v, ok := is["time_taken"]; ok && v != nil {
 			workItem.TimeTaken = v.(float64)
 		}
 		result = append(result, workItem)
@@ -258,31 +258,31 @@ func constructAddPnPWorkflowTasks(wTasks []interface{}) *[]dnac.AddAWorkflowRequ
 	for _, wTask := range wTasks {
 		wts := wTask.(map[string]interface{})
 		var workflowTask dnac.AddAWorkflowRequestTasks
-		if v, ok := wts["curr_work_item_idx"]; ok {
+		if v, ok := wts["curr_work_item_idx"]; ok && v != nil {
 			workflowTask.CurrWorkItemIDx = v.(int)
 		}
-		if v, ok := wts["end_time"]; ok {
+		if v, ok := wts["end_time"]; ok && v != nil {
 			workflowTask.EndTime = v.(int)
 		}
-		if v, ok := wts["name"]; ok {
+		if v, ok := wts["name"]; ok && v != nil {
 			workflowTask.Name = v.(string)
 		}
-		if v, ok := wts["start_time"]; ok {
+		if v, ok := wts["start_time"]; ok && v != nil {
 			workflowTask.StartTime = v.(int)
 		}
-		if v, ok := wts["state"]; ok {
+		if v, ok := wts["state"]; ok && v != nil {
 			workflowTask.State = v.(string)
 		}
-		if v, ok := wts["task_seq_no"]; ok {
+		if v, ok := wts["task_seq_no"]; ok && v != nil {
 			workflowTask.TaskSeqNo = v.(int)
 		}
-		if v, ok := wts["time_taken"]; ok {
+		if v, ok := wts["time_taken"]; ok && v != nil {
 			workflowTask.TimeTaken = v.(float64)
 		}
-		if v, ok := wts["type"]; ok {
+		if v, ok := wts["type"]; ok && v != nil {
 			workflowTask.Type = v.(string)
 		}
-		if v, ok := wts["work_item_list"]; ok {
+		if v, ok := wts["work_item_list"]; ok && v != nil {
 			if w := constructAddPnPWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
@@ -294,63 +294,63 @@ func constructAddPnPWorkflowTasks(wTasks []interface{}) *[]dnac.AddAWorkflowRequ
 
 func constructAddPnPWorkflow(ws map[string]interface{}) *dnac.AddAWorkflowRequest {
 	var workflowItem dnac.AddAWorkflowRequest
-	if v, ok := ws["id"]; ok {
+	if v, ok := ws["id"]; ok && v != nil {
 		workflowItem.TypeID = v.(string)
 	}
-	if v, ok := ws["add_to_inventory"]; ok {
+	if v, ok := ws["add_to_inventory"]; ok && v != nil {
 		workflowItem.AddToInventory = v.(bool)
 	}
-	if v, ok := ws["added_on"]; ok {
+	if v, ok := ws["added_on"]; ok && v != nil {
 		workflowItem.AddedOn = v.(float64)
 	}
-	if v, ok := ws["config_id"]; ok {
+	if v, ok := ws["config_id"]; ok && v != nil {
 		workflowItem.ConfigID = v.(string)
 	}
-	if v, ok := ws["curr_task_idx"]; ok {
+	if v, ok := ws["curr_task_idx"]; ok && v != nil {
 		workflowItem.CurrTaskIDx = v.(float64)
 	}
-	if v, ok := ws["description"]; ok {
+	if v, ok := ws["description"]; ok && v != nil {
 		workflowItem.Description = v.(string)
 	}
-	if v, ok := ws["end_time"]; ok {
+	if v, ok := ws["end_time"]; ok && v != nil {
 		workflowItem.EndTime = v.(int)
 	}
-	if v, ok := ws["exec_time"]; ok {
+	if v, ok := ws["exec_time"]; ok && v != nil {
 		workflowItem.ExecTime = v.(float64)
 	}
-	if v, ok := ws["image_id"]; ok {
+	if v, ok := ws["image_id"]; ok && v != nil {
 		workflowItem.ImageID = v.(string)
 	}
-	if v, ok := ws["instance_type"]; ok {
+	if v, ok := ws["instance_type"]; ok && v != nil {
 		workflowItem.InstanceType = v.(string)
 	}
-	if v, ok := ws["lastupdate_on"]; ok {
+	if v, ok := ws["lastupdate_on"]; ok && v != nil {
 		workflowItem.LastupdateOn = v.(float64)
 	}
-	if v, ok := ws["name"]; ok {
+	if v, ok := ws["name"]; ok && v != nil {
 		workflowItem.Name = v.(string)
 	}
-	if v, ok := ws["start_time"]; ok {
+	if v, ok := ws["start_time"]; ok && v != nil {
 		workflowItem.StartTime = v.(int)
 	}
-	if v, ok := ws["state"]; ok {
+	if v, ok := ws["state"]; ok && v != nil {
 		workflowItem.State = v.(string)
 	}
-	if v, ok := ws["tasks"]; ok {
+	if v, ok := ws["tasks"]; ok && v != nil {
 		if w := constructAddPnPWorkflowTasks(v.([]interface{})); w != nil {
 			workflowItem.Tasks = *w
 		}
 	}
-	if v, ok := ws["tenant_id"]; ok {
+	if v, ok := ws["tenant_id"]; ok && v != nil {
 		workflowItem.TenantID = v.(string)
 	}
-	if v, ok := ws["type"]; ok {
+	if v, ok := ws["type"]; ok && v != nil {
 		workflowItem.Type = v.(string)
 	}
-	if v, ok := ws["use_state"]; ok {
+	if v, ok := ws["use_state"]; ok && v != nil {
 		workflowItem.UseState = v.(string)
 	}
-	if v, ok := ws["version"]; ok {
+	if v, ok := ws["version"]; ok && v != nil {
 		workflowItem.Version = v.(float64)
 	}
 	return &workflowItem
@@ -364,22 +364,22 @@ func constructUpdatePnPWorkflowTasksWorkItemList(itemList []interface{}) *[]dnac
 	for _, item := range itemList {
 		is := item.(map[string]interface{})
 		var workItem dnac.UpdateWorkflowRequestTasksWorkItemList
-		if v, ok := is["command"]; ok {
+		if v, ok := is["command"]; ok && v != nil {
 			workItem.Command = v.(string)
 		}
-		if v, ok := is["end_time"]; ok {
+		if v, ok := is["end_time"]; ok && v != nil {
 			workItem.EndTime = v.(int)
 		}
-		if v, ok := is["output_str"]; ok {
+		if v, ok := is["output_str"]; ok && v != nil {
 			workItem.OutputStr = v.(string)
 		}
-		if v, ok := is["start_time"]; ok {
+		if v, ok := is["start_time"]; ok && v != nil {
 			workItem.StartTime = v.(int)
 		}
-		if v, ok := is["state"]; ok {
+		if v, ok := is["state"]; ok && v != nil {
 			workItem.State = v.(string)
 		}
-		if v, ok := is["time_taken"]; ok {
+		if v, ok := is["time_taken"]; ok && v != nil {
 			workItem.TimeTaken = v.(float64)
 		}
 		result = append(result, workItem)
@@ -392,31 +392,31 @@ func constructUpdatePnPWorkflowTasks(wTasks []interface{}) *[]dnac.UpdateWorkflo
 	for _, wTask := range wTasks {
 		wts := wTask.(map[string]interface{})
 		var workflowTask dnac.UpdateWorkflowRequestTasks
-		if v, ok := wts["curr_work_item_idx"]; ok {
+		if v, ok := wts["curr_work_item_idx"]; ok && v != nil {
 			workflowTask.CurrWorkItemIDx = v.(int)
 		}
-		if v, ok := wts["end_time"]; ok {
+		if v, ok := wts["end_time"]; ok && v != nil {
 			workflowTask.EndTime = v.(int)
 		}
-		if v, ok := wts["name"]; ok {
+		if v, ok := wts["name"]; ok && v != nil {
 			workflowTask.Name = v.(string)
 		}
-		if v, ok := wts["start_time"]; ok {
+		if v, ok := wts["start_time"]; ok && v != nil {
 			workflowTask.StartTime = v.(int)
 		}
-		if v, ok := wts["state"]; ok {
+		if v, ok := wts["state"]; ok && v != nil {
 			workflowTask.State = v.(string)
 		}
-		if v, ok := wts["task_seq_no"]; ok {
+		if v, ok := wts["task_seq_no"]; ok && v != nil {
 			workflowTask.TaskSeqNo = v.(int)
 		}
-		if v, ok := wts["time_taken"]; ok {
+		if v, ok := wts["time_taken"]; ok && v != nil {
 			workflowTask.TimeTaken = v.(float64)
 		}
-		if v, ok := wts["type"]; ok {
+		if v, ok := wts["type"]; ok && v != nil {
 			workflowTask.Type = v.(string)
 		}
-		if v, ok := wts["work_item_list"]; ok {
+		if v, ok := wts["work_item_list"]; ok && v != nil {
 			if w := constructUpdatePnPWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
@@ -428,63 +428,63 @@ func constructUpdatePnPWorkflowTasks(wTasks []interface{}) *[]dnac.UpdateWorkflo
 
 func constructUpdatePnPWorkflow(ws map[string]interface{}) *dnac.UpdateWorkflowRequest {
 	var workflowItem dnac.UpdateWorkflowRequest
-	if v, ok := ws["id"]; ok {
+	if v, ok := ws["id"]; ok && v != nil {
 		workflowItem.TypeID = v.(string)
 	}
-	if v, ok := ws["add_to_inventory"]; ok {
+	if v, ok := ws["add_to_inventory"]; ok && v != nil {
 		workflowItem.AddToInventory = v.(bool)
 	}
-	if v, ok := ws["added_on"]; ok {
+	if v, ok := ws["added_on"]; ok && v != nil {
 		workflowItem.AddedOn = v.(float64)
 	}
-	if v, ok := ws["config_id"]; ok {
+	if v, ok := ws["config_id"]; ok && v != nil {
 		workflowItem.ConfigID = v.(string)
 	}
-	if v, ok := ws["curr_task_idx"]; ok {
+	if v, ok := ws["curr_task_idx"]; ok && v != nil {
 		workflowItem.CurrTaskIDx = v.(float64)
 	}
-	if v, ok := ws["description"]; ok {
+	if v, ok := ws["description"]; ok && v != nil {
 		workflowItem.Description = v.(string)
 	}
-	if v, ok := ws["end_time"]; ok {
+	if v, ok := ws["end_time"]; ok && v != nil {
 		workflowItem.EndTime = v.(int)
 	}
-	if v, ok := ws["exec_time"]; ok {
+	if v, ok := ws["exec_time"]; ok && v != nil {
 		workflowItem.ExecTime = v.(float64)
 	}
-	if v, ok := ws["image_id"]; ok {
+	if v, ok := ws["image_id"]; ok && v != nil {
 		workflowItem.ImageID = v.(string)
 	}
-	if v, ok := ws["instance_type"]; ok {
+	if v, ok := ws["instance_type"]; ok && v != nil {
 		workflowItem.InstanceType = v.(string)
 	}
-	if v, ok := ws["lastupdate_on"]; ok {
+	if v, ok := ws["lastupdate_on"]; ok && v != nil {
 		workflowItem.LastupdateOn = v.(float64)
 	}
-	if v, ok := ws["name"]; ok {
+	if v, ok := ws["name"]; ok && v != nil {
 		workflowItem.Name = v.(string)
 	}
-	if v, ok := ws["start_time"]; ok {
+	if v, ok := ws["start_time"]; ok && v != nil {
 		workflowItem.StartTime = v.(int)
 	}
-	if v, ok := ws["state"]; ok {
+	if v, ok := ws["state"]; ok && v != nil {
 		workflowItem.State = v.(string)
 	}
-	if v, ok := ws["tasks"]; ok {
+	if v, ok := ws["tasks"]; ok && v != nil {
 		if w := constructUpdatePnPWorkflowTasks(v.([]interface{})); w != nil {
 			workflowItem.Tasks = *w
 		}
 	}
-	if v, ok := ws["tenant_id"]; ok {
+	if v, ok := ws["tenant_id"]; ok && v != nil {
 		workflowItem.TenantID = v.(string)
 	}
-	if v, ok := ws["type"]; ok {
+	if v, ok := ws["type"]; ok && v != nil {
 		workflowItem.Type = v.(string)
 	}
-	if v, ok := ws["use_state"]; ok {
+	if v, ok := ws["use_state"]; ok && v != nil {
 		workflowItem.UseState = v.(string)
 	}
-	if v, ok := ws["version"]; ok {
+	if v, ok := ws["version"]; ok && v != nil {
 		workflowItem.Version = v.(float64)
 	}
 	return &workflowItem
