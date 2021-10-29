@@ -637,7 +637,7 @@ func constructCreateSDAFabricBorderDeviceExternalConnectivitySettingsL3HandoffVi
 	if len(response) > 0 {
 		item := response[0]
 		ci := item.(map[string]interface{})
-		if v, ok := ci["virtual_network_name"]; ok {
+		if v, ok := ci["virtual_network_name"]; ok && v != nil {
 			result.VirtualNetworkName = v.(string)
 		}
 		return &result
@@ -665,10 +665,10 @@ func constructCreateSDAFabricBorderDeviceExternalConnectivitySettings(response [
 	for _, item := range response {
 		ci := item.(map[string]interface{})
 		cItem := dnac.AddsBorderDeviceInSDAFabricRequestExternalConnectivitySettings{}
-		if v, ok := ci["external_autonomous_system_number"]; ok {
+		if v, ok := ci["external_autonomous_system_number"]; ok && v != nil {
 			cItem.ExternalAutonomouSystemNumber = v.(string)
 		}
-		if v, ok := ci["interface_name"]; ok {
+		if v, ok := ci["interface_name"]; ok && v != nil {
 			cItem.InterfaceName = v.(string)
 		}
 		if v, ok := ci["l3_handoff"]; ok && v != nil {

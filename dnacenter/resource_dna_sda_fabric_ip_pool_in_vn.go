@@ -111,9 +111,19 @@ func resourceSDAFabricIPPoolInVNCreate(ctx context.Context, d *schema.ResourceDa
 	}
 
 	requests = append(requests, request)
-	_, _, err = client.SDA.AddIPPoolInSDAVirtualNetwork(&requests)
+	addResponse, _, err := client.SDA.AddIPPoolInSDAVirtualNetwork(&requests)
 	if err != nil {
 		return diag.FromErr(err)
+	}
+	if addResponse != nil {
+		if addResponse.Status == "failed" {
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "May have been unable to create SDA fabric IP pool in VN",
+				Detail:   addResponse.Description,
+			})
+			return diags
+		}
 	}
 
 	// Wait for execution status to complete

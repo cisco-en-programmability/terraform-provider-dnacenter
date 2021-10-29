@@ -120,7 +120,7 @@ func constructUpdateTag(tagID string, tag map[string]interface{}) *dnac.UpdateTa
 		tagRequest.InstanceTenantID = dataInstanceTenantID.(string)
 	}
 
-	if _, ok := tag["dynamic_rules"]; ok {
+	if v, ok := tag["dynamic_rules"]; ok && v != nil {
 		dynamicRules := tag["dynamic_rules"].([]interface{})
 
 		if len(dynamicRules) > 0 {
@@ -178,7 +178,7 @@ func constructCreateTag(tag map[string]interface{}) *dnac.CreateTagRequest {
 		tagRequest.InstanceTenantID = dataInstanceTenantID.(string)
 	}
 
-	if _, ok := tag["dynamic_rules"]; ok {
+	if v, ok := tag["dynamic_rules"]; ok && v != nil {
 		dynamicRules := tag["dynamic_rules"].([]interface{})
 
 		if len(dynamicRules) > 0 {

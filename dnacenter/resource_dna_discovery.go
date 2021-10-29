@@ -3,9 +3,10 @@ package dnacenter
 import (
 	"context"
 	"fmt"
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strings"
 	"time"
+
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -267,159 +268,159 @@ func constructStartDiscoveryRequest(discovery map[string]interface{}) *dnac.Star
 	discoveryRequest.IPAddressList = discovery["ip_address_list"].(string)
 	discoveryRequest.Name = discovery["name"].(string)
 
-	if v, ok := discovery["cdp_level"]; ok {
+	if v, ok := discovery["cdp_level"]; ok && v != nil {
 		discoveryRequest.CdpLevel = v.(int)
 	}
-	if v, ok := discovery["enable_password_list"]; ok {
+	if v, ok := discovery["enable_password_list"]; ok && v != nil {
 		discoveryRequest.EnablePasswordList = convertSliceInterfaceToSliceString(v.([]interface{}))
 	}
-	if v, ok := discovery["global_credential_id_list"]; ok {
+	if v, ok := discovery["global_credential_id_list"]; ok && v != nil {
 		discoveryRequest.GlobalCredentialIDList = convertSliceInterfaceToSliceString(v.([]interface{}))
 	}
-	if v, ok := discovery["http_read_credential"]; ok {
+	if v, ok := discovery["http_read_credential"]; ok && v != nil {
 		httpCredentials := v.([]interface{})
 		if len(httpCredentials) > 0 {
 			hC := httpCredentials[0]
 			httpCredential := hC.(map[string]interface{})
-			if v, ok := httpCredential["comments"]; ok {
+			if v, ok := httpCredential["comments"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Comments = v.(string)
 			}
-			if v, ok := httpCredential["credential_type"]; ok {
+			if v, ok := httpCredential["credential_type"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.CredentialType = v.(string)
 			}
-			if v, ok := httpCredential["description"]; ok {
+			if v, ok := httpCredential["description"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Description = v.(string)
 			}
-			if v, ok := httpCredential["id"]; ok {
+			if v, ok := httpCredential["id"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.ID = v.(string)
 			}
-			if v, ok := httpCredential["instance_tenant_id"]; ok {
+			if v, ok := httpCredential["instance_tenant_id"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.InstanceTenantID = v.(string)
 			}
-			if v, ok := httpCredential["instance_uuid"]; ok {
+			if v, ok := httpCredential["instance_uuid"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.InstanceUUID = v.(string)
 			}
-			if v, ok := httpCredential["password"]; ok {
+			if v, ok := httpCredential["password"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Password = v.(string)
 			}
-			if v, ok := httpCredential["port"]; ok {
+			if v, ok := httpCredential["port"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Port = v.(int)
 			}
-			if v, ok := httpCredential["secure"]; ok {
+			if v, ok := httpCredential["secure"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Secure = v.(bool)
 			}
-			if v, ok := httpCredential["username"]; ok {
+			if v, ok := httpCredential["username"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Username = v.(string)
 			}
 		}
 	}
-	if v, ok := discovery["http_write_credential"]; ok {
+	if v, ok := discovery["http_write_credential"]; ok && v != nil {
 		httpCredentials := v.([]interface{})
 		if len(httpCredentials) > 0 {
 			hC := httpCredentials[0]
 			httpCredential := hC.(map[string]interface{})
-			if v, ok := httpCredential["comments"]; ok {
+			if v, ok := httpCredential["comments"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Comments = v.(string)
 			}
-			if v, ok := httpCredential["credential_type"]; ok {
+			if v, ok := httpCredential["credential_type"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.CredentialType = v.(string)
 			}
-			if v, ok := httpCredential["description"]; ok {
+			if v, ok := httpCredential["description"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Description = v.(string)
 			}
-			if v, ok := httpCredential["id"]; ok {
+			if v, ok := httpCredential["id"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.ID = v.(string)
 			}
-			if v, ok := httpCredential["instance_tenant_id"]; ok {
+			if v, ok := httpCredential["instance_tenant_id"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.InstanceTenantID = v.(string)
 			}
-			if v, ok := httpCredential["instance_uuid"]; ok {
+			if v, ok := httpCredential["instance_uuid"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.InstanceUUID = v.(string)
 			}
-			if v, ok := httpCredential["password"]; ok {
+			if v, ok := httpCredential["password"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Password = v.(string)
 			}
-			if v, ok := httpCredential["port"]; ok {
+			if v, ok := httpCredential["port"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Port = v.(int)
 			}
-			if v, ok := httpCredential["secure"]; ok {
+			if v, ok := httpCredential["secure"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Secure = v.(bool)
 			}
-			if v, ok := httpCredential["username"]; ok {
+			if v, ok := httpCredential["username"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Username = v.(string)
 			}
 		}
 	}
-	if v, ok := discovery["ip_filter_list"]; ok {
+	if v, ok := discovery["ip_filter_list"]; ok && v != nil {
 		discoveryRequest.IPFilterList = convertSliceInterfaceToSliceString(v.([]interface{}))
 	}
-	if v, ok := discovery["lldp_level"]; ok {
+	if v, ok := discovery["lldp_level"]; ok && v != nil {
 		discoveryRequest.LldpLevel = v.(int)
 	}
-	if v, ok := discovery["netconf_port"]; ok {
+	if v, ok := discovery["netconf_port"]; ok && v != nil {
 		discoveryRequest.NetconfPort = v.(string)
 	}
-	if v, ok := discovery["no_add_new_device"]; ok {
+	if v, ok := discovery["no_add_new_device"]; ok && v != nil {
 		discoveryRequest.NoAddNewDevice = v.(bool)
 	}
-	if v, ok := discovery["parent_discovery_id"]; ok {
+	if v, ok := discovery["parent_discovery_id"]; ok && v != nil {
 		discoveryRequest.ParentDiscoveryID = v.(string)
 	}
-	if v, ok := discovery["password_list"]; ok {
+	if v, ok := discovery["password_list"]; ok && v != nil {
 		discoveryRequest.PasswordList = convertSliceInterfaceToSliceString(v.([]interface{}))
 	}
-	if v, ok := discovery["preferred_mgmt_ip_method"]; ok {
+	if v, ok := discovery["preferred_mgmt_ip_method"]; ok && v != nil {
 		discoveryRequest.PreferredMgmtIPMethod = v.(string)
 	}
-	if v, ok := discovery["protocol_order"]; ok {
+	if v, ok := discovery["protocol_order"]; ok && v != nil {
 		discoveryRequest.ProtocolOrder = v.(string)
 	}
-	if v, ok := discovery["re_discovery"]; ok {
+	if v, ok := discovery["re_discovery"]; ok && v != nil {
 		discoveryRequest.ReDiscovery = v.(bool)
 	}
-	if v, ok := discovery["retry"]; ok {
+	if v, ok := discovery["retry"]; ok && v != nil {
 		discoveryRequest.Retry = v.(int)
 	}
-	if v, ok := discovery["snmp_auth_passphrase"]; ok {
+	if v, ok := discovery["snmp_auth_passphrase"]; ok && v != nil {
 		discoveryRequest.SNMPAuthPassphrase = v.(string)
 	}
-	if v, ok := discovery["snmp_auth_protocol"]; ok {
+	if v, ok := discovery["snmp_auth_protocol"]; ok && v != nil {
 		discoveryRequest.SNMPAuthProtocol = v.(string)
 	}
-	if v, ok := discovery["snmp_mode"]; ok {
+	if v, ok := discovery["snmp_mode"]; ok && v != nil {
 		discoveryRequest.SNMPMode = v.(string)
 	}
-	if v, ok := discovery["snmp_priv_passphrase"]; ok {
+	if v, ok := discovery["snmp_priv_passphrase"]; ok && v != nil {
 		discoveryRequest.SNMPPrivPassphrase = v.(string)
 	}
-	if v, ok := discovery["snmp_priv_protocol"]; ok {
+	if v, ok := discovery["snmp_priv_protocol"]; ok && v != nil {
 		discoveryRequest.SNMPPrivProtocol = v.(string)
 	}
-	if v, ok := discovery["snmp_ro_community"]; ok {
+	if v, ok := discovery["snmp_ro_community"]; ok && v != nil {
 		discoveryRequest.SNMPROCommunity = v.(string)
 	}
-	if v, ok := discovery["snmp_ro_community_desc"]; ok {
+	if v, ok := discovery["snmp_ro_community_desc"]; ok && v != nil {
 		discoveryRequest.SNMPROCommunityDesc = v.(string)
 	}
-	if v, ok := discovery["snmp_rw_community"]; ok {
+	if v, ok := discovery["snmp_rw_community"]; ok && v != nil {
 		discoveryRequest.SNMPRWCommunity = v.(string)
 	}
-	if v, ok := discovery["snmp_rw_community_desc"]; ok {
+	if v, ok := discovery["snmp_rw_community_desc"]; ok && v != nil {
 		discoveryRequest.SNMPRWCommunityDesc = v.(string)
 	}
-	if v, ok := discovery["snmp_user_name"]; ok {
+	if v, ok := discovery["snmp_user_name"]; ok && v != nil {
 		discoveryRequest.SNMPUserName = v.(string)
 	}
-	if v, ok := discovery["snmp_version"]; ok {
+	if v, ok := discovery["snmp_version"]; ok && v != nil {
 		discoveryRequest.SNMPUserName = v.(string)
 	}
-	if v, ok := discovery["timeout"]; ok {
+	if v, ok := discovery["timeout"]; ok && v != nil {
 		discoveryRequest.Timeout = v.(int)
 	}
-	if v, ok := discovery["update_mgmt_ip"]; ok {
+	if v, ok := discovery["update_mgmt_ip"]; ok && v != nil {
 		discoveryRequest.UpdateMgmtIP = v.(bool)
 	}
-	if v, ok := discovery["user_name_list"]; ok {
+	if v, ok := discovery["user_name_list"]; ok && v != nil {
 		discoveryRequest.UserNameList = convertSliceInterfaceToSliceString(v.([]interface{}))
 	}
 
@@ -429,158 +430,158 @@ func constructStartDiscoveryRequest(discovery map[string]interface{}) *dnac.Star
 func constructUpdateDiscoveryRequest(prevID string, discovery map[string]interface{}) *dnac.UpdatesAnExistingDiscoveryBySpecifiedIDRequest {
 	discoveryRequest := dnac.UpdatesAnExistingDiscoveryBySpecifiedIDRequest{}
 
-	if v, ok := discovery["cdp_level"]; ok {
+	if v, ok := discovery["cdp_level"]; ok && v != nil {
 		discoveryRequest.CdpLevel = v.(int)
 	}
-	if v, ok := discovery["device_ids"]; ok {
+	if v, ok := discovery["device_ids"]; ok && v != nil {
 		discoveryRequest.DeviceIDs = v.(string)
 	}
-	if v, ok := discovery["discovery_condition"]; ok {
+	if v, ok := discovery["discovery_condition"]; ok && v != nil {
 		discoveryRequest.DiscoveryCondition = v.(string)
 	}
-	if v, ok := discovery["enable_password_list"]; ok {
+	if v, ok := discovery["enable_password_list"]; ok && v != nil {
 		discoveryRequest.EnablePasswordList = strings.Join(convertSliceInterfaceToSliceString(v.([]interface{})), ",")
 	}
-	if v, ok := discovery["global_credential_id_list"]; ok {
+	if v, ok := discovery["global_credential_id_list"]; ok && v != nil {
 		discoveryRequest.DeviceIDs = strings.Join(convertSliceInterfaceToSliceString(v.([]interface{})), ",")
 	}
-	if v, ok := discovery["ip_filter_list"]; ok {
+	if v, ok := discovery["ip_filter_list"]; ok && v != nil {
 		discoveryRequest.IPFilterList = strings.Join(convertSliceInterfaceToSliceString(v.([]interface{})), ",")
 	}
-	if v, ok := discovery["is_auto_cdp"]; ok {
+	if v, ok := discovery["is_auto_cdp"]; ok && v != nil {
 		discoveryRequest.IsAutoCdp = v.(bool)
 	}
-	if v, ok := discovery["lldp_level"]; ok {
+	if v, ok := discovery["lldp_level"]; ok && v != nil {
 		discoveryRequest.LldpLevel = v.(int)
 	}
-	if v, ok := discovery["netconf_port"]; ok {
+	if v, ok := discovery["netconf_port"]; ok && v != nil {
 		discoveryRequest.NetconfPort = v.(string)
 	}
-	if v, ok := discovery["parent_discovery_id"]; ok {
+	if v, ok := discovery["parent_discovery_id"]; ok && v != nil {
 		discoveryRequest.ParentDiscoveryID = v.(string)
 	}
-	if v, ok := discovery["password_list"]; ok {
+	if v, ok := discovery["password_list"]; ok && v != nil {
 		discoveryRequest.PasswordList = strings.Join(convertSliceInterfaceToSliceString(v.([]interface{})), ",")
 	}
-	if v, ok := discovery["preferred_mgmt_ip_method"]; ok {
+	if v, ok := discovery["preferred_mgmt_ip_method"]; ok && v != nil {
 		discoveryRequest.PreferredMgmtIPMethod = v.(string)
 	}
-	if v, ok := discovery["protocol_order"]; ok {
+	if v, ok := discovery["protocol_order"]; ok && v != nil {
 		discoveryRequest.ProtocolOrder = v.(string)
 	}
-	if v, ok := discovery["retry"]; ok {
+	if v, ok := discovery["retry"]; ok && v != nil {
 		discoveryRequest.RetryCount = v.(int)
 	}
-	if v, ok := discovery["snmp_auth_passphrase"]; ok {
+	if v, ok := discovery["snmp_auth_passphrase"]; ok && v != nil {
 		discoveryRequest.SNMPAuthPassphrase = v.(string)
 	}
-	if v, ok := discovery["snmp_auth_protocol"]; ok {
+	if v, ok := discovery["snmp_auth_protocol"]; ok && v != nil {
 		discoveryRequest.SNMPAuthProtocol = v.(string)
 	}
-	if v, ok := discovery["snmp_mode"]; ok {
+	if v, ok := discovery["snmp_mode"]; ok && v != nil {
 		discoveryRequest.SNMPMode = v.(string)
 	}
-	if v, ok := discovery["snmp_priv_passphrase"]; ok {
+	if v, ok := discovery["snmp_priv_passphrase"]; ok && v != nil {
 		discoveryRequest.SNMPPrivPassphrase = v.(string)
 	}
-	if v, ok := discovery["snmp_priv_protocol"]; ok {
+	if v, ok := discovery["snmp_priv_protocol"]; ok && v != nil {
 		discoveryRequest.SNMPPrivProtocol = v.(string)
 	}
-	if v, ok := discovery["snmp_ro_community"]; ok {
+	if v, ok := discovery["snmp_ro_community"]; ok && v != nil {
 		discoveryRequest.SNMPRoCommunity = v.(string)
 	}
-	if v, ok := discovery["snmp_ro_community_desc"]; ok {
+	if v, ok := discovery["snmp_ro_community_desc"]; ok && v != nil {
 		discoveryRequest.SNMPRoCommunityDesc = v.(string)
 	}
-	if v, ok := discovery["snmp_rw_community"]; ok {
+	if v, ok := discovery["snmp_rw_community"]; ok && v != nil {
 		discoveryRequest.SNMPRwCommunity = v.(string)
 	}
-	if v, ok := discovery["snmp_rw_community_desc"]; ok {
+	if v, ok := discovery["snmp_rw_community_desc"]; ok && v != nil {
 		discoveryRequest.SNMPRwCommunityDesc = v.(string)
 	}
-	if v, ok := discovery["snmp_user_name"]; ok {
+	if v, ok := discovery["snmp_user_name"]; ok && v != nil {
 		discoveryRequest.SNMPUserName = v.(string)
 	}
-	if v, ok := discovery["timeout"]; ok {
+	if v, ok := discovery["timeout"]; ok && v != nil {
 		discoveryRequest.TimeOut = v.(int)
 	}
-	if v, ok := discovery["update_mgmt_ip"]; ok {
+	if v, ok := discovery["update_mgmt_ip"]; ok && v != nil {
 		discoveryRequest.UpdateMgmtIP = v.(bool)
 	}
-	if v, ok := discovery["user_name_list"]; ok {
+	if v, ok := discovery["user_name_list"]; ok && v != nil {
 		discoveryRequest.UserNameList = strings.Join(convertSliceInterfaceToSliceString(v.([]interface{})), ",")
 	}
 
-	if v, ok := discovery["http_read_credential"]; ok {
+	if v, ok := discovery["http_read_credential"]; ok && v != nil {
 		httpCredentials := v.([]interface{})
 		if len(httpCredentials) > 0 {
 			hC := httpCredentials[0]
 			httpCredential := hC.(map[string]interface{})
-			if v, ok := httpCredential["comments"]; ok {
+			if v, ok := httpCredential["comments"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Comments = v.(string)
 			}
-			if v, ok := httpCredential["credential_type"]; ok {
+			if v, ok := httpCredential["credential_type"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.CredentialType = v.(string)
 			}
-			if v, ok := httpCredential["description"]; ok {
+			if v, ok := httpCredential["description"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Description = v.(string)
 			}
-			if v, ok := httpCredential["id"]; ok {
+			if v, ok := httpCredential["id"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.ID = v.(string)
 			}
-			if v, ok := httpCredential["instance_tenant_id"]; ok {
+			if v, ok := httpCredential["instance_tenant_id"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.InstanceTenantID = v.(string)
 			}
-			if v, ok := httpCredential["instance_uuid"]; ok {
+			if v, ok := httpCredential["instance_uuid"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.InstanceUUID = v.(string)
 			}
-			if v, ok := httpCredential["password"]; ok {
+			if v, ok := httpCredential["password"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Password = v.(string)
 			}
-			if v, ok := httpCredential["port"]; ok {
+			if v, ok := httpCredential["port"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Port = v.(int)
 			}
-			if v, ok := httpCredential["secure"]; ok {
+			if v, ok := httpCredential["secure"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Secure = v.(bool)
 			}
-			if v, ok := httpCredential["username"]; ok {
+			if v, ok := httpCredential["username"]; ok && v != nil {
 				discoveryRequest.HTTPReadCredential.Username = v.(string)
 			}
 		}
 	}
-	if v, ok := discovery["http_write_credential"]; ok {
+	if v, ok := discovery["http_write_credential"]; ok && v != nil {
 		httpCredentials := v.([]interface{})
 		if len(httpCredentials) > 0 {
 			hC := httpCredentials[0]
 			httpCredential := hC.(map[string]interface{})
-			if v, ok := httpCredential["comments"]; ok {
+			if v, ok := httpCredential["comments"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Comments = v.(string)
 			}
-			if v, ok := httpCredential["credential_type"]; ok {
+			if v, ok := httpCredential["credential_type"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.CredentialType = v.(string)
 			}
-			if v, ok := httpCredential["description"]; ok {
+			if v, ok := httpCredential["description"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Description = v.(string)
 			}
-			if v, ok := httpCredential["id"]; ok {
+			if v, ok := httpCredential["id"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.ID = v.(string)
 			}
-			if v, ok := httpCredential["instance_tenant_id"]; ok {
+			if v, ok := httpCredential["instance_tenant_id"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.InstanceTenantID = v.(string)
 			}
-			if v, ok := httpCredential["instance_uuid"]; ok {
+			if v, ok := httpCredential["instance_uuid"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.InstanceUUID = v.(string)
 			}
-			if v, ok := httpCredential["password"]; ok {
+			if v, ok := httpCredential["password"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Password = v.(string)
 			}
-			if v, ok := httpCredential["port"]; ok {
+			if v, ok := httpCredential["port"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Port = v.(int)
 			}
-			if v, ok := httpCredential["secure"]; ok {
+			if v, ok := httpCredential["secure"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Secure = v.(bool)
 			}
-			if v, ok := httpCredential["username"]; ok {
+			if v, ok := httpCredential["username"]; ok && v != nil {
 				discoveryRequest.HTTPWriteCredential.Username = v.(string)
 			}
 		}
