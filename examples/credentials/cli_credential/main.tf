@@ -21,5 +21,6 @@ resource "dna_cli_credential" "response" {
   }
 }
 output "dna_cli_credential_response" {
+  sensitive = true
   value = dna_cli_credential.response
 }

@@ -21,5 +21,6 @@ resource "dna_http_read_credential" "response" {
   }
 }
 output "dna_http_read_credential_response" {
+  sensitive = true
   value = dna_http_read_credential.response
 }

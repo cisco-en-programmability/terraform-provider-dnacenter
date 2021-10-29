@@ -76,17 +76,17 @@ func resourceSNMPWriteCommunityCredential() *schema.Resource {
 
 func constructUpdateSNMPWriteCommunityCredentialsRequest(prevID string, credential map[string]interface{}) *dnac.UpdateSNMPWriteCommunityRequest {
 	credentialRequest := dnac.UpdateSNMPWriteCommunityRequest{}
-	if v, ok := credential["comments"]; ok {
+	if v, ok := credential["comments"]; ok && v != nil {
 		credentialRequest.Comments = v.(string)
 	}
-	if v, ok := credential["credential_type"]; ok {
+	if v, ok := credential["credential_type"]; ok && v != nil {
 		credentialRequest.CredentialType = v.(string)
 	}
 	credentialRequest.ID = prevID
-	if v, ok := credential["instance_tenant_id"]; ok {
+	if v, ok := credential["instance_tenant_id"]; ok && v != nil {
 		credentialRequest.InstanceTenantID = v.(string)
 	}
-	if v, ok := credential["instance_uuid"]; ok {
+	if v, ok := credential["instance_uuid"]; ok && v != nil {
 		credentialRequest.InstanceUUID = v.(string)
 	}
 	credentialRequest.WriteCommunity = credential["write_community"].(string)
@@ -156,19 +156,19 @@ func resourceSNMPWriteCommunityCredentialCreate(ctx context.Context, d *schema.R
 
 	// Construct payload from resource schema (item)
 	credentialRequest := dnac.CreateSNMPWriteCommunityRequest{}
-	if v, ok := credential["comments"]; ok {
+	if v, ok := credential["comments"]; ok && v != nil {
 		credentialRequest.Comments = v.(string)
 	}
-	if v, ok := credential["credential_type"]; ok {
+	if v, ok := credential["credential_type"]; ok && v != nil {
 		credentialRequest.CredentialType = v.(string)
 	}
-	if v, ok := credential["id"]; ok {
+	if v, ok := credential["id"]; ok && v != nil {
 		credentialRequest.ID = v.(string)
 	}
-	if v, ok := credential["instance_tenant_id"]; ok {
+	if v, ok := credential["instance_tenant_id"]; ok && v != nil {
 		credentialRequest.InstanceTenantID = v.(string)
 	}
-	if v, ok := credential["instance_uuid"]; ok {
+	if v, ok := credential["instance_uuid"]; ok && v != nil {
 		credentialRequest.InstanceUUID = v.(string)
 	}
 	credentialRequest.WriteCommunity = credential["write_community"].(string)

@@ -11,6 +11,15 @@ terraform {
 provider "dnacenter" {
 }
 
+resource "dna_tag" "tf_tag" {
+  provider = dnacenter
+  item {
+    system_tag = false
+    description = "Terraform Tag"
+    name = "Terraform"
+  }
+}
+
 data "dna_tag" "list" {
   provider = dnacenter
   sort_by  = "name"

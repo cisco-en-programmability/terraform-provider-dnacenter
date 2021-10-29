@@ -2,9 +2,10 @@ package dnacenter
 
 import (
 	"context"
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strconv"
 	"time"
+
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -134,10 +135,10 @@ func constructDataPnPClaimDeviceClaimListConfigListConfigParameters(response []i
 	for _, item := range response {
 		ci := item.(map[string]interface{})
 		configItem := dnac.ClaimDeviceRequestDeviceClaimListConfigListConfigParameters{}
-		if v, ok := ci["key"]; ok {
+		if v, ok := ci["key"]; ok && v != nil {
 			configItem.Key = v.(string)
 		}
-		if v, ok := ci["value"]; ok {
+		if v, ok := ci["value"]; ok && v != nil {
 			configItem.Value = v.(string)
 		}
 		result = append(result, configItem)
@@ -150,12 +151,12 @@ func constructDataPnPClaimDeviceClaimListConfigList(response []interface{}) *[]d
 	for _, item := range response {
 		ci := item.(map[string]interface{})
 		configItem := dnac.ClaimDeviceRequestDeviceClaimListConfigList{}
-		if v, ok := ci["config_parameters"]; ok {
+		if v, ok := ci["config_parameters"]; ok && v != nil {
 			if w := constructDataPnPClaimDeviceClaimListConfigListConfigParameters(v.([]interface{})); w != nil {
 				configItem.ConfigParameters = *w
 			}
 		}
-		if v, ok := ci["config_id"]; ok {
+		if v, ok := ci["config_id"]; ok && v != nil {
 			configItem.ConfigID = v.(string)
 		}
 		result = append(result, configItem)
@@ -168,21 +169,21 @@ func constructDataPnPClaimDeviceClaimList(response []interface{}) *[]dnac.ClaimD
 	for _, item := range response {
 		ci := item.(map[string]interface{})
 		claimItem := dnac.ClaimDeviceRequestDeviceClaimList{}
-		if v, ok := ci["config_list"]; ok {
+		if v, ok := ci["config_list"]; ok && v != nil {
 			if w := constructDataPnPClaimDeviceClaimListConfigList(v.([]interface{})); w != nil {
 				claimItem.ConfigList = *w
 			}
 		}
-		if v, ok := ci["device_id"]; ok {
+		if v, ok := ci["device_id"]; ok && v != nil {
 			claimItem.DeviceID = v.(string)
 		}
-		if v, ok := ci["license_level"]; ok {
+		if v, ok := ci["license_level"]; ok && v != nil {
 			claimItem.LicenseLevel = v.(string)
 		}
-		if v, ok := ci["license_type"]; ok {
+		if v, ok := ci["license_type"]; ok && v != nil {
 			claimItem.LicenseType = v.(string)
 		}
-		if v, ok := ci["top_of_stack_serial_number"]; ok {
+		if v, ok := ci["top_of_stack_serial_number"]; ok && v != nil {
 			claimItem.TopOfStackSerialNumber = v.(string)
 		}
 		result = append(result, claimItem)

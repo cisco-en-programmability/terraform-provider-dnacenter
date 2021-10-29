@@ -305,10 +305,10 @@ func constructUpdatePnPSettingsAAACredentials(response []interface{}) *dnac.Upda
 	var result dnac.UpdatePnPGlobalSettingsRequestAAACredentials
 	if len(response) > 0 {
 		cred := response[0].(map[string]interface{})
-		if v, ok := cred["password"]; ok {
+		if v, ok := cred["password"]; ok && v != nil {
 			result.Password = v.(string)
 		}
-		if v, ok := cred["username"]; ok {
+		if v, ok := cred["username"]; ok && v != nil {
 			result.Username = v.(string)
 		}
 	}
@@ -319,19 +319,19 @@ func constructUpdatePnPSettingsDefaultProfile(response []interface{}) *dnac.Upda
 	var result dnac.UpdatePnPGlobalSettingsRequestDefaultProfile
 	if len(response) > 0 {
 		profile := response[0].(map[string]interface{})
-		if v, ok := profile["cert"]; ok {
+		if v, ok := profile["cert"]; ok && v != nil {
 			result.Cert = v.(string)
 		}
-		if v, ok := profile["fqdn_addresses"]; ok {
+		if v, ok := profile["fqdn_addresses"]; ok && v != nil {
 			result.FqdnAddresses = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := profile["ip_addresses"]; ok {
+		if v, ok := profile["ip_addresses"]; ok && v != nil {
 			result.IPAddresses = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := profile["port"]; ok {
+		if v, ok := profile["port"]; ok && v != nil {
 			result.Port = v.(int)
 		}
-		if v, ok := profile["proxy"]; ok {
+		if v, ok := profile["proxy"]; ok && v != nil {
 			result.Proxy = v.(bool)
 		}
 	}
@@ -342,28 +342,28 @@ func constructUpdatePnPSettingsSavaMappingListProfile(response []interface{}) *d
 	var result dnac.UpdatePnPGlobalSettingsRequestSavaMappingListProfile
 	if len(response) > 0 {
 		p := response[0].(map[string]interface{})
-		if v, ok := p["address_fqdn"]; ok {
+		if v, ok := p["address_fqdn"]; ok && v != nil {
 			result.AddressFqdn = v.(string)
 		}
-		if v, ok := p["address_ip_v4"]; ok {
+		if v, ok := p["address_ip_v4"]; ok && v != nil {
 			result.AddressIPV4 = v.(string)
 		}
-		if v, ok := p["cert"]; ok {
+		if v, ok := p["cert"]; ok && v != nil {
 			result.Cert = v.(string)
 		}
-		if v, ok := p["make_default"]; ok {
+		if v, ok := p["make_default"]; ok && v != nil {
 			result.MakeDefault = v.(bool)
 		}
-		if v, ok := p["name"]; ok {
+		if v, ok := p["name"]; ok && v != nil {
 			result.Name = v.(string)
 		}
-		if v, ok := p["port"]; ok {
+		if v, ok := p["port"]; ok && v != nil {
 			result.Port = v.(int)
 		}
-		if v, ok := p["profile_id"]; ok {
+		if v, ok := p["profile_id"]; ok && v != nil {
 			result.ProfileID = v.(string)
 		}
-		if v, ok := p["proxy"]; ok {
+		if v, ok := p["proxy"]; ok && v != nil {
 			result.Proxy = v.(bool)
 		}
 	}
@@ -375,10 +375,10 @@ func constructUpdatePnPSettingsSavaMappingListSyncResultSyncList(response []inte
 	for _, sm := range response {
 		smi := sm.(map[string]interface{})
 		syncItem := dnac.UpdatePnPGlobalSettingsRequestSavaMappingListSyncResultSyncList{}
-		if v, ok := smi["device_sn_list"]; ok {
+		if v, ok := smi["device_sn_list"]; ok && v != nil {
 			syncItem.DeviceSnList = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := smi["sync_type"]; ok {
+		if v, ok := smi["sync_type"]; ok && v != nil {
 			syncItem.SyncType = v.(string)
 		}
 		syncList = append(syncList, syncItem)
@@ -390,12 +390,12 @@ func constructUpdatePnPSettingsSavaMappingListSyncResult(response []interface{})
 	var result dnac.UpdatePnPGlobalSettingsRequestSavaMappingListSyncResult
 	if len(response) > 0 {
 		p := response[0].(map[string]interface{})
-		if v, ok := p["sync_list"]; ok {
+		if v, ok := p["sync_list"]; ok && v != nil {
 			if w := constructUpdatePnPSettingsSavaMappingListSyncResultSyncList(v.([]interface{})); w != nil {
 				result.SyncList = *w
 			}
 		}
-		if v, ok := p["sync_msg"]; ok {
+		if v, ok := p["sync_msg"]; ok && v != nil {
 			result.SyncMsg = v.(string)
 		}
 	}
@@ -407,47 +407,47 @@ func constructUpdatePnPSettingsSavaMappingList(response []interface{}) *[]dnac.U
 	for _, sm := range response {
 		smi := sm.(map[string]interface{})
 		savaMappingItem := dnac.UpdatePnPGlobalSettingsRequestSavaMappingList{}
-		if v, ok := smi["auto_sync_period"]; ok {
+		if v, ok := smi["auto_sync_period"]; ok && v != nil {
 			savaMappingItem.AutoSyncPeriod = v.(int)
 		}
-		if v, ok := smi["cco_user"]; ok {
+		if v, ok := smi["cco_user"]; ok && v != nil {
 			savaMappingItem.CcoUser = v.(string)
 		}
-		if v, ok := smi["expiry"]; ok {
+		if v, ok := smi["expiry"]; ok && v != nil {
 			savaMappingItem.Expiry = v.(int)
 		}
-		if v, ok := smi["last_sync"]; ok {
+		if v, ok := smi["last_sync"]; ok && v != nil {
 			savaMappingItem.LastSync = v.(int)
 		}
-		if v, ok := smi["profile"]; ok {
+		if v, ok := smi["profile"]; ok && v != nil {
 			if w := constructUpdatePnPSettingsSavaMappingListProfile(v.([]interface{})); w != nil {
 				savaMappingItem.Profile = *w
 			}
 		}
-		if v, ok := smi["smart_account_id"]; ok {
+		if v, ok := smi["smart_account_id"]; ok && v != nil {
 			savaMappingItem.SmartAccountID = v.(string)
 		}
-		if v, ok := smi["sync_result"]; ok {
+		if v, ok := smi["sync_result"]; ok && v != nil {
 			if w := constructUpdatePnPSettingsSavaMappingListSyncResult(v.([]interface{})); w != nil {
 				savaMappingItem.SyncResult = *w
 			}
 		}
-		if v, ok := smi["sync_result_str"]; ok {
+		if v, ok := smi["sync_result_str"]; ok && v != nil {
 			savaMappingItem.SyncResultStr = v.(string)
 		}
-		if v, ok := smi["sync_start_time"]; ok {
+		if v, ok := smi["sync_start_time"]; ok && v != nil {
 			savaMappingItem.SyncStartTime = v.(int)
 		}
-		if v, ok := smi["sync_status"]; ok {
+		if v, ok := smi["sync_status"]; ok && v != nil {
 			savaMappingItem.SyncStatus = v.(string)
 		}
-		if v, ok := smi["tenant_id"]; ok {
+		if v, ok := smi["tenant_id"]; ok && v != nil {
 			savaMappingItem.TenantID = v.(string)
 		}
-		if v, ok := smi["token"]; ok {
+		if v, ok := smi["token"]; ok && v != nil {
 			savaMappingItem.Token = v.(string)
 		}
-		if v, ok := smi["virtual_account_id"]; ok {
+		if v, ok := smi["virtual_account_id"]; ok && v != nil {
 			savaMappingItem.VirtualAccountID = v.(string)
 		}
 
@@ -461,13 +461,13 @@ func constructUpdatePnPSettingsTaskTimeOuts(response []interface{}) *dnac.Update
 	if len(response) > 0 {
 		timeOuts := response[0].(map[string]interface{})
 
-		if v, ok := timeOuts["config_time_out"]; ok {
+		if v, ok := timeOuts["config_time_out"]; ok && v != nil {
 			result.ConfigTimeOut = v.(int)
 		}
-		if v, ok := timeOuts["general_time_out"]; ok {
+		if v, ok := timeOuts["general_time_out"]; ok && v != nil {
 			result.GeneralTimeOut = v.(int)
 		}
-		if v, ok := timeOuts["image_download_time_out"]; ok {
+		if v, ok := timeOuts["image_download_time_out"]; ok && v != nil {
 			result.ImageDownloadTimeOut = v.(int)
 		}
 	}
@@ -476,36 +476,36 @@ func constructUpdatePnPSettingsTaskTimeOuts(response []interface{}) *dnac.Update
 
 func constructUpdatePnPSettings(ws map[string]interface{}) *dnac.UpdatePnPGlobalSettingsRequest {
 	var SettingsItem dnac.UpdatePnPGlobalSettingsRequest
-	if v, ok := ws["id"]; ok {
+	if v, ok := ws["id"]; ok && v != nil {
 		SettingsItem.TypeID = v.(string)
 	}
-	if v, ok := ws["aaa_credentials"]; ok {
+	if v, ok := ws["aaa_credentials"]; ok && v != nil {
 		if w := constructUpdatePnPSettingsAAACredentials(v.([]interface{})); w != nil {
 			SettingsItem.AAACredentials = *w
 		}
 	}
-	if v, ok := ws["accept_eula"]; ok {
+	if v, ok := ws["accept_eula"]; ok && v != nil {
 		SettingsItem.AcceptEula = v.(bool)
 	}
-	if v, ok := ws["default_profile"]; ok {
+	if v, ok := ws["default_profile"]; ok && v != nil {
 		if w := constructUpdatePnPSettingsDefaultProfile(v.([]interface{})); w != nil {
 			SettingsItem.DefaultProfile = *w
 		}
 	}
-	if v, ok := ws["sava_mapping_list"]; ok {
+	if v, ok := ws["sava_mapping_list"]; ok && v != nil {
 		if w := constructUpdatePnPSettingsSavaMappingList(v.([]interface{})); w != nil {
 			SettingsItem.SavaMappingList = *w
 		}
 	}
-	if v, ok := ws["task_time_outs"]; ok {
+	if v, ok := ws["task_time_outs"]; ok && v != nil {
 		if w := constructUpdatePnPSettingsTaskTimeOuts(v.([]interface{})); w != nil {
 			SettingsItem.TaskTimeOuts = *w
 		}
 	}
-	if v, ok := ws["tenant_id"]; ok {
+	if v, ok := ws["tenant_id"]; ok && v != nil {
 		SettingsItem.TenantID = v.(string)
 	}
-	if v, ok := ws["version"]; ok {
+	if v, ok := ws["version"]; ok && v != nil {
 		SettingsItem.Version = v.(int)
 	}
 	return &SettingsItem

@@ -1080,10 +1080,10 @@ func constructAddDeviceInfoAAACredentials(credentials []interface{}) *dnac.AddDe
 	var aaaCredentials dnac.AddDeviceToPnpDatabaseRequestDeviceInfoAAACredentials
 	if len(credentials) > 0 {
 		credential := credentials[0].(map[string]interface{})
-		if v, ok := credential["username"]; ok {
+		if v, ok := credential["username"]; ok && v != nil {
 			aaaCredentials.Username = v.(string)
 		}
-		if v, ok := credential["password"]; ok {
+		if v, ok := credential["password"]; ok && v != nil {
 			aaaCredentials.Password = v.(string)
 		}
 	}
@@ -1095,22 +1095,22 @@ func constructAddDeviceInfoFileSystemList(fileList []interface{}) *[]dnac.AddDev
 	for _, fi := range fileList {
 		fsi := fi.(map[string]interface{})
 		fileSystemItem := dnac.AddDeviceToPnpDatabaseRequestDeviceInfoFileSystemList{}
-		if v, ok := fsi["freespace"]; ok {
+		if v, ok := fsi["freespace"]; ok && v != nil {
 			fileSystemItem.Freespace = v.(float64)
 		}
-		if v, ok := fsi["name"]; ok {
+		if v, ok := fsi["name"]; ok && v != nil {
 			fileSystemItem.Name = v.(string)
 		}
-		if v, ok := fsi["readable"]; ok {
+		if v, ok := fsi["readable"]; ok && v != nil {
 			fileSystemItem.Readable = v.(bool)
 		}
-		if v, ok := fsi["size"]; ok {
+		if v, ok := fsi["size"]; ok && v != nil {
 			fileSystemItem.Size = v.(float64)
 		}
-		if v, ok := fsi["type"]; ok {
+		if v, ok := fsi["type"]; ok && v != nil {
 			fileSystemItem.Type = v.(string)
 		}
-		if v, ok := fsi["writeable"]; ok {
+		if v, ok := fsi["writeable"]; ok && v != nil {
 			fileSystemItem.Writeable = v.(bool)
 		}
 		fileSystemList = append(fileSystemList, fileSystemItem)
@@ -1135,19 +1135,19 @@ func constructAddDeviceInfoIPInterfaces(interfaces []interface{}) *[]dnac.AddDev
 	for _, i := range interfaces {
 		interfaceItem := dnac.AddDeviceToPnpDatabaseRequestDeviceInfoIPInterfaces{}
 		is := i.(map[string]interface{})
-		if v, ok := is["ipv4_address"]; ok {
+		if v, ok := is["ipv4_address"]; ok && v != nil {
 			interfaceItem.IPv4Address = v.(string)
 		}
-		if v, ok := is["ipv6_address_list"]; ok {
+		if v, ok := is["ipv6_address_list"]; ok && v != nil {
 			interfaceItem.IPv6AddressList = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := is["mac_address"]; ok {
+		if v, ok := is["mac_address"]; ok && v != nil {
 			interfaceItem.MacAddress = v.(string)
 		}
-		if v, ok := is["name"]; ok {
+		if v, ok := is["name"]; ok && v != nil {
 			interfaceItem.Name = v.(string)
 		}
-		if v, ok := is["status"]; ok {
+		if v, ok := is["status"]; ok && v != nil {
 			interfaceItem.Status = v.(string)
 		}
 		result = append(result, interfaceItem)
@@ -1159,19 +1159,19 @@ func constructAddDeviceInfoLocation(locations []interface{}) *dnac.AddDeviceToPn
 	var result dnac.AddDeviceToPnpDatabaseRequestDeviceInfoLocation
 	if len(locations) > 0 {
 		location := locations[0].(map[string]interface{})
-		if v, ok := location["address"]; ok {
+		if v, ok := location["address"]; ok && v != nil {
 			result.Address = v.(string)
 		}
-		if v, ok := location["altitude"]; ok {
+		if v, ok := location["altitude"]; ok && v != nil {
 			result.Altitude = v.(string)
 		}
-		if v, ok := location["latitude"]; ok {
+		if v, ok := location["latitude"]; ok && v != nil {
 			result.Latitude = v.(string)
 		}
-		if v, ok := location["longitude"]; ok {
+		if v, ok := location["longitude"]; ok && v != nil {
 			result.Longitude = v.(string)
 		}
-		if v, ok := location["siteId"]; ok {
+		if v, ok := location["siteId"]; ok && v != nil {
 			result.SiteID = v.(string)
 		}
 	}
@@ -1183,31 +1183,31 @@ func constructAddDeviceInfoNeighborLinks(links []interface{}) *[]dnac.AddDeviceT
 	for _, link := range links {
 		var linkItem dnac.AddDeviceToPnpDatabaseRequestDeviceInfoNeighborLinks
 		ls := link.(map[string]interface{})
-		if v, ok := ls["local_interface_name"]; ok {
+		if v, ok := ls["local_interface_name"]; ok && v != nil {
 			linkItem.LocalInterfaceName = v.(string)
 		}
-		if v, ok := ls["local_mac_address"]; ok {
+		if v, ok := ls["local_mac_address"]; ok && v != nil {
 			linkItem.LocalMacAddress = v.(string)
 		}
-		if v, ok := ls["local_short_interface_name"]; ok {
+		if v, ok := ls["local_short_interface_name"]; ok && v != nil {
 			linkItem.LocalShortInterfaceName = v.(string)
 		}
-		if v, ok := ls["remote_device_name"]; ok {
+		if v, ok := ls["remote_device_name"]; ok && v != nil {
 			linkItem.RemoteDeviceName = v.(string)
 		}
-		if v, ok := ls["remote_interface_name"]; ok {
+		if v, ok := ls["remote_interface_name"]; ok && v != nil {
 			linkItem.RemoteInterfaceName = v.(string)
 		}
-		if v, ok := ls["remote_mac_address"]; ok {
+		if v, ok := ls["remote_mac_address"]; ok && v != nil {
 			linkItem.RemoteMacAddress = v.(string)
 		}
-		if v, ok := ls["remote_platform"]; ok {
+		if v, ok := ls["remote_platform"]; ok && v != nil {
 			linkItem.RemotePlatform = v.(string)
 		}
-		if v, ok := ls["remote_short_interface_name"]; ok {
+		if v, ok := ls["remote_short_interface_name"]; ok && v != nil {
 			linkItem.RemoteShortInterfaceName = v.(string)
 		}
-		if v, ok := ls["remote_version"]; ok {
+		if v, ok := ls["remote_version"]; ok && v != nil {
 			linkItem.RemoteVersion = v.(string)
 		}
 		result = append(result, linkItem)
@@ -1220,57 +1220,57 @@ func constructAddDeviceInfoPnpProfileList(profiles []interface{}) *[]dnac.AddDev
 	for _, profile := range profiles {
 		var profileItem dnac.AddDeviceToPnpDatabaseRequestDeviceInfoPnpProfileList
 		ps := profile.(map[string]interface{})
-		if v, ok := ps["created_by"]; ok {
+		if v, ok := ps["created_by"]; ok && v != nil {
 			profileItem.CreatedBy = v.(string)
 		}
-		if v, ok := ps["discovery_created"]; ok {
+		if v, ok := ps["discovery_created"]; ok && v != nil {
 			profileItem.DiscoveryCreated = v.(bool)
 		}
-		if v, ok := ps["primary_endpoint"]; ok {
+		if v, ok := ps["primary_endpoint"]; ok && v != nil {
 			if w := v.([]interface{}); len(w) > 0 {
 				endpoint := w[0].(map[string]interface{})
-				if x, ok := endpoint["certificate"]; ok {
+				if x, ok := endpoint["certificate"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.Certificate = x.(string)
 				}
-				if x, ok := endpoint["fqdn"]; ok {
+				if x, ok := endpoint["fqdn"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.Fqdn = x.(string)
 				}
-				if x, ok := endpoint["ipv4_address"]; ok {
+				if x, ok := endpoint["ipv4_address"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.IPv4Address = x.(string)
 				}
-				if x, ok := endpoint["ipv6_address"]; ok {
+				if x, ok := endpoint["ipv6_address"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.IPv6Address = x.(string)
 				}
-				if x, ok := endpoint["port"]; ok {
+				if x, ok := endpoint["port"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.Port = x.(float64)
 				}
-				if x, ok := endpoint["protocol"]; ok {
+				if x, ok := endpoint["protocol"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.Protocol = x.(string)
 				}
 			}
 		}
-		if v, ok := ps["profile_name"]; ok {
+		if v, ok := ps["profile_name"]; ok && v != nil {
 			profileItem.ProfileName = v.(string)
 		}
-		if v, ok := ps["secondary_endpoint"]; ok {
+		if v, ok := ps["secondary_endpoint"]; ok && v != nil {
 			if w := v.([]interface{}); len(w) > 0 {
 				endpoint := w[0].(map[string]interface{})
-				if x, ok := endpoint["certificate"]; ok {
+				if x, ok := endpoint["certificate"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.Certificate = x.(string)
 				}
-				if x, ok := endpoint["fqdn"]; ok {
+				if x, ok := endpoint["fqdn"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.Fqdn = x.(string)
 				}
-				if x, ok := endpoint["ipv4_address"]; ok {
+				if x, ok := endpoint["ipv4_address"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.IPv4Address = x.(string)
 				}
-				if x, ok := endpoint["ipv6_address"]; ok {
+				if x, ok := endpoint["ipv6_address"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.IPv6Address = x.(string)
 				}
-				if x, ok := endpoint["port"]; ok {
+				if x, ok := endpoint["port"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.Port = x.(float64)
 				}
-				if x, ok := endpoint["protocol"]; ok {
+				if x, ok := endpoint["protocol"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.Protocol = x.(string)
 				}
 			}
@@ -1285,10 +1285,10 @@ func constructAddDeviceInfoPreWorkflowCliOuputs(cliOutputs []interface{}) *[]dna
 	for _, cliOutput := range cliOutputs {
 		var cliOutputItem dnac.AddDeviceToPnpDatabaseRequestDeviceInfoPreWorkflowCliOuputs
 		cos := cliOutput.(map[string]interface{})
-		if v, ok := cos["cli"]; ok {
+		if v, ok := cos["cli"]; ok && v != nil {
 			cliOutputItem.Cli = v.(string)
 		}
-		if v, ok := cos["cli_output"]; ok {
+		if v, ok := cos["cli_output"]; ok && v != nil {
 			cliOutputItem.CliOutput = v.(string)
 		}
 		result = append(result, cliOutputItem)
@@ -1301,40 +1301,40 @@ func constructAddDeviceInfoStackInfoStackMemberList(memberList []interface{}) *[
 	for _, member := range memberList {
 		var memberItem dnac.AddDeviceToPnpDatabaseRequestDeviceInfoStackInfoStackMemberList
 		ms := member.(map[string]interface{})
-		if v, ok := ms["hardware_version"]; ok {
+		if v, ok := ms["hardware_version"]; ok && v != nil {
 			memberItem.HardwareVersion = v.(string)
 		}
-		if v, ok := ms["license_level"]; ok {
+		if v, ok := ms["license_level"]; ok && v != nil {
 			memberItem.LicenseLevel = v.(string)
 		}
-		if v, ok := ms["license_type"]; ok {
+		if v, ok := ms["license_type"]; ok && v != nil {
 			memberItem.LicenseType = v.(string)
 		}
-		if v, ok := ms["mac_address"]; ok {
+		if v, ok := ms["mac_address"]; ok && v != nil {
 			memberItem.MacAddress = v.(string)
 		}
-		if v, ok := ms["pid"]; ok {
+		if v, ok := ms["pid"]; ok && v != nil {
 			memberItem.Pid = v.(string)
 		}
-		if v, ok := ms["priority"]; ok {
+		if v, ok := ms["priority"]; ok && v != nil {
 			memberItem.Priority = v.(float64)
 		}
-		if v, ok := ms["role"]; ok {
+		if v, ok := ms["role"]; ok && v != nil {
 			memberItem.Role = v.(string)
 		}
-		if v, ok := ms["serial_number"]; ok {
+		if v, ok := ms["serial_number"]; ok && v != nil {
 			memberItem.SerialNumber = v.(string)
 		}
-		if v, ok := ms["software_version"]; ok {
+		if v, ok := ms["software_version"]; ok && v != nil {
 			memberItem.SoftwareVersion = v.(string)
 		}
-		if v, ok := ms["stack_number"]; ok {
+		if v, ok := ms["stack_number"]; ok && v != nil {
 			memberItem.StackNumber = v.(float64)
 		}
-		if v, ok := ms["state"]; ok {
+		if v, ok := ms["state"]; ok && v != nil {
 			memberItem.State = v.(string)
 		}
-		if v, ok := ms["sudi_serial_number"]; ok {
+		if v, ok := ms["sudi_serial_number"]; ok && v != nil {
 			memberItem.SudiSerialNumber = v.(string)
 		}
 		result = append(result, memberItem)
@@ -1346,24 +1346,24 @@ func constructAddDeviceInfoStackInfo(stackInfos []interface{}) *dnac.AddDeviceTo
 	var result dnac.AddDeviceToPnpDatabaseRequestDeviceInfoStackInfo
 	if len(stackInfos) > 0 {
 		stackInfo := stackInfos[0].(map[string]interface{})
-		if v, ok := stackInfo["is_full_ring"]; ok {
+		if v, ok := stackInfo["is_full_ring"]; ok && v != nil {
 			result.IsFullRing = v.(bool)
 		}
-		if v, ok := stackInfo["stack_member_list"]; ok {
+		if v, ok := stackInfo["stack_member_list"]; ok && v != nil {
 			if w := constructAddDeviceInfoStackInfoStackMemberList(v.([]interface{})); w != nil {
 				result.StackMemberList = *w
 			}
 		}
-		if v, ok := stackInfo["stack_ring_protocol"]; ok {
+		if v, ok := stackInfo["stack_ring_protocol"]; ok && v != nil {
 			result.StackRingProtocol = v.(string)
 		}
-		if v, ok := stackInfo["supports_stack_workflows"]; ok {
+		if v, ok := stackInfo["supports_stack_workflows"]; ok && v != nil {
 			result.SupportsStackWorkflows = v.(bool)
 		}
-		if v, ok := stackInfo["total_member_count"]; ok {
+		if v, ok := stackInfo["total_member_count"]; ok && v != nil {
 			result.TotalMemberCount = v.(float64)
 		}
-		if v, ok := stackInfo["valid_license_levels"]; ok {
+		if v, ok := stackInfo["valid_license_levels"]; ok && v != nil {
 			result.ValidLicenseLevels = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
 	}
@@ -1388,22 +1388,22 @@ func constructAddRunSummaryListHistoryTaskInfoWorkItemList(itemList []interface{
 	for _, item := range itemList {
 		is := item.(map[string]interface{})
 		var workItem dnac.AddDeviceToPnpDatabaseRequestRunSummaryListHistoryTaskInfoWorkItemList
-		if v, ok := is["command"]; ok {
+		if v, ok := is["command"]; ok && v != nil {
 			workItem.Command = v.(string)
 		}
-		if v, ok := is["end_time"]; ok {
+		if v, ok := is["end_time"]; ok && v != nil {
 			workItem.EndTime = v.(int)
 		}
-		if v, ok := is["output_str"]; ok {
+		if v, ok := is["output_str"]; ok && v != nil {
 			workItem.OutputStr = v.(string)
 		}
-		if v, ok := is["start_time"]; ok {
+		if v, ok := is["start_time"]; ok && v != nil {
 			workItem.StartTime = v.(int)
 		}
-		if v, ok := is["state"]; ok {
+		if v, ok := is["state"]; ok && v != nil {
 			workItem.State = v.(string)
 		}
-		if v, ok := is["time_taken"]; ok {
+		if v, ok := is["time_taken"]; ok && v != nil {
 			workItem.TimeTaken = v.(float64)
 		}
 		result = append(result, workItem)
@@ -1415,21 +1415,21 @@ func constructAddRunSummaryListHistoryTaskInfo(taskInfos []interface{}) *dnac.Ad
 	var result dnac.AddDeviceToPnpDatabaseRequestRunSummaryListHistoryTaskInfo
 	if len(taskInfos) > 0 {
 		taskInfo := taskInfos[0].(map[string]interface{})
-		if v, ok := taskInfo["addn_details"]; ok {
+		if v, ok := taskInfo["addn_details"]; ok && v != nil {
 			if w := constructAddRunSummaryListHistoryTaskInfoAddnDetails(v.([]interface{})); w != nil {
 				result.AddnDetails = *w
 			}
 		}
-		if v, ok := taskInfo["name"]; ok {
+		if v, ok := taskInfo["name"]; ok && v != nil {
 			result.Name = v.(string)
 		}
-		if v, ok := taskInfo["time_taken"]; ok {
+		if v, ok := taskInfo["time_taken"]; ok && v != nil {
 			result.TimeTaken = v.(float64)
 		}
-		if v, ok := taskInfo["type"]; ok {
+		if v, ok := taskInfo["type"]; ok && v != nil {
 			result.Type = v.(string)
 		}
-		if v, ok := taskInfo["work_item_list"]; ok {
+		if v, ok := taskInfo["work_item_list"]; ok && v != nil {
 			if w := constructAddRunSummaryListHistoryTaskInfoWorkItemList(v.([]interface{})); w != nil {
 				result.WorkItemList = *w
 			}
@@ -1442,175 +1442,175 @@ func constructAddDeviceInfo(deviceInfos []interface{}) *dnac.AddDeviceToPnpDatab
 	var deviceInfo dnac.AddDeviceToPnpDatabaseRequestDeviceInfo
 	if len(deviceInfos) > 0 {
 		deviceInfoItem := deviceInfos[0].(map[string]interface{})
-		if v, ok := deviceInfoItem["aaa_credentials"]; ok {
+		if v, ok := deviceInfoItem["aaa_credentials"]; ok && v != nil {
 			if w := constructAddDeviceInfoAAACredentials(v.([]interface{})); w != nil {
 				deviceInfo.AAACredentials = *w
 			}
 		}
-		if v, ok := deviceInfoItem["added_on"]; ok {
+		if v, ok := deviceInfoItem["added_on"]; ok && v != nil {
 			deviceInfo.AddedOn = v.(float64)
 		}
-		if v, ok := deviceInfoItem["addn_mac_addrs"]; ok {
+		if v, ok := deviceInfoItem["addn_mac_addrs"]; ok && v != nil {
 			deviceInfo.AddnMacAddrs = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["agent_type"]; ok {
+		if v, ok := deviceInfoItem["agent_type"]; ok && v != nil {
 			deviceInfo.AgentType = v.(string)
 		}
-		if v, ok := deviceInfoItem["auth_status"]; ok {
+		if v, ok := deviceInfoItem["auth_status"]; ok && v != nil {
 			deviceInfo.AuthStatus = v.(string)
 		}
-		if v, ok := deviceInfoItem["authenticated_mic_number"]; ok {
+		if v, ok := deviceInfoItem["authenticated_mic_number"]; ok && v != nil {
 			deviceInfo.AuthenticatedMicNumber = v.(string)
 		}
-		if v, ok := deviceInfoItem["authenticated_sudi_serial_no"]; ok {
+		if v, ok := deviceInfoItem["authenticated_sudi_serial_no"]; ok && v != nil {
 			deviceInfo.AuthenticatedSudiSerialNo = v.(string)
 		}
-		if v, ok := deviceInfoItem["capabilities_supported"]; ok {
+		if v, ok := deviceInfoItem["capabilities_supported"]; ok && v != nil {
 			deviceInfo.CapabilitiesSupported = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["cm_state"]; ok {
+		if v, ok := deviceInfoItem["cm_state"]; ok && v != nil {
 			deviceInfo.CmState = v.(string)
 		}
-		if v, ok := deviceInfoItem["description"]; ok {
+		if v, ok := deviceInfoItem["description"]; ok && v != nil {
 			deviceInfo.Description = v.(string)
 		}
-		if v, ok := deviceInfoItem["device_sudi_serial_nos"]; ok {
+		if v, ok := deviceInfoItem["device_sudi_serial_nos"]; ok && v != nil {
 			deviceInfo.DeviceSudiSerialNos = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["device_type"]; ok {
+		if v, ok := deviceInfoItem["device_type"]; ok && v != nil {
 			deviceInfo.DeviceType = v.(string)
 		}
-		if v, ok := deviceInfoItem["features_supported"]; ok {
+		if v, ok := deviceInfoItem["features_supported"]; ok && v != nil {
 			deviceInfo.FeaturesSupported = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["file_system_list"]; ok {
+		if v, ok := deviceInfoItem["file_system_list"]; ok && v != nil {
 			if w := constructAddDeviceInfoFileSystemList(v.([]interface{})); w != nil {
 				deviceInfo.FileSystemList = *w
 			}
 		}
-		if v, ok := deviceInfoItem["first_contact"]; ok {
+		if v, ok := deviceInfoItem["first_contact"]; ok && v != nil {
 			deviceInfo.FirstContact = v.(float64)
 		}
-		if v, ok := deviceInfoItem["hostname"]; ok {
+		if v, ok := deviceInfoItem["hostname"]; ok && v != nil {
 			deviceInfo.Hostname = v.(string)
 		}
-		if v, ok := deviceInfoItem["http_headers"]; ok {
+		if v, ok := deviceInfoItem["http_headers"]; ok && v != nil {
 			if w := constructAddDeviceInfoHTTPHeaders(v.([]interface{})); w != nil {
 				deviceInfo.HTTPHeaders = *w
 			}
 		}
-		if v, ok := deviceInfoItem["image_file"]; ok {
+		if v, ok := deviceInfoItem["image_file"]; ok && v != nil {
 			deviceInfo.ImageFile = v.(string)
 		}
-		if v, ok := deviceInfoItem["image_version"]; ok {
+		if v, ok := deviceInfoItem["image_version"]; ok && v != nil {
 			deviceInfo.ImageVersion = v.(string)
 		}
-		if v, ok := deviceInfoItem["http_headers"]; ok {
+		if v, ok := deviceInfoItem["http_headers"]; ok && v != nil {
 			if w := constructAddDeviceInfoIPInterfaces(v.([]interface{})); w != nil {
 				deviceInfo.IPInterfaces = *w
 			}
 		}
-		if v, ok := deviceInfoItem["last_contact"]; ok {
+		if v, ok := deviceInfoItem["last_contact"]; ok && v != nil {
 			deviceInfo.LastContact = v.(float64)
 		}
-		if v, ok := deviceInfoItem["last_sync_time"]; ok {
+		if v, ok := deviceInfoItem["last_sync_time"]; ok && v != nil {
 			deviceInfo.LastSyncTime = v.(float64)
 		}
-		if v, ok := deviceInfoItem["last_update_on"]; ok {
+		if v, ok := deviceInfoItem["last_update_on"]; ok && v != nil {
 			deviceInfo.LastUpdateOn = v.(float64)
 		}
-		if v, ok := deviceInfoItem["location"]; ok {
+		if v, ok := deviceInfoItem["location"]; ok && v != nil {
 			if w := constructAddDeviceInfoLocation(v.([]interface{})); w != nil {
 				deviceInfo.Location = *w
 			}
 		}
-		if v, ok := deviceInfoItem["mac_address"]; ok {
+		if v, ok := deviceInfoItem["mac_address"]; ok && v != nil {
 			deviceInfo.MacAddress = v.(string)
 		}
-		if v, ok := deviceInfoItem["mode"]; ok {
+		if v, ok := deviceInfoItem["mode"]; ok && v != nil {
 			deviceInfo.Mode = v.(string)
 		}
-		if v, ok := deviceInfoItem["name"]; ok {
+		if v, ok := deviceInfoItem["name"]; ok && v != nil {
 			deviceInfo.Name = v.(string)
 		}
-		if v, ok := deviceInfoItem["neighbor_links"]; ok {
+		if v, ok := deviceInfoItem["neighbor_links"]; ok && v != nil {
 			if w := constructAddDeviceInfoNeighborLinks(v.([]interface{})); w != nil {
 				deviceInfo.NeighborLinks = *w
 			}
 		}
-		if v, ok := deviceInfoItem["onb_state"]; ok {
+		if v, ok := deviceInfoItem["onb_state"]; ok && v != nil {
 			deviceInfo.OnbState = v.(string)
 		}
-		if v, ok := deviceInfoItem["pid"]; ok {
+		if v, ok := deviceInfoItem["pid"]; ok && v != nil {
 			deviceInfo.Pid = v.(string)
 		}
-		if v, ok := deviceInfoItem["pnp_profile_list"]; ok {
+		if v, ok := deviceInfoItem["pnp_profile_list"]; ok && v != nil {
 			if w := constructAddDeviceInfoPnpProfileList(v.([]interface{})); w != nil {
 				deviceInfo.PnpProfileList = *w
 			}
 		}
-		if v, ok := deviceInfoItem["populate_inventory"]; ok {
+		if v, ok := deviceInfoItem["populate_inventory"]; ok && v != nil {
 			deviceInfo.PopulateInventory = v.(bool)
 		}
-		if v, ok := deviceInfoItem["pre_workflow_cli_ouputs"]; ok {
+		if v, ok := deviceInfoItem["pre_workflow_cli_ouputs"]; ok && v != nil {
 			if w := constructAddDeviceInfoPreWorkflowCliOuputs(v.([]interface{})); w != nil {
 				deviceInfo.PreWorkflowCliOuputs = *w
 			}
 		}
-		if v, ok := deviceInfoItem["project_id"]; ok {
+		if v, ok := deviceInfoItem["project_id"]; ok && v != nil {
 			deviceInfo.ProjectID = v.(string)
 		}
-		if v, ok := deviceInfoItem["project_name"]; ok {
+		if v, ok := deviceInfoItem["project_name"]; ok && v != nil {
 			deviceInfo.ProjectName = v.(string)
 		}
-		if v, ok := deviceInfoItem["reload_requested"]; ok {
+		if v, ok := deviceInfoItem["reload_requested"]; ok && v != nil {
 			deviceInfo.ReloadRequested = v.(bool)
 		}
-		if v, ok := deviceInfoItem["serial_number"]; ok {
+		if v, ok := deviceInfoItem["serial_number"]; ok && v != nil {
 			deviceInfo.SerialNumber = v.(string)
 		}
-		if v, ok := deviceInfoItem["site_id"]; ok {
+		if v, ok := deviceInfoItem["site_id"]; ok && v != nil {
 			deviceInfo.SiteID = v.(string)
 		}
-		if v, ok := deviceInfoItem["site_name"]; ok {
+		if v, ok := deviceInfoItem["site_name"]; ok && v != nil {
 			deviceInfo.SiteName = v.(string)
 		}
-		if v, ok := deviceInfoItem["smart_account_id"]; ok {
+		if v, ok := deviceInfoItem["smart_account_id"]; ok && v != nil {
 			deviceInfo.SmartAccountID = v.(string)
 		}
-		if v, ok := deviceInfoItem["source"]; ok {
+		if v, ok := deviceInfoItem["source"]; ok && v != nil {
 			deviceInfo.Source = v.(string)
 		}
-		if v, ok := deviceInfoItem["stack"]; ok {
+		if v, ok := deviceInfoItem["stack"]; ok && v != nil {
 			deviceInfo.Stack = v.(bool)
 		}
-		if v, ok := deviceInfoItem["stack_info"]; ok {
+		if v, ok := deviceInfoItem["stack_info"]; ok && v != nil {
 			if w := constructAddDeviceInfoStackInfo(v.([]interface{})); w != nil {
 				deviceInfo.StackInfo = *w
 			}
 		}
-		if v, ok := deviceInfoItem["state"]; ok {
+		if v, ok := deviceInfoItem["state"]; ok && v != nil {
 			deviceInfo.State = v.(string)
 		}
-		if v, ok := deviceInfoItem["sudi_required"]; ok {
+		if v, ok := deviceInfoItem["sudi_required"]; ok && v != nil {
 			deviceInfo.SudiRequired = v.(bool)
 		}
-		if v, ok := deviceInfoItem["tags"]; ok {
+		if v, ok := deviceInfoItem["tags"]; ok && v != nil {
 			deviceInfo.Tags = v.(string)
 		}
-		if v, ok := deviceInfoItem["user_mic_numbers"]; ok {
+		if v, ok := deviceInfoItem["user_mic_numbers"]; ok && v != nil {
 			deviceInfo.UserMicNumbers = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["user_sudi_serial_nos"]; ok {
+		if v, ok := deviceInfoItem["user_sudi_serial_nos"]; ok && v != nil {
 			deviceInfo.UserSudiSerialNos = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["virtual_account_id"]; ok {
+		if v, ok := deviceInfoItem["virtual_account_id"]; ok && v != nil {
 			deviceInfo.VirtualAccountID = v.(string)
 		}
-		if v, ok := deviceInfoItem["workflow_id"]; ok {
+		if v, ok := deviceInfoItem["workflow_id"]; ok && v != nil {
 			deviceInfo.WorkflowID = v.(string)
 		}
-		if v, ok := deviceInfoItem["workflow_name"]; ok {
+		if v, ok := deviceInfoItem["workflow_name"]; ok && v != nil {
 			deviceInfo.WorkflowName = v.(string)
 		}
 	}
@@ -1622,18 +1622,18 @@ func constructAddRunSummaryList(summaryList []interface{}) *[]dnac.AddDeviceToPn
 	for _, runSummary := range summaryList {
 		var runSummaryItem dnac.AddDeviceToPnpDatabaseRequestRunSummaryList
 		rs := runSummary.(map[string]interface{})
-		if v, ok := rs["details"]; ok {
+		if v, ok := rs["details"]; ok && v != nil {
 			runSummaryItem.Details = v.(string)
 		}
-		if v, ok := rs["error_flag"]; ok {
+		if v, ok := rs["error_flag"]; ok && v != nil {
 			runSummaryItem.ErrorFlag = v.(bool)
 		}
-		if v, ok := rs["history_task_info"]; ok {
+		if v, ok := rs["history_task_info"]; ok && v != nil {
 			if w := constructAddRunSummaryListHistoryTaskInfo(v.([]interface{})); w != nil {
 				runSummaryItem.HistoryTaskInfo = *w
 			}
 		}
-		if v, ok := rs["timestamp"]; ok {
+		if v, ok := rs["timestamp"]; ok && v != nil {
 			runSummaryItem.Timestamp = v.(float64)
 		}
 		runSummaryList = append(runSummaryList, runSummaryItem)
@@ -1646,22 +1646,22 @@ func constructAddSystemResetWorkflowTasksWorkItemList(itemList []interface{}) *[
 	for _, item := range itemList {
 		is := item.(map[string]interface{})
 		var workItem dnac.AddDeviceToPnpDatabaseRequestSystemResetWorkflowTasksWorkItemList
-		if v, ok := is["command"]; ok {
+		if v, ok := is["command"]; ok && v != nil {
 			workItem.Command = v.(string)
 		}
-		if v, ok := is["end_time"]; ok {
+		if v, ok := is["end_time"]; ok && v != nil {
 			workItem.EndTime = v.(int)
 		}
-		if v, ok := is["output_str"]; ok {
+		if v, ok := is["output_str"]; ok && v != nil {
 			workItem.OutputStr = v.(string)
 		}
-		if v, ok := is["start_time"]; ok {
+		if v, ok := is["start_time"]; ok && v != nil {
 			workItem.StartTime = v.(int)
 		}
-		if v, ok := is["state"]; ok {
+		if v, ok := is["state"]; ok && v != nil {
 			workItem.State = v.(string)
 		}
-		if v, ok := is["time_taken"]; ok {
+		if v, ok := is["time_taken"]; ok && v != nil {
 			workItem.TimeTaken = v.(float64)
 		}
 		result = append(result, workItem)
@@ -1674,22 +1674,22 @@ func constructAddSystemWorkflowTasksWorkItemList(itemList []interface{}) *[]dnac
 	for _, item := range itemList {
 		is := item.(map[string]interface{})
 		var workItem dnac.AddDeviceToPnpDatabaseRequestSystemWorkflowTasksWorkItemList
-		if v, ok := is["command"]; ok {
+		if v, ok := is["command"]; ok && v != nil {
 			workItem.Command = v.(string)
 		}
-		if v, ok := is["end_time"]; ok {
+		if v, ok := is["end_time"]; ok && v != nil {
 			workItem.EndTime = v.(int)
 		}
-		if v, ok := is["output_str"]; ok {
+		if v, ok := is["output_str"]; ok && v != nil {
 			workItem.OutputStr = v.(string)
 		}
-		if v, ok := is["start_time"]; ok {
+		if v, ok := is["start_time"]; ok && v != nil {
 			workItem.StartTime = v.(int)
 		}
-		if v, ok := is["state"]; ok {
+		if v, ok := is["state"]; ok && v != nil {
 			workItem.State = v.(string)
 		}
-		if v, ok := is["time_taken"]; ok {
+		if v, ok := is["time_taken"]; ok && v != nil {
 			workItem.TimeTaken = v.(float64)
 		}
 		result = append(result, workItem)
@@ -1702,22 +1702,22 @@ func constructAddWorkflowTasksWorkItemList(itemList []interface{}) *[]dnac.AddDe
 	for _, item := range itemList {
 		is := item.(map[string]interface{})
 		var workItem dnac.AddDeviceToPnpDatabaseRequestWorkflowTasksWorkItemList
-		if v, ok := is["command"]; ok {
+		if v, ok := is["command"]; ok && v != nil {
 			workItem.Command = v.(string)
 		}
-		if v, ok := is["end_time"]; ok {
+		if v, ok := is["end_time"]; ok && v != nil {
 			workItem.EndTime = v.(int)
 		}
-		if v, ok := is["output_str"]; ok {
+		if v, ok := is["output_str"]; ok && v != nil {
 			workItem.OutputStr = v.(string)
 		}
-		if v, ok := is["start_time"]; ok {
+		if v, ok := is["start_time"]; ok && v != nil {
 			workItem.StartTime = v.(int)
 		}
-		if v, ok := is["state"]; ok {
+		if v, ok := is["state"]; ok && v != nil {
 			workItem.State = v.(string)
 		}
-		if v, ok := is["time_taken"]; ok {
+		if v, ok := is["time_taken"]; ok && v != nil {
 			workItem.TimeTaken = v.(float64)
 		}
 		result = append(result, workItem)
@@ -1730,31 +1730,31 @@ func constructAddSystemResetWorkflowTasks(wTasks []interface{}) *[]dnac.AddDevic
 	for _, wTask := range wTasks {
 		wts := wTask.(map[string]interface{})
 		var workflowTask dnac.AddDeviceToPnpDatabaseRequestSystemResetWorkflowTasks
-		if v, ok := wts["curr_work_item_idx"]; ok {
+		if v, ok := wts["curr_work_item_idx"]; ok && v != nil {
 			workflowTask.CurrWorkItemIDx = v.(int)
 		}
-		if v, ok := wts["end_time"]; ok {
+		if v, ok := wts["end_time"]; ok && v != nil {
 			workflowTask.EndTime = v.(int)
 		}
-		if v, ok := wts["name"]; ok {
+		if v, ok := wts["name"]; ok && v != nil {
 			workflowTask.Name = v.(string)
 		}
-		if v, ok := wts["start_time"]; ok {
+		if v, ok := wts["start_time"]; ok && v != nil {
 			workflowTask.StartTime = v.(int)
 		}
-		if v, ok := wts["state"]; ok {
+		if v, ok := wts["state"]; ok && v != nil {
 			workflowTask.State = v.(string)
 		}
-		if v, ok := wts["task_seq_no"]; ok {
+		if v, ok := wts["task_seq_no"]; ok && v != nil {
 			workflowTask.TaskSeqNo = v.(int)
 		}
-		if v, ok := wts["time_taken"]; ok {
+		if v, ok := wts["time_taken"]; ok && v != nil {
 			workflowTask.TimeTaken = v.(float64)
 		}
-		if v, ok := wts["type"]; ok {
+		if v, ok := wts["type"]; ok && v != nil {
 			workflowTask.Type = v.(string)
 		}
-		if v, ok := wts["work_item_list"]; ok {
+		if v, ok := wts["work_item_list"]; ok && v != nil {
 			if w := constructAddSystemResetWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
@@ -1769,31 +1769,31 @@ func constructAddSystemWorkflowTasks(wTasks []interface{}) *[]dnac.AddDeviceToPn
 	for _, wTask := range wTasks {
 		wts := wTask.(map[string]interface{})
 		var workflowTask dnac.AddDeviceToPnpDatabaseRequestSystemWorkflowTasks
-		if v, ok := wts["curr_work_item_idx"]; ok {
+		if v, ok := wts["curr_work_item_idx"]; ok && v != nil {
 			workflowTask.CurrWorkItemIDx = v.(int)
 		}
-		if v, ok := wts["end_time"]; ok {
+		if v, ok := wts["end_time"]; ok && v != nil {
 			workflowTask.EndTime = v.(int)
 		}
-		if v, ok := wts["name"]; ok {
+		if v, ok := wts["name"]; ok && v != nil {
 			workflowTask.Name = v.(string)
 		}
-		if v, ok := wts["start_time"]; ok {
+		if v, ok := wts["start_time"]; ok && v != nil {
 			workflowTask.StartTime = v.(int)
 		}
-		if v, ok := wts["state"]; ok {
+		if v, ok := wts["state"]; ok && v != nil {
 			workflowTask.State = v.(string)
 		}
-		if v, ok := wts["task_seq_no"]; ok {
+		if v, ok := wts["task_seq_no"]; ok && v != nil {
 			workflowTask.TaskSeqNo = v.(int)
 		}
-		if v, ok := wts["time_taken"]; ok {
+		if v, ok := wts["time_taken"]; ok && v != nil {
 			workflowTask.TimeTaken = v.(float64)
 		}
-		if v, ok := wts["type"]; ok {
+		if v, ok := wts["type"]; ok && v != nil {
 			workflowTask.Type = v.(string)
 		}
-		if v, ok := wts["work_item_list"]; ok {
+		if v, ok := wts["work_item_list"]; ok && v != nil {
 			if w := constructAddSystemWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
@@ -1808,31 +1808,31 @@ func constructAddWorkflowTasks(wTasks []interface{}) *[]dnac.AddDeviceToPnpDatab
 	for _, wTask := range wTasks {
 		wts := wTask.(map[string]interface{})
 		var workflowTask dnac.AddDeviceToPnpDatabaseRequestWorkflowTasks
-		if v, ok := wts["curr_work_item_idx"]; ok {
+		if v, ok := wts["curr_work_item_idx"]; ok && v != nil {
 			workflowTask.CurrWorkItemIDx = v.(int)
 		}
-		if v, ok := wts["end_time"]; ok {
+		if v, ok := wts["end_time"]; ok && v != nil {
 			workflowTask.EndTime = v.(int)
 		}
-		if v, ok := wts["name"]; ok {
+		if v, ok := wts["name"]; ok && v != nil {
 			workflowTask.Name = v.(string)
 		}
-		if v, ok := wts["start_time"]; ok {
+		if v, ok := wts["start_time"]; ok && v != nil {
 			workflowTask.StartTime = v.(int)
 		}
-		if v, ok := wts["state"]; ok {
+		if v, ok := wts["state"]; ok && v != nil {
 			workflowTask.State = v.(string)
 		}
-		if v, ok := wts["task_seq_no"]; ok {
+		if v, ok := wts["task_seq_no"]; ok && v != nil {
 			workflowTask.TaskSeqNo = v.(int)
 		}
-		if v, ok := wts["time_taken"]; ok {
+		if v, ok := wts["time_taken"]; ok && v != nil {
 			workflowTask.TimeTaken = v.(float64)
 		}
-		if v, ok := wts["type"]; ok {
+		if v, ok := wts["type"]; ok && v != nil {
 			workflowTask.Type = v.(string)
 		}
-		if v, ok := wts["work_item_list"]; ok {
+		if v, ok := wts["work_item_list"]; ok && v != nil {
 			if w := constructAddWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
@@ -1846,63 +1846,63 @@ func constructAddSystemResetWorkflow(workflows []interface{}) *dnac.AddDeviceToP
 	var workflowItem dnac.AddDeviceToPnpDatabaseRequestSystemResetWorkflow
 	if len(workflows) > 0 {
 		ws := workflows[0].(map[string]interface{})
-		if v, ok := ws["id"]; ok {
+		if v, ok := ws["id"]; ok && v != nil {
 			workflowItem.TypeID = v.(string)
 		}
-		if v, ok := ws["add_to_inventory"]; ok {
+		if v, ok := ws["add_to_inventory"]; ok && v != nil {
 			workflowItem.AddToInventory = v.(bool)
 		}
-		if v, ok := ws["added_on"]; ok {
+		if v, ok := ws["added_on"]; ok && v != nil {
 			workflowItem.AddedOn = v.(float64)
 		}
-		if v, ok := ws["config_id"]; ok {
+		if v, ok := ws["config_id"]; ok && v != nil {
 			workflowItem.ConfigID = v.(string)
 		}
-		if v, ok := ws["curr_task_idx"]; ok {
+		if v, ok := ws["curr_task_idx"]; ok && v != nil {
 			workflowItem.CurrTaskIDx = v.(float64)
 		}
-		if v, ok := ws["description"]; ok {
+		if v, ok := ws["description"]; ok && v != nil {
 			workflowItem.Description = v.(string)
 		}
-		if v, ok := ws["end_time"]; ok {
+		if v, ok := ws["end_time"]; ok && v != nil {
 			workflowItem.EndTime = v.(int)
 		}
-		if v, ok := ws["exec_time"]; ok {
+		if v, ok := ws["exec_time"]; ok && v != nil {
 			workflowItem.ExecTime = v.(float64)
 		}
-		if v, ok := ws["image_id"]; ok {
+		if v, ok := ws["image_id"]; ok && v != nil {
 			workflowItem.ImageID = v.(string)
 		}
-		if v, ok := ws["instance_type"]; ok {
+		if v, ok := ws["instance_type"]; ok && v != nil {
 			workflowItem.InstanceType = v.(string)
 		}
-		if v, ok := ws["lastupdate_on"]; ok {
+		if v, ok := ws["lastupdate_on"]; ok && v != nil {
 			workflowItem.LastupdateOn = v.(float64)
 		}
-		if v, ok := ws["name"]; ok {
+		if v, ok := ws["name"]; ok && v != nil {
 			workflowItem.Name = v.(string)
 		}
-		if v, ok := ws["start_time"]; ok {
+		if v, ok := ws["start_time"]; ok && v != nil {
 			workflowItem.StartTime = v.(int)
 		}
-		if v, ok := ws["state"]; ok {
+		if v, ok := ws["state"]; ok && v != nil {
 			workflowItem.State = v.(string)
 		}
-		if v, ok := ws["tasks"]; ok {
+		if v, ok := ws["tasks"]; ok && v != nil {
 			if w := constructAddSystemResetWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
-		if v, ok := ws["tenant_id"]; ok {
+		if v, ok := ws["tenant_id"]; ok && v != nil {
 			workflowItem.TenantID = v.(string)
 		}
-		if v, ok := ws["type"]; ok {
+		if v, ok := ws["type"]; ok && v != nil {
 			workflowItem.Type = v.(string)
 		}
-		if v, ok := ws["use_state"]; ok {
+		if v, ok := ws["use_state"]; ok && v != nil {
 			workflowItem.UseState = v.(string)
 		}
-		if v, ok := ws["version"]; ok {
+		if v, ok := ws["version"]; ok && v != nil {
 			workflowItem.Version = v.(float64)
 		}
 	}
@@ -1913,63 +1913,63 @@ func constructAddSystemWorkflow(workflows []interface{}) *dnac.AddDeviceToPnpDat
 	var workflowItem dnac.AddDeviceToPnpDatabaseRequestSystemWorkflow
 	if len(workflows) > 0 {
 		ws := workflows[0].(map[string]interface{})
-		if v, ok := ws["id"]; ok {
+		if v, ok := ws["id"]; ok && v != nil {
 			workflowItem.TypeID = v.(string)
 		}
-		if v, ok := ws["add_to_inventory"]; ok {
+		if v, ok := ws["add_to_inventory"]; ok && v != nil {
 			workflowItem.AddToInventory = v.(bool)
 		}
-		if v, ok := ws["added_on"]; ok {
+		if v, ok := ws["added_on"]; ok && v != nil {
 			workflowItem.AddedOn = v.(float64)
 		}
-		if v, ok := ws["config_id"]; ok {
+		if v, ok := ws["config_id"]; ok && v != nil {
 			workflowItem.ConfigID = v.(string)
 		}
-		if v, ok := ws["curr_task_idx"]; ok {
+		if v, ok := ws["curr_task_idx"]; ok && v != nil {
 			workflowItem.CurrTaskIDx = v.(float64)
 		}
-		if v, ok := ws["description"]; ok {
+		if v, ok := ws["description"]; ok && v != nil {
 			workflowItem.Description = v.(string)
 		}
-		if v, ok := ws["end_time"]; ok {
+		if v, ok := ws["end_time"]; ok && v != nil {
 			workflowItem.EndTime = v.(int)
 		}
-		if v, ok := ws["exec_time"]; ok {
+		if v, ok := ws["exec_time"]; ok && v != nil {
 			workflowItem.ExecTime = v.(float64)
 		}
-		if v, ok := ws["image_id"]; ok {
+		if v, ok := ws["image_id"]; ok && v != nil {
 			workflowItem.ImageID = v.(string)
 		}
-		if v, ok := ws["instance_type"]; ok {
+		if v, ok := ws["instance_type"]; ok && v != nil {
 			workflowItem.InstanceType = v.(string)
 		}
-		if v, ok := ws["lastupdate_on"]; ok {
+		if v, ok := ws["lastupdate_on"]; ok && v != nil {
 			workflowItem.LastupdateOn = v.(float64)
 		}
-		if v, ok := ws["name"]; ok {
+		if v, ok := ws["name"]; ok && v != nil {
 			workflowItem.Name = v.(string)
 		}
-		if v, ok := ws["start_time"]; ok {
+		if v, ok := ws["start_time"]; ok && v != nil {
 			workflowItem.StartTime = v.(int)
 		}
-		if v, ok := ws["state"]; ok {
+		if v, ok := ws["state"]; ok && v != nil {
 			workflowItem.State = v.(string)
 		}
-		if v, ok := ws["tasks"]; ok {
+		if v, ok := ws["tasks"]; ok && v != nil {
 			if w := constructAddSystemWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
-		if v, ok := ws["tenant_id"]; ok {
+		if v, ok := ws["tenant_id"]; ok && v != nil {
 			workflowItem.TenantID = v.(string)
 		}
-		if v, ok := ws["type"]; ok {
+		if v, ok := ws["type"]; ok && v != nil {
 			workflowItem.Type = v.(string)
 		}
-		if v, ok := ws["use_state"]; ok {
+		if v, ok := ws["use_state"]; ok && v != nil {
 			workflowItem.UseState = v.(string)
 		}
-		if v, ok := ws["version"]; ok {
+		if v, ok := ws["version"]; ok && v != nil {
 			workflowItem.Version = v.(float64)
 		}
 	}
@@ -1980,63 +1980,63 @@ func constructAddWorkflow(workflows []interface{}) *dnac.AddDeviceToPnpDatabaseR
 	var workflowItem dnac.AddDeviceToPnpDatabaseRequestWorkflow
 	if len(workflows) > 0 {
 		ws := workflows[0].(map[string]interface{})
-		if v, ok := ws["id"]; ok {
+		if v, ok := ws["id"]; ok && v != nil {
 			workflowItem.TypeID = v.(string)
 		}
-		if v, ok := ws["add_to_inventory"]; ok {
+		if v, ok := ws["add_to_inventory"]; ok && v != nil {
 			workflowItem.AddToInventory = v.(bool)
 		}
-		if v, ok := ws["added_on"]; ok {
+		if v, ok := ws["added_on"]; ok && v != nil {
 			workflowItem.AddedOn = v.(float64)
 		}
-		if v, ok := ws["config_id"]; ok {
+		if v, ok := ws["config_id"]; ok && v != nil {
 			workflowItem.ConfigID = v.(string)
 		}
-		if v, ok := ws["curr_task_idx"]; ok {
+		if v, ok := ws["curr_task_idx"]; ok && v != nil {
 			workflowItem.CurrTaskIDx = v.(float64)
 		}
-		if v, ok := ws["description"]; ok {
+		if v, ok := ws["description"]; ok && v != nil {
 			workflowItem.Description = v.(string)
 		}
-		if v, ok := ws["end_time"]; ok {
+		if v, ok := ws["end_time"]; ok && v != nil {
 			workflowItem.EndTime = v.(int)
 		}
-		if v, ok := ws["exec_time"]; ok {
+		if v, ok := ws["exec_time"]; ok && v != nil {
 			workflowItem.ExecTime = v.(float64)
 		}
-		if v, ok := ws["image_id"]; ok {
+		if v, ok := ws["image_id"]; ok && v != nil {
 			workflowItem.ImageID = v.(string)
 		}
-		if v, ok := ws["instance_type"]; ok {
+		if v, ok := ws["instance_type"]; ok && v != nil {
 			workflowItem.InstanceType = v.(string)
 		}
-		if v, ok := ws["lastupdate_on"]; ok {
+		if v, ok := ws["lastupdate_on"]; ok && v != nil {
 			workflowItem.LastupdateOn = v.(float64)
 		}
-		if v, ok := ws["name"]; ok {
+		if v, ok := ws["name"]; ok && v != nil {
 			workflowItem.Name = v.(string)
 		}
-		if v, ok := ws["start_time"]; ok {
+		if v, ok := ws["start_time"]; ok && v != nil {
 			workflowItem.StartTime = v.(int)
 		}
-		if v, ok := ws["state"]; ok {
+		if v, ok := ws["state"]; ok && v != nil {
 			workflowItem.State = v.(string)
 		}
-		if v, ok := ws["tasks"]; ok {
+		if v, ok := ws["tasks"]; ok && v != nil {
 			if w := constructAddWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
-		if v, ok := ws["tenant_id"]; ok {
+		if v, ok := ws["tenant_id"]; ok && v != nil {
 			workflowItem.TenantID = v.(string)
 		}
-		if v, ok := ws["type"]; ok {
+		if v, ok := ws["type"]; ok && v != nil {
 			workflowItem.Type = v.(string)
 		}
-		if v, ok := ws["use_state"]; ok {
+		if v, ok := ws["use_state"]; ok && v != nil {
 			workflowItem.UseState = v.(string)
 		}
-		if v, ok := ws["version"]; ok {
+		if v, ok := ws["version"]; ok && v != nil {
 			workflowItem.Version = v.(float64)
 		}
 	}
@@ -2048,16 +2048,16 @@ func constructAddWorkflowParams(params []interface{}) *dnac.AddDeviceToPnpDataba
 	for _, param := range params {
 		ps := param.(map[string]interface{})
 
-		if v, ok := ps["config_list"]; ok {
+		if v, ok := ps["config_list"]; ok && v != nil {
 			configListV := v.([]interface{})
 			var configList []dnac.AddDeviceToPnpDatabaseRequestWorkflowParametersConfigList
 			for _, ci := range configListV {
 				var configItem dnac.AddDeviceToPnpDatabaseRequestWorkflowParametersConfigList
 				cis := ci.(map[string]interface{})
-				if v, ok := cis["config_id"]; ok {
+				if v, ok := cis["config_id"]; ok && v != nil {
 					configItem.ConfigID = v.(string)
 				}
-				if v, ok := cis["config_paramters"]; ok {
+				if v, ok := cis["config_paramters"]; ok && v != nil {
 					configParameters := v.([]interface{})
 					for _, configParam := range configParameters {
 						cp := configParam.(map[string]interface{})
@@ -2071,13 +2071,13 @@ func constructAddWorkflowParams(params []interface{}) *dnac.AddDeviceToPnpDataba
 			}
 			workflowParameters.ConfigList = configList
 		}
-		if v, ok := ps["license_level"]; ok {
+		if v, ok := ps["license_level"]; ok && v != nil {
 			workflowParameters.LicenseLevel = v.(string)
 		}
-		if v, ok := ps["license_type"]; ok {
+		if v, ok := ps["license_type"]; ok && v != nil {
 			workflowParameters.LicenseType = v.(string)
 		}
-		if v, ok := ps["top_of_stack_serial_number"]; ok {
+		if v, ok := ps["top_of_stack_serial_number"]; ok && v != nil {
 			workflowParameters.TopOfStackSerialNumber = v.(string)
 		}
 	}
@@ -2086,49 +2086,49 @@ func constructAddWorkflowParams(params []interface{}) *dnac.AddDeviceToPnpDataba
 
 func constructAddPnPDevice(pnpRequest map[string]interface{}) *dnac.AddDeviceToPnpDatabaseRequest {
 	var request dnac.AddDeviceToPnpDatabaseRequest
-	if v, ok := pnpRequest["id"]; ok {
+	if v, ok := pnpRequest["id"]; ok && v != nil {
 		request.TypeID = v.(string)
 	}
-	if v, ok := pnpRequest["day_zero_config"]; ok {
+	if v, ok := pnpRequest["day_zero_config"]; ok && v != nil {
 		if w := constructAddZeroConfig(v.([]interface{})); w != nil {
 			request.DayZeroConfig = *w
 		}
 	}
-	if v, ok := pnpRequest["day_zero_config_preview"]; ok {
+	if v, ok := pnpRequest["day_zero_config_preview"]; ok && v != nil {
 		request.DayZeroConfigPreview = v.(string)
 	}
-	if v, ok := pnpRequest["device_info"]; ok {
+	if v, ok := pnpRequest["device_info"]; ok && v != nil {
 		if w := constructAddDeviceInfo(v.([]interface{})); w != nil {
 			request.DeviceInfo = *w
 		}
 	}
-	if v, ok := pnpRequest["run_summary_list"]; ok {
+	if v, ok := pnpRequest["run_summary_list"]; ok && v != nil {
 		if w := constructAddRunSummaryList(v.([]interface{})); w != nil {
 			request.RunSummaryList = *w
 		}
 	}
-	if v, ok := pnpRequest["system_reset_workflow"]; ok {
+	if v, ok := pnpRequest["system_reset_workflow"]; ok && v != nil {
 		if w := constructAddSystemResetWorkflow(v.([]interface{})); w != nil {
 			request.SystemResetWorkflow = *w
 		}
 	}
-	if v, ok := pnpRequest["system_workflow"]; ok {
+	if v, ok := pnpRequest["system_workflow"]; ok && v != nil {
 		if w := constructAddSystemWorkflow(v.([]interface{})); w != nil {
 			request.SystemWorkflow = *w
 		}
 	}
-	if v, ok := pnpRequest["tenant_id"]; ok {
+	if v, ok := pnpRequest["tenant_id"]; ok && v != nil {
 		request.TenantID = v.(string)
 	}
-	if v, ok := pnpRequest["version"]; ok {
+	if v, ok := pnpRequest["version"]; ok && v != nil {
 		request.Version = v.(float64)
 	}
-	if v, ok := pnpRequest["workflow"]; ok {
+	if v, ok := pnpRequest["workflow"]; ok && v != nil {
 		if w := constructAddWorkflow(v.([]interface{})); w != nil {
 			request.Workflow = *w
 		}
 	}
-	if v, ok := pnpRequest["workflow_parameters"]; ok {
+	if v, ok := pnpRequest["workflow_parameters"]; ok && v != nil {
 		if w := constructAddWorkflowParams(v.([]interface{})); w != nil {
 			request.WorkflowParameters = *w
 		}
@@ -2150,10 +2150,10 @@ func constructUpdateDeviceInfoAAACredentials(credentials []interface{}) *dnac.Up
 	var aaaCredentials dnac.UpdateDeviceRequestDeviceInfoAAACredentials
 	if len(credentials) > 0 {
 		credential := credentials[0].(map[string]interface{})
-		if v, ok := credential["username"]; ok {
+		if v, ok := credential["username"]; ok && v != nil {
 			aaaCredentials.Username = v.(string)
 		}
-		if v, ok := credential["password"]; ok {
+		if v, ok := credential["password"]; ok && v != nil {
 			aaaCredentials.Password = v.(string)
 		}
 	}
@@ -2165,22 +2165,22 @@ func constructUpdateDeviceInfoFileSystemList(fileList []interface{}) *[]dnac.Upd
 	for _, fi := range fileList {
 		fsi := fi.(map[string]interface{})
 		fileSystemItem := dnac.UpdateDeviceRequestDeviceInfoFileSystemList{}
-		if v, ok := fsi["freespace"]; ok {
+		if v, ok := fsi["freespace"]; ok && v != nil {
 			fileSystemItem.Freespace = v.(float64)
 		}
-		if v, ok := fsi["name"]; ok {
+		if v, ok := fsi["name"]; ok && v != nil {
 			fileSystemItem.Name = v.(string)
 		}
-		if v, ok := fsi["readable"]; ok {
+		if v, ok := fsi["readable"]; ok && v != nil {
 			fileSystemItem.Readable = v.(bool)
 		}
-		if v, ok := fsi["size"]; ok {
+		if v, ok := fsi["size"]; ok && v != nil {
 			fileSystemItem.Size = v.(float64)
 		}
-		if v, ok := fsi["type"]; ok {
+		if v, ok := fsi["type"]; ok && v != nil {
 			fileSystemItem.Type = v.(string)
 		}
-		if v, ok := fsi["writeable"]; ok {
+		if v, ok := fsi["writeable"]; ok && v != nil {
 			fileSystemItem.Writeable = v.(bool)
 		}
 		fileSystemList = append(fileSystemList, fileSystemItem)
@@ -2205,19 +2205,19 @@ func constructUpdateDeviceInfoIPInterfaces(interfaces []interface{}) *[]dnac.Upd
 	for _, i := range interfaces {
 		interfaceItem := dnac.UpdateDeviceRequestDeviceInfoIPInterfaces{}
 		is := i.(map[string]interface{})
-		if v, ok := is["ipv4_address"]; ok {
+		if v, ok := is["ipv4_address"]; ok && v != nil {
 			interfaceItem.IPv4Address = v.(string)
 		}
-		if v, ok := is["ipv6_address_list"]; ok {
+		if v, ok := is["ipv6_address_list"]; ok && v != nil {
 			interfaceItem.IPv6AddressList = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := is["mac_address"]; ok {
+		if v, ok := is["mac_address"]; ok && v != nil {
 			interfaceItem.MacAddress = v.(string)
 		}
-		if v, ok := is["name"]; ok {
+		if v, ok := is["name"]; ok && v != nil {
 			interfaceItem.Name = v.(string)
 		}
-		if v, ok := is["status"]; ok {
+		if v, ok := is["status"]; ok && v != nil {
 			interfaceItem.Status = v.(string)
 		}
 		result = append(result, interfaceItem)
@@ -2229,19 +2229,19 @@ func constructUpdateDeviceInfoLocation(locations []interface{}) *dnac.UpdateDevi
 	var result dnac.UpdateDeviceRequestDeviceInfoLocation
 	if len(locations) > 0 {
 		location := locations[0].(map[string]interface{})
-		if v, ok := location["address"]; ok {
+		if v, ok := location["address"]; ok && v != nil {
 			result.Address = v.(string)
 		}
-		if v, ok := location["altitude"]; ok {
+		if v, ok := location["altitude"]; ok && v != nil {
 			result.Altitude = v.(string)
 		}
-		if v, ok := location["latitude"]; ok {
+		if v, ok := location["latitude"]; ok && v != nil {
 			result.Latitude = v.(string)
 		}
-		if v, ok := location["longitude"]; ok {
+		if v, ok := location["longitude"]; ok && v != nil {
 			result.Longitude = v.(string)
 		}
-		if v, ok := location["siteId"]; ok {
+		if v, ok := location["siteId"]; ok && v != nil {
 			result.SiteID = v.(string)
 		}
 	}
@@ -2253,31 +2253,31 @@ func constructUpdateDeviceInfoNeighborLinks(links []interface{}) *[]dnac.UpdateD
 	for _, link := range links {
 		var linkItem dnac.UpdateDeviceRequestDeviceInfoNeighborLinks
 		ls := link.(map[string]interface{})
-		if v, ok := ls["local_interface_name"]; ok {
+		if v, ok := ls["local_interface_name"]; ok && v != nil {
 			linkItem.LocalInterfaceName = v.(string)
 		}
-		if v, ok := ls["local_mac_address"]; ok {
+		if v, ok := ls["local_mac_address"]; ok && v != nil {
 			linkItem.LocalMacAddress = v.(string)
 		}
-		if v, ok := ls["local_short_interface_name"]; ok {
+		if v, ok := ls["local_short_interface_name"]; ok && v != nil {
 			linkItem.LocalShortInterfaceName = v.(string)
 		}
-		if v, ok := ls["remote_device_name"]; ok {
+		if v, ok := ls["remote_device_name"]; ok && v != nil {
 			linkItem.RemoteDeviceName = v.(string)
 		}
-		if v, ok := ls["remote_interface_name"]; ok {
+		if v, ok := ls["remote_interface_name"]; ok && v != nil {
 			linkItem.RemoteInterfaceName = v.(string)
 		}
-		if v, ok := ls["remote_mac_address"]; ok {
+		if v, ok := ls["remote_mac_address"]; ok && v != nil {
 			linkItem.RemoteMacAddress = v.(string)
 		}
-		if v, ok := ls["remote_platform"]; ok {
+		if v, ok := ls["remote_platform"]; ok && v != nil {
 			linkItem.RemotePlatform = v.(string)
 		}
-		if v, ok := ls["remote_short_interface_name"]; ok {
+		if v, ok := ls["remote_short_interface_name"]; ok && v != nil {
 			linkItem.RemoteShortInterfaceName = v.(string)
 		}
-		if v, ok := ls["remote_version"]; ok {
+		if v, ok := ls["remote_version"]; ok && v != nil {
 			linkItem.RemoteVersion = v.(string)
 		}
 		result = append(result, linkItem)
@@ -2290,57 +2290,57 @@ func constructUpdateDeviceInfoPnpProfileList(profiles []interface{}) *[]dnac.Upd
 	for _, profile := range profiles {
 		var profileItem dnac.UpdateDeviceRequestDeviceInfoPnpProfileList
 		ps := profile.(map[string]interface{})
-		if v, ok := ps["created_by"]; ok {
+		if v, ok := ps["created_by"]; ok && v != nil {
 			profileItem.CreatedBy = v.(string)
 		}
-		if v, ok := ps["discovery_created"]; ok {
+		if v, ok := ps["discovery_created"]; ok && v != nil {
 			profileItem.DiscoveryCreated = v.(bool)
 		}
-		if v, ok := ps["primary_endpoint"]; ok {
+		if v, ok := ps["primary_endpoint"]; ok && v != nil {
 			if w := v.([]interface{}); len(w) > 0 {
 				endpoint := w[0].(map[string]interface{})
-				if x, ok := endpoint["certificate"]; ok {
+				if x, ok := endpoint["certificate"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.Certificate = x.(string)
 				}
-				if x, ok := endpoint["fqdn"]; ok {
+				if x, ok := endpoint["fqdn"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.Fqdn = x.(string)
 				}
-				if x, ok := endpoint["ipv4_address"]; ok {
+				if x, ok := endpoint["ipv4_address"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.IPv4Address = x.(string)
 				}
-				if x, ok := endpoint["ipv6_address"]; ok {
+				if x, ok := endpoint["ipv6_address"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.IPv6Address = x.(string)
 				}
-				if x, ok := endpoint["port"]; ok {
+				if x, ok := endpoint["port"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.Port = x.(float64)
 				}
-				if x, ok := endpoint["protocol"]; ok {
+				if x, ok := endpoint["protocol"]; ok && x != nil {
 					profileItem.PrimaryEndpoint.Protocol = x.(string)
 				}
 			}
 		}
-		if v, ok := ps["profile_name"]; ok {
+		if v, ok := ps["profile_name"]; ok && v != nil {
 			profileItem.ProfileName = v.(string)
 		}
-		if v, ok := ps["secondary_endpoint"]; ok {
+		if v, ok := ps["secondary_endpoint"]; ok && v != nil {
 			if w := v.([]interface{}); len(w) > 0 {
 				endpoint := w[0].(map[string]interface{})
-				if x, ok := endpoint["certificate"]; ok {
+				if x, ok := endpoint["certificate"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.Certificate = x.(string)
 				}
-				if x, ok := endpoint["fqdn"]; ok {
+				if x, ok := endpoint["fqdn"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.Fqdn = x.(string)
 				}
-				if x, ok := endpoint["ipv4_address"]; ok {
+				if x, ok := endpoint["ipv4_address"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.IPv4Address = x.(string)
 				}
-				if x, ok := endpoint["ipv6_address"]; ok {
+				if x, ok := endpoint["ipv6_address"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.IPv6Address = x.(string)
 				}
-				if x, ok := endpoint["port"]; ok {
+				if x, ok := endpoint["port"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.Port = x.(float64)
 				}
-				if x, ok := endpoint["protocol"]; ok {
+				if x, ok := endpoint["protocol"]; ok && x != nil {
 					profileItem.SecondaryEndpoint.Protocol = x.(string)
 				}
 			}
@@ -2355,10 +2355,10 @@ func constructUpdateDeviceInfoPreWorkflowCliOuputs(cliOutputs []interface{}) *[]
 	for _, cliOutput := range cliOutputs {
 		var cliOutputItem dnac.UpdateDeviceRequestDeviceInfoPreWorkflowCliOuputs
 		cos := cliOutput.(map[string]interface{})
-		if v, ok := cos["cli"]; ok {
+		if v, ok := cos["cli"]; ok && v != nil {
 			cliOutputItem.Cli = v.(string)
 		}
-		if v, ok := cos["cli_output"]; ok {
+		if v, ok := cos["cli_output"]; ok && v != nil {
 			cliOutputItem.CliOutput = v.(string)
 		}
 		result = append(result, cliOutputItem)
@@ -2371,40 +2371,40 @@ func constructUpdateDeviceInfoStackInfoStackMemberList(memberList []interface{})
 	for _, member := range memberList {
 		var memberItem dnac.UpdateDeviceRequestDeviceInfoStackInfoStackMemberList
 		ms := member.(map[string]interface{})
-		if v, ok := ms["hardware_version"]; ok {
+		if v, ok := ms["hardware_version"]; ok && v != nil {
 			memberItem.HardwareVersion = v.(string)
 		}
-		if v, ok := ms["license_level"]; ok {
+		if v, ok := ms["license_level"]; ok && v != nil {
 			memberItem.LicenseLevel = v.(string)
 		}
-		if v, ok := ms["license_type"]; ok {
+		if v, ok := ms["license_type"]; ok && v != nil {
 			memberItem.LicenseType = v.(string)
 		}
-		if v, ok := ms["mac_address"]; ok {
+		if v, ok := ms["mac_address"]; ok && v != nil {
 			memberItem.MacAddress = v.(string)
 		}
-		if v, ok := ms["pid"]; ok {
+		if v, ok := ms["pid"]; ok && v != nil {
 			memberItem.Pid = v.(string)
 		}
-		if v, ok := ms["priority"]; ok {
+		if v, ok := ms["priority"]; ok && v != nil {
 			memberItem.Priority = v.(float64)
 		}
-		if v, ok := ms["role"]; ok {
+		if v, ok := ms["role"]; ok && v != nil {
 			memberItem.Role = v.(string)
 		}
-		if v, ok := ms["serial_number"]; ok {
+		if v, ok := ms["serial_number"]; ok && v != nil {
 			memberItem.SerialNumber = v.(string)
 		}
-		if v, ok := ms["software_version"]; ok {
+		if v, ok := ms["software_version"]; ok && v != nil {
 			memberItem.SoftwareVersion = v.(string)
 		}
-		if v, ok := ms["stack_number"]; ok {
+		if v, ok := ms["stack_number"]; ok && v != nil {
 			memberItem.StackNumber = v.(float64)
 		}
-		if v, ok := ms["state"]; ok {
+		if v, ok := ms["state"]; ok && v != nil {
 			memberItem.State = v.(string)
 		}
-		if v, ok := ms["sudi_serial_number"]; ok {
+		if v, ok := ms["sudi_serial_number"]; ok && v != nil {
 			memberItem.SudiSerialNumber = v.(string)
 		}
 		result = append(result, memberItem)
@@ -2416,24 +2416,24 @@ func constructUpdateDeviceInfoStackInfo(stackInfos []interface{}) *dnac.UpdateDe
 	var result dnac.UpdateDeviceRequestDeviceInfoStackInfo
 	if len(stackInfos) > 0 {
 		stackInfo := stackInfos[0].(map[string]interface{})
-		if v, ok := stackInfo["is_full_ring"]; ok {
+		if v, ok := stackInfo["is_full_ring"]; ok && v != nil {
 			result.IsFullRing = v.(bool)
 		}
-		if v, ok := stackInfo["stack_member_list"]; ok {
+		if v, ok := stackInfo["stack_member_list"]; ok && v != nil {
 			if w := constructUpdateDeviceInfoStackInfoStackMemberList(v.([]interface{})); w != nil {
 				result.StackMemberList = *w
 			}
 		}
-		if v, ok := stackInfo["stack_ring_protocol"]; ok {
+		if v, ok := stackInfo["stack_ring_protocol"]; ok && v != nil {
 			result.StackRingProtocol = v.(string)
 		}
-		if v, ok := stackInfo["supports_stack_workflows"]; ok {
+		if v, ok := stackInfo["supports_stack_workflows"]; ok && v != nil {
 			result.SupportsStackWorkflows = v.(bool)
 		}
-		if v, ok := stackInfo["total_member_count"]; ok {
+		if v, ok := stackInfo["total_member_count"]; ok && v != nil {
 			result.TotalMemberCount = v.(float64)
 		}
-		if v, ok := stackInfo["valid_license_levels"]; ok {
+		if v, ok := stackInfo["valid_license_levels"]; ok && v != nil {
 			result.ValidLicenseLevels = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
 	}
@@ -2458,22 +2458,22 @@ func constructUpdateRunSummaryListHistoryTaskInfoWorkItemList(itemList []interfa
 	for _, item := range itemList {
 		is := item.(map[string]interface{})
 		var workItem dnac.UpdateDeviceRequestRunSummaryListHistoryTaskInfoWorkItemList
-		if v, ok := is["command"]; ok {
+		if v, ok := is["command"]; ok && v != nil {
 			workItem.Command = v.(string)
 		}
-		if v, ok := is["end_time"]; ok {
+		if v, ok := is["end_time"]; ok && v != nil {
 			workItem.EndTime = v.(int)
 		}
-		if v, ok := is["output_str"]; ok {
+		if v, ok := is["output_str"]; ok && v != nil {
 			workItem.OutputStr = v.(string)
 		}
-		if v, ok := is["start_time"]; ok {
+		if v, ok := is["start_time"]; ok && v != nil {
 			workItem.StartTime = v.(int)
 		}
-		if v, ok := is["state"]; ok {
+		if v, ok := is["state"]; ok && v != nil {
 			workItem.State = v.(string)
 		}
-		if v, ok := is["time_taken"]; ok {
+		if v, ok := is["time_taken"]; ok && v != nil {
 			workItem.TimeTaken = v.(float64)
 		}
 		result = append(result, workItem)
@@ -2485,21 +2485,21 @@ func constructUpdateRunSummaryListHistoryTaskInfo(taskInfos []interface{}) *dnac
 	var result dnac.UpdateDeviceRequestRunSummaryListHistoryTaskInfo
 	if len(taskInfos) > 0 {
 		taskInfo := taskInfos[0].(map[string]interface{})
-		if v, ok := taskInfo["addn_details"]; ok {
+		if v, ok := taskInfo["addn_details"]; ok && v != nil {
 			if w := constructUpdateRunSummaryListHistoryTaskInfoAddnDetails(v.([]interface{})); w != nil {
 				result.AddnDetails = *w
 			}
 		}
-		if v, ok := taskInfo["name"]; ok {
+		if v, ok := taskInfo["name"]; ok && v != nil {
 			result.Name = v.(string)
 		}
-		if v, ok := taskInfo["time_taken"]; ok {
+		if v, ok := taskInfo["time_taken"]; ok && v != nil {
 			result.TimeTaken = v.(float64)
 		}
-		if v, ok := taskInfo["type"]; ok {
+		if v, ok := taskInfo["type"]; ok && v != nil {
 			result.Type = v.(string)
 		}
-		if v, ok := taskInfo["work_item_list"]; ok {
+		if v, ok := taskInfo["work_item_list"]; ok && v != nil {
 			if w := constructUpdateRunSummaryListHistoryTaskInfoWorkItemList(v.([]interface{})); w != nil {
 				result.WorkItemList = *w
 			}
@@ -2512,175 +2512,175 @@ func constructUpdateDeviceInfo(deviceInfos []interface{}) *dnac.UpdateDeviceRequ
 	var deviceInfo dnac.UpdateDeviceRequestDeviceInfo
 	if len(deviceInfos) > 0 {
 		deviceInfoItem := deviceInfos[0].(map[string]interface{})
-		if v, ok := deviceInfoItem["aaa_credentials"]; ok {
+		if v, ok := deviceInfoItem["aaa_credentials"]; ok && v != nil {
 			if w := constructUpdateDeviceInfoAAACredentials(v.([]interface{})); w != nil {
 				deviceInfo.AAACredentials = *w
 			}
 		}
-		if v, ok := deviceInfoItem["added_on"]; ok {
+		if v, ok := deviceInfoItem["added_on"]; ok && v != nil {
 			deviceInfo.AddedOn = v.(float64)
 		}
-		if v, ok := deviceInfoItem["addn_mac_addrs"]; ok {
+		if v, ok := deviceInfoItem["addn_mac_addrs"]; ok && v != nil {
 			deviceInfo.AddnMacAddrs = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["agent_type"]; ok {
+		if v, ok := deviceInfoItem["agent_type"]; ok && v != nil {
 			deviceInfo.AgentType = v.(string)
 		}
-		if v, ok := deviceInfoItem["auth_status"]; ok {
+		if v, ok := deviceInfoItem["auth_status"]; ok && v != nil {
 			deviceInfo.AuthStatus = v.(string)
 		}
-		if v, ok := deviceInfoItem["authenticated_mic_number"]; ok {
+		if v, ok := deviceInfoItem["authenticated_mic_number"]; ok && v != nil {
 			deviceInfo.AuthenticatedMicNumber = v.(string)
 		}
-		if v, ok := deviceInfoItem["authenticated_sudi_serial_no"]; ok {
+		if v, ok := deviceInfoItem["authenticated_sudi_serial_no"]; ok && v != nil {
 			deviceInfo.AuthenticatedSudiSerialNo = v.(string)
 		}
-		if v, ok := deviceInfoItem["capabilities_supported"]; ok {
+		if v, ok := deviceInfoItem["capabilities_supported"]; ok && v != nil {
 			deviceInfo.CapabilitiesSupported = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["cm_state"]; ok {
+		if v, ok := deviceInfoItem["cm_state"]; ok && v != nil {
 			deviceInfo.CmState = v.(string)
 		}
-		if v, ok := deviceInfoItem["description"]; ok {
+		if v, ok := deviceInfoItem["description"]; ok && v != nil {
 			deviceInfo.Description = v.(string)
 		}
-		if v, ok := deviceInfoItem["device_sudi_serial_nos"]; ok {
+		if v, ok := deviceInfoItem["device_sudi_serial_nos"]; ok && v != nil {
 			deviceInfo.DeviceSudiSerialNos = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["device_type"]; ok {
+		if v, ok := deviceInfoItem["device_type"]; ok && v != nil {
 			deviceInfo.DeviceType = v.(string)
 		}
-		if v, ok := deviceInfoItem["features_supported"]; ok {
+		if v, ok := deviceInfoItem["features_supported"]; ok && v != nil {
 			deviceInfo.FeaturesSupported = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["file_system_list"]; ok {
+		if v, ok := deviceInfoItem["file_system_list"]; ok && v != nil {
 			if w := constructUpdateDeviceInfoFileSystemList(v.([]interface{})); w != nil {
 				deviceInfo.FileSystemList = *w
 			}
 		}
-		if v, ok := deviceInfoItem["first_contact"]; ok {
+		if v, ok := deviceInfoItem["first_contact"]; ok && v != nil {
 			deviceInfo.FirstContact = v.(float64)
 		}
-		if v, ok := deviceInfoItem["hostname"]; ok {
+		if v, ok := deviceInfoItem["hostname"]; ok && v != nil {
 			deviceInfo.Hostname = v.(string)
 		}
-		if v, ok := deviceInfoItem["http_headers"]; ok {
+		if v, ok := deviceInfoItem["http_headers"]; ok && v != nil {
 			if w := constructUpdateDeviceInfoHTTPHeaders(v.([]interface{})); w != nil {
 				deviceInfo.HTTPHeaders = *w
 			}
 		}
-		if v, ok := deviceInfoItem["image_file"]; ok {
+		if v, ok := deviceInfoItem["image_file"]; ok && v != nil {
 			deviceInfo.ImageFile = v.(string)
 		}
-		if v, ok := deviceInfoItem["image_version"]; ok {
+		if v, ok := deviceInfoItem["image_version"]; ok && v != nil {
 			deviceInfo.ImageVersion = v.(string)
 		}
-		if v, ok := deviceInfoItem["http_headers"]; ok {
+		if v, ok := deviceInfoItem["http_headers"]; ok && v != nil {
 			if w := constructUpdateDeviceInfoIPInterfaces(v.([]interface{})); w != nil {
 				deviceInfo.IPInterfaces = *w
 			}
 		}
-		if v, ok := deviceInfoItem["last_contact"]; ok {
+		if v, ok := deviceInfoItem["last_contact"]; ok && v != nil {
 			deviceInfo.LastContact = v.(float64)
 		}
-		if v, ok := deviceInfoItem["last_sync_time"]; ok {
+		if v, ok := deviceInfoItem["last_sync_time"]; ok && v != nil {
 			deviceInfo.LastSyncTime = v.(float64)
 		}
-		if v, ok := deviceInfoItem["last_update_on"]; ok {
+		if v, ok := deviceInfoItem["last_update_on"]; ok && v != nil {
 			deviceInfo.LastUpdateOn = v.(float64)
 		}
-		if v, ok := deviceInfoItem["location"]; ok {
+		if v, ok := deviceInfoItem["location"]; ok && v != nil {
 			if w := constructUpdateDeviceInfoLocation(v.([]interface{})); w != nil {
 				deviceInfo.Location = *w
 			}
 		}
-		if v, ok := deviceInfoItem["mac_address"]; ok {
+		if v, ok := deviceInfoItem["mac_address"]; ok && v != nil {
 			deviceInfo.MacAddress = v.(string)
 		}
-		if v, ok := deviceInfoItem["mode"]; ok {
+		if v, ok := deviceInfoItem["mode"]; ok && v != nil {
 			deviceInfo.Mode = v.(string)
 		}
-		if v, ok := deviceInfoItem["name"]; ok {
+		if v, ok := deviceInfoItem["name"]; ok && v != nil {
 			deviceInfo.Name = v.(string)
 		}
-		if v, ok := deviceInfoItem["neighbor_links"]; ok {
+		if v, ok := deviceInfoItem["neighbor_links"]; ok && v != nil {
 			if w := constructUpdateDeviceInfoNeighborLinks(v.([]interface{})); w != nil {
 				deviceInfo.NeighborLinks = *w
 			}
 		}
-		if v, ok := deviceInfoItem["onb_state"]; ok {
+		if v, ok := deviceInfoItem["onb_state"]; ok && v != nil {
 			deviceInfo.OnbState = v.(string)
 		}
-		if v, ok := deviceInfoItem["pid"]; ok {
+		if v, ok := deviceInfoItem["pid"]; ok && v != nil {
 			deviceInfo.Pid = v.(string)
 		}
-		if v, ok := deviceInfoItem["pnp_profile_list"]; ok {
+		if v, ok := deviceInfoItem["pnp_profile_list"]; ok && v != nil {
 			if w := constructUpdateDeviceInfoPnpProfileList(v.([]interface{})); w != nil {
 				deviceInfo.PnpProfileList = *w
 			}
 		}
-		if v, ok := deviceInfoItem["populate_inventory"]; ok {
+		if v, ok := deviceInfoItem["populate_inventory"]; ok && v != nil {
 			deviceInfo.PopulateInventory = v.(bool)
 		}
-		if v, ok := deviceInfoItem["pre_workflow_cli_ouputs"]; ok {
+		if v, ok := deviceInfoItem["pre_workflow_cli_ouputs"]; ok && v != nil {
 			if w := constructUpdateDeviceInfoPreWorkflowCliOuputs(v.([]interface{})); w != nil {
 				deviceInfo.PreWorkflowCliOuputs = *w
 			}
 		}
-		if v, ok := deviceInfoItem["project_id"]; ok {
+		if v, ok := deviceInfoItem["project_id"]; ok && v != nil {
 			deviceInfo.ProjectID = v.(string)
 		}
-		if v, ok := deviceInfoItem["project_name"]; ok {
+		if v, ok := deviceInfoItem["project_name"]; ok && v != nil {
 			deviceInfo.ProjectName = v.(string)
 		}
-		if v, ok := deviceInfoItem["reload_requested"]; ok {
+		if v, ok := deviceInfoItem["reload_requested"]; ok && v != nil {
 			deviceInfo.ReloadRequested = v.(bool)
 		}
-		if v, ok := deviceInfoItem["serial_number"]; ok {
+		if v, ok := deviceInfoItem["serial_number"]; ok && v != nil {
 			deviceInfo.SerialNumber = v.(string)
 		}
-		if v, ok := deviceInfoItem["site_id"]; ok {
+		if v, ok := deviceInfoItem["site_id"]; ok && v != nil {
 			deviceInfo.SiteID = v.(string)
 		}
-		if v, ok := deviceInfoItem["site_name"]; ok {
+		if v, ok := deviceInfoItem["site_name"]; ok && v != nil {
 			deviceInfo.SiteName = v.(string)
 		}
-		if v, ok := deviceInfoItem["smart_account_id"]; ok {
+		if v, ok := deviceInfoItem["smart_account_id"]; ok && v != nil {
 			deviceInfo.SmartAccountID = v.(string)
 		}
-		if v, ok := deviceInfoItem["source"]; ok {
+		if v, ok := deviceInfoItem["source"]; ok && v != nil {
 			deviceInfo.Source = v.(string)
 		}
-		if v, ok := deviceInfoItem["stack"]; ok {
+		if v, ok := deviceInfoItem["stack"]; ok && v != nil {
 			deviceInfo.Stack = v.(bool)
 		}
-		if v, ok := deviceInfoItem["stack_info"]; ok {
+		if v, ok := deviceInfoItem["stack_info"]; ok && v != nil {
 			if w := constructUpdateDeviceInfoStackInfo(v.([]interface{})); w != nil {
 				deviceInfo.StackInfo = *w
 			}
 		}
-		if v, ok := deviceInfoItem["state"]; ok {
+		if v, ok := deviceInfoItem["state"]; ok && v != nil {
 			deviceInfo.State = v.(string)
 		}
-		if v, ok := deviceInfoItem["sudi_required"]; ok {
+		if v, ok := deviceInfoItem["sudi_required"]; ok && v != nil {
 			deviceInfo.SudiRequired = v.(bool)
 		}
-		if v, ok := deviceInfoItem["tags"]; ok {
+		if v, ok := deviceInfoItem["tags"]; ok && v != nil {
 			deviceInfo.Tags = v.(string)
 		}
-		if v, ok := deviceInfoItem["user_mic_numbers"]; ok {
+		if v, ok := deviceInfoItem["user_mic_numbers"]; ok && v != nil {
 			deviceInfo.UserMicNumbers = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["user_sudi_serial_nos"]; ok {
+		if v, ok := deviceInfoItem["user_sudi_serial_nos"]; ok && v != nil {
 			deviceInfo.UserSudiSerialNos = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := deviceInfoItem["virtual_account_id"]; ok {
+		if v, ok := deviceInfoItem["virtual_account_id"]; ok && v != nil {
 			deviceInfo.VirtualAccountID = v.(string)
 		}
-		if v, ok := deviceInfoItem["workflow_id"]; ok {
+		if v, ok := deviceInfoItem["workflow_id"]; ok && v != nil {
 			deviceInfo.WorkflowID = v.(string)
 		}
-		if v, ok := deviceInfoItem["workflow_name"]; ok {
+		if v, ok := deviceInfoItem["workflow_name"]; ok && v != nil {
 			deviceInfo.WorkflowName = v.(string)
 		}
 	}
@@ -2692,18 +2692,18 @@ func constructUpdateRunSummaryList(summaryList []interface{}) *[]dnac.UpdateDevi
 	for _, runSummary := range summaryList {
 		var runSummaryItem dnac.UpdateDeviceRequestRunSummaryList
 		rs := runSummary.(map[string]interface{})
-		if v, ok := rs["details"]; ok {
+		if v, ok := rs["details"]; ok && v != nil {
 			runSummaryItem.Details = v.(string)
 		}
-		if v, ok := rs["error_flag"]; ok {
+		if v, ok := rs["error_flag"]; ok && v != nil {
 			runSummaryItem.ErrorFlag = v.(bool)
 		}
-		if v, ok := rs["history_task_info"]; ok {
+		if v, ok := rs["history_task_info"]; ok && v != nil {
 			if w := constructUpdateRunSummaryListHistoryTaskInfo(v.([]interface{})); w != nil {
 				runSummaryItem.HistoryTaskInfo = *w
 			}
 		}
-		if v, ok := rs["timestamp"]; ok {
+		if v, ok := rs["timestamp"]; ok && v != nil {
 			runSummaryItem.Timestamp = v.(float64)
 		}
 		runSummaryList = append(runSummaryList, runSummaryItem)
@@ -2716,22 +2716,22 @@ func constructUpdateSystemResetWorkflowTasksWorkItemList(itemList []interface{})
 	for _, item := range itemList {
 		is := item.(map[string]interface{})
 		var workItem dnac.UpdateDeviceRequestSystemResetWorkflowTasksWorkItemList
-		if v, ok := is["command"]; ok {
+		if v, ok := is["command"]; ok && v != nil {
 			workItem.Command = v.(string)
 		}
-		if v, ok := is["end_time"]; ok {
+		if v, ok := is["end_time"]; ok && v != nil {
 			workItem.EndTime = v.(int)
 		}
-		if v, ok := is["output_str"]; ok {
+		if v, ok := is["output_str"]; ok && v != nil {
 			workItem.OutputStr = v.(string)
 		}
-		if v, ok := is["start_time"]; ok {
+		if v, ok := is["start_time"]; ok && v != nil {
 			workItem.StartTime = v.(int)
 		}
-		if v, ok := is["state"]; ok {
+		if v, ok := is["state"]; ok && v != nil {
 			workItem.State = v.(string)
 		}
-		if v, ok := is["time_taken"]; ok {
+		if v, ok := is["time_taken"]; ok && v != nil {
 			workItem.TimeTaken = v.(float64)
 		}
 		result = append(result, workItem)
@@ -2744,22 +2744,22 @@ func constructUpdateSystemWorkflowTasksWorkItemList(itemList []interface{}) *[]d
 	for _, item := range itemList {
 		is := item.(map[string]interface{})
 		var workItem dnac.UpdateDeviceRequestSystemWorkflowTasksWorkItemList
-		if v, ok := is["command"]; ok {
+		if v, ok := is["command"]; ok && v != nil {
 			workItem.Command = v.(string)
 		}
-		if v, ok := is["end_time"]; ok {
+		if v, ok := is["end_time"]; ok && v != nil {
 			workItem.EndTime = v.(int)
 		}
-		if v, ok := is["output_str"]; ok {
+		if v, ok := is["output_str"]; ok && v != nil {
 			workItem.OutputStr = v.(string)
 		}
-		if v, ok := is["start_time"]; ok {
+		if v, ok := is["start_time"]; ok && v != nil {
 			workItem.StartTime = v.(int)
 		}
-		if v, ok := is["state"]; ok {
+		if v, ok := is["state"]; ok && v != nil {
 			workItem.State = v.(string)
 		}
-		if v, ok := is["time_taken"]; ok {
+		if v, ok := is["time_taken"]; ok && v != nil {
 			workItem.TimeTaken = v.(float64)
 		}
 		result = append(result, workItem)
@@ -2772,22 +2772,22 @@ func constructUpdateWorkflowTasksWorkItemList(itemList []interface{}) *[]dnac.Up
 	for _, item := range itemList {
 		is := item.(map[string]interface{})
 		var workItem dnac.UpdateDeviceRequestWorkflowTasksWorkItemList
-		if v, ok := is["command"]; ok {
+		if v, ok := is["command"]; ok && v != nil {
 			workItem.Command = v.(string)
 		}
-		if v, ok := is["end_time"]; ok {
+		if v, ok := is["end_time"]; ok && v != nil {
 			workItem.EndTime = v.(int)
 		}
-		if v, ok := is["output_str"]; ok {
+		if v, ok := is["output_str"]; ok && v != nil {
 			workItem.OutputStr = v.(string)
 		}
-		if v, ok := is["start_time"]; ok {
+		if v, ok := is["start_time"]; ok && v != nil {
 			workItem.StartTime = v.(int)
 		}
-		if v, ok := is["state"]; ok {
+		if v, ok := is["state"]; ok && v != nil {
 			workItem.State = v.(string)
 		}
-		if v, ok := is["time_taken"]; ok {
+		if v, ok := is["time_taken"]; ok && v != nil {
 			workItem.TimeTaken = v.(float64)
 		}
 		result = append(result, workItem)
@@ -2800,31 +2800,31 @@ func constructUpdateSystemResetWorkflowTasks(wTasks []interface{}) *[]dnac.Updat
 	for _, wTask := range wTasks {
 		wts := wTask.(map[string]interface{})
 		var workflowTask dnac.UpdateDeviceRequestSystemResetWorkflowTasks
-		if v, ok := wts["curr_work_item_idx"]; ok {
+		if v, ok := wts["curr_work_item_idx"]; ok && v != nil {
 			workflowTask.CurrWorkItemIDx = v.(int)
 		}
-		if v, ok := wts["end_time"]; ok {
+		if v, ok := wts["end_time"]; ok && v != nil {
 			workflowTask.EndTime = v.(int)
 		}
-		if v, ok := wts["name"]; ok {
+		if v, ok := wts["name"]; ok && v != nil {
 			workflowTask.Name = v.(string)
 		}
-		if v, ok := wts["start_time"]; ok {
+		if v, ok := wts["start_time"]; ok && v != nil {
 			workflowTask.StartTime = v.(int)
 		}
-		if v, ok := wts["state"]; ok {
+		if v, ok := wts["state"]; ok && v != nil {
 			workflowTask.State = v.(string)
 		}
-		if v, ok := wts["task_seq_no"]; ok {
+		if v, ok := wts["task_seq_no"]; ok && v != nil {
 			workflowTask.TaskSeqNo = v.(int)
 		}
-		if v, ok := wts["time_taken"]; ok {
+		if v, ok := wts["time_taken"]; ok && v != nil {
 			workflowTask.TimeTaken = v.(float64)
 		}
-		if v, ok := wts["type"]; ok {
+		if v, ok := wts["type"]; ok && v != nil {
 			workflowTask.Type = v.(string)
 		}
-		if v, ok := wts["work_item_list"]; ok {
+		if v, ok := wts["work_item_list"]; ok && v != nil {
 			if w := constructUpdateSystemResetWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
@@ -2839,31 +2839,31 @@ func constructUpdateSystemWorkflowTasks(wTasks []interface{}) *[]dnac.UpdateDevi
 	for _, wTask := range wTasks {
 		wts := wTask.(map[string]interface{})
 		var workflowTask dnac.UpdateDeviceRequestSystemWorkflowTasks
-		if v, ok := wts["curr_work_item_idx"]; ok {
+		if v, ok := wts["curr_work_item_idx"]; ok && v != nil {
 			workflowTask.CurrWorkItemIDx = v.(int)
 		}
-		if v, ok := wts["end_time"]; ok {
+		if v, ok := wts["end_time"]; ok && v != nil {
 			workflowTask.EndTime = v.(int)
 		}
-		if v, ok := wts["name"]; ok {
+		if v, ok := wts["name"]; ok && v != nil {
 			workflowTask.Name = v.(string)
 		}
-		if v, ok := wts["start_time"]; ok {
+		if v, ok := wts["start_time"]; ok && v != nil {
 			workflowTask.StartTime = v.(int)
 		}
-		if v, ok := wts["state"]; ok {
+		if v, ok := wts["state"]; ok && v != nil {
 			workflowTask.State = v.(string)
 		}
-		if v, ok := wts["task_seq_no"]; ok {
+		if v, ok := wts["task_seq_no"]; ok && v != nil {
 			workflowTask.TaskSeqNo = v.(int)
 		}
-		if v, ok := wts["time_taken"]; ok {
+		if v, ok := wts["time_taken"]; ok && v != nil {
 			workflowTask.TimeTaken = v.(float64)
 		}
-		if v, ok := wts["type"]; ok {
+		if v, ok := wts["type"]; ok && v != nil {
 			workflowTask.Type = v.(string)
 		}
-		if v, ok := wts["work_item_list"]; ok {
+		if v, ok := wts["work_item_list"]; ok && v != nil {
 			if w := constructUpdateSystemWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
@@ -2878,31 +2878,31 @@ func constructUpdateWorkflowTasks(wTasks []interface{}) *[]dnac.UpdateDeviceRequ
 	for _, wTask := range wTasks {
 		wts := wTask.(map[string]interface{})
 		var workflowTask dnac.UpdateDeviceRequestWorkflowTasks
-		if v, ok := wts["curr_work_item_idx"]; ok {
+		if v, ok := wts["curr_work_item_idx"]; ok && v != nil {
 			workflowTask.CurrWorkItemIDx = v.(int)
 		}
-		if v, ok := wts["end_time"]; ok {
+		if v, ok := wts["end_time"]; ok && v != nil {
 			workflowTask.EndTime = v.(int)
 		}
-		if v, ok := wts["name"]; ok {
+		if v, ok := wts["name"]; ok && v != nil {
 			workflowTask.Name = v.(string)
 		}
-		if v, ok := wts["start_time"]; ok {
+		if v, ok := wts["start_time"]; ok && v != nil {
 			workflowTask.StartTime = v.(int)
 		}
-		if v, ok := wts["state"]; ok {
+		if v, ok := wts["state"]; ok && v != nil {
 			workflowTask.State = v.(string)
 		}
-		if v, ok := wts["task_seq_no"]; ok {
+		if v, ok := wts["task_seq_no"]; ok && v != nil {
 			workflowTask.TaskSeqNo = v.(int)
 		}
-		if v, ok := wts["time_taken"]; ok {
+		if v, ok := wts["time_taken"]; ok && v != nil {
 			workflowTask.TimeTaken = v.(float64)
 		}
-		if v, ok := wts["type"]; ok {
+		if v, ok := wts["type"]; ok && v != nil {
 			workflowTask.Type = v.(string)
 		}
-		if v, ok := wts["work_item_list"]; ok {
+		if v, ok := wts["work_item_list"]; ok && v != nil {
 			if w := constructUpdateWorkflowTasksWorkItemList(v.([]interface{})); w != nil {
 				workflowTask.WorkItemList = *w
 			}
@@ -2916,63 +2916,63 @@ func constructUpdateSystemResetWorkflow(workflows []interface{}) *dnac.UpdateDev
 	var workflowItem dnac.UpdateDeviceRequestSystemResetWorkflow
 	if len(workflows) > 0 {
 		ws := workflows[0].(map[string]interface{})
-		if v, ok := ws["id"]; ok {
+		if v, ok := ws["id"]; ok && v != nil {
 			workflowItem.TypeID = v.(string)
 		}
-		if v, ok := ws["add_to_inventory"]; ok {
+		if v, ok := ws["add_to_inventory"]; ok && v != nil {
 			workflowItem.AddToInventory = v.(bool)
 		}
-		if v, ok := ws["added_on"]; ok {
+		if v, ok := ws["added_on"]; ok && v != nil {
 			workflowItem.AddedOn = v.(float64)
 		}
-		if v, ok := ws["config_id"]; ok {
+		if v, ok := ws["config_id"]; ok && v != nil {
 			workflowItem.ConfigID = v.(string)
 		}
-		if v, ok := ws["curr_task_idx"]; ok {
+		if v, ok := ws["curr_task_idx"]; ok && v != nil {
 			workflowItem.CurrTaskIDx = v.(float64)
 		}
-		if v, ok := ws["description"]; ok {
+		if v, ok := ws["description"]; ok && v != nil {
 			workflowItem.Description = v.(string)
 		}
-		if v, ok := ws["end_time"]; ok {
+		if v, ok := ws["end_time"]; ok && v != nil {
 			workflowItem.EndTime = v.(int)
 		}
-		if v, ok := ws["exec_time"]; ok {
+		if v, ok := ws["exec_time"]; ok && v != nil {
 			workflowItem.ExecTime = v.(float64)
 		}
-		if v, ok := ws["image_id"]; ok {
+		if v, ok := ws["image_id"]; ok && v != nil {
 			workflowItem.ImageID = v.(string)
 		}
-		if v, ok := ws["instance_type"]; ok {
+		if v, ok := ws["instance_type"]; ok && v != nil {
 			workflowItem.InstanceType = v.(string)
 		}
-		if v, ok := ws["lastupdate_on"]; ok {
+		if v, ok := ws["lastupdate_on"]; ok && v != nil {
 			workflowItem.LastupdateOn = v.(float64)
 		}
-		if v, ok := ws["name"]; ok {
+		if v, ok := ws["name"]; ok && v != nil {
 			workflowItem.Name = v.(string)
 		}
-		if v, ok := ws["start_time"]; ok {
+		if v, ok := ws["start_time"]; ok && v != nil {
 			workflowItem.StartTime = v.(int)
 		}
-		if v, ok := ws["state"]; ok {
+		if v, ok := ws["state"]; ok && v != nil {
 			workflowItem.State = v.(string)
 		}
-		if v, ok := ws["tasks"]; ok {
+		if v, ok := ws["tasks"]; ok && v != nil {
 			if w := constructUpdateSystemResetWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
-		if v, ok := ws["tenant_id"]; ok {
+		if v, ok := ws["tenant_id"]; ok && v != nil {
 			workflowItem.TenantID = v.(string)
 		}
-		if v, ok := ws["type"]; ok {
+		if v, ok := ws["type"]; ok && v != nil {
 			workflowItem.Type = v.(string)
 		}
-		if v, ok := ws["use_state"]; ok {
+		if v, ok := ws["use_state"]; ok && v != nil {
 			workflowItem.UseState = v.(string)
 		}
-		if v, ok := ws["version"]; ok {
+		if v, ok := ws["version"]; ok && v != nil {
 			workflowItem.Version = v.(float64)
 		}
 	}
@@ -2983,63 +2983,63 @@ func constructUpdateSystemWorkflow(workflows []interface{}) *dnac.UpdateDeviceRe
 	var workflowItem dnac.UpdateDeviceRequestSystemWorkflow
 	if len(workflows) > 0 {
 		ws := workflows[0].(map[string]interface{})
-		if v, ok := ws["id"]; ok {
+		if v, ok := ws["id"]; ok && v != nil {
 			workflowItem.TypeID = v.(string)
 		}
-		if v, ok := ws["add_to_inventory"]; ok {
+		if v, ok := ws["add_to_inventory"]; ok && v != nil {
 			workflowItem.AddToInventory = v.(bool)
 		}
-		if v, ok := ws["added_on"]; ok {
+		if v, ok := ws["added_on"]; ok && v != nil {
 			workflowItem.AddedOn = v.(float64)
 		}
-		if v, ok := ws["config_id"]; ok {
+		if v, ok := ws["config_id"]; ok && v != nil {
 			workflowItem.ConfigID = v.(string)
 		}
-		if v, ok := ws["curr_task_idx"]; ok {
+		if v, ok := ws["curr_task_idx"]; ok && v != nil {
 			workflowItem.CurrTaskIDx = v.(float64)
 		}
-		if v, ok := ws["description"]; ok {
+		if v, ok := ws["description"]; ok && v != nil {
 			workflowItem.Description = v.(string)
 		}
-		if v, ok := ws["end_time"]; ok {
+		if v, ok := ws["end_time"]; ok && v != nil {
 			workflowItem.EndTime = v.(int)
 		}
-		if v, ok := ws["exec_time"]; ok {
+		if v, ok := ws["exec_time"]; ok && v != nil {
 			workflowItem.ExecTime = v.(float64)
 		}
-		if v, ok := ws["image_id"]; ok {
+		if v, ok := ws["image_id"]; ok && v != nil {
 			workflowItem.ImageID = v.(string)
 		}
-		if v, ok := ws["instance_type"]; ok {
+		if v, ok := ws["instance_type"]; ok && v != nil {
 			workflowItem.InstanceType = v.(string)
 		}
-		if v, ok := ws["lastupdate_on"]; ok {
+		if v, ok := ws["lastupdate_on"]; ok && v != nil {
 			workflowItem.LastupdateOn = v.(float64)
 		}
-		if v, ok := ws["name"]; ok {
+		if v, ok := ws["name"]; ok && v != nil {
 			workflowItem.Name = v.(string)
 		}
-		if v, ok := ws["start_time"]; ok {
+		if v, ok := ws["start_time"]; ok && v != nil {
 			workflowItem.StartTime = v.(int)
 		}
-		if v, ok := ws["state"]; ok {
+		if v, ok := ws["state"]; ok && v != nil {
 			workflowItem.State = v.(string)
 		}
-		if v, ok := ws["tasks"]; ok {
+		if v, ok := ws["tasks"]; ok && v != nil {
 			if w := constructUpdateSystemWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
-		if v, ok := ws["tenant_id"]; ok {
+		if v, ok := ws["tenant_id"]; ok && v != nil {
 			workflowItem.TenantID = v.(string)
 		}
-		if v, ok := ws["type"]; ok {
+		if v, ok := ws["type"]; ok && v != nil {
 			workflowItem.Type = v.(string)
 		}
-		if v, ok := ws["use_state"]; ok {
+		if v, ok := ws["use_state"]; ok && v != nil {
 			workflowItem.UseState = v.(string)
 		}
-		if v, ok := ws["version"]; ok {
+		if v, ok := ws["version"]; ok && v != nil {
 			workflowItem.Version = v.(float64)
 		}
 	}
@@ -3050,63 +3050,63 @@ func constructUpdateWorkflow(workflows []interface{}) *dnac.UpdateDeviceRequestW
 	var workflowItem dnac.UpdateDeviceRequestWorkflow
 	if len(workflows) > 0 {
 		ws := workflows[0].(map[string]interface{})
-		if v, ok := ws["id"]; ok {
+		if v, ok := ws["id"]; ok && v != nil {
 			workflowItem.TypeID = v.(string)
 		}
-		if v, ok := ws["add_to_inventory"]; ok {
+		if v, ok := ws["add_to_inventory"]; ok && v != nil {
 			workflowItem.AddToInventory = v.(bool)
 		}
-		if v, ok := ws["added_on"]; ok {
+		if v, ok := ws["added_on"]; ok && v != nil {
 			workflowItem.AddedOn = v.(float64)
 		}
-		if v, ok := ws["config_id"]; ok {
+		if v, ok := ws["config_id"]; ok && v != nil {
 			workflowItem.ConfigID = v.(string)
 		}
-		if v, ok := ws["curr_task_idx"]; ok {
+		if v, ok := ws["curr_task_idx"]; ok && v != nil {
 			workflowItem.CurrTaskIDx = v.(float64)
 		}
-		if v, ok := ws["description"]; ok {
+		if v, ok := ws["description"]; ok && v != nil {
 			workflowItem.Description = v.(string)
 		}
-		if v, ok := ws["end_time"]; ok {
+		if v, ok := ws["end_time"]; ok && v != nil {
 			workflowItem.EndTime = v.(int)
 		}
-		if v, ok := ws["exec_time"]; ok {
+		if v, ok := ws["exec_time"]; ok && v != nil {
 			workflowItem.ExecTime = v.(float64)
 		}
-		if v, ok := ws["image_id"]; ok {
+		if v, ok := ws["image_id"]; ok && v != nil {
 			workflowItem.ImageID = v.(string)
 		}
-		if v, ok := ws["instance_type"]; ok {
+		if v, ok := ws["instance_type"]; ok && v != nil {
 			workflowItem.InstanceType = v.(string)
 		}
-		if v, ok := ws["lastupdate_on"]; ok {
+		if v, ok := ws["lastupdate_on"]; ok && v != nil {
 			workflowItem.LastupdateOn = v.(float64)
 		}
-		if v, ok := ws["name"]; ok {
+		if v, ok := ws["name"]; ok && v != nil {
 			workflowItem.Name = v.(string)
 		}
-		if v, ok := ws["start_time"]; ok {
+		if v, ok := ws["start_time"]; ok && v != nil {
 			workflowItem.StartTime = v.(int)
 		}
-		if v, ok := ws["state"]; ok {
+		if v, ok := ws["state"]; ok && v != nil {
 			workflowItem.State = v.(string)
 		}
-		if v, ok := ws["tasks"]; ok {
+		if v, ok := ws["tasks"]; ok && v != nil {
 			if w := constructUpdateWorkflowTasks(v.([]interface{})); w != nil {
 				workflowItem.Tasks = *w
 			}
 		}
-		if v, ok := ws["tenant_id"]; ok {
+		if v, ok := ws["tenant_id"]; ok && v != nil {
 			workflowItem.TenantID = v.(string)
 		}
-		if v, ok := ws["type"]; ok {
+		if v, ok := ws["type"]; ok && v != nil {
 			workflowItem.Type = v.(string)
 		}
-		if v, ok := ws["use_state"]; ok {
+		if v, ok := ws["use_state"]; ok && v != nil {
 			workflowItem.UseState = v.(string)
 		}
-		if v, ok := ws["version"]; ok {
+		if v, ok := ws["version"]; ok && v != nil {
 			workflowItem.Version = v.(float64)
 		}
 	}
@@ -3118,16 +3118,16 @@ func constructUpdateWorkflowParams(params []interface{}) *dnac.UpdateDeviceReque
 	for _, param := range params {
 		ps := param.(map[string]interface{})
 
-		if v, ok := ps["config_list"]; ok {
+		if v, ok := ps["config_list"]; ok && v != nil {
 			configListV := v.([]interface{})
 			var configList []dnac.UpdateDeviceRequestWorkflowParametersConfigList
 			for _, ci := range configListV {
 				var configItem dnac.UpdateDeviceRequestWorkflowParametersConfigList
 				cis := ci.(map[string]interface{})
-				if v, ok := cis["config_id"]; ok {
+				if v, ok := cis["config_id"]; ok && v != nil {
 					configItem.ConfigID = v.(string)
 				}
-				if v, ok := cis["config_paramters"]; ok {
+				if v, ok := cis["config_paramters"]; ok && v != nil {
 					configParameters := v.([]interface{})
 					for _, configParam := range configParameters {
 						cp := configParam.(map[string]interface{})
@@ -3141,13 +3141,13 @@ func constructUpdateWorkflowParams(params []interface{}) *dnac.UpdateDeviceReque
 			}
 			workflowParameters.ConfigList = configList
 		}
-		if v, ok := ps["license_level"]; ok {
+		if v, ok := ps["license_level"]; ok && v != nil {
 			workflowParameters.LicenseLevel = v.(string)
 		}
-		if v, ok := ps["license_type"]; ok {
+		if v, ok := ps["license_type"]; ok && v != nil {
 			workflowParameters.LicenseType = v.(string)
 		}
-		if v, ok := ps["top_of_stack_serial_number"]; ok {
+		if v, ok := ps["top_of_stack_serial_number"]; ok && v != nil {
 			workflowParameters.TopOfStackSerialNumber = v.(string)
 		}
 	}
@@ -3156,49 +3156,49 @@ func constructUpdateWorkflowParams(params []interface{}) *dnac.UpdateDeviceReque
 
 func constructUpdatePnPDevice(pnpRequest map[string]interface{}) *dnac.UpdateDeviceRequest {
 	var request dnac.UpdateDeviceRequest
-	if v, ok := pnpRequest["id"]; ok {
+	if v, ok := pnpRequest["id"]; ok && v != nil {
 		request.TypeID = v.(string)
 	}
-	if v, ok := pnpRequest["day_zero_config"]; ok {
+	if v, ok := pnpRequest["day_zero_config"]; ok && v != nil {
 		if w := constructUpdateZeroConfig(v.([]interface{})); w != nil {
 			request.DayZeroConfig = *w
 		}
 	}
-	if v, ok := pnpRequest["day_zero_config_preview"]; ok {
+	if v, ok := pnpRequest["day_zero_config_preview"]; ok && v != nil {
 		request.DayZeroConfigPreview = v.(string)
 	}
-	if v, ok := pnpRequest["device_info"]; ok {
+	if v, ok := pnpRequest["device_info"]; ok && v != nil {
 		if w := constructUpdateDeviceInfo(v.([]interface{})); w != nil {
 			request.DeviceInfo = *w
 		}
 	}
-	if v, ok := pnpRequest["run_summary_list"]; ok {
+	if v, ok := pnpRequest["run_summary_list"]; ok && v != nil {
 		if w := constructUpdateRunSummaryList(v.([]interface{})); w != nil {
 			request.RunSummaryList = *w
 		}
 	}
-	if v, ok := pnpRequest["system_reset_workflow"]; ok {
+	if v, ok := pnpRequest["system_reset_workflow"]; ok && v != nil {
 		if w := constructUpdateSystemResetWorkflow(v.([]interface{})); w != nil {
 			request.SystemResetWorkflow = *w
 		}
 	}
-	if v, ok := pnpRequest["system_workflow"]; ok {
+	if v, ok := pnpRequest["system_workflow"]; ok && v != nil {
 		if w := constructUpdateSystemWorkflow(v.([]interface{})); w != nil {
 			request.SystemWorkflow = *w
 		}
 	}
-	if v, ok := pnpRequest["tenant_id"]; ok {
+	if v, ok := pnpRequest["tenant_id"]; ok && v != nil {
 		request.TenantID = v.(string)
 	}
-	if v, ok := pnpRequest["version"]; ok {
+	if v, ok := pnpRequest["version"]; ok && v != nil {
 		request.Version = v.(float64)
 	}
-	if v, ok := pnpRequest["workflow"]; ok {
+	if v, ok := pnpRequest["workflow"]; ok && v != nil {
 		if w := constructUpdateWorkflow(v.([]interface{})); w != nil {
 			request.Workflow = *w
 		}
 	}
-	if v, ok := pnpRequest["workflow_parameters"]; ok {
+	if v, ok := pnpRequest["workflow_parameters"]; ok && v != nil {
 		if w := constructUpdateWorkflowParams(v.([]interface{})); w != nil {
 			request.WorkflowParameters = *w
 		}

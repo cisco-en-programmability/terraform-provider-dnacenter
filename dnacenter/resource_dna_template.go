@@ -302,43 +302,43 @@ func constructUpdateTemplate(templateID string, template map[string]interface{})
 
 	updateTemplateRequest.ID = templateID
 	updateTemplateRequest.ProjectID = projectID
-	if v, ok := template["author"]; ok {
+	if v, ok := template["author"]; ok && v != nil {
 		updateTemplateRequest.Author = v.(string)
 	}
-	if v, ok := template["composite"]; ok {
+	if v, ok := template["composite"]; ok && v != nil {
 		updateTemplateRequest.Composite = v.(bool)
 	}
-	if v, ok := template["create_time"]; ok {
+	if v, ok := template["create_time"]; ok && v != nil {
 		updateTemplateRequest.CreateTime = v.(int)
 	}
-	if v, ok := template["description"]; ok {
+	if v, ok := template["description"]; ok && v != nil {
 		updateTemplateRequest.Description = v.(string)
 	}
-	if v, ok := template["failure_policy"]; ok {
+	if v, ok := template["failure_policy"]; ok && v != nil {
 		updateTemplateRequest.FailurePolicy = v.(string)
 	}
-	if v, ok := template["last_update_time"]; ok {
+	if v, ok := template["last_update_time"]; ok && v != nil {
 		updateTemplateRequest.LastUpdateTime = v.(int)
 	}
-	if v, ok := template["parent_template_id"]; ok {
+	if v, ok := template["parent_template_id"]; ok && v != nil {
 		updateTemplateRequest.ParentTemplateID = v.(string)
 	}
-	if v, ok := template["project_name"]; ok {
+	if v, ok := template["project_name"]; ok && v != nil {
 		updateTemplateRequest.ProjectName = v.(string)
 	}
-	if v, ok := template["rollback_template_content"]; ok {
+	if v, ok := template["rollback_template_content"]; ok && v != nil {
 		updateTemplateRequest.RollbackTemplateContent = v.(string)
 	}
-	if v, ok := template["software_variant"]; ok {
+	if v, ok := template["software_variant"]; ok && v != nil {
 		updateTemplateRequest.SoftwareVariant = v.(string)
 	}
-	if v, ok := template["software_version"]; ok {
+	if v, ok := template["software_version"]; ok && v != nil {
 		updateTemplateRequest.SoftwareVersion = v.(string)
 	}
-	if v, ok := template["template_content"]; ok {
+	if v, ok := template["template_content"]; ok && v != nil {
 		updateTemplateRequest.TemplateContent = v.(string)
 	}
-	if v, ok := template["version"]; ok {
+	if v, ok := template["version"]; ok && v != nil {
 		updateTemplateRequest.Version = v.(string)
 	}
 
@@ -346,138 +346,138 @@ func constructUpdateTemplate(templateID string, template map[string]interface{})
 	for _, deviceType := range deviceTypes {
 		dT := deviceType.(map[string]interface{})
 		deviceTypeObject := dnac.UpdateTemplateRequestDeviceTypes{}
-		if v, ok := dT["product_family"]; ok {
+		if v, ok := dT["product_family"]; ok && v != nil {
 			deviceTypeObject.ProductFamily = v.(string)
 		}
-		if v, ok := dT["product_series"]; ok {
+		if v, ok := dT["product_series"]; ok && v != nil {
 			deviceTypeObject.ProductSeries = v.(string)
 		}
-		if v, ok := dT["product_type"]; ok {
+		if v, ok := dT["product_type"]; ok && v != nil {
 			deviceTypeObject.ProductType = v.(string)
 		}
 		updateTemplateRequest.DeviceTypes = append(updateTemplateRequest.DeviceTypes, deviceTypeObject)
 	}
-	if v, ok := template["containing_templates"]; ok {
+	if v, ok := template["containing_templates"]; ok && v != nil {
 		containingTemplates := v.([]interface{})
 		for _, containingTemplate := range containingTemplates {
 			cT := containingTemplate.(map[string]interface{})
 			containingTemplateObject := dnac.UpdateTemplateRequestContainingTemplates{}
-			if v, ok := cT["composite"]; ok {
+			if v, ok := cT["composite"]; ok && v != nil {
 				containingTemplateObject.Composite = v.(bool)
 			}
-			if v, ok := cT["id"]; ok {
+			if v, ok := cT["id"]; ok && v != nil {
 				containingTemplateObject.ID = v.(string)
 			}
-			if v, ok := cT["name"]; ok {
+			if v, ok := cT["name"]; ok && v != nil {
 				containingTemplateObject.Name = v.(string)
 			}
-			if v, ok := cT["version"]; ok {
+			if v, ok := cT["version"]; ok && v != nil {
 				containingTemplateObject.Version = v.(string)
 			}
 			updateTemplateRequest.ContainingTemplates = append(updateTemplateRequest.ContainingTemplates, containingTemplateObject)
 		}
 	}
-	if v, ok := template["rollback_template_params"]; ok {
+	if v, ok := template["rollback_template_params"]; ok && v != nil {
 		rollbackTemplateParams := v.([]interface{})
 		for _, rollbackTemplateParam := range rollbackTemplateParams {
 			tP := rollbackTemplateParam.(map[string]interface{})
 			tPParams := dnac.UpdateTemplateRequestRollbackTemplateParams{}
-			if v, ok := tP["binding"]; ok {
+			if v, ok := tP["binding"]; ok && v != nil {
 				tPParams.Binding = v.(string)
 			}
-			if v, ok := tP["data_type"]; ok {
+			if v, ok := tP["data_type"]; ok && v != nil {
 				tPParams.DataType = v.(string)
 			}
-			if v, ok := tP["default_value"]; ok {
+			if v, ok := tP["default_value"]; ok && v != nil {
 				tPParams.DefaultValue = v.(string)
 			}
-			if v, ok := tP["description"]; ok {
+			if v, ok := tP["description"]; ok && v != nil {
 				tPParams.Description = v.(string)
 			}
-			if v, ok := tP["display_name"]; ok {
+			if v, ok := tP["display_name"]; ok && v != nil {
 				tPParams.DisplayName = v.(string)
 			}
-			if v, ok := tP["group"]; ok {
+			if v, ok := tP["group"]; ok && v != nil {
 				tPParams.Group = v.(string)
 			}
-			if v, ok := tP["id"]; ok {
+			if v, ok := tP["id"]; ok && v != nil {
 				tPParams.ID = v.(string)
 			}
-			if v, ok := tP["instruction_text"]; ok {
+			if v, ok := tP["instruction_text"]; ok && v != nil {
 				tPParams.InstructionText = v.(string)
 			}
-			if v, ok := tP["key"]; ok {
+			if v, ok := tP["key"]; ok && v != nil {
 				tPParams.Key = v.(string)
 			}
-			if v, ok := tP["not_param"]; ok {
+			if v, ok := tP["not_param"]; ok && v != nil {
 				tPParams.NotParam = v.(bool)
 			}
-			if v, ok := tP["order"]; ok {
+			if v, ok := tP["order"]; ok && v != nil {
 				tPParams.Order = v.(int)
 			}
-			if v, ok := tP["param_array"]; ok {
+			if v, ok := tP["param_array"]; ok && v != nil {
 				tPParams.ParamArray = v.(bool)
 			}
-			if v, ok := tP["parameter_name"]; ok {
+			if v, ok := tP["parameter_name"]; ok && v != nil {
 				tPParams.ParameterName = v.(string)
 			}
-			if v, ok := tP["provider"]; ok {
+			if v, ok := tP["provider"]; ok && v != nil {
 				tPParams.Provider = v.(string)
 			}
-			if v, ok := tP["required"]; ok {
+			if v, ok := tP["required"]; ok && v != nil {
 				tPParams.Required = v.(bool)
 			}
 			updateTemplateRequest.RollbackTemplateParams = append(updateTemplateRequest.RollbackTemplateParams, tPParams)
 		}
 	}
-	if v, ok := template["template_params"]; ok {
+	if v, ok := template["template_params"]; ok && v != nil {
 		templateParams := v.([]interface{})
 		for _, templateParam := range templateParams {
 			tP := templateParam.(map[string]interface{})
 			tPParams := dnac.UpdateTemplateRequestTemplateParams{}
-			if v, ok := tP["binding"]; ok {
+			if v, ok := tP["binding"]; ok && v != nil {
 				tPParams.Binding = v.(string)
 			}
-			if v, ok := tP["data_type"]; ok {
+			if v, ok := tP["data_type"]; ok && v != nil {
 				tPParams.DataType = v.(string)
 			}
-			if v, ok := tP["default_value"]; ok {
+			if v, ok := tP["default_value"]; ok && v != nil {
 				tPParams.DefaultValue = v.(string)
 			}
-			if v, ok := tP["description"]; ok {
+			if v, ok := tP["description"]; ok && v != nil {
 				tPParams.Description = v.(string)
 			}
-			if v, ok := tP["display_name"]; ok {
+			if v, ok := tP["display_name"]; ok && v != nil {
 				tPParams.DisplayName = v.(string)
 			}
-			if v, ok := tP["group"]; ok {
+			if v, ok := tP["group"]; ok && v != nil {
 				tPParams.Group = v.(string)
 			}
-			if v, ok := tP["id"]; ok {
+			if v, ok := tP["id"]; ok && v != nil {
 				tPParams.ID = v.(string)
 			}
-			if v, ok := tP["instruction_text"]; ok {
+			if v, ok := tP["instruction_text"]; ok && v != nil {
 				tPParams.InstructionText = v.(string)
 			}
-			if v, ok := tP["key"]; ok {
+			if v, ok := tP["key"]; ok && v != nil {
 				tPParams.Key = v.(string)
 			}
-			if v, ok := tP["not_param"]; ok {
+			if v, ok := tP["not_param"]; ok && v != nil {
 				tPParams.NotParam = v.(bool)
 			}
-			if v, ok := tP["order"]; ok {
+			if v, ok := tP["order"]; ok && v != nil {
 				tPParams.Order = v.(int)
 			}
-			if v, ok := tP["param_array"]; ok {
+			if v, ok := tP["param_array"]; ok && v != nil {
 				tPParams.ParamArray = v.(bool)
 			}
-			if v, ok := tP["parameter_name"]; ok {
+			if v, ok := tP["parameter_name"]; ok && v != nil {
 				tPParams.ParameterName = v.(string)
 			}
-			if v, ok := tP["provider"]; ok {
+			if v, ok := tP["provider"]; ok && v != nil {
 				tPParams.Provider = v.(string)
 			}
-			if v, ok := tP["required"]; ok {
+			if v, ok := tP["required"]; ok && v != nil {
 				tPParams.Required = v.(bool)
 			}
 			updateTemplateRequest.TemplateParams = append(updateTemplateRequest.TemplateParams, tPParams)
@@ -491,46 +491,46 @@ func constructCreateTemplate(template map[string]interface{}) *dnac.CreateTempla
 	softwareType := template["software_type"].(string)
 	createTemplateRequest := dnac.CreateTemplateRequest{Name: name, SoftwareType: softwareType}
 
-	if v, ok := template["author"]; ok {
+	if v, ok := template["author"]; ok && v != nil {
 		createTemplateRequest.Author = v.(string)
 	}
-	if v, ok := template["composite"]; ok {
+	if v, ok := template["composite"]; ok && v != nil {
 		createTemplateRequest.Composite = v.(bool)
 	}
-	if v, ok := template["create_time"]; ok {
+	if v, ok := template["create_time"]; ok && v != nil {
 		createTemplateRequest.CreateTime = v.(int)
 	}
-	if v, ok := template["description"]; ok {
+	if v, ok := template["description"]; ok && v != nil {
 		createTemplateRequest.Description = v.(string)
 	}
-	if v, ok := template["failure_policy"]; ok {
+	if v, ok := template["failure_policy"]; ok && v != nil {
 		createTemplateRequest.FailurePolicy = v.(string)
 	}
-	if v, ok := template["id"]; ok {
+	if v, ok := template["id"]; ok && v != nil {
 		createTemplateRequest.ID = v.(string)
 	}
-	if v, ok := template["last_update_time"]; ok {
+	if v, ok := template["last_update_time"]; ok && v != nil {
 		createTemplateRequest.LastUpdateTime = v.(int)
 	}
-	if v, ok := template["parent_template_id"]; ok {
+	if v, ok := template["parent_template_id"]; ok && v != nil {
 		createTemplateRequest.ParentTemplateID = v.(string)
 	}
-	if v, ok := template["project_name"]; ok {
+	if v, ok := template["project_name"]; ok && v != nil {
 		createTemplateRequest.ProjectName = v.(string)
 	}
-	if v, ok := template["rollback_template_content"]; ok {
+	if v, ok := template["rollback_template_content"]; ok && v != nil {
 		createTemplateRequest.RollbackTemplateContent = v.(string)
 	}
-	if v, ok := template["software_variant"]; ok {
+	if v, ok := template["software_variant"]; ok && v != nil {
 		createTemplateRequest.SoftwareVariant = v.(string)
 	}
-	if v, ok := template["software_version"]; ok {
+	if v, ok := template["software_version"]; ok && v != nil {
 		createTemplateRequest.SoftwareVersion = v.(string)
 	}
-	if v, ok := template["template_content"]; ok {
+	if v, ok := template["template_content"]; ok && v != nil {
 		createTemplateRequest.TemplateContent = v.(string)
 	}
-	if v, ok := template["version"]; ok {
+	if v, ok := template["version"]; ok && v != nil {
 		createTemplateRequest.Version = v.(string)
 	}
 
@@ -538,138 +538,138 @@ func constructCreateTemplate(template map[string]interface{}) *dnac.CreateTempla
 	for _, deviceType := range deviceTypes {
 		dT := deviceType.(map[string]interface{})
 		deviceTypeObject := dnac.CreateTemplateRequestDeviceTypes{}
-		if v, ok := dT["product_family"]; ok {
+		if v, ok := dT["product_family"]; ok && v != nil {
 			deviceTypeObject.ProductFamily = v.(string)
 		}
-		if v, ok := dT["product_series"]; ok {
+		if v, ok := dT["product_series"]; ok && v != nil {
 			deviceTypeObject.ProductSeries = v.(string)
 		}
-		if v, ok := dT["product_type"]; ok {
+		if v, ok := dT["product_type"]; ok && v != nil {
 			deviceTypeObject.ProductType = v.(string)
 		}
 		createTemplateRequest.DeviceTypes = append(createTemplateRequest.DeviceTypes, deviceTypeObject)
 	}
-	if v, ok := template["containing_templates"]; ok {
+	if v, ok := template["containing_templates"]; ok && v != nil {
 		containingTemplates := v.([]interface{})
 		for _, containingTemplate := range containingTemplates {
 			cT := containingTemplate.(map[string]interface{})
 			containingTemplateObject := dnac.CreateTemplateRequestContainingTemplates{}
-			if v, ok := cT["composite"]; ok {
+			if v, ok := cT["composite"]; ok && v != nil {
 				containingTemplateObject.Composite = v.(bool)
 			}
-			if v, ok := cT["id"]; ok {
+			if v, ok := cT["id"]; ok && v != nil {
 				containingTemplateObject.ID = v.(string)
 			}
-			if v, ok := cT["name"]; ok {
+			if v, ok := cT["name"]; ok && v != nil {
 				containingTemplateObject.Name = v.(string)
 			}
-			if v, ok := cT["version"]; ok {
+			if v, ok := cT["version"]; ok && v != nil {
 				containingTemplateObject.Version = v.(string)
 			}
 			createTemplateRequest.ContainingTemplates = append(createTemplateRequest.ContainingTemplates, containingTemplateObject)
 		}
 	}
-	if v, ok := template["rollback_template_params"]; ok {
+	if v, ok := template["rollback_template_params"]; ok && v != nil {
 		rollbackTemplateParams := v.([]interface{})
 		for _, rollbackTemplateParam := range rollbackTemplateParams {
 			tP := rollbackTemplateParam.(map[string]interface{})
 			tPParams := dnac.CreateTemplateRequestRollbackTemplateParams{}
-			if v, ok := tP["binding"]; ok {
+			if v, ok := tP["binding"]; ok && v != nil {
 				tPParams.Binding = v.(string)
 			}
-			if v, ok := tP["data_type"]; ok {
+			if v, ok := tP["data_type"]; ok && v != nil {
 				tPParams.DataType = v.(string)
 			}
-			if v, ok := tP["default_value"]; ok {
+			if v, ok := tP["default_value"]; ok && v != nil {
 				tPParams.DefaultValue = v.(string)
 			}
-			if v, ok := tP["description"]; ok {
+			if v, ok := tP["description"]; ok && v != nil {
 				tPParams.Description = v.(string)
 			}
-			if v, ok := tP["display_name"]; ok {
+			if v, ok := tP["display_name"]; ok && v != nil {
 				tPParams.DisplayName = v.(string)
 			}
-			if v, ok := tP["group"]; ok {
+			if v, ok := tP["group"]; ok && v != nil {
 				tPParams.Group = v.(string)
 			}
-			if v, ok := tP["id"]; ok {
+			if v, ok := tP["id"]; ok && v != nil {
 				tPParams.ID = v.(string)
 			}
-			if v, ok := tP["instruction_text"]; ok {
+			if v, ok := tP["instruction_text"]; ok && v != nil {
 				tPParams.InstructionText = v.(string)
 			}
-			if v, ok := tP["key"]; ok {
+			if v, ok := tP["key"]; ok && v != nil {
 				tPParams.Key = v.(string)
 			}
-			if v, ok := tP["not_param"]; ok {
+			if v, ok := tP["not_param"]; ok && v != nil {
 				tPParams.NotParam = v.(bool)
 			}
-			if v, ok := tP["order"]; ok {
+			if v, ok := tP["order"]; ok && v != nil {
 				tPParams.Order = v.(int)
 			}
-			if v, ok := tP["param_array"]; ok {
+			if v, ok := tP["param_array"]; ok && v != nil {
 				tPParams.ParamArray = v.(bool)
 			}
-			if v, ok := tP["parameter_name"]; ok {
+			if v, ok := tP["parameter_name"]; ok && v != nil {
 				tPParams.ParameterName = v.(string)
 			}
-			if v, ok := tP["provider"]; ok {
+			if v, ok := tP["provider"]; ok && v != nil {
 				tPParams.Provider = v.(string)
 			}
-			if v, ok := tP["required"]; ok {
+			if v, ok := tP["required"]; ok && v != nil {
 				tPParams.Required = v.(bool)
 			}
 			createTemplateRequest.RollbackTemplateParams = append(createTemplateRequest.RollbackTemplateParams, tPParams)
 		}
 	}
-	if v, ok := template["template_params"]; ok {
+	if v, ok := template["template_params"]; ok && v != nil {
 		templateParams := v.([]interface{})
 		for _, templateParam := range templateParams {
 			tP := templateParam.(map[string]interface{})
 			tPParams := dnac.CreateTemplateRequestTemplateParams{}
-			if v, ok := tP["binding"]; ok {
+			if v, ok := tP["binding"]; ok && v != nil {
 				tPParams.Binding = v.(string)
 			}
-			if v, ok := tP["data_type"]; ok {
+			if v, ok := tP["data_type"]; ok && v != nil {
 				tPParams.DataType = v.(string)
 			}
-			if v, ok := tP["default_value"]; ok {
+			if v, ok := tP["default_value"]; ok && v != nil {
 				tPParams.DefaultValue = v.(string)
 			}
-			if v, ok := tP["description"]; ok {
+			if v, ok := tP["description"]; ok && v != nil {
 				tPParams.Description = v.(string)
 			}
-			if v, ok := tP["display_name"]; ok {
+			if v, ok := tP["display_name"]; ok && v != nil {
 				tPParams.DisplayName = v.(string)
 			}
-			if v, ok := tP["group"]; ok {
+			if v, ok := tP["group"]; ok && v != nil {
 				tPParams.Group = v.(string)
 			}
-			if v, ok := tP["id"]; ok {
+			if v, ok := tP["id"]; ok && v != nil {
 				tPParams.ID = v.(string)
 			}
-			if v, ok := tP["instruction_text"]; ok {
+			if v, ok := tP["instruction_text"]; ok && v != nil {
 				tPParams.InstructionText = v.(string)
 			}
-			if v, ok := tP["key"]; ok {
+			if v, ok := tP["key"]; ok && v != nil {
 				tPParams.Key = v.(string)
 			}
-			if v, ok := tP["not_param"]; ok {
+			if v, ok := tP["not_param"]; ok && v != nil {
 				tPParams.NotParam = v.(bool)
 			}
-			if v, ok := tP["order"]; ok {
+			if v, ok := tP["order"]; ok && v != nil {
 				tPParams.Order = v.(int)
 			}
-			if v, ok := tP["param_array"]; ok {
+			if v, ok := tP["param_array"]; ok && v != nil {
 				tPParams.ParamArray = v.(bool)
 			}
-			if v, ok := tP["parameter_name"]; ok {
+			if v, ok := tP["parameter_name"]; ok && v != nil {
 				tPParams.ParameterName = v.(string)
 			}
-			if v, ok := tP["provider"]; ok {
+			if v, ok := tP["provider"]; ok && v != nil {
 				tPParams.Provider = v.(string)
 			}
-			if v, ok := tP["required"]; ok {
+			if v, ok := tP["required"]; ok && v != nil {
 				tPParams.Required = v.(bool)
 			}
 			createTemplateRequest.TemplateParams = append(createTemplateRequest.TemplateParams, tPParams)

@@ -2,9 +2,10 @@ package dnacenter
 
 import (
 	"context"
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strings"
 	"time"
+
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -222,13 +223,13 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 	site := item.(map[string]interface{})
 
 	var typeS, name, parentName string
-	if v, ok := site["type"]; ok {
+	if v, ok := site["type"]; ok && v != nil {
 		typeS = v.(string)
 	}
-	if v, ok := site["name"]; ok {
+	if v, ok := site["name"]; ok && v != nil {
 		name = v.(string)
 	}
-	if v, ok := site["parent_name"]; ok {
+	if v, ok := site["parent_name"]; ok && v != nil {
 		parentName = v.(string)
 	}
 	pathName := []string{parentName, name}
@@ -359,13 +360,13 @@ func resourceSiteUpdate(ctx context.Context, d *schema.ResourceData, m interface
 		}
 
 		var typeS, name, parentName string
-		if v, ok := site["type"]; ok {
+		if v, ok := site["type"]; ok && v != nil {
 			typeS = v.(string)
 		}
-		if v, ok := site["name"]; ok {
+		if v, ok := site["name"]; ok && v != nil {
 			name = v.(string)
 		}
-		if v, ok := site["parent_name"]; ok {
+		if v, ok := site["parent_name"]; ok && v != nil {
 			parentName = v.(string)
 		}
 

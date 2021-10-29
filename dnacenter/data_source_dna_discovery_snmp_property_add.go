@@ -54,19 +54,19 @@ func constructDataSNMPPropertiesRequest(response []interface{}) *[]dnac.CreateUp
 		ci := item.(map[string]interface{})
 		requestItem := dnac.CreateUpdateSNMPPropertiesRequest{}
 
-		if v, ok := ci["id"]; ok {
+		if v, ok := ci["id"]; ok && v != nil {
 			requestItem.ID = v.(string)
 		}
-		if v, ok := ci["instance_tenant_id"]; ok {
+		if v, ok := ci["instance_tenant_id"]; ok && v != nil {
 			requestItem.InstanceTenantID = v.(string)
 		}
-		if v, ok := ci["instance_uuid"]; ok {
+		if v, ok := ci["instance_uuid"]; ok && v != nil {
 			requestItem.InstanceUUID = v.(string)
 		}
-		if v, ok := ci["int_value"]; ok {
+		if v, ok := ci["int_value"]; ok && v != nil {
 			requestItem.IntValue = v.(int)
 		}
-		if v, ok := ci["system_property_name"]; ok {
+		if v, ok := ci["system_property_name"]; ok && v != nil {
 			requestItem.SystemPropertyName = v.(string)
 		}
 		result = append(result, requestItem)

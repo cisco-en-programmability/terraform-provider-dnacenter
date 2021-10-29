@@ -2,9 +2,10 @@ package dnacenter
 
 import (
 	"context"
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strconv"
 	"time"
+
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -110,10 +111,10 @@ func constructDataPnPDeviceResetDeviceResetListConfigListConfigParameters(respon
 	for _, item := range response {
 		ci := item.(map[string]interface{})
 		configItem := dnac.ResetDeviceRequestDeviceResetListConfigListConfigParameters{}
-		if v, ok := ci["key"]; ok {
+		if v, ok := ci["key"]; ok && v != nil {
 			configItem.Key = v.(string)
 		}
-		if v, ok := ci["value"]; ok {
+		if v, ok := ci["value"]; ok && v != nil {
 			configItem.Value = v.(string)
 		}
 		result = append(result, configItem)
@@ -126,12 +127,12 @@ func constructDataPnPDeviceResetDeviceResetListConfigList(response []interface{}
 	for _, item := range response {
 		ci := item.(map[string]interface{})
 		configItem := dnac.ResetDeviceRequestDeviceResetListConfigList{}
-		if v, ok := ci["config_parameters"]; ok {
+		if v, ok := ci["config_parameters"]; ok && v != nil {
 			if w := constructDataPnPDeviceResetDeviceResetListConfigListConfigParameters(v.([]interface{})); w != nil {
 				configItem.ConfigParameters = *w
 			}
 		}
-		if v, ok := ci["config_id"]; ok {
+		if v, ok := ci["config_id"]; ok && v != nil {
 			configItem.ConfigID = v.(string)
 		}
 		result = append(result, configItem)
@@ -144,21 +145,21 @@ func constructDataPnPDeviceResetDeviceResetList(response []interface{}) *[]dnac.
 	for _, item := range response {
 		ci := item.(map[string]interface{})
 		resetItem := dnac.ResetDeviceRequestDeviceResetList{}
-		if v, ok := ci["config_list"]; ok {
+		if v, ok := ci["config_list"]; ok && v != nil {
 			if w := constructDataPnPDeviceResetDeviceResetListConfigList(v.([]interface{})); w != nil {
 				resetItem.ConfigList = *w
 			}
 		}
-		if v, ok := ci["device_id"]; ok {
+		if v, ok := ci["device_id"]; ok && v != nil {
 			resetItem.DeviceID = v.(string)
 		}
-		if v, ok := ci["license_level"]; ok {
+		if v, ok := ci["license_level"]; ok && v != nil {
 			resetItem.LicenseLevel = v.(string)
 		}
-		if v, ok := ci["license_type"]; ok {
+		if v, ok := ci["license_type"]; ok && v != nil {
 			resetItem.LicenseType = v.(string)
 		}
-		if v, ok := ci["top_of_stack_serial_number"]; ok {
+		if v, ok := ci["top_of_stack_serial_number"]; ok && v != nil {
 			resetItem.TopOfStackSerialNumber = v.(string)
 		}
 		result = append(result, resetItem)

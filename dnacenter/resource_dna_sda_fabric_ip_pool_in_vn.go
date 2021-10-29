@@ -2,9 +2,10 @@ package dnacenter
 
 import (
 	"context"
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 	"strings"
 	"time"
+
+	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -52,15 +53,15 @@ func resourceSDAFabricIPPoolInVN() *schema.Resource {
 			},
 			"is_l2_flooding_enabled": &schema.Schema{
 				Type:     schema.TypeBool,
-				Required: true, //REVIEW: It may be only Optional & Computed
+				Optional: true, //REVIEW: It may be only Optional & Computed
 			},
 			"is_this_critical_pool": &schema.Schema{
 				Type:     schema.TypeBool,
-				Required: true, //REVIEW: It may be only Optional & Computed
+				Optional: true, //REVIEW: It may be only Optional & Computed
 			},
 			"pool_type": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true, //REVIEW: It may be only Optional & Computed
+				Optional: true, //REVIEW: It may be only Optional & Computed
 			},
 		},
 	}
@@ -110,9 +111,19 @@ func resourceSDAFabricIPPoolInVNCreate(ctx context.Context, d *schema.ResourceDa
 	}
 
 	requests = append(requests, request)
-	_, _, err = client.SDA.AddIPPoolInSDAVirtualNetwork(&requests)
+	addResponse, _, err := client.SDA.AddIPPoolInSDAVirtualNetwork(&requests)
 	if err != nil {
 		return diag.FromErr(err)
+	}
+	if addResponse != nil {
+		if addResponse.Status == "failed" {
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "May have been unable to create SDA fabric IP pool in VN",
+				Detail:   addResponse.Description,
+			})
+			return diags
+		}
 	}
 
 	// Wait for execution status to complete
@@ -172,10 +183,6 @@ func resourceSDAFabricIPPoolInVNRead(ctx context.Context, d *schema.ResourceData
 		return diag.FromErr(err)
 	}
 	if err := d.Set("is_this_critical_pool", searchResponse.IsThisCriticalPool); err != nil {
-		return diag.FromErr(err)
-	}
-	// REVIEW:.
-	if err := d.Set("pool_type", ""); err != nil {
 		return diag.FromErr(err)
 	}
 

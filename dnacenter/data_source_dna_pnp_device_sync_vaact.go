@@ -273,10 +273,10 @@ func constructSyncVirtualAccountDevicesRequestSyncResultSyncList(response []inte
 	for _, item := range response {
 		syncItem := dnac.SyncVirtualAccountDevicesRequestSyncResultSyncList{}
 		si := item.(map[string]interface{})
-		if v, ok := si["device_sn_list"]; ok {
+		if v, ok := si["device_sn_list"]; ok && v != nil {
 			syncItem.DeviceSnList = convertSliceInterfaceToSliceString(v.([]interface{}))
 		}
-		if v, ok := si["sync_type"]; ok {
+		if v, ok := si["sync_type"]; ok && v != nil {
 			syncItem.SyncType = v.(string)
 		}
 		result = append(result, syncItem)
@@ -288,12 +288,12 @@ func constructSyncVirtualAccountDevicesRequestSyncResult(response []interface{})
 	var result dnac.SyncVirtualAccountDevicesRequestSyncResult
 	if len(response) > 0 {
 		sr := response[0].(map[string]interface{})
-		if v, ok := sr["sync_list"]; ok {
+		if v, ok := sr["sync_list"]; ok && v != nil {
 			if w := constructSyncVirtualAccountDevicesRequestSyncResultSyncList(v.([]interface{})); w != nil {
 				result.SyncList = *w
 			}
 		}
-		if v, ok := sr["sync_msg"]; ok {
+		if v, ok := sr["sync_msg"]; ok && v != nil {
 			result.SyncMsg = v.(string)
 		}
 	}
@@ -305,28 +305,28 @@ func constructSyncVirtualAccountDevicesRequestProfile(response []interface{}) *d
 	if len(response) > 0 {
 		drp := response[0].(map[string]interface{})
 
-		if v, ok := drp["address_fqdn"]; ok {
+		if v, ok := drp["address_fqdn"]; ok && v != nil {
 			result.AddressFqdn = v.(string)
 		}
-		if v, ok := drp["address_ip_v4"]; ok {
+		if v, ok := drp["address_ip_v4"]; ok && v != nil {
 			result.AddressIPV4 = v.(string)
 		}
-		if v, ok := drp["cert"]; ok {
+		if v, ok := drp["cert"]; ok && v != nil {
 			result.Cert = v.(string)
 		}
-		if v, ok := drp["make_default"]; ok {
+		if v, ok := drp["make_default"]; ok && v != nil {
 			result.MakeDefault = v.(bool)
 		}
-		if v, ok := drp["name"]; ok {
+		if v, ok := drp["name"]; ok && v != nil {
 			result.Name = v.(string)
 		}
-		if v, ok := drp["port"]; ok {
+		if v, ok := drp["port"]; ok && v != nil {
 			result.Port = v.(int)
 		}
-		if v, ok := drp["profile_id"]; ok {
+		if v, ok := drp["profile_id"]; ok && v != nil {
 			result.ProfileID = v.(string)
 		}
-		if v, ok := drp["proxy"]; ok {
+		if v, ok := drp["proxy"]; ok && v != nil {
 			result.Proxy = v.(bool)
 		}
 	}
@@ -337,47 +337,47 @@ func constructSyncVirtualAccountDevicesRequest(response []interface{}) *dnac.Syn
 	var result dnac.SyncVirtualAccountDevicesRequest
 	if len(response) > 0 {
 		dr := response[0].(map[string]interface{})
-		if v, ok := dr["auto_sync_period"]; ok {
+		if v, ok := dr["auto_sync_period"]; ok && v != nil {
 			result.AutoSyncPeriod = v.(int)
 		}
-		if v, ok := dr["cco_user"]; ok {
+		if v, ok := dr["cco_user"]; ok && v != nil {
 			result.CcoUser = v.(string)
 		}
-		if v, ok := dr["expiry"]; ok {
+		if v, ok := dr["expiry"]; ok && v != nil {
 			result.Expiry = v.(int)
 		}
-		if v, ok := dr["last_sync"]; ok {
+		if v, ok := dr["last_sync"]; ok && v != nil {
 			result.LastSync = v.(int)
 		}
-		if v, ok := dr["profile"]; ok {
+		if v, ok := dr["profile"]; ok && v != nil {
 			if w := constructSyncVirtualAccountDevicesRequestProfile(v.([]interface{})); w != nil {
 				result.Profile = *w
 			}
 		}
-		if v, ok := dr["smart_account_id"]; ok {
+		if v, ok := dr["smart_account_id"]; ok && v != nil {
 			result.SmartAccountID = v.(string)
 		}
-		if v, ok := dr["sync_result"]; ok {
+		if v, ok := dr["sync_result"]; ok && v != nil {
 			if w := constructSyncVirtualAccountDevicesRequestSyncResult(v.([]interface{})); w != nil {
 				result.SyncResult = *w
 			}
 		}
-		if v, ok := dr["sync_result_str"]; ok {
+		if v, ok := dr["sync_result_str"]; ok && v != nil {
 			result.SyncResultStr = v.(string)
 		}
-		if v, ok := dr["sync_start_time"]; ok {
+		if v, ok := dr["sync_start_time"]; ok && v != nil {
 			result.SyncStartTime = v.(int)
 		}
-		if v, ok := dr["sync_status"]; ok {
+		if v, ok := dr["sync_status"]; ok && v != nil {
 			result.SyncStatus = v.(string)
 		}
-		if v, ok := dr["tenant_id"]; ok {
+		if v, ok := dr["tenant_id"]; ok && v != nil {
 			result.TenantID = v.(string)
 		}
-		if v, ok := dr["token"]; ok {
+		if v, ok := dr["token"]; ok && v != nil {
 			result.Token = v.(string)
 		}
-		if v, ok := dr["virtual_account_id"]; ok {
+		if v, ok := dr["virtual_account_id"]; ok && v != nil {
 			result.VirtualAccountID = v.(string)
 		}
 	}

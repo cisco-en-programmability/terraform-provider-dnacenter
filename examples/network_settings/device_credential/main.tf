@@ -13,7 +13,7 @@ provider "dnacenter" {
 
 data "dna_network_device_credential" "response" {
   provider = dnacenter
-  # site_id  = "b85fe0be-d971-4eb7-92a9-3498356ad87f"
+  site_id  = "2397da83-4e12-4d04-9bd3-a57b2ad91652"
 }
 
 output "dna_network_device_credential_response" {
