@@ -21,7 +21,7 @@ output "dna_command_runner_keywords_response" {
 data "dna_command_runner_run_command" "response" {
   provider     = dnacenter
   commands     = ["pwd"]
-  device_uuids = ["a9b86e42-6573-4f5d-a0bf-a743e290f46a"]
+  device_uuids = [var.device_uuid]
 }
 output "dna_command_runner_run_command_response" {
   value = data.dna_command_runner_run_command.response

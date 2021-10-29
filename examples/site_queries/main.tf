@@ -13,7 +13,7 @@ provider "dnacenter" {
 
 data "dna_site_count" "response" {
   provider = dnacenter
-  site_id  = "1ba55132-0fb8-4986-a31e-674d30e8b8ee"
+  site_id  = "2397da83-4e12-4d04-9bd3-a57b2ad91652"
 }
 output "dna_site_count_response" {
   value = data.dna_site_count.response
@@ -23,7 +23,7 @@ data "dna_site" "response" {
   provider = dnacenter
   offset   = "1"
   limit    = "3"
-  name     = "Global/USA"
+  name     = "Global/Peru"
 }
 output "dna_site_response" {
   value = data.dna_site.response
@@ -40,7 +40,7 @@ output "dna_site_health_response" {
 
 data "dna_site_membership" "response" {
   provider = dnacenter
-  site_id  = "a013dd15-69a3-423f-82dc-c6a10eba2cb7"
+  site_id  = "2397da83-4e12-4d04-9bd3-a57b2ad91652"
 }
 output "dna_site_membership_response" {
   value = data.dna_site_membership.response

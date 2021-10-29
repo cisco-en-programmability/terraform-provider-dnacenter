@@ -20,5 +20,6 @@ resource "dna_snmpv2_write_community_credential" "response" {
   }
 }
 output "dna_snmpv2_write_community_credential_response" {
+  sensitive = true
   value = dna_snmpv2_write_community_credential.response
 }

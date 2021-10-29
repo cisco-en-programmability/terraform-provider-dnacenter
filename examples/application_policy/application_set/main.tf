@@ -21,5 +21,5 @@ resource "dna_application_set" "response" {
 data "dna_application_set" "query" {
   provider   = dnacenter
   depends_on = [dna_application_set.response]
-  name       = var.application_set_name
+  name       = dna_application_set.response.item[0].name
 }
