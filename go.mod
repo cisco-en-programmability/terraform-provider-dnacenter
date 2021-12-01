@@ -3,7 +3,7 @@ module terraform-provider-dnacenter
 go 1.17
 
 require (
-	github.com/cisco-en-programmability/dnacenter-go-sdk v0.1.0
+	github.com/cisco-en-programmability/dnacenter-go-sdk v1.0.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.8.0
 )
 
