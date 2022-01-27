@@ -1,0 +1,1 @@
+terraform import dnacenter_device_replacement.example "id:=string"

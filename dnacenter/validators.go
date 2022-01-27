@@ -3,22 +3,9 @@ package dnacenter
 import (
 	"fmt"
 	"regexp"
-	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
-
-func diffSuppressAlways() schema.SchemaDiffSuppressFunc {
-	return func(k, old, new string, d *schema.ResourceData) bool {
-		return true
-	}
-}
-
-func caseInsensitive() schema.SchemaDiffSuppressFunc {
-	return func(k, old, new string, d *schema.ResourceData) bool {
-		return strings.EqualFold(old, new)
-	}
-}
 
 func validateStringIsValueFunc(reqValue string) schema.SchemaValidateFunc {
 	return func(v interface{}, k string) (we []string, errors []error) {

@@ -1,0 +1,1 @@
+terraform import dnacenter_sda_fabric_control_plane_device.example "id:=string"

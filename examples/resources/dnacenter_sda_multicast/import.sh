@@ -1,0 +1,1 @@
+terraform import dnacenter_sda_multicast.example "id:=string"
