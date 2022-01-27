@@ -1,0 +1,1 @@
+terraform import dnacenter_wireless_profile.example "id:=string"

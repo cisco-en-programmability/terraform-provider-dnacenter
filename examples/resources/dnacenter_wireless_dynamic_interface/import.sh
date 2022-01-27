@@ -1,0 +1,1 @@
+terraform import dnacenter_wireless_dynamic_interface.example "id:=string"

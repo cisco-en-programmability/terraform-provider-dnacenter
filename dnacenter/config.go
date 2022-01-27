@@ -3,44 +3,54 @@ package dnacenter
 import (
 	"context"
 
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
-	baseURL := d.Get("base_url").(string)
-	username := d.Get("username").(string)
-	password := d.Get("password").(string)
-	debug := d.Get("debug").(string)
-	sslVerify := d.Get("ssl_verify").(string)
+// Config is the configuration structure used to instantiate a
+// new Cisco DNA Center client.
+type Config struct {
+	BaseURL   string
+	Username  string
+	Password  string
+	Debug     string
+	SSLVerify string
+}
 
+// NewClient returns a new Cisco DNA Center client.
+func (c *Config) NewClient() (*dnacentersdkgo.Client, error) {
+	client, err := dnacentersdkgo.NewClientWithOptions(c.BaseURL,
+		c.Username, c.Password,
+		c.Debug, c.SSLVerify,
+	)
+	if err != nil {
+		return client, err
+	}
+	client.RestyClient().SetLogger(createLogger())
+	return client, err
+}
+
+func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
-	if (username != "") && (password != "") && (baseURL != "") {
-		c, err := dnac.NewClientWithOptions(baseURL, username, password, debug, sslVerify)
-		if err != nil {
-			diags = append(diags, diag.Diagnostic{
-				Severity: diag.Error,
-				Summary:  "Unable to create Cisco DNA Center client",
-				Detail:   "Unable to authorize user for Cisco DNA Center client",
-			})
-			return nil, diags
-		}
-
-		return c, diags
+	config := Config{
+		BaseURL:   d.Get("base_url").(string),
+		Username:  d.Get("username").(string),
+		Password:  d.Get("password").(string),
+		Debug:     d.Get("debug").(string),
+		SSLVerify: d.Get("ssl_verify").(string),
 	}
 
-	c, err := dnac.NewClient()
+	client, err := config.NewClient()
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Unable to create Cisco DNA Center client",
-			Detail:   "Unable to auth user for Cisco DNA Center client. Required values are baseURL, username, password",
+			Detail:   err.Error(),
 		})
 		return nil, diags
 	}
-
-	return c, diags
+	return client, diags
 }

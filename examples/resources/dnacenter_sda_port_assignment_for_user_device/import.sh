@@ -1,0 +1,1 @@
+terraform import dnacenter_sda_port_assignment_for_user_device.example "id:=string"

@@ -1,0 +1,1 @@
+terraform import dnacenter_snmp_properties.example "id:=string"

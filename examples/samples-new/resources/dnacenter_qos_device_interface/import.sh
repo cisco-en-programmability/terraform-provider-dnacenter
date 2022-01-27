@@ -1,0 +1,1 @@
+terraform import dnacenter_qos_device_interface.example "id:=string"
