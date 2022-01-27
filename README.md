@@ -1,9 +1,7 @@
 
 # terraform-provider-dnacenter
 
-terraform-provider-dnacenter is a Terraform Provider for [Cisco DNA Center]()
-
-<img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" width="600px">
+terraform-provider-dnacenter is a Terraform Provider for [Cisco DNA Center](https://developer.cisco.com/docs/dna-center/)
 
 ## Requirements
 
