@@ -2816,7 +2816,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemArray(ctx context.Contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3041,7 +3041,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoFileSystemList
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoFileSystemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3092,7 +3092,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoHTTPHeadersArr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoHTTPHeaders(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3131,7 +3131,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfacesAr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfaces(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3189,7 +3189,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfacesIP
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfacesIPv6AddressList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3247,7 +3247,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoNeighborLinksA
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoNeighborLinks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3307,7 +3307,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileList
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3449,7 +3449,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPreWorkflowCli
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPreWorkflowCliOuputs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3515,7 +3515,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoStackInfoStack
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoStackInfoStackMemberList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3594,7 +3594,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListArray(ctx 
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3663,7 +3663,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTas
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfoAddnDetails(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3702,7 +3702,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTas
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfoWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3819,7 +3819,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasks
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3879,7 +3879,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasks
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3996,7 +3996,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasksArray
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4056,7 +4056,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasksWorkI
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4173,7 +4173,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasksArray(ctx c
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4233,7 +4233,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasksWorkItemLis
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4305,7 +4305,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfig
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfigList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4344,7 +4344,7 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfig
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfigListConfigParameters(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

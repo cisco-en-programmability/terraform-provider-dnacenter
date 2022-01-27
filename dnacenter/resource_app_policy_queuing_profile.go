@@ -918,7 +918,7 @@ func expandRequestAppPolicyQueuingProfileCreateApplicationPolicyQueuingProfileAr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyQueuingProfileCreateApplicationPolicyQueuingProfile(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -960,7 +960,7 @@ func expandRequestAppPolicyQueuingProfileCreateApplicationPolicyQueuingProfileCl
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyQueuingProfileCreateApplicationPolicyQueuingProfileClause(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1002,7 +1002,7 @@ func expandRequestAppPolicyQueuingProfileCreateApplicationPolicyQueuingProfileCl
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyQueuingProfileCreateApplicationPolicyQueuingProfileClauseInterfaceSpeedBandwidthClauses(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1041,7 +1041,7 @@ func expandRequestAppPolicyQueuingProfileCreateApplicationPolicyQueuingProfileCl
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyQueuingProfileCreateApplicationPolicyQueuingProfileClauseInterfaceSpeedBandwidthClausesTcBandwidthSettings(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1080,7 +1080,7 @@ func expandRequestAppPolicyQueuingProfileCreateApplicationPolicyQueuingProfileCl
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyQueuingProfileCreateApplicationPolicyQueuingProfileClauseTcDscpSettings(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1119,7 +1119,7 @@ func expandRequestAppPolicyQueuingProfileUpdateApplicationPolicyQueuingProfileAr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyQueuingProfileUpdateApplicationPolicyQueuingProfile(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1164,7 +1164,7 @@ func expandRequestAppPolicyQueuingProfileUpdateApplicationPolicyQueuingProfileCl
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyQueuingProfileUpdateApplicationPolicyQueuingProfileClause(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1212,7 +1212,7 @@ func expandRequestAppPolicyQueuingProfileUpdateApplicationPolicyQueuingProfileCl
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyQueuingProfileUpdateApplicationPolicyQueuingProfileClauseInterfaceSpeedBandwidthClauses(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1254,7 +1254,7 @@ func expandRequestAppPolicyQueuingProfileUpdateApplicationPolicyQueuingProfileCl
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyQueuingProfileUpdateApplicationPolicyQueuingProfileClauseInterfaceSpeedBandwidthClausesTcBandwidthSettings(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1296,7 +1296,7 @@ func expandRequestAppPolicyQueuingProfileUpdateApplicationPolicyQueuingProfileCl
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyQueuingProfileUpdateApplicationPolicyQueuingProfileClauseTcDscpSettings(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

@@ -786,7 +786,7 @@ func expandRequestNfvProfileCreateNfvProfileDeviceArray(ctx context.Context, key
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileCreateNfvProfileDevice(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -843,7 +843,7 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServiceProviderProfileArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileCreateNfvProfileDeviceServiceProviderProfile(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -888,7 +888,7 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServicesArray(ctx context.Cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileCreateNfvProfileDeviceServices(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -939,7 +939,7 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServicesVNicMappingArray(ctx c
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileCreateNfvProfileDeviceServicesVNicMapping(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -978,7 +978,7 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworksArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1026,7 +1026,7 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworksServicesToConnec
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworksServicesToConnect(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1062,7 +1062,7 @@ func expandRequestNfvProfileCreateNfvProfileDeviceVLANForL2Array(ctx context.Con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileCreateNfvProfileDeviceVLANForL2(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1104,7 +1104,7 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomTemplateArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileCreateNfvProfileDeviceCustomTemplate(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1158,7 +1158,7 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceArray(ctx context.Context, key
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileUpdateNfvProfileDevice(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1212,7 +1212,7 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceServicesArray(ctx context.Cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileUpdateNfvProfileDeviceServices(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1263,7 +1263,7 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceServicesVNicMappingArray(ctx c
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileUpdateNfvProfileDeviceServicesVNicMapping(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1302,7 +1302,7 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworksArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1350,7 +1350,7 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworksServicesToConnec
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworksServicesToConnect(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1386,7 +1386,7 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceVLANForL2Array(ctx context.Con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileUpdateNfvProfileDeviceVLANForL2(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1428,7 +1428,7 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomTemplateArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNfvProfileUpdateNfvProfileDeviceCustomTemplate(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

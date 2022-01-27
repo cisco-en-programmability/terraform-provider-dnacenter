@@ -238,7 +238,7 @@ func expandRequestPnpDeviceClaimClaimDeviceDeviceClaimListArray(ctx context.Cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceClaimClaimDeviceDeviceClaimList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -286,7 +286,7 @@ func expandRequestPnpDeviceClaimClaimDeviceDeviceClaimListConfigListArray(ctx co
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceClaimClaimDeviceDeviceClaimListConfigList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -325,7 +325,7 @@ func expandRequestPnpDeviceClaimClaimDeviceDeviceClaimListConfigListConfigParame
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceClaimClaimDeviceDeviceClaimListConfigListConfigParameters(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

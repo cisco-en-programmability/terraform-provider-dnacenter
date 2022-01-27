@@ -194,7 +194,7 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListArray(ctx context.Cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceResetResetDeviceDeviceResetList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -242,7 +242,7 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigListArray(ctx co
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -281,7 +281,7 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigListConfigParame
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigListConfigParameters(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

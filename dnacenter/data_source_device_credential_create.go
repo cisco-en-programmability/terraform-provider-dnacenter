@@ -346,7 +346,7 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsCliCreden
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsCliCredential(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -391,7 +391,7 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV2CRe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV2CRead(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -430,7 +430,7 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV2CWr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV2CWrite(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -469,7 +469,7 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV3Arr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV3(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -523,7 +523,7 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsHTTPSRead
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsHTTPSRead(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -568,7 +568,7 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsHTTPSWrit
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsHTTPSWrite(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

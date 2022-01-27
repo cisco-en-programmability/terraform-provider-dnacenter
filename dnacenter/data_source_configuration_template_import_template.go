@@ -1166,7 +1166,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1277,7 +1277,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1316,7 +1316,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplates(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1385,7 +1385,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1424,7 +1424,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1466,7 +1466,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1553,7 +1553,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1626,7 +1626,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1713,7 +1713,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1786,7 +1786,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1828,7 +1828,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1915,7 +1915,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1988,7 +1988,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2075,7 +2075,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2169,7 +2169,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsRollbackTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2203,7 +2203,7 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

@@ -332,7 +332,7 @@ func expandRequestConfigurationTemplateDeployDeployTemplateMemberTemplateDeploym
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateDeployDeployTemplateMemberTemplateDeploymentInfo(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -366,7 +366,7 @@ func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoArray(ctx c
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateDeployDeployTemplateTargetInfo(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -427,7 +427,7 @@ func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoResourcePar
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoResourceParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
