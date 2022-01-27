@@ -1383,9 +1383,9 @@ func dataSourceConfigurationTemplateRead(ctx context.Context, d *schema.Resource
 	vLatestVersion, okLatestVersion := d.GetOk("latest_version")
 
 	method1 := []bool{okProjectID, okSoftwareType, okSoftwareVersion, okProductFamily, okProductSeries, okProductType, okFilterConflictingTemplates, okTags, okProjectNames, okUnCommitted, okSortOrder}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okTemplateID, okLatestVersion}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
