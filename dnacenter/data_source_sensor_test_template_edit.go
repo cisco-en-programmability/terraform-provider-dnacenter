@@ -753,7 +753,7 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateLocationInfoListAr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSensorTestTemplateEditEditSensorTestTemplateLocationInfoList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -831,7 +831,7 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -870,7 +870,7 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRangeTimeRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

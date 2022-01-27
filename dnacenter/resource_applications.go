@@ -788,7 +788,7 @@ func expandRequestApplicationsCreateApplicationItemArray(ctx context.Context, ke
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestApplicationsCreateApplicationItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -836,7 +836,7 @@ func expandRequestApplicationsCreateApplicationItemNetworkApplicationsArray(ctx 
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestApplicationsCreateApplicationItemNetworkApplications(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -917,7 +917,7 @@ func expandRequestApplicationsCreateApplicationItemNetworkIDentityArray(ctx cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestApplicationsCreateApplicationItemNetworkIDentity(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -977,7 +977,7 @@ func expandRequestApplicationsCreateApplicationItemIndicativeNetworkIDentityArra
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestApplicationsCreateApplicationItemIndicativeNetworkIDentity(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1041,7 +1041,7 @@ func expandRequestApplicationsEditApplicationItemArray(ctx context.Context, key 
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestApplicationsEditApplicationItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1089,7 +1089,7 @@ func expandRequestApplicationsEditApplicationItemNetworkApplicationsArray(ctx co
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestApplicationsEditApplicationItemNetworkApplications(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1173,7 +1173,7 @@ func expandRequestApplicationsEditApplicationItemNetworkIDentityArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestApplicationsEditApplicationItemNetworkIDentity(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

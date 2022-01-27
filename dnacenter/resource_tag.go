@@ -585,7 +585,7 @@ func expandRequestTagCreateTagDynamicRulesArray(ctx context.Context, key string,
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestTagCreateTagDynamicRules(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -648,7 +648,7 @@ func expandRequestTagCreateTagDynamicRulesRulesItemsArray(ctx context.Context, k
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestTagCreateTagDynamicRulesRulesItems(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -709,7 +709,7 @@ func expandRequestTagUpdateTagDynamicRulesArray(ctx context.Context, key string,
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestTagUpdateTagDynamicRules(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -772,7 +772,7 @@ func expandRequestTagUpdateTagDynamicRulesRulesItemsArray(ctx context.Context, k
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestTagUpdateTagDynamicRulesRulesItems(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

@@ -730,7 +730,7 @@ func expandRequestPnpWorkflowAddAWorkflowTasksArray(ctx context.Context, key str
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpWorkflowAddAWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -790,7 +790,7 @@ func expandRequestPnpWorkflowAddAWorkflowTasksWorkItemListArray(ctx context.Cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpWorkflowAddAWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -907,7 +907,7 @@ func expandRequestPnpWorkflowUpdateWorkflowTasksArray(ctx context.Context, key s
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpWorkflowUpdateWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -967,7 +967,7 @@ func expandRequestPnpWorkflowUpdateWorkflowTasksWorkItemListArray(ctx context.Co
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpWorkflowUpdateWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

@@ -707,7 +707,7 @@ func expandRequestReportsCreateOrScheduleAReportDeliveriesArray(ctx context.Cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestReportsCreateOrScheduleAReportDeliveries(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -775,7 +775,7 @@ func expandRequestReportsCreateOrScheduleAReportViewFieldGroupsArray(ctx context
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestReportsCreateOrScheduleAReportViewFieldGroups(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -817,7 +817,7 @@ func expandRequestReportsCreateOrScheduleAReportViewFieldGroupsFieldsArray(ctx c
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestReportsCreateOrScheduleAReportViewFieldGroupsFields(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -856,7 +856,7 @@ func expandRequestReportsCreateOrScheduleAReportViewFiltersArray(ctx context.Con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestReportsCreateOrScheduleAReportViewFilters(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

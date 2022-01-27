@@ -594,7 +594,7 @@ func expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemArr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -645,7 +645,7 @@ func expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemSub
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemSubscriptionEndpoints(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -720,7 +720,7 @@ func expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemArr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -771,7 +771,7 @@ func expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemSub
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemSubscriptionEndpoints(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

@@ -639,7 +639,7 @@ func expandRequestSensorCreateCreateSensorTestTemplateSSIDsArray(ctx context.Con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSensorCreateCreateSensorTestTemplateSSIDs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -708,7 +708,7 @@ func expandRequestSensorCreateCreateSensorTestTemplateSSIDsTestsArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSensorCreateCreateSensorTestTemplateSSIDsTests(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -747,7 +747,7 @@ func expandRequestSensorCreateCreateSensorTestTemplateSSIDsTestsConfigArray(ctx 
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSensorCreateCreateSensorTestTemplateSSIDsTestsConfig(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -781,7 +781,7 @@ func expandRequestSensorCreateCreateSensorTestTemplateApCoverageArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSensorCreateCreateSensorTestTemplateApCoverage(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

@@ -552,7 +552,7 @@ func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemArray(
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -603,7 +603,7 @@ func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemSubscr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemSubscriptionEndpoints(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -678,7 +678,7 @@ func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemArray(
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -729,7 +729,7 @@ func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemSubscr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemSubscriptionEndpoints(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

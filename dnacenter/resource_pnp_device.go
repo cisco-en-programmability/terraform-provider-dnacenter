@@ -3189,7 +3189,7 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoFileSystemListArray(ctx context.Co
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceDeviceInfoFileSystemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3240,7 +3240,7 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoHTTPHeadersArray(ctx context.Conte
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceDeviceInfoHTTPHeaders(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3279,7 +3279,7 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoIPInterfacesArray(ctx context.Cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceDeviceInfoIPInterfaces(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3337,7 +3337,7 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoIPInterfacesIPv6AddressListArray(c
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceDeviceInfoIPInterfacesIPv6AddressList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3395,7 +3395,7 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoNeighborLinksArray(ctx context.Con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceDeviceInfoNeighborLinks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3455,7 +3455,7 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPnpProfileListArray(ctx context.Co
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceDeviceInfoPnpProfileList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3597,7 +3597,7 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPreWorkflowCliOuputsArray(ctx cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceDeviceInfoPreWorkflowCliOuputs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3663,7 +3663,7 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoStackInfoStackMemberListArray(ctx 
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceDeviceInfoStackInfoStackMemberList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3742,7 +3742,7 @@ func expandRequestPnpDeviceAddDeviceRunSummaryListArray(ctx context.Context, key
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceRunSummaryList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3811,7 +3811,7 @@ func expandRequestPnpDeviceAddDeviceRunSummaryListHistoryTaskInfoAddnDetailsArra
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceRunSummaryListHistoryTaskInfoAddnDetails(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3850,7 +3850,7 @@ func expandRequestPnpDeviceAddDeviceRunSummaryListHistoryTaskInfoWorkItemListArr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceRunSummaryListHistoryTaskInfoWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3967,7 +3967,7 @@ func expandRequestPnpDeviceAddDeviceSystemResetWorkflowTasksArray(ctx context.Co
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceSystemResetWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4027,7 +4027,7 @@ func expandRequestPnpDeviceAddDeviceSystemResetWorkflowTasksWorkItemListArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceSystemResetWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4144,7 +4144,7 @@ func expandRequestPnpDeviceAddDeviceSystemWorkflowTasksArray(ctx context.Context
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceSystemWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4204,7 +4204,7 @@ func expandRequestPnpDeviceAddDeviceSystemWorkflowTasksWorkItemListArray(ctx con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceSystemWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4321,7 +4321,7 @@ func expandRequestPnpDeviceAddDeviceWorkflowTasksArray(ctx context.Context, key 
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4381,7 +4381,7 @@ func expandRequestPnpDeviceAddDeviceWorkflowTasksWorkItemListArray(ctx context.C
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4453,7 +4453,7 @@ func expandRequestPnpDeviceAddDeviceWorkflowParametersConfigListArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceWorkflowParametersConfigList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4492,7 +4492,7 @@ func expandRequestPnpDeviceAddDeviceWorkflowParametersConfigListConfigParameters
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceAddDeviceWorkflowParametersConfigListConfigParameters(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4732,7 +4732,7 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoFileSystemListArray(ctx context
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceDeviceInfoFileSystemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4783,7 +4783,7 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoHTTPHeadersArray(ctx context.Co
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceDeviceInfoHTTPHeaders(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4822,7 +4822,7 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoIPInterfacesArray(ctx context.C
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceDeviceInfoIPInterfaces(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4880,7 +4880,7 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoIPInterfacesIPv6AddressListArra
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceDeviceInfoIPInterfacesIPv6AddressList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4938,7 +4938,7 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoNeighborLinksArray(ctx context.
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceDeviceInfoNeighborLinks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4998,7 +4998,7 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPnpProfileListArray(ctx context
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceDeviceInfoPnpProfileList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5140,7 +5140,7 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPreWorkflowCliOuputsArray(ctx c
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceDeviceInfoPreWorkflowCliOuputs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5206,7 +5206,7 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoStackInfoStackMemberListArray(c
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceDeviceInfoStackInfoStackMemberList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5285,7 +5285,7 @@ func expandRequestPnpDeviceUpdateDeviceRunSummaryListArray(ctx context.Context, 
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceRunSummaryList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5354,7 +5354,7 @@ func expandRequestPnpDeviceUpdateDeviceRunSummaryListHistoryTaskInfoAddnDetailsA
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceRunSummaryListHistoryTaskInfoAddnDetails(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5393,7 +5393,7 @@ func expandRequestPnpDeviceUpdateDeviceRunSummaryListHistoryTaskInfoWorkItemList
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceRunSummaryListHistoryTaskInfoWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5510,7 +5510,7 @@ func expandRequestPnpDeviceUpdateDeviceSystemResetWorkflowTasksArray(ctx context
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceSystemResetWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5570,7 +5570,7 @@ func expandRequestPnpDeviceUpdateDeviceSystemResetWorkflowTasksWorkItemListArray
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceSystemResetWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5687,7 +5687,7 @@ func expandRequestPnpDeviceUpdateDeviceSystemWorkflowTasksArray(ctx context.Cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceSystemWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5747,7 +5747,7 @@ func expandRequestPnpDeviceUpdateDeviceSystemWorkflowTasksWorkItemListArray(ctx 
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceSystemWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5864,7 +5864,7 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowTasksArray(ctx context.Context, k
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5924,7 +5924,7 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowTasksWorkItemListArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -5996,7 +5996,7 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowParametersConfigListArray(ctx con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceWorkflowParametersConfigList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -6035,7 +6035,7 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowParametersConfigListConfigParamet
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceUpdateDeviceWorkflowParametersConfigListConfigParameters(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

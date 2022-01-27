@@ -535,7 +535,7 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -610,7 +610,7 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListAdvanced
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListAdvancedPolicyScopeAdvancedPolicyScopeElement(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -661,7 +661,7 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListExclusiv
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListExclusiveContractClause(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -730,7 +730,7 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListProducer
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListProducerScalableGroup(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -778,7 +778,7 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListConsumer
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListConsumerScalableGroup(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -814,7 +814,7 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -895,7 +895,7 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListAdvanced
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListAdvancedPolicyScopeAdvancedPolicyScopeElement(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -952,7 +952,7 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListExclusiv
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListExclusiveContractClause(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1027,7 +1027,7 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListProducer
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListProducerScalableGroup(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1078,7 +1078,7 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListConsumer
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListConsumerScalableGroup(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

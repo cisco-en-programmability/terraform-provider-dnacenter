@@ -2635,7 +2635,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTagsArray(ctx context
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2674,7 +2674,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesArray(ctx co
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplates(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2791,7 +2791,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesTagsArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2830,7 +2830,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTemplates(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2899,7 +2899,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTemplatesTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2938,7 +2938,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTemplatesDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2980,7 +2980,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTemplatesRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3067,7 +3067,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTemplatesRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3140,7 +3140,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTemplatesTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3227,7 +3227,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTemplatesTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3300,7 +3300,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesDeviceTypesA
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3342,7 +3342,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesRollbackTemp
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3429,7 +3429,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesRollbackTemp
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3502,7 +3502,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesTemplatePara
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3589,7 +3589,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesTemplatePara
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3683,7 +3683,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesValidationEr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesValidationErrorsRollbackTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3717,7 +3717,7 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesValidationEr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectCreateProjectTemplatesValidationErrorsTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3781,7 +3781,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTagsArray(ctx context
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3820,7 +3820,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesArray(ctx co
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplates(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3937,7 +3937,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTagsArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3976,7 +3976,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTemplates(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4045,7 +4045,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTemplatesTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4084,7 +4084,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTemplatesDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4126,7 +4126,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTemplatesRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4213,7 +4213,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTemplatesRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4286,7 +4286,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTemplatesTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4373,7 +4373,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTemplatesTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4446,7 +4446,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesDeviceTypesA
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4488,7 +4488,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesRollbackTemp
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4575,7 +4575,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesRollbackTemp
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4648,7 +4648,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTemplatePara
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4735,7 +4735,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTemplatePara
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4829,7 +4829,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesValidationEr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesValidationErrorsRollbackTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4863,7 +4863,7 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesValidationEr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateProjectUpdateProjectTemplatesValidationErrorsTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

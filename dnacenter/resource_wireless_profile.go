@@ -586,7 +586,7 @@ func expandRequestWirelessProfileCreateWirelessProfileProfileDetailsSSIDDetailsA
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestWirelessProfileCreateWirelessProfileProfileDetailsSSIDDetails(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -677,7 +677,7 @@ func expandRequestWirelessProfileUpdateWirelessProfileProfileDetailsSSIDDetailsA
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestWirelessProfileUpdateWirelessProfileProfileDetailsSSIDDetails(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
