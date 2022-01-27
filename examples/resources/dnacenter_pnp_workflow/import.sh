@@ -1,0 +1,1 @@
+terraform import dnacenter_pnp_workflow.example "id:=string"

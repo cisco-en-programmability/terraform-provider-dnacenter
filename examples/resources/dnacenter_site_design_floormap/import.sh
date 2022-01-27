@@ -1,0 +1,1 @@
+terraform import dnacenter_site_design_floormap.example "floor_id:=string"

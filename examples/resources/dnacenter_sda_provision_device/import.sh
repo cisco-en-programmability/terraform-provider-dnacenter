@@ -1,0 +1,1 @@
+terraform import dnacenter_sda_provision_device.example "id:=string"
