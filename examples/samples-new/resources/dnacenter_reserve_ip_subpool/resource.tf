@@ -1,18 +1,18 @@
 terraform {
   required_providers {
-  dnacenter = {
-    version = "0.1.0-alpha"
-    source  = "hashicorp.com/edu/dnacenter"
-    # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
-  }
+    dnacenter = {
+      version = "0.1.0-alpha"
+      source  = "hashicorp.com/edu/dnacenter"
+      # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
+    }
   }
 }
 
 resource "dnacenter_reserve_ip_subpool" "example" {
   provider = dnacenter
   parameters {
-    ipv4_prefix        = "false"
-    ipv4_global_pool   = "175.175.0.0/16"
+    ipv4_prefix      = "false"
+    ipv4_global_pool = "175.175.0.0/16"
     /*
     id                 = "string"
     ipv4_dhcp_servers  = ["string"]
@@ -32,8 +32,8 @@ resource "dnacenter_reserve_ip_subpool" "example" {
     ipv6_prefix_length = 1
     ipv6_subnet        = "string"
     ipv6_total_host    = 1*/
-    name               = "IPv4v62002Block"
-    site_id            = "9e860d9e-6499-40d1-9645-4b45bd684219"
+    name    = "IPv4v62002Block"
+    site_id = "9e860d9e-6499-40d1-9645-4b45bd684219"
     /*slaac_support      = "false"
     type               = "string"*/
   }

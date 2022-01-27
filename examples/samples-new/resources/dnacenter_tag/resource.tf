@@ -27,7 +27,7 @@ resource "dnacenter_tag" "example" {
     
     instance_tenant_id = "string"*/
     //id                 = "0c3c64ea-69de-4686-8114-3f3dd7d97882" //Just necesesary for update...
-    name               = "Day0Configuration2"
+    name = "Day0Configuration2"
     //system_tag         = "false"
   }
 }
