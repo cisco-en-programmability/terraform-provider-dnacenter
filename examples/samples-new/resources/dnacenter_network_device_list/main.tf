@@ -1,11 +1,11 @@
 
 terraform {
   required_providers {
-  dnacenter = {
-    version = "0.1.0-alpha"
-    source  = "hashicorp.com/edu/dnacenter"
-    # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
-  }
+    dnacenter = {
+      version = "0.1.0-alpha"
+      source  = "hashicorp.com/edu/dnacenter"
+      # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
+    }
   }
 }
 
@@ -22,14 +22,14 @@ resource "dnacenter_network_device_list" "example" {
     netconf_port            = "string"
     password                = "******"
     */
-    http_user_name          = "User"
-    http_password           = "123"
-    http_port               = "8081"
-    http_secure             = "true"
-    ip_address              = ["10.121.1.1"]
+    http_user_name = "User"
+    http_password  = "123"
+    http_port      = "8081"
+    http_secure    = "true"
+    ip_address     = ["10.121.1.1"]
     # serial_number           = "FLM2213W05R"
     #type                    = "Cisco 4331 Integrated Services Router"
-    type                    = "COMPUTE_DEVICE"
+    type = "COMPUTE_DEVICE"
     /*
     snmp_auth_passphrase    = "string"
     snmp_auth_protocol      = "string"
@@ -54,6 +54,6 @@ resource "dnacenter_network_device_list" "example" {
 }
 
 output "dnacenter_network_device_list_example" {
-  value = dnacenter_network_device_list.example
+  value     = dnacenter_network_device_list.example
   sensitive = true
 }

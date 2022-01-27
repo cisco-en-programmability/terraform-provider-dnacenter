@@ -14,12 +14,12 @@ resource "dnacenter_discovery" "example" {
   parameters {
 
     #attribute_info = ["string"]
-    cdp_level                 = 3
+    cdp_level = 3
     # device_ids                = " "
-    discovery_condition       = "Complete"
-    discovery_status          = "Inactive"
-    discovery_type            = "CDP"
-    enable_password_list      = []
+    discovery_condition  = "Complete"
+    discovery_status     = "Inactive"
+    discovery_type       = "CDP"
+    enable_password_list = []
     global_credential_id_list = [
       "52b611b4-5ee4-4581-8a01-a2062cd2d3c1",
       "ba85d1d0-616f-429c-9ed0-95369d13afa1",
@@ -57,9 +57,9 @@ resource "dnacenter_discovery" "example" {
     id              = "1"
     ip_address_list = "10.121.1.1"
     # ip_filter_list  = [""]
-    is_auto_cdp     = "true"
-    lldp_level      = 1
-    name            = "DMZ Lab"
+    is_auto_cdp = "true"
+    lldp_level  = 1
+    name        = "DMZ Lab"
     #netconf_port = "string"
     num_devices = 1
     #parent_discovery_id = "string"

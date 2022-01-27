@@ -1,20 +1,20 @@
 
 terraform {
   required_providers {
-  dnacenter = {
-    version = "0.1.0-alpha"
-    source  = "hashicorp.com/edu/dnacenter"
-    # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
-  }
+    dnacenter = {
+      version = "0.1.0-alpha"
+      source  = "hashicorp.com/edu/dnacenter"
+      # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
+    }
   }
 }
 resource "dnacenter_path_trace" "example" {
   provider = dnacenter
   parameters {
 
-    control_path     = "true"
-    dest_ip          = "10.1.1.2"
-    dest_port        = "8080"
+    control_path = "true"
+    dest_ip      = "10.1.1.2"
+    dest_port    = "8080"
     #flow_analysis_id = "false"
     #inclusions       = ["string"]
     periodic_refresh = "false"
