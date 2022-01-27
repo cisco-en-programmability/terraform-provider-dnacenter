@@ -2,49 +2,95 @@ package dnacenter
 
 import (
 	"context"
-	"strconv"
-	"time"
 
-	dnac "github.com/cisco-en-programmability/dnacenter-go-sdk/sdk"
+	"log"
+
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func dataSourceCommandRunnerKeywords() *schema.Resource {
+func dataSourceDnaCommandRunnerKeywords() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: dataSourceCommandRunnerKeywordsRead,
+		Description: `It performs read operation on Command Runner.
+
+- Get valid keywords
+`,
+
+		ReadContext: dataSourceDnaCommandRunnerKeywordsRead,
 		Schema: map[string]*schema.Schema{
+
 			"items": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"response": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+
+						"version": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
 				},
 			},
 		},
 	}
 }
 
-func dataSourceCommandRunnerKeywordsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnac.Client)
+func dataSourceDnaCommandRunnerKeywordsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
-	// Prepare Request
-	response, _, err := client.CommandRunner.GetAllKeywordsOfCLIsAcceptedByCommandRunner()
-	if err != nil {
-		return diag.FromErr(err)
+	selectedMethod := 1
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method 1: GetAllKeywordsOfCliSAcceptedByCommandRunner")
+
+		response1, restyResp1, err := client.CommandRunner.GetAllKeywordsOfCliSAcceptedByCommandRunner()
+
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetAllKeywordsOfCliSAcceptedByCommandRunner", err,
+				"Failure at GetAllKeywordsOfCliSAcceptedByCommandRunner, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+		vItems1 := flattenCommandRunnerGetAllKeywordsOfCliSAcceptedByCommandRunnerItems(response1)
+		if err := d.Set("items", vItems1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAllKeywordsOfCliSAcceptedByCommandRunner response",
+				err))
+			return diags
+		}
+		d.SetId(getUnixTimeString())
+		return diags
+
 	}
-
-	// set response to Terraform data source
-	if err := d.Set("items", response.Response); err != nil {
-		return diag.FromErr(err)
-	}
-
-	// always run, Set resource id
-	// Unix time  forces this resource to refresh during every Terraform apply
-	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
-
 	return diags
+}
+
+func flattenCommandRunnerGetAllKeywordsOfCliSAcceptedByCommandRunnerItems(items *dnacentersdkgo.ResponseCommandRunnerGetAllKeywordsOfCliSAcceptedByCommandRunner) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["response"] = items.Response
+	respItem["version"] = items.Version
+	return []map[string]interface{}{
+		respItem,
+	}
 }

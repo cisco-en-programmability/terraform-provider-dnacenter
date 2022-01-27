@@ -1,0 +1,1 @@
+terraform import dnacenter_reports.example "report_id:=string"

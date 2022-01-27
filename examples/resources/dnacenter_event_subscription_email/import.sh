@@ -1,0 +1,1 @@
+terraform import dnacenter_event_subscription_email.example "id:=string"

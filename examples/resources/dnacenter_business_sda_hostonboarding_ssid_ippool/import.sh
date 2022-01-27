@@ -1,0 +1,1 @@
+terraform import dnacenter_business_sda_hostonboarding_ssid_ippool.example "id:=string"
