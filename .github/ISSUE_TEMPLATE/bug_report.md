@@ -23,7 +23,7 @@ Please provide an screenshot of the successful API call with cuRL, Postman, etc.
 **Environment (please complete the following information):**
 * Cisco DNA Center version and patch: 
 * Terraform version:
-* ISE provider version:
+* Cisco DNA Center provider version:
 * OS Version: 
 
 **Additional context**
