@@ -121,9 +121,9 @@ func dataSourceNetworkDeviceConfigRead(ctx context.Context, d *schema.ResourceDa
 	vNetworkDeviceID, okNetworkDeviceID := d.GetOk("network_device_id")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okNetworkDeviceID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {

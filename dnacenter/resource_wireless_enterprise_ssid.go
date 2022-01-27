@@ -472,7 +472,7 @@ func resourceWirelessEnterpriseSSIDUpdate(ctx context.Context, d *schema.Resourc
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %s", queryParams1)
+		log.Printf("[DEBUG] Name used for update operation %v", queryParams1)
 		request1 := expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSID(ctx, "parameters.0", d)
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))

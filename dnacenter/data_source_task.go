@@ -335,9 +335,9 @@ func dataSourceTaskRead(ctx context.Context, d *schema.ResourceData, m interface
 	vTaskID, okTaskID := d.GetOk("task_id")
 
 	method1 := []bool{okStartTime, okEndTime, okData, okErrorCode, okServiceType, okUsername, okProgress, okIsError, okFailureReason, okParentID, okOffset, okLimit, okSortBy, okOrder}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okTaskID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
