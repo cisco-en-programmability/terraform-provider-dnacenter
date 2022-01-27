@@ -95,7 +95,6 @@ func resourceSiteDesignFloormapCreate(ctx context.Context, d *schema.ResourceDat
 		return diags
 	}
 
-	log.Printf("[DEBUG]", vvFloorID)
 	resourceMap := make(map[string]string)
 	resourceMap["floor_id"] = vvFloorID
 	d.SetId(joinResourceID(resourceMap))
