@@ -8,7 +8,7 @@ description: |-
 
 # dnacenter Provider
 
-The Cisco DNA Center provider is used to interact with Cisco DNA Center APIs. The provider needs to be configured with the proper credentials before it can be used.
+The Cisco DNA Center provider is used to interact with Cisco DNA Center APIs (2.2.3.3). The provider needs to be configured with the proper credentials before it can be used.
 
 Use the navigation to the left to read about the available resources.
 
