@@ -84,7 +84,7 @@ well. The response payload contains the deregistered smart & virtual account inf
 									},
 									"make_default": &schema.Schema{
 										Description: `Make Default`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -105,7 +105,7 @@ well. The response payload contains the deregistered smart & virtual account inf
 									},
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},

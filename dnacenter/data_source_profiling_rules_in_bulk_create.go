@@ -97,7 +97,7 @@ inserted.
 						"is_deleted": &schema.Schema{
 							Description: `Flag to indicate whether the rule was deleted.
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -123,7 +123,7 @@ inserted.
 						"rejected": &schema.Schema{
 							Description: `Flag to indicate whether rule has been rejected by user or not. Only applicable for 'ML Rule'.
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

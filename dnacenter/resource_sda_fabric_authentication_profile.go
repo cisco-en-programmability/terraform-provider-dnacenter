@@ -104,7 +104,7 @@ func resourceSdaFabricAuthenticationProfile() *schema.Resource {
 						"wake_on_lan": &schema.Schema{
 							Description: `The IEEE 802.1X Wake on LAN (WoL) Support feature allows dormant systems to be powered up when the  switch receives a specific Ethernet frame. You can use this feature in cases when hosts on power save and needs to receive a  magic packet to turn them on. This feature works on a per subnet basis and send the subnet broadcast to all hosts in the subnet
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -222,10 +222,6 @@ func resourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema.R
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetDefaultAuthenticationProfileFromSdaFabric", err,
-			// 	"Failure at GetDefaultAuthenticationProfileFromSdaFabric, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -272,7 +268,6 @@ func resourceSdaFabricAuthenticationProfileUpdate(ctx context.Context, d *schema
 
 	vvName := item.SiteNameHierarchy
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestSdaFabricAuthenticationProfileUpdateDefaultAuthenticationProfileInSdaFabric(ctx, "parameters.0", d)
@@ -352,9 +347,6 @@ func resourceSdaFabricAuthenticationProfileDelete(ctx context.Context, d *schema
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		/*diags = append(diags, diagErrorWithAlt(
-		"Failure when executing GetDefaultAuthenticationProfileFromSdaFabric", err,
-		"Failure at GetDefaultAuthenticationProfileFromSdaFabric, unexpected response", ""))*/
 		d.SetId("")
 		return diags
 	}

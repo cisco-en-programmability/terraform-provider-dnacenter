@@ -48,7 +48,7 @@ func dataSourceSwimTriggerActivation() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"activate_lower_image_version": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -62,7 +62,7 @@ func dataSourceSwimTriggerActivation() *schema.Resource {
 							Optional: true,
 						},
 						"distribute_if_needed": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

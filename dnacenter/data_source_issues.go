@@ -78,7 +78,7 @@ address.
 
 						"ai_driven": &schema.Schema{
 							Description: `Ai Driven`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

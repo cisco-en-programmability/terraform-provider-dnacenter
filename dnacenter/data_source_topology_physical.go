@@ -74,7 +74,7 @@ func dataSourceTopologyPhysical() *schema.Resource {
 									},
 
 									"grey_out": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -139,7 +139,7 @@ func dataSourceTopologyPhysical() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"acl_applied": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -199,13 +199,13 @@ func dataSourceTopologyPhysical() *schema.Resource {
 									},
 
 									"fixed": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"grey_out": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},

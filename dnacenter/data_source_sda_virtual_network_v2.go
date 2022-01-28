@@ -46,7 +46,7 @@ func dataSourceSdaVirtualNetworkV2() *schema.Resource {
 
 						"is_guest_virtual_network": &schema.Schema{
 							Description: `Is Guest Virtual Network`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

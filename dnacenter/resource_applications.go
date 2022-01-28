@@ -580,10 +580,6 @@ func resourceApplicationsRead(ctx context.Context, d *schema.ResourceData, m int
 		response1, err := searchApplicationPolicyGetApplications(m, queryParams1, vID)
 
 		if err != nil || response1 == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetApplications", err,
-			// 	"Failure at GetApplications, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -615,10 +611,8 @@ func resourceApplicationsUpdate(ctx context.Context, d *schema.ResourceData, m i
 	queryParams := dnacentersdkgo.GetApplicationsQueryParams{
 		Name: vName,
 	}
-	//selectedMethod := 1
-	//var vvID string
+
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 
 	item, err := searchApplicationPolicyGetApplications(m, queryParams, vID)
 

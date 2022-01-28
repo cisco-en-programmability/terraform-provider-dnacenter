@@ -75,7 +75,7 @@ func dataSourceGoldenTagImageDetails() *schema.Resource {
 						"tagged_golden": &schema.Schema{
 							Description: `Tagged Golden.
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

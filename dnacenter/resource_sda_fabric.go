@@ -201,10 +201,6 @@ func resourceSdaFabricRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetSdaFabricInfo", err,
-			// 	"Failure at GetSdaFabricInfo, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -242,9 +238,6 @@ func resourceSdaFabricDelete(ctx context.Context, d *schema.ResourceData, m inte
 	queryParams1.FabricName = vFabricName
 	item, restyResp1, err := client.Sda.GetSdaFabricInfo(&queryParams1)
 	if err != nil || item == nil || item.Status == "failed" {
-		/*diags = append(diags, diagErrorWithAlt(
-		"Failure when executing GetSDAFabricInfo", err,
-		"Failure at GetSDAFabricInfo, unexpected response", ""))*/
 		d.SetId("")
 		return diags
 	}

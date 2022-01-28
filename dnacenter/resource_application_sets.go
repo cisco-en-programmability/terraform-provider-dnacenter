@@ -388,10 +388,6 @@ func resourceApplicationSetsRead(ctx context.Context, d *schema.ResourceData, m 
 		response1, err := searchApplicationPolicyGetApplicationSets(m, queryParams1)
 
 		if err != nil || response1 == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetApplicationSets", err,
-			// 	"Failure at GetApplicationSets, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}

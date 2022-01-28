@@ -186,10 +186,6 @@ func resourceSdaFabricSiteRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetSiteFromSdaFabric", err,
-			// 	"Failure at GetSiteFromSdaFabric, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -227,9 +223,6 @@ func resourceSdaFabricSiteDelete(ctx context.Context, d *schema.ResourceData, m 
 	queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 	item, restyResp1, err := client.Sda.GetSiteFromSdaFabric(&queryParams1)
 	if err != nil || item == nil {
-		/*diags = append(diags, diagErrorWithAlt(
-		"Failure when executing GetSiteFromSDAFabric", err,
-		"Failure at GetSiteFromSDAFabric, unexpected response", ""))*/
 		d.SetId("")
 		return diags
 	}
@@ -240,9 +233,6 @@ func resourceSdaFabricSiteDelete(ctx context.Context, d *schema.ResourceData, m 
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 		}
-		/*diags = append(diags, diagErrorWithAlt(
-		"Failure when executing DeleteSiteFromSdaFabric", err,
-		"Failure at DeleteSiteFromSdaFabric, unexpected response", ""))*/
 		d.SetId("")
 		return diags
 	}

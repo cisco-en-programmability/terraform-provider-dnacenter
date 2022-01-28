@@ -228,10 +228,6 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx context.Context, d *sch
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetSSIDToIPPoolMapping", err,
-			// 	"Failure at GetSSIDToIPPoolMapping, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -261,7 +257,6 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolUpdate(ctx context.Context, d *s
 	vVLANName := resourceMap["vlan_name"]
 	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
 
-	//selectedMethod := 1
 	queryParams1 := dnacentersdkgo.GetSSIDToIPPoolMappingQueryParams{}
 	queryParams1.VLANName = vVLANName
 	queryParams1.SiteNameHierarchy = vSiteNameHierarchy
@@ -274,7 +269,6 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolUpdate(ctx context.Context, d *s
 		return diags
 	}
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %v", queryParams1)
 		request1 := expandRequestBusinessSdaHostonboardingSSIDIPpoolUpdateSSIDToIPPoolMapping(ctx, "parameters.0", d)

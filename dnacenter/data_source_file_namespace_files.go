@@ -44,7 +44,7 @@ func dataSourceFileNamespaceFiles() *schema.Resource {
 						},
 
 						"encrypted": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

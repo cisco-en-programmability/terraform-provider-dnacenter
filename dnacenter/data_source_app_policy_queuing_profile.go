@@ -217,7 +217,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 									"is_common_between_all_interface_speeds": &schema.Schema{
 										Description: `Is common between all interface speeds
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -334,7 +334,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"deployed": &schema.Schema{
 							Description: `Deployed
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -398,7 +398,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"internal": &schema.Schema{
 							Description: `Internal
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -406,7 +406,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"is_deleted": &schema.Schema{
 							Description: `Is deleted
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -414,7 +414,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"is_seeded": &schema.Schema{
 							Description: `Is seeded
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -422,7 +422,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"is_stale": &schema.Schema{
 							Description: `Is stale
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -430,7 +430,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"ise_reserved": &schema.Schema{
 							Description: `Is reserved
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -466,7 +466,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"pushed": &schema.Schema{
 							Description: `Pushed
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

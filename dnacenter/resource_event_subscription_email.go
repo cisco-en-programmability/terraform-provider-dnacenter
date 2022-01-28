@@ -395,10 +395,6 @@ func resourceEventSubscriptionEmailRead(ctx context.Context, d *schema.ResourceD
 		queryParams1 := dnacentersdkgo.GetEmailEventSubscriptionsQueryParams{}
 		item, err := searchEventManagementGetEmailEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
 		if err != nil || item == nil || len(*item) <= 0 {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetEmailEventSubscriptions", err,
-			// 	"Failure at GetEmailEventSubscriptions, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -439,7 +435,6 @@ func resourceEventSubscriptionEmailUpdate(ctx context.Context, d *schema.Resourc
 	}
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		request1 := expandRequestEventSubscriptionEmailUpdateEmailEventSubscription(ctx, "parameters.0", d)
 		if request1 != nil {

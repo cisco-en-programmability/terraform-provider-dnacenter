@@ -50,7 +50,7 @@ func resourcePnpWorkflow() *schema.Resource {
 						},
 						"add_to_inventory": &schema.Schema{
 							Description: `Add To Inventory`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -238,7 +238,7 @@ func resourcePnpWorkflow() *schema.Resource {
 							Optional: true,
 						},
 						"add_to_inventory": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -464,10 +464,6 @@ func resourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m inte
 		response1, err := searchDeviceOnboardingPnpGetWorkflows(m, queryParams1)
 
 		if err != nil || response1 == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetWorkflows", err,
-			// 	"Failure at GetWorkflows, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -506,10 +502,6 @@ func resourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m inte
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetWorkflowByID", err,
-			// 	"Failure at GetWorkflowByID, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}

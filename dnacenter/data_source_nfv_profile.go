@@ -157,7 +157,7 @@ func dataSourceNfvProfile() *schema.Resource {
 									"direct_internet_access_for_firewall": &schema.Schema{
 										Description: `Direct internet access value should be boolean (eg: false)
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -171,7 +171,7 @@ func dataSourceNfvProfile() *schema.Resource {
 												"connect": &schema.Schema{
 													Description: `Connection of service provider and device value should be boolean (eg: true)
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -179,7 +179,7 @@ func dataSourceNfvProfile() *schema.Resource {
 												"connect_default_gateway_on_wan": &schema.Schema{
 													Description: `Default gateway connect value as boolean (eg: true)
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -251,7 +251,7 @@ func dataSourceNfvProfile() *schema.Resource {
 															"assign_ip_address_to_network": &schema.Schema{
 																Description: `Assign ip address to network (eg: true)
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},

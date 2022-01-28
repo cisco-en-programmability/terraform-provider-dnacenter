@@ -77,7 +77,7 @@ should be provided.
 												"enable_fabric": &schema.Schema{
 													Description: `true if fabric is enabled else false
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -91,7 +91,7 @@ should be provided.
 															"enable_flex_connect": &schema.Schema{
 																Description: `true if flex connect is enabled else false
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -177,7 +177,7 @@ should be provided.
 												"enable_fabric": &schema.Schema{
 													Description: `true is ssid is fabric else false
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -192,7 +192,7 @@ should be provided.
 															"enable_flex_connect": &schema.Schema{
 																Description: `true if flex connect is enabled else false
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -351,16 +351,11 @@ func resourceWirelessProfileRead(ctx context.Context, d *schema.ResourceData, m 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			//diags = append(diags, diagErrorWithAlt(
-			//	"Failure when executing GetWirelessProfile", err,
-			//	"Failure at GetWirelessProfile, unexpected response", ""))
 			d.SetId("")
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		//TODO FOR DNAC
 
 		vItem1 := flattenWirelessGetWirelessProfileItems(response1)
 		if err := d.Set("item", vItem1); err != nil {
@@ -402,7 +397,6 @@ func resourceWirelessProfileUpdate(ctx context.Context, d *schema.ResourceData, 
 	}
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %v", queryParams1)
 		request1 := expandRequestWirelessProfileUpdateWirelessProfile(ctx, "parameters.0", d)

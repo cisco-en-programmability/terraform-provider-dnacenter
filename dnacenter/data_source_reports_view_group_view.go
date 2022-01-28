@@ -49,7 +49,7 @@ API to get the viewIds  (required as a query param for this API) for available v
 									"default": &schema.Schema{
 										Description: `true, if the delivery type is considered default
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -138,7 +138,7 @@ API to get the viewIds  (required as a query param for this API) for available v
 									},
 
 									"cache_filter": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -202,7 +202,7 @@ API to get the viewIds  (required as a query param for this API) for available v
 									"required": &schema.Schema{
 										Description: `true if the filter is required
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -270,7 +270,7 @@ API to get the viewIds  (required as a query param for this API) for available v
 									"default": &schema.Schema{
 										Description: `true, if the format type is considered default
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -317,7 +317,7 @@ API to get the viewIds  (required as a query param for this API) for available v
 									"default": &schema.Schema{
 										Description: `true, if the schedule type is default
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},

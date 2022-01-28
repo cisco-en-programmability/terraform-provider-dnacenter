@@ -158,7 +158,7 @@ func dataSourceTask() *schema.Resource {
 						},
 
 						"is_error": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -258,7 +258,7 @@ func dataSourceTask() *schema.Resource {
 						},
 
 						"is_error": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

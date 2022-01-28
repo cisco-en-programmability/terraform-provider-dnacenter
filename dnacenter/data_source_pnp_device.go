@@ -362,7 +362,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"readable": &schema.Schema{
 													Description: `Readable`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -381,7 +381,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"writeable": &schema.Schema{
 													Description: `Writeable`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -640,7 +640,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"discovery_created": &schema.Schema{
 													Description: `Discovery Created`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -746,7 +746,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"populate_inventory": &schema.Schema{
 										Description: `Populate Inventory`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -786,7 +786,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"reload_requested": &schema.Schema{
 										Description: `Reload Requested`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -823,7 +823,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"stack": &schema.Schema{
 										Description: `Stack`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -836,7 +836,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"is_full_ring": &schema.Schema{
 													Description: `Is Full Ring`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -930,7 +930,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"supports_stack_workflows": &schema.Schema{
 													Description: `Supports Stack Workflows`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -961,7 +961,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"sudi_required": &schema.Schema{
 										Description: `Sudi Required`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1025,7 +1025,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"error_flag": &schema.Schema{
 										Description: `Error Flag`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1146,7 +1146,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1366,7 +1366,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1598,7 +1598,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2035,7 +2035,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"readable": &schema.Schema{
 													Description: `Readable`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2054,7 +2054,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"writeable": &schema.Schema{
 													Description: `Writeable`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2313,7 +2313,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"discovery_created": &schema.Schema{
 													Description: `Discovery Created`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2419,7 +2419,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"populate_inventory": &schema.Schema{
 										Description: `Populate Inventory`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2459,7 +2459,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"reload_requested": &schema.Schema{
 										Description: `Reload Requested`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2496,7 +2496,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"stack": &schema.Schema{
 										Description: `Stack`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2509,7 +2509,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"is_full_ring": &schema.Schema{
 													Description: `Is Full Ring`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2603,7 +2603,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"supports_stack_workflows": &schema.Schema{
 													Description: `Supports Stack Workflows`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2634,7 +2634,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"sudi_required": &schema.Schema{
 										Description: `Sudi Required`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2698,7 +2698,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"error_flag": &schema.Schema{
 										Description: `Error Flag`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2819,7 +2819,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -3039,7 +3039,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -3271,7 +3271,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},

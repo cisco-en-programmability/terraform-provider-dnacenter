@@ -623,7 +623,7 @@ func dataSourceNfvProvision() *schema.Resource {
 									"dia": &schema.Schema{
 										Description: `Direct internet access value should be boolean (eg: false)
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -637,7 +637,7 @@ func dataSourceNfvProvision() *schema.Resource {
 												"connect": &schema.Schema{
 													Description: `Connection of service provider and device value should be boolean (eg: true)
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -645,7 +645,7 @@ func dataSourceNfvProvision() *schema.Resource {
 												"default_gateway": &schema.Schema{
 													Description: `Default gateway connect value as boolean (eg: true)
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,

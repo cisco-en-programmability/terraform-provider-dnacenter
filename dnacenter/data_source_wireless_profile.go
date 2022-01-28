@@ -65,7 +65,7 @@ func dataSourceWirelessProfile() *schema.Resource {
 												"enable_fabric": &schema.Schema{
 													Description: `true if fabric is enabled else false
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -79,7 +79,7 @@ func dataSourceWirelessProfile() *schema.Resource {
 															"enable_flex_connect": &schema.Schema{
 																Description: `true if flex connect is enabled else false
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},

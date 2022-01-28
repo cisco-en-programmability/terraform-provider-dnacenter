@@ -189,7 +189,7 @@ func resourceNetworkDeviceList() *schema.Resource {
 
 						"managed_atleast_once": &schema.Schema{
 							Description: `Managed Atleast Once`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -329,7 +329,7 @@ func resourceNetworkDeviceList() *schema.Resource {
 							Optional: true,
 						},
 						"compute_device": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -351,7 +351,7 @@ func resourceNetworkDeviceList() *schema.Resource {
 							Optional: true,
 						},
 						"http_secure": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -577,10 +577,6 @@ func resourceNetworkDeviceListRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetDeviceList", err,
-			// 	"Failure at GetDeviceList, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -617,16 +613,11 @@ func resourceNetworkDeviceListUpdate(ctx context.Context, d *schema.ResourceData
 	queryParams1.ManagementIPAddress = vIPAddress
 	item, err := searchDevicesGetDeviceList(m, queryParams1)
 	if err != nil || item == nil {
-		// diags = append(diags, diagErrorWithAlt(
-		// 	"Failure when executing GetDeviceList", err,
-		// 	"Failure at GetDeviceList, unexpected response", ""))
-		// return diags
 		d.SetId("")
 		return diags
 	}
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vSerialNumber)
 		request1 := expandRequestNetworkDeviceListSyncDevices2(ctx, "parameters.0", d)

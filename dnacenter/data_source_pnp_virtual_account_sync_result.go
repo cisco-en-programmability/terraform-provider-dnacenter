@@ -89,7 +89,7 @@ func dataSourcePnpVirtualAccountSyncResult() *schema.Resource {
 
 									"make_default": &schema.Schema{
 										Description: `Make Default`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -114,7 +114,7 @@ func dataSourcePnpVirtualAccountSyncResult() *schema.Resource {
 
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},

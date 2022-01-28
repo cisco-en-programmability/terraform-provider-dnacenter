@@ -112,7 +112,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -125,7 +125,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"composite": &schema.Schema{
 													Description: `Is it composite template
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -255,7 +255,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -268,7 +268,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -314,7 +314,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -456,7 +456,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -469,7 +469,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -515,7 +515,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -579,7 +579,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"custom_params_order": &schema.Schema{
 										Description: `Custom Params Order
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -619,7 +619,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"document_database": &schema.Schema{
 										Description: `Document Database
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -668,7 +668,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"project_associated": &schema.Schema{
 										Description: `Project Associated
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -759,7 +759,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -772,7 +772,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -818,7 +818,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -978,7 +978,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -991,7 +991,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1037,7 +1037,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1216,7 +1216,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1230,7 +1230,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"composite": &schema.Schema{
 													Description: `Is it composite template
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1361,7 +1361,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1375,7 +1375,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1422,7 +1422,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1567,7 +1567,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1581,7 +1581,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1628,7 +1628,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1695,7 +1695,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"custom_params_order": &schema.Schema{
 										Description: `Custom Params Order
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1736,7 +1736,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"document_database": &schema.Schema{
 										Description: `Document Database
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1786,7 +1786,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"project_associated": &schema.Schema{
 										Description: `Project Associated
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1878,7 +1878,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1892,7 +1892,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1939,7 +1939,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2102,7 +2102,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2116,7 +2116,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2163,7 +2163,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2377,10 +2377,6 @@ func resourceConfigurationTemplateProjectRead(ctx context.Context, d *schema.Res
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetsAListOfProjects", err,
-			// 	"Failure at GetsAListOfProjects, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -2422,10 +2418,6 @@ func resourceConfigurationTemplateProjectRead(ctx context.Context, d *schema.Res
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetsTheDetailsOfAGivenProject", err,
-			// 	"Failure at GetsTheDetailsOfAGivenProject, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -2456,7 +2448,6 @@ func resourceConfigurationTemplateProjectUpdate(ctx context.Context, d *schema.R
 	vName := resourceMap["name"]
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if vProjectID != "" {
 		getResp, _, err := client.ConfigurationTemplates.GetsTheDetailsOfAGivenProject(vProjectID)
 		if err != nil || getResp == nil {

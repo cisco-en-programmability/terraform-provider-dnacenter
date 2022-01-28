@@ -123,7 +123,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -137,7 +137,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"composite": &schema.Schema{
 													Description: `Is it composite template
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -286,7 +286,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -301,7 +301,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -353,7 +353,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -513,7 +513,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -528,7 +528,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -580,7 +580,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -651,7 +651,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 									"custom_params_order": &schema.Schema{
 										Description: `Custom Params Order
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -696,7 +696,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 									"document_database": &schema.Schema{
 										Description: `Document Database
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -753,7 +753,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 									"project_associated": &schema.Schema{
 										Description: `Project Associated
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -858,7 +858,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -873,7 +873,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -925,7 +925,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1106,7 +1106,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1121,7 +1121,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1173,7 +1173,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1362,7 +1362,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1376,7 +1376,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"composite": &schema.Schema{
 													Description: `Is it composite template
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1525,7 +1525,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -1540,7 +1540,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -1592,7 +1592,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -1752,7 +1752,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -1767,7 +1767,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -1819,7 +1819,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -1890,7 +1890,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 									"custom_params_order": &schema.Schema{
 										Description: `Custom Params Order
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1935,7 +1935,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 									"document_database": &schema.Schema{
 										Description: `Document Database
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1992,7 +1992,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 									"project_associated": &schema.Schema{
 										Description: `Project Associated
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2097,7 +2097,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2112,7 +2112,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2164,7 +2164,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2345,7 +2345,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2360,7 +2360,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2412,7 +2412,7 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},

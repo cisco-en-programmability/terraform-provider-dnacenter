@@ -88,7 +88,7 @@ workflows. Pagination and sorting are also supported by this endpoint
 
 						"add_to_inventory": &schema.Schema{
 							Description: `Add To Inventory`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -308,7 +308,7 @@ workflows. Pagination and sorting are also supported by this endpoint
 
 						"add_to_inventory": &schema.Schema{
 							Description: `Add To Inventory`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

@@ -50,7 +50,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 									"vip": &schema.Schema{
 										Description: `Is this interface an Virtual IP address or not. This is true for Global DR VIP
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -117,7 +117,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 												"vip": &schema.Schema{
 													Description: `Is this interface an Virtual IP address or not. This is true for cluster level.
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -161,7 +161,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 															"vip": &schema.Schema{
 																Description: `Is this interface a Virtual IP address or not. This is false for node level.
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -218,7 +218,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 												"vip": &schema.Schema{
 													Description: `Is this interface an Virtual IP address or not. This is true for cluster level.
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -262,7 +262,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 															"vip": &schema.Schema{
 																Description: `Is this interface a Virtual IP Address or not. This is false for node level.
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -333,7 +333,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 												"vip": &schema.Schema{
 													Description: `Is this interface an Virtual IP address or not. This is false for witness.
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -377,7 +377,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 															"vip": &schema.Schema{
 																Description: `Is this interface an Virtual IP address or not. This is false for Witness 
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},

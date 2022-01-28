@@ -75,7 +75,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 
 									"configure_external_dhcp": &schema.Schema{
 										Description: `Configure External Dhcp`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -166,7 +166,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 
 									"ipv6": &schema.Schema{
 										Description: `Ipv6`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -179,7 +179,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 
 									"overlapping": &schema.Schema{
 										Description: `Overlapping`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -198,7 +198,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 
 									"shared": &schema.Schema{
 										Description: `Shared`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -291,7 +291,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 						"ipv4_prefix": &schema.Schema{
 							Description: `IPv4 prefix value is true, the ip4 prefix length input field is enabled , if it is false ipv4 total Host input is enable
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -317,7 +317,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 						"ipv6_address_space": &schema.Schema{
 							Description: `If the value is false only ipv4 input are required, otherwise both ipv6 and ipv4 are required
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -355,7 +355,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 						"ipv6_prefix": &schema.Schema{
 							Description: `Ipv6 prefix value is true, the ip6 prefix length input field is enabled , if it is false ipv6 total Host input is enable
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -392,7 +392,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 						},
 						"slaac_support": &schema.Schema{
 							Description: `Slaac Support`,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -513,10 +513,6 @@ func resourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData, m
 		response1, err := searchNetworkSettingsGetReserveIPSubpool(m, queryParams1, vName)
 
 		if err != nil || response1 == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetReserveIPSubpool", err,
-			// 	"Failure at GetReserveIPSubpool, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -555,9 +551,7 @@ func resourceReserveIPSubpoolUpdate(ctx context.Context, d *schema.ResourceData,
 		return diags
 	}
 
-	//vvSiteID= item.
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vSiteID)
 		request1 := expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx, "parameters.0", d)

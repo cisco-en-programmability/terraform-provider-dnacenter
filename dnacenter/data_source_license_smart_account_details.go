@@ -44,7 +44,7 @@ func dataSourceLicenseSmartAccountDetails() *schema.Resource {
 						"is_active_smart_account": &schema.Schema{
 							Description: `Is active smart account
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

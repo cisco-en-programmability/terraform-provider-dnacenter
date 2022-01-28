@@ -25,7 +25,7 @@ func dataSourceConfigurationTemplateDeploy() *schema.Resource {
 		ReadContext: dataSourceConfigurationTemplateDeployRead,
 		Schema: map[string]*schema.Schema{
 			"force_push_template": &schema.Schema{
-				// Type:     schema.TypeBool,
+
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -33,7 +33,7 @@ func dataSourceConfigurationTemplateDeploy() *schema.Resource {
 			"is_composite": &schema.Schema{
 				Description: `Composite template flag
 `,
-				// Type:        schema.TypeBool,
+
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,

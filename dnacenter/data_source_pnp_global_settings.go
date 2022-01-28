@@ -57,7 +57,7 @@ func dataSourcePnpGlobalSettings() *schema.Resource {
 
 						"accept_eula": &schema.Schema{
 							Description: `Accept Eula`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -100,7 +100,7 @@ func dataSourcePnpGlobalSettings() *schema.Resource {
 
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -170,7 +170,7 @@ func dataSourcePnpGlobalSettings() *schema.Resource {
 
 												"make_default": &schema.Schema{
 													Description: `Make Default`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -195,7 +195,7 @@ func dataSourcePnpGlobalSettings() *schema.Resource {
 
 												"proxy": &schema.Schema{
 													Description: `Proxy`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},

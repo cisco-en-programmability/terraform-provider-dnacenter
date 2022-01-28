@@ -208,7 +208,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 															},
 															"readable": &schema.Schema{
 																Description: `Readable`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -224,7 +224,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 															},
 															"writeable": &schema.Schema{
 																Description: `Writeable`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -451,7 +451,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 															},
 															"discovery_created": &schema.Schema{
 																Description: `Discovery Created`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -555,7 +555,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 												},
 												"populate_inventory": &schema.Schema{
 													Description: `Populate Inventory`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -590,7 +590,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 												},
 												"reload_requested": &schema.Schema{
 													Description: `Reload Requested`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -621,7 +621,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 												},
 												"stack": &schema.Schema{
 													Description: `Stack`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -633,7 +633,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 
 															"is_full_ring": &schema.Schema{
 																Description: `Is Full Ring`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -713,7 +713,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 															},
 															"supports_stack_workflows": &schema.Schema{
 																Description: `Supports Stack Workflows`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -740,7 +740,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 												},
 												"sudi_required": &schema.Schema{
 													Description: `Sudi Required`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -799,7 +799,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 												},
 												"error_flag": &schema.Schema{
 													Description: `Error Flag`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -906,7 +906,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 												},
 												"add_to_inventory": &schema.Schema{
 													Description: `Add To Inventory`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1094,7 +1094,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 												},
 												"add_to_inventory": &schema.Schema{
 													Description: `Add To Inventory`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1292,7 +1292,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 												},
 												"add_to_inventory": &schema.Schema{
 													Description: `Add To Inventory`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1636,7 +1636,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 													Optional: true,
 												},
 												"readable": &schema.Schema{
-													// Type:     schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1650,7 +1650,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 													Optional: true,
 												},
 												"writeable": &schema.Schema{
-													// Type:     schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1843,7 +1843,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 													Optional: true,
 												},
 												"discovery_created": &schema.Schema{
-													// Type:     schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1934,7 +1934,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 										},
 									},
 									"populate_inventory": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1965,7 +1965,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 										Optional: true,
 									},
 									"reload_requested": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1983,7 +1983,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 										Optional: true,
 									},
 									"stack": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1995,7 +1995,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"is_full_ring": &schema.Schema{
-													// Type:     schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2062,7 +2062,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 													Optional: true,
 												},
 												"supports_stack_workflows": &schema.Schema{
-													// Type:     schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2086,7 +2086,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 										Optional: true,
 									},
 									"sudi_required": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2131,7 +2131,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 										Optional: true,
 									},
 									"error_flag": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2225,7 +2225,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 										Optional: true,
 									},
 									"add_to_inventory": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2382,7 +2382,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 										Optional: true,
 									},
 									"add_to_inventory": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2547,7 +2547,7 @@ func dataSourcePnpDeviceImport() *schema.Resource {
 										Optional: true,
 									},
 									"add_to_inventory": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,

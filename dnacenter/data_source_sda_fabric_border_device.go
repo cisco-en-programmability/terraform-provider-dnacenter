@@ -106,7 +106,7 @@ func dataSourceSdaFabricBorderDevice() *schema.Resource {
 
 									"deployed": &schema.Schema{
 										Description: `Deployed`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -149,7 +149,7 @@ func dataSourceSdaFabricBorderDevice() *schema.Resource {
 
 												"dhcp_enabled": &schema.Schema{
 													Description: `Dhcp Enabled`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -303,7 +303,7 @@ func dataSourceSdaFabricBorderDevice() *schema.Resource {
 
 															"policy_propagation_enabled": &schema.Schema{
 																Description: `Policy Propagation Enabled`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -415,14 +415,14 @@ func dataSourceSdaFabricBorderDevice() *schema.Resource {
 
 									"is_seeded": &schema.Schema{
 										Description: `Is Seeded`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"is_stale": &schema.Schema{
 										Description: `Is Stale`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -711,7 +711,7 @@ func dataSourceSdaFabricBorderDevice() *schema.Resource {
 
 									"save_wan_connectivity_details_only": &schema.Schema{
 										Description: `Save Wan Connectivity Details Only`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},

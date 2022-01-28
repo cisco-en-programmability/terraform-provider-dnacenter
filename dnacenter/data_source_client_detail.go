@@ -281,7 +281,7 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"ios_capable": &schema.Schema{
 										Description: `Ios Capable`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},

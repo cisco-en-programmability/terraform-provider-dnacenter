@@ -61,14 +61,14 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 
 						"is_l2_flooding_enabled": &schema.Schema{
 							Description: `Is L2 Flooding Enabled`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"is_this_critical_pool": &schema.Schema{
 							Description: `Is This Critical Pool`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -122,7 +122,7 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 						"is_l2_flooding_enabled": &schema.Schema{
 							Description: `Layer2 flooding enablement flag
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -130,7 +130,7 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 						"is_this_critical_pool": &schema.Schema{
 							Description: `Critical pool enablement flag where depending on the pool type (data or voice), a corresponding Critical Vlan gets assigned to the Critical Pool
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -289,10 +289,6 @@ func resourceSdaVirtualNetworkIPPoolRead(ctx context.Context, d *schema.Resource
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetIPPoolFromSdaVirtualNetwork", err,
-			// 	"Failure at GetIPPoolFromSdaVirtualNetwork, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -332,9 +328,6 @@ func resourceSdaVirtualNetworkIPPoolDelete(ctx context.Context, d *schema.Resour
 	queryParams1.VirtualNetworkName = vVirtualNetworkName
 	item, restyResp1, err := client.Sda.GetIPPoolFromSdaVirtualNetwork(&queryParams1)
 	if err != nil || item == nil {
-		//diags = append(diags, diagErrorWithAlt(
-		//	"Failure when executing GetIPPoolFromSDAVirtualNetwork", err,
-		//	"Failure at GetIPPoolFromSDAVirtualNetwork, unexpected response", ""))
 		d.SetId("")
 		return diags
 	}

@@ -57,14 +57,14 @@ func dataSourceSdaVirtualNetworkIPPool() *schema.Resource {
 
 						"is_l2_flooding_enabled": &schema.Schema{
 							Description: `Is L2 Flooding Enabled`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"is_this_critical_pool": &schema.Schema{
 							Description: `Is This Critical Pool`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

@@ -102,7 +102,7 @@ func resourceEndpointAnalyticsProfilingRules() *schema.Resource {
 						"is_deleted": &schema.Schema{
 							Description: `Flag to indicate whether the rule was deleted.
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -127,7 +127,7 @@ func resourceEndpointAnalyticsProfilingRules() *schema.Resource {
 						"rejected": &schema.Schema{
 							Description: `Flag to indicate whether rule has been rejected by user or not. Only applicable for 'ML Rule'.
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -292,7 +292,7 @@ func resourceEndpointAnalyticsProfilingRules() *schema.Resource {
 						"is_deleted": &schema.Schema{
 							Description: `Flag to indicate whether the rule was deleted.
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -318,7 +318,7 @@ func resourceEndpointAnalyticsProfilingRules() *schema.Resource {
 						"rejected": &schema.Schema{
 							Description: `Flag to indicate whether rule has been rejected by user or not. Only applicable for 'ML Rule'.
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -496,10 +496,6 @@ func resourceEndpointAnalyticsProfilingRulesRead(ctx context.Context, d *schema.
 		response1, err := searchPolicyGetListOfProfilingRules(m, queryParams1, vRuleName)
 
 		if err != nil || response1 == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetListOfProfilingRules", err,
-			// 	"Failure at GetListOfProfilingRules, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -526,10 +522,6 @@ func resourceEndpointAnalyticsProfilingRulesRead(ctx context.Context, d *schema.
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetDetailsOfASingleProfilingRule", err,
-			// 	"Failure at GetDetailsOfASingleProfilingRule, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -563,7 +555,6 @@ func resourceEndpointAnalyticsProfilingRulesUpdate(ctx context.Context, d *schem
 
 	vvRuleID = vRuleID
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if vvRuleID != "" {
 		response2, restyResp2, err := client.Policy.GetDetailsOfASingleProfilingRule(vvRuleID)
 
@@ -982,7 +973,6 @@ func searchPolicyGetListOfProfilingRules(m interface{}, queryParams dnacentersdk
 	var foundItem *dnacentersdkgo.ResponsePolicyGetListOfProfilingRulesProfilingRules
 	queryParams.Offset = 1
 
-	//var allItems []*dnacenterskgo.ResponseItemApplicationPolicyGetApplications
 	nResponse, _, err := client.Policy.GetListOfProfilingRules(nil)
 	maxPageSize := len(*nResponse.ProfilingRules)
 	//maxPageSize := 10

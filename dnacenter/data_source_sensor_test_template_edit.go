@@ -81,7 +81,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"legacy_test_suite": &schema.Schema{
 							Description: `Legacy Test Suite`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -98,7 +98,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 
 									"all_sensors": &schema.Schema{
 										Description: `All Sensors`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -150,7 +150,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"radio_as_sensor_removed": &schema.Schema{
 							Description: `Radio As Sensor Removed`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -269,7 +269,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"show_wlc_upgrade_banner": &schema.Schema{
 							Description: `Show Wlc Upgrade Banner`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -336,7 +336,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"ext_web_auth": &schema.Schema{
 										Description: `Ext Web Auth`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -420,7 +420,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"scep": &schema.Schema{
 										Description: `Scep`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -464,7 +464,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 
 												"selected": &schema.Schema{
 													Description: `Selected`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -488,7 +488,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"white_list": &schema.Schema{
 										Description: `White List`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -532,7 +532,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"test_template": &schema.Schema{
 							Description: `Test Template`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -565,7 +565,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 
 						"all_sensors": &schema.Schema{
 							Description: `All Sensors`,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

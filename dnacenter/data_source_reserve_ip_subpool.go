@@ -77,7 +77,7 @@ func dataSourceReserveIPSubpool() *schema.Resource {
 
 									"configure_external_dhcp": &schema.Schema{
 										Description: `Configure External Dhcp`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -168,7 +168,7 @@ func dataSourceReserveIPSubpool() *schema.Resource {
 
 									"ipv6": &schema.Schema{
 										Description: `Ipv6`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -181,7 +181,7 @@ func dataSourceReserveIPSubpool() *schema.Resource {
 
 									"overlapping": &schema.Schema{
 										Description: `Overlapping`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -200,7 +200,7 @@ func dataSourceReserveIPSubpool() *schema.Resource {
 
 									"shared": &schema.Schema{
 										Description: `Shared`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},

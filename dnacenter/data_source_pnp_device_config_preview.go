@@ -34,7 +34,7 @@ func dataSourcePnpDeviceConfigPreview() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"complete": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -43,7 +43,7 @@ func dataSourcePnpDeviceConfigPreview() *schema.Resource {
 							Computed: true,
 						},
 						"error": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

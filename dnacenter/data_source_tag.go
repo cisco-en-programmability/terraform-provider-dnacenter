@@ -170,7 +170,7 @@ func dataSourceTag() *schema.Resource {
 						},
 
 						"system_tag": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -259,7 +259,7 @@ func dataSourceTag() *schema.Resource {
 						},
 
 						"system_tag": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

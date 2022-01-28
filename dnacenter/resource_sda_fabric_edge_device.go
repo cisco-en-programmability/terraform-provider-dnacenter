@@ -208,10 +208,6 @@ func resourceSdaFabricEdgeDeviceRead(ctx context.Context, d *schema.ResourceData
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetEdgeDeviceFromSdaFabric", err,
-			// 	"Failure at GetEdgeDeviceFromSdaFabric, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -249,9 +245,6 @@ func resourceSdaFabricEdgeDeviceDelete(ctx context.Context, d *schema.ResourceDa
 	queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
 	item, restyResp1, err := client.Sda.GetEdgeDeviceFromSdaFabric(&queryParams1)
 	if err != nil || item == nil {
-		/*diags = append(diags, diagErrorWithAlt(
-		"Failure when executing GetEdgeDeviceFromSDAFabric", err,
-		"Failure at GetEdgeDeviceFromSDAFabric, unexpected response", ""))*/
 		d.SetId("")
 		return diags
 	}

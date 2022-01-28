@@ -74,7 +74,7 @@ func dataSourceAppPolicyDefault() *schema.Resource {
 						"deployed": &schema.Schema{
 							Description: `Deployed
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -312,7 +312,7 @@ func dataSourceAppPolicyDefault() *schema.Resource {
 						"internal": &schema.Schema{
 							Description: `Internal
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -320,7 +320,7 @@ func dataSourceAppPolicyDefault() *schema.Resource {
 						"is_deleted": &schema.Schema{
 							Description: `Is deleted
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -328,7 +328,7 @@ func dataSourceAppPolicyDefault() *schema.Resource {
 						"is_enabled": &schema.Schema{
 							Description: `Is enabled
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -336,7 +336,7 @@ func dataSourceAppPolicyDefault() *schema.Resource {
 						"is_scope_stale": &schema.Schema{
 							Description: `Is scope stale
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -344,7 +344,7 @@ func dataSourceAppPolicyDefault() *schema.Resource {
 						"is_seeded": &schema.Schema{
 							Description: `Is seeded
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -352,7 +352,7 @@ func dataSourceAppPolicyDefault() *schema.Resource {
 						"is_stale": &schema.Schema{
 							Description: `Is stale
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -360,7 +360,7 @@ func dataSourceAppPolicyDefault() *schema.Resource {
 						"ise_reserved": &schema.Schema{
 							Description: `Is reserved
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -477,7 +477,7 @@ func dataSourceAppPolicyDefault() *schema.Resource {
 						"pushed": &schema.Schema{
 							Description: `Pushed
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

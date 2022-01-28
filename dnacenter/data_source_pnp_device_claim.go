@@ -132,7 +132,7 @@ func dataSourcePnpDeviceClaim() *schema.Resource {
 				},
 			},
 			"populate_inventory": &schema.Schema{
-				// Type:     schema.TypeBool,
+
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,

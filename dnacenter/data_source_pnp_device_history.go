@@ -56,7 +56,7 @@ func dataSourcePnpDeviceHistory() *schema.Resource {
 
 						"error_flag": &schema.Schema{
 							Description: `Error Flag`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

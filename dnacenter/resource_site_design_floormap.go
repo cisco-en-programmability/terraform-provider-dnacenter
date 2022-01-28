@@ -118,10 +118,6 @@ func resourceSiteDesignFloormapRead(ctx context.Context, d *schema.ResourceData,
 		response1, err := client.SiteDesign.ListSpecifiedFloormaps(vvFloorID)
 
 		if err != nil || response1 == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing ListSpecifiedFloormaps", err,
-			// 	"Failure at ListSpecifiedFloormaps, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -197,9 +193,6 @@ func resourceSiteDesignFloormapDelete(ctx context.Context, d *schema.ResourceDat
 	item, err := client.SiteDesign.ListSpecifiedFloormaps(vvFloorID)
 
 	if err != nil || item == nil {
-		//diags = append(diags, diagErrorWithAlt(
-		//	"Failure when executing ListSpecifiedFloormaps", err,
-		//	"Failure at ListSpecifiedFloormaps, unexpected response", ""))
 		d.SetId("")
 		return diags
 	}

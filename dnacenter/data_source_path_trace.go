@@ -3714,7 +3714,7 @@ func dataSourcePathTrace() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"control_path": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -3758,7 +3758,7 @@ func dataSourcePathTrace() *schema.Resource {
 									},
 
 									"periodic_refresh": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -3796,7 +3796,7 @@ func dataSourcePathTrace() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"control_path": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -3840,7 +3840,7 @@ func dataSourcePathTrace() *schema.Resource {
 						},
 
 						"periodic_refresh": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
