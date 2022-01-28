@@ -14,6 +14,15 @@ The terraform-provider-dnacenter provides a Terraform provider for managing and 
 
 This collection has been tested and supports Cisco DNA Center 2.2.3.3.
 
+Other versions of this collection have support for previous Cisco DNA Center versions. The recommended versions are listed below on the [Compatibility matrix](#compatibility-matrix).
+
+## Compatibility matrix
+
+| Cisco DNA Center version | Terraform "dnacenter" provider version |
+|--------------------------|----------------------------------------|
+| 2.1.1                    | 0.0.4                                  |
+| 2.2.3.3                  | 0.1.0-beta                             |
+
 ## Using the provider
 
 There are two ways to get and use the provider.
@@ -29,7 +38,7 @@ terraform {
   required_providers {
     dnacenter = {
       source = "cisco-en-programmability/dnacenter"
-      version = "2.4.0"
+      version = "0.1.0-beta"
     }
   }
 }
@@ -67,7 +76,7 @@ terraform {
   required_providers {
     dnacenter = {
       source = "hashicorp.com/edu/dnacenter"
-      version = "2.4.0"
+      version = "0.1.0-beta"
     }
   }
 }
@@ -110,7 +119,9 @@ $ make testacc
 
 ## Documentation
 
-In the docs directory you can find the documentation.
+In the docs directory you can find the documentation source.
+
+You can find the documentation online at [Terraform Registry - Cisco DNA Center provider](https://registry.terraform.io/providers/cisco-en-programmability/dnacenter/latest/docs).
 
 # Contributing
 
