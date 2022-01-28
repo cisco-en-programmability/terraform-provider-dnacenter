@@ -109,7 +109,7 @@ func resourceTag() *schema.Resource {
 							Computed: true,
 						},
 						"system_tag": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -193,7 +193,7 @@ func resourceTag() *schema.Resource {
 							Optional: true,
 						},
 						"system_tag": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -316,10 +316,6 @@ func resourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{})
 		response1, err := searchTagGetTag(m, queryParams1)
 
 		if err != nil || response1 == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetTag", err,
-			// 	"Failure at GetTag, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -414,7 +410,6 @@ func resourceTagUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 		vvID = response1.ID
 	}
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 
 	//Set value vvName = getResp
 	if d.HasChange("parameters") {

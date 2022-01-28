@@ -63,7 +63,7 @@ func dataSourceQosDeviceInterface() *schema.Resource {
 						"deployed": &schema.Schema{
 							Description: `Deployed
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -123,7 +123,7 @@ func dataSourceQosDeviceInterface() *schema.Resource {
 						"is_excluded": &schema.Schema{
 							Description: `Is excluded
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -131,7 +131,7 @@ func dataSourceQosDeviceInterface() *schema.Resource {
 						"is_seeded": &schema.Schema{
 							Description: `Is seeded
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -139,7 +139,7 @@ func dataSourceQosDeviceInterface() *schema.Resource {
 						"is_stale": &schema.Schema{
 							Description: `Is stale
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

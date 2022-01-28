@@ -87,7 +87,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 									"enable_broadcast_ssi_d": &schema.Schema{
 										Description: `Enable Broadcast SSID
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -95,7 +95,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 									"enable_fast_lane": &schema.Schema{
 										Description: `Enable Fast Lane
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -103,7 +103,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 									"enable_mac_filtering": &schema.Schema{
 										Description: `Enable MAC Filtering
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -118,7 +118,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 									"is_enabled": &schema.Schema{
 										Description: `Is Enabled
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -126,7 +126,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 									"is_fabric": &schema.Schema{
 										Description: `Is Fabric
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -208,7 +208,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_basic_service_set_max_idle": &schema.Schema{
 							Description: `Enable Basic Service Set Max Idle 
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -216,7 +216,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_broadcast_ssi_d": &schema.Schema{
 							Description: `Enable Broadcast SSID
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -224,7 +224,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_client_exclusion": &schema.Schema{
 							Description: `Enable Client Exclusion
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -232,7 +232,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_directed_multicast_service": &schema.Schema{
 							Description: `Enable Directed Multicast Service
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -240,7 +240,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_fast_lane": &schema.Schema{
 							Description: `Enable Fast Lane
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -248,7 +248,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_mac_filtering": &schema.Schema{
 							Description: `Enable MAC Filtering
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -256,7 +256,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_neighbor_list": &schema.Schema{
 							Description: `Enable Neighbor List
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -264,7 +264,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_session_time_out": &schema.Schema{
 							Description: `Enable Session Timeout
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -426,17 +426,11 @@ func resourceWirelessEnterpriseSSIDRead(ctx context.Context, d *schema.ResourceD
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			/*diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEnterpriseSSID", err,
-				"Failure at GetEnterpriseSSID, unexpected response", ""))
-			return diags*/
 			d.SetId("")
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		//TODO FOR DNAC
 
 		vItem1 := flattenWirelessGetEnterpriseSSIDItems(response1)
 		if err := d.Set("item", vItem1); err != nil {
@@ -470,7 +464,6 @@ func resourceWirelessEnterpriseSSIDUpdate(ctx context.Context, d *schema.Resourc
 	}
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %v", queryParams1)
 		request1 := expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSID(ctx, "parameters.0", d)
@@ -546,9 +539,6 @@ func resourceWirelessEnterpriseSSIDDelete(ctx context.Context, d *schema.Resourc
 	var vvSSIDName string
 	item, err := searchWirelessGetEnterpriseSSID(m, queryParams1)
 	if err != nil || item == nil {
-		/*diags = append(diags, diagErrorWithAlt(
-		"Failure when executing GetEnterpriseSSID", err,
-		"Failure at GetEnterpriseSSID, unexpected response", ""))*/
 		return diags
 	}
 

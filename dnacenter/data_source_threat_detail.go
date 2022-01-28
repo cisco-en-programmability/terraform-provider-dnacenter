@@ -30,7 +30,7 @@ func dataSourceThreatDetail() *schema.Resource {
 			},
 			"is_new_threat": &schema.Schema{
 				Description: `Is New Threat`,
-				// Type:        schema.TypeBool,
+
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,

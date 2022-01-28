@@ -1,3 +1,8 @@
+## 0.1.0-beta (January 27, 2022)
+
+IMPROVEMENTS:
+* Removed comments.
+
 ## 0.1.0-alpha (January 27, 2022)
 
 * New Release, supports Cisco DNA Center API 2.2.3.3.

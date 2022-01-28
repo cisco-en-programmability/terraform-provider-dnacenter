@@ -86,7 +86,7 @@ payload returns a list of synced devices
 									},
 									"make_default": &schema.Schema{
 										Description: `Make Default`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -107,7 +107,7 @@ payload returns a list of synced devices
 									},
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -211,7 +211,7 @@ payload returns a list of synced devices
 							Optional: true,
 						},
 						"make_default": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -229,7 +229,7 @@ payload returns a list of synced devices
 							Optional: true,
 						},
 						"proxy": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

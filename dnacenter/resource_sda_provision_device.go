@@ -212,10 +212,6 @@ func resourceSdaProvisionDeviceRead(ctx context.Context, d *schema.ResourceData,
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetProvisionedWiredDevice", err,
-			// 	"Failure at GetProvisionedWiredDevice, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -256,7 +252,6 @@ func resourceSdaProvisionDeviceUpdate(ctx context.Context, d *schema.ResourceDat
 
 	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestSdaProvisionDeviceReProvisionWiredDevice(ctx, "parameters.0", d)
@@ -330,9 +325,6 @@ func resourceSdaProvisionDeviceDelete(ctx context.Context, d *schema.ResourceDat
 	queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
 	item, _, err := client.Sda.GetProvisionedWiredDevice(&queryParams1)
 	if err != nil || item == nil {
-		//diags = append(diags, diagErrorWithAlt(
-		//	"Failure when executing GetProvisionedWiredDevice", err,
-		//	"Failure at GetProvisionedWiredDevice, unexpected response", ""))
 		d.SetId("")
 		return diags
 	}

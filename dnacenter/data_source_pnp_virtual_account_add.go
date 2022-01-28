@@ -87,7 +87,7 @@ the new profile
 									},
 									"make_default": &schema.Schema{
 										Description: `Make Default`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -108,7 +108,7 @@ the new profile
 									},
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -212,7 +212,7 @@ the new profile
 							Optional: true,
 						},
 						"make_default": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -230,7 +230,7 @@ the new profile
 							Optional: true,
 						},
 						"proxy": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

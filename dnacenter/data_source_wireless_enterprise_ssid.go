@@ -77,7 +77,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"enable_broadcast_ssi_d": &schema.Schema{
 										Description: `Enable Broadcast SSID
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -85,7 +85,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"enable_fast_lane": &schema.Schema{
 										Description: `Enable Fast Lane
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -93,7 +93,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"enable_mac_filtering": &schema.Schema{
 										Description: `Enable MAC Filtering
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -108,7 +108,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"is_enabled": &schema.Schema{
 										Description: `Is Enabled
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -116,7 +116,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"is_fabric": &schema.Schema{
 										Description: `Is Fabric
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},

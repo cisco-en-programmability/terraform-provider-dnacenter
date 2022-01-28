@@ -114,7 +114,7 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 
 									"deployed": &schema.Schema{
 										Description: `Deployed`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -157,7 +157,7 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 
 												"dhcp_enabled": &schema.Schema{
 													Description: `Dhcp Enabled`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -311,7 +311,7 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 
 															"policy_propagation_enabled": &schema.Schema{
 																Description: `Policy Propagation Enabled`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -423,14 +423,14 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 
 									"is_seeded": &schema.Schema{
 										Description: `Is Seeded`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"is_stale": &schema.Schema{
 										Description: `Is Stale`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -719,7 +719,7 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 
 									"save_wan_connectivity_details_only": &schema.Schema{
 										Description: `Save Wan Connectivity Details Only`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -806,7 +806,7 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 						"connected_to_internet": &schema.Schema{
 							Description: `Connected to Internet
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -1002,10 +1002,6 @@ func resourceSdaFabricBorderDeviceRead(ctx context.Context, d *schema.ResourceDa
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetsBorderDeviceDetailFromSdaFabric", err,
-			// 	"Failure at GetsBorderDeviceDetailFromSdaFabric, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -1048,9 +1044,6 @@ func resourceSdaFabricBorderDeviceDelete(ctx context.Context, d *schema.Resource
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		/*diags = append(diags, diagErrorWithAlt(
-		"Failure when executing GetsBorderDeviceDetailFromSdaFabric", err,
-		"Failure at GetsBorderDeviceDetailFromSdaFabric, unexpected response", ""))*/
 		d.SetId("")
 		return diags
 	}

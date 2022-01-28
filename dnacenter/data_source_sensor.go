@@ -52,7 +52,7 @@ func dataSourceSensor() *schema.Resource {
 
 						"is_led_enabled": &schema.Schema{
 							Description: `Is L E D Enabled`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

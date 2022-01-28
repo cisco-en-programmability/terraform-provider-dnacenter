@@ -138,7 +138,7 @@ information.
 												"intra_cluster_link": &schema.Schema{
 													Description: `Flag to indicate which interface is configured as the inter-cluster link
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -146,7 +146,7 @@ information.
 												"lacp_mode": &schema.Schema{
 													Description: `LACP Mode configuration on NIC
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -154,7 +154,7 @@ information.
 												"lacp_supported": &schema.Schema{
 													Description: `LACP Support configuration on NIC
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},

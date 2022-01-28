@@ -69,7 +69,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 
 						"accept_eula": &schema.Schema{
 							Description: `Accept Eula`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -112,7 +112,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -182,7 +182,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 
 												"make_default": &schema.Schema{
 													Description: `Make Default`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -207,7 +207,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 
 												"proxy": &schema.Schema{
 													Description: `Proxy`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -372,7 +372,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 							},
 						},
 						"accept_eula": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -407,7 +407,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 										Optional: true,
 									},
 									"proxy": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -457,7 +457,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 													Optional: true,
 												},
 												"make_default": &schema.Schema{
-													// Type:     schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -475,7 +475,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 													Optional: true,
 												},
 												"proxy": &schema.Schema{
-													// Type:     schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -614,10 +614,6 @@ func resourcePnpGlobalSettingsRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetPnpGlobalSettings", err,
-			// 	"Failure at GetPnpGlobalSettings, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -643,7 +639,6 @@ func resourcePnpGlobalSettingsUpdate(ctx context.Context, d *schema.ResourceData
 	var diags diag.Diagnostics
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		request1 := expandRequestPnpGlobalSettingsUpdatePnpGlobalSettings(ctx, "parameters.0", d)
 		if request1 != nil {

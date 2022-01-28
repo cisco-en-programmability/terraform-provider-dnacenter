@@ -25,7 +25,7 @@ get results and follow progress.
 		ReadContext: dataSourcePathTraceCreateRead,
 		Schema: map[string]*schema.Schema{
 			"control_path": &schema.Schema{
-				// Type:     schema.TypeBool,
+
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -67,7 +67,7 @@ get results and follow progress.
 				},
 			},
 			"periodic_refresh": &schema.Schema{
-				// Type:     schema.TypeBool,
+
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,

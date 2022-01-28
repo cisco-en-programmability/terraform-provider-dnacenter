@@ -51,7 +51,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 						"default_rf_profile": &schema.Schema{
 							Description: `is default radio profile
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -59,7 +59,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 						"enable_brown_field": &schema.Schema{
 							Description: `is brownfield enabled
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -67,7 +67,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 						"enable_custom": &schema.Schema{
 							Description: `is Custom Enable
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -75,7 +75,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 						"enable_radio_type_a": &schema.Schema{
 							Description: `Enable Radio Type A
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -83,7 +83,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 						"enable_radio_type_b": &schema.Schema{
 							Description: `Enable Radio Type B
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -244,7 +244,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 						"default_rf_profile": &schema.Schema{
 							Description: `isDefault rf-profile
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -252,7 +252,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 						"enable_brown_field": &schema.Schema{
 							Description: `true if enable brown field for rf-profile else false
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -260,7 +260,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 						"enable_custom": &schema.Schema{
 							Description: `true if enable custom rf-profile else false
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -268,7 +268,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 						"enable_radio_type_a": &schema.Schema{
 							Description: `tru if Enable Radio Type A else false
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -276,7 +276,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 						"enable_radio_type_b": &schema.Schema{
 							Description: `true if Enable Radio Type B else false
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -512,17 +512,11 @@ func resourceWirelessRfProfileRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			/*diags = append(diags, diagErrorWithAlt(
-				"Failure when executing RetrieveRfProfiles", err,
-				"Failure at RetrieveRfProfiles, unexpected response", ""))
-			return diags*/
 			d.SetId("")
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		//TODO FOR DNAC
 
 		vItem1 := flattenWirelessRetrieveRfProfilesItems(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
@@ -555,9 +549,6 @@ func resourceWirelessRfProfileDelete(ctx context.Context, d *schema.ResourceData
 	item, err := searchWirelessRetrieveRfProfiles(m, queryParams1)
 	var vvRfProfileName string
 	if err != nil || item == nil {
-		/*diags = append(diags, diagErrorWithAlt(
-		"Failure when executing RetrieveRFProfiles", err,
-		"Failure at RetrieveRFProfiles, unexpected response", ""))*/
 		return diags
 	}
 

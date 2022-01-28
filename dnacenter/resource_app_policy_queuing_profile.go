@@ -228,7 +228,7 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 									"is_common_between_all_interface_speeds": &schema.Schema{
 										Description: `Is common between all interface speeds
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -345,7 +345,7 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 						"deployed": &schema.Schema{
 							Description: `Deployed
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -409,7 +409,7 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 						"internal": &schema.Schema{
 							Description: `Internal
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -417,7 +417,7 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 						"is_deleted": &schema.Schema{
 							Description: `Is deleted
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -425,7 +425,7 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 						"is_seeded": &schema.Schema{
 							Description: `Is seeded
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -433,7 +433,7 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 						"is_stale": &schema.Schema{
 							Description: `Is stale
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -441,7 +441,7 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 						"ise_reserved": &schema.Schema{
 							Description: `Is reserved
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -477,7 +477,7 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 						"pushed": &schema.Schema{
 							Description: `Pushed
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -587,7 +587,7 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 									"is_common_between_all_interface_speeds": &schema.Schema{
 										Description: `Is common between all interface speeds
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -737,10 +737,6 @@ func resourceAppPolicyQueuingProfileRead(ctx context.Context, d *schema.Resource
 		queryParams1.Name = vName
 		item, err := searchApplicationPolicyGetApplicationPolicyQueuingProfile(m, queryParams1)
 		if err != nil || item == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetApplicationPolicyQueuingProfile", err,
-			// 	"Failure at GetApplicationPolicyQueuingProfile, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -768,9 +764,6 @@ func resourceAppPolicyQueuingProfileUpdate(ctx context.Context, d *schema.Resour
 	resourceMap := separateResourceID(resourceID)
 	vName := resourceMap["name"]
 
-	//selectedMethod := 1
-	//var vvID string
-
 	queryParams1 := dnacentersdkgo.GetApplicationPolicyQueuingProfileQueryParams{}
 	queryParams1.Name = vName
 	item, err := searchApplicationPolicyGetApplicationPolicyQueuingProfile(m, queryParams1)
@@ -781,7 +774,6 @@ func resourceAppPolicyQueuingProfileUpdate(ctx context.Context, d *schema.Resour
 		return diags
 	}
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vName)
 		request1 := expandRequestAppPolicyQueuingProfileUpdateApplicationPolicyQueuingProfileArray(ctx, "parameters", d)

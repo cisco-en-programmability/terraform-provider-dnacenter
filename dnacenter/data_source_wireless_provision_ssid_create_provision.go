@@ -34,7 +34,7 @@ sites
 			"enable_fabric": &schema.Schema{
 				Description: `Enable SSID for Fabric
 `,
-				// Type:        schema.TypeBool,
+
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -48,7 +48,7 @@ sites
 						"enable_flex_connect": &schema.Schema{
 							Description: `Enable Flex Connect
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -104,7 +104,7 @@ sites
 						"enable_broadcast_ssi_d": &schema.Schema{
 							Description: `Enable Broadcast SSID
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -112,7 +112,7 @@ sites
 						"enable_fast_lane": &schema.Schema{
 							Description: `Enable Fast Lane
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -120,7 +120,7 @@ sites
 						"enable_mac_filtering": &schema.Schema{
 							Description: `Enable MAC Filtering
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

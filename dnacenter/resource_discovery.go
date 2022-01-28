@@ -121,7 +121,7 @@ by range" API.
 										Computed: true,
 									},
 									"secure": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -172,7 +172,7 @@ by range" API.
 										Computed: true,
 									},
 									"secure": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -196,7 +196,7 @@ by range" API.
 							Computed: true,
 						},
 						"is_auto_cdp": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -282,7 +282,7 @@ by range" API.
 							Computed: true,
 						},
 						"update_mgmt_ip": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -395,7 +395,7 @@ ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeS
 									"secure": &schema.Schema{
 										Description: `Flag for HTTPS
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -456,7 +456,7 @@ ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeS
 									"secure": &schema.Schema{
 										Description: `Flag for HTTPS
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -491,7 +491,7 @@ ERROR: Different types for param ipFilterList schema.TypeList schema.TypeString`
 							},
 						},
 						"is_auto_cdp": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -632,7 +632,7 @@ ERROR: Different types for param passwordList schema.TypeList schema.TypeString`
 							Optional: true,
 						},
 						"update_mgmt_ip": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -755,10 +755,6 @@ func resourceDiscoveryRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetDiscoveryByID", err,
-			// 	"Failure at GetDiscoveryByID, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -779,10 +775,6 @@ func resourceDiscoveryRead(ctx context.Context, d *schema.ResourceData, m interf
 	if vName != "" {
 		response1, err := searchDiscovery(m, vName)
 		if err != nil || response1 == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetDiscoveryByID", err,
-			// 	"Failure at GetDiscoveryByID, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}

@@ -77,13 +77,13 @@ func dataSourceNetworkDeviceWirelessLan() *schema.Resource {
 						},
 
 						"lag_mode_enabled": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"netconf_enabled": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -94,7 +94,7 @@ func dataSourceNetworkDeviceWirelessLan() *schema.Resource {
 						},
 
 						"wireless_package_installed": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

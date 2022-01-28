@@ -75,7 +75,7 @@ func dataSourceHTTPReadCredentialCreate() *schema.Resource {
 				Optional: true,
 			},
 			"secure": &schema.Schema{
-				// Type:     schema.TypeBool,
+
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,

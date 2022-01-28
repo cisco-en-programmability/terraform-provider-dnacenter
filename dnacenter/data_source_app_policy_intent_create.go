@@ -138,7 +138,7 @@ func dataSourceAppPolicyIntentCreate() *schema.Resource {
 												"host_tracking_enabled": &schema.Schema{
 													Description: `Is host tracking enabled
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -368,7 +368,7 @@ func dataSourceAppPolicyIntentCreate() *schema.Resource {
 												"host_tracking_enabled": &schema.Schema{
 													Description: `Host tracking enabled
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,

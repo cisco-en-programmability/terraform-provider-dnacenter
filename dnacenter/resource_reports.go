@@ -131,7 +131,7 @@ required to configure a report.
 						"report_was_executed": &schema.Schema{
 							Description: `true if atleast one execution has started
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -244,7 +244,7 @@ required to configure a report.
 												"default": &schema.Schema{
 													Description: `true, if the format type is considered default
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -552,10 +552,6 @@ func resourceReportsRead(ctx context.Context, d *schema.ResourceData, m interfac
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetAScheduledReport", err,
-			// 	"Failure at GetAScheduledReport, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -576,10 +572,6 @@ func resourceReportsRead(ctx context.Context, d *schema.ResourceData, m interfac
 	if vName != "" {
 		response1, err := searchReportsGetListOfScheduledReports(m, nil, vName)
 		if err != nil || response1 == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetAScheduledReport", err,
-			// 	"Failure at GetAScheduledReport, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}

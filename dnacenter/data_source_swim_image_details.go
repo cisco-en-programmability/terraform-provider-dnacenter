@@ -230,7 +230,7 @@ func dataSourceSwimImageDetails() *schema.Resource {
 						},
 
 						"is_tagged_golden": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

@@ -148,7 +148,7 @@ func dataSourceReports() *schema.Resource {
 						"report_was_executed": &schema.Schema{
 							Description: `true if atleast one execution has started
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -273,7 +273,7 @@ func dataSourceReports() *schema.Resource {
 												"default": &schema.Schema{
 													Description: `true, if the format type is considered default
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -443,7 +443,7 @@ func dataSourceReports() *schema.Resource {
 						"report_was_executed": &schema.Schema{
 							Description: `true if atleast one execution has started
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -568,7 +568,7 @@ func dataSourceReports() *schema.Resource {
 												"default": &schema.Schema{
 													Description: `true, if the format type is considered default
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},

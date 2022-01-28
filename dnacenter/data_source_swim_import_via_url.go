@@ -80,7 +80,7 @@ files extensions are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2
 							Optional: true,
 						},
 						"third_party": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

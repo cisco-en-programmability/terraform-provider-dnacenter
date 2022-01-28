@@ -75,7 +75,7 @@ WAN, to associate WAN interfaces with specific SP Profile and to be able to defi
 						"deployed": &schema.Schema{
 							Description: `Deployed
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -135,7 +135,7 @@ WAN, to associate WAN interfaces with specific SP Profile and to be able to defi
 						"is_excluded": &schema.Schema{
 							Description: `Is excluded
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -143,7 +143,7 @@ WAN, to associate WAN interfaces with specific SP Profile and to be able to defi
 						"is_seeded": &schema.Schema{
 							Description: `Is seeded
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -151,7 +151,7 @@ WAN, to associate WAN interfaces with specific SP Profile and to be able to defi
 						"is_stale": &schema.Schema{
 							Description: `Is stale
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -519,10 +519,6 @@ func resourceQosDeviceInterfaceRead(ctx context.Context, d *schema.ResourceData,
 		response1, err := searchApplicationPolicyGetQosDeviceInterfaceInfo(m, queryParams1, vName)
 
 		if err != nil || response1 == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetQosDeviceInterfaceInfo", err,
-			// 	"Failure at GetQosDeviceInterfaceInfo, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -563,7 +559,6 @@ func resourceQosDeviceInterfaceUpdate(ctx context.Context, d *schema.ResourceDat
 
 	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("item") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestQosDeviceInterfaceUpdateQosDeviceInterfaceInfo(ctx, "parameters", d)

@@ -42,7 +42,7 @@ func dataSourceWirelessRfProfile() *schema.Resource {
 						"default_rf_profile": &schema.Schema{
 							Description: `is default radio profile
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -50,7 +50,7 @@ func dataSourceWirelessRfProfile() *schema.Resource {
 						"enable_brown_field": &schema.Schema{
 							Description: `is brownfield enabled
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -58,7 +58,7 @@ func dataSourceWirelessRfProfile() *schema.Resource {
 						"enable_custom": &schema.Schema{
 							Description: `is Custom Enable
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -66,7 +66,7 @@ func dataSourceWirelessRfProfile() *schema.Resource {
 						"enable_radio_type_a": &schema.Schema{
 							Description: `Enable Radio Type A
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -74,7 +74,7 @@ func dataSourceWirelessRfProfile() *schema.Resource {
 						"enable_radio_type_b": &schema.Schema{
 							Description: `Enable Radio Type B
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

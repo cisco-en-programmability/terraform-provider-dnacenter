@@ -143,7 +143,7 @@ if required. 'GET /profiling-rules/count' API can be used to find out the total 
 						"is_deleted": &schema.Schema{
 							Description: `Flag to indicate whether the rule was deleted.
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -172,7 +172,7 @@ if required. 'GET /profiling-rules/count' API can be used to find out the total 
 						"rejected": &schema.Schema{
 							Description: `Flag to indicate whether rule has been rejected by user or not. Only applicable for 'ML Rule'.
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -353,7 +353,7 @@ if required. 'GET /profiling-rules/count' API can be used to find out the total 
 						"is_deleted": &schema.Schema{
 							Description: `Flag to indicate whether the rule was deleted.
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -382,7 +382,7 @@ if required. 'GET /profiling-rules/count' API can be used to find out the total 
 						"rejected": &schema.Schema{
 							Description: `Flag to indicate whether rule has been rejected by user or not. Only applicable for 'ML Rule'.
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

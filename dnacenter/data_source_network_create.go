@@ -240,7 +240,7 @@ func dataSourceNetworkCreate() *schema.Resource {
 									"configure_dnac_ip": &schema.Schema{
 										Description: `Configuration dnac ip for snmp server (eg: true)
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -266,7 +266,7 @@ func dataSourceNetworkCreate() *schema.Resource {
 									"configure_dnac_ip": &schema.Schema{
 										Description: `Configuration dnac ip for syslog server (eg: true)
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,

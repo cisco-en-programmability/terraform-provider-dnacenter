@@ -446,10 +446,6 @@ func resourceEventSubscriptionRestRead(ctx context.Context, d *schema.ResourceDa
 		queryParams1 := dnacentersdkgo.GetRestWebhookEventSubscriptionsQueryParams{}
 		item, err := searchEventManagementGetRestWebhookEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
 		if err != nil || item == nil || len(*item) <= 0 {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetEmailEventSubscriptions", err,
-			// 	"Failure at GetEmailEventSubscriptions, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -490,7 +486,6 @@ func resourceEventSubscriptionRestUpdate(ctx context.Context, d *schema.Resource
 	}
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		request1 := expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscription(ctx, "parameters.0", d)
 		if request1 != nil {

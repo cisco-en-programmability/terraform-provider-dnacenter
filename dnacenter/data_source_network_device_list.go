@@ -429,7 +429,7 @@ ignores the other request parameters.
 
 						"managed_atleast_once": &schema.Schema{
 							Description: `Managed Atleast Once`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

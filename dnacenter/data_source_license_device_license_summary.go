@@ -173,7 +173,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_license_expired": &schema.Schema{
 							Description: `Is device license expired
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -181,7 +181,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_performance_allowed": &schema.Schema{
 							Description: `Is performance license available
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -189,7 +189,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_wireless": &schema.Schema{
 							Description: `Is device wireless controller
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -197,7 +197,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_wireless_capable": &schema.Schema{
 							Description: `Is device wireless capable
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

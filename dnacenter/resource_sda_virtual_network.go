@@ -215,10 +215,6 @@ func resourceSdaVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetVnFromSdaFabric", err,
-			// 	"Failure at GetVnFromSdaFabric, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -258,9 +254,6 @@ func resourceSdaVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData
 	queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 	item, restyResp1, err := client.Sda.GetVnFromSdaFabric(&queryParams1)
 	if err != nil || item == nil {
-		//diags = append(diags, diagErrorWithAlt(
-		//	"Failure when executing GetVNFromSDAFabric", err,
-		//	"Failure at GetVNFromSDAFabric, unexpected response", ""))
 		d.SetId("")
 		return diags
 	}

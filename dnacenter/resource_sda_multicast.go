@@ -295,10 +295,6 @@ func resourceSdaMulticastRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetMulticastDetailsFromSdaFabric", err,
-			// 	"Failure at GetMulticastDetailsFromSdaFabric, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -336,9 +332,6 @@ func resourceSdaMulticastDelete(ctx context.Context, d *schema.ResourceData, m i
 	queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 	item, restyResp1, err := client.Sda.GetMulticastDetailsFromSdaFabric(&queryParams1)
 	if err != nil || item == nil {
-		/*diags = append(diags, diagErrorWithAlt(
-		"Failure when executing GetMulticastDetailsFromSDAFabric", err,
-		"Failure at GetMulticastDetailsFromSDAFabric, unexpected response", ""))*/
 		d.SetId("")
 		return diags
 	}

@@ -89,7 +89,7 @@ func dataSourceNetwork() *schema.Resource {
 
 									"configure_dnac_ip": &schema.Schema{
 										Description: `Configure Dnac I P`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},

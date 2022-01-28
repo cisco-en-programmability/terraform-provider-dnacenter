@@ -56,7 +56,7 @@ func dataSourceNetworkDeviceStackDetails() *schema.Resource {
 									"link_active": &schema.Schema{
 										Description: `If stack port is in same state as link partner
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -64,7 +64,7 @@ func dataSourceNetworkDeviceStackDetails() *schema.Resource {
 									"link_ok": &schema.Schema{
 										Description: `If link is stable
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -214,7 +214,7 @@ func dataSourceNetworkDeviceStackDetails() *schema.Resource {
 									"dad_recovery_reload_enabled": &schema.Schema{
 										Description: `If dad recovery reload enabled
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -229,7 +229,7 @@ func dataSourceNetworkDeviceStackDetails() *schema.Resource {
 									"in_dad_recovery_mode": &schema.Schema{
 										Description: `If in dad recovery mode
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -323,7 +323,7 @@ func dataSourceNetworkDeviceStackDetails() *schema.Resource {
 															"dad_enabled": &schema.Schema{
 																Description: `If dadInterface is configured for dual active detection
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},

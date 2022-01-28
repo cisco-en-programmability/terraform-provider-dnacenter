@@ -267,10 +267,6 @@ func resourceDeviceReplacementRead(ctx context.Context, d *schema.ResourceData, 
 		response1, err := searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails(m, queryParams1, vFaultyDeviceID)
 
 		if err != nil || response1 == nil {
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing ReturnListOfReplacementDevicesWithReplacementDetails", err,
-			// 	"Failure at ReturnListOfReplacementDevicesWithReplacementDetails, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -320,7 +316,6 @@ func resourceDeviceReplacementUpdate(ctx context.Context, d *schema.ResourceData
 	}
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		request1 := expandRequestDeviceReplacementUnmarkDeviceForReplacement(ctx, "parameters.0", d)
 		if request1 != nil {
@@ -559,7 +554,6 @@ func searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails
 		queryParams.ReplacementDeviceSerialNumber = ""
 		queryParams.Offset = 1
 
-		//var allItems []*dnacenterskgo.ResponseItemApplicationPolicyGetApplications
 		nResponse, _, err := client.DeviceReplacement.ReturnListOfReplacementDevicesWithReplacementDetails(nil)
 		maxPageSize := len(*nResponse.Response)
 		//maxPageSize := 10
@@ -570,7 +564,6 @@ func searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails
 					foundItem = &item
 					return foundItem, err
 				}
-				//allItems = append(allItems, &item)
 			}
 			queryParams.Limit = maxPageSize
 			queryParams.Offset += maxPageSize

@@ -130,7 +130,7 @@ func dataSourceDiscoveryRange() *schema.Resource {
 									},
 
 									"secure": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -191,7 +191,7 @@ func dataSourceDiscoveryRange() *schema.Resource {
 									},
 
 									"secure": &schema.Schema{
-										// Type:     schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -220,7 +220,7 @@ func dataSourceDiscoveryRange() *schema.Resource {
 						},
 
 						"is_auto_cdp": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -327,7 +327,7 @@ func dataSourceDiscoveryRange() *schema.Resource {
 						},
 
 						"update_mgmt_ip": &schema.Schema{
-							// Type:     schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

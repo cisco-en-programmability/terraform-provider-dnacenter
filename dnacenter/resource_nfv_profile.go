@@ -149,7 +149,7 @@ func resourceNfvProfile() *schema.Resource {
 									"direct_internet_access_for_firewall": &schema.Schema{
 										Description: `Direct internet access value should be boolean (eg: false)
 `,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -163,7 +163,7 @@ func resourceNfvProfile() *schema.Resource {
 												"connect": &schema.Schema{
 													Description: `Connection of service provider and device value should be boolean (eg: true)
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -171,7 +171,7 @@ func resourceNfvProfile() *schema.Resource {
 												"connect_default_gateway_on_wan": &schema.Schema{
 													Description: `Default gateway connect value as boolean (eg: true)
 `,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -243,7 +243,7 @@ func resourceNfvProfile() *schema.Resource {
 															"assign_ip_address_to_network": &schema.Schema{
 																Description: `Assign ip address to network (eg: true)
 `,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -420,7 +420,7 @@ func resourceNfvProfile() *schema.Resource {
 									"direct_internet_access_for_firewall": &schema.Schema{
 										Description: `Direct internet access value should be boolean (eg: false or true)
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -434,7 +434,7 @@ func resourceNfvProfile() *schema.Resource {
 												"connect": &schema.Schema{
 													Description: `Connection of service provider and device value should be boolean (eg: true)
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -442,7 +442,7 @@ func resourceNfvProfile() *schema.Resource {
 												"connect_default_gateway_on_wan": &schema.Schema{
 													Description: `Connect default gateway connect value as boolean (eg: true)
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -643,10 +643,6 @@ func resourceNfvProfileRead(ctx context.Context, d *schema.ResourceData, m inter
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetNfvProfile", err,
-			// 	"Failure at GetNfvProfile, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}

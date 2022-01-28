@@ -57,7 +57,7 @@ func dataSourceComplianceCheckRun() *schema.Resource {
 				},
 			},
 			"trigger_full": &schema.Schema{
-				// Type:     schema.TypeBool,
+
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,

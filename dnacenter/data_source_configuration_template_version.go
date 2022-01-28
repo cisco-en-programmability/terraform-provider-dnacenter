@@ -36,7 +36,7 @@ func dataSourceConfigurationTemplateVersion() *schema.Resource {
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},

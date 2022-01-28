@@ -57,7 +57,7 @@ func resourceSdaVirtualNetworkV2() *schema.Resource {
 
 						"is_guest_virtual_network": &schema.Schema{
 							Description: `Is Guest Virtual Network`,
-							// Type:        schema.TypeBool,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -108,7 +108,7 @@ func resourceSdaVirtualNetworkV2() *schema.Resource {
 						"is_guest_virtual_network": &schema.Schema{
 							Description: `To create guest virtual network
 `,
-							// Type:        schema.TypeBool,
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -237,10 +237,6 @@ func resourceSdaVirtualNetworkV2Read(ctx context.Context, d *schema.ResourceData
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			// diags = append(diags, diagErrorWithAlt(
-			// 	"Failure when executing GetVirtualNetworkWithScalableGroups", err,
-			// 	"Failure at GetVirtualNetworkWithScalableGroups, unexpected response", ""))
-			// return diags
 			d.SetId("")
 			return diags
 		}
@@ -281,7 +277,6 @@ func resourceSdaVirtualNetworkV2Update(ctx context.Context, d *schema.ResourceDa
 
 	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestSdaVirtualNetworkV2UpdateVirtualNetworkWithScalableGroups(ctx, "parameters.0", d)
@@ -355,9 +350,6 @@ func resourceSdaVirtualNetworkV2Delete(ctx context.Context, d *schema.ResourceDa
 	queryParams1.VirtualNetworkName = vVirtualNetworkName
 	item, _, err := client.Sda.GetVirtualNetworkWithScalableGroups(&queryParams1)
 	if err != nil || item == nil {
-		//diags = append(diags, diagErrorWithAlt(
-		//	"Failure when executing GetVirtualNetworkWithScalableGroups", err,
-		//	"Failure at GetVirtualNetworkWithScalableGroups, unexpected response", ""))
 		d.SetId("")
 		return diags
 	}
