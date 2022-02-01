@@ -23,6 +23,18 @@ data "dnacenter_pnp_device_claim_to_site" "example" {
   device_id = "string"
   site_id   = "string"
   type      = "string"
+  hostname  = "string"
+  config_info {
+    config_id = "string"
+    config_parameters {
+      key   = "string"
+      value = "string"
+    }
+  }
+  image_info {
+    image_id = "string"
+    skip     = "false"
+  }
 }
 ```
 
@@ -31,14 +43,44 @@ data "dnacenter_pnp_device_claim_to_site" "example" {
 
 ### Optional
 
+- **config_info** (Block List) (see [below for nested schema](#nestedblock--config_info))
 - **device_id** (String)
+- **hostname** (String)
 - **id** (String) The ID of this resource.
+- **image_info** (Block List) (see [below for nested schema](#nestedblock--image_info))
 - **site_id** (String)
 - **type** (String)
 
 ### Read-Only
 
 - **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+
+<a id="nestedblock--config_info"></a>
+### Nested Schema for `config_info`
+
+Optional:
+
+- **config_id** (String)
+- **config_parameters** (Block List) (see [below for nested schema](#nestedblock--config_info--config_parameters))
+
+<a id="nestedblock--config_info--config_parameters"></a>
+### Nested Schema for `config_info.config_parameters`
+
+Optional:
+
+- **key** (String)
+- **value** (String)
+
+
+
+<a id="nestedblock--image_info"></a>
+### Nested Schema for `image_info`
+
+Optional:
+
+- **image_id** (String)
+- **skip** (String)
+
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`

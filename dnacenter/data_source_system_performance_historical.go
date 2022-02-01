@@ -58,22 +58,8 @@ func dataSourceSystemPerformanceHistorical() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"data": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeMap,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"t1": &schema.Schema{
-													Description: `Time in  'YYYY-MM-DDT00:00:00Z' format with values for legends
-`,
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-											},
-										},
 									},
 
 									"legends": &schema.Schema{
@@ -311,15 +297,13 @@ func flattenHealthAndPerformanceSystemPerformanceHistoricalApIItemKpisLegendsNet
 
 }
 
-func flattenHealthAndPerformanceSystemPerformanceHistoricalApIItemKpisData(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceHistoricalAPIKpisData) []map[string]interface{} {
+func flattenHealthAndPerformanceSystemPerformanceHistoricalApIItemKpisData(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceHistoricalAPIKpisData) map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["t1"] = item.T1
-
-	return []map[string]interface{}{
-		respItem,
+	for key, value := range *item {
+		respItem[key] = listNicely(value)
 	}
-
+	return respItem
 }

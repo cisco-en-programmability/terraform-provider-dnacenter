@@ -56,16 +56,8 @@ Read-Only:
 
 Read-Only:
 
-- **data** (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--data))
+- **data** (Map of String)
 - **legends** (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends))
-
-<a id="nestedobjatt--item--kpis--data"></a>
-### Nested Schema for `item.kpis.data`
-
-Read-Only:
-
-- **t1** (List of String)
-
 
 <a id="nestedobjatt--item--kpis--legends"></a>
 ### Nested Schema for `item.kpis.legends`

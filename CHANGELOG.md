@@ -1,3 +1,11 @@
+## 0.1.0-beta.1 (February 01, 2022)
+
+BUG FIXES:
+* dnacenter/data_source_system_performance_historical: Remove `t1` computed parameter from schema.
+
+IMPROVEMENTS:
+* dnacenter/data_source_pnp_device_claim_to_site: Add parameters `config_info, image_info, hostname` to schema.
+
 ## 0.1.0-beta (January 27, 2022)
 
 IMPROVEMENTS:
