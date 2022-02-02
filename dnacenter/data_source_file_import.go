@@ -1,6 +1,6 @@
 package dnacenter
 
-import (
+/*import (
 	"context"
 	"io"
 	"os"
@@ -111,3 +111,4 @@ func dataSourceFileImportRead(ctx context.Context, d *schema.ResourceData, m int
 	}
 	return diags
 }
+*/

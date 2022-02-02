@@ -1,8 +1,8 @@
 package dnacenter
 
+/*
 import (
 	"context"
-	"fmt"
 	"reflect"
 
 	"log"
@@ -145,3 +145,4 @@ func expandRequestNetworkDeviceCustomPromptCustomPromptPostAPI(ctx context.Conte
 	}
 	return &request
 }
+*/
