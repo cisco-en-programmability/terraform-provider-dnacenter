@@ -422,8 +422,8 @@ func Provider() *schema.Provider {
 			"dnacenter_event_webhook_crete":                            dataSourceEventWebhookCrete(),
 			"dnacenter_planned_access_points":                          dataSourcePlannedAccessPoints(),
 			"dnacenter_syslog_config_create":                           dataSourceSyslogConfigCreate(),
-			//"dnacenter_file_import":                                    dataSourceFileImport(),
-			"dnacenter_event_email_config_update": dataSourceEventEmailConfigUpdate(),
+			"dnacenter_file_import":                                    dataSourceFileImport(),
+			"dnacenter_event_email_config_update":                      dataSourceEventEmailConfigUpdate(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}

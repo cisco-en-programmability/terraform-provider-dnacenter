@@ -1,13 +1,13 @@
 package dnacenter
 
-/*import (
+import (
 	"context"
 	"io"
 	"os"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -50,8 +50,9 @@ func dataSourceFileImportRead(ctx context.Context, d *schema.ResourceData, m int
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
+	vFileName := d.Get("file_name")
+	vFilePath := d.Get("file_path")
 	vNameSpace := d.Get("name_space")
-
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: UploadFile")
@@ -111,4 +112,3 @@ func dataSourceFileImportRead(ctx context.Context, d *schema.ResourceData, m int
 	}
 	return diags
 }
-*/
