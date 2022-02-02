@@ -1,0 +1,1 @@
+terraform import dnacenter_network_device_custom_prompt.example "id:=string"
