@@ -108,7 +108,7 @@ func Provider() *schema.Provider {
 			"dnacenter_business_sda_hostonboarding_ssid_ippool": resourceBusinessSdaHostonboardingSSIDIPpool(),
 			"dnacenter_endpoint_analytics_profiling_rules":      resourceEndpointAnalyticsProfilingRules(),
 			"dnacenter_qos_device_interface":                    resourceQosDeviceInterface(),
-			//"dnacenter_network_device_custom_prompt":            resourceNetworkDeviceCustomPrompt(),
+			"dnacenter_network_device_custom_prompt":            resourceNetworkDeviceCustomPrompt(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"dnacenter_reserve_ip_subpool":                             dataSourceReserveIPSubpool(),
