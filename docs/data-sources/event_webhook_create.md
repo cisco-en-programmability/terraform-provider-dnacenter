@@ -16,7 +16,7 @@ It performs create operation on Event Management.
 ## Example Usage
 
 ```terraform
-data "dnacevent_webhook_crete" "example" {
+data "dnacevent_webhook_create" "example" {
   provider    = dnac
   description = "string"
   headers {

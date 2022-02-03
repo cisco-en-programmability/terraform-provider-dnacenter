@@ -419,7 +419,7 @@ func Provider() *schema.Provider {
 			"dnacenter_event_config_connector_types":                   dataSourceEventConfigConnectorTypes(),
 			"dnacenter_lan_automation_count":                           dataSourceLanAutomationCount(),
 			"dnacenter_syslog_config_update":                           dataSourceSyslogConfigUpdate(),
-			"dnacenter_event_webhook_crete":                            dataSourceEventWebhookCrete(),
+			"dnacenter_event_webhook_create":                           dataSourceEventWebhookCrete(),
 			"dnacenter_planned_access_points":                          dataSourcePlannedAccessPoints(),
 			"dnacenter_syslog_config_create":                           dataSourceSyslogConfigCreate(),
 			"dnacenter_file_import":                                    dataSourceFileImport(),
