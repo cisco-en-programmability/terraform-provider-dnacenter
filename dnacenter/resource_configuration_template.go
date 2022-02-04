@@ -52,7 +52,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-							
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -65,7 +65,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-										
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -195,7 +195,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -208,7 +208,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -254,7 +254,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -396,7 +396,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -409,7 +409,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -455,7 +455,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -519,7 +519,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"custom_params_order": &schema.Schema{
 							Description: `Custom Params Order
 `,
-							
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -559,7 +559,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"document_database": &schema.Schema{
 							Description: `Document Database
 `,
-							
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -608,7 +608,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"project_associated": &schema.Schema{
 							Description: `Project Associated
 `,
-							
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -699,7 +699,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-										
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -712,7 +712,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-										
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -758,7 +758,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-										
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -918,7 +918,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-										
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -931,7 +931,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-										
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -977,7 +977,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-										
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1073,7 +1073,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-        Required: true,
+				Required: true,
 				MaxItems: 1,
 				MinItems: 1,
 				Elem: &schema.Resource{
@@ -1088,7 +1088,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-							
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -1102,7 +1102,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-										
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1233,7 +1233,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1247,7 +1247,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1294,7 +1294,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1439,7 +1439,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1453,7 +1453,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1500,7 +1500,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1567,7 +1567,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"custom_params_order": &schema.Schema{
 							Description: `Custom Params Order
 `,
-							
+
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -1734,7 +1734,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-										
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1748,7 +1748,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-										
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1795,7 +1795,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-										
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1964,7 +1964,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-										
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1978,7 +1978,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-										
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2025,7 +2025,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-										
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
