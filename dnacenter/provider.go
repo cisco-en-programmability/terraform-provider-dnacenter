@@ -127,7 +127,6 @@ func Provider() *schema.Provider {
 			"dnacenter_service_provider":                         resourceServiceProvider(),
 			"dnacenter_site":                                     resourceSite(),
 			"dnacenter_site_assign":                              resourceSiteAssign(),
-			"dnacenter_configuration_template":                   resourceConfigurationTemplate(),
 			"dnacenter_swim_image_file":                          resourceSwimImageFile(),
 			"dnacenter_swim_image_url":                           resourceSwimImageURL(),
 		},
