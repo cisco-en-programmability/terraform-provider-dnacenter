@@ -22,8 +22,6 @@ func resourceSite() *schema.Resource {
 - Update site area/building/floor with specified hierarchy and new values
 
 - Delete site with area/building/floor by siteId.
-
-- Assigns list of devices to a site
 `,
 
 		CreateContext: resourceSiteCreate,
@@ -39,85 +37,12 @@ func resourceSite() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"device": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"response": &schema.Schema{
-										Description: `Response`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"site_id": &schema.Schema{
-										Description: `Site Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-									"version": &schema.Schema{
-										Description: `Version`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-								},
-							},
-						},
-						"site": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"response": &schema.Schema{
-										Description: `Response`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"version": &schema.Schema{
-										Description: `Version`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-								},
-							},
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"device": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"ip": &schema.Schema{
-										Description: `Device ip (eg: 10.104.240.64)
-`,
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-								},
-							},
-						},
 						"site": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
@@ -133,14 +58,16 @@ func resourceSite() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description: `Name of the area (eg: Area1)
+`,
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 												"parent_name": &schema.Schema{
-													Description: `Parent Name`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description: `Parent name of the area to be created
+`,
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 											},
 										},
@@ -153,29 +80,34 @@ func resourceSite() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"address": &schema.Schema{
-													Description: `Address`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description: `Address of the building to be created
+`,
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 												"latitude": &schema.Schema{
-													Description: `Latitude`,
-													Type:        schema.TypeFloat,
-													Optional:    true,
+													Description: `Latitude coordinate of the building (eg:37.338)
+`,
+													Type:     schema.TypeFloat,
+													Optional: true,
 												},
 												"longitude": &schema.Schema{
-													Description: `Longitude`,
-													Type:        schema.TypeFloat,
-													Optional:    true,
+													Description: `Longitude coordinate of the building (eg:-121.832)
+`,
+													Type:     schema.TypeFloat,
+													Optional: true,
 												},
 												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description: `Name of the building (eg: building1)
+`,
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 												"parent_name": &schema.Schema{
-													Description: `Parent Name`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description: `Parent name of building to be created
+`,
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 											},
 										},
@@ -188,30 +120,40 @@ func resourceSite() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"height": &schema.Schema{
-													Description: `Height`,
-													Type:        schema.TypeFloat,
-													Optional:    true,
+													Description: `Height of the floor (eg: 15)
+`,
+													Type:     schema.TypeFloat,
+													Optional: true,
 												},
 												"length": &schema.Schema{
-													Description: `Length`,
-													Type:        schema.TypeFloat,
-													Optional:    true,
+													Description: `Length of the floor (eg: 100)
+`,
+													Type:     schema.TypeFloat,
+													Optional: true,
 												},
 												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description: `Name of the floor (eg:floor-1)
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"parent_name": &schema.Schema{
+													Description: `Parent name of the floor to be created
+`,
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 												"rf_model": &schema.Schema{
-													Description: `Rf Model. Allowed values are 'Cubes And Walled Offices', 'Drywall Office Only', 'Indoor High Ceiling', 'Outdoor Open Space'
+													Description: `Type of floor. Allowed values are 'Cubes And Walled Offices', 'Drywall Office Only', 'Indoor High Ceiling', 'Outdoor Open Space'.
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 												},
 												"width": &schema.Schema{
-													Description: `Width`,
-													Type:        schema.TypeFloat,
-													Optional:    true,
+													Description: `Width of the floor (eg:100)
+`,
+													Type:     schema.TypeFloat,
+													Optional: true,
 												},
 											},
 										},
@@ -226,9 +168,10 @@ func resourceSite() *schema.Resource {
 							Required: true,
 						},
 						"type": &schema.Schema{
-							Description: `Type`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description: `Type of site to create (eg: area, building, floor)
+`,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -243,40 +186,20 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestSiteAssignDeviceToSite(ctx, "parameters.0", d)
+	request1 := expandRequestSiteCreateSite(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vSiteID, okSiteID := resourceItem["site_id"]
 	vvSiteID := interfaceToString(vSiteID)
-	if okSiteID && vvSiteID != "" {
-		getResponse2, _, err := client.Sites.GetMembership(vvSiteID, nil)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["site_id"] = vvSiteID
-			d.SetId(joinResourceID(resourceMap))
-			return resourceSiteRead(ctx, d, m)
-		}
-	} else {
-		response2, _, err := client.Sites.GetSite(nil)
-		if response2 != nil && err == nil {
-			item2, err := searchSitesGetSite(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
-				resourceMap := make(map[string]string)
-				resourceMap["site_id"] = vvSiteID
-				d.SetId(joinResourceID(resourceMap))
-				return resourceSiteRead(ctx, d, m)
-			}
-		}
-	}
-	resp1, restyResp1, err := client.Sites.AssignDeviceToSite(request1)
+	resp1, restyResp1, err := client.Sites.CreateSite(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
-				"Failure when executing AssignDeviceToSite", err, restyResp1.String()))
+				"Failure when executing CreateSite", err, restyResp1.String()))
 			return diags
 		}
 		diags = append(diags, diagError(
-			"Failure when executing AssignDeviceToSite", err))
+			"Failure when executing CreateSite", err))
 		return diags
 	}
 	resourceMap := make(map[string]string)
@@ -292,90 +215,38 @@ func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSiteID, okSiteID := resourceMap["site_id"]
-	vOffset, okOffset := resourceMap["offset"]
-	vLimit, okLimit := resourceMap["limit"]
-	vDeviceFamily, okDeviceFamily := resourceMap["device_family"]
-	vSerialNumber, okSerialNumber := resourceMap["serial_number"]
-	vName, okName := resourceMap["name"]
-	vSiteID, okSiteID := resourceMap["site_id"]
-	vType, okType := resourceMap["type"]
-	vOffset, okOffset := resourceMap["offset"]
-	vLimit, okLimit := resourceMap["limit"]
+	vName := resourceMap["name"]
+	vSiteID := resourceMap["site_id"]
+	vType := resourceMap["type"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
 
-	method1 := []bool{okSiteID, okOffset, okLimit, okDeviceFamily, okSerialNumber}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okName, okSiteID, okType, okOffset, okLimit}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
-
-	selectedMethod := pickMethod([][]bool{method1, method2})
+	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetMembership")
-		vvSiteID := vSiteID
-		queryParams1 := dnacentersdkgo.GetMembershipQueryParams{}
+		log.Printf("[DEBUG] Selected method 1: GetSite")
+		queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
 
+		if okName {
+			queryParams1.Name = vName
+		}
+		if okSiteID {
+			queryParams1.SiteID = vSiteID
+		}
+		if okType {
+			queryParams1.Type = vType
+		}
 		if okOffset {
 			queryParams1.Offset = vOffset
 		}
 		if okLimit {
 			queryParams1.Limit = vLimit
 		}
-		if okDeviceFamily {
-			queryParams1.DeviceFamily = vDeviceFamily
-		}
-		if okSerialNumber {
-			queryParams1.SerialNumber = vSerialNumber
-		}
 
-		response1, restyResp1, err := client.Sites.GetMembership(vvSiteID, &queryParams1)
+		response1, restyResp1, err := client.Sites.GetSite(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetMembership", err,
-				"Failure at GetMembership, unexpected response", ""))
-			return diags
-		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		vItem1 := flattenSitesGetMembershipItem(response1)
-		if err := d.Set("item", vItem1); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetMembership response",
-				err))
-			return diags
-		}
-		return diags
-
-	}
-	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetSite")
-		queryParams2 := dnacentersdkgo.GetSiteQueryParams{}
-
-		if okName {
-			queryParams2.Name = vName
-		}
-		if okSiteID {
-			queryParams2.SiteID = vSiteID
-		}
-		if okType {
-			queryParams2.Type = vType
-		}
-		if okOffset {
-			queryParams2.Offset = vOffset
-		}
-		if okLimit {
-			queryParams2.Limit = vLimit
-		}
-
-		response2, restyResp2, err := client.Sites.GetSite(&queryParams2)
-
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSite", err,
@@ -383,12 +254,12 @@ func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		//TODO FOR DNAC
 
-		vItem2 := flattenSitesGetSiteItems(response2)
-		if err := d.Set("parameters", vItem2); err != nil {
+		vItem1 := flattenSitesGetSiteItems(response1)
+		if err := d.Set("parameters", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSite search response",
 				err))
@@ -406,37 +277,18 @@ func resourceSiteUpdate(ctx context.Context, d *schema.ResourceData, m interface
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSiteID, okSiteID := resourceMap["site_id"]
-	vOffset, okOffset := resourceMap["offset"]
-	vLimit, okLimit := resourceMap["limit"]
-	vDeviceFamily, okDeviceFamily := resourceMap["device_family"]
-	vSerialNumber, okSerialNumber := resourceMap["serial_number"]
+	vName := resourceMap["name"]
+	vSiteID := resourceMap["site_id"]
+	vType := resourceMap["type"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
 
-	queryParams1 := dnacentersdkgo.GetMembershipQueryParams
+	queryParams1 := dnacentersdkgo.GetSiteQueryParams
+	queryParams1.Name = vName
+	queryParams1.SiteID = vSiteID
+	queryParams1.Type = vType
 	queryParams1.Offset = vOffset
 	queryParams1.Limit = vLimit
-	queryParams1.DeviceFamily = vDeviceFamily
-	queryParams1.SerialNumber = vSerialNumber
-	item, err := searchSitesGetMembership(m, queryParams1)
-	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetMembership", err,
-			"Failure at GetMembership, unexpected response", ""))
-		return diags
-	}
-
-	vName, okName := resourceMap["name"]
-	vSiteID, okSiteID := resourceMap["site_id"]
-	vType, okType := resourceMap["type"]
-	vOffset, okOffset := resourceMap["offset"]
-	vLimit, okLimit := resourceMap["limit"]
-
-	queryParams2 := dnacentersdkgo.GetSiteQueryParams
-	queryParams2.Name = vName
-	queryParams2.SiteID = vSiteID
-	queryParams2.Type = vType
-	queryParams2.Offset = vOffset
-	queryParams2.Limit = vLimit
 	item, err := searchSitesGetSite(m, queryParams1)
 	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
@@ -445,19 +297,11 @@ func resourceSiteUpdate(ctx context.Context, d *schema.ResourceData, m interface
 		return diags
 	}
 
-	method1 := []bool{okSiteID, okOffset, okLimit, okDeviceFamily, okSerialNumber}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okName, okSiteID, okType, okOffset, okLimit}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
-
-	selectedMethod := pickMethod([][]bool{method1, method2})
+	selectedMethod := 1
 	var vvID string
 	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 2 { }
-	if selectedMethod == 1 {
-		vvID = vID
-	}
+	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSiteUpdateSite(ctx, "parameters.0", d)
@@ -489,37 +333,18 @@ func resourceSiteDelete(ctx context.Context, d *schema.ResourceData, m interface
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSiteID, okSiteID := resourceMap["site_id"]
-	vOffset, okOffset := resourceMap["offset"]
-	vLimit, okLimit := resourceMap["limit"]
-	vDeviceFamily, okDeviceFamily := resourceMap["device_family"]
-	vSerialNumber, okSerialNumber := resourceMap["serial_number"]
+	vName := resourceMap["name"]
+	vSiteID := resourceMap["site_id"]
+	vType := resourceMap["type"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
 
-	queryParams1 := dnacentersdkgo.GetMembershipQueryParams
+	queryParams1 := dnacentersdkgo.GetSiteQueryParams
+	queryParams1.Name = vName
+	queryParams1.SiteID = vSiteID
+	queryParams1.Type = vType
 	queryParams1.Offset = vOffset
 	queryParams1.Limit = vLimit
-	queryParams1.DeviceFamily = vDeviceFamily
-	queryParams1.SerialNumber = vSerialNumber
-	item, err := searchSitesGetMembership(m, queryParams1)
-	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetMembership", err,
-			"Failure at GetMembership, unexpected response", ""))
-		return diags
-	}
-
-	vName, okName := resourceMap["name"]
-	vSiteID, okSiteID := resourceMap["site_id"]
-	vType, okType := resourceMap["type"]
-	vOffset, okOffset := resourceMap["offset"]
-	vLimit, okLimit := resourceMap["limit"]
-
-	queryParams2 := dnacentersdkgo.GetSiteQueryParams
-	queryParams2.Name = vName
-	queryParams2.SiteID = vSiteID
-	queryParams2.Type = vType
-	queryParams2.Offset = vOffset
-	queryParams2.Limit = vLimit
 	item, err := searchSitesGetSite(m, queryParams1)
 	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
@@ -528,40 +353,27 @@ func resourceSiteDelete(ctx context.Context, d *schema.ResourceData, m interface
 		return diags
 	}
 
-	method1 := []bool{okSiteID, okOffset, okLimit, okDeviceFamily, okSerialNumber}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okName, okSiteID, okType, okOffset, okLimit}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
-
-	selectedMethod := pickMethod([][]bool{method1, method2})
+	selectedMethod := 1
 	var vvID string
 	var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
-	if selectedMethod == 2 {
+	if selectedMethod == 1 {
 
-		getResp2, _, err := client.Sites.GetSite(nil)
-		if err != nil || getResp2 == nil {
+		getResp1, _, err := client.Sites.GetSite(nil)
+		if err != nil || getResp1 == nil {
 			// Assume that element it is already gone
 			return diags
 		}
-		items2 := getAllItemsSitesGetSite(m, getResp2, nil)
-		item2, err := searchSitesGetSite(m, items2, vName, vID)
-		if err != nil || item2 == nil {
+		items1 := getAllItemsSitesGetSite(m, getResp1, nil)
+		item1, err := searchSitesGetSite(m, items1, vName, vID)
+		if err != nil || item1 == nil {
 			// Assume that element it is already gone
 			return diags
 		}
-		if vID != item2.ID {
-			vvID = item2.ID
+		if vID != item1.ID {
+			vvID = item1.ID
 		} else {
 			vvID = vID
-		}
-	}
-	if selectedMethod == 1 {
-		vvID = vID
-		getResp, _, err := client.Sites.GetMembership(vvSiteID)
-		if err != nil || getResp == nil {
-			// Assume that element it is already gone
-			return diags
 		}
 	}
 	response1, restyResp1, err := client.Sites.DeleteSite(vvSiteID)
@@ -585,10 +397,13 @@ func resourceSiteDelete(ctx context.Context, d *schema.ResourceData, m interface
 
 	return diags
 }
-func expandRequestSiteAssignDeviceToSite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesAssignDeviceToSite {
-	request := dnacentersdkgo.RequestSitesAssignDeviceToSite{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device")))) {
-		request.Device = expandRequestSiteAssignDeviceToSiteDeviceArray(ctx, key+".device", d)
+func expandRequestSiteCreateSite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesCreateSite {
+	request := dnacentersdkgo.RequestSitesCreateSite{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
+		request.Type = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site")))) {
+		request.Site = expandRequestSiteCreateSiteSite(ctx, key+".site.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -597,22 +412,16 @@ func expandRequestSiteAssignDeviceToSite(ctx context.Context, key string, d *sch
 	return &request
 }
 
-func expandRequestSiteAssignDeviceToSiteDeviceArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestSitesAssignDeviceToSiteDevice {
-	request := []dnacentersdkgo.RequestSitesAssignDeviceToSiteDevice{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
+func expandRequestSiteCreateSiteSite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesCreateSiteSite {
+	request := dnacentersdkgo.RequestSitesCreateSiteSite{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".area")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".area")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".area")))) {
+		request.Area = expandRequestSiteCreateSiteSiteArea(ctx, key+".area.0", d)
 	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".building")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".building")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".building")))) {
+		request.Building = expandRequestSiteCreateSiteSiteBuilding(ctx, key+".building.0", d)
 	}
-	for item_no, _ := range objs {
-		i := expandRequestSiteAssignDeviceToSiteDevice(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor")))) {
+		request.Floor = expandRequestSiteCreateSiteSiteFloor(ctx, key+".floor.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -621,10 +430,64 @@ func expandRequestSiteAssignDeviceToSiteDeviceArray(ctx context.Context, key str
 	return &request
 }
 
-func expandRequestSiteAssignDeviceToSiteDevice(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesAssignDeviceToSiteDevice {
-	request := dnacentersdkgo.RequestSitesAssignDeviceToSiteDevice{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip")))) {
-		request.IP = interfaceToString(v)
+func expandRequestSiteCreateSiteSiteArea(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesCreateSiteSiteArea {
+	request := dnacentersdkgo.RequestSitesCreateSiteSiteArea{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_name")))) {
+		request.ParentName = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestSiteCreateSiteSiteBuilding(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesCreateSiteSiteBuilding {
+	request := dnacentersdkgo.RequestSitesCreateSiteSiteBuilding{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".address")))) {
+		request.Address = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_name")))) {
+		request.ParentName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".latitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".latitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".latitude")))) {
+		request.Latitude = interfaceToFloat64Ptr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".longitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".longitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".longitude")))) {
+		request.Longitude = interfaceToFloat64Ptr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestSiteCreateSiteSiteFloor(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesCreateSiteSiteFloor {
+	request := dnacentersdkgo.RequestSitesCreateSiteSiteFloor{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_name")))) {
+		request.ParentName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rf_model")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rf_model")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rf_model")))) {
+		request.RfModel = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".width")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".width")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".width")))) {
+		request.Width = interfaceToFloat64Ptr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".length")))) {
+		request.Length = interfaceToFloat64Ptr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".height")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".height")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".height")))) {
+		request.Height = interfaceToFloat64Ptr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
