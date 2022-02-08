@@ -210,6 +210,23 @@ func flattenDiscoveryGetGlobalCredentialsItems(items *[]dnacentersdkgo.ResponseD
 	return respItems
 }
 
+func flattenDiscoveryGetGlobalCredentialsItem(item *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+
+	respItem := make(map[string]interface{})
+	respItem["comments"] = item.Comments
+	respItem["credential_type"] = item.CredentialType
+	respItem["description"] = item.Description
+	respItem["id"] = item.ID
+	respItem["instance_tenant_id"] = item.InstanceTenantID
+	respItem["instance_uuid"] = item.InstanceUUID
+	return []map[string]interface{}{
+		respItem,
+	}
+}
+
 func flattenDiscoveryGetCredentialSubTypeByCredentialIDItem(item *dnacentersdkgo.ResponseDiscoveryGetCredentialSubTypeByCredentialID) []map[string]interface{} {
 	if item == nil {
 		return nil
