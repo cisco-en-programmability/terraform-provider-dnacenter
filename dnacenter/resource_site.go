@@ -2,8 +2,10 @@ package dnacenter
 
 import (
 	"context"
-	"fmt"
 	"reflect"
+	"strconv"
+	"strings"
+	"time"
 
 	"log"
 
@@ -36,6 +38,59 @@ func resourceSite() *schema.Resource {
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"additional_info": &schema.Schema{
+							Description: `Additional Info`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+
+						"id": &schema.Schema{
+							Description: `Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"instance_tenant_id": &schema.Schema{
+							Description: `Instance Tenant Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"name": &schema.Schema{
+							Description: `Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"parent_id": &schema.Schema{
+							Description: `Parent Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"site_hierarchy": &schema.Schema{
+							Description: `Site Hierarchy`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"site_name_hierarchy": &schema.Schema{
+							Description: `Site Name Hierarchy`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
@@ -165,14 +220,32 @@ func resourceSite() *schema.Resource {
 							Description: `siteId path parameter. Site id to which site details to be updated.
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"type": &schema.Schema{
 							Description: `Type of site to create (eg: area, building, floor)
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
+						/*"runsync": &schema.Schema{
+													Description: `HeaderParam
+						`,
+													Type:     schema.TypeString,
+													Required: true,
+												},
+												"timeout": &schema.Schema{
+													Description: `HeaderParam
+						`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"persistbapioutput": &schema.Schema{
+													Description: `HeaderParam
+						`,
+													Type:     schema.TypeString,
+													Required: true,
+												},*/
 					},
 				},
 			},
@@ -189,9 +262,61 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 	request1 := expandRequestSiteCreateSite(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	vSiteID, okSiteID := resourceItem["site_id"]
+	vSiteID := resourceItem["site_id"]
 	vvSiteID := interfaceToString(vSiteID)
-	resp1, restyResp1, err := client.Sites.CreateSite(request1)
+	vType := resourceItem["type"]
+	vvType := interfaceToString(vType)
+	/*vTimeout, okTimeout := resourceItem["timeout"]
+	vvTimeout := interfaceToString(vTimeout)
+	vRunsync := resourceItem["runsync"]
+	vvRunsync := interfaceToString(vRunsync)
+	vPersistbapioutput := resourceItem["persistbapioutput"]
+	vvPersistbapioutput := interfaceToString(vPersistbapioutput)*/
+
+	vvName := ""
+	vvParentName := ""
+	if _, ok := d.GetOk("parameters.0"); ok {
+		if _, ok := d.GetOk("parameters.0.site"); ok {
+			if _, ok := d.GetOk("parameters.0.site.0"); ok {
+				if _, ok := d.GetOk("parameters.0.site.0." + vvType); ok {
+					if v, ok := d.GetOk("parameters.0.site.0." + vvType + ".0.name"); ok {
+						vvName = interfaceToString(v)
+					}
+					if v2, ok := d.GetOk("parameters.0.site.0." + vvType + ".0.parent_name"); ok {
+						vvParentName = interfaceToString(v2)
+					}
+				}
+			}
+		}
+	}
+
+	pathName := []string{vvParentName, vvName}
+	newName := strings.Join(pathName, "/")
+	queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
+	queryParams1.Name = newName
+	queryParams1.SiteID = vvSiteID
+	queryParams1.Type = vvType
+
+	item, err := searchSitesGetSite(m, queryParams1)
+	if err != nil || item != nil {
+		resourceMap := make(map[string]string)
+		resourceMap["site_id"] = vvSiteID
+		resourceMap["type"] = vvType
+		resourceMap["name"] = vvName
+		resourceMap["parent_name"] = vvParentName
+		/*resourceMap["runsync"] = vvRunsync
+		resourceMap["persistbapioutput"] = vvPersistbapioutput
+		resourceMap["timeout"] = vvTimeout*/
+		d.SetId(joinResourceID(resourceMap))
+		return resourceSiteRead(ctx, d, m)
+	}
+	headers := dnacentersdkgo.CreateSiteHeaderParams{}
+	headers.Persistbapioutput = "false"
+	headers.Runsync = "false"
+	/*if okTimeout {
+		headers.Timeout = vvTimeout
+	}*/
+	resp1, restyResp1, err := client.Sites.CreateSite(request1, &headers)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
@@ -202,8 +327,50 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 			"Failure when executing CreateSite", err))
 		return diags
 	}
+
+	executionId := resp1.ExecutionID
+	log.Printf("[DEBUG] ExecutionID => %s", executionId)
+	if executionId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetBusinessAPIExecutionDetails", err,
+				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+			return diags
+		}
+		for response2.Status == "IN_PROGRESS" {
+			time.Sleep(10 * time.Second)
+			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp1 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+		}
+		if response2.Status == "FAILURE" {
+			bapiError := response2.BapiError
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing CreateSite", err,
+				"Failure at CreateSite execution", bapiError))
+			return diags
+		}
+	}
 	resourceMap := make(map[string]string)
 	resourceMap["site_id"] = vvSiteID
+	resourceMap["type"] = vvType
+	resourceMap["name"] = vvName
+	resourceMap["parent_name"] = vvParentName
+	/*resourceMap["runsync"] = vvRunsync
+	resourceMap["persistbapioutput"] = vvPersistbapioutput
+	resourceMap["timeout"] = vvTimeout*/
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSiteRead(ctx, d, m)
 }
@@ -212,54 +379,36 @@ func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vName := resourceMap["name"]
 	vSiteID := resourceMap["site_id"]
 	vType := resourceMap["type"]
-	vOffset := resourceMap["offset"]
-	vLimit := resourceMap["limit"]
+	vParentName := resourceMap["parent_name"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
+		pathName := []string{vParentName, vName}
+		newName := strings.Join(pathName, "/")
 		log.Printf("[DEBUG] Selected method 1: GetSite")
 		queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
-
-		if okName {
-			queryParams1.Name = vName
-		}
-		if okSiteID {
-			queryParams1.SiteID = vSiteID
-		}
-		if okType {
-			queryParams1.Type = vType
-		}
-		if okOffset {
-			queryParams1.Offset = vOffset
-		}
-		if okLimit {
-			queryParams1.Limit = vLimit
-		}
-
+		queryParams1.Name = newName
+		queryParams1.SiteID = vSiteID
+		queryParams1.Type = vType
 		response1, restyResp1, err := client.Sites.GetSite(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSite", err,
-				"Failure at GetSite, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		//TODO FOR DNAC
-
-		vItem1 := flattenSitesGetSiteItems(response1)
-		if err := d.Set("parameters", vItem1); err != nil {
+		vItem1 := flattenSitesGetSiteItems(response1.Response)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSite search response",
 				err))
@@ -280,15 +429,16 @@ func resourceSiteUpdate(ctx context.Context, d *schema.ResourceData, m interface
 	vName := resourceMap["name"]
 	vSiteID := resourceMap["site_id"]
 	vType := resourceMap["type"]
-	vOffset := resourceMap["offset"]
-	vLimit := resourceMap["limit"]
-
-	queryParams1 := dnacentersdkgo.GetSiteQueryParams
-	queryParams1.Name = vName
+	vParentName := resourceMap["parent_name"]
+	/*vRunsync := resourceMap["runsync"]
+	vPersistbapioutput := resourceMap["persistbapioutput"]
+	vTimeout := resourceMap["timeout"]*/
+	pathName := []string{vParentName, vName}
+	newName := strings.Join(pathName, "/")
+	queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
+	queryParams1.Name = newName
 	queryParams1.SiteID = vSiteID
 	queryParams1.Type = vType
-	queryParams1.Offset = vOffset
-	queryParams1.Limit = vLimit
 	item, err := searchSitesGetSite(m, queryParams1)
 	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
@@ -296,17 +446,24 @@ func resourceSiteUpdate(ctx context.Context, d *schema.ResourceData, m interface
 			"Failure at GetSite, unexpected response", ""))
 		return diags
 	}
-
-	selectedMethod := 1
+	if vSiteID != item.ID {
+		vSiteID = item.ID
+	}
 	var vvID string
-	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSiteUpdateSite(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		response1, restyResp1, err := client.Sites.UpdateSite(vvSiteID, request1)
+		headers := dnacentersdkgo.UpdateSiteHeaderParams{}
+		headers.Persistbapioutput = "false"
+		headers.Runsync = "false"
+		/*if vTimeout != "" {
+			headers.Timeout = vTimeout
+		}*/
+
+		response1, restyResp1, err := client.Sites.UpdateSite(vSiteID, request1, &headers)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
@@ -319,6 +476,15 @@ func resourceSiteUpdate(ctx context.Context, d *schema.ResourceData, m interface
 				"Failure when executing UpdateSite", err,
 				"Failure at UpdateSite, unexpected response", ""))
 			return diags
+		}
+		if response1.Response != nil {
+			errorResult, _ := strconv.ParseBool(response1.Response.IsError)
+			if errorResult {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing UpdateSite", err,
+					"Failure at UpdateSite, unexpected response", ""))
+				return diags
+			}
 		}
 	}
 
@@ -336,47 +502,24 @@ func resourceSiteDelete(ctx context.Context, d *schema.ResourceData, m interface
 	vName := resourceMap["name"]
 	vSiteID := resourceMap["site_id"]
 	vType := resourceMap["type"]
-	vOffset := resourceMap["offset"]
-	vLimit := resourceMap["limit"]
-
-	queryParams1 := dnacentersdkgo.GetSiteQueryParams
+	vParentName := resourceMap["parent_name"]
+	pathName := []string{vParentName, vName}
+	newName := strings.Join(pathName, "/")
+	queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
 	queryParams1.Name = vName
-	queryParams1.SiteID = vSiteID
+	queryParams1.SiteID = newName
 	queryParams1.Type = vType
-	queryParams1.Offset = vOffset
-	queryParams1.Limit = vLimit
 	item, err := searchSitesGetSite(m, queryParams1)
 	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetSite", err,
-			"Failure at GetSite, unexpected response", ""))
+		d.SetId("")
 		return diags
 	}
 
-	selectedMethod := 1
-	var vvID string
-	var vvName string
-	// REVIEW: Add getAllItems and search function to get missing params
-	if selectedMethod == 1 {
-
-		getResp1, _, err := client.Sites.GetSite(nil)
-		if err != nil || getResp1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		items1 := getAllItemsSitesGetSite(m, getResp1, nil)
-		item1, err := searchSitesGetSite(m, items1, vName, vID)
-		if err != nil || item1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		if vID != item1.ID {
-			vvID = item1.ID
-		} else {
-			vvID = vID
-		}
+	if vSiteID != item.ID {
+		vSiteID = item.ID
 	}
-	response1, restyResp1, err := client.Sites.DeleteSite(vvSiteID)
+
+	response1, restyResp1, err := client.Sites.DeleteSite(vSiteID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -391,6 +534,12 @@ func resourceSiteDelete(ctx context.Context, d *schema.ResourceData, m interface
 		return diags
 	}
 
+	if response1.Status == "FAILURE" {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing DeleteSite", err,
+			"Failure at DeleteSite, unexpected response", ""))
+		return diags
+	}
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")
@@ -414,14 +563,27 @@ func expandRequestSiteCreateSite(ctx context.Context, key string, d *schema.Reso
 
 func expandRequestSiteCreateSiteSite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesCreateSiteSite {
 	request := dnacentersdkgo.RequestSitesCreateSiteSite{}
+	var typeStr string
+	if typeS, ok := d.GetOkExists(fixKeyAccess("parameters.0.type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess("parameters.0.type")))) && (ok || !reflect.DeepEqual(typeS, d.Get(fixKeyAccess("parameters.0.type")))) {
+		typeStr = interfaceToString(typeS)
+	} else {
+		return nil
+	}
+
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".area")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".area")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".area")))) {
-		request.Area = expandRequestSiteCreateSiteSiteArea(ctx, key+".area.0", d)
+		if typeStr == "area" {
+			request.Area = expandRequestSiteCreateSiteSiteArea(ctx, key+".area.0", d)
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".building")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".building")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".building")))) {
-		request.Building = expandRequestSiteCreateSiteSiteBuilding(ctx, key+".building.0", d)
+		if typeStr == "building" {
+			request.Building = expandRequestSiteCreateSiteSiteBuilding(ctx, key+".building.0", d)
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor")))) {
-		request.Floor = expandRequestSiteCreateSiteSiteFloor(ctx, key+".floor.0", d)
+		if typeStr == "floor" {
+			request.Floor = expandRequestSiteCreateSiteSiteFloor(ctx, key+".floor.0", d)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -513,14 +675,26 @@ func expandRequestSiteUpdateSite(ctx context.Context, key string, d *schema.Reso
 
 func expandRequestSiteUpdateSiteSite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesUpdateSiteSite {
 	request := dnacentersdkgo.RequestSitesUpdateSiteSite{}
+	var typeStr string
+	if typeS, ok := d.GetOkExists(fixKeyAccess("parameters.0.type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess("parameters.0.type")))) && (ok || !reflect.DeepEqual(typeS, d.Get(fixKeyAccess("parameters.0.type")))) {
+		typeStr = interfaceToString(typeS)
+	} else {
+		return nil
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".area")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".area")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".area")))) {
-		request.Area = expandRequestSiteUpdateSiteSiteArea(ctx, key+".area.0", d)
+		if typeStr == "area" {
+			request.Area = expandRequestSiteUpdateSiteSiteArea(ctx, key+".area.0", d)
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".building")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".building")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".building")))) {
-		request.Building = expandRequestSiteUpdateSiteSiteBuilding(ctx, key+".building.0", d)
+		if typeStr == "building" {
+			request.Building = expandRequestSiteUpdateSiteSiteBuilding(ctx, key+".building.0", d)
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor")))) {
-		request.Floor = expandRequestSiteUpdateSiteSiteFloor(ctx, key+".floor.0", d)
+		if typeStr == "floor" {
+			request.Floor = expandRequestSiteUpdateSiteSiteFloor(ctx, key+".floor.0", d)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -592,16 +766,16 @@ func expandRequestSiteUpdateSiteSiteFloor(ctx context.Context, key string, d *sc
 	return &request
 }
 
-func searchSitesGetSite(m interface{}, queryParams dnacentersdkgo.GetSiteQueryParams) (*dnacentersdkgo.ResponseItemSitesGetSite, error) {
+func searchSitesGetSite(m interface{}, queryParams dnacentersdkgo.GetSiteQueryParams) (*dnacentersdkgo.ResponseSitesGetSiteResponse, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseItemSitesGetSite
+	var foundItem *dnacentersdkgo.ResponseSitesGetSiteResponse
 	var ite *dnacentersdkgo.ResponseSitesGetSite
 	ite, _, err = client.Sites.GetSite(&queryParams)
 	if err != nil {
 		return foundItem, err
 	}
-	items := ite
+	items := ite.Response
 	if items == nil {
 		return foundItem, err
 	}
@@ -609,7 +783,7 @@ func searchSitesGetSite(m interface{}, queryParams dnacentersdkgo.GetSiteQueryPa
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
 		if item.Name == queryParams.Name {
-			var getItem *dnacentersdkgo.ResponseItemSitesGetSite
+			var getItem *dnacentersdkgo.ResponseSitesGetSiteResponse
 			getItem = &item
 			foundItem = getItem
 			return foundItem, err
