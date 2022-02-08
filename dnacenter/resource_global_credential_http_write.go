@@ -308,7 +308,7 @@ func resourceGlobalCredentialHTTPWriteDelete(ctx context.Context, d *schema.Reso
 
 func expandRequestHTTPWriteCredentialCreateCreateHTTPWriteCredentials(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateHTTPWriteCredentials {
 	request := dnacentersdkgo.RequestDiscoveryCreateHTTPWriteCredentials{}
-	if v := expandRequestHTTPWriteCredentialCreateCreateHTTPWriteCredentialsItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestHTTPWriteCredentialCreateCreateHTTPWriteCredentialsItemArray(ctx, key, d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
