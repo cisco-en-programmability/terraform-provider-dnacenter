@@ -2,7 +2,6 @@ package dnacenter
 
 import (
 	"context"
-	"fmt"
 	"reflect"
 
 	"log"
@@ -3254,9 +3253,17 @@ func resourcePathTraceCreate(ctx context.Context, d *schema.ResourceData, m inte
 	request1 := expandRequestPathTraceInitiateANewPathtrace(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	vFlowAnalysisID, okFlowAnalysisID := resourceItem["flow_analysis_id"]
+	vFlowAnalysisID := resourceItem["flow_analysis_id"]
 	vvFlowAnalysisID := interfaceToString(vFlowAnalysisID)
-	if okFlowAnalysisID && vvFlowAnalysisID != "" {
+
+	resourceID := d.Id()
+	if resourceID != "" {
+		log.Printf("[DEBUG] ResourceID => %s", resourceID)
+		resourceMap := separateResourceID(resourceID)
+		vvFlowAnalysisID = resourceMap["flow_analysis_id"]
+	}
+
+	if vvFlowAnalysisID != "" {
 		getResponse2, _, err := client.PathTrace.RetrievesPreviousPathtrace(vvFlowAnalysisID)
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
@@ -3264,18 +3271,8 @@ func resourcePathTraceCreate(ctx context.Context, d *schema.ResourceData, m inte
 			d.SetId(joinResourceID(resourceMap))
 			return resourcePathTraceRead(ctx, d, m)
 		}
-	} else {
-		response2, _, err := client.PathTrace.RetrivesAllPreviousPathtracesSummary(nil)
-		if response2 != nil && err == nil {
-			item2, err := searchPathTraceRetrivesAllPreviousPathtracesSummary(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
-				resourceMap := make(map[string]string)
-				resourceMap["flow_analysis_id"] = vvFlowAnalysisID
-				d.SetId(joinResourceID(resourceMap))
-				return resourcePathTraceRead(ctx, d, m)
-			}
-		}
 	}
+
 	resp1, restyResp1, err := client.PathTrace.InitiateANewPathtrace(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -3287,6 +3284,14 @@ func resourcePathTraceCreate(ctx context.Context, d *schema.ResourceData, m inte
 			"Failure when executing InitiateANewPathtrace", err))
 		return diags
 	}
+	if resp1.Response == nil {
+		diags = append(diags, diagError(
+			"Failure when executing InitiateANewPathtrace", err))
+		return diags
+	}
+
+	vvFlowAnalysisID = resp1.Response.FlowAnalysisID
+
 	resourceMap := make(map[string]string)
 	resourceMap["flow_analysis_id"] = vvFlowAnalysisID
 	d.SetId(joinResourceID(resourceMap))
@@ -3300,104 +3305,9 @@ func resourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPeriodicRefresh, okPeriodicRefresh := resourceMap["periodic_refresh"]
-	vSourceIP, okSourceIP := resourceMap["source_ip"]
-	vDestIP, okDestIP := resourceMap["dest_ip"]
-	vSourcePort, okSourcePort := resourceMap["source_port"]
-	vDestPort, okDestPort := resourceMap["dest_port"]
-	vGtCreateTime, okGtCreateTime := resourceMap["gt_create_time"]
-	vLtCreateTime, okLtCreateTime := resourceMap["lt_create_time"]
-	vProtocol, okProtocol := resourceMap["protocol"]
-	vStatus, okStatus := resourceMap["status"]
-	vTaskID, okTaskID := resourceMap["task_id"]
-	vLastUpdateTime, okLastUpdateTime := resourceMap["last_update_time"]
-	vLimit, okLimit := resourceMap["limit"]
-	vOffset, okOffset := resourceMap["offset"]
-	vOrder, okOrder := resourceMap["order"]
-	vSortBy, okSortBy := resourceMap["sort_by"]
-	vFlowAnalysisID, okFlowAnalysisID := resourceMap["flow_analysis_id"]
+	vFlowAnalysisID := resourceMap["flow_analysis_id"]
 
-	method1 := []bool{okPeriodicRefresh, okSourceIP, okDestIP, okSourcePort, okDestPort, okGtCreateTime, okLtCreateTime, okProtocol, okStatus, okTaskID, okLastUpdateTime, okLimit, okOffset, okOrder, okSortBy}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okFlowAnalysisID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
-
-	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RetrivesAllPreviousPathtracesSummary")
-		queryParams1 := dnacentersdkgo.RetrivesAllPreviousPathtracesSummaryQueryParams{}
-
-		if okPeriodicRefresh {
-			queryParams1.PeriodicRefresh = *stringToBooleanPtr(vPeriodicRefresh)
-		}
-		if okSourceIP {
-			queryParams1.SourceIP = vSourceIP
-		}
-		if okDestIP {
-			queryParams1.DestIP = vDestIP
-		}
-		if okSourcePort {
-			queryParams1.SourcePort = vSourcePort
-		}
-		if okDestPort {
-			queryParams1.DestPort = vDestPort
-		}
-		if okGtCreateTime {
-			queryParams1.GtCreateTime = vGtCreateTime
-		}
-		if okLtCreateTime {
-			queryParams1.LtCreateTime = vLtCreateTime
-		}
-		if okProtocol {
-			queryParams1.Protocol = vProtocol
-		}
-		if okStatus {
-			queryParams1.Status = vStatus
-		}
-		if okTaskID {
-			queryParams1.TaskID = vTaskID
-		}
-		if okLastUpdateTime {
-			queryParams1.LastUpdateTime = vLastUpdateTime
-		}
-		if okLimit {
-			queryParams1.Limit = vLimit
-		}
-		if okOffset {
-			queryParams1.Offset = vOffset
-		}
-		if okOrder {
-			queryParams1.Order = vOrder
-		}
-		if okSortBy {
-			queryParams1.SortBy = vSortBy
-		}
-
-		response1, restyResp1, err := client.PathTrace.RetrivesAllPreviousPathtracesSummary(&queryParams1)
-
-		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing RetrivesAllPreviousPathtracesSummary", err,
-				"Failure at RetrivesAllPreviousPathtracesSummary, unexpected response", ""))
-			return diags
-		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		//TODO FOR DNAC
-
-		vItem1 := flattenPathTraceRetrivesAllPreviousPathtracesSummaryItems(response1)
-		if err := d.Set("parameters", vItem1); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting RetrivesAllPreviousPathtracesSummary search response",
-				err))
-			return diags
-		}
-
-	}
+	selectedMethod := 2
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method 2: RetrievesPreviousPathtrace")
 		vvFlowAnalysisID := vFlowAnalysisID
@@ -3408,9 +3318,7 @@ func resourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing RetrievesPreviousPathtrace", err,
-				"Failure at RetrievesPreviousPathtrace, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -3441,85 +3349,23 @@ func resourcePathTraceDelete(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPeriodicRefresh, okPeriodicRefresh := resourceMap["periodic_refresh"]
-	vSourceIP, okSourceIP := resourceMap["source_ip"]
-	vDestIP, okDestIP := resourceMap["dest_ip"]
-	vSourcePort, okSourcePort := resourceMap["source_port"]
-	vDestPort, okDestPort := resourceMap["dest_port"]
-	vGtCreateTime, okGtCreateTime := resourceMap["gt_create_time"]
-	vLtCreateTime, okLtCreateTime := resourceMap["lt_create_time"]
-	vProtocol, okProtocol := resourceMap["protocol"]
-	vStatus, okStatus := resourceMap["status"]
-	vTaskID, okTaskID := resourceMap["task_id"]
-	vLastUpdateTime, okLastUpdateTime := resourceMap["last_update_time"]
-	vLimit, okLimit := resourceMap["limit"]
-	vOffset, okOffset := resourceMap["offset"]
-	vOrder, okOrder := resourceMap["order"]
-	vSortBy, okSortBy := resourceMap["sort_by"]
+	vFlowAnalysisID := resourceMap["flow_analysis_id"]
 
-	queryParams1 := dnacentersdkgo.RetrivesAllPreviousPathtracesSummaryQueryParams
-	queryParams1.PeriodicRefresh = *stringToBooleanPtr(vPeriodicRefresh)
-	queryParams1.SourceIP = vSourceIP
-	queryParams1.DestIP = vDestIP
-	queryParams1.SourcePort = vSourcePort
-	queryParams1.DestPort = vDestPort
-	queryParams1.GtCreateTime = vGtCreateTime
-	queryParams1.LtCreateTime = vLtCreateTime
-	queryParams1.Protocol = vProtocol
-	queryParams1.Status = vStatus
-	queryParams1.TaskID = vTaskID
-	queryParams1.LastUpdateTime = vLastUpdateTime
-	queryParams1.Limit = vLimit
-	queryParams1.Offset = vOffset
-	queryParams1.Order = vOrder
-	queryParams1.SortBy = vSortBy
-	item, err := searchPathTraceRetrivesAllPreviousPathtracesSummary(m, queryParams1)
-	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing RetrivesAllPreviousPathtracesSummary", err,
-			"Failure at RetrivesAllPreviousPathtracesSummary, unexpected response", ""))
+	if vFlowAnalysisID != "" {
+		getResponse2, _, err := client.PathTrace.RetrievesPreviousPathtrace(vFlowAnalysisID)
+		if err == nil && getResponse2 == nil {
+			d.SetId("")
+			return diags
+		}
+	}else {
 		return diags
 	}
-
-	vFlowAnalysisID, okFlowAnalysisID := resourceMap["flow_analysis_id"]
-
-	method1 := []bool{okPeriodicRefresh, okSourceIP, okDestIP, okSourcePort, okDestPort, okGtCreateTime, okLtCreateTime, okProtocol, okStatus, okTaskID, okLastUpdateTime, okLimit, okOffset, okOrder, okSortBy}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okFlowAnalysisID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
-
-	selectedMethod := pickMethod([][]bool{method1, method2})
-	var vvID string
-	var vvName string
+	
+	//var vvID string
+	//var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
-	if selectedMethod == 1 {
 
-		getResp1, _, err := client.PathTrace.RetrivesAllPreviousPathtracesSummary(nil)
-		if err != nil || getResp1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		items1 := getAllItemsPathTraceRetrivesAllPreviousPathtracesSummary(m, getResp1, nil)
-		item1, err := searchPathTraceRetrivesAllPreviousPathtracesSummary(m, items1, vName, vID)
-		if err != nil || item1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		if vID != item1.ID {
-			vvID = item1.ID
-		} else {
-			vvID = vID
-		}
-	}
-	if selectedMethod == 2 {
-		vvID = vID
-		getResp, _, err := client.PathTrace.RetrievesPreviousPathtrace(vvFlowAnalysisID)
-		if err != nil || getResp == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-	}
-	response1, restyResp1, err := client.PathTrace.DeletesPathtraceByID(vvFlowAnalysisID)
+	response1, restyResp1, err := client.PathTrace.DeletesPathtraceByID(vFlowAnalysisID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -3571,30 +3417,4 @@ func expandRequestPathTraceInitiateANewPathtrace(ctx context.Context, key string
 	}
 
 	return &request
-}
-
-func searchPathTraceRetrivesAllPreviousPathtracesSummary(m interface{}, queryParams dnacentersdkgo.RetrivesAllPreviousPathtracesSummaryQueryParams) (*dnacentersdkgo.ResponseItemPathTraceRetrivesAllPreviousPathtracesSummary, error) {
-	client := m.(*dnacentersdkgo.Client)
-	var err error
-	var foundItem *dnacentersdkgo.ResponseItemPathTraceRetrivesAllPreviousPathtracesSummary
-	var ite *dnacentersdkgo.ResponsePathTraceRetrivesAllPreviousPathtracesSummary
-	ite, _, err = client.PathTrace.RetrivesAllPreviousPathtracesSummary(&queryParams)
-	if err != nil {
-		return foundItem, err
-	}
-	items := ite
-	if items == nil {
-		return foundItem, err
-	}
-	itemsCopy := *items
-	for _, item := range itemsCopy {
-		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.Name {
-			var getItem *dnacentersdkgo.ResponseItemPathTraceRetrivesAllPreviousPathtracesSummary
-			getItem = &item
-			foundItem = getItem
-			return foundItem, err
-		}
-	}
-	return foundItem, err
 }
