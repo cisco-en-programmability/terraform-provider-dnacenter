@@ -35,6 +35,120 @@ func resourceSensor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"backhaul_type": &schema.Schema{
+							Description: `Backhaul Type`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"ethernet_mac_address": &schema.Schema{
+							Description: `Ethernet Mac Address`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"ip_address": &schema.Schema{
+							Description: `Ip Address`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"is_led_enabled": &schema.Schema{
+							Description: `Is L E D Enabled`,
+
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"last_seen": &schema.Schema{
+							Description: `Last Seen`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"location": &schema.Schema{
+							Description: `Location`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"name": &schema.Schema{
+							Description: `Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"radio_mac_address": &schema.Schema{
+							Description: `Radio Mac Address`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"serial_number": &schema.Schema{
+							Description: `Serial Number`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"ssh_config": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"enable_password": &schema.Schema{
+										Description: `Enable Password`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"ssh_password": &schema.Schema{
+										Description: `Ssh Password`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"ssh_state": &schema.Schema{
+										Description: `Ssh State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"ssh_user_name": &schema.Schema{
+										Description: `Ssh User Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"status": &schema.Schema{
+							Description: `Status`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"type": &schema.Schema{
+							Description: `Type`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"version": &schema.Schema{
+							Description: `Version`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -176,7 +290,15 @@ func resourceSensorCreate(ctx context.Context, d *schema.ResourceData, m interfa
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSensorCreateSensorTestTemplate(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-
+	vName := resourceItem["name"]
+	vvName := interfaceToString(vName)
+	item, err := searchSensorsSensors(m, vvName)
+	if err != nil || item == nil {
+		resourceMap := make(map[string]string)
+		resourceMap["name"] = vvName
+		d.SetId(joinResourceID(resourceMap))
+		return resourceSensorRead(ctx, d, m)
+	}
 	resp1, restyResp1, err := client.Sensors.CreateSensorTestTemplate(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -188,41 +310,35 @@ func resourceSensorCreate(ctx context.Context, d *schema.ResourceData, m interfa
 			"Failure when executing CreateSensorTestTemplate", err))
 		return diags
 	}
-	if vvName != resp1.Response.Name {
-		vvName = resp1.Response.Name
-	}
+	//Falta verificar por medio de EXECUTION ID, no pude porque el esquema de respuesta esta mal.
+
 	resourceMap := make(map[string]string)
+	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSensorRead(ctx, d, m)
 }
 
 func resourceSensorRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
+	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSiteID := resourceMap["site_id"]
+	vName := resourceMap["name"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: Sensors")
-		queryParams1 := dnacentersdkgo.SensorsQueryParams{}
+		//queryParams1 := dnacentersdkgo.SensorsQueryParams{}
 
-		if okSiteID {
-			queryParams1.SiteID = vSiteID
-		}
-
-		response1, restyResp1, err := client.Sensors.Sensors(&queryParams1)
+		response1, err := searchSensorsSensors(m, vName)
 
 		if err != nil || response1 == nil {
-			if restyResp1 != nil {
+			/*if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing Sensors", err,
-				"Failure at Sensors, unexpected response", ""))
+			}*/
+			d.SetId("")
 			return diags
 		}
 
@@ -230,8 +346,8 @@ func resourceSensorRead(ctx context.Context, d *schema.ResourceData, m interface
 
 		//TODO FOR DNAC
 
-		vItem1 := flattenSensorsSensorsItems(response1)
-		if err := d.Set("parameters", vItem1); err != nil {
+		vItem1 := flattenSensorsSensorsItem(response1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting Sensors search response",
 				err))
@@ -254,37 +370,23 @@ func resourceSensorDelete(ctx context.Context, d *schema.ResourceData, m interfa
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSiteID := resourceMap["site_id"]
+	vName := resourceMap["name"]
 
-	queryParams1 := dnacentersdkgo.SensorsQueryParams
-	queryParams1.SiteID = vSiteID
-	item, err := searchSensorsSensors(m, queryParams1)
+	item, err := searchSensorsSensors(m, vName)
 	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing Sensors", err,
-			"Failure at Sensors, unexpected response", ""))
+		d.SetId("")
 		return diags
 	}
 
-	selectedMethod := 1
-	var vvID string
-	var vvName string
+	//selectedMethod := 1
+	//var vvID string
+	//var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
-	if selectedMethod == 1 {
 
-		getResp1, _, err := client.Sensors.Sensors(nil)
-		if err != nil || getResp1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		items1 := getAllItemsSensorsSensors(m, getResp1, nil)
-		item1, err := searchSensorsSensors(m, items1, vName, vID)
-		if err != nil || item1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
+	queryParams := dnacentersdkgo.DeleteSensorTestQueryParams{
+		TemplateName: vName,
 	}
-	response1, restyResp1, err := client.Sensors.DeleteSensorTest()
+	response1, restyResp1, err := client.Sensors.DeleteSensorTest(&queryParams)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -298,6 +400,8 @@ func resourceSensorDelete(ctx context.Context, d *schema.ResourceData, m interfa
 			"Failure at DeleteSensorTest, unexpected response", ""))
 		return diags
 	}
+
+	//Falta verificar por medio de EXECUTION ID, no pude porque el esquema de respuesta esta mal.
 
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
@@ -513,12 +617,12 @@ func expandRequestSensorCreateSensorTestTemplateApCoverage(ctx context.Context, 
 	return &request
 }
 
-func searchSensorsSensors(m interface{}, queryParams dnacentersdkgo.SensorsQueryParams) (*dnacentersdkgo.ResponseItemSensorsSensors, error) {
+func searchSensorsSensors(m interface{}, vName string) (*dnacentersdkgo.ResponseSensorsSensorsResponse, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseItemSensorsSensors
+	var foundItem *dnacentersdkgo.ResponseSensorsSensorsResponse
 	var ite *dnacentersdkgo.ResponseSensorsSensors
-	ite, _, err = client.Sensors.Sensors(&queryParams)
+	ite, _, err = client.Sensors.Sensors(nil)
 	if err != nil {
 		return foundItem, err
 	}
@@ -526,11 +630,11 @@ func searchSensorsSensors(m interface{}, queryParams dnacentersdkgo.SensorsQuery
 	if items == nil {
 		return foundItem, err
 	}
-	itemsCopy := *items
+	itemsCopy := *items.Response
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.Name {
-			var getItem *dnacentersdkgo.ResponseItemSensorsSensors
+		if item.Name == vName {
+			var getItem *dnacentersdkgo.ResponseSensorsSensorsResponse
 			getItem = &item
 			foundItem = getItem
 			return foundItem, err
