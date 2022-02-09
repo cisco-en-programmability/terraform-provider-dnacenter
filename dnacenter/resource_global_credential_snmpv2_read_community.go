@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"time"
 
 	"log"
 
@@ -34,6 +35,44 @@ func resourceGlobalCredentialSNMPv2ReadCommunity() *schema.Resource {
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"comments": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"credential_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"instance_tenant_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"instance_uuid": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"parameters": &schema.Schema{
 				Description: `Array of RequestDiscoveryCreateSNMPReadCommunity`,
@@ -69,6 +108,7 @@ func resourceGlobalCredentialSNMPv2ReadCommunity() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
 					},
 				},
@@ -86,6 +126,27 @@ func resourceGlobalCredentialSNMPv2ReadCommunityCreate(ctx context.Context, d *s
 	request1 := expandRequestGlobalCredentialSNMPv2ReadCommunityCreateSNMPReadCommunity(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
+	vReadCommunity := resourceItem["read_community"]
+	vvReadCommunity := interfaceToString(vReadCommunity)
+	vID := resourceItem["id"]
+	vvID := interfaceToString(vID)
+	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
+	resourceID := d.Id()
+	if resourceID != "" {
+		log.Printf("[DEBUG] ResourceID => %s", resourceID)
+		resourceMap := separateResourceID(resourceID)
+		vvID = resourceMap["id"]
+	}
+
+	queryParams1.CredentialSubType = "SNMPV2_READ_COMMUNITY"
+	item, err := searchDiscoveryGetGlobalCredentialsSmpv2Read(m, queryParams1, vvID)
+	if item != nil || err != nil {
+		resourceMap := make(map[string]string)
+		resourceMap["read_community"] = vvReadCommunity
+		resourceMap["id"] = vvID
+		d.SetId(joinResourceID(resourceMap))
+		return resourceGlobalCredentialSNMPv2ReadCommunityRead(ctx, d, m)
+	}
 	resp1, restyResp1, err := client.Discovery.CreateSNMPReadCommunity(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -97,21 +158,45 @@ func resourceGlobalCredentialSNMPv2ReadCommunityCreate(ctx context.Context, d *s
 			"Failure when executing CreateSNMPReadCommunity", err))
 		return diags
 	}
+
+	taskId := resp1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			diags = append(diags, diagError(
+				"Failure when executing CreateNetconfCredentials", err))
+			return diags
+		}
+		vvID = response2.Response.Progress
+	}
 	resourceMap := make(map[string]string)
+	resourceMap["read_community"] = vvReadCommunity
+	resourceMap["id"] = vvID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceGlobalCredentialSNMPv2ReadCommunityRead(ctx, d, m)
 }
 
 func resourceGlobalCredentialSNMPv2ReadCommunityRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
+	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vCredentialSubType := resourceMap["credential_sub_type"]
-	vSortBy := resourceMap["sort_by"]
-	vOrder := resourceMap["order"]
+	vCredentialSubType := "SNMPV2_READ_COMMUNITY"
+	vID := resourceMap["id"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -120,22 +205,9 @@ func resourceGlobalCredentialSNMPv2ReadCommunityRead(ctx context.Context, d *sch
 
 		queryParams1.CredentialSubType = vCredentialSubType
 
-		if okSortBy {
-			queryParams1.SortBy = vSortBy
-		}
-		if okOrder {
-			queryParams1.Order = vOrder
-		}
-
-		response1, restyResp1, err := client.Discovery.GetGlobalCredentials(&queryParams1)
-
+		response1, err := searchDiscoveryGetGlobalCredentialsSmpv2Read(m, queryParams1, vID)
 		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGlobalCredentials", err,
-				"Failure at GetGlobalCredentials, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -143,8 +215,8 @@ func resourceGlobalCredentialSNMPv2ReadCommunityRead(ctx context.Context, d *sch
 
 		//TODO FOR DNAC
 
-		vItem1 := flattenDiscoveryGetGlobalCredentialsItems(response1)
-		if err := d.Set("parameters", vItem1); err != nil {
+		vItem1 := flattenDiscoveryGetGlobalCredentialsItem(response1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGlobalCredentials search response",
 				err))
@@ -162,15 +234,12 @@ func resourceGlobalCredentialSNMPv2ReadCommunityUpdate(ctx context.Context, d *s
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vCredentialSubType := resourceMap["credential_sub_type"]
-	vSortBy := resourceMap["sort_by"]
-	vOrder := resourceMap["order"]
+	vCredentialSubType := "SNMPV2_READ_COMMUNITY"
+	vID := resourceMap["id"]
 
-	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams
+	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
 	queryParams1.CredentialSubType = vCredentialSubType
-	queryParams1.SortBy = vSortBy
-	queryParams1.Order = vOrder
-	item, err := searchDiscoveryGetGlobalCredentials(m, queryParams1)
+	item, err := searchDiscoveryGetGlobalCredentialsSmpv2Read(m, queryParams1, vID)
 	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetGlobalCredentials", err,
@@ -178,8 +247,6 @@ func resourceGlobalCredentialSNMPv2ReadCommunityUpdate(ctx context.Context, d *s
 		return diags
 	}
 
-	selectedMethod := 1
-	var vvID string
 	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	// if selectedMethod == 1 { }
@@ -200,6 +267,27 @@ func resourceGlobalCredentialSNMPv2ReadCommunityUpdate(ctx context.Context, d *s
 				"Failure when executing UpdateSNMPReadCommunity", err,
 				"Failure at UpdateSNMPReadCommunity, unexpected response", ""))
 			return diags
+		}
+		taskId := response1.Response.TaskID
+		log.Printf("[DEBUG] TASKID => %s", taskId)
+		if taskId != "" {
+			time.Sleep(5 * time.Second)
+			response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetTaskByID", err,
+					"Failure at GetTaskByID, unexpected response", ""))
+				return diags
+			}
+			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				diags = append(diags, diagError(
+					"Failure when executing CreateNetconfCredentials", err))
+				return diags
+			}
 		}
 	}
 
@@ -293,11 +381,12 @@ func expandRequestGlobalCredentialSNMPv2ReadCommunityUpdateSNMPReadCommunity(ctx
 	return &request
 }
 
-func searchDiscoveryGetGlobalCredentials(m interface{}, queryParams dnacentersdkgo.GetGlobalCredentialsQueryParams) (*dnacentersdkgo.ResponseItemDiscoveryGetGlobalCredentials, error) {
+func searchDiscoveryGetGlobalCredentialsSmpv2Read(m interface{}, queryParams dnacentersdkgo.GetGlobalCredentialsQueryParams, vID string) (*dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseItemDiscoveryGetGlobalCredentials
+	var foundItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
 	var ite *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentials
+	queryParams.CredentialSubType = "SNMPV2_READ_COMMUNITY"
 	ite, _, err = client.Discovery.GetGlobalCredentials(&queryParams)
 	if err != nil {
 		return foundItem, err
@@ -307,10 +396,10 @@ func searchDiscoveryGetGlobalCredentials(m interface{}, queryParams dnacentersdk
 		return foundItem, err
 	}
 	itemsCopy := *items
-	for _, item := range itemsCopy {
+	for _, item := range *itemsCopy.Response {
 		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.Name {
-			var getItem *dnacentersdkgo.ResponseItemDiscoveryGetGlobalCredentials
+		if item.ID == vID {
+			var getItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
 			getItem = &item
 			foundItem = getItem
 			return foundItem, err

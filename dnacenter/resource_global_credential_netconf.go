@@ -261,6 +261,28 @@ func resourceGlobalCredentialNetconfUpdate(ctx context.Context, d *schema.Resour
 				"Failure at UpdateNetconfCredentials, unexpected response", ""))
 			return diags
 		}
+		taskId := response1.Response.TaskID
+		log.Printf("[DEBUG] TASKID => %s", taskId)
+		if taskId != "" {
+			time.Sleep(5 * time.Second)
+			response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetTaskByID", err,
+					"Failure at GetTaskByID, unexpected response", ""))
+				return diags
+			}
+			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				diags = append(diags, diagError(
+					"Failure when executing UpdateNetconfCredentials", err))
+				return diags
+			}
+		}
+
 	}
 
 	return resourceGlobalCredentialNetconfRead(ctx, d, m)
