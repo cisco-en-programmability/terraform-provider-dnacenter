@@ -3,6 +3,7 @@ package dnacenter
 import (
 	"context"
 	"reflect"
+	"time"
 
 	"log"
 
@@ -3289,6 +3290,27 @@ func resourcePathTraceCreate(ctx context.Context, d *schema.ResourceData, m inte
 			"Failure when executing InitiateANewPathtrace", err))
 		return diags
 	}
+	taskId := resp1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			diags = append(diags, diagError(
+				"Failure when executing InitiateANewPathtrace", err))
+			return diags
+		}
+	}
 
 	vvFlowAnalysisID = resp1.Response.FlowAnalysisID
 
@@ -3357,10 +3379,10 @@ func resourcePathTraceDelete(ctx context.Context, d *schema.ResourceData, m inte
 			d.SetId("")
 			return diags
 		}
-	}else {
+	} else {
 		return diags
 	}
-	
+
 	//var vvID string
 	//var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
@@ -3378,6 +3400,27 @@ func resourcePathTraceDelete(ctx context.Context, d *schema.ResourceData, m inte
 			"Failure when executing DeletesPathtraceByID", err,
 			"Failure at DeletesPathtraceByID, unexpected response", ""))
 		return diags
+	}
+	taskId := response1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			diags = append(diags, diagError(
+				"Failure when executing DeletesPathtraceByID", err))
+			return diags
+		}
 	}
 
 	// d.SetId("") is automatically called assuming delete returns no errors, but
