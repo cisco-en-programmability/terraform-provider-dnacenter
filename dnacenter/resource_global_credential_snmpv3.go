@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"time"
 
 	"log"
 
@@ -105,7 +106,21 @@ func resourceGlobalCredentialSNMPv3Create(ctx context.Context, d *schema.Resourc
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestGlobalCredentialSNMPv3CreateSNMPv3Credentials(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	vUsername := resourceItem["username"]
+	vvUsername := interfaceToString(vUsername)
+	vID := resourceItem["id"]
+	vvID := interfaceToString(vID)
+	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
 
+	queryParams1.CredentialSubType = "SNMPV3"
+	item, err := searchDiscoveryGetGlobalCredentialsSmpv3(m, queryParams1, vvUsername, vvID)
+	if item != nil || err != nil {
+		resourceMap := make(map[string]string)
+		resourceMap["username"] = vvUsername
+		resourceMap["id"] = vvID
+		d.SetId(joinResourceID(resourceMap))
+		return resourceGlobalCredentialSNMPv3Read(ctx, d, m)
+	}
 	resp1, restyResp1, err := client.Discovery.CreateSNMPv3Credentials(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -117,21 +132,44 @@ func resourceGlobalCredentialSNMPv3Create(ctx context.Context, d *schema.Resourc
 			"Failure when executing CreateSNMPv3Credentials", err))
 		return diags
 	}
+	taskId := resp1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			diags = append(diags, diagError(
+				"Failure when executing CreateHTTPReadCredentials", err))
+			return diags
+		}
+	}
 	resourceMap := make(map[string]string)
+	resourceMap["username"] = vvUsername
+	resourceMap["id"] = vvID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceGlobalCredentialSNMPv3Read(ctx, d, m)
 }
 
 func resourceGlobalCredentialSNMPv3Read(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
+	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vCredentialSubType := resourceMap["credential_sub_type"]
-	vSortBy := resourceMap["sort_by"]
-	vOrder := resourceMap["order"]
+	vCredentialSubType := "SNMPV3"
+	vUsername := resourceMap["username"]
+	vID := resourceMap["id"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -140,22 +178,9 @@ func resourceGlobalCredentialSNMPv3Read(ctx context.Context, d *schema.ResourceD
 
 		queryParams1.CredentialSubType = vCredentialSubType
 
-		if okSortBy {
-			queryParams1.SortBy = vSortBy
-		}
-		if okOrder {
-			queryParams1.Order = vOrder
-		}
-
-		response1, restyResp1, err := client.Discovery.GetGlobalCredentials(&queryParams1)
-
+		response1, err := searchDiscoveryGetGlobalCredentialsHttpRead(m, queryParams1, vUsername, vID)
 		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGlobalCredentials", err,
-				"Failure at GetGlobalCredentials, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -163,8 +188,8 @@ func resourceGlobalCredentialSNMPv3Read(ctx context.Context, d *schema.ResourceD
 
 		//TODO FOR DNAC
 
-		vItem1 := flattenDiscoveryGetGlobalCredentialsItems(response1)
-		if err := d.Set("parameters", vItem1); err != nil {
+		vItem1 := flattenDiscoveryGetGlobalCredentialsItem(response1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGlobalCredentials search response",
 				err))
@@ -182,24 +207,20 @@ func resourceGlobalCredentialSNMPv3Update(ctx context.Context, d *schema.Resourc
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vCredentialSubType := resourceMap["credential_sub_type"]
-	vSortBy := resourceMap["sort_by"]
-	vOrder := resourceMap["order"]
+	vCredentialSubType := "SNMPV3"
+	vUsername := resourceMap["username"]
+	vID := resourceMap["id"]
 
-	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams
+	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
 	queryParams1.CredentialSubType = vCredentialSubType
-	queryParams1.SortBy = vSortBy
-	queryParams1.Order = vOrder
-	item, err := searchDiscoveryGetGlobalCredentials(m, queryParams1)
-	if err != nil || item == nil {
+	response1, err := searchDiscoveryGetGlobalCredentialsSmpv3(m, queryParams1, vUsername, vID)
+	if err != nil || response1 == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetGlobalCredentials", err,
 			"Failure at GetGlobalCredentials, unexpected response", ""))
 		return diags
 	}
 
-	selectedMethod := 1
-	var vvID string
 	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	// if selectedMethod == 1 { }
@@ -220,6 +241,27 @@ func resourceGlobalCredentialSNMPv3Update(ctx context.Context, d *schema.Resourc
 				"Failure when executing UpdateSNMPv3Credentials", err,
 				"Failure at UpdateSNMPv3Credentials, unexpected response", ""))
 			return diags
+		}
+		taskId := response1.Response.TaskID
+		log.Printf("[DEBUG] TASKID => %s", taskId)
+		if taskId != "" {
+			time.Sleep(5 * time.Second)
+			response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetTaskByID", err,
+					"Failure at GetTaskByID, unexpected response", ""))
+				return diags
+			}
+			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				diags = append(diags, diagError(
+					"Failure when executing UpdateHTTPReadCredential", err))
+				return diags
+			}
 		}
 	}
 
@@ -358,11 +400,12 @@ func expandRequestGlobalCredentialSNMPv3UpdateSNMPv3Credentials(ctx context.Cont
 	return &request
 }
 
-func searchDiscoveryGetGlobalCredentials(m interface{}, queryParams dnacentersdkgo.GetGlobalCredentialsQueryParams) (*dnacentersdkgo.ResponseItemDiscoveryGetGlobalCredentials, error) {
+func searchDiscoveryGetGlobalCredentialsSmpv3(m interface{}, queryParams dnacentersdkgo.GetGlobalCredentialsQueryParams, vUsername string, vID string) (*dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseItemDiscoveryGetGlobalCredentials
+	var foundItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
 	var ite *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentials
+	queryParams.CredentialSubType = "SNMPV3"
 	ite, _, err = client.Discovery.GetGlobalCredentials(&queryParams)
 	if err != nil {
 		return foundItem, err
@@ -372,10 +415,10 @@ func searchDiscoveryGetGlobalCredentials(m interface{}, queryParams dnacentersdk
 		return foundItem, err
 	}
 	itemsCopy := *items
-	for _, item := range itemsCopy {
+	for _, item := range *itemsCopy.Response {
 		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.Name {
-			var getItem *dnacentersdkgo.ResponseItemDiscoveryGetGlobalCredentials
+		if item.ID == vID || item.Comments == vUsername {
+			var getItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
 			getItem = &item
 			foundItem = getItem
 			return foundItem, err

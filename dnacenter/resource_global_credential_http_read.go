@@ -241,7 +241,7 @@ func resourceGlobalCredentialHTTPReadUpdate(ctx context.Context, d *schema.Resou
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vCredentialSubType := "CLI"
+	vCredentialSubType := "HTTP_READ"
 	vUsername := resourceMap["username"]
 	vID := resourceMap["id"]
 
