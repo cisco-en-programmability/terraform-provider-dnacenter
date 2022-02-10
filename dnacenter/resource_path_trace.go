@@ -3257,12 +3257,12 @@ func resourcePathTraceCreate(ctx context.Context, d *schema.ResourceData, m inte
 	vFlowAnalysisID := resourceItem["flow_analysis_id"]
 	vvFlowAnalysisID := interfaceToString(vFlowAnalysisID)
 
-	resourceID := d.Id()
-	if resourceID != "" {
-		log.Printf("[DEBUG] ResourceID => %s", resourceID)
-		resourceMap := separateResourceID(resourceID)
-		vvFlowAnalysisID = resourceMap["flow_analysis_id"]
-	}
+	//resourceID := d.Id()
+	//if resourceID != "" {
+	//	log.Printf("[DEBUG] ResourceID => %s", resourceID)
+	//	resourceMap := separateResourceID(resourceID)
+	//	vvFlowAnalysisID = resourceMap["flow_analysis_id"]
+	//}
 
 	if vvFlowAnalysisID != "" {
 		getResponse2, _, err := client.PathTrace.RetrievesPreviousPathtrace(vvFlowAnalysisID)
