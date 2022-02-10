@@ -143,7 +143,7 @@ func resourceGlobalCredentialCliCreate(ctx context.Context, d *schema.ResourceDa
 	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
 
 	queryParams1.CredentialSubType = "CLI"
-	item, err := searchDiscoveryGetGlobalCredentialsCli(m, queryParams1, vvUsername, vvPassword, vvID)
+	item, err := searchDiscoveryGetGlobalCredentialsCli(m, queryParams1, vvUsername, vvID)
 	if item != nil || err != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["username"] = vvUsername
@@ -199,7 +199,7 @@ func resourceGlobalCredentialCliRead(ctx context.Context, d *schema.ResourceData
 	resourceMap := separateResourceID(resourceID)
 	vCredentialSubType := "CLI"
 	vUsername := resourceMap["username"]
-	vPassword := resourceMap["password"]
+	//vPassword := resourceMap["password"]
 	vID := resourceMap["id"]
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -208,7 +208,7 @@ func resourceGlobalCredentialCliRead(ctx context.Context, d *schema.ResourceData
 
 		queryParams1.CredentialSubType = vCredentialSubType
 
-		response1, err := searchDiscoveryGetGlobalCredentialsCli(m, queryParams1, vUsername, vPassword, vID)
+		response1, err := searchDiscoveryGetGlobalCredentialsCli(m, queryParams1, vUsername, vID)
 		if err != nil || response1 == nil {
 			d.SetId("")
 			return diags
@@ -239,12 +239,12 @@ func resourceGlobalCredentialCliUpdate(ctx context.Context, d *schema.ResourceDa
 	resourceMap := separateResourceID(resourceID)
 	vCredentialSubType := "CLI"
 	vUsername := resourceMap["username"]
-	vPassword := resourceMap["password"]
+	//vPassword := resourceMap["password"]
 	vID := resourceMap["id"]
 
 	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
 	queryParams1.CredentialSubType = vCredentialSubType
-	response1, err := searchDiscoveryGetGlobalCredentialsCli(m, queryParams1, vUsername, vPassword, vID)
+	response1, err := searchDiscoveryGetGlobalCredentialsCli(m, queryParams1, vUsername, vID)
 	if err != nil || response1 == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetGlobalCredentials", err,
@@ -303,8 +303,38 @@ func resourceGlobalCredentialCliUpdate(ctx context.Context, d *schema.ResourceDa
 
 func resourceGlobalCredentialCliDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete GlobalCredentialCli on Dna Center
+	// NOTE: Unable to delete GlobalCredentialSNMPv2ReadCommunity on Dna Center
 	//       Returning empty diags to delete it on Terraform
+	// DeleteGlobalCredentialsByID
+	client := m.(*dnacentersdkgo.Client)
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vID := resourceMap["id"]
+	vUsername := resourceMap["username"]
+
+	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
+
+	queryParams1.CredentialSubType = "CLI"
+	item, err := searchDiscoveryGetGlobalCredentialsCli(m, queryParams1, vUsername, vID)
+	if item == nil && err != nil {
+		return resourceGlobalCredentialCliRead(ctx, d, m)
+	}
+	if vID != item.ID {
+		vID = item.ID
+	}
+	if vID != "" {
+		response1, restyResp1, err := client.Discovery.DeleteGlobalCredentialsByID(vID)
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing DeleteGlobalCredentialsByID", err,
+				"Failure at DeleteGlobalCredentialsByID, unexpected response", ""))
+			return diags
+		}
+	}
 	return diags
 }
 func expandRequestGlobalCredentialCliCreateCliCredentials(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateCliCredentials {
@@ -415,7 +445,7 @@ func expandRequestGlobalCredentialCliUpdateCliCredentials(ctx context.Context, k
 	return &request
 }
 
-func searchDiscoveryGetGlobalCredentialsCli(m interface{}, queryParams dnacentersdkgo.GetGlobalCredentialsQueryParams, vUsername string, vPassword string, vID string) (*dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse, error) {
+func searchDiscoveryGetGlobalCredentialsCli(m interface{}, queryParams dnacentersdkgo.GetGlobalCredentialsQueryParams, vUsername string, vID string) (*dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
@@ -432,7 +462,7 @@ func searchDiscoveryGetGlobalCredentialsCli(m interface{}, queryParams dnacenter
 	itemsCopy := *items
 	for _, item := range *itemsCopy.Response {
 		// Call get by _ method and set value to foundItem and return
-		if item.ID == vID || item.Comments == vUsername && item.Comments == vPassword {
+		if item.ID == vID || item.Comments == vUsername {
 			var getItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
 			getItem = &item
 			foundItem = getItem

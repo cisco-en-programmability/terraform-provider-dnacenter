@@ -257,9 +257,36 @@ func resourceGlobalCredentialSNMPv2WriteCommunityUpdate(ctx context.Context, d *
 }
 
 func resourceGlobalCredentialSNMPv2WriteCommunityDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
 	// NOTE: Unable to delete GlobalCredentialSNMPv2WriteCommunity on Dna Center
 	//       Returning empty diags to delete it on Terraform
+	client := m.(*dnacentersdkgo.Client)
+
+	var diags diag.Diagnostics
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vID := resourceMap["id"]
+
+	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
+
+	queryParams1.CredentialSubType = "SNMPV2_WRITE_COMMUNITY"
+	item, err := searchDiscoveryGetGlobalCredentialsSmpv2Write(m, queryParams1, vID)
+	if item == nil && err != nil {
+		return resourceGlobalCredentialSNMPv2WriteCommunityRead(ctx, d, m)
+	}
+
+	if vID != "" {
+		response1, restyResp1, err := client.Discovery.DeleteGlobalCredentialsByID(vID)
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing DeleteGlobalCredentialsByID", err,
+				"Failure at DeleteGlobalCredentialsByID, unexpected response", ""))
+			return diags
+		}
+	}
 	return diags
 }
 func expandRequestGlobalCredentialSNMPv2WriteCommunityCreateSNMPWriteCommunity(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateSNMPWriteCommunity {
