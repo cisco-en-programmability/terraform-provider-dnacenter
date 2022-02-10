@@ -114,3 +114,19 @@ func flattenLicensesSmartAccountDetailsItems(items *[]dnacentersdkgo.ResponseLic
 	}
 	return respItems
 }
+
+func flattenLicensesSmartAccountDetailsItem(item *dnacentersdkgo.ResponseLicensesSmartAccountDetailsResponse) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+
+	respItem := make(map[string]interface{})
+	respItem["name"] = item.Name
+	respItem["id"] = item.ID
+	respItem["domain"] = item.Domain
+	respItem["is_active_smart_account"] = boolPtrToString(item.IsActiveSmartAccount)
+
+	return []map[string]interface{}{
+		respItem,
+	}
+}
