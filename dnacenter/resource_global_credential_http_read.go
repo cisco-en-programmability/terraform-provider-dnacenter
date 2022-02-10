@@ -304,8 +304,38 @@ func resourceGlobalCredentialHTTPReadUpdate(ctx context.Context, d *schema.Resou
 
 func resourceGlobalCredentialHTTPReadDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete GlobalCredentialHTTPRead on Dna Center
+	// NOTE: Unable to delete GlobalCredentialSNMPv2ReadCommunity on Dna Center
 	//       Returning empty diags to delete it on Terraform
+	// DeleteGlobalCredentialsByID
+	client := m.(*dnacentersdkgo.Client)
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vID := resourceMap["id"]
+	vUsername := resourceMap["username"]
+
+	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
+
+	queryParams1.CredentialSubType = "HTTP_READ"
+	item, err := searchDiscoveryGetGlobalCredentialsHttpRead(m, queryParams1, vUsername, vID)
+	if item == nil && err != nil {
+		return resourceGlobalCredentialHTTPReadRead(ctx, d, m)
+	}
+	if vID != item.ID {
+		vID = item.ID
+	}
+	if vID != "" {
+		response1, restyResp1, err := client.Discovery.DeleteGlobalCredentialsByID(vID)
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing DeleteGlobalCredentialsByID", err,
+				"Failure at DeleteGlobalCredentialsByID, unexpected response", ""))
+			return diags
+		}
+	}
 	return diags
 }
 func expandRequestGlobalCredentialHTTPReadCreateHTTPReadCredentials(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateHTTPReadCredentials {

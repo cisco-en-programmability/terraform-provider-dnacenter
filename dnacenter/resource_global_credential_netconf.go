@@ -290,8 +290,36 @@ func resourceGlobalCredentialNetconfUpdate(ctx context.Context, d *schema.Resour
 
 func resourceGlobalCredentialNetconfDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete GlobalCredentialNetconf on Dna Center
+	// NOTE: Unable to delete GlobalCredentialSNMPv2ReadCommunity on Dna Center
 	//       Returning empty diags to delete it on Terraform
+	// DeleteGlobalCredentialsByID
+	client := m.(*dnacentersdkgo.Client)
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vID := resourceMap["id"]
+	vNetconfPort := resourceMap["netconf_port"]
+
+	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
+
+	queryParams1.CredentialSubType = "NETCONF"
+	item, err := searchDiscoveryGetGlobalCredentialsNetConf(m, queryParams1, vNetconfPort, vID)
+	if item == nil && err != nil {
+		return resourceGlobalCredentialNetconfRead(ctx, d, m)
+	}
+
+	if vID != "" {
+		response1, restyResp1, err := client.Discovery.DeleteGlobalCredentialsByID(vID)
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing DeleteGlobalCredentialsByID", err,
+				"Failure at DeleteGlobalCredentialsByID, unexpected response", ""))
+			return diags
+		}
+	}
 	return diags
 }
 func expandRequestGlobalCredentialNetconfCreateNetconfCredentials(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateNetconfCredentials {
