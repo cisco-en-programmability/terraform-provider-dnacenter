@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"time"
 
 	"log"
 
@@ -35,6 +36,95 @@ func resourceServiceProvider() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"group_uuid": &schema.Schema{
+							Description: `Group Uuid`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"inherited_group_name": &schema.Schema{
+							Description: `Inherited Group Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"inherited_group_uuid": &schema.Schema{
+							Description: `Inherited Group Uuid`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"instance_type": &schema.Schema{
+							Description: `Instance Type`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"instance_uuid": &schema.Schema{
+							Description: `Instance Uuid`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"key": &schema.Schema{
+							Description: `Key`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"namespace": &schema.Schema{
+							Description: `Namespace`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"type": &schema.Schema{
+							Description: `Type`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"value": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"sla_profile_name": &schema.Schema{
+										Description: `Sla Profile Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"sp_profile_name": &schema.Schema{
+										Description: `Sp Profile Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"wan_provider": &schema.Schema{
+										Description: `Wan Provider`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"version": &schema.Schema{
+							Description: `Version`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -56,11 +146,6 @@ func resourceServiceProvider() *schema.Resource {
 
 												"model": &schema.Schema{
 													Description: `Model`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
-												"old_profile_name": &schema.Schema{
-													Description: `Old Profile Name`,
 													Type:        schema.TypeString,
 													Optional:    true,
 												},
@@ -92,9 +177,30 @@ func resourceServiceProviderCreate(ctx context.Context, d *schema.ResourceData, 
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
+	//resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestServiceProviderCreateSpProfile(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+
+	vvSpProfileName := ""
+	if _, ok := d.GetOk("parameters.0"); ok {
+		if _, ok := d.GetOk("parameters.0.settings"); ok {
+			if _, ok := d.GetOk("parameters.0.settings.0"); ok {
+				if _, ok := d.GetOk("parameters.0.settings.0.qos"); ok {
+					if v, ok := d.GetOk("parameters.0.site.0.qos.0.profile_name"); ok {
+						vvSpProfileName = interfaceToString(v)
+					}
+				}
+			}
+		}
+	}
+
+	item, err := searchNetworkSettingsGetServiceProviderDetails(m, vvSpProfileName)
+	if err != nil || item != nil {
+		resourceMap := make(map[string]string)
+		resourceMap["profile_name"] = vvSpProfileName
+		d.SetId(joinResourceID(resourceMap))
+		return resourceServiceProviderRead(ctx, d, m)
+	}
 
 	resp1, restyResp1, err := client.NetworkSettings.CreateSpProfile(request1)
 	if err != nil || resp1 == nil {
@@ -107,32 +213,64 @@ func resourceServiceProviderCreate(ctx context.Context, d *schema.ResourceData, 
 			"Failure when executing CreateSpProfile", err))
 		return diags
 	}
+
+	executionId := resp1.ExecutionID
+	log.Printf("[DEBUG] ExecutionID => %s", executionId)
+	if executionId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetBusinessAPIExecutionDetails", err,
+				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+			return diags
+		}
+		for response2.Status == "IN_PROGRESS" {
+			time.Sleep(10 * time.Second)
+			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp1 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+		}
+		if response2.Status == "FAILURE" {
+			bapiError := response2.BapiError
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing CreateSpProfile", err,
+				"Failure at CreateSpProfile execution", bapiError))
+			return diags
+		}
+	}
 	resourceMap := make(map[string]string)
+	resourceMap["profile_name"] = vvSpProfileName
 	d.SetId(joinResourceID(resourceMap))
 	return resourceServiceProviderRead(ctx, d, m)
 }
 
 func resourceServiceProviderRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
+	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
+	vSPProfleName := resourceMap["profile_name"]
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetServiceProviderDetails")
 
-		response1, restyResp1, err := client.NetworkSettings.GetServiceProviderDetails()
+		response1, err := searchNetworkSettingsGetServiceProviderDetails(m, vSPProfleName)
 
 		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetServiceProviderDetails", err,
-				"Failure at GetServiceProviderDetails, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -140,8 +278,8 @@ func resourceServiceProviderRead(ctx context.Context, d *schema.ResourceData, m 
 
 		//TODO FOR DNAC
 
-		vItem1 := flattenNetworkSettingsGetServiceProviderDetailsItems(response1)
-		if err := d.Set("parameters", vItem1); err != nil {
+		vItem1 := flattenNetworkSettingsGetServiceProviderDetailsItem(response1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetServiceProviderDetails search response",
 				err))
@@ -160,14 +298,23 @@ func resourceServiceProviderUpdate(ctx context.Context, d *schema.ResourceData, 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 
-	selectedMethod := 1
-	var vvID string
-	var vvName string
-	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
+	vSpProfileName := resourceMap["profile_name"]
+	item, err := searchNetworkSettingsGetServiceProviderDetails(m, vSpProfileName)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetServiceProviderDetails", err,
+			"Failure at yGetApplications, unexpected response", ""))
+		return diags
+	}
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %s", vvName)
+		log.Printf("[DEBUG] Name used for update operation %s", vSpProfileName)
 		request1 := expandRequestServiceProviderUpdateSpProfile(ctx, "parameters.0", d)
+		if d.HasChange("parameters.0.site.0.qos.0.profile_name") {
+			old, _ := d.GetChange("parameters.0.site.0.qos.0.profile_name")
+			newQos := *request1.Settings.Qos
+			newQos[0].OldProfileName = interfaceToString(old)
+			request1.Settings.Qos = &newQos
+		}
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkSettings.UpdateSpProfile(request1)
 		if err != nil || response1 == nil {
@@ -183,15 +330,117 @@ func resourceServiceProviderUpdate(ctx context.Context, d *schema.ResourceData, 
 				"Failure at UpdateSpProfile, unexpected response", ""))
 			return diags
 		}
+		executionId := response1.ExecutionID
+		log.Printf("[DEBUG] ExecutionID => %s", executionId)
+		if executionId != "" {
+			time.Sleep(5 * time.Second)
+			response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetBusinessAPIExecutionDetails", err,
+					"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+				return diags
+			}
+			for response2.Status == "IN_PROGRESS" {
+				time.Sleep(10 * time.Second)
+				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+				if err != nil || response2 == nil {
+					if restyResp1 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+					}
+					diags = append(diags, diagErrorWithAlt(
+						"Failure when executing GetExecutionByID", err,
+						"Failure at GetExecutionByID, unexpected response", ""))
+					return diags
+				}
+			}
+			if response2.Status == "FAILURE" {
+				bapiError := response2.BapiError
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing UpdateSpProfile", err,
+					"Failure at UpdateSpProfile execution", bapiError))
+				return diags
+			}
+		}
 	}
 
 	return resourceServiceProviderRead(ctx, d, m)
 }
 
 func resourceServiceProviderDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
+
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete ServiceProvider on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vSpProfileName := resourceMap["sp_profile_name"]
+	item, err := searchNetworkSettingsGetServiceProviderDetails(m, vSpProfileName)
+	if err != nil || item == nil {
+		d.SetId("")
+		return diags
+	}
+
+	selectedMethod := 1
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method 1: DeleteSpProfile")
+
+		response1, restyResp1, err := client.NetworkSettings.DeleteSpProfile(vSpProfileName)
+
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing DeleteSpProfile", err,
+				"Failure at DeleteSpProfile, unexpected response", ""))
+			return diags
+		}
+
+		executionId := response1.ExecutionID
+		log.Printf("[DEBUG] ExecutionID => %s", executionId)
+		if executionId != "" {
+			time.Sleep(5 * time.Second)
+			response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetBusinessAPIExecutionDetails", err,
+					"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+				return diags
+			}
+			for response2.Status == "IN_PROGRESS" {
+				time.Sleep(10 * time.Second)
+				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+				if err != nil || response2 == nil {
+					if restyResp1 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+					}
+					diags = append(diags, diagErrorWithAlt(
+						"Failure when executing GetExecutionByID", err,
+						"Failure at GetExecutionByID, unexpected response", ""))
+					return diags
+				}
+			}
+			if response2.Status == "FAILURE" {
+				bapiError := response2.BapiError
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing DeleteSpProfile", err,
+					"Failure at DeleteSpProfile execution", bapiError))
+				return diags
+			}
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+		d.SetId("")
+		return diags
+
+	}
 	return diags
 }
 func expandRequestServiceProviderCreateSpProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateSpProfile {
@@ -315,9 +564,6 @@ func expandRequestServiceProviderUpdateSpProfileSettingsQos(ctx context.Context,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".wan_provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".wan_provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".wan_provider")))) {
 		request.WanProvider = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".old_profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".old_profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".old_profile_name")))) {
-		request.OldProfileName = interfaceToString(v)
-	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -325,12 +571,12 @@ func expandRequestServiceProviderUpdateSpProfileSettingsQos(ctx context.Context,
 	return &request
 }
 
-func searchNetworkSettingsGetServiceProviderDetails(m interface{}, queryParams dnacentersdkgo.GetServiceProviderDetailsQueryParams) (*dnacentersdkgo.ResponseItemNetworkSettingsGetServiceProviderDetails, error) {
+func searchNetworkSettingsGetServiceProviderDetails(m interface{}, vSProfileName string) (*dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetailsResponse, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseItemNetworkSettingsGetServiceProviderDetails
+	var foundItem *dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetailsResponse
 	var ite *dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetails
-	ite, _, err = client.NetworkSettings.GetServiceProviderDetails(&queryParams)
+	ite, _, err = client.NetworkSettings.GetServiceProviderDetails()
 	if err != nil {
 		return foundItem, err
 	}
@@ -338,14 +584,21 @@ func searchNetworkSettingsGetServiceProviderDetails(m interface{}, queryParams d
 	if items == nil {
 		return foundItem, err
 	}
-	itemsCopy := *items
+	if items.Response == nil {
+		return foundItem, err
+	}
+	itemsCopy := *items.Response
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.Name {
-			var getItem *dnacentersdkgo.ResponseItemNetworkSettingsGetServiceProviderDetails
-			getItem = &item
-			foundItem = getItem
-			return foundItem, err
+		if item.Value != nil {
+			for _, item2 := range *item.Value {
+				if item2.SpProfileName == vSProfileName {
+					var getItem *dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetailsResponse
+					getItem = &item
+					foundItem = getItem
+					return foundItem, err
+				}
+			}
 		}
 	}
 	return foundItem, err
