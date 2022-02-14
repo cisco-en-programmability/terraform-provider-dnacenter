@@ -173,6 +173,28 @@ func flattenNetworkSettingsGetServiceProviderDetailsItems(items *[]dnacentersdkg
 	return respItems
 }
 
+func flattenNetworkSettingsGetServiceProviderDetailsItem(item *dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetailsResponse) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+
+	respItem := make(map[string]interface{})
+	respItem["instance_type"] = item.InstanceType
+	respItem["instance_uuid"] = item.InstanceUUID
+	respItem["namespace"] = item.Namespace
+	respItem["type"] = item.Type
+	respItem["key"] = item.Key
+	respItem["version"] = item.Version
+	respItem["value"] = flattenNetworkSettingsGetServiceProviderDetailsItemsValue(item.Value)
+	respItem["group_uuid"] = item.GroupUUID
+	respItem["inherited_group_uuid"] = item.InheritedGroupUUID
+	respItem["inherited_group_name"] = item.InheritedGroupName
+
+	return []map[string]interface{}{
+		respItem,
+	}
+}
+
 func flattenNetworkSettingsGetServiceProviderDetailsItemsValue(items *[]dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetailsResponseValue) []map[string]interface{} {
 	if items == nil {
 		return nil
