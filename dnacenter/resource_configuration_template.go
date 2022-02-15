@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"time"
 
 	"log"
 
@@ -12,6 +13,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
+
+//Falta el trigger /version/
 
 func resourceConfigurationTemplate() *schema.Resource {
 	return &schema.Resource{
@@ -2138,31 +2141,33 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 
 	vTemplateID, okTemplateID := resourceItem["template_id"]
 	vvTemplateID := interfaceToString(vTemplateID)
-	vProjectID, okProjectID := resourceItem["project_id"]
+	vName := resourceItem["name"]
+	vvName := interfaceToString(vName)
+	vProjectID := resourceItem["project_id"]
 	vvProjectID := interfaceToString(vProjectID)
 	if okTemplateID && vvTemplateID != "" {
 		getResponse2, _, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID, nil)
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["template_id"] = vvTemplateID
+			resourceMap["name"] = vvName
 			resourceMap["project_id"] = vvProjectID
 			d.SetId(joinResourceID(resourceMap))
 			return resourceConfigurationTemplateRead(ctx, d, m)
 		}
 	} else {
-		response2, _, err := client.ConfigurationTemplates.GetsTheTemplatesAvailable(nil)
-		if response2 != nil && err == nil {
-			item2, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
-				resourceMap := make(map[string]string)
-				resourceMap["template_id"] = vvTemplateID
-				resourceMap["project_id"] = vvProjectID
-				d.SetId(joinResourceID(resourceMap))
-				return resourceConfigurationTemplateRead(ctx, d, m)
-			}
+		queryParam := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
+		item2, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParam, vvName)
+		if err == nil && item2 != nil {
+			resourceMap := make(map[string]string)
+			resourceMap["template_id"] = vvTemplateID
+			resourceMap["name"] = vvName
+			resourceMap["project_id"] = vvProjectID
+			d.SetId(joinResourceID(resourceMap))
+			return resourceConfigurationTemplateRead(ctx, d, m)
 		}
 	}
-	resp1, restyResp1, err := client.ConfigurationTemplates.CreateTemplate(request1)
+	resp1, restyResp1, err := client.ConfigurationTemplates.CreateTemplate(vvProjectID, request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
@@ -2173,8 +2178,30 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 			"Failure when executing CreateTemplate", err))
 		return diags
 	}
+	taskId := resp1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			diags = append(diags, diagError(
+				"Failure when executing CreateApplicationSet", err))
+			return diags
+		}
+	}
 	resourceMap := make(map[string]string)
 	resourceMap["template_id"] = vvTemplateID
+	resourceMap["name"] = vvName
 	resourceMap["project_id"] = vvProjectID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceConfigurationTemplateRead(ctx, d, m)
@@ -2187,13 +2214,14 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTemplateID := resourceMap["id"]
+	vTemplateID := resourceMap["template_id"]
+	vProjectID := resourceMap["project_id"]
 	vTemplateName := resourceMap["name"]
 
 	if vTemplateName != "" {
 		log.Printf("[DEBUG] Selected method 1: GetsTheTemplatesAvailable")
 		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-
+		queryParams1.ProjectID = vProjectID
 		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
 
 		if err != nil || response1 == nil {
@@ -2210,9 +2238,7 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsDetailsOfAGivenTemplate", err,
-				"Failure at GetsDetailsOfAGivenTemplate, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItems1 := flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItem(response2)
@@ -2259,7 +2285,8 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTemplateID := resourceMap["id"]
+	vTemplateID := resourceMap["template_id"]
+	vProjectID := resourceMap["project_id"]
 	vTemplateName := resourceMap["name"]
 	var vvTemplateID string
 	// NOTE: Consider adding getAllItems and search function to get missing params
@@ -2276,7 +2303,7 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 		}
 	} else if vTemplateName != "" {
 		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-
+		queryParams1.ProjectID = vProjectID
 		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
 
 		if err != nil || response1 == nil {
@@ -2294,9 +2321,9 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
-		if request1 != nil && request1.ID == "" {
-			request1.ID = vvTemplateID
-		}
+
+		request1.ID = vvTemplateID
+
 		response1, restyResp1, err := client.ConfigurationTemplates.UpdateTemplate(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -2350,7 +2377,8 @@ func resourceConfigurationTemplateDelete(ctx context.Context, d *schema.Resource
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTemplateID := resourceMap["id"]
+	vTemplateID := resourceMap["template_id"]
+	vProjectID := resourceMap["project_id"]
 	vTemplateName := resourceMap["name"]
 
 	var vvTemplateID string
@@ -2366,7 +2394,7 @@ func resourceConfigurationTemplateDelete(ctx context.Context, d *schema.Resource
 	}
 	if vTemplateName != "" {
 		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-
+		queryParams1.ProjectID = vProjectID
 		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
 
 		if err != nil || response1 == nil {
@@ -4489,28 +4517,23 @@ func expandRequestConfigurationTemplateUpdateTemplateValidationErrorsTemplateErr
 	return &request
 }
 
-func searchConfigurationTemplatesGetsTheTemplatesAvailable(m interface{}, queryParams dnacentersdkgo.GetsTheTemplatesAvailableQueryParams) (*dnacentersdkgo.ResponseItemConfigurationTemplatesGetsTheTemplatesAvailable, error) {
+func searchConfigurationTemplatesGetsTheTemplatesAvailable(m interface{}, queryParams dnacentersdkgo.GetsTheTemplatesAvailableQueryParams, vName string) (*dnacentersdkgo.ResponseItemConfigurationTemplatesGetsTheTemplatesAvailable, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseItemConfigurationTemplatesGetsTheTemplatesAvailable
-	var ite *dnacentersdkgo.ResponseConfigurationTemplatesGetsTheTemplatesAvailable
-	ite, _, err = client.ConfigurationTemplates.GetsTheTemplatesAvailable(&queryParams)
+	nResponse, _, err := client.ConfigurationTemplates.GetsTheTemplatesAvailable(nil)
+
 	if err != nil {
 		return foundItem, err
 	}
-	items := ite
-	if items == nil {
-		return foundItem, err
-	}
-	itemsCopy := *items
-	for _, item := range itemsCopy {
-		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.Name {
-			var getItem *dnacentersdkgo.ResponseItemConfigurationTemplatesGetsTheTemplatesAvailable
-			getItem = &item
-			foundItem = getItem
+	//maxPageSize := 10
+
+	for _, item := range *nResponse {
+		if vName == item.Name {
+			foundItem = &item
 			return foundItem, err
 		}
+
 	}
 	return foundItem, err
 }
