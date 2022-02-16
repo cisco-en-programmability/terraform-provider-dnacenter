@@ -2,7 +2,6 @@ package dnacenter
 
 import (
 	"context"
-	"fmt"
 	"reflect"
 
 	"log"
@@ -220,17 +219,17 @@ func resourceGoldenImageDelete(ctx context.Context, d *schema.ResourceData, m in
 	vImageID := resourceMap["image_id"]
 
 	selectedMethod := 1
-	var vvID string
-	var vvName string
+	//var vvID string
+	//var vvName string
 	if selectedMethod == 1 {
-		vvID = vID
-		getResp, _, err := client.SoftwareImageManagementSwim.GetGoldenTagStatusOfAnImage(vvSiteID, vvDeviceFamilyIDentifier, vvDeviceRole, vvImageID)
+		//vvID = vID
+		getResp, _, err := client.SoftwareImageManagementSwim.GetGoldenTagStatusOfAnImage(vSiteID, vDeviceFamilyIDentifier, vDeviceRole, vImageID)
 		if err != nil || getResp == nil {
 			// Assume that element it is already gone
 			return diags
 		}
 	}
-	response1, restyResp1, err := client.SoftwareImageManagementSwim.RemoveGoldenTagForImage(vvSiteID, vvDeviceFamilyIDentifier, vvDeviceRole, vvImageID)
+	response1, restyResp1, err := client.SoftwareImageManagementSwim.RemoveGoldenTagForImage(vSiteID, vDeviceFamilyIDentifier, vDeviceRole, vImageID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
