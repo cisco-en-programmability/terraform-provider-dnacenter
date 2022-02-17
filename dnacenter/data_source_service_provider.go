@@ -104,7 +104,7 @@ func dataSourceServiceProvider() *schema.Resource {
 
 						"version": &schema.Schema{
 							Description: `Version`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 					},

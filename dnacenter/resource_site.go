@@ -49,8 +49,102 @@ func resourceSite() *schema.Resource {
 							Description: `Additional Info`,
 							Type:        schema.TypeList,
 							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"attributes": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"address": &schema.Schema{
+													Description: `address`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"address_inherited_from": &schema.Schema{
+													Description: `addressInheritedFrom`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"country": &schema.Schema{
+													Description: `country`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"floor_index": &schema.Schema{
+													Description: `floorIndex`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"height": &schema.Schema{
+													Description: `height`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"latitude": &schema.Schema{
+													Description: `latitude`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"length": &schema.Schema{
+													Description: `length`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"longitude": &schema.Schema{
+													Description: `longitude`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"offset_x": &schema.Schema{
+													Description: `offsetX`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"offset_y": &schema.Schema{
+													Description: `offsetY`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"rf_model": &schema.Schema{
+													Description: `rfModel`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"type": &schema.Schema{
+													Description: `type`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"width": &schema.Schema{
+													Description: `width`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"namespace": &schema.Schema{
+										Description: `namespace`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+								},
 							},
 						},
 
@@ -260,7 +354,6 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSiteCreateSite(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vSiteID := resourceItem["site_id"]
 	vvSiteID := interfaceToString(vSiteID)
@@ -292,18 +385,19 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 
 	pathName := []string{vvParentName, vvName}
 	newName := strings.Join(pathName, "/")
+	if !strings.Contains(newName, "Global/") {
+		newPathName := []string{"Global", newName}
+		newName = strings.Join(newPathName, "/")
+	}
 	queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
 	queryParams1.Name = newName
-	queryParams1.SiteID = vvSiteID
-	queryParams1.Type = vvType
-
+	log.Printf("[DEBUG] newName => %s", newName)
 	item, err := searchSitesGetSite(m, queryParams1)
-	if err != nil || item != nil {
+	if err == nil || item != nil {
 		resourceMap := make(map[string]string)
-		resourceMap["site_id"] = vvSiteID
-		resourceMap["type"] = vvType
-		resourceMap["name"] = vvName
-		resourceMap["parent_name"] = vvParentName
+		resourceMap["site_id"] = item.ID
+		//resourceMap["type"] = item.AdditionalInfo
+		resourceMap["name"] = item.SiteNameHierarchy
 		/*resourceMap["runsync"] = vvRunsync
 		resourceMap["persistbapioutput"] = vvPersistbapioutput
 		resourceMap["timeout"] = vvTimeout*/
@@ -335,7 +429,7 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
 			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				log.Printf("[DEBUG] Retrieved error response1 %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetBusinessAPIExecutionDetails", err,
@@ -347,7 +441,7 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
 				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+					log.Printf("[DEBUG] Retrieved error response2 %s", restyResp1.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -365,9 +459,9 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 	}
 	resourceMap := make(map[string]string)
 	resourceMap["site_id"] = vvSiteID
-	resourceMap["type"] = vvType
-	resourceMap["name"] = vvName
-	resourceMap["parent_name"] = vvParentName
+	//resourceMap["type"] = vvType
+	resourceMap["name"] = newName
+	//resourceMap["parent_name"] = vvParentName
 	/*resourceMap["runsync"] = vvRunsync
 	resourceMap["persistbapioutput"] = vvPersistbapioutput
 	resourceMap["timeout"] = vvTimeout*/
@@ -382,24 +476,26 @@ func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vName := resourceMap["name"]
-	vSiteID := resourceMap["site_id"]
-	vType := resourceMap["type"]
-	vParentName := resourceMap["parent_name"]
+	log.Printf("[DEBUG] Read SiteNameHierarchy => %s", vName)
+	//vSiteID := resourceMap["site_id"]
+	//vParentName := resourceMap["parent_name"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		pathName := []string{vParentName, vName}
-		newName := strings.Join(pathName, "/")
-		log.Printf("[DEBUG] Selected method 1: GetSite")
+		//pathName := []string{vParentName, vName}
+		//newName := strings.Join(pathName, "/")
+		//log.Printf("[DEBUG] Selected method 1: GetSite")
 		queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
-		queryParams1.Name = newName
-		queryParams1.SiteID = vSiteID
-		queryParams1.Type = vType
+		queryParams1.Name = vName
+		//queryParams1.SiteID = vSiteID
+		log.Printf("[DEBUG] Read name => %s", queryParams1.Name)
+		log.Printf("[DEBUG] Read site => %s", queryParams1.SiteID)
 		response1, restyResp1, err := client.Sites.GetSite(&queryParams1)
 
 		if err != nil || response1 == nil {
+			log.Printf("[DEBUG] Error => %s", err.Error())
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				log.Printf("[DEBUG] Retrieved error response3 %s", restyResp1.String())
 			}
 			d.SetId("")
 			return diags
@@ -428,17 +524,14 @@ func resourceSiteUpdate(ctx context.Context, d *schema.ResourceData, m interface
 	resourceMap := separateResourceID(resourceID)
 	vName := resourceMap["name"]
 	vSiteID := resourceMap["site_id"]
-	vType := resourceMap["type"]
-	vParentName := resourceMap["parent_name"]
+	//vParentName := resourceMap["parent_name"]
 	/*vRunsync := resourceMap["runsync"]
 	vPersistbapioutput := resourceMap["persistbapioutput"]
 	vTimeout := resourceMap["timeout"]*/
-	pathName := []string{vParentName, vName}
-	newName := strings.Join(pathName, "/")
+	//pathName := []string{vParentName, vName}
+	//newName := strings.Join(pathName, "/")
 	queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
-	queryParams1.Name = newName
-	queryParams1.SiteID = vSiteID
-	queryParams1.Type = vType
+	queryParams1.Name = vName
 	item, err := searchSitesGetSite(m, queryParams1)
 	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
@@ -501,14 +594,9 @@ func resourceSiteDelete(ctx context.Context, d *schema.ResourceData, m interface
 	resourceMap := separateResourceID(resourceID)
 	vName := resourceMap["name"]
 	vSiteID := resourceMap["site_id"]
-	vType := resourceMap["type"]
-	vParentName := resourceMap["parent_name"]
-	pathName := []string{vParentName, vName}
-	newName := strings.Join(pathName, "/")
+
 	queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
 	queryParams1.Name = vName
-	queryParams1.SiteID = newName
-	queryParams1.Type = vType
 	item, err := searchSitesGetSite(m, queryParams1)
 	if err != nil || item == nil {
 		d.SetId("")
@@ -540,6 +628,7 @@ func resourceSiteDelete(ctx context.Context, d *schema.ResourceData, m interface
 			"Failure at DeleteSite, unexpected response", ""))
 		return diags
 	}
+
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")
@@ -771,8 +860,12 @@ func searchSitesGetSite(m interface{}, queryParams dnacentersdkgo.GetSiteQueryPa
 	var err error
 	var foundItem *dnacentersdkgo.ResponseSitesGetSiteResponse
 	var ite *dnacentersdkgo.ResponseSitesGetSite
-	ite, _, err = client.Sites.GetSite(&queryParams)
+	ite, restyResp1, err := client.Sites.GetSite(&queryParams)
 	if err != nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+		}
+		log.Printf("[DEBUG] Error =>%s", err.Error())
 		return foundItem, err
 	}
 	items := ite.Response
@@ -782,7 +875,7 @@ func searchSitesGetSite(m interface{}, queryParams dnacentersdkgo.GetSiteQueryPa
 	itemsCopy := *items
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.Name {
+		if item.SiteNameHierarchy == queryParams.Name {
 			var getItem *dnacentersdkgo.ResponseSitesGetSiteResponse
 			getItem = &item
 			foundItem = getItem

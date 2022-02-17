@@ -36,13 +36,93 @@ func resourceGlobalCredentialSNMPv2WriteCommunity() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"parameters": &schema.Schema{
-				Description: `Array of RequestDiscoveryCreateSNMPWriteCommunity`,
-				Type:        schema.TypeList,
-				Optional:    true,
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"comments": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"credential_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"instance_tenant_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"instance_uuid": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"netconf_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+
+						"port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"read_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"secure": &schema.Schema{
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"username": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"write_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Description: `Array of RequestDiscoveryCreateSNMPWriteCommunity`,
+				Type:        schema.TypeList,
+				Required:    true,
+				MaxItems:    1,
+				MinItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
 						"comments": &schema.Schema{
 							Description: `Comments to identify the credential
 `,
@@ -70,7 +150,7 @@ func resourceGlobalCredentialSNMPv2WriteCommunity() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-							ForceNew: true,
+							// ForceNew: true,
 						},
 					},
 				},
@@ -85,19 +165,17 @@ func resourceGlobalCredentialSNMPv2WriteCommunityCreate(ctx context.Context, d *
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestGlobalCredentialSNMPv2WriteCommunityCreateSNMPWriteCommunity(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	request1 := expandRequestGlobalCredentialSNMPv2WriteCommunityCreateSNMPWriteCommunity(ctx, "parameters", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+
 	vWriteCommunity := resourceItem["write_community"]
 	vvWriteCommunity := interfaceToString(vWriteCommunity)
 	vID := resourceItem["id"]
 	vvID := interfaceToString(vID)
+
 	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
-	resourceID := d.Id()
-	if resourceID != "" {
-		log.Printf("[DEBUG] ResourceID => %s", resourceID)
-		resourceMap := separateResourceID(resourceID)
-		vvID = resourceMap["id"]
-	}
 
 	queryParams1.CredentialSubType = "SNMPV2_WRITE_COMMUNITY"
 	item, err := searchDiscoveryGetGlobalCredentialsSmpv2Write(m, queryParams1, vvID)
@@ -167,7 +245,7 @@ func resourceGlobalCredentialSNMPv2WriteCommunityRead(ctx context.Context, d *sc
 
 		queryParams1.CredentialSubType = vCredentialSubType
 
-		response1, err := searchDiscoveryGetGlobalCredentialsSmpv2Read(m, queryParams1, vID)
+		response1, err := searchDiscoveryGetGlobalCredentialsSmpv2Write(m, queryParams1, vID)
 		if err != nil || response1 == nil {
 			d.SetId("")
 			return diags
@@ -375,7 +453,7 @@ func searchDiscoveryGetGlobalCredentialsSmpv2Write(m interface{}, queryParams dn
 	var err error
 	var foundItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
 	var ite *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentials
-	queryParams.CredentialSubType = "SNMPV2_READ_COMMUNITY"
+	queryParams.CredentialSubType = "SNMPV2_WRITE_COMMUNITY"
 	ite, _, err = client.Discovery.GetGlobalCredentials(&queryParams)
 	if err != nil {
 		return foundItem, err

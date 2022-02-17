@@ -511,9 +511,6 @@ func resourceGlobalPoolDelete(ctx context.Context, d *schema.ResourceData, m int
 	queryParams1 := dnacentersdkgo.GetGlobalPoolQueryParams{}
 	item, err := searchNetworkSettingsGetGlobalPool(m, queryParams1, vID, vIpPoolName)
 	if err != nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetGlobalPool", err,
-			"Failure at GetGlobalPool, unexpected response", ""))
 		return diags
 	}
 	if item == nil || len(*item) == 0 {

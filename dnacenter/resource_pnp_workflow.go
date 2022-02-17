@@ -476,9 +476,7 @@ func resourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m inte
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetWorkflowByID", err,
-				"Failure at GetWorkflowByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

@@ -71,16 +71,58 @@ func resourceGlobalCredentialSNMPv2ReadCommunity() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
+						"netconf_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+
+						"port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"read_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"secure": &schema.Schema{
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"username": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"write_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
 			"parameters": &schema.Schema{
 				Description: `Array of RequestDiscoveryCreateSNMPReadCommunity`,
 				Type:        schema.TypeList,
-				Optional:    true,
+				Required:    true,
+				MaxItems:    1,
+				MinItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
 						"comments": &schema.Schema{
 							Description: `Comments to identify the credential
 `,
@@ -108,7 +150,7 @@ func resourceGlobalCredentialSNMPv2ReadCommunity() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-							ForceNew: true,
+							// ForceNew: true,
 						},
 					},
 				},
@@ -123,7 +165,7 @@ func resourceGlobalCredentialSNMPv2ReadCommunityCreate(ctx context.Context, d *s
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestGlobalCredentialSNMPv2ReadCommunityCreateSNMPReadCommunity(ctx, "parameters.0", d)
+	request1 := expandRequestGlobalCredentialSNMPv2ReadCommunityCreateSNMPReadCommunity(ctx, "parameters", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vReadCommunity := resourceItem["read_community"]
@@ -131,12 +173,12 @@ func resourceGlobalCredentialSNMPv2ReadCommunityCreate(ctx context.Context, d *s
 	vID := resourceItem["id"]
 	vvID := interfaceToString(vID)
 	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
-	resourceID := d.Id()
-	if resourceID != "" {
-		log.Printf("[DEBUG] ResourceID => %s", resourceID)
-		resourceMap := separateResourceID(resourceID)
-		vvID = resourceMap["id"]
-	}
+	// resourceID := d.Id()
+	// if resourceID != "" {
+	// 	log.Printf("[DEBUG] ResourceID => %s", resourceID)
+	// 	resourceMap := separateResourceID(resourceID)
+	// 	vvID = resourceMap["id"]
+	// }
 
 	queryParams1.CredentialSubType = "SNMPV2_READ_COMMUNITY"
 	item, err := searchDiscoveryGetGlobalCredentialsSmpv2Read(m, queryParams1, vvID)
@@ -176,7 +218,7 @@ func resourceGlobalCredentialSNMPv2ReadCommunityCreate(ctx context.Context, d *s
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 			diags = append(diags, diagError(
-				"Failure when executing CreateNetconfCredentials", err))
+				"Failure when executing CreateSNMPReadCommunity", err))
 			return diags
 		}
 		vvID = response2.Response.Progress
@@ -246,6 +288,7 @@ func resourceGlobalCredentialSNMPv2ReadCommunityUpdate(ctx context.Context, d *s
 			"Failure at GetGlobalCredentials, unexpected response", ""))
 		return diags
 	}
+	log.Printf("[DEBUG] ReadCommunity=> %s", item.ReadCommunity)
 
 	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
@@ -253,6 +296,7 @@ func resourceGlobalCredentialSNMPv2ReadCommunityUpdate(ctx context.Context, d *s
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestGlobalCredentialSNMPv2ReadCommunityUpdateSNMPReadCommunity(ctx, "parameters.0", d)
+		request1.InstanceUUID = item.InstanceUUID
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Discovery.UpdateSNMPReadCommunity(request1)
 		if err != nil || response1 == nil {
@@ -285,7 +329,7 @@ func resourceGlobalCredentialSNMPv2ReadCommunityUpdate(ctx context.Context, d *s
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 				diags = append(diags, diagError(
-					"Failure when executing CreateNetconfCredentials", err))
+					"Failure when executing UpdateSNMPReadCommunity", err))
 				return diags
 			}
 		}

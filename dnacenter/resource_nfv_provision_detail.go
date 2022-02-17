@@ -2,7 +2,6 @@ package dnacenter
 
 import (
 	"context"
-	"fmt"
 	"reflect"
 
 	"log"
@@ -52,15 +51,15 @@ func resourceNfvProvisionDetail() *schema.Resource {
 }
 
 func resourceNfvProvisionDetailCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
+	//client := m.(*dnacentersdkgo.Client)
 
-	var diags diag.Diagnostics
+	//var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
+	//resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNfvProvisionDetailNfvProvisioningDetail(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	resp1, restyResp1, err := client.SiteDesign.NfvProvisioningDetail(request1)
+	/*resp1, restyResp1, err := client.SiteDesign.NfvProvisioningDetail(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
@@ -70,7 +69,7 @@ func resourceNfvProvisionDetailCreate(ctx context.Context, d *schema.ResourceDat
 		diags = append(diags, diagError(
 			"Failure when executing NfvProvisioningDetail", err))
 		return diags
-	}
+	}*/
 	resourceMap := make(map[string]string)
 	d.SetId(joinResourceID(resourceMap))
 	return resourceNfvProvisionDetailRead(ctx, d, m)
@@ -98,9 +97,7 @@ func resourceNfvProvisionDetailRead(ctx context.Context, d *schema.ResourceData,
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceDetailsByIP", err,
-				"Failure at GetDeviceDetailsByIP, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

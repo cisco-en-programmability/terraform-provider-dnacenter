@@ -2,7 +2,6 @@ package dnacenter
 
 import (
 	"context"
-	"fmt"
 	"reflect"
 
 	"log"
@@ -295,17 +294,17 @@ func resourceNetwork() *schema.Resource {
 }
 
 func resourceNetworkCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
+	//client := m.(*dnacentersdkgo.Client)
 
-	var diags diag.Diagnostics
+	//var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNetworkCreateNetwork(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	vSiteID, okSiteID := resourceItem["site_id"]
+	vSiteID := resourceItem["site_id"]
 	vvSiteID := interfaceToString(vSiteID)
-	resp1, restyResp1, err := client.NetworkSettings.CreateNetwork(request1)
+	/*resp1, restyResp1, err := client.NetworkSettings.CreateNetwork(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
@@ -315,7 +314,7 @@ func resourceNetworkCreate(ctx context.Context, d *schema.ResourceData, m interf
 		diags = append(diags, diagError(
 			"Failure when executing CreateNetwork", err))
 		return diags
-	}
+	}*/
 	resourceMap := make(map[string]string)
 	resourceMap["site_id"] = vvSiteID
 	d.SetId(joinResourceID(resourceMap))
@@ -336,9 +335,7 @@ func resourceNetworkRead(ctx context.Context, d *schema.ResourceData, m interfac
 		log.Printf("[DEBUG] Selected method 1: GetNetwork")
 		queryParams1 := dnacentersdkgo.GetNetworkQueryParams{}
 
-		if okSiteID {
-			queryParams1.SiteID = vSiteID
-		}
+		queryParams1.SiteID = vSiteID
 
 		response1, restyResp1, err := client.NetworkSettings.GetNetwork(&queryParams1)
 
@@ -346,9 +343,7 @@ func resourceNetworkRead(ctx context.Context, d *schema.ResourceData, m interfac
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetwork", err,
-				"Failure at GetNetwork, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -356,20 +351,20 @@ func resourceNetworkRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 		//TODO FOR DNAC
 
-		vItem1 := flattenNetworkSettingsGetNetworkItems(response1)
+		/*vItem1 := flattenNetworkSettingsGetNetworkItems(response1)
 		if err := d.Set("parameters", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetwork search response",
 				err))
 			return diags
-		}
+		}*/
 
 	}
 	return diags
 }
 
 func resourceNetworkUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
+	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
@@ -377,7 +372,7 @@ func resourceNetworkUpdate(ctx context.Context, d *schema.ResourceData, m interf
 	resourceMap := separateResourceID(resourceID)
 	vSiteID := resourceMap["site_id"]
 
-	queryParams1 := dnacentersdkgo.GetNetworkQueryParams
+	queryParams1 := dnacentersdkgo.GetNetworkQueryParams{}
 	queryParams1.SiteID = vSiteID
 	item, err := searchNetworkSettingsGetNetwork(m, queryParams1)
 	if err != nil || item == nil {
@@ -387,16 +382,16 @@ func resourceNetworkUpdate(ctx context.Context, d *schema.ResourceData, m interf
 		return diags
 	}
 
-	selectedMethod := 1
+	//selectedMethod := 1
 	var vvID string
-	var vvName string
+	//var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNetworkUpdateNetwork(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		response1, restyResp1, err := client.NetworkSettings.UpdateNetwork(vvSiteID, request1)
+		/*response1, restyResp1, err := client.NetworkSettings.UpdateNetwork(vvSiteID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
@@ -409,7 +404,7 @@ func resourceNetworkUpdate(ctx context.Context, d *schema.ResourceData, m interf
 				"Failure when executing UpdateNetwork", err,
 				"Failure at UpdateNetwork, unexpected response", ""))
 			return diags
-		}
+		}*/
 	}
 
 	return resourceNetworkRead(ctx, d, m)
@@ -771,10 +766,10 @@ func expandRequestNetworkUpdateNetworkSettingsClientAndEndpointAAA(ctx context.C
 	return &request
 }
 
-func searchNetworkSettingsGetNetwork(m interface{}, queryParams dnacentersdkgo.GetNetworkQueryParams) (*dnacentersdkgo.ResponseItemNetworkSettingsGetNetwork, error) {
-	client := m.(*dnacentersdkgo.Client)
+func searchNetworkSettingsGetNetwork(m interface{}, queryParams dnacentersdkgo.GetNetworkQueryParams) (*dnacentersdkgo.ResponseNetworkSettingsGetNetwork, error) {
+	//client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseItemNetworkSettingsGetNetwork
+	/*var foundItem *dnacentersdkgo.ResponseItemNetworkSettingsGetNetwork
 	var ite *dnacentersdkgo.ResponseNetworkSettingsGetNetwork
 	ite, _, err = client.NetworkSettings.GetNetwork(&queryParams)
 	if err != nil {
@@ -793,6 +788,6 @@ func searchNetworkSettingsGetNetwork(m interface{}, queryParams dnacentersdkgo.G
 			foundItem = getItem
 			return foundItem, err
 		}
-	}
-	return foundItem, err
+	}*/
+	return nil, err
 }

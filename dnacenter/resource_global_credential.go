@@ -2,8 +2,6 @@ package dnacenter
 
 import (
 	"context"
-	"fmt"
-	"reflect"
 
 	"log"
 
@@ -3216,113 +3214,90 @@ func resourceGlobalCredentialCreate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceGlobalCredentialRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
+	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPeriodicRefresh, okPeriodicRefresh := resourceMap["periodic_refresh"]
-	vSourceIP, okSourceIP := resourceMap["source_ip"]
-	vDestIP, okDestIP := resourceMap["dest_ip"]
-	vSourcePort, okSourcePort := resourceMap["source_port"]
-	vDestPort, okDestPort := resourceMap["dest_port"]
-	vGtCreateTime, okGtCreateTime := resourceMap["gt_create_time"]
-	vLtCreateTime, okLtCreateTime := resourceMap["lt_create_time"]
-	vProtocol, okProtocol := resourceMap["protocol"]
-	vStatus, okStatus := resourceMap["status"]
-	vTaskID, okTaskID := resourceMap["task_id"]
-	vLastUpdateTime, okLastUpdateTime := resourceMap["last_update_time"]
-	vLimit, okLimit := resourceMap["limit"]
-	vOffset, okOffset := resourceMap["offset"]
-	vOrder, okOrder := resourceMap["order"]
-	vSortBy, okSortBy := resourceMap["sort_by"]
-	vFlowAnalysisID, okFlowAnalysisID := resourceMap["flow_analysis_id"]
+	vPeriodicRefresh := resourceMap["periodic_refresh"]
+	vSourceIP := resourceMap["source_ip"]
+	vDestIP := resourceMap["dest_ip"]
+	vSourcePort := resourceMap["source_port"]
+	vDestPort := resourceMap["dest_port"]
+	vGtCreateTime := resourceMap["gt_create_time"]
+	vLtCreateTime := resourceMap["lt_create_time"]
+	vProtocol := resourceMap["protocol"]
+	vStatus := resourceMap["status"]
+	vTaskID := resourceMap["task_id"]
+	vLastUpdateTime := resourceMap["last_update_time"]
+	vLimit := resourceMap["limit"]
+	vOffset := resourceMap["offset"]
+	vOrder := resourceMap["order"]
+	vSortBy := resourceMap["sort_by"]
+	//vFlowAnalysisID := resourceMap["flow_analysis_id"]
 
-	method1 := []bool{okPeriodicRefresh, okSourceIP, okDestIP, okSourcePort, okDestPort, okGtCreateTime, okLtCreateTime, okProtocol, okStatus, okTaskID, okLastUpdateTime, okLimit, okOffset, okOrder, okSortBy}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okFlowAnalysisID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
-
-	selectedMethod := pickMethod([][]bool{method1, method2})
+	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: RetrivesAllPreviousPathtracesSummary")
 		queryParams1 := dnacentersdkgo.RetrivesAllPreviousPathtracesSummaryQueryParams{}
 
-		if okPeriodicRefresh {
-			queryParams1.PeriodicRefresh = *stringToBooleanPtr(vPeriodicRefresh)
-		}
-		if okSourceIP {
-			queryParams1.SourceIP = vSourceIP
-		}
-		if okDestIP {
-			queryParams1.DestIP = vDestIP
-		}
-		if okSourcePort {
-			queryParams1.SourcePort = vSourcePort
-		}
-		if okDestPort {
-			queryParams1.DestPort = vDestPort
-		}
-		if okGtCreateTime {
-			queryParams1.GtCreateTime = vGtCreateTime
-		}
-		if okLtCreateTime {
-			queryParams1.LtCreateTime = vLtCreateTime
-		}
-		if okProtocol {
-			queryParams1.Protocol = vProtocol
-		}
-		if okStatus {
-			queryParams1.Status = vStatus
-		}
-		if okTaskID {
-			queryParams1.TaskID = vTaskID
-		}
-		if okLastUpdateTime {
-			queryParams1.LastUpdateTime = vLastUpdateTime
-		}
-		if okLimit {
-			queryParams1.Limit = vLimit
-		}
-		if okOffset {
-			queryParams1.Offset = vOffset
-		}
-		if okOrder {
-			queryParams1.Order = vOrder
-		}
-		if okSortBy {
-			queryParams1.SortBy = vSortBy
-		}
+		queryParams1.PeriodicRefresh = *stringToBooleanPtr(vPeriodicRefresh)
 
-		response1, restyResp1, err := client.Discovery.RetrivesAllPreviousPathtracesSummary(&queryParams1)
+		queryParams1.SourceIP = vSourceIP
+
+		queryParams1.DestIP = vDestIP
+
+		queryParams1.SourcePort = vSourcePort
+
+		queryParams1.DestPort = vDestPort
+
+		queryParams1.GtCreateTime = vGtCreateTime
+
+		queryParams1.LtCreateTime = vLtCreateTime
+
+		queryParams1.Protocol = vProtocol
+
+		queryParams1.Status = vStatus
+
+		queryParams1.TaskID = vTaskID
+
+		queryParams1.LastUpdateTime = vLastUpdateTime
+
+		queryParams1.Limit = vLimit
+
+		queryParams1.Offset = vOffset
+
+		queryParams1.Order = vOrder
+
+		queryParams1.SortBy = vSortBy
+
+		/*response1, restyResp1, err := client.Discovery.RetrivesAllPreviousPathtracesSummary(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing RetrivesAllPreviousPathtracesSummary", err,
-				"Failure at RetrivesAllPreviousPathtracesSummary, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))*/
 
 		//TODO FOR DNAC
 
-		vItem1 := flattenDiscoveryRetrivesAllPreviousPathtracesSummaryItems(response1)
+		/*vItem1 := flattenDiscoveryRetrivesAllPreviousPathtracesSummaryItems(response1)
 		if err := d.Set("parameters", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting RetrivesAllPreviousPathtracesSummary search response",
 				err))
 			return diags
-		}
+		}*/
 
 	}
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method 2: RetrievesPreviousPathtrace")
-		vvFlowAnalysisID := vFlowAnalysisID
+		/*vvFlowAnalysisID := vFlowAnalysisID
 
 		response2, restyResp2, err := client.Discovery.RetrievesPreviousPathtrace(vvFlowAnalysisID)
 
@@ -3330,22 +3305,20 @@ func resourceGlobalCredentialRead(ctx context.Context, d *schema.ResourceData, m
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing RetrievesPreviousPathtrace", err,
-				"Failure at RetrievesPreviousPathtrace, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))*/
 
-		vItem2 := flattenDiscoveryRetrievesPreviousPathtraceItem(response2.Response)
+		/*vItem2 := flattenDiscoveryRetrievesPreviousPathtraceItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting RetrievesPreviousPathtrace response",
 				err))
 			return diags
 		}
-		return diags
+		return diags*/
 
 	}
 	return diags
@@ -3357,29 +3330,29 @@ func resourceGlobalCredentialUpdate(ctx context.Context, d *schema.ResourceData,
 
 func resourceGlobalCredentialDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
-	client := m.(*dnacentersdkgo.Client)
+	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPeriodicRefresh, okPeriodicRefresh := resourceMap["periodic_refresh"]
-	vSourceIP, okSourceIP := resourceMap["source_ip"]
-	vDestIP, okDestIP := resourceMap["dest_ip"]
-	vSourcePort, okSourcePort := resourceMap["source_port"]
-	vDestPort, okDestPort := resourceMap["dest_port"]
-	vGtCreateTime, okGtCreateTime := resourceMap["gt_create_time"]
-	vLtCreateTime, okLtCreateTime := resourceMap["lt_create_time"]
-	vProtocol, okProtocol := resourceMap["protocol"]
-	vStatus, okStatus := resourceMap["status"]
-	vTaskID, okTaskID := resourceMap["task_id"]
-	vLastUpdateTime, okLastUpdateTime := resourceMap["last_update_time"]
-	vLimit, okLimit := resourceMap["limit"]
-	vOffset, okOffset := resourceMap["offset"]
-	vOrder, okOrder := resourceMap["order"]
-	vSortBy, okSortBy := resourceMap["sort_by"]
+	vPeriodicRefresh := resourceMap["periodic_refresh"]
+	vSourceIP := resourceMap["source_ip"]
+	vDestIP := resourceMap["dest_ip"]
+	vSourcePort := resourceMap["source_port"]
+	vDestPort := resourceMap["dest_port"]
+	vGtCreateTime := resourceMap["gt_create_time"]
+	vLtCreateTime := resourceMap["lt_create_time"]
+	vProtocol := resourceMap["protocol"]
+	vStatus := resourceMap["status"]
+	vTaskID := resourceMap["task_id"]
+	vLastUpdateTime := resourceMap["last_update_time"]
+	vLimit := resourceMap["limit"]
+	vOffset := resourceMap["offset"]
+	vOrder := resourceMap["order"]
+	vSortBy := resourceMap["sort_by"]
 
-	queryParams1 := dnacentersdkgo.RetrivesAllPreviousPathtracesSummaryQueryParams
+	queryParams1 := dnacentersdkgo.RetrivesAllPreviousPathtracesSummaryQueryParams{}
 	queryParams1.PeriodicRefresh = *stringToBooleanPtr(vPeriodicRefresh)
 	queryParams1.SourceIP = vSourceIP
 	queryParams1.DestIP = vDestIP
@@ -3403,45 +3376,9 @@ func resourceGlobalCredentialDelete(ctx context.Context, d *schema.ResourceData,
 		return diags
 	}
 
-	vFlowAnalysisID, okFlowAnalysisID := resourceMap["flow_analysis_id"]
+	//vFlowAnalysisID := resourceMap["flow_analysis_id"]
 
-	method1 := []bool{okPeriodicRefresh, okSourceIP, okDestIP, okSourcePort, okDestPort, okGtCreateTime, okLtCreateTime, okProtocol, okStatus, okTaskID, okLastUpdateTime, okLimit, okOffset, okOrder, okSortBy}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okFlowAnalysisID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
-
-	selectedMethod := pickMethod([][]bool{method1, method2})
-	var vvID string
-	var vvName string
-	// REVIEW: Add getAllItems and search function to get missing params
-	if selectedMethod == 1 {
-
-		getResp1, _, err := client.Discovery.RetrivesAllPreviousPathtracesSummary(nil)
-		if err != nil || getResp1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		items1 := getAllItemsDiscoveryRetrivesAllPreviousPathtracesSummary(m, getResp1, nil)
-		item1, err := searchDiscoveryRetrivesAllPreviousPathtracesSummary(m, items1, vName, vID)
-		if err != nil || item1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		if vID != item1.ID {
-			vvID = item1.ID
-		} else {
-			vvID = vID
-		}
-	}
-	if selectedMethod == 2 {
-		vvID = vID
-		getResp, _, err := client.Discovery.RetrievesPreviousPathtrace(vvFlowAnalysisID)
-		if err != nil || getResp == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-	}
-	response1, restyResp1, err := client.Discovery.DeletesPathtraceByID(vvFlowAnalysisID)
+	/*response1, restyResp1, err := client.Discovery.DeletesPathtraceByID(vvFlowAnalysisID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -3454,7 +3391,7 @@ func resourceGlobalCredentialDelete(ctx context.Context, d *schema.ResourceData,
 			"Failure when executing DeletesPathtraceByID", err,
 			"Failure at DeletesPathtraceByID, unexpected response", ""))
 		return diags
-	}
+	}*/
 
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
@@ -3463,9 +3400,9 @@ func resourceGlobalCredentialDelete(ctx context.Context, d *schema.ResourceData,
 	return diags
 }
 
-func searchDiscoveryRetrivesAllPreviousPathtracesSummary(m interface{}, queryParams dnacentersdkgo.RetrivesAllPreviousPathtracesSummaryQueryParams) (*dnacentersdkgo.ResponseItemDiscoveryRetrivesAllPreviousPathtracesSummary, error) {
-	client := m.(*dnacentersdkgo.Client)
-	var err error
+func searchDiscoveryRetrivesAllPreviousPathtracesSummary(m interface{}, queryParams dnacentersdkgo.RetrivesAllPreviousPathtracesSummaryQueryParams) (*dnacentersdkgo.ResponsePathTraceRetrivesAllPreviousPathtracesSummaryResponse, error) {
+	//client := m.(*dnacentersdkgo.Client)
+	/*var err error
 	var foundItem *dnacentersdkgo.ResponseItemDiscoveryRetrivesAllPreviousPathtracesSummary
 	var ite *dnacentersdkgo.ResponseDiscoveryRetrivesAllPreviousPathtracesSummary
 	ite, _, err = client.Discovery.RetrivesAllPreviousPathtracesSummary(&queryParams)
@@ -3485,6 +3422,6 @@ func searchDiscoveryRetrivesAllPreviousPathtracesSummary(m interface{}, queryPar
 			foundItem = getItem
 			return foundItem, err
 		}
-	}
-	return foundItem, err
+	}*/
+	return nil, nil
 }

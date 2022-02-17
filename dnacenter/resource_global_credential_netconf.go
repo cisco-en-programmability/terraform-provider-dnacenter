@@ -71,6 +71,33 @@ func resourceGlobalCredentialNetconf() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
+						"netconf_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+
+						"port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"secure": &schema.Schema{
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"username": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -122,7 +149,7 @@ func resourceGlobalCredentialNetconfCreate(ctx context.Context, d *schema.Resour
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestGlobalCredentialNetconfCreateNetconfCredentials(ctx, "parameters.0", d)
+	request1 := expandRequestGlobalCredentialNetconfCreateNetconfCredentials(ctx, "parameters", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	vNetconfPort := resourceItem["netconf_port"]
 	vvNetconfPort := interfaceToString(vNetconfPort)
@@ -196,7 +223,7 @@ func resourceGlobalCredentialNetconfRead(ctx context.Context, d *schema.Resource
 
 		queryParams1.CredentialSubType = vCredentialSubType
 
-		response1, err := searchDiscoveryGetGlobalCredentialsHttpWrite(m, queryParams1, vNetconfPort, vID)
+		response1, err := searchDiscoveryGetGlobalCredentialsNetConf(m, queryParams1, vNetconfPort, vID)
 		if err != nil || response1 == nil {
 			d.SetId("")
 			return diags
@@ -435,7 +462,7 @@ func searchDiscoveryGetGlobalCredentialsNetConf(m interface{}, queryParams dnace
 	itemsCopy := *items
 	for _, item := range *itemsCopy.Response {
 		// Call get by _ method and set value to foundItem and return
-		if item.ID == vID || item.Comments == vNetconfPort {
+		if item.ID == vID || item.NetconfPort == vNetconfPort {
 			var getItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
 			getItem = &item
 			foundItem = getItem

@@ -119,7 +119,7 @@ func resourceServiceProvider() *schema.Resource {
 
 						"version": &schema.Schema{
 							Description: `Version`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 					},
@@ -134,7 +134,6 @@ func resourceServiceProvider() *schema.Resource {
 						"settings": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
-							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -186,7 +185,7 @@ func resourceServiceProviderCreate(ctx context.Context, d *schema.ResourceData, 
 		if _, ok := d.GetOk("parameters.0.settings"); ok {
 			if _, ok := d.GetOk("parameters.0.settings.0"); ok {
 				if _, ok := d.GetOk("parameters.0.settings.0.qos"); ok {
-					if v, ok := d.GetOk("parameters.0.site.0.qos.0.profile_name"); ok {
+					if v, ok := d.GetOk("parameters.0.settings.0.qos.0.profile_name"); ok {
 						vvSpProfileName = interfaceToString(v)
 					}
 				}
@@ -195,7 +194,7 @@ func resourceServiceProviderCreate(ctx context.Context, d *schema.ResourceData, 
 	}
 
 	item, err := searchNetworkSettingsGetServiceProviderDetails(m, vvSpProfileName)
-	if err != nil || item != nil {
+	if err == nil && item != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["profile_name"] = vvSpProfileName
 		d.SetId(joinResourceID(resourceMap))
@@ -270,6 +269,9 @@ func resourceServiceProviderRead(ctx context.Context, d *schema.ResourceData, m 
 		response1, err := searchNetworkSettingsGetServiceProviderDetails(m, vSPProfleName)
 
 		if err != nil || response1 == nil {
+			if err != nil {
+				log.Printf("[DEBUG] Error => %s", err.Error())
+			}
 			d.SetId("")
 			return diags
 		}
@@ -297,7 +299,8 @@ func resourceServiceProviderUpdate(ctx context.Context, d *schema.ResourceData, 
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
+	isProfileNameChange := false
+	newProfileName := ""
 	vSpProfileName := resourceMap["profile_name"]
 	item, err := searchNetworkSettingsGetServiceProviderDetails(m, vSpProfileName)
 	if err != nil || item == nil {
@@ -309,11 +312,13 @@ func resourceServiceProviderUpdate(ctx context.Context, d *schema.ResourceData, 
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vSpProfileName)
 		request1 := expandRequestServiceProviderUpdateSpProfile(ctx, "parameters.0", d)
-		if d.HasChange("parameters.0.site.0.qos.0.profile_name") {
-			old, _ := d.GetChange("parameters.0.site.0.qos.0.profile_name")
-			newQos := *request1.Settings.Qos
+		newQos := *request1.Settings.Qos
+		if d.HasChange("parameters.0.settings.0.qos.0.profile_name") {
+			old, _ := d.GetChange("parameters.0.settings.0.qos.0.profile_name")
+			isProfileNameChange = true
 			newQos[0].OldProfileName = interfaceToString(old)
 			request1.Settings.Qos = &newQos
+			newProfileName = newQos[0].ProfileName
 		}
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkSettings.UpdateSpProfile(request1)
@@ -366,7 +371,11 @@ func resourceServiceProviderUpdate(ctx context.Context, d *schema.ResourceData, 
 			}
 		}
 	}
-
+	if isProfileNameChange {
+		resourceMap := make(map[string]string)
+		resourceMap["profile_name"] = newProfileName
+		d.SetId(joinResourceID(resourceMap))
+	}
 	return resourceServiceProviderRead(ctx, d, m)
 }
 
@@ -376,7 +385,7 @@ func resourceServiceProviderDelete(ctx context.Context, d *schema.ResourceData, 
 	var diags diag.Diagnostics
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSpProfileName := resourceMap["sp_profile_name"]
+	vSpProfileName := resourceMap["profile_name"]
 	item, err := searchNetworkSettingsGetServiceProviderDetails(m, vSpProfileName)
 	if err != nil || item == nil {
 		d.SetId("")
@@ -445,10 +454,7 @@ func resourceServiceProviderDelete(ctx context.Context, d *schema.ResourceData, 
 }
 func expandRequestServiceProviderCreateSpProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateSpProfile {
 	request := dnacentersdkgo.RequestNetworkSettingsCreateSpProfile{}
-	request.Settings = expandRequestServiceProviderCreateSpProfileSettings(ctx, key, d)
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
+	request.Settings = expandRequestServiceProviderCreateSpProfileSettings(ctx, key+".settings.0", d)
 
 	return &request
 }
@@ -457,9 +463,6 @@ func expandRequestServiceProviderCreateSpProfileSettings(ctx context.Context, ke
 	request := dnacentersdkgo.RequestNetworkSettingsCreateSpProfileSettings{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".qos")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".qos")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".qos")))) {
 		request.Qos = expandRequestServiceProviderCreateSpProfileSettingsQosArray(ctx, key+".qos", d)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
 	}
 
 	return &request
@@ -482,9 +485,6 @@ func expandRequestServiceProviderCreateSpProfileSettingsQosArray(ctx context.Con
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
 
 	return &request
 }
@@ -500,19 +500,13 @@ func expandRequestServiceProviderCreateSpProfileSettingsQos(ctx context.Context,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".wan_provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".wan_provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".wan_provider")))) {
 		request.WanProvider = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
 
 	return &request
 }
 
 func expandRequestServiceProviderUpdateSpProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsUpdateSpProfile {
 	request := dnacentersdkgo.RequestNetworkSettingsUpdateSpProfile{}
-	request.Settings = expandRequestServiceProviderUpdateSpProfileSettings(ctx, key, d)
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
+	request.Settings = expandRequestServiceProviderUpdateSpProfileSettings(ctx, key+".settings.0", d)
 
 	return &request
 }
@@ -521,9 +515,6 @@ func expandRequestServiceProviderUpdateSpProfileSettings(ctx context.Context, ke
 	request := dnacentersdkgo.RequestNetworkSettingsUpdateSpProfileSettings{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".qos")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".qos")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".qos")))) {
 		request.Qos = expandRequestServiceProviderUpdateSpProfileSettingsQosArray(ctx, key+".qos", d)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
 	}
 
 	return &request
@@ -546,9 +537,6 @@ func expandRequestServiceProviderUpdateSpProfileSettingsQosArray(ctx context.Con
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
 
 	return &request
 }
@@ -564,26 +552,32 @@ func expandRequestServiceProviderUpdateSpProfileSettingsQos(ctx context.Context,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".wan_provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".wan_provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".wan_provider")))) {
 		request.WanProvider = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
 
 	return &request
 }
 
 func searchNetworkSettingsGetServiceProviderDetails(m interface{}, vSProfileName string) (*dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetailsResponse, error) {
+	log.Printf("[DEBUG] Search")
+	log.Printf("[DEBUG] Search sp profile name =>%s", vSProfileName)
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetailsResponse
 	var ite *dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetails
-	ite, _, err = client.NetworkSettings.GetServiceProviderDetails()
+	ite, resty, err := client.NetworkSettings.GetServiceProviderDetails()
+	log.Printf("[DEBUG] Load data")
+	if resty != nil {
+		log.Printf("Failure when sarch => %s", resty.String())
+	}
+	log.Printf("[DEBUG] Load data1")
 	if err != nil {
 		return foundItem, err
 	}
+	log.Printf("[DEBUG] Load data2")
 	items := ite
 	if items == nil {
 		return foundItem, err
 	}
+	log.Printf("[DEBUG] Load data3")
 	if items.Response == nil {
 		return foundItem, err
 	}
@@ -593,6 +587,7 @@ func searchNetworkSettingsGetServiceProviderDetails(m interface{}, vSProfileName
 		if item.Value != nil {
 			for _, item2 := range *item.Value {
 				if item2.SpProfileName == vSProfileName {
+					log.Printf("[DEBUG] Search finded item")
 					var getItem *dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetailsResponse
 					getItem = &item
 					foundItem = getItem
@@ -601,5 +596,6 @@ func searchNetworkSettingsGetServiceProviderDetails(m interface{}, vSProfileName
 			}
 		}
 	}
+	log.Printf("[DEBUG] Search final")
 	return foundItem, err
 }

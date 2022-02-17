@@ -479,9 +479,6 @@ func resourceWirelessProfileDelete(ctx context.Context, d *schema.ResourceData, 
 	item, err := searchWirelessGetWirelessProfile(m, queryParams1)
 	var vvWirelessProfileName string
 	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetWirelessProfile", err,
-			"Failure at GetWirelessProfile, unexpected response", ""))
 		return diags
 	}
 

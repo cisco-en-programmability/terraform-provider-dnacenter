@@ -3211,7 +3211,7 @@ get results and follow progress.
 							Description: `flowAnalysisId path parameter. Flow analysis request id
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"inclusions": &schema.Schema{
 							Type:     schema.TypeList,

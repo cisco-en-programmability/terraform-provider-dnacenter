@@ -71,6 +71,28 @@ func resourceGlobalCredentialHTTPRead() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+
+						"port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"secure": &schema.Schema{
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"username": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -260,6 +282,7 @@ func resourceGlobalCredentialHTTPReadUpdate(ctx context.Context, d *schema.Resou
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestGlobalCredentialHTTPReadUpdateHTTPReadCredential(ctx, "parameters.0", d)
+		request1.ID = response1.ID
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Discovery.UpdateHTTPReadCredential(request1)
 		if err != nil || response1 == nil {
@@ -469,7 +492,7 @@ func searchDiscoveryGetGlobalCredentialsHttpRead(m interface{}, queryParams dnac
 	itemsCopy := *items
 	for _, item := range *itemsCopy.Response {
 		// Call get by _ method and set value to foundItem and return
-		if item.ID == vID || item.Comments == vUsername {
+		if item.ID == vID || item.Username == vUsername {
 			var getItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
 			getItem = &item
 			foundItem = getItem

@@ -124,14 +124,16 @@ func resourceGoldenImageCreate(ctx context.Context, d *schema.ResourceData, m in
 	vvImageID := interfaceToString(vImageID)
 	if okSiteID && vvSiteID != "" && okDeviceFamilyIDentifier && vvDeviceFamilyIDentifier != "" && okDeviceRole && vvDeviceRole != "" && okImageID && vvImageID != "" {
 		getResponse1, _, err := client.SoftwareImageManagementSwim.GetGoldenTagStatusOfAnImage(vvSiteID, vvDeviceFamilyIDentifier, vvDeviceRole, vvImageID)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["site_id"] = vvSiteID
-			resourceMap["device_family_identifier"] = vvDeviceFamilyIDentifier
-			resourceMap["device_role"] = vvDeviceRole
-			resourceMap["image_id"] = vvImageID
-			d.SetId(joinResourceID(resourceMap))
-			return resourceGoldenImageRead(ctx, d, m)
+		if err == nil && getResponse1 != nil && getResponse1.Response != nil && getResponse1.Response.TaggedGolden != nil {
+			if *getResponse1.Response.TaggedGolden {
+				resourceMap := make(map[string]string)
+				resourceMap["site_id"] = vvSiteID
+				resourceMap["device_family_identifier"] = vvDeviceFamilyIDentifier
+				resourceMap["device_role"] = vvDeviceRole
+				resourceMap["image_id"] = vvImageID
+				d.SetId(joinResourceID(resourceMap))
+				return resourceGoldenImageRead(ctx, d, m)
+			}
 		}
 	}
 	resp1, restyResp1, err := client.SoftwareImageManagementSwim.TagAsGoldenImage(request1)
@@ -180,9 +182,7 @@ func resourceGoldenImageRead(ctx context.Context, d *schema.ResourceData, m inte
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGoldenTagStatusOfAnImage", err,
-				"Failure at GetGoldenTagStatusOfAnImage, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
