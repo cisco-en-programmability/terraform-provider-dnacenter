@@ -36,6 +36,81 @@ func resourceGlobalCredentialSNMPv3() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"comments": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"credential_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"instance_tenant_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"instance_uuid": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"netconf_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+
+						"port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"read_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"secure": &schema.Schema{
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"username": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"write_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"parameters": &schema.Schema{
 				Description: `Array of RequestDiscoveryCreateSNMPv3Credentials`,
 				Type:        schema.TypeList,
@@ -104,7 +179,7 @@ func resourceGlobalCredentialSNMPv3Create(ctx context.Context, d *schema.Resourc
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestGlobalCredentialSNMPv3CreateSNMPv3Credentials(ctx, "parameters.0", d)
+	request1 := expandRequestGlobalCredentialSNMPv3CreateSNMPv3Credentials(ctx, "parameters", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	vUsername := resourceItem["username"]
 	vvUsername := interfaceToString(vUsername)
@@ -178,7 +253,7 @@ func resourceGlobalCredentialSNMPv3Read(ctx context.Context, d *schema.ResourceD
 
 		queryParams1.CredentialSubType = vCredentialSubType
 
-		response1, err := searchDiscoveryGetGlobalCredentialsHttpRead(m, queryParams1, vUsername, vID)
+		response1, err := searchDiscoveryGetGlobalCredentialsSmpv3(m, queryParams1, vUsername, vID)
 		if err != nil || response1 == nil {
 			d.SetId("")
 			return diags
@@ -227,6 +302,7 @@ func resourceGlobalCredentialSNMPv3Update(ctx context.Context, d *schema.Resourc
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestGlobalCredentialSNMPv3UpdateSNMPv3Credentials(ctx, "parameters.0", d)
+		request1.ID = response1.ID
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Discovery.UpdateSNMPv3Credentials(request1)
 		if err != nil || response1 == nil {
@@ -307,7 +383,7 @@ func resourceGlobalCredentialSNMPv3Delete(ctx context.Context, d *schema.Resourc
 }
 func expandRequestGlobalCredentialSNMPv3CreateSNMPv3Credentials(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateSNMPv3Credentials {
 	request := dnacentersdkgo.RequestDiscoveryCreateSNMPv3Credentials{}
-	if v := expandRequestGlobalCredentialSNMPv3CreateSNMPv3CredentialsItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestGlobalCredentialSNMPv3CreateSNMPv3CredentialsItemArray(ctx, key, d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -448,7 +524,7 @@ func searchDiscoveryGetGlobalCredentialsSmpv3(m interface{}, queryParams dnacent
 	itemsCopy := *items
 	for _, item := range *itemsCopy.Response {
 		// Call get by _ method and set value to foundItem and return
-		if item.ID == vID || item.Comments == vUsername {
+		if item.ID == vID || item.Username == vUsername {
 			var getItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
 			getItem = &item
 			foundItem = getItem

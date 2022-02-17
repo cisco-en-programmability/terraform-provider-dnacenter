@@ -68,6 +68,28 @@ func resourceGlobalCredentialHTTPWrite() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+
+						"port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"secure": &schema.Schema{
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"username": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -244,7 +266,7 @@ func resourceGlobalCredentialHTTPWriteUpdate(ctx context.Context, d *schema.Reso
 
 	queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
 	queryParams1.CredentialSubType = vCredentialSubType
-	response1, err := searchDiscoveryGetGlobalCredentialsHttpRead(m, queryParams1, vUsername, vID)
+	response1, err := searchDiscoveryGetGlobalCredentialsHttpWrite(m, queryParams1, vUsername, vID)
 	if err != nil || response1 == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetGlobalCredentials", err,
@@ -257,6 +279,7 @@ func resourceGlobalCredentialHTTPWriteUpdate(ctx context.Context, d *schema.Reso
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestHTTPWriteCredentialUpdateUpdateHTTPWriteCredentials(ctx, "parameters.0", d)
+		request1.ID = response1.ID
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Discovery.UpdateHTTPWriteCredentials(request1)
 		if err != nil || response1 == nil {
@@ -455,7 +478,7 @@ func searchDiscoveryGetGlobalCredentialsHttpWrite(m interface{}, queryParams dna
 	var err error
 	var foundItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
 	var ite *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentials
-	queryParams.CredentialSubType = "HTTP_READ"
+	queryParams.CredentialSubType = "HTTP_WRITE"
 	ite, _, err = client.Discovery.GetGlobalCredentials(&queryParams)
 	if err != nil {
 		return foundItem, err
@@ -467,7 +490,7 @@ func searchDiscoveryGetGlobalCredentialsHttpWrite(m interface{}, queryParams dna
 	itemsCopy := *items
 	for _, item := range *itemsCopy.Response {
 		// Call get by _ method and set value to foundItem and return
-		if item.ID == vID || item.Comments == vUsername {
+		if item.ID == vID || item.Username == vUsername {
 			var getItem *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse
 			getItem = &item
 			foundItem = getItem

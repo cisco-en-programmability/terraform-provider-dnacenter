@@ -725,9 +725,6 @@ func resourceNfvProfileDelete(ctx context.Context, d *schema.ResourceData, m int
 	queryParams1.Name = vName
 	item, err := searchSiteDesignGetNfvProfile(m, queryParams1, &vID)
 	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetNFVProfile", err,
-			"Failure at GetNFVProfile, unexpected response", ""))
 		return diags
 	}
 	if vID == "" {

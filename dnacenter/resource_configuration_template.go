@@ -1654,7 +1654,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 							Description: `Project UUID
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 						"project_name": &schema.Schema{
 							Description: `Project name
@@ -1896,7 +1896,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 							Description: `templateId path parameter. templateId(UUID) of template to be deleted
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"template_params": &schema.Schema{
 							Type:     schema.TypeList,
@@ -2117,6 +2117,12 @@ func resourceConfigurationTemplate() *schema.Resource {
 								},
 							},
 						},
+						"comments": &schema.Schema{
+							Description: `Template version comments
+			`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
 						"version": &schema.Schema{
 							Description: `Current version of template
 `,
@@ -2141,8 +2147,6 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 
 	vTemplateID, okTemplateID := resourceItem["template_id"]
 	vvTemplateID := interfaceToString(vTemplateID)
-	vName := resourceItem["name"]
-	vvName := interfaceToString(vName)
 	vProjectID := resourceItem["project_id"]
 	vvProjectID := interfaceToString(vProjectID)
 	if okTemplateID && vvTemplateID != "" {
@@ -2150,18 +2154,6 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["template_id"] = vvTemplateID
-			resourceMap["name"] = vvName
-			resourceMap["project_id"] = vvProjectID
-			d.SetId(joinResourceID(resourceMap))
-			return resourceConfigurationTemplateRead(ctx, d, m)
-		}
-	} else {
-		queryParam := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-		item2, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParam, vvName)
-		if err == nil && item2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["template_id"] = vvTemplateID
-			resourceMap["name"] = vvName
 			resourceMap["project_id"] = vvProjectID
 			d.SetId(joinResourceID(resourceMap))
 			return resourceConfigurationTemplateRead(ctx, d, m)
@@ -2198,10 +2190,10 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 				"Failure when executing CreateApplicationSet", err))
 			return diags
 		}
+		vvTemplateID = response2.Response.Data
 	}
 	resourceMap := make(map[string]string)
 	resourceMap["template_id"] = vvTemplateID
-	resourceMap["name"] = vvName
 	resourceMap["project_id"] = vvProjectID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceConfigurationTemplateRead(ctx, d, m)
@@ -2215,16 +2207,19 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vTemplateID := resourceMap["template_id"]
-	vProjectID := resourceMap["project_id"]
-	vTemplateName := resourceMap["name"]
+	//vProjectID := resourceMap["project_id"]
+	//vTemplateName := resourceMap["name"]
 
-	if vTemplateName != "" {
+	/*if vTemplateName != "" {
 		log.Printf("[DEBUG] Selected method 1: GetsTheTemplatesAvailable")
 		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
 		queryParams1.ProjectID = vProjectID
 		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
 
 		if err != nil || response1 == nil {
+			if err != nil {
+				log.Printf("[DEBUG] Error when search => %s", err.Error())
+			}
 			d.SetId("")
 			return diags
 		}
@@ -2249,7 +2244,8 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 			return diags
 		}
 		return diags
-	} else if vTemplateID != "" {
+	} else*/
+	if vTemplateID != "" {
 		log.Printf("[DEBUG] Selected method 2: GetsDetailsOfAGivenTemplate")
 		vvTemplateID := vTemplateID
 		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
@@ -2286,8 +2282,8 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vTemplateID := resourceMap["template_id"]
-	vProjectID := resourceMap["project_id"]
-	vTemplateName := resourceMap["name"]
+	//vProjectID := resourceMap["project_id"]
+	//vTemplateName := resourceMap["name"]
 	var vvTemplateID string
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	if vTemplateID != "" {
@@ -2301,7 +2297,7 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 				"Failure at GetsDetailsOfAGivenTemplate, unexpected response", ""))
 			return diags
 		}
-	} else if vTemplateName != "" {
+	} /*else if vTemplateName != "" {
 		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
 		queryParams1.ProjectID = vProjectID
 		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
@@ -2314,15 +2310,61 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 		}
 		vvTemplateID = response1.TemplateID
 	}
-
+	*/
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %s", vTemplateName)
+		log.Printf("[DEBUG] ID used for update operation %s", vTemplateID)
 		request1 := expandRequestConfigurationTemplateUpdateTemplate(ctx, "parameters.0", d)
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
-
 		request1.ID = vvTemplateID
+		if d.HasChange("parameters.0.comments") {
+			request2 := expandRequestConfigurationTemplateVersionCreateVersionTemplate(ctx, "parameters.0", d)
+			if request2 != nil {
+				log.Printf("[DEBUG] request2 sent => %v", responseInterfaceToString(*request2))
+			}
+			request2.TemplateID = vTemplateID
+			response2, restyResp2, err := client.ConfigurationTemplates.VersionTemplate(request2)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] resty response for update operation => %v", restyResp2.String())
+					diags = append(diags, diagErrorWithAltAndResponse(
+						"Failure when executing VersionTemplate", err, restyResp2.String(),
+						"Failure at VersionTemplate, unexpected response", ""))
+					return diags
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing VersionTemplate", err,
+					"Failure at VersionTemplate, unexpected response", ""))
+				return diags
+			}
+			if response2.Response == nil {
+				diags = append(diags, diagError(
+					"Failure when executing VersionTemplate", err))
+				return diags
+			}
+			taskId := response2.Response.TaskID
+			log.Printf("[DEBUG] TASKID => %s", taskId)
+			if taskId != "" {
+				time.Sleep(5 * time.Second)
+				response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+				if err != nil || response2 == nil {
+					if restyResp2 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+					}
+					diags = append(diags, diagErrorWithAlt(
+						"Failure when executing GetTaskByID", err,
+						"Failure at GetTaskByID, unexpected response", ""))
+					return diags
+				}
+				if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+					log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+					diags = append(diags, diagError(
+						"Failure when executing VersionTemplate", err))
+					return diags
+				}
+			}
+		}
 
 		response1, restyResp1, err := client.ConfigurationTemplates.UpdateTemplate(request1)
 		if err != nil || response1 == nil {
@@ -2360,7 +2402,7 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 				diags = append(diags, diagError(
-					"Failure when executing CreateApplicationSet", err))
+					"Failure when executing UpdateApplicationSet", err))
 				return diags
 			}
 		}
@@ -2378,8 +2420,8 @@ func resourceConfigurationTemplateDelete(ctx context.Context, d *schema.Resource
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vTemplateID := resourceMap["template_id"]
-	vProjectID := resourceMap["project_id"]
-	vTemplateName := resourceMap["name"]
+	//vProjectID := resourceMap["project_id"]
+	//vTemplateName := resourceMap["name"]
 
 	var vvTemplateID string
 	// REVIEW: Add getAllItems and search function to get missing params
@@ -2392,16 +2434,18 @@ func resourceConfigurationTemplateDelete(ctx context.Context, d *schema.Resource
 			return diags
 		}
 	}
-	if vTemplateName != "" {
-		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-		queryParams1.ProjectID = vProjectID
-		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
+	/*
+		if vTemplateName != "" {
+			queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
+			queryParams1.ProjectID = vProjectID
+			response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
 
-		if err != nil || response1 == nil {
-			return diags
+			if err != nil || response1 == nil {
+				return diags
+			}
+			vvTemplateID = response1.TemplateID
 		}
-		vvTemplateID = response1.TemplateID
-	}
+	*/
 	response1, restyResp1, err := client.ConfigurationTemplates.DeletesTheTemplate(vvTemplateID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -3470,6 +3514,21 @@ func expandRequestConfigurationTemplateCreateTemplateValidationErrorsTemplateErr
 	return &request
 }
 
+func expandRequestConfigurationTemplateVersionCreateVersionTemplate(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesVersionTemplate {
+	request := dnacentersdkgo.RequestConfigurationTemplatesVersionTemplate{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".comments")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".comments")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".comments")))) {
+		request.Comments = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
+		request.TemplateID = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
 func expandRequestConfigurationTemplateUpdateTemplate(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesUpdateTemplate {
 	request := dnacentersdkgo.RequestConfigurationTemplatesUpdateTemplate{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tags")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tags")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tags")))) {
@@ -4524,10 +4583,11 @@ func searchConfigurationTemplatesGetsTheTemplatesAvailable(m interface{}, queryP
 	nResponse, _, err := client.ConfigurationTemplates.GetsTheTemplatesAvailable(nil)
 
 	if err != nil {
+		log.Printf("[DEBUG] Error when search => %s", err.Error())
 		return foundItem, err
 	}
 	//maxPageSize := 10
-
+	log.Printf("[DEBUG] Start to find a concidence")
 	for _, item := range *nResponse {
 		if vName == item.Name {
 			foundItem = &item

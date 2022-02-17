@@ -770,9 +770,7 @@ func resourceDiscoveryRead(ctx context.Context, d *schema.ResourceData, m interf
 		}
 		return diags
 
-	}
-
-	if vName != "" {
+	} else if vName != "" {
 		response1, err := searchDiscovery(m, vName)
 		if err != nil || response1 == nil {
 			d.SetId("")

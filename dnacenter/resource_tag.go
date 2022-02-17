@@ -328,9 +328,7 @@ func resourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{})
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTagByID", err,
-				"Failure at GetTagByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -353,9 +351,7 @@ func resourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{})
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTagByID", err,
-				"Failure at GetTagByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

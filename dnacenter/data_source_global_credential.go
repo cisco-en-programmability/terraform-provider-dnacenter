@@ -99,6 +99,43 @@ func dataSourceGlobalCredential() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
+						"netconf_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+
+						"port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"read_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"secure": &schema.Schema{
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"username": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"write_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -205,6 +242,13 @@ func flattenDiscoveryGetGlobalCredentialsItems(items *[]dnacentersdkgo.ResponseD
 		respItem["id"] = item.ID
 		respItem["instance_tenant_id"] = item.InstanceTenantID
 		respItem["instance_uuid"] = item.InstanceUUID
+		respItem["password"] = item.Password
+		respItem["port"] = item.Port
+		respItem["secure"] = boolPtrToString(item.Secure)
+		respItem["username"] = item.Username
+		respItem["netconf_port"] = item.NetconfPort
+		respItem["read_community"] = item.ReadCommunity
+		respItem["write_community"] = item.WriteCommunity
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -222,6 +266,13 @@ func flattenDiscoveryGetGlobalCredentialsItem(item *dnacentersdkgo.ResponseDisco
 	respItem["id"] = item.ID
 	respItem["instance_tenant_id"] = item.InstanceTenantID
 	respItem["instance_uuid"] = item.InstanceUUID
+	respItem["password"] = item.Password
+	respItem["port"] = item.Port
+	respItem["secure"] = boolPtrToString(item.Secure)
+	respItem["username"] = item.Username
+	respItem["netconf_port"] = item.NetconfPort
+	respItem["read_community"] = item.ReadCommunity
+	respItem["write_community"] = item.WriteCommunity
 	return []map[string]interface{}{
 		respItem,
 	}

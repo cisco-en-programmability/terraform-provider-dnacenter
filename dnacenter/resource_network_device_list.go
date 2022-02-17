@@ -613,7 +613,9 @@ func resourceNetworkDeviceListUpdate(ctx context.Context, d *schema.ResourceData
 	queryParams1.ManagementIPAddress = vIPAddress
 	item, err := searchDevicesGetDeviceList(m, queryParams1)
 	if err != nil || item == nil {
-		d.SetId("")
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetDeviceList", err,
+			"Failure at GetDeviceList, unexpected response", ""))
 		return diags
 	}
 
