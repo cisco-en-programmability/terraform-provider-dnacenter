@@ -87,12 +87,16 @@ func resourceTagMembershipCreate(ctx context.Context, d *schema.ResourceData, m 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	vID := resourceItem["tag_id"]
 	vvID := vID.(string)
+	/*vMemberId := resourceItem["member_id"]
+	vvMemberId := vMemberId.(string)
+	vMemberType := resourceItem["member_type"]
+	vvMemberType := vMemberType.(string)*/
 	var diags diag.Diagnostics
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: AddMembersToTheTag")
 
-		request1 := expandRequestTagMemberCreateAddMembersToTheTag(ctx, "parameters", d)
+		request1 := expandRequestTagMemberCreateAddMembersToTheTag(ctx, "parameters.0", d)
 
 		response1, restyResp1, err := client.Tag.AddMembersToTheTag(vvID, request1)
 
