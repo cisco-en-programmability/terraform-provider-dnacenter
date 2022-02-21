@@ -57,26 +57,11 @@ func resourceTagMembership() *schema.Resource {
 				MinItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"id": &schema.Schema{
+						"tag_id": &schema.Schema{
 							Description: `id path parameter. Tag ID
 			`,
 							Type:     schema.TypeString,
 							Required: true,
-						},
-						"payload": &schema.Schema{
-							Description: `Array of RequestAddMembersToTheTagRequest`,
-							Type:        schema.TypeList,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-							Required: true,
-						},
-						"member_to_tags": &schema.Schema{
-							Type:     schema.TypeMap,
-							Optional: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 						"member_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -100,7 +85,7 @@ func resourceTagMembershipCreate(ctx context.Context, d *schema.ResourceData, m 
 	client := m.(*dnacentersdkgo.Client)
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	vID := resourceItem["id"]
+	vID := resourceItem["tag_id"]
 	vvID := vID.(string)
 	var diags diag.Diagnostics
 	selectedMethod := 1
@@ -155,7 +140,7 @@ func resourceTagMembershipCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	resourceMap := make(map[string]string)
-	resourceMap["id"] = vvID
+	resourceMap["tag_id"] = vvID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceTagMembershipRead(ctx, d, m)
 }
@@ -166,7 +151,7 @@ func resourceTagMembershipRead(ctx context.Context, d *schema.ResourceData, m in
 	var diags diag.Diagnostics
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vID := resourceMap["id"]
+	vID := resourceMap["tag_id"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -260,7 +245,7 @@ func resourceTagMembershipDelete(ctx context.Context, d *schema.ResourceData, m 
 	var diags diag.Diagnostics
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vID := resourceMap["id"]
+	vID := resourceMap["tag_id"]
 	vMemberID := d.Get("member_id")
 	vvMemberID := vMemberID.(string)
 
@@ -292,23 +277,13 @@ func resourceTagMembershipDelete(ctx context.Context, d *schema.ResourceData, m 
 
 func expandRequestTagMemberCreateAddMembersToTheTag(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagAddMembersToTheTag {
 	request := dnacentersdkgo.RequestTagAddMembersToTheTag{}
-	if v := expandRequestItemTagMemberAddMembersToTheTag(ctx, key+".payload", d); v != nil {
-		request = *v
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".member_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_type")))) {
+		if v2, ok := d.GetOkExists(fixKeyAccess(key + ".member_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_id")))) {
+			x := make(map[string][]string)
+			x[v.(string)] = append(x[v.(string)], v2.(string))
+			request = x
+		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
-	return &request
-}
-
-func expandRequestItemTagMemberAddMembersToTheTag(ctx context.Context, key string, d *schema.ResourceData) *map[string][]string {
-	var request map[string][]string
-	o := d.Get(fixKeyAccess(key))
-	if o == nil {
-		return nil
-	}
-	request = o.(map[string][]string)
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
