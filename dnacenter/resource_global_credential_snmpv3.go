@@ -226,7 +226,7 @@ func resourceGlobalCredentialSNMPv3Create(ctx context.Context, d *schema.Resourc
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 			diags = append(diags, diagError(
-				"Failure when executing CreateHTTPReadCredentials", err))
+				"Failure when executing CreateSNMPv3Credentials", err))
 			return diags
 		}
 	}
@@ -337,7 +337,7 @@ func resourceGlobalCredentialSNMPv3Update(ctx context.Context, d *schema.Resourc
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 				diags = append(diags, diagError(
-					"Failure when executing UpdateHTTPReadCredential", err))
+					"Failure when executing UpdateSNMPv3Credentials", err))
 				return diags
 			}
 		}

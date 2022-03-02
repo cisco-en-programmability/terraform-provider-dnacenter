@@ -2187,7 +2187,7 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 			diags = append(diags, diagError(
-				"Failure when executing CreateApplicationSet", err))
+				"Failure when executing CreateTemplate", err))
 			return diags
 		}
 		vvTemplateID = response2.Response.Data
@@ -2402,7 +2402,7 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 				diags = append(diags, diagError(
-					"Failure when executing UpdateApplicationSet", err))
+					"Failure when executing UpdateTemplate", err))
 				return diags
 			}
 		}

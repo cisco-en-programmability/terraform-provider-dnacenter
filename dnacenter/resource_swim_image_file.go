@@ -371,7 +371,7 @@ func resourceSwimImageFileCreate(ctx context.Context, d *schema.ResourceData, m 
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 				diags = append(diags, diagError(
-					"Failure when executing CreateConfigurationTemplateProject", err))
+					"Failure when executing ImportLocalSoftwareImage", err))
 				return diags
 			}
 		}
@@ -405,9 +405,7 @@ func resourceSwimImageFileRead(ctx context.Context, d *schema.ResourceData, m in
 			/*if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}*/
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSoftwareImageDetails", err,
-				"Failure at GetSoftwareImageDetails, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

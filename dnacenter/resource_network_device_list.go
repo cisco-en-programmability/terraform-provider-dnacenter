@@ -673,7 +673,7 @@ func resourceNetworkDeviceListUpdate(ctx context.Context, d *schema.ResourceData
 				if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 					log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 					diags = append(diags, diagError(
-						"Failure when executing SyncDevices2", err))
+						"Failure when executing UpdateDeviceRole", err))
 					return diags
 				}
 			}
