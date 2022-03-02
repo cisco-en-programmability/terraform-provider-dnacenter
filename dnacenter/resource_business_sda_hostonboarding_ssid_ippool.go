@@ -322,7 +322,7 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolUpdate(ctx context.Context, d *s
 				bapiError := response2.BapiError
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing AddSSIDToIPPoolMapping", err,
-					"Failure at AddSSIDToIPPoolMapping execution", bapiError))
+					"Failure at UpdateSSIDToIPPoolMapping execution", bapiError))
 				return diags
 			}
 		}

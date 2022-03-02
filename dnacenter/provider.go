@@ -105,7 +105,6 @@ func Provider() *schema.Provider {
 			"dnacenter_global_credential_snmpv3":                 resourceGlobalCredentialSNMPv3(),
 			"dnacenter_golden_image":                             resourceGoldenImage(),
 			"dnacenter_license_device":                           resourceLicenseDevice(),
-			"dnacenter_network":                                  resourceNetwork(),
 			"dnacenter_nfv_provision_detail":                     resourceNfvProvisionDetail(),
 			"dnacenter_sensor":                                   resourceSensor(),
 			"dnacenter_service_provider":                         resourceServiceProvider(),
