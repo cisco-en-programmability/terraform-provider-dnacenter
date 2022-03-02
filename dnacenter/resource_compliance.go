@@ -246,8 +246,8 @@ func resourceComplianceCreate(ctx context.Context, d *schema.ResourceData, m int
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing AddWLCToFabricDomain", err,
-			"Failure at AddWLCToFabricDomain, unexpected response", ""))
+			"Failure when executing RunCompliance", err,
+			"Failure at RunCompliance, unexpected response", ""))
 		return diags
 	}
 	if response1 == nil {
@@ -276,7 +276,7 @@ func resourceComplianceCreate(ctx context.Context, d *schema.ResourceData, m int
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 			diags = append(diags, diagError(
-				"Failure when executing CreateApplicationPolicyQueuingProfile", err))
+				"Failure when executing RunCompliance", err))
 			return diags
 		}
 	}
