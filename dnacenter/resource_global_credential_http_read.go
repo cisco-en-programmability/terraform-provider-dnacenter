@@ -21,6 +21,8 @@ func resourceGlobalCredentialHTTPRead() *schema.Resource {
 - Adds HTTP read credentials
 
 - Updates global HTTP Read credential
+
+- Deletes global credential for the given ID
 `,
 
 		CreateContext: resourceGlobalCredentialHTTPReadCreate,

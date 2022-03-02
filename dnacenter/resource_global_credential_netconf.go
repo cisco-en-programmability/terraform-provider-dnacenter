@@ -21,6 +21,8 @@ func resourceGlobalCredentialNetconf() *schema.Resource {
 - Updates global netconf credentials
 
 - Adds global netconf credentials
+
+- Deletes global credential for the given ID
 `,
 
 		CreateContext: resourceGlobalCredentialNetconfCreate,

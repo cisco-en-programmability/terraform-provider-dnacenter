@@ -21,6 +21,8 @@ func resourceGlobalCredentialSNMPv2WriteCommunity() *schema.Resource {
 - Adds global SNMP write community
 
 - Updates global SNMP write community
+
+- Deletes global credential for the given ID
 `,
 
 		CreateContext: resourceGlobalCredentialSNMPv2WriteCommunityCreate,

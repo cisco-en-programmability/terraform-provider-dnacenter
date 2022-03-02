@@ -16,7 +16,7 @@ provider "dnacenter" {
 resource "dnacenter_swim_image_file" "example" {
   provider = dnacenter
   parameters {
-    file_path= "$PATH/terraform-provider-dnacenter/examples/samples/resources/dnacenter_swin_image_file/testIMG1.zip"
+    file_path = "$PATH/terraform-provider-dnacenter/examples/samples/resources/dnacenter_swin_image_file/testIMG1.zip"
     file_name = "testIMG1.zip"
   }
 }

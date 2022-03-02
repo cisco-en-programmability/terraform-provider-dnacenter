@@ -342,7 +342,6 @@ func resourceSwimImageFileCreate(ctx context.Context, d *schema.ResourceData, m 
 			},
 		)
 		log.Printf("[DEBUG] File name => %s", vFileName.(string))
-		log.Printf("[DEBUG] File => %v", r)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())

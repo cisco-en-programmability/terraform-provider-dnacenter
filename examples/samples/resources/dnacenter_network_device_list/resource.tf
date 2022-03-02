@@ -1,4 +1,5 @@
 
+
 terraform {
   required_providers {
     dnacenter = {
@@ -50,6 +51,10 @@ resource "dnacenter_network_device_list" "example" {
     }
     user_name = "string"
     */
+    #role = "DISTRIBUTION"
+    #role_source = "AUTO"
+    role        = "ACCESS"
+    role_source = "MANUAL"
   }
 }
 

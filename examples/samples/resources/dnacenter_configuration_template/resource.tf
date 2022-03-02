@@ -112,12 +112,12 @@ resource "dnacenter_configuration_template" "example" {
     }
     failure_policy = "CONTINUE_ON_ERROR"
     #id             = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
-    language       = "VELOCITY"
+    language = "VELOCITY"
     #last_update_time = 1
     #latest_version_time = 1
-    name               = "DMVPN Spoke for Branch Router - System Default for Test Project n3"
-    parent_template_id = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
-    project_id = "c3e77f82-bea7-45db-9eab-c7140b54a4a8"
+    name                      = "DMVPN Spoke for Branch Router - System Default for Test Project n3"
+    parent_template_id        = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
+    project_id                = "c3e77f82-bea7-45db-9eab-c7140b54a4a8"
     project_name              = "Cloud Test Template 2"
     rollback_template_content = "string"
     rollback_template_params {
@@ -200,8 +200,8 @@ resource "dnacenter_configuration_template" "example" {
       template_id              = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
       template_version         = null
     }
-    version = "1.0"
-    comments= "Test tf"
+    version  = "1.0"
+    comments = "Test tf"
   }
 }
 

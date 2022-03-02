@@ -16,13 +16,13 @@ provider "dnacenter" {
 resource "dnacenter_global_credential_http_write" "example" {
   provider = dnacenter
   parameters {
-    secure= true
-    username= "userTF3"
-    password= "123"
-    port= 23
-    description= "New description"
+    secure      = true
+    username    = "userTF3"
+    password    = "123"
+    port        = 23
+    description = "New description"
     #comments= null
-    credential_type= "APP"
+    credential_type = "APP"
     #instance_tenant_id= "6168b750e7a2701a37d64526"
     #instance_uuid= "aed1c6d9-e32d-47b5-a7c4-9e8cb15060a1"
     #id= "aed1c6d9-e32d-47b5-a7c4-9e8cb15060a1"
@@ -30,6 +30,6 @@ resource "dnacenter_global_credential_http_write" "example" {
 }
 
 output "dnacenter_global_credential_http_write_example" {
-  value = dnacenter_global_credential_http_write.example
+  value     = dnacenter_global_credential_http_write.example
   sensitive = true
 }

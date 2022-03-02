@@ -71,7 +71,8 @@ func resourceLicenseDevice() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
+				Required: true,
+				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"smart_account_id": &schema.Schema{
@@ -106,8 +107,6 @@ func resourceLicenseDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 	var diags diag.Diagnostics
 	client := m.(*dnacentersdkgo.Client)
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	// TODO: Add the path params to `item` schema
-	//       & return it individually
 	vSmartAccountID := resourceItem["smart_account_id"]
 	vvSmartAccountID := interfaceToString(vSmartAccountID)
 	vVirtualAccountName := resourceItem["virtual_account_name"]

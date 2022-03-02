@@ -1,3 +1,28 @@
+FEATURES:
+## 0.2.0-beta (March 01, 2022)
+
+* **New Resource:** `resource_tag_membership`
+* **New Resource:** `resource_path_trace`
+* **New Resource:** `resource_golden_image`
+* **New Resource:** `resource_swim_image_file`
+* **New Resource:** `resource_global_credential_cli`
+* **New Resource:** `resource_global_credential_http_read`
+* **New Resource:** `resource_global_credential_http_write`
+* **New Resource:** `resource_global_credential_netconf`
+* **New Resource:** `resource_global_credential_snmpv2_read`
+* **New Resource:** `resource_global_credential_snmpv2_write`
+* **New Resource:** `resource_global_credential_snmpv3`
+* **New Resource:** `resource_site`
+* **New Resource:** `resource_service_provider`
+
+IMPROVEMENTS:
+* dnacenter/resource_wireless_enterprise_ssid: Add trigger for update passphrase
+* dnacenter/resource_network_device: Add trigger for update role of a device
+* dnacenter/resource_configuration_template: Add trigger for new versio released
+
+BUG FIXES:
+* Remove `use_api_gateway` and `use_csrf_token` configuration parameters from `provider`
+
 ## 0.1.0-beta.1 (February 01, 2022)
 
 BUG FIXES:

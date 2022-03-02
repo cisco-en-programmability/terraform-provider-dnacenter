@@ -21,6 +21,8 @@ func resourceGlobalCredentialSNMPv3() *schema.Resource {
 - Updates global SNMPv3 credential
 
 - Adds global SNMPv3 credentials
+
+- Deletes global credential for the given ID
 `,
 
 		CreateContext: resourceGlobalCredentialSNMPv3Create,

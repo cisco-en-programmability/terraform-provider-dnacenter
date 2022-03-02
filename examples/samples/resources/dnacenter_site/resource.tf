@@ -17,7 +17,7 @@ resource "dnacenter_site" "example" {
   provider = dnacenter
   parameters {
     site {
-    /*
+      /*
         area {
             name= "test_tf_area4"
             parent_name= "string"
@@ -25,14 +25,14 @@ resource "dnacenter_site" "example" {
     
     */
       building {
-              name= "testBuilding"
-              address= "255 China Basin Street, San Francisco, California 94158, United States"
-              parent_name= "Global"
-              latitude= 37.77178651716143
-              longitude= -122.39062051589885
-          }
+        name        = "testBuilding"
+        address     = "255 China Basin Street, San Francisco, California 94158, United States"
+        parent_name = "Global"
+        latitude    = 37.77178651716143
+        longitude   = -122.39062051589885
+      }
     }
-    type= "building"
+    type = "building"
   }
 }
 

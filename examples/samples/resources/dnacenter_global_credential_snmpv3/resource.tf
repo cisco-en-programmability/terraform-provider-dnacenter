@@ -16,18 +16,18 @@ provider "dnacenter" {
 resource "dnacenter_global_credential_snmpv3" "example" {
   provider = dnacenter
   parameters {
-    auth_password= "12345678"
-    auth_type= "SHA"
-    comments= "Test"
-    credential_type= "APP"
-    description= "Description 3"
+    auth_password   = "12345678"
+    auth_type       = "SHA"
+    comments        = "Test"
+    credential_type = "APP"
+    description     = "Description 3"
     #id= "string"
     #instanceTenantId= "string"
     #instanceUuid= "string"
-    privacy_password= "privacy_password_test"
-    privacy_type= "AES128"
-    snmp_mode= "AUTHPRIV"
-    username= "Global_credential_test3"
+    privacy_password = "privacy_password_test"
+    privacy_type     = "AES128"
+    snmp_mode        = "AUTHPRIV"
+    username         = "Global_credential_test3"
   }
 }
 

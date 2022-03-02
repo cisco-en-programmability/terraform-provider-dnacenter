@@ -24,12 +24,13 @@ resource "dnacenter_wireless_enterprise_ssid" "example" {
     enable_session_time_out               = "true"
     fast_transition                       = "Adaptive"
     mfp_client_protection                 = "Optional"
-    name                                  = "Test"
-    passphrase                            = ""
+    name                                  = "TestPersonal2"
+    passphrase                            = "testtest3"
     radio_policy                          = "Dual band operation (2.4GHz and 5GHz)"
-    security_level                        = "WPA2_ENTERPRISE"
+    security_level                        = "WPA2_PERSONAL"
     session_time_out                      = 0
     traffic_type                          = "voicedata"
+    site                                  = "Global/New Jersey"
 
   }
 }

@@ -19,3 +19,17 @@ resource "dnacenter_network_device" "example" {
 output "dnacenter_network_device_example" {
   value = dnacenter_network_device.example
 }
+
+resource "dnacenter_compliance" "example" {
+  depends_on = [dnacenter_network_device.example]
+  provider   = dnacenter
+  parameters {
+    trigger_full = true
+    categories   = ["PSIRT"]
+    device_uuids = [dnacenter_network_device.example.item.0.id]
+  }
+}
+
+output "dnacenter_compliance_example" {
+  value = dnacenter_compliance.example
+}
