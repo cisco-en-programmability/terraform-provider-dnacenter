@@ -3,23 +3,17 @@
 page_title: "dnacenter_tag_membership Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
-  It manages create, read, update and delete operations on Tag member.
+  It manages create, read and delete operations on Tag member.
   •   Adds members to the tag specified by id
   •   Removes Tag member from the tag specified by id
-  •   Updates tag membership. As part of the request payload through this API, only the specified members are added /
-      retained to the given input tags. Possible values of memberType attribute in the request payload can be queried by using
-      the /tag/member/type API
 ---
 
 # dnacenter_tag_membership (Resource)
 
-It manages create, read, update and delete operations on Tag member.
+It manages create, read and delete operations on Tag member.
 
 	•	Adds members to the tag specified by id
 	•	Removes Tag member from the tag specified by id
-	•	Updates tag membership. As part of the request payload through this API, only the specified members are added /
-		retained to the given input tags. Possible values of memberType attribute in the request payload can be queried by using
-		the /tag/member/type API
 
 ## Example Usage
 

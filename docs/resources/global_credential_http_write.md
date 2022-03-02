@@ -3,14 +3,14 @@
 page_title: "dnacenter_global_credential_http_write Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
-  It manages create, read and update operations on Discovery.
+  It manages create, read, update and delete operations on Discovery.
   - Adds global HTTP write credentials
   Updates global HTTP write credentialsDeletes global credential for the given ID
 ---
 
 # dnacenter_global_credential_http_write (Resource)
 
-It manages create, read and update operations on Discovery.
+It manages create, read, update and delete operations on Discovery.
 - Adds global HTTP write credentials
 
 - Updates global HTTP write credentials
