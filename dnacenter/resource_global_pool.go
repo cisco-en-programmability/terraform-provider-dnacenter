@@ -565,7 +565,7 @@ func resourceGlobalPoolDelete(ctx context.Context, d *schema.ResourceData, m int
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing UpdateGlobalPool", err,
-				"Failure at UpdateGlobalPool execution", bapiError))
+				"Failure at DeleteGlobalIPPool execution", bapiError))
 			return diags
 		}
 	}
