@@ -101,6 +101,7 @@ func resourceGlobalCredentialHTTPWrite() *schema.Resource {
 				Description: `HttpWriteCredentials`,
 				Type:        schema.TypeList,
 				MaxItems:    1,
+				MinItems:    1,
 				Required:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{

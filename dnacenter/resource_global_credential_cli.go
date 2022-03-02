@@ -80,6 +80,7 @@ func resourceGlobalCredentialCli() *schema.Resource {
 				Description: `Array of RequestDiscoveryCreateCLICredentials`,
 				Type:        schema.TypeList,
 				MaxItems:    1,
+				MinItems:    1,
 				Required:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{

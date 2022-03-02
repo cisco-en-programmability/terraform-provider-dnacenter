@@ -102,6 +102,7 @@ func resourceGlobalCredentialHTTPRead() *schema.Resource {
 				Description: `Array of RequestDiscoveryCreateHTTPReadCredentials`,
 				Type:        schema.TypeList,
 				MaxItems:    1,
+				MinItems:    1,
 				Required:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{

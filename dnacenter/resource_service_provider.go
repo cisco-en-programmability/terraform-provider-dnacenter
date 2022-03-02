@@ -20,9 +20,9 @@ func resourceServiceProvider() *schema.Resource {
 
 - API to create service provider profile(QOS).
 
-- API to update SP profile
+- API to update SP profile.
 
-- API to delete Service Provider profile (QoS)
+- API to delete Service Provider profile (QoS).
 `,
 
 		CreateContext: resourceServiceProviderCreate,
@@ -131,6 +131,7 @@ func resourceServiceProvider() *schema.Resource {
 				Type:     schema.TypeList,
 				Required: true,
 				MaxItems: 1,
+				MinItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
