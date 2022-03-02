@@ -21,6 +21,8 @@ func resourceGlobalCredentialCli() *schema.Resource {
 - Updates global CLI credentials
 
 - Adds global CLI credential
+
+- Deletes global credential for the given ID
 `,
 
 		CreateContext: resourceGlobalCredentialCliCreate,

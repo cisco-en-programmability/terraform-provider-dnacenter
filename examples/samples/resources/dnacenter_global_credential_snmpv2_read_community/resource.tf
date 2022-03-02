@@ -16,10 +16,10 @@ provider "dnacenter" {
 resource "dnacenter_global_credential_snmpv2_read_community" "example" {
   provider = dnacenter
   parameters {
-    description= "Description 4"
-    comments= "New Comments"
-    credential_type= "APP"
-    read_community= "Test4"
+    description     = "Description 4"
+    comments        = "New Comments"
+    credential_type = "APP"
+    read_community  = "Test4"
   }
 }
 

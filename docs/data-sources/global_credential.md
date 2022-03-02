@@ -74,5 +74,12 @@ Read-Only:
 - **id** (String)
 - **instance_tenant_id** (String)
 - **instance_uuid** (String)
+- **netconf_port** (String)
+- **password** (String)
+- **port** (Number)
+- **read_community** (String)
+- **secure** (String)
+- **username** (String)
+- **write_community** (String)
 
 

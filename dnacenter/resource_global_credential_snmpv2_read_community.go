@@ -21,6 +21,8 @@ func resourceGlobalCredentialSNMPv2ReadCommunity() *schema.Resource {
 - Updates global SNMP read community
 
 - Adds global SNMP read community
+
+- Deletes global credential for the given ID
 `,
 
 		CreateContext: resourceGlobalCredentialSNMPv2ReadCommunityCreate,

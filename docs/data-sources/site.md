@@ -51,12 +51,39 @@ output "dnacenter_site_example" {
 
 Read-Only:
 
-- **additional_info** (List of String)
+- **additional_info** (List of Object) (see [below for nested schema](#nestedobjatt--items--additional_info))
 - **id** (String)
 - **instance_tenant_id** (String)
 - **name** (String)
 - **parent_id** (String)
 - **site_hierarchy** (String)
 - **site_name_hierarchy** (String)
+
+<a id="nestedobjatt--items--additional_info"></a>
+### Nested Schema for `items.additional_info`
+
+Read-Only:
+
+- **attributes** (List of Object) (see [below for nested schema](#nestedobjatt--items--additional_info--attributes))
+- **namespace** (String)
+
+<a id="nestedobjatt--items--additional_info--attributes"></a>
+### Nested Schema for `items.additional_info.attributes`
+
+Read-Only:
+
+- **address** (String)
+- **address_inherited_from** (String)
+- **country** (String)
+- **floor_index** (String)
+- **height** (String)
+- **latitude** (String)
+- **length** (String)
+- **longitude** (String)
+- **offset_x** (String)
+- **offset_y** (String)
+- **rf_model** (String)
+- **type** (String)
+- **width** (String)
 
 

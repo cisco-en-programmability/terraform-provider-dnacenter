@@ -16,8 +16,12 @@ import (
 
 func resourceGlobalCredentialHTTPWrite() *schema.Resource {
 	return &schema.Resource{
-		Description: `It manages create, read and update operations on Discovery.
+		Description: `It manages create, read, update and delete operations on Discovery.
+- Adds global HTTP write credentials
 
+- Updates global HTTP write credentials
+
+- Deletes global credential for the given ID
 `,
 
 		CreateContext: resourceGlobalCredentialHTTPWriteCreate,

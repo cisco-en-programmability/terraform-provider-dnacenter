@@ -1,0 +1,1 @@
+terraform import dnacenter_golden_image.example "id:=string"

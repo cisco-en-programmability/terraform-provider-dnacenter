@@ -2,7 +2,6 @@ package dnacenter
 
 import (
 	"context"
-	"fmt"
 	"reflect"
 	"time"
 
@@ -16,11 +15,10 @@ import (
 
 func resourceTagMembership() *schema.Resource {
 	return &schema.Resource{
-		Description: `It manages create, read and delete operations on Application Policy.
+		Description: `It manages create, read and delete operations on Tag member.
 
-- Delete existing application-set by it's id
-
-- Create new custom application-set/s
+	•	Adds members to the tag specified by id
+	•	Removes Tag member from the tag specified by id
 `,
 
 		CreateContext: resourceTagMembershipCreate,
@@ -62,16 +60,20 @@ func resourceTagMembership() *schema.Resource {
 			`,
 							Type:     schema.TypeString,
 							Required: true,
+							ForceNew: true,
 						},
 						"member_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: ``,
+							Type:        schema.TypeString,
+							Required:    true,
+							ForceNew:    true,
 						},
 						"member_id": &schema.Schema{
 							Description: `memberId path parameter. TagMember id to be removed from tag
 			`,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
+							ForceNew: true,
 						},
 					},
 				},
@@ -87,10 +89,10 @@ func resourceTagMembershipCreate(ctx context.Context, d *schema.ResourceData, m 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	vID := resourceItem["tag_id"]
 	vvID := vID.(string)
-	/*vMemberId := resourceItem["member_id"]
+	vMemberId := resourceItem["member_id"]
 	vvMemberId := vMemberId.(string)
 	vMemberType := resourceItem["member_type"]
-	vvMemberType := vMemberType.(string)*/
+	vvMemberType := vMemberType.(string)
 	var diags diag.Diagnostics
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -145,6 +147,8 @@ func resourceTagMembershipCreate(ctx context.Context, d *schema.ResourceData, m 
 	}
 	resourceMap := make(map[string]string)
 	resourceMap["tag_id"] = vvID
+	resourceMap["member_type"] = vvMemberType
+	resourceMap["member_id"] = vvMemberId
 	d.SetId(joinResourceID(resourceMap))
 	return resourceTagMembershipRead(ctx, d, m)
 }
@@ -156,21 +160,19 @@ func resourceTagMembershipRead(ctx context.Context, d *schema.ResourceData, m in
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vID := resourceMap["tag_id"]
-
+	vMemberType := resourceMap["member_type"]
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetTagMembersByID")
 		queryParams1 := dnacentersdkgo.GetTagMembersByIDQueryParams{}
-
+		queryParams1.MemberType = vMemberType
 		response1, restyResp1, err := client.Tag.GetTagMembersByID(vID, &queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTagMembersByID", err,
-				"Failure at GetTagMembersByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -196,7 +198,7 @@ func resourceTagMembershipUpdate(ctx context.Context, d *schema.ResourceData, m 
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: UpdatesTagMembership")
-		request1 := expandRequestTagMembershipUpdatesTagMembership(ctx, "", d)
+		request1 := expandRequestTagMembershipUpdatesTagMembership(ctx, "parameters.0", d)
 
 		response1, restyResp1, err := client.Tag.UpdatesTagMembership(request1)
 
@@ -250,14 +252,13 @@ func resourceTagMembershipDelete(ctx context.Context, d *schema.ResourceData, m 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vID := resourceMap["tag_id"]
-	vMemberID := d.Get("member_id")
-	vvMemberID := vMemberID.(string)
+	vMemberID := resourceMap["member_id"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: RemoveTagMember")
 
-		response1, restyResp1, err := client.Tag.RemoveTagMember(vID, vvMemberID)
+		response1, restyResp1, err := client.Tag.RemoveTagMember(vID, vMemberID)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -270,7 +271,27 @@ func resourceTagMembershipDelete(ctx context.Context, d *schema.ResourceData, m 
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
+		taskId := response1.Response.TaskID
+		log.Printf("[DEBUG] TASKID => %s", taskId)
+		if taskId != "" {
+			time.Sleep(5 * time.Second)
+			response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetTaskByID", err,
+					"Failure at GetTaskByID, unexpected response", ""))
+				return diags
+			}
+			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				diags = append(diags, diagError(
+					"Failure when executing DeleteTagMembership", err))
+				return diags
+			}
+		}
 	}
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
@@ -297,47 +318,15 @@ func expandRequestTagMemberCreateAddMembersToTheTag(ctx context.Context, key str
 
 func expandRequestTagMembershipUpdatesTagMembership(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagUpdatesTagMembership {
 	request := dnacentersdkgo.RequestTagUpdatesTagMembership{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".member_to_tags")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_to_tags")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_to_tags")))) {
-		request.MemberToTags = expandRequestTagMembershipUpdatesTagMembershipMemberToTagsArray(ctx, key+".member_to_tags", d)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tag_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tag_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tag_id")))) {
+		if v2, ok := d.GetOkExists(fixKeyAccess(key + ".member_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_id")))) {
+			x := make(map[string][]string)
+			x[v2.(string)] = append(x[v2.(string)], v.(string))
+			request.MemberToTags = x
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".member_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_type")))) {
 		request.MemberType = interfaceToString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
-	return &request
-}
-
-func expandRequestTagMembershipUpdatesTagMembershipMemberToTagsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestTagUpdatesTagMembershipMemberToTags {
-	request := []dnacentersdkgo.RequestTagUpdatesTagMembershipMemberToTags{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestTagMembershipUpdatesTagMembershipMemberToTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
-	return &request
-}
-
-func expandRequestTagMembershipUpdatesTagMembershipMemberToTags(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagUpdatesTagMembershipMemberToTags {
-	request := dnacentersdkgo.RequestTagUpdatesTagMembershipMemberToTags{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
-		request.Key = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

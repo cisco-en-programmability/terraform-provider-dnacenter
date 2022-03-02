@@ -53,6 +53,7 @@ resource "dnacenter_network_device_list" "example" {
       new_mgmt_ip_address   = "string"
     }
     user_name = "string"
+    role      = "string"
   }
 }
 
@@ -97,6 +98,8 @@ Optional:
 - **meraki_org_id** (List of String)
 - **netconf_port** (String)
 - **password** (String, Sensitive)
+- **role** (String)
+- **role_source** (String)
 - **serial_number** (String)
 - **snmp_auth_passphrase** (String)
 - **snmp_auth_protocol** (String)

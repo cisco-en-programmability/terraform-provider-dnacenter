@@ -3,6 +3,7 @@ package dnacenter
 import (
 	"context"
 	"reflect"
+	"time"
 
 	"log"
 
@@ -70,7 +71,8 @@ func resourceGoldenImage() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
+				Required: true,
+				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -178,7 +180,7 @@ func resourceGoldenImageRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		response1, restyResp1, err := client.SoftwareImageManagementSwim.GetGoldenTagStatusOfAnImage(vvSiteID, vvDeviceFamilyIDentifier, vvDeviceRole, vvImageID)
 
-		if err != nil || response1 == nil {
+		if !d.IsNewResource() && err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -243,7 +245,27 @@ func resourceGoldenImageDelete(ctx context.Context, d *schema.ResourceData, m in
 			"Failure at RemoveGoldenTagForImage, unexpected response", ""))
 		return diags
 	}
-
+	taskId := response1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			diags = append(diags, diagError(
+				"Failure when executing CreateConfigurationTemplateProject", err))
+			return diags
+		}
+	}
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")
