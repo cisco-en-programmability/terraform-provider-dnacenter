@@ -297,9 +297,6 @@ func resourceWirelessDynamicInterfaceDelete(ctx context.Context, d *schema.Resou
 	item, err := searchWirelessGetDynamicInterface(m, queryParams1)
 	var vvInterfaceName string
 	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetDynamicInterface", err,
-			"Failure at GetDynamicInterface, unexpected response", ""))
 		return diags
 	}
 

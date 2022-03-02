@@ -724,7 +724,7 @@ func resourceDiscoveryCreate(ctx context.Context, d *schema.ResourceData, m inte
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 			diags = append(diags, diagError(
-				"Failure when executing CreateDiscovery", err))
+				"Failure when executing StartDiscovery", err))
 			return diags
 		}
 	}
@@ -770,9 +770,7 @@ func resourceDiscoveryRead(ctx context.Context, d *schema.ResourceData, m interf
 		}
 		return diags
 
-	}
-
-	if vName != "" {
+	} else if vName != "" {
 		response1, err := searchDiscovery(m, vName)
 		if err != nil || response1 == nil {
 			d.SetId("")
@@ -879,7 +877,7 @@ func resourceDiscoveryUpdate(ctx context.Context, d *schema.ResourceData, m inte
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 				diags = append(diags, diagError(
-					"Failure when executing UpdateDiscovery", err))
+					"Failure when executing UpdatesAnExistingDiscoveryBySpecifiedID", err))
 				return diags
 			}
 		}

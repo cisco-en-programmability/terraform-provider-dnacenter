@@ -14,9 +14,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+//Falta el trigger /version/
+
 func resourceConfigurationTemplate() *schema.Resource {
 	return &schema.Resource{
-		Description: `It manages read, update and delete operations on Configuration Templates.
+		Description: `It manages create, read, update and delete operations on Configuration Templates.
+
+- API to create a template by project id.
 
 - API to update a template.
 
@@ -1650,7 +1654,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 							Description: `Project UUID
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 						"project_name": &schema.Schema{
 							Description: `Project name
@@ -1892,7 +1896,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 							Description: `templateId path parameter. templateId(UUID) of template to be deleted
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"template_params": &schema.Schema{
 							Type:     schema.TypeList,
@@ -2113,6 +2117,12 @@ func resourceConfigurationTemplate() *schema.Resource {
 								},
 							},
 						},
+						"comments": &schema.Schema{
+							Description: `Template version comments
+			`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
 						"version": &schema.Schema{
 							Description: `Current version of template
 `,
@@ -2127,15 +2137,66 @@ func resourceConfigurationTemplate() *schema.Resource {
 }
 
 func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
+
 	var diags diag.Diagnostics
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestConfigurationTemplateCreateTemplate(ctx, "parameters.0", d)
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+
+	vTemplateID, okTemplateID := resourceItem["template_id"]
+	vvTemplateID := interfaceToString(vTemplateID)
+	vProjectID := resourceItem["project_id"]
+	vvProjectID := interfaceToString(vProjectID)
+	if okTemplateID && vvTemplateID != "" {
+		getResponse2, _, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID, nil)
+		if err == nil && getResponse2 != nil {
+			resourceMap := make(map[string]string)
+			resourceMap["template_id"] = vvTemplateID
+			resourceMap["project_id"] = vvProjectID
+			d.SetId(joinResourceID(resourceMap))
+			return resourceConfigurationTemplateRead(ctx, d, m)
+		}
+	}
+	resp1, restyResp1, err := client.ConfigurationTemplates.CreateTemplate(vvProjectID, request1)
+	if err != nil || resp1 == nil {
+		if restyResp1 != nil {
+			diags = append(diags, diagErrorWithResponse(
+				"Failure when executing CreateTemplate", err, restyResp1.String()))
+			return diags
+		}
+		diags = append(diags, diagError(
+			"Failure when executing CreateTemplate", err))
+		return diags
+	}
+	taskId := resp1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			diags = append(diags, diagError(
+				"Failure when executing CreateTemplate", err))
+			return diags
+		}
+		vvTemplateID = response2.Response.Data
+	}
 	resourceMap := make(map[string]string)
-	// TODO: Add the path params to `item` schema
-	//       & return it individually
-	resourceMap["id"] = interfaceToString(resourceItem["id"])
-	resourceMap["name"] = interfaceToString(resourceItem["name"])
+	resourceMap["template_id"] = vvTemplateID
+	resourceMap["project_id"] = vvProjectID
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceConfigurationTemplateRead(ctx, d, m)
 }
 
 func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -2145,16 +2206,20 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTemplateID := resourceMap["id"]
-	vTemplateName := resourceMap["name"]
+	vTemplateID := resourceMap["template_id"]
+	//vProjectID := resourceMap["project_id"]
+	//vTemplateName := resourceMap["name"]
 
-	if vTemplateName != "" {
+	/*if vTemplateName != "" {
 		log.Printf("[DEBUG] Selected method 1: GetsTheTemplatesAvailable")
 		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-
+		queryParams1.ProjectID = vProjectID
 		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
 
 		if err != nil || response1 == nil {
+			if err != nil {
+				log.Printf("[DEBUG] Error when search => %s", err.Error())
+			}
 			d.SetId("")
 			return diags
 		}
@@ -2168,9 +2233,7 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsDetailsOfAGivenTemplate", err,
-				"Failure at GetsDetailsOfAGivenTemplate, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItems1 := flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItem(response2)
@@ -2181,7 +2244,8 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 			return diags
 		}
 		return diags
-	} else if vTemplateID != "" {
+	} else*/
+	if vTemplateID != "" {
 		log.Printf("[DEBUG] Selected method 2: GetsDetailsOfAGivenTemplate")
 		vvTemplateID := vTemplateID
 		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
@@ -2217,8 +2281,9 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTemplateID := resourceMap["id"]
-	vTemplateName := resourceMap["name"]
+	vTemplateID := resourceMap["template_id"]
+	//vProjectID := resourceMap["project_id"]
+	//vTemplateName := resourceMap["name"]
 	var vvTemplateID string
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	if vTemplateID != "" {
@@ -2232,9 +2297,9 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 				"Failure at GetsDetailsOfAGivenTemplate, unexpected response", ""))
 			return diags
 		}
-	} else if vTemplateName != "" {
+	} /*else if vTemplateName != "" {
 		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-
+		queryParams1.ProjectID = vProjectID
 		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
 
 		if err != nil || response1 == nil {
@@ -2245,16 +2310,62 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 		}
 		vvTemplateID = response1.TemplateID
 	}
-
+	*/
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %s", vTemplateName)
+		log.Printf("[DEBUG] ID used for update operation %s", vTemplateID)
 		request1 := expandRequestConfigurationTemplateUpdateTemplate(ctx, "parameters.0", d)
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
-		if request1 != nil && request1.ID == "" {
-			request1.ID = vvTemplateID
+		request1.ID = vvTemplateID
+		if d.HasChange("parameters.0.comments") {
+			request2 := expandRequestConfigurationTemplateVersionCreateVersionTemplate(ctx, "parameters.0", d)
+			if request2 != nil {
+				log.Printf("[DEBUG] request2 sent => %v", responseInterfaceToString(*request2))
+			}
+			request2.TemplateID = vTemplateID
+			response2, restyResp2, err := client.ConfigurationTemplates.VersionTemplate(request2)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] resty response for update operation => %v", restyResp2.String())
+					diags = append(diags, diagErrorWithAltAndResponse(
+						"Failure when executing VersionTemplate", err, restyResp2.String(),
+						"Failure at VersionTemplate, unexpected response", ""))
+					return diags
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing VersionTemplate", err,
+					"Failure at VersionTemplate, unexpected response", ""))
+				return diags
+			}
+			if response2.Response == nil {
+				diags = append(diags, diagError(
+					"Failure when executing VersionTemplate", err))
+				return diags
+			}
+			taskId := response2.Response.TaskID
+			log.Printf("[DEBUG] TASKID => %s", taskId)
+			if taskId != "" {
+				time.Sleep(5 * time.Second)
+				response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+				if err != nil || response2 == nil {
+					if restyResp2 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+					}
+					diags = append(diags, diagErrorWithAlt(
+						"Failure when executing GetTaskByID", err,
+						"Failure at GetTaskByID, unexpected response", ""))
+					return diags
+				}
+				if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+					log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+					diags = append(diags, diagError(
+						"Failure when executing VersionTemplate", err))
+					return diags
+				}
+			}
 		}
+
 		response1, restyResp1, err := client.ConfigurationTemplates.UpdateTemplate(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -2291,7 +2402,7 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 				diags = append(diags, diagError(
-					"Failure when executing CreateApplicationSet", err))
+					"Failure when executing UpdateTemplate", err))
 				return diags
 			}
 		}
@@ -2308,8 +2419,9 @@ func resourceConfigurationTemplateDelete(ctx context.Context, d *schema.Resource
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTemplateID := resourceMap["id"]
-	vTemplateName := resourceMap["name"]
+	vTemplateID := resourceMap["template_id"]
+	//vProjectID := resourceMap["project_id"]
+	//vTemplateName := resourceMap["name"]
 
 	var vvTemplateID string
 	// REVIEW: Add getAllItems and search function to get missing params
@@ -2322,16 +2434,18 @@ func resourceConfigurationTemplateDelete(ctx context.Context, d *schema.Resource
 			return diags
 		}
 	}
-	if vTemplateName != "" {
-		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
+	/*
+		if vTemplateName != "" {
+			queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
+			queryParams1.ProjectID = vProjectID
+			response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
 
-		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
-
-		if err != nil || response1 == nil {
-			return diags
+			if err != nil || response1 == nil {
+				return diags
+			}
+			vvTemplateID = response1.TemplateID
 		}
-		vvTemplateID = response1.TemplateID
-	}
+	*/
 	response1, restyResp1, err := client.ConfigurationTemplates.DeletesTheTemplate(vvTemplateID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -2353,6 +2467,1068 @@ func resourceConfigurationTemplateDelete(ctx context.Context, d *schema.Resource
 
 	return diags
 }
+func expandRequestConfigurationTemplateCreateTemplate(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplate {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplate{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tags")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tags")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tags")))) {
+		request.Tags = expandRequestConfigurationTemplateCreateTemplateTagsArray(ctx, key+".tags", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".author")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".author")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".author")))) {
+		request.Author = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".composite")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".composite")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".composite")))) {
+		request.Composite = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".containing_templates")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".containing_templates")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".containing_templates")))) {
+		request.ContainingTemplates = expandRequestConfigurationTemplateCreateTemplateContainingTemplatesArray(ctx, key+".containing_templates", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".create_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".create_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".create_time")))) {
+		request.CreateTime = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_params_order")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_params_order")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_params_order")))) {
+		request.CustomParamsOrder = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_types")))) {
+		request.DeviceTypes = expandRequestConfigurationTemplateCreateTemplateDeviceTypesArray(ctx, key+".device_types", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".failure_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".failure_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".failure_policy")))) {
+		request.FailurePolicy = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".language")))) {
+		request.Language = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".last_update_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".last_update_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".last_update_time")))) {
+		request.LastUpdateTime = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".latest_version_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".latest_version_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".latest_version_time")))) {
+		request.LatestVersionTime = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_template_id")))) {
+		request.ParentTemplateID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_id")))) {
+		request.ProjectID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_name")))) {
+		request.ProjectName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rollback_template_content")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rollback_template_content")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rollback_template_content")))) {
+		request.RollbackTemplateContent = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rollback_template_params")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rollback_template_params")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rollback_template_params")))) {
+		request.RollbackTemplateParams = expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsArray(ctx, key+".rollback_template_params", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".software_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".software_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".software_type")))) {
+		request.SoftwareType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".software_variant")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".software_variant")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".software_variant")))) {
+		request.SoftwareVariant = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".software_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".software_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".software_version")))) {
+		request.SoftwareVersion = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_content")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_content")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_content")))) {
+		request.TemplateContent = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_params")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_params")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_params")))) {
+		request.TemplateParams = expandRequestConfigurationTemplateCreateTemplateTemplateParamsArray(ctx, key+".template_params", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".validation_errors")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".validation_errors")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".validation_errors")))) {
+		request.ValidationErrors = expandRequestConfigurationTemplateCreateTemplateValidationErrors(ctx, key+".validation_errors.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
+		request.Version = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateTagsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTags {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTags{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateTags(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTags {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTags{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplates {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplates{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplates(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplates(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplates {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplates{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tags")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tags")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tags")))) {
+		request.Tags = expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTagsArray(ctx, key+".tags", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".composite")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".composite")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".composite")))) {
+		request.Composite = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_types")))) {
+		request.DeviceTypes = expandRequestConfigurationTemplateCreateTemplateContainingTemplatesDeviceTypesArray(ctx, key+".device_types", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".language")))) {
+		request.Language = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_name")))) {
+		request.ProjectName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rollback_template_params")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rollback_template_params")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rollback_template_params")))) {
+		request.RollbackTemplateParams = expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParamsArray(ctx, key+".rollback_template_params", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_content")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_content")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_content")))) {
+		request.TemplateContent = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_params")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_params")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_params")))) {
+		request.TemplateParams = expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParamsArray(ctx, key+".template_params", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
+		request.Version = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTagsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTags {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTags{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTags(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTags {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTags{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesDeviceTypesArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesDeviceTypes {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesDeviceTypes{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesDeviceTypes(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesDeviceTypes {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesDeviceTypes{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_family")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_family")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_family")))) {
+		request.ProductFamily = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_series")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_series")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_series")))) {
+		request.ProductSeries = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_type")))) {
+		request.ProductType = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParamsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParams {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParams{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParams {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParams{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".binding")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".binding")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".binding")))) {
+		request.Binding = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_order")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_order")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_order")))) {
+		request.CustomOrder = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data_type")))) {
+		request.DataType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_value")))) {
+		request.DefaultValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_name")))) {
+		request.DisplayName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".group")))) {
+		request.Group = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".instruction_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".instruction_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".instruction_text")))) {
+		request.InstructionText = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
+		request.Key = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".not_param")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".not_param")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".not_param")))) {
+		request.NotParam = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".order")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".order")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".order")))) {
+		request.Order = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".param_array")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".param_array")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".param_array")))) {
+		request.ParamArray = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parameter_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parameter_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parameter_name")))) {
+		request.ParameterName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".provider")))) {
+		request.Provider = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".range")))) {
+		request.Range = expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParamsRangeArray(ctx, key+".range", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".required")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".required")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".required")))) {
+		request.Required = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
+		request.Selection = expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParamsSelection(ctx, key+".selection.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParamsRangeArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParamsRange {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParamsRange{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParamsRange(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParamsRange {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParamsRange{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_value")))) {
+		request.MaxValue = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
+		request.MinValue = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParamsSelection(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParamsSelection {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParamsSelection{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_selected_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_selected_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_selected_values")))) {
+		request.DefaultSelectedValues = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_type")))) {
+		request.SelectionType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
+		request.SelectionValues = expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParamsSelectionSelectionValues {
+	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParamsSelectionSelectionValues
+	request = d.Get(fixKeyAccess(key))
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParamsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParams {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParams{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParams {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParams{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".binding")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".binding")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".binding")))) {
+		request.Binding = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_order")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_order")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_order")))) {
+		request.CustomOrder = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data_type")))) {
+		request.DataType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_value")))) {
+		request.DefaultValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_name")))) {
+		request.DisplayName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".group")))) {
+		request.Group = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".instruction_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".instruction_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".instruction_text")))) {
+		request.InstructionText = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
+		request.Key = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".not_param")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".not_param")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".not_param")))) {
+		request.NotParam = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".order")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".order")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".order")))) {
+		request.Order = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".param_array")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".param_array")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".param_array")))) {
+		request.ParamArray = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parameter_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parameter_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parameter_name")))) {
+		request.ParameterName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".provider")))) {
+		request.Provider = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".range")))) {
+		request.Range = expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParamsRangeArray(ctx, key+".range", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".required")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".required")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".required")))) {
+		request.Required = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
+		request.Selection = expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParamsSelection(ctx, key+".selection.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParamsRangeArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParamsRange {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParamsRange{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParamsRange(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParamsRange {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParamsRange{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_value")))) {
+		request.MaxValue = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
+		request.MinValue = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParamsSelection(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParamsSelection {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParamsSelection{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_selected_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_selected_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_selected_values")))) {
+		request.DefaultSelectedValues = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_type")))) {
+		request.SelectionType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
+		request.SelectionValues = expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParamsSelectionSelectionValues {
+	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParamsSelectionSelectionValues
+	request = d.Get(fixKeyAccess(key))
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateDeviceTypesArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateDeviceTypes {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateDeviceTypes{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateDeviceTypes(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateDeviceTypes {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateDeviceTypes{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_family")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_family")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_family")))) {
+		request.ProductFamily = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_series")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_series")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_series")))) {
+		request.ProductSeries = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_type")))) {
+		request.ProductType = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParams {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParams{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParams {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParams{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".binding")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".binding")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".binding")))) {
+		request.Binding = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_order")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_order")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_order")))) {
+		request.CustomOrder = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data_type")))) {
+		request.DataType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_value")))) {
+		request.DefaultValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_name")))) {
+		request.DisplayName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".group")))) {
+		request.Group = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".instruction_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".instruction_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".instruction_text")))) {
+		request.InstructionText = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
+		request.Key = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".not_param")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".not_param")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".not_param")))) {
+		request.NotParam = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".order")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".order")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".order")))) {
+		request.Order = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".param_array")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".param_array")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".param_array")))) {
+		request.ParamArray = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parameter_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parameter_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parameter_name")))) {
+		request.ParameterName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".provider")))) {
+		request.Provider = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".range")))) {
+		request.Range = expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsRangeArray(ctx, key+".range", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".required")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".required")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".required")))) {
+		request.Required = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
+		request.Selection = expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsSelection(ctx, key+".selection.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsRangeArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParamsRange {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParamsRange{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsRange(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParamsRange {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParamsRange{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_value")))) {
+		request.MaxValue = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
+		request.MinValue = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsSelection(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParamsSelection {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParamsSelection{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_selected_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_selected_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_selected_values")))) {
+		request.DefaultSelectedValues = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_type")))) {
+		request.SelectionType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
+		request.SelectionValues = expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParamsSelectionSelectionValues {
+	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParamsSelectionSelectionValues
+	request = d.Get(fixKeyAccess(key))
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateTemplateParamsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParams {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParams{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateTemplateParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParams {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParams{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".binding")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".binding")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".binding")))) {
+		request.Binding = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_order")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_order")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_order")))) {
+		request.CustomOrder = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data_type")))) {
+		request.DataType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_value")))) {
+		request.DefaultValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_name")))) {
+		request.DisplayName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".group")))) {
+		request.Group = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".instruction_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".instruction_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".instruction_text")))) {
+		request.InstructionText = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
+		request.Key = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".not_param")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".not_param")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".not_param")))) {
+		request.NotParam = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".order")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".order")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".order")))) {
+		request.Order = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".param_array")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".param_array")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".param_array")))) {
+		request.ParamArray = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parameter_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parameter_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parameter_name")))) {
+		request.ParameterName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".provider")))) {
+		request.Provider = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".range")))) {
+		request.Range = expandRequestConfigurationTemplateCreateTemplateTemplateParamsRangeArray(ctx, key+".range", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".required")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".required")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".required")))) {
+		request.Required = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
+		request.Selection = expandRequestConfigurationTemplateCreateTemplateTemplateParamsSelection(ctx, key+".selection.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateTemplateParamsRangeArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParamsRange {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParamsRange{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateTemplateParamsRange(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParamsRange {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParamsRange{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_value")))) {
+		request.MaxValue = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
+		request.MinValue = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateTemplateParamsSelection(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParamsSelection {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParamsSelection{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_selected_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_selected_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_selected_values")))) {
+		request.DefaultSelectedValues = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_type")))) {
+		request.SelectionType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
+		request.SelectionValues = expandRequestConfigurationTemplateCreateTemplateTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParamsSelectionSelectionValues {
+	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParamsSelectionSelectionValues
+	request = d.Get(fixKeyAccess(key))
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateValidationErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrors {
+	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrors{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rollback_template_errors")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rollback_template_errors")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rollback_template_errors")))) {
+		request.RollbackTemplateErrors = expandRequestConfigurationTemplateCreateTemplateValidationErrorsRollbackTemplateErrorsArray(ctx, key+".rollback_template_errors", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_errors")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_errors")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_errors")))) {
+		request.TemplateErrors = expandRequestConfigurationTemplateCreateTemplateValidationErrorsTemplateErrorsArray(ctx, key+".template_errors", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
+		request.TemplateID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_version")))) {
+		request.TemplateVersion = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateValidationErrorsRollbackTemplateErrorsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsRollbackTemplateErrors {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsRollbackTemplateErrors{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateValidationErrorsRollbackTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateValidationErrorsRollbackTemplateErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsRollbackTemplateErrors {
+	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsRollbackTemplateErrors
+	request = d.Get(fixKeyAccess(key))
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateValidationErrorsTemplateErrorsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsTemplateErrors {
+	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsTemplateErrors{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestConfigurationTemplateCreateTemplateValidationErrorsTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateCreateTemplateValidationErrorsTemplateErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsTemplateErrors {
+	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsTemplateErrors
+	request = d.Get(fixKeyAccess(key))
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestConfigurationTemplateVersionCreateVersionTemplate(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesVersionTemplate {
+	request := dnacentersdkgo.RequestConfigurationTemplatesVersionTemplate{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".comments")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".comments")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".comments")))) {
+		request.Comments = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
+		request.TemplateID = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
 func expandRequestConfigurationTemplateUpdateTemplate(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesUpdateTemplate {
 	request := dnacentersdkgo.RequestConfigurationTemplatesUpdateTemplate{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tags")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tags")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tags")))) {
@@ -2451,7 +3627,7 @@ func expandRequestConfigurationTemplateUpdateTemplateTagsArray(ctx context.Conte
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2490,7 +3666,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplates(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2559,7 +3735,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTagsArra
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2598,7 +3774,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesDeviceTy
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2640,7 +3816,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2727,7 +3903,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2800,7 +3976,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2887,7 +4063,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2960,7 +4136,7 @@ func expandRequestConfigurationTemplateUpdateTemplateDeviceTypesArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3002,7 +4178,7 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsArray
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3089,7 +4265,7 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsRange
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3162,7 +4338,7 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsArray(ctx con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3249,7 +4425,7 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsRangeArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3343,7 +4519,7 @@ func expandRequestConfigurationTemplateUpdateTemplateValidationErrorsRollbackTem
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateValidationErrorsRollbackTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3377,7 +4553,7 @@ func expandRequestConfigurationTemplateUpdateTemplateValidationErrorsTemplateErr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
+	for item_no, _ := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateValidationErrorsTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3407,10 +4583,11 @@ func searchConfigurationTemplatesGetsTheTemplatesAvailable(m interface{}, queryP
 	nResponse, _, err := client.ConfigurationTemplates.GetsTheTemplatesAvailable(nil)
 
 	if err != nil {
+		log.Printf("[DEBUG] Error when search => %s", err.Error())
 		return foundItem, err
 	}
 	//maxPageSize := 10
-
+	log.Printf("[DEBUG] Start to find a concidence")
 	for _, item := range *nResponse {
 		if vName == item.Name {
 			foundItem = &item

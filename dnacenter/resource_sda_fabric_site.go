@@ -233,7 +233,9 @@ func resourceSdaFabricSiteDelete(ctx context.Context, d *schema.ResourceData, m 
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 		}
-		d.SetId("")
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing DeleteSiteFromSdaFabric", err,
+			"Failure at DeleteSiteFromSdaFabric, unexpected response", ""))
 		return diags
 	}
 

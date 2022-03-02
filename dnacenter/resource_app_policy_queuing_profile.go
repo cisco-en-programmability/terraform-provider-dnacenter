@@ -844,9 +844,6 @@ func resourceAppPolicyQueuingProfileDelete(ctx context.Context, d *schema.Resour
 	queryParams1.Name = vName
 	item, err := searchApplicationPolicyGetApplicationPolicyQueuingProfile(m, queryParams1)
 	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetApplicationPolicyQueuingProfile", err,
-			"Failure at GetApplicationPolicyQueuingProfile, unexpected response", ""))
 		return diags
 	}
 

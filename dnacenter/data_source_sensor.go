@@ -212,6 +212,30 @@ func flattenSensorsSensorsItems(items *[]dnacentersdkgo.ResponseSensorsSensorsRe
 	return respItems
 }
 
+func flattenSensorsSensorsItem(item *dnacentersdkgo.ResponseSensorsSensorsResponse) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+
+	respItem := make(map[string]interface{})
+	respItem["name"] = item.Name
+	respItem["status"] = item.Status
+	respItem["radio_mac_address"] = item.RadioMacAddress
+	respItem["ethernet_mac_address"] = item.EthernetMacAddress
+	respItem["location"] = item.Location
+	respItem["backhaul_type"] = item.BackhaulType
+	respItem["serial_number"] = item.SerialNumber
+	respItem["ip_address"] = item.IPAddress
+	respItem["version"] = item.Version
+	respItem["last_seen"] = item.LastSeen
+	respItem["type"] = item.Type
+	respItem["ssh_config"] = flattenSensorsSensorsItemsSSHConfig(item.SSHConfig)
+	respItem["is_led_enabled"] = boolPtrToString(item.IsLEDEnabled)
+	return []map[string]interface{}{
+		respItem,
+	}
+}
+
 func flattenSensorsSensorsItemsSSHConfig(item *dnacentersdkgo.ResponseSensorsSensorsResponseSSHConfig) []map[string]interface{} {
 	if item == nil {
 		return nil

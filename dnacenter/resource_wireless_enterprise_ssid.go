@@ -2,7 +2,9 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
 	"reflect"
+	"strings"
 	"time"
 
 	"log"
@@ -323,6 +325,12 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 						},
+						"site": &schema.Schema{
+							Description: `site name hierarchy (ex: Global/aaa/zzz/...) 
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
 					},
 				},
 			},
@@ -465,6 +473,64 @@ func resourceWirelessEnterpriseSSIDUpdate(ctx context.Context, d *schema.Resourc
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
+		// NOTE: After testing, we consider that this trigger is only applicable for WPA2_PERSONAL security, so we limit it to the trigger being executed only with that type of security.
+		if d.HasChange("parameters.0.passphrase") && strings.ToLower(item.SecurityLevel) == "wpa2_personal" {
+			request2 := expandRequestWirelessPskOverridePSKOverride(ctx, "parameters", d)
+			if request2 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request2))
+			}
+			if request2 != nil {
+				newRequest2 := *request2
+				newRequest2[0].SSID = vSSIDName
+				request2 = &newRequest2
+			}
+			response2, restyResp2, err := client.Wireless.PSKOverride(request2)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] resty response for update operation => %v", restyResp2.String())
+					diags = append(diags, diagErrorWithAltAndResponse(
+						"Failure when executing PSKOverride", err, restyResp2.String(),
+						"Failure at PSKOverride, unexpected response", ""))
+					return diags
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing PSKOverride", err,
+					"Failure at PSKOverride, unexpected response", ""))
+				return diags
+			}
+			executionId := response2.ExecutionID
+			log.Printf("[DEBUG] ExecutionID => %s", executionId)
+			time.Sleep(5 * time.Second)
+			response3, restyResp3, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp3 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+			for response3.Status == "IN_PROGRESS" {
+				time.Sleep(20 * time.Second)
+				response3, restyResp3, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+				if err != nil || response3 == nil {
+					if restyResp3 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+					}
+					diags = append(diags, diagErrorWithAlt(
+						"Failure when executing GetExecutionByID", err,
+						"Failure at GetExecutionByID, unexpected response", ""))
+					return diags
+				}
+			}
+			if response3.Status == "FAILURE" {
+				log.Printf("[DEBUG] Error %s", response3.BapiError)
+				diags = append(diags, diagError(
+					"Failure when executing PSKOverride", err))
+				return diags
+			}
+		}
 		log.Printf("[DEBUG] Name used for update operation %v", queryParams1)
 		request1 := expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSID(ctx, "parameters.0", d)
 		if request1 != nil {
@@ -654,6 +720,60 @@ func expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSID(ctx context.Context
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mfp_client_protection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mfp_client_protection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mfp_client_protection")))) {
 		request.MfpClientProtection = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestWirelessPskOverridePSKOverride(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessPSKOverride {
+	request := dnacentersdkgo.RequestWirelessPSKOverride{}
+	if v := expandRequestWirelessPskOverridePSKOverrideItemArray(ctx, key, d); v != nil {
+		request = *v
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestWirelessPskOverridePSKOverrideItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemWirelessPSKOverride {
+	request := []dnacentersdkgo.RequestItemWirelessPSKOverride{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestWirelessPskOverridePSKOverrideItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestWirelessPskOverridePSKOverrideItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemWirelessPSKOverride {
+	request := dnacentersdkgo.RequestItemWirelessPSKOverride{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssid_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssid_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssid_name")))) {
+		request.SSID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site")))) {
+		request.Site = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".passphrase")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".passphrase")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".passphrase")))) {
+		request.PassPhrase = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

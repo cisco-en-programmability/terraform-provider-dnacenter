@@ -1,0 +1,1 @@
+terraform import dnacenter_global_credential_snmpv2_read_community.example "id:=8cc3db21-8071-4423-a58d-9b080164f07c"

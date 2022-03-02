@@ -43,6 +43,7 @@ resource "dnacenter_wireless_enterprise_ssid" "example" {
     session_time_out                      = 1
     ssid_name                             = "string"
     traffic_type                          = "string"
+    site                                  = "string"
   }
 }
 
@@ -92,6 +93,7 @@ Optional:
 - **radio_policy** (String) Radio Policy. Allowed values are 'Dual band operation (2.4GHz and 5GHz)', 'Dual band operation with band select', '5GHz only', '2.4GHz only'.
 - **security_level** (String) Security Level
 - **session_time_out** (Number) Session Time Out
+- **site** (String) site name hierarchy (ex: Global/aaa/zzz/...)
 - **ssid_name** (String) ssidName path parameter. Enter the SSID name to be deleted
 - **traffic_type** (String) Traffic Type
 
