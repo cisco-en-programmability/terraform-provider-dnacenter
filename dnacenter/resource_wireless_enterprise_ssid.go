@@ -473,7 +473,7 @@ func resourceWirelessEnterpriseSSIDUpdate(ctx context.Context, d *schema.Resourc
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
-		// NOTE:
+		// NOTE: After testing, we consider that this trigger is only applicable for WPA2_PERSONAL security, so we limit it to the trigger being executed only with that type of security.
 		if d.HasChange("parameters.0.passphrase") && strings.ToLower(item.SecurityLevel) == "wpa2_personal" {
 			request2 := expandRequestWirelessPskOverridePSKOverride(ctx, "parameters", d)
 			if request2 != nil {
