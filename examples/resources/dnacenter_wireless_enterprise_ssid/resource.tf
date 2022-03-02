@@ -22,6 +22,7 @@ resource "dnacenter_wireless_enterprise_ssid" "example" {
     session_time_out                      = 1
     ssid_name                             = "string"
     traffic_type                          = "string"
+    site                                  = "string"
   }
 }
 

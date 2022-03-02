@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "0.1.0-beta.2"
+      version = "0.2.0-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source, change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -24,12 +24,13 @@ resource "dnacenter_wireless_enterprise_ssid" "example" {
     enable_session_time_out               = "true"
     fast_transition                       = "Adaptive"
     mfp_client_protection                 = "Optional"
-    name                                  = "Test"
-    passphrase                            = ""
+    name                                  = "TestPersonal2"
+    passphrase                            = "testtest3"
     radio_policy                          = "Dual band operation (2.4GHz and 5GHz)"
-    security_level                        = "WPA2_ENTERPRISE"
+    security_level                        = "WPA2_PERSONAL"
     session_time_out                      = 0
     traffic_type                          = "voicedata"
+    site                                  = "Global/New Jersey"
 
   }
 }

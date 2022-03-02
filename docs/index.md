@@ -51,6 +51,4 @@ provider "dnacenter" {
 - **debug** (String) Flag for Cisco DNA Center to enable debugging. If not set, it uses the DNAC_DEBUG environment variable; defaults to `false`.
 - **password** (String, Sensitive) Cisco DNA Center password to authenticate. If not set, it uses the DNAC_PASSWORD environment variable.
 - **ssl_verify** (String, Sensitive) Flag to enable or disable SSL certificate verification. If not set, it uses the DNAC_SSL_VERIFY environment variable; defaults to `true`.
-- **use_api_gateway** (String) Flag to enable or disable the usage of the DNAC's API Gateway. If not set, it uses the DNAC_USE_API_GATEWAY environment variable; defaults to `false`.
-- **use_csrf_token** (String) Flag to enable or disable the usage of the X-CSRF-Token header. If not set, it uses the DNAC_USE_CSRF_TOKEN environment varible; defaults to `false`.
 - **username** (String, Sensitive) Cisco DNA Center username to authenticate. If not set, it uses the DNAC_USERNAME environment variable.

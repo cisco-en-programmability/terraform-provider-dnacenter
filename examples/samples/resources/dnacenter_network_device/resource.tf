@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "0.1.0-beta.2"
+      version = "0.2.0-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -18,4 +18,18 @@ resource "dnacenter_network_device" "example" {
 
 output "dnacenter_network_device_example" {
   value = dnacenter_network_device.example
+}
+
+resource "dnacenter_compliance" "example" {
+  depends_on = [dnacenter_network_device.example]
+  provider   = dnacenter
+  parameters {
+    trigger_full = true
+    categories   = ["PSIRT"]
+    device_uuids = [dnacenter_network_device.example.item.0.id]
+  }
+}
+
+output "dnacenter_compliance_example" {
+  value = dnacenter_compliance.example
 }

@@ -50,7 +50,7 @@ Read-Only:
 - **namespace** (String)
 - **type** (String)
 - **value** (List of Object) (see [below for nested schema](#nestedobjatt--items--value))
-- **version** (String)
+- **version** (Number)
 
 <a id="nestedobjatt--items--value"></a>
 ### Nested Schema for `items.value`

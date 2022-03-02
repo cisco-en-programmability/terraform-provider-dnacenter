@@ -1,0 +1,1 @@
+terraform import dnacenter_global_credential.example "id:=string"

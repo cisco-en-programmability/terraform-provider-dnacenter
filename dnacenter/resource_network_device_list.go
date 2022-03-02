@@ -457,6 +457,14 @@ func resourceNetworkDeviceList() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 						},
+						"role": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"role_source": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
 					},
 				},
 			},
@@ -613,12 +621,63 @@ func resourceNetworkDeviceListUpdate(ctx context.Context, d *schema.ResourceData
 	queryParams1.ManagementIPAddress = vIPAddress
 	item, err := searchDevicesGetDeviceList(m, queryParams1)
 	if err != nil || item == nil {
-		d.SetId("")
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetDeviceList", err,
+			"Failure at GetDeviceList, unexpected response", ""))
 		return diags
 	}
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
+		if d.HasChange("parameters.0.role") || d.HasChange("parameters.0.role_source") {
+			request2 := expandRequestNetworkDeviceUpdateRoleUpdateDeviceRole(ctx, "parameters.0", d)
+			if request2 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request2))
+			}
+			if request2 != nil && item != nil && request2.ID == "" {
+				request2.ID = item.ID
+			}
+			response2, restyResp2, err := client.Devices.UpdateDeviceRole(request2)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] resty response for update operation => %v", restyResp2.String())
+					diags = append(diags, diagErrorWithAltAndResponse(
+						"Failure when executing UpdateDeviceRole", err, restyResp2.String(),
+						"Failure at UpdateDeviceRole, unexpected response", ""))
+					return diags
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing UpdateDeviceRole", err,
+					"Failure at UpdateDeviceRole, unexpected response", ""))
+				return diags
+			}
+			if response2.Response == nil {
+				diags = append(diags, diagError(
+					"Failure when executing UpdateDeviceRole", err))
+				return diags
+			}
+			taskId := response2.Response.TaskID
+			log.Printf("[DEBUG] TASKID => %s", taskId)
+			if taskId != "" {
+				time.Sleep(5 * time.Second)
+				response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+				if err != nil || response2 == nil {
+					if restyResp2 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+					}
+					diags = append(diags, diagErrorWithAlt(
+						"Failure when executing GetTaskByID", err,
+						"Failure at GetTaskByID, unexpected response", ""))
+					return diags
+				}
+				if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+					log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+					diags = append(diags, diagError(
+						"Failure when executing UpdateDeviceRole", err))
+					return diags
+				}
+			}
+		}
 		log.Printf("[DEBUG] Name used for update operation %s", vSerialNumber)
 		request1 := expandRequestNetworkDeviceListSyncDevices2(ctx, "parameters.0", d)
 		if request1 != nil {
@@ -799,6 +858,24 @@ func expandRequestNetworkDeviceListAddDevice2UpdateMgmtIPaddressList(ctx context
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".new_mgmt_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".new_mgmt_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".new_mgmt_ip_address")))) {
 		request.NewMgmtIPAddress = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestNetworkDeviceUpdateRoleUpdateDeviceRole(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDevicesUpdateDeviceRole {
+	request := dnacentersdkgo.RequestDevicesUpdateDeviceRole{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".role")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".role")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".role")))) {
+		request.Role = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".role_source")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".role_source")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".role_source")))) {
+		request.RoleSource = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

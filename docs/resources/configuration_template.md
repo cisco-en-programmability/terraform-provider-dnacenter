@@ -3,13 +3,15 @@
 page_title: "dnacenter_configuration_template Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
-  It manages read, update and delete operations on Configuration Templates.
-  API to update a template.Deletes the template by its id
+  It manages create, read, update and delete operations on Configuration Templates.
+  API to create a template by project id.API to update a template.Deletes the template by its id
 ---
 
 # dnacenter_configuration_template (Resource)
 
-It manages read, update and delete operations on Configuration Templates.
+It manages create, read, update and delete operations on Configuration Templates.
+
+- API to create a template by project id.
 
 - API to update a template.
 
@@ -241,11 +243,12 @@ output "dnacenter_configuration_template_example" {
 Required:
 
 - **name** (String) Name of template
-- **template_id** (String) templateId path parameter. templateId(UUID) of template to be deleted
+- **project_id** (String) Project UUID
 
 Optional:
 
 - **author** (String) Author of template
+- **comments** (String) Template version comments
 - **composite** (String) Is it composite template
 - **containing_templates** (Block List) (see [below for nested schema](#nestedblock--parameters--containing_templates))
 - **create_time** (Number) Create time of template
@@ -258,7 +261,6 @@ Optional:
 - **last_update_time** (Number) Update time of template
 - **latest_version_time** (Number) Latest versioned template time
 - **parent_template_id** (String) Parent templateID
-- **project_id** (String) Project UUID
 - **project_name** (String) Project name
 - **rollback_template_content** (String) Rollback template content
 - **rollback_template_params** (Block List) (see [below for nested schema](#nestedblock--parameters--rollback_template_params))
@@ -267,6 +269,7 @@ Optional:
 - **software_version** (String) Applicable device software version
 - **tags** (Block List) (see [below for nested schema](#nestedblock--parameters--tags))
 - **template_content** (String) Template content
+- **template_id** (String) templateId path parameter. templateId(UUID) of template to be deleted
 - **template_params** (Block List) (see [below for nested schema](#nestedblock--parameters--template_params))
 - **validation_errors** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--validation_errors))
 - **version** (String) Current version of template

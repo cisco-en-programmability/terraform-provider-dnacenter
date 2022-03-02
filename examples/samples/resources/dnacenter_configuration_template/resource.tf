@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "0.1.0-beta.2"
+      version = "0.2.0-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source, change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -13,7 +13,7 @@ resource "dnacenter_configuration_template" "example" {
   provider = dnacenter
   parameters {
 
-    author    = "string"
+    author    = "Test"
     composite = "false"
     containing_templates {
       /*
@@ -103,7 +103,7 @@ resource "dnacenter_configuration_template" "example" {
     }
     #create_time = 1
     custom_params_order = "false"
-    description         = "TestTerraform"
+    description         = "Test Terraform by ID Update"
     device_types {
 
       product_family = "Routers"
@@ -111,13 +111,13 @@ resource "dnacenter_configuration_template" "example" {
       #product_type = "string"
     }
     failure_policy = "CONTINUE_ON_ERROR"
-    id             = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
-    language       = "VELOCITY"
+    #id             = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
+    language = "VELOCITY"
     #last_update_time = 1
     #latest_version_time = 1
-    name               = "DMVPN Spoke for Branch Router - System Default for Test Project"
-    parent_template_id = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
-    #project_id = "c3e77f82-bea7-45db-9eab-c7140b54a4a8"
+    name                      = "DMVPN Spoke for Branch Router - System Default for Test Project n3"
+    parent_template_id        = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
+    project_id                = "c3e77f82-bea7-45db-9eab-c7140b54a4a8"
     project_name              = "Cloud Test Template 2"
     rollback_template_content = "string"
     rollback_template_params {
@@ -159,7 +159,7 @@ resource "dnacenter_configuration_template" "example" {
     tags {
     }
     #template_content = "string"
-    template_id = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
+    #template_id = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
     template_params {
       /*
         binding = "string"
@@ -200,7 +200,8 @@ resource "dnacenter_configuration_template" "example" {
       template_id              = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
       template_version         = null
     }
-    version = "1.0"
+    version  = "1.0"
+    comments = "Test tf"
   }
 }
 
