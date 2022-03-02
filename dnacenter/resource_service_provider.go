@@ -22,7 +22,7 @@ func resourceServiceProvider() *schema.Resource {
 
 - API to update SP profile
 
-- Delete**
+- API to delete Service Provider profile (QoS)
 `,
 
 		CreateContext: resourceServiceProviderCreate,
