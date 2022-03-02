@@ -44,7 +44,7 @@ output "dnacenter_global_credential_netconf_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **parameters** (Block List) Array of RequestDiscoveryCreateNetconfCredentials (see [below for nested schema](#nestedblock--parameters))
+- **parameters** (Block List, Max: 1) Array of RequestDiscoveryCreateNetconfCredentials (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 

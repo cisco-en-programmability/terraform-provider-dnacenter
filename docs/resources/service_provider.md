@@ -4,7 +4,7 @@ page_title: "dnacenter_service_provider Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Network Settings.
-  API to create service provider profile(QOS).API to update SP profile
+  API to create service provider profile(QOS).API to update SP profile.API to delete Service Provider profile (QoS).
 ---
 
 # dnacenter_service_provider (Resource)
@@ -13,18 +13,23 @@ It manages create, read, update and delete operations on Network Settings.
 
 - API to create service provider profile(QOS).
 
-- API to update SP profile
+- API to update SP profile.
+
+- API to delete Service Provider profile (QoS).
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_service_provider" "example" {
   provider = dnacenter
-  settings {
-    qos {
-      model        = "string"
-      profile_name = "string"
-      wan_provider = "string"
+  parameters {
+
+    settings {
+      qos {
+        profile_name = "Test_tf_new"
+        model        = "8-class-model"
+        wan_provider = "test1-provider"
+      }
     }
   }
 }
