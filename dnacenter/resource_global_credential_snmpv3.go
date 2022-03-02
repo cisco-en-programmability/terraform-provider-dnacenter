@@ -116,6 +116,8 @@ func resourceGlobalCredentialSNMPv3() *schema.Resource {
 			"parameters": &schema.Schema{
 				Description: `Array of RequestDiscoveryCreateSNMPv3Credentials`,
 				Type:        schema.TypeList,
+				MinItems:    1,
+				MaxItems:    1,
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{

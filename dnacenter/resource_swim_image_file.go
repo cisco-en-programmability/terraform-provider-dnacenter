@@ -223,6 +223,7 @@ Upload the file to the **file** form data field
 				Type:     schema.TypeList,
 				Required: true,
 				MaxItems: 1,
+				MinItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"file_name": &schema.Schema{
@@ -402,9 +403,6 @@ func resourceSwimImageFileRead(ctx context.Context, d *schema.ResourceData, m in
 		response1, err := searchSoftwareImageManagementSwimGetSoftwareImageDetailsFile(m, queryParams1)
 
 		if err != nil || response1 == nil {
-			/*if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}*/
 			d.SetId("")
 			return diags
 		}
