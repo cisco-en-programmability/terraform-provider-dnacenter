@@ -23,6 +23,106 @@ IMPROVEMENTS:
 BUG FIXES:
 * Remove `use_api_gateway` and `use_csrf_token` configuration parameters from `provider`
 
+## 0.1.0-beta.2 (February 08, 2022)
+
+NOTES:
+* Data Sources of type 'action' have been removed. Removed data Sources of type 'action' have been classified as unsafe by the team.
+* Next 0.2.0-beta version will transform some of them to resources.
+
+BREAKING CHANGES:
+
+* Data Source of type 'action' `dnacenter_app_policy_intent_create` has been removed
+* Data Source of type 'action' `dnacenter_associate_site_to_network_profile` has been removed
+* Data Source of type 'action' `dnacenter_authentication_import_certificate_p12` has been removed
+* Data Source of type 'action' `dnacenter_authentication_import_certificate` has been removed
+* Data Source of type 'action' `dnacenter_business_sda_wireless_controller_create` has been removed
+* Data Source of type 'action' `dnacenter_business_sda_wireless_controller_delete` has been removed
+* Data Source of type 'action' `dnacenter_cli_credential_create` has been removed
+* Data Source of type 'action' `dnacenter_cli_credential_update` has been removed
+* Data Source of type 'action' `dnacenter_command_runner_run_command` has been removed
+* Data Source of type 'action' `dnacenter_compliance_check_run` has been removed
+* Data Source of type 'action' `dnacenter_configuration_template_clone` has been removed
+* Data Source of type 'action' `dnacenter_configuration_template_create` has been removed
+* Data Source of type 'action' `dnacenter_configuration_template_deploy_v2` has been removed
+* Data Source of type 'action' `dnacenter_configuration_template_deploy` has been removed
+* Data Source of type 'action' `dnacenter_configuration_template_export_project` has been removed
+* Data Source of type 'action' `dnacenter_configuration_template_export_template` has been removed
+* Data Source of type 'action' `dnacenter_configuration_template_import_project` has been removed
+* Data Source of type 'action' `dnacenter_configuration_template_import_template` has been removed
+* Data Source of type 'action' `dnacenter_configuration_template_version_create` has been removed
+* Data Source of type 'action' `dnacenter_device_configurations_export` has been removed
+* Data Source of type 'action' `dnacenter_device_credential_create` has been removed
+* Data Source of type 'action' `dnacenter_device_credential_delete` has been removed
+* Data Source of type 'action' `dnacenter_device_credential_update` has been removed
+* Data Source of type 'action' `dnacenter_device_replacement_deploy` has been removed
+* Data Source of type 'action' `dnacenter_disassociate_site_to_network_profile` has been removed
+* Data Source of type 'action' `dnacenter_discovery_range_delete` has been removed
+* Data Source of type 'action' `dnacenter_global_credential_delete` has been removed
+* Data Source of type 'action' `dnacenter_global_credential_update` has been removed
+* Data Source of type 'action' `dnacenter_golden_image_create` has been removed
+* Data Source of type 'action' `dnacenter_golden_tag_image_delete` has been removed
+* Data Source of type 'action' `dnacenter_http_read_credential_create` has been removed
+* Data Source of type 'action' `dnacenter_http_read_credential_update` has been removed
+* Data Source of type 'action' `dnacenter_http_write_credential_create` has been removed
+* Data Source of type 'action' `dnacenter_http_write_credential_update` has been removed
+* Data Source of type 'action' `dnacenter_itsm_integration_events_retry` has been removed
+* Data Source of type 'action' `dnacenter_license_device_deregistration` has been removed
+* Data Source of type 'action' `dnacenter_license_device_registration` has been removed
+* Data Source of type 'action' `dnacenter_license_virtual_account_change` has been removed
+* Data Source of type 'action' `dnacenter_netconf_credential_create` has been removed
+* Data Source of type 'action' `dnacenter_netconf_credential_update` has been removed
+* Data Source of type 'action' `dnacenter_network_create` has been removed
+* Data Source of type 'action' `dnacenter_network_device_export` has been removed
+* Data Source of type 'action' `dnacenter_network_device_sync` has been removed
+* Data Source of type 'action' `dnacenter_network_device_update_role` has been removed
+* Data Source of type 'action' `dnacenter_network_update` has been removed
+* Data Source of type 'action' `dnacenter_nfv_provision_details` has been removed
+* Data Source of type 'action' `dnacenter_nfv_provision` has been removed
+* Data Source of type 'action' `dnacenter_path_trace_create` has been removed
+* Data Source of type 'action' `dnacenter_path_trace_delete` has been removed
+* Data Source of type 'action' `dnacenter_pnp_device_claim_to_site` has been removed
+* Data Source of type 'action' `dnacenter_pnp_device_claim` has been removed
+* Data Source of type 'action' `dnacenter_pnp_device_config_preview` has been removed
+* Data Source of type 'action' `dnacenter_pnp_device_import` has been removed
+* Data Source of type 'action' `dnacenter_pnp_device_reset` has been removed
+* Data Source of type 'action' `dnacenter_pnp_device_unclaim` has been removed
+* Data Source of type 'action' `dnacenter_pnp_server_profile_update` has been removed
+* Data Source of type 'action' `dnacenter_pnp_virtual_account_add` has been removed
+* Data Source of type 'action' `dnacenter_pnp_virtual_account_deregister` has been removed
+* Data Source of type 'action' `dnacenter_pnp_virtual_account_devices_sync` has been removed
+* Data Source of type 'action' `dnacenter_profiling_rules_in_bulk_create` has been removed
+* Data Source of type 'action' `dnacenter_sensor_create` has been removed
+* Data Source of type 'action' `dnacenter_sensor_delete` has been removed
+* Data Source of type 'action' `dnacenter_sensor_test_run` has been removed
+* Data Source of type 'action' `dnacenter_sensor_test_template_duplicate` has been removed
+* Data Source of type 'action' `dnacenter_sensor_test_template_edit` has been removed
+* Data Source of type 'action' `dnacenter_service_provider_create` has been removed
+* Data Source of type 'action' `dnacenter_service_provider_profile_delete` has been removed
+* Data Source of type 'action' `dnacenter_service_provider_update` has been removed
+* Data Source of type 'action' `dnacenter_site_assign_credential` has been removed
+* Data Source of type 'action' `dnacenter_site_assign_device` has been removed
+* Data Source of type 'action' `dnacenter_site_create` has been removed
+* Data Source of type 'action' `dnacenter_site_delete` has been removed
+* Data Source of type 'action' `dnacenter_site_update` has been removed
+* Data Source of type 'action' `dnacenter_snmpv2_read_community_credential_create` has been removed
+* Data Source of type 'action' `dnacenter_snmpv2_read_community_credential_update` has been removed
+* Data Source of type 'action' `dnacenter_snmpv2_write_community_credential_create` has been removed
+* Data Source of type 'action' `dnacenter_snmpv2_write_community_credential_update` has been removed
+* Data Source of type 'action' `dnacenter_snmpv3_credential_create` has been removed
+* Data Source of type 'action' `dnacenter_snmpv3_credential_update` has been removed
+* Data Source of type 'action' `dnacenter_swim_import_local` has been removed
+* Data Source of type 'action' `dnacenter_swim_import_via_url` has been removed
+* Data Source of type 'action' `dnacenter_swim_trigger_activation` has been removed
+* Data Source of type 'action' `dnacenter_swim_trigger_distribution` has been removed
+* Data Source of type 'action' `dnacenter_tag_member_create` has been removed
+* Data Source of type 'action' `dnacenter_tag_member_delete` has been removed
+* Data Source of type 'action' `dnacenter_tag_membership` has been removed
+* Data Source of type 'action' `dnacenter_template_preview` has been removed
+* Data Source of type 'action' `dnacenter_wireless_provision_access_point` has been removed
+* Data Source of type 'action' `dnacenter_wireless_provision_device_create` has been removed
+* Data Source of type 'action' `dnacenter_wireless_provision_device_update` has been removed
+* Data Source of type 'action' `dnacenter_wireless_provision_ssid_create_provision` has been removed
+* Data Source of type 'action' `dnacenter_wireless_provision_ssid_delete_reprovision` has been removed
 ## 0.1.0-beta.1 (February 01, 2022)
 
 BUG FIXES:
