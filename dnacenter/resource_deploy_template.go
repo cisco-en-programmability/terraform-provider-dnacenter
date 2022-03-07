@@ -3,22 +3,29 @@ package dnacenter
 import (
 	"context"
 	"fmt"
-	"log"
 	"reflect"
 	"time"
 
+	"log"
+
 	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceDeployTemplate() *schema.Resource {
 	return &schema.Resource{
-		Description: `
+		Description: `It manages create, read and delete operations on Software Image Management (SWIM).
+
+- Golden Tag image. Set siteId as -1 for Global site.
+
+- Remove golden tag. Set siteId as -1 for Global site.
 `,
 
 		CreateContext: resourceDeployTemplateCreate,
 		ReadContext:   resourceDeployTemplateRead,
+		UpdateContext: resourceDeployTemplateUpdate,
 		DeleteContext: resourceDeployTemplateDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -29,7 +36,6 @@ func resourceDeployTemplate() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
@@ -37,6 +43,7 @@ func resourceDeployTemplate() *schema.Resource {
 				MinItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+
 						"force_push_template": &schema.Schema{
 
 							Type:         schema.TypeString,
@@ -132,29 +139,31 @@ func resourceDeployTemplate() *schema.Resource {
 
 func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
+
 	var diags diag.Diagnostics
-	log.Printf("[DEBUG] Selected method: Deploy a template")
+
+	log.Printf("[DEBUG] Selected method 1: DeployTemplate")
 	request1 := expandRequestConfigurationTemplateDeployV2DeployTemplateV2(ctx, "parameters.0", d)
+
+	response1, restyResp1, err := client.ConfigurationTemplates.DeployTemplateV2(request1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
-	response1, restyResp1, err := client.ConfigurationTemplates.DeployTemplateV2(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeployTemplateV2", err,
-			"Failure at DeployTemplateV2, unexpected response", ""))
+			"Failure when executing DeployTemplate", err,
+			"Failure at DeployTemplate, unexpected response", ""))
 		return diags
 	}
 
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when executing DeployTemplateV2", err))
+			"Failure when executing CreateApplication", err))
 		return diags
 	}
 	taskId := response1.Response.TaskID
@@ -174,26 +183,32 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 			diags = append(diags, diagError(
-				"Failure when executing DeployTemplateV2", err))
+				"Failure when executing CreateApplication", err))
 			return diags
 		}
 	}
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	d.SetId(getUnixTimeString())
 
 	return resourceDeployTemplateRead(ctx, d, m)
 }
 
 func resourceDeployTemplateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-	var diags diag.Diagnostics
 
+	var diags diag.Diagnostics
 	return diags
+}
+
+func resourceDeployTemplateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return resourceDeployTemplateRead(ctx, d, m)
 }
 
 func resourceDeployTemplateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 	return diags
 }
-
 func expandRequestConfigurationTemplateDeployV2DeployTemplateV2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2 {
 	request := dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".force_push_template")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".force_push_template")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".force_push_template")))) {
