@@ -16,16 +16,12 @@ import (
 
 func resourceDeployTemplate() *schema.Resource {
 	return &schema.Resource{
-		Description: `It manages create, read and delete operations on Software Image Management (SWIM).
-
-- Golden Tag image. Set siteId as -1 for Global site.
-
-- Remove golden tag. Set siteId as -1 for Global site.
+		Description: `It performs create operation on Configuration Templates.
+	•	V2 API to deploy a template.
 `,
 
 		CreateContext: resourceDeployTemplateCreate,
 		ReadContext:   resourceDeployTemplateRead,
-		UpdateContext: resourceDeployTemplateUpdate,
 		DeleteContext: resourceDeployTemplateDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -41,6 +37,7 @@ func resourceDeployTemplate() *schema.Resource {
 				Required: true,
 				MaxItems: 1,
 				MinItems: 1,
+				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -49,6 +46,7 @@ func resourceDeployTemplate() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							ForceNew:     true,
 						},
 						"is_composite": &schema.Schema{
 							Description: `Composite template flag
@@ -57,18 +55,21 @@ func resourceDeployTemplate() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							ForceNew:     true,
 						},
 						"main_template_id": &schema.Schema{
 							Description: `Main template UUID of versioned template
 			`,
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
 						"member_template_deployment_info": &schema.Schema{
 							Description: `memberTemplateDeploymentInfo
 			`,
 							Type:     schema.TypeList,
 							Optional: true,
+							ForceNew: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -76,6 +77,7 @@ func resourceDeployTemplate() *schema.Resource {
 						"target_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							ForceNew: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -84,18 +86,21 @@ func resourceDeployTemplate() *schema.Resource {
 			`,
 										Type:     schema.TypeString,
 										Optional: true,
+										ForceNew: true,
 									},
 									"id": &schema.Schema{
 										Description: `UUID of target is required if targetType is MANAGED_DEVICE_UUID
 			`,
 										Type:     schema.TypeString,
 										Optional: true,
+										ForceNew: true,
 									},
 									"params": &schema.Schema{
 										Description: `Template params/values to be provisioned
 			`,
 										Type:     schema.TypeList,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -105,6 +110,7 @@ func resourceDeployTemplate() *schema.Resource {
 			`,
 										Type:     schema.TypeList,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -114,12 +120,14 @@ func resourceDeployTemplate() *schema.Resource {
 			`,
 										Type:     schema.TypeString,
 										Optional: true,
+										ForceNew: true,
 									},
 									"versioned_template_id": &schema.Schema{
 										Description: `Versioned templateUUID to be provisioned
 			`,
 										Type:     schema.TypeString,
 										Optional: true,
+										ForceNew: true,
 									},
 								},
 							},
@@ -129,6 +137,7 @@ func resourceDeployTemplate() *schema.Resource {
 			`,
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
 					},
 				},
@@ -199,10 +208,6 @@ func resourceDeployTemplateRead(ctx context.Context, d *schema.ResourceData, m i
 
 	var diags diag.Diagnostics
 	return diags
-}
-
-func resourceDeployTemplateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceDeployTemplateRead(ctx, d, m)
 }
 
 func resourceDeployTemplateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
