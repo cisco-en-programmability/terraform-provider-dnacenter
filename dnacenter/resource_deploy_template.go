@@ -23,9 +23,6 @@ func resourceDeployTemplate() *schema.Resource {
 		CreateContext: resourceDeployTemplateCreate,
 		ReadContext:   resourceDeployTemplateRead,
 		DeleteContext: resourceDeployTemplateDelete,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
@@ -151,7 +148,7 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 
 	var diags diag.Diagnostics
 
-	log.Printf("[DEBUG] Selected method 1: DeployTemplate")
+	log.Printf("[DEBUG] Selected method 1: DeployTemplateV2")
 	request1 := expandRequestConfigurationTemplateDeployV2DeployTemplateV2(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.ConfigurationTemplates.DeployTemplateV2(request1)
@@ -165,14 +162,14 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeployTemplate", err,
-			"Failure at DeployTemplate, unexpected response", ""))
+			"Failure when executing DeployTemplateV2", err,
+			"Failure at DeployTemplateV2, unexpected response", ""))
 		return diags
 	}
 
 	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when executing DeployTemplate", err))
+			"Failure when executing DeployTemplateV2", err))
 		return diags
 	}
 	taskId := response1.Response.TaskID
@@ -192,7 +189,7 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 			diags = append(diags, diagError(
-				"Failure when executing DeployTemplate", err))
+				"Failure when executing DeployTemplateV2", err))
 			return diags
 		}
 	}
