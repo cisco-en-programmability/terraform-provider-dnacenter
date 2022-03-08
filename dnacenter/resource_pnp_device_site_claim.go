@@ -15,15 +15,15 @@ import (
 
 func resourcePnpDeviceSiteClaim() *schema.Resource {
 	return &schema.Resource{
-		Description: `
+		Description: `It performs create operation on Device Onboarding (PnP).
+	•	Claim a device based on DNA-C Site based design process. Different parameters are required for different device
+		platforms.
+	
 `,
 
 		CreateContext: resourcePnpDeviceSiteClaimCreate,
 		ReadContext:   resourcePnpDeviceSiteClaimRead,
 		DeleteContext: resourcePnpDeviceSiteClaimDelete,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{

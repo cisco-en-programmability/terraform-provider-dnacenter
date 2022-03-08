@@ -15,16 +15,13 @@ import (
 
 func resourcePnpDeviceImport() *schema.Resource {
 	return &schema.Resource{
-		Description: `
+		Description: `It performs create operation on Device Onboarding (PnP).
+	•	Add devices to PnP in bulk
 `,
 
 		CreateContext: resourcePnpDeviceImportCreate,
 		ReadContext:   resourcePnpDeviceImportRead,
-		UpdateContext: resourcePnpDeviceImportUpdate,
 		DeleteContext: resourcePnpDeviceImportDelete,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
@@ -71,7 +68,11 @@ func resourcePnpDeviceImport() *schema.Resource {
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-
+									"type_id": &schema.Schema{
+										Description: `Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
 									"id": &schema.Schema{
 										Description: `Id`,
 										Type:        schema.TypeString,
@@ -298,6 +299,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 																	Type: schema.TypeString,
 																},
 																Optional: true,
+																ForceNew: true,
 															},
 															"mac_address": &schema.Schema{
 																Description: `Mac Address`,
@@ -1540,1213 +1542,1473 @@ func resourcePnpDeviceImport() *schema.Resource {
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
+				ForceNew: true,
 				MinItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"device_info": &schema.Schema{
-							Type:     schema.TypeList,
-							MinItems: 1,
-							Required: true,
+						"payload": &schema.Schema{
+							Description: `Array of RequestDeviceOnboardingPnpImportDevicesInBulk`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							ForceNew:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-
-									"aaa_credentials": &schema.Schema{
-										Type:     schema.TypeList,
+									"id": &schema.Schema{
+										Type:     schema.TypeString,
 										Optional: true,
+										ForceNew: true,
+									},
+									"device_info": &schema.Schema{
+										Type:     schema.TypeList,
+										MinItems: 1,
+										Required: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"password": &schema.Schema{
-													Type:      schema.TypeString,
-													Optional:  true,
-													Sensitive: true,
-												},
-												"username": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-											},
-										},
-									},
-									"added_on": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"addn_mac_addrs": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"agent_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"auth_status": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"authenticated_sudi_serial_no": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"capabilities_supported": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"cm_state": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"device_sudi_serial_nos": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"device_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"features_supported": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"file_system_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"freespace": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"readable": &schema.Schema{
-
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-												},
-												"size": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"writeable": &schema.Schema{
-
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-												},
-											},
-										},
-									},
-									"first_contact": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"hostname": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"http_headers": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"key": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"value": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-											},
-										},
-									},
-									"image_file": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"image_version": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"ip_interfaces": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"ipv4_address": &schema.Schema{
-													Type: schema.TypeList,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-													Optional: true,
-												},
-												"ipv6_address_list": &schema.Schema{
-													Type: schema.TypeList,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-													Optional: true,
-												},
-												"mac_address": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"status": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-											},
-										},
-									},
-									"last_contact": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"last_sync_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"last_update_on": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"location": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"address": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"altitude": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"latitude": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"longitude": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"site_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-											},
-										},
-									},
-									"mac_address": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"mode": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"neighbor_links": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"local_interface_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"local_mac_address": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"local_short_interface_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"remote_device_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"remote_interface_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"remote_mac_address": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"remote_platform": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"remote_short_interface_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"remote_version": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-											},
-										},
-									},
-									"onb_state": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"pid": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"pnp_profile_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"created_by": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"discovery_created": &schema.Schema{
-
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-												},
-												"primary_endpoint": &schema.Schema{
+												"aaa_credentials": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"certificate": &schema.Schema{
+															"password": &schema.Schema{
+																Type:      schema.TypeString,
+																Optional:  true,
+																ForceNew:  true,
+																Sensitive: true,
+															},
+															"username": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
+																ForceNew: true,
 															},
-															"fqdn": &schema.Schema{
+														},
+													},
+												},
+												"added_on": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"addn_mac_addrs": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"agent_type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"auth_status": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"authenticated_sudi_serial_no": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"capabilities_supported": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"cm_state": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"description": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"device_sudi_serial_nos": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"device_type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"features_supported": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"file_system_list": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"freespace": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
+																ForceNew: true,
 															},
+															"readable": &schema.Schema{
+
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																ForceNew:     true,
+															},
+															"size": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"writeable": &schema.Schema{
+
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																ForceNew:     true,
+															},
+														},
+													},
+												},
+												"first_contact": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"hostname": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"http_headers": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"key": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"value": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+														},
+													},
+												},
+												"image_file": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"image_version": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"ip_interfaces": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
 															"ipv4_address": &schema.Schema{
 																Type: schema.TypeList,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
 																Optional: true,
+																ForceNew: true,
 															},
-															"ipv6_address": &schema.Schema{
+															"ipv6_address_list": &schema.Schema{
 																Type: schema.TypeList,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
 																Optional: true,
-															},
-															"port": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"protocol": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-														},
-													},
-												},
-												"profile_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"secondary_endpoint": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"certificate": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"fqdn": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"ipv4_address": &schema.Schema{
-																Type: schema.TypeList,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-																Optional: true,
-															},
-															"ipv6_address": &schema.Schema{
-																Type: schema.TypeList,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-																Optional: true,
-															},
-															"port": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"protocol": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-														},
-													},
-												},
-											},
-										},
-									},
-									"populate_inventory": &schema.Schema{
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-									},
-									"pre_workflow_cli_ouputs": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"cli": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"cli_output": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-											},
-										},
-									},
-									"project_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"project_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"reload_requested": &schema.Schema{
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-									},
-									"serial_number": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"smart_account_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"source": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"stack": &schema.Schema{
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-									},
-									"stack_info": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"is_full_ring": &schema.Schema{
-
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-												},
-												"stack_member_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"hardware_version": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"license_level": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"license_type": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
+																ForceNew: true,
 															},
 															"mac_address": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
+																ForceNew: true,
 															},
-															"pid": &schema.Schema{
+															"name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
+																ForceNew: true,
 															},
-															"priority": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"role": &schema.Schema{
+															"status": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
-															},
-															"serial_number": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"software_version": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"stack_number": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"state": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"sudi_serial_number": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
 												},
-												"stack_ring_protocol": &schema.Schema{
+												"last_contact": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"last_sync_time": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"last_update_on": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"location": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"address": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"altitude": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"latitude": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"longitude": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"site_id": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+														},
+													},
+												},
+												"mac_address": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
+													ForceNew: true,
 												},
-												"supports_stack_workflows": &schema.Schema{
+												"mode": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"neighbor_links": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"local_interface_name": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"local_mac_address": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"local_short_interface_name": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"remote_device_name": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"remote_interface_name": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"remote_mac_address": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"remote_platform": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"remote_short_interface_name": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"remote_version": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+														},
+													},
+												},
+												"onb_state": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"pid": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"pnp_profile_list": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"created_by": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"discovery_created": &schema.Schema{
+
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																ForceNew:     true,
+															},
+															"primary_endpoint": &schema.Schema{
+																Type:     schema.TypeList,
+																Optional: true,
+																ForceNew: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"certificate": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"fqdn": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"ipv4_address": &schema.Schema{
+																			Type: schema.TypeList,
+																			Elem: &schema.Schema{
+																				Type: schema.TypeString,
+																			},
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"ipv6_address": &schema.Schema{
+																			Type: schema.TypeList,
+																			Elem: &schema.Schema{
+																				Type: schema.TypeString,
+																			},
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"port": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"protocol": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																	},
+																},
+															},
+															"profile_name": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"secondary_endpoint": &schema.Schema{
+																Type:     schema.TypeList,
+																Optional: true,
+																ForceNew: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"certificate": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"fqdn": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"ipv4_address": &schema.Schema{
+																			Type: schema.TypeList,
+																			Elem: &schema.Schema{
+																				Type: schema.TypeString,
+																			},
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"ipv6_address": &schema.Schema{
+																			Type: schema.TypeList,
+																			Elem: &schema.Schema{
+																				Type: schema.TypeString,
+																			},
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"port": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"protocol": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																	},
+																},
+															},
+														},
+													},
+												},
+												"populate_inventory": &schema.Schema{
 
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
+													ForceNew:     true,
 												},
-												"total_member_count": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"valid_license_levels": &schema.Schema{
+												"pre_workflow_cli_ouputs": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"cli": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"cli_output": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+														},
+													},
+												},
+												"project_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"project_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"reload_requested": &schema.Schema{
+
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													ForceNew:     true,
+												},
+												"serial_number": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"smart_account_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"source": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"stack": &schema.Schema{
+
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													ForceNew:     true,
+												},
+												"stack_info": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"is_full_ring": &schema.Schema{
+
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																ForceNew:     true,
+															},
+															"stack_member_list": &schema.Schema{
+																Type:     schema.TypeList,
+																Optional: true,
+																ForceNew: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"hardware_version": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"license_level": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"license_type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"mac_address": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"pid": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"priority": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"role": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"serial_number": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"software_version": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"stack_number": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"state": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"sudi_serial_number": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																	},
+																},
+															},
+															"stack_ring_protocol": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"supports_stack_workflows": &schema.Schema{
+
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																ForceNew:     true,
+															},
+															"total_member_count": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"valid_license_levels": &schema.Schema{
+																Type:     schema.TypeList,
+																Optional: true,
+																ForceNew: true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
+															},
+														},
+													},
+												},
+												"state": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"sudi_required": &schema.Schema{
+
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													ForceNew:     true,
+												},
+												"tags": &schema.Schema{
+													Type: schema.TypeList,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+													Optional: true,
+													ForceNew: true,
+												},
+												"user_sudi_serial_nos": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
 												},
+												"virtual_account_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"workflow_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"workflow_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
 											},
 										},
 									},
-									"state": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"sudi_required": &schema.Schema{
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-									},
-									"tags": &schema.Schema{
-										Type: schema.TypeList,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-										Optional: true,
-									},
-									"user_sudi_serial_nos": &schema.Schema{
+									"run_summary_list": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"virtual_account_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"workflow_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"workflow_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-								},
-							},
-						},
-						"run_summary_list": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"details": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"error_flag": &schema.Schema{
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-									},
-									"history_task_info": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"addn_details": &schema.Schema{
+												"details": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"error_flag": &schema.Schema{
+
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													ForceNew:     true,
+												},
+												"history_task_info": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"key": &schema.Schema{
-																Type:     schema.TypeString,
+															"addn_details": &schema.Schema{
+																Type:     schema.TypeList,
 																Optional: true,
-															},
-															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-														},
-													},
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"time_taken": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"work_item_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
+																ForceNew: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
 
-															"command": &schema.Schema{
+																		"key": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"value": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																	},
+																},
+															},
+															"name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
-															},
-															"end_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"output_str": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"start_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"state": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
+																ForceNew: true,
 															},
 															"time_taken": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
+																ForceNew: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"work_item_list": &schema.Schema{
+																Type:     schema.TypeList,
+																Optional: true,
+																ForceNew: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"command": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"end_time": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"output_str": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"start_time": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"state": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"time_taken": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
 												},
-											},
-										},
-									},
-									"timestamp": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-								},
-							},
-						},
-						"system_reset_workflow": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"add_to_inventory": &schema.Schema{
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-									},
-									"added_on": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"config_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"curr_task_idx": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"end_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"exec_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"image_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"instance_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"lastupdate_on": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"start_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"state": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"tasks": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"curr_work_item_idx": &schema.Schema{
+												"timestamp": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
-												},
-												"end_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"start_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"task_seq_no": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"time_taken": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"work_item_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"command": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"end_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"output_str": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"start_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"state": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"time_taken": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-														},
-													},
+													ForceNew: true,
 												},
 											},
 										},
 									},
-									"tenant_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"use_state": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"version": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-								},
-							},
-						},
-						"system_workflow": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"add_to_inventory": &schema.Schema{
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-									},
-									"added_on": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"config_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"curr_task_idx": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"end_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"exec_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"image_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"instance_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"lastupdate_on": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"start_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"state": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"tasks": &schema.Schema{
+									"system_reset_workflow": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"curr_work_item_idx": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"end_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"name": &schema.Schema{
+												"id": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
+													ForceNew: true,
 												},
-												"start_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"task_seq_no": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"time_taken": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"work_item_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
+												"add_to_inventory": &schema.Schema{
 
-															"command": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"end_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"output_str": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"start_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"state": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"time_taken": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-														},
-													},
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													ForceNew:     true,
 												},
-											},
-										},
-									},
-									"tenant_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"use_state": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"version": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-								},
-							},
-						},
-						"tenant_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"version": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-						},
-						"workflow": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"add_to_inventory": &schema.Schema{
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-									},
-									"added_on": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"config_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"curr_task_idx": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"end_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"exec_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"image_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"instance_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"lastupdate_on": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"start_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-									"state": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"tasks": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"curr_work_item_idx": &schema.Schema{
+												"added_on": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
+													ForceNew: true,
 												},
-												"end_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"start_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"task_seq_no": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"time_taken": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"work_item_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"command": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"end_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"output_str": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"start_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-															"state": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"time_taken": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-															},
-														},
-													},
-												},
-											},
-										},
-									},
-									"tenant_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"use_state": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"version": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-									},
-								},
-							},
-						},
-						"workflow_parameters": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"config_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
 												"config_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
+													ForceNew: true,
 												},
-												"config_parameters": &schema.Schema{
+												"curr_task_idx": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"description": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"end_time": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"exec_time": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"image_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"instance_type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"lastupdate_on": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"start_time": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"state": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"tasks": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"key": &schema.Schema{
-																Type:     schema.TypeString,
+															"curr_work_item_idx": &schema.Schema{
+																Type:     schema.TypeInt,
 																Optional: true,
+																ForceNew: true,
 															},
-															"value": &schema.Schema{
+															"end_time": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
+																ForceNew: true,
+															},
+															"start_time": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"state": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"task_seq_no": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"time_taken": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"work_item_list": &schema.Schema{
+																Type:     schema.TypeList,
+																Optional: true,
+																ForceNew: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"command": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"end_time": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"output_str": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"start_time": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"state": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"time_taken": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
 												},
+												"tenant_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"use_state": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"version": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
 											},
 										},
 									},
-									"license_level": &schema.Schema{
-										Type:     schema.TypeString,
+									"system_workflow": &schema.Schema{
+										Type:     schema.TypeList,
 										Optional: true,
+										ForceNew: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"add_to_inventory": &schema.Schema{
+
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													ForceNew:     true,
+												},
+												"added_on": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"config_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"curr_task_idx": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"description": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"end_time": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"exec_time": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"image_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"instance_type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"lastupdate_on": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"start_time": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"state": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"tasks": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"curr_work_item_idx": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"end_time": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"name": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"start_time": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"state": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"task_seq_no": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"time_taken": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"work_item_list": &schema.Schema{
+																Type:     schema.TypeList,
+																Optional: true,
+																ForceNew: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"command": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"end_time": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"output_str": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"start_time": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"state": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"time_taken": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																	},
+																},
+															},
+														},
+													},
+												},
+												"tenant_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"use_state": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"version": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+											},
+										},
 									},
-									"license_type": &schema.Schema{
+									"tenant_id": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										ForceNew: true,
 									},
-									"top_of_stack_serial_number": &schema.Schema{
-										Type:     schema.TypeString,
+									"version": &schema.Schema{
+										Type:     schema.TypeInt,
 										Optional: true,
+										ForceNew: true,
+									},
+									"workflow": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										ForceNew: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"add_to_inventory": &schema.Schema{
+
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													ForceNew:     true,
+												},
+												"added_on": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"config_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"curr_task_idx": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"description": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"end_time": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"exec_time": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"image_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"instance_type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"lastupdate_on": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"start_time": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+												"state": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"tasks": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"curr_work_item_idx": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"end_time": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"name": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"start_time": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"state": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"task_seq_no": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"time_taken": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+																ForceNew: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"work_item_list": &schema.Schema{
+																Type:     schema.TypeList,
+																Optional: true,
+																ForceNew: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"command": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"end_time": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"output_str": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"start_time": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"state": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"time_taken": &schema.Schema{
+																			Type:     schema.TypeInt,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																	},
+																},
+															},
+														},
+													},
+												},
+												"tenant_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"use_state": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"version": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													ForceNew: true,
+												},
+											},
+										},
+									},
+									"workflow_parameters": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										ForceNew: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"config_list": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"config_id": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+															},
+															"config_parameters": &schema.Schema{
+																Type:     schema.TypeList,
+																Optional: true,
+																ForceNew: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"key": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																		"value": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			ForceNew: true,
+																		},
+																	},
+																},
+															},
+														},
+													},
+												},
+												"license_level": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"license_type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"top_of_stack_serial_number": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -2764,7 +3026,7 @@ func resourcePnpDeviceImportCreate(ctx context.Context, d *schema.ResourceData, 
 	var diags diag.Diagnostics
 
 	log.Printf("[DEBUG] Selected method 1: ImportDevicesInBulk")
-	request1 := expandRequestPnpDeviceImportImportDevicesInBulk(ctx, "parameters", d)
+	request1 := expandRequestPnpDeviceImportImportDevicesInBulk(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.DeviceOnboardingPnp.ImportDevicesInBulk(request1)
 
@@ -2815,7 +3077,7 @@ func resourcePnpDeviceImportDelete(ctx context.Context, d *schema.ResourceData, 
 }
 func expandRequestPnpDeviceImportImportDevicesInBulk(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpImportDevicesInBulk {
 	request := dnacentersdkgo.RequestDeviceOnboardingPnpImportDevicesInBulk{}
-	if v := expandRequestPnpDeviceImportImportDevicesInBulkItemArray(ctx, key, d); v != nil {
+	if v := expandRequestPnpDeviceImportImportDevicesInBulkItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
