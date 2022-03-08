@@ -172,7 +172,7 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 
 	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when executing CreateApplication", err))
+			"Failure when executing DeployTemplate", err))
 		return diags
 	}
 	taskId := response1.Response.TaskID
@@ -192,7 +192,7 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
 			diags = append(diags, diagError(
-				"Failure when executing CreateApplication", err))
+				"Failure when executing DeployTemplate", err))
 			return diags
 		}
 	}

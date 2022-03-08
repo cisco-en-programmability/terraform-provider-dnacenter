@@ -1,0 +1,1 @@
+terraform import dnacenter_pnp_device_site_claim.example "id:=string"
