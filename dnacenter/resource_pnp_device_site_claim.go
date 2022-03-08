@@ -20,7 +20,6 @@ func resourcePnpDeviceSiteClaim() *schema.Resource {
 
 		CreateContext: resourcePnpDeviceSiteClaimCreate,
 		ReadContext:   resourcePnpDeviceSiteClaimRead,
-		UpdateContext: resourcePnpDeviceSiteClaimUpdate,
 		DeleteContext: resourcePnpDeviceSiteClaimDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -36,31 +35,37 @@ func resourcePnpDeviceSiteClaim() *schema.Resource {
 				Required: true,
 				MaxItems: 1,
 				MinItems: 1,
+				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"config_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							ForceNew: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"config_id": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										ForceNew: true,
 									},
 									"config_parameters": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"key": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
+													ForceNew: true,
 												},
 												"value": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
+													ForceNew: true,
 												},
 											},
 										},
@@ -71,26 +76,31 @@ func resourcePnpDeviceSiteClaim() *schema.Resource {
 						"device_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
 						"hostname": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
 						"image_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							ForceNew: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"image_id": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										ForceNew: true,
 									},
 									"skip": &schema.Schema{
 										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
+										ForceNew:     true,
 									},
 								},
 							},
@@ -98,10 +108,12 @@ func resourcePnpDeviceSiteClaim() *schema.Resource {
 						"site_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
 					},
 				},

@@ -51,6 +51,7 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"dnacenter_pnp_device_site_claim":                    resourcePnpDeviceSiteClaim(),
 			"dnacenter_deploy_template":                          resourceDeployTemplate(),
 			"dnacenter_reserve_ip_subpool":                       resourceReserveIPSubpool(),
 			"dnacenter_wireless_rf_profile":                      resourceWirelessRfProfile(),
