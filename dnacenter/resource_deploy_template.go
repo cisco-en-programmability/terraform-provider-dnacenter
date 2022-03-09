@@ -29,6 +29,23 @@ func resourceDeployTemplate() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"task_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"url": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
@@ -194,7 +211,13 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 		}
 	}
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
+	vItem1 := flattenConfigurationTemplatesDeployTemplateV2Item(response1.Response)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting DeployTemplateV2 response",
+			err))
+		return diags
+	}
 	d.SetId(getUnixTimeString())
 
 	return resourceDeployTemplateRead(ctx, d, m)
@@ -365,4 +388,16 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoResourc
 	}
 
 	return &request
+}
+
+func flattenConfigurationTemplatesDeployTemplateV2Item(item *dnacentersdkgo.ResponseConfigurationTemplatesDeployTemplateV2Response) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["task_id"] = item.TaskID
+	respItem["url"] = item.URL
+	return []map[string]interface{}{
+		respItem,
+	}
 }
