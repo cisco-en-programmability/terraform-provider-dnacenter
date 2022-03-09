@@ -24,9 +24,6 @@ func resourceImageDistribution() *schema.Resource {
 		CreateContext: resourceImageDistributionCreate,
 		ReadContext:   resourceImageDistributionRead,
 		DeleteContext: resourceImageDistributionDelete,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
@@ -62,6 +59,7 @@ func resourceImageDistribution() *schema.Resource {
 							Description: `Array of RequestSoftwareImageManagementSwimTriggerSoftwareImageDistribution`,
 							Type:        schema.TypeList,
 							Optional:    true,
+							ForceNew:    true,
 							MinItems:    1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -69,10 +67,12 @@ func resourceImageDistribution() *schema.Resource {
 									"device_uuid": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										ForceNew: true,
 									},
 									"image_uuid": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										ForceNew: true,
 									},
 								},
 							},
@@ -180,10 +180,6 @@ func resourceImageDistributionRead(ctx context.Context, d *schema.ResourceData, 
 	var diags diag.Diagnostics
 
 	return diags
-}
-
-func resourceImageDistributionUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceImageDistributionRead(ctx, d, m)
 }
 
 func resourceImageDistributionDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
