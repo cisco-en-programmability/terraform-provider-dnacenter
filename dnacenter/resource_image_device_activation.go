@@ -51,7 +51,6 @@ func resourceImageDeviceActivation() *schema.Resource {
 				Required: true,
 				MaxItems: 1,
 				MinItems: 1,
-				Optional: true,
 				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
