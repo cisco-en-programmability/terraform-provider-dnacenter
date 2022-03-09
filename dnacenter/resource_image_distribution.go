@@ -128,8 +128,9 @@ func resourceImageDistributionCreate(ctx context.Context, d *schema.ResourceData
 		}
 		if !strings.Contains(response2.Response.Progress, "Starting") && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			err1 := errors.New(response2.Response.Progress)
 			diags = append(diags, diagError(
-				"Failure when executing TriggerSoftwareImageDistribution", err))
+				"Failure when executing TriggerSoftwareImageDistribution", err1))
 			return diags
 		}
 		for strings.Contains(response2.Response.Progress, "Starting") {
@@ -154,8 +155,9 @@ func resourceImageDistributionCreate(ctx context.Context, d *schema.ResourceData
 		}
 		if *response2.Response.IsError {
 			log.Printf("[DEBUG] Error %s", response2.Response.Progress)
+			err1 := errors.New(response2.Response.Progress)
 			diags = append(diags, diagError(
-				"Failure when executing TriggerSoftwareImageDistribution", err))
+				"Failure when executing TriggerSoftwareImageDistribution", err1))
 			return diags
 		}
 	}
