@@ -18,7 +18,9 @@ import (
 
 func resourceImageDistribution() *schema.Resource {
 	return &schema.Resource{
-		Description: `
+		Description: `It performs create operation on Software Image Management (SWIM).
+	- Distributes a software image on a given device. Software image must be imported successfully into DNA Center before it
+	can be distributed
 `,
 
 		CreateContext: resourceImageDistributionCreate,

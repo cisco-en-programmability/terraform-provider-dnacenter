@@ -5,9 +5,9 @@ resource "dnacenter_image_distribution" "example" {
     create_before_destroy = true
   }
   parameters {
-    payload{
-      device_uuid=  "string"
-      image_uuid=   "string"
+    payload {
+      device_uuid = "string"
+      image_uuid  = "string"
     }
   }
 }

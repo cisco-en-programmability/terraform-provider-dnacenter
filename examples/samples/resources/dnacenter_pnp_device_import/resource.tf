@@ -17,12 +17,12 @@ resource "dnacenter_pnp_device_import" "example" {
   parameters {
     payload {
       device_info {
-        serial_number    = "FOCTEST5113"
+        serial_number = "FOCTEST5113"
       }
     }
     payload {
       device_info {
-        serial_number    = "FOCTEST511"
+        serial_number = "FOCTEST511"
       }
     }
   }

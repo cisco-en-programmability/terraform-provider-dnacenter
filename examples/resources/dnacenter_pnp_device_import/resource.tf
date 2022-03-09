@@ -16,7 +16,7 @@ resource "dnacenter_pnp_device_import" "example" {
   }
   parameters {
     payload {
-      id       = "string"
+      id = "string"
       device_info {
 
         aaa_credentials {
