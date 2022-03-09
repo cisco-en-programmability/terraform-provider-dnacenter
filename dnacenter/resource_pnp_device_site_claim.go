@@ -30,6 +30,23 @@ func resourcePnpDeviceSiteClaim() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"response": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"version": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
@@ -147,6 +164,13 @@ func resourcePnpDeviceSiteClaimCreate(ctx context.Context, d *schema.ResourceDat
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+	vItem1 := flattenDeviceOnboardingPnpClaimADeviceToASiteItem(response1)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting ClaimADeviceToASite response",
+			err))
+		return diags
+	}
 	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
 	return resourcePnpDeviceSiteClaimRead(ctx, d, m)
@@ -265,4 +289,16 @@ func expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfoConfigParamet
 	}
 
 	return &request
+}
+
+func flattenDeviceOnboardingPnpClaimADeviceToASiteItem(item *dnacentersdkgo.ResponseDeviceOnboardingPnpClaimADeviceToASite) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["response"] = item.Response
+	respItem["version"] = item.Version
+	return []map[string]interface{}{
+		respItem,
+	}
 }
