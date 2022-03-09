@@ -17,7 +17,8 @@ import (
 
 func resourceImageDeviceActivation() *schema.Resource {
 	return &schema.Resource{
-		Description: `
+		Description: `It performs create operation on Software Image Management (SWIM).
+	- Activates a software image on a given device. Software image must be present in the device flash
 `,
 
 		CreateContext: resourceImageDeviceActivationCreate,
