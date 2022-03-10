@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_event_subscription_rest" "example" {
   provider = dnacenter

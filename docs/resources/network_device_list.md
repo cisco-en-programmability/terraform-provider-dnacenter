@@ -18,6 +18,10 @@ It manages create, read and update operations on Devices.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_network_device_list" "example" {
   provider = dnacenter
   parameters {

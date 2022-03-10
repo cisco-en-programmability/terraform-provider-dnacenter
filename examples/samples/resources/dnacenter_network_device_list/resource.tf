@@ -10,6 +10,10 @@ terraform {
   }
 }
 
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_network_device_list" "example" {
   provider = dnacenter
   parameters {

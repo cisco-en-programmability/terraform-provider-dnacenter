@@ -9,6 +9,7 @@ terraform {
 }
 
 provider "dnacenter" {
+  debug = "true"
 }
 
 resource "dnacenter_event_subscription" "example" {

@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_sda_virtual_network_ip_pool" "example" {
   provider = dnacenter

@@ -8,6 +8,11 @@ terraform {
     }
   }
 }
+
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_applications" "example" {
   provider = dnacenter
   parameters {

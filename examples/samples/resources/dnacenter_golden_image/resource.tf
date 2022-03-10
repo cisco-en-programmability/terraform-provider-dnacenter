@@ -9,6 +9,10 @@ terraform {
   }
 }
 
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_golden_image" "example" {
   provider = dnacenter
   parameters {

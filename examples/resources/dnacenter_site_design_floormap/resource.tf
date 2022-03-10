@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_site_design_floormap" "example" {
   provider = dnacenter

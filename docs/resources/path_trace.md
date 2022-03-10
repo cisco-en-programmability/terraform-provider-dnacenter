@@ -20,6 +20,10 @@ get results and follow progress.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_path_trace" "example" {
   provider = dnacenter
   parameters {
