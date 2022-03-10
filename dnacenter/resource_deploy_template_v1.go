@@ -21,7 +21,6 @@ func resourceDeployTemplateV1() *schema.Resource {
 
 		CreateContext: resourceDeployTemplateV1Create,
 		ReadContext:   resourceDeployTemplateV1Read,
-		UpdateContext: resourceDeployTemplateV1Update,
 		DeleteContext: resourceDeployTemplateV1Delete,
 
 		Schema: map[string]*schema.Schema{
@@ -295,7 +294,7 @@ func resourceDeployTemplateV1Create(ctx context.Context, d *schema.ResourceData,
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
 
-	if err != nil || response1 == nil {
+	if err != nil || response1 == nil || !isValidUUID(response1.DeploymentID) {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
@@ -343,9 +342,6 @@ func resourceDeployTemplateV1Read(ctx context.Context, d *schema.ResourceData, m
 		return diags
 	}
 	return diags
-}
-func resourceDeployTemplateV1Update(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceConfigurationTemplateRead(ctx, d, m)
 }
 
 func resourceDeployTemplateV1Delete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
