@@ -307,7 +307,7 @@ func resourceDeployTemplateV1Create(ctx context.Context, d *schema.ResourceData,
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 	resourceMap := make(map[string]string)
 	resourceMap["deployment_id"] = response1.DeploymentID
-	d.SetId(getUnixTimeString())
+	d.SetId(joinResourceID(resourceMap))
 
 	return resourceDeployTemplateV1Read(ctx, d, m)
 }
