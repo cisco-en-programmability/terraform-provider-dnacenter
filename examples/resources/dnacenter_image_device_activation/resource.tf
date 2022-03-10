@@ -22,3 +22,13 @@ resource "dnacenter_image_device_activation" "example" {
 output "dnacenter_image_device_activation_example" {
   value = dnacenter_image_device_activation.example
 }
+
+data "dnacenter_task" "example" {
+  depends_on = [dnacenter_image_device_activation.example]
+  provider = dnacenter
+  task_id  = dnacenter_image_device_activation.example.item.0.task_id
+}
+
+output "dnacenter_task_example" {
+  value = data.dnacenter_task.example.item
+} 
