@@ -20,6 +20,10 @@ It manages create, read, update and delete operations on Configuration Templates
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_configuration_template" "example" {
   provider = dnacenter
   parameters {

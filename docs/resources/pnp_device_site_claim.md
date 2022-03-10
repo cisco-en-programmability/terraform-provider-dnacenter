@@ -23,6 +23,10 @@ Most commonly, this resource is used together with [site](./site.md) and [pnp_de
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_pnp_device_site_claim" "example" {
   provider = dnacenter
   parameters {
@@ -62,6 +66,7 @@ output "dnacenter_pnp_device_site_claim_example" {
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
 <a id="nestedblock--parameters"></a>
@@ -103,3 +108,11 @@ Optional:
 - **skip** (String)
 
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **response** (String)
+- **version** (String)

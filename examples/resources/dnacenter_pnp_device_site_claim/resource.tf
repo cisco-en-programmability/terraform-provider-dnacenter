@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_pnp_device_site_claim" "example" {
   provider = dnacenter

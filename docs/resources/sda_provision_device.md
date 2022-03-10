@@ -20,6 +20,10 @@ It manages create, read, update and delete operations on SDA.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_sda_provision_device" "example" {
   provider = dnacenter
   parameters {

@@ -16,6 +16,10 @@ It manages read and delete operations on Devices.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_network_device" "example" {
   provider = dnacenter
   parameters {

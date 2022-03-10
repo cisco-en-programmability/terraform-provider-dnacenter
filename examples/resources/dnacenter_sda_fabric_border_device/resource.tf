@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_sda_fabric_border_device" "example" {
   provider = dnacenter
