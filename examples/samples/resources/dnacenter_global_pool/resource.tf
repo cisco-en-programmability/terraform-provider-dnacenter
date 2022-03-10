@@ -9,6 +9,10 @@ terraform {
   }
 }
 
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_global_pool" "example" {
   provider = dnacenter
   parameters {

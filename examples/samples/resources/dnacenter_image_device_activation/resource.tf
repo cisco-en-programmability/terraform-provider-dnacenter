@@ -9,6 +9,10 @@ terraform {
   }
 }
 
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_image_device_activation" "example" {
   provider = dnacenter
   lifecycle {

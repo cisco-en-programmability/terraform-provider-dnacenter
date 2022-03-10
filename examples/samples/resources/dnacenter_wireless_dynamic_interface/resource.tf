@@ -7,6 +7,11 @@ terraform {
     }
   }
 }
+
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_wireless_dynamic_interface" "example" {
   provider = dnacenter
   parameters {

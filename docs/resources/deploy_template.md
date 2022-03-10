@@ -16,7 +16,7 @@ It performs create operation on Configuration Templates.
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed on DNACenter without any additional verification.
 
-Most commonly, this resource is used together with resource_configuration_template and resource_network_device to complete the deployment of a template.
+Most commonly, this resource is used together with [configuration_template](./configuration_template.md) and [network_device](./network_device.md) to complete the deployment of a template.
 
 ## Example Usage
 
