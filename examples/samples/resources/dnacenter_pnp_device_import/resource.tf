@@ -9,6 +9,10 @@ terraform {
   }
 }
 
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_pnp_device_import" "example" {
   provider = dnacenter
   lifecycle {

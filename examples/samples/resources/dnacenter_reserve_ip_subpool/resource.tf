@@ -8,6 +8,10 @@ terraform {
   }
 }
 
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_reserve_ip_subpool" "example" {
   provider = dnacenter
   parameters {

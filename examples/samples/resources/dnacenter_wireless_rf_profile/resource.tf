@@ -8,6 +8,11 @@ terraform {
     }
   }
 }
+
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_wireless_rf_profile" "example" {
   provider = dnacenter
   parameters {

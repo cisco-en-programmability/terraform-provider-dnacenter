@@ -18,7 +18,7 @@ It performs create operation on Device Onboarding (PnP).
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed on DNACenter without any additional verification.
 
-Most commonly, this resource is used together with resource_site and resource_pnp_device to claim a device.
+Most commonly, this resource is used together with [site](./site.md) and [pnp_device](./pnp_device.md) to claim a device.
 
 ## Example Usage
 

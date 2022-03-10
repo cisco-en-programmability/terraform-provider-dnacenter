@@ -9,6 +9,10 @@ terraform {
   }
 }
 
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_deploy_template" "example" {
   provider = dnacenter
   lifecycle {

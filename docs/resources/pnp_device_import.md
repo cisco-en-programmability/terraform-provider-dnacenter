@@ -16,7 +16,7 @@ It performs create operation on Device Onboarding (PnP).
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed on DNACenter without any additional verification.
 
-Most commonly, this resource is used to import pnp_device in bulk.
+Most commonly, this resource is used to import [pnp_device](./pnp_device.md) in bulk.
 
 ## Example Usage
 
