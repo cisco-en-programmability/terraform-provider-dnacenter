@@ -181,7 +181,7 @@ func resourceImageDeviceActivationCreate(ctx context.Context, d *schema.Resource
 	log.Printf("[DEBUG] TASKID => %s", taskId)
 	if taskId != "" {
 		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-		if err != nil || response2 == nil {
+		if err != nil || response2 == nil || response2.Response == nil {
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
@@ -200,7 +200,7 @@ func resourceImageDeviceActivationCreate(ctx context.Context, d *schema.Resource
 		for response2.Response.Progress == "image activation" {
 			time.Sleep(5 * time.Second)
 			response2, restyResp2, err = client.Task.GetTaskByID(taskId)
-			if err != nil || response2 == nil {
+			if err != nil || response2 == nil || response2.Response == nil {
 				if restyResp2 != nil {
 					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
