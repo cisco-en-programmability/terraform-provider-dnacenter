@@ -8,6 +8,10 @@ terraform {
   }
 }
 
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_sda_fabric" "example" {
   provider = dnacenter
   parameters {

@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_endpoint_analytics_profiling_rules" "example" {
   provider = dnacenter

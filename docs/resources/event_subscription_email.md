@@ -18,6 +18,10 @@ It manages create, read and update operations on Event Management.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_event_subscription_email" "example" {
   provider = dnacenter
   parameters {

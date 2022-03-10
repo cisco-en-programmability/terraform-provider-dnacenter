@@ -8,6 +8,10 @@ terraform {
   }
 }
 
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_device_replacement" "example" {
   provider = dnacenter
   parameters {
