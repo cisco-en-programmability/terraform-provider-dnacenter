@@ -20,6 +20,10 @@ It manages create, read, update and delete operations on Wireless.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_wireless_enterprise_ssid" "example" {
   provider = dnacenter
   parameters {

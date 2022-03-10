@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_sda_port_assignment_for_user_device" "example" {
   provider = dnacenter

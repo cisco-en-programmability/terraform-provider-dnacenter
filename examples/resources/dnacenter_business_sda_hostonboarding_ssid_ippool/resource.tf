@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_business_sda_hostonboarding_ssid_ippool" "example" {
   provider = dnacenter

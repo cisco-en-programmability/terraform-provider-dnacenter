@@ -23,6 +23,10 @@ Most commonly, this resource is used together with [swim_image_file](./swim_imag
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_image_distribution" "example" {
   provider = dnacenter
   lifecycle {
@@ -41,9 +45,9 @@ output "dnacenter_image_distribution_example" {
 }
 
 data "dnacenter_task" "example" {
-  depends_on=[dnacenter_image_distribution.example]
-  provider = dnacenter
-  task_id  = dnacenter_image_distribution.example.item.0.task_id
+  depends_on = [dnacenter_image_distribution.example]
+  provider   = dnacenter
+  task_id    = dnacenter_image_distribution.example.item.0.task_id
 }
 
 output "dnacenter_task_example" {

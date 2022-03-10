@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_event_subscription_syslog" "example" {
   provider = dnacenter

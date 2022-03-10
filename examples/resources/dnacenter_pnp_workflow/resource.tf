@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_pnp_workflow" "example" {
   provider = dnacenter

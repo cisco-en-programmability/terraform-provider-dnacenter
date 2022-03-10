@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_image_device_activation" "example" {
   provider = dnacenter
@@ -25,10 +28,10 @@ output "dnacenter_image_device_activation_example" {
 
 data "dnacenter_task" "example" {
   depends_on = [dnacenter_image_device_activation.example]
-  provider = dnacenter
-  task_id  = dnacenter_image_device_activation.example.item.0.task_id
+  provider   = dnacenter
+  task_id    = dnacenter_image_device_activation.example.item.0.task_id
 }
 
 output "dnacenter_task_example" {
   value = data.dnacenter_task.example.item
-} 
+}

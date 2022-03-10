@@ -18,6 +18,10 @@ It manages create, read and delete operations on Wireless.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_wireless_dynamic_interface" "example" {
   provider = dnacenter
   parameters {

@@ -18,6 +18,10 @@ It manages create, read and delete operations on Wireless.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_wireless_rf_profile" "example" {
   provider = dnacenter
   parameters {

@@ -18,6 +18,10 @@ It manages create, read and delete operations on Tag member.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_tag_membership" "example" {
   provider = dnacenter
   parameters {

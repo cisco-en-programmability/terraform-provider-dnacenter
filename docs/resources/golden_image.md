@@ -18,6 +18,10 @@ It manages create, read and delete operations on Software Image Management (SWIM
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_golden_image" "example" {
   provider = dnacenter
   parameters {
