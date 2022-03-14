@@ -49,7 +49,7 @@ provider "dnacenter" {
 }
 ```
 
-### From build
+### From build (For test)
 
 Clone this repository to: `$GOPATH/src/github.com/cisco-en-programmability/terraform-provider-dnacenter`
 
@@ -63,11 +63,15 @@ Enter the provider directory and build the provider
 
 ```sh
 $ cd $GOPATH/src/github.com/cisco-en-programmability/terraform-provider-dnacenter
-$ make build
+$ make developtest
 ```
 
 If the Makefile values (HOSTNAME, NAMESPACE, NAME, VERSION) were not changed, then the following code could used without changes.
 Otherwise change the values accordingly.
+
+->NOTE:
+It is important to verify that the architecture of your operating system in the file [MakeFile](./Makefile)
+
 
 To use this provider, copy and paste this code into your Terraform configuration. Then, run terraform init.
 
