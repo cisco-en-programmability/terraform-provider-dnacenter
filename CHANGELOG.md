@@ -1,4 +1,14 @@
 FEATURES:
+## 0.3.0-beta (March 14, 2022)
+
+FEATURES:
+* **New Resource:** `resource_deploy_template_v1`
+* **New Resource:** `resource_deploy_template`
+* **New Resource:** `resource_pnp_device_site_claim`
+* **New Resource:** `resource_pnp_device_import`
+* **New Resource:** `resource_image_distribution`
+* **New Resource:** `resource_image_device_activation`
+
 ## 0.2.0-beta (March 01, 2022)
 
 * **New Resource:** `resource_tag_membership`
