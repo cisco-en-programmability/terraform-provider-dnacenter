@@ -21,7 +21,7 @@ Other versions of this collection have support for previous Cisco DNA Center ver
 | Cisco DNA Center version | Terraform "dnacenter" provider version |
 |--------------------------|----------------------------------------|
 | 2.1.1                    | 0.0.4                                  |
-| 2.2.3.3                  | 0.2.0-beta                             |
+| 2.2.3.3                  | 0.3.0-beta                             |
 
 ## Using the provider
 
@@ -62,7 +62,7 @@ terraform {
   required_providers {
     dnacenter = {
       source = "hashicorp.com/edu/dnacenter"
-      version = "0.2.0-beta"
+      version = "0.3.0-beta"
     }
   }
 }
