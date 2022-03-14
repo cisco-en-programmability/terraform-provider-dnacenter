@@ -70,7 +70,7 @@ If the Makefile values (HOSTNAME, NAMESPACE, NAME, VERSION) were not changed, th
 Otherwise change the values accordingly.
 
 ->NOTE:
-It is important to verify that the architecture of your operating system in the file [MakeFile](./Makefile)
+It is important to check the architecture of your operating system in the file [MakeFile](./Makefile)
 
 
 To use this provider, copy and paste this code into your Terraform configuration. Then, run terraform init.
