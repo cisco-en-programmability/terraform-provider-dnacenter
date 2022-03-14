@@ -91,7 +91,7 @@ provider "dnacenter" {
 }
 ```
 
-
+There are several examples of the use of the provider within the folder [samples](./examples/samples)
 ## Developing the Provider
 
 If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed
