@@ -4,7 +4,7 @@ NAMESPACE=edu
 NAME=dnacenter
 BINARY=terraform-provider-${NAME}
 VERSION=0.2.0-beta
-OS_ARCH=darwin_arm64
+OS_ARCH=darwin_amd64
 GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
 WEBSITE_REPO=github.com/hashicorp/terraform-website
 
@@ -47,6 +47,10 @@ fmtcheck:
 
 errcheck:
 	scripts/errcheck.sh
+
+developtest:
+	mkdir -p ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
+	cp ./bin/${BINARY}_${VERSION}_${OS_ARCH} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
 
 vet:
 	@echo "go vet ."
