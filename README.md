@@ -29,26 +29,6 @@ There are two ways to get and use the provider.
 1. Downloading & installing it from registry.terraform.io
 2. Building it from source
 
-### From registry
-
-To install this provider, copy and paste this code into your Terraform configuration. Then, run terraform init. 
-
-```hcl
-terraform {
-  required_providers {
-    dnacenter = {
-      source = "cisco-en-programmability/dnacenter"
-      version = "0.2.0-beta"
-    }
-  }
-}
-
-provider "dnacenter" {
-  # Configuration options
-  # More info at https://registry.terraform.io/providers/cisco-en-programmability/dnacenter/latest/docs#example-usage
-}
-```
-
 ### From build (For test)
 
 Clone this repository to: `$GOPATH/src/github.com/cisco-en-programmability/terraform-provider-dnacenter`
@@ -61,6 +41,9 @@ $ git clone https://github.com/cisco-en-programmability/{config.names.terraform}
 
 Enter the provider directory and build the provider
 
+->NOTE:
+It is important to check the architecture of your operating system in the file [MakeFile](./Makefile)
+
 ```sh
 $ cd $GOPATH/src/github.com/cisco-en-programmability/terraform-provider-dnacenter
 $ make developtest
@@ -69,8 +52,7 @@ $ make developtest
 If the Makefile values (HOSTNAME, NAMESPACE, NAME, VERSION) were not changed, then the following code could used without changes.
 Otherwise change the values accordingly.
 
-->NOTE:
-It is important to check the architecture of your operating system in the file [MakeFile](./Makefile)
+
 
 
 To use this provider, copy and paste this code into your Terraform configuration. Then, run terraform init.
@@ -125,7 +107,7 @@ $ make testacc
 
 In the docs directory you can find the documentation source.
 
-You can find the documentation online at [Terraform Registry - Cisco DNA Center provider](https://registry.terraform.io/providers/cisco-en-programmability/dnacenter/latest/docs).
+You can find the documentation online at [Terraform Registry - Cisco DNA Center provider](./docs/).
 
 # Contributing
 
