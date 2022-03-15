@@ -211,7 +211,8 @@ func resourceImageDeviceActivationCreate(ctx context.Context, d *schema.Resource
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.Progress)
-				err1 := errors.New(response2.Response.Progress)
+				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
 					"Failure when executing TriggerSoftwareImageDeviceActivation", err1))
 				return diags
@@ -219,7 +220,8 @@ func resourceImageDeviceActivationCreate(ctx context.Context, d *schema.Resource
 		}
 		if *response2.Response.IsError {
 			log.Printf("[DEBUG] Error %s", response2.Response.Progress)
-			err1 := errors.New(response2.Response.Progress)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
 				"Failure when executing TriggerSoftwareImageDeviceActivation", err1))
 			return diags

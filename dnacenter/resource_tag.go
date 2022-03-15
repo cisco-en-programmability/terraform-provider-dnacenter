@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -276,8 +277,10 @@ func resourceTagCreate(ctx context.Context, d *schema.ResourceData, m interface{
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error => %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing CreateTag", err))
+				"Failure when executing CreateTag", err1))
 			return diags
 		}
 	}
@@ -449,8 +452,10 @@ func resourceTagUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error => %s", response2.Response.FailureReason)
+				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing UpdateTag", err))
+					"Failure when executing UpdateTag", err1))
 				return diags
 			}
 		}
@@ -526,8 +531,10 @@ func resourceTagDelete(ctx context.Context, d *schema.ResourceData, m interface{
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error => %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing DeleteTag", err))
+				"Failure when executing DeleteTag", err1))
 			return diags
 		}
 	}
