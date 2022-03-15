@@ -19,7 +19,7 @@ resource "dnacenter_golden_image" "example" {
     image_id                 = "e7f80aaa-62d3-4390-a8ee-49bbfba036a3"
     site_id                  = "2397da83-4e12-4d04-9bd3-a57b2ad91652"
     device_role              = "ALL"
-    device_family_identifier = "Routers"
+    device_family_identifier = "284389362"
   }
 }
 
