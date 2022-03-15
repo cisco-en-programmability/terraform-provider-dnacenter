@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -2336,8 +2337,10 @@ func resourceConfigurationTemplateProjectCreate(ctx context.Context, d *schema.R
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing CreateConfigurationTemplateProject", err))
+				"Failure when executing CreateConfigurationTemplateProject", err1))
 			return diags
 		}
 	}
@@ -2513,8 +2516,10 @@ func resourceConfigurationTemplateProjectUpdate(ctx context.Context, d *schema.R
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing UdpateConfigurationTemplateProject", err))
+					"Failure when executing UdpateConfigurationTemplateProject", err1))
 				return diags
 			}
 		}

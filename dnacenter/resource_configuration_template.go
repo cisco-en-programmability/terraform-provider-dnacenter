@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -2186,8 +2187,10 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing CreateTemplate", err))
+				"Failure when executing CreateTemplate", err1))
 			return diags
 		}
 		vvTemplateID = response2.Response.Data
@@ -2359,8 +2362,10 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 				}
 				if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 					log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+					errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+					err1 := errors.New(errorMsg)
 					diags = append(diags, diagError(
-						"Failure when executing VersionTemplate", err))
+						"Failure when executing VersionTemplate", err1))
 					return diags
 				}
 			}
@@ -2401,8 +2406,10 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing UpdateTemplate", err))
+					"Failure when executing UpdateTemplate", err1))
 				return diags
 			}
 		}

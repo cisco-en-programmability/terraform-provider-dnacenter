@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"io"
 	"os"
 	"time"
@@ -371,8 +372,10 @@ func resourceSwimImageFileCreate(ctx context.Context, d *schema.ResourceData, m 
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing ImportLocalSoftwareImage", err))
+					"Failure when executing ImportLocalSoftwareImage", err1))
 				return diags
 			}
 		}
