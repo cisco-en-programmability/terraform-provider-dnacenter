@@ -156,9 +156,21 @@ func resourceImageDistributionCreate(ctx context.Context, d *schema.ResourceData
 				return diags
 			}
 		}
+		restyResp3, err := client.CustomCall.GetCustomCall(response2.Response.AdditionalStatusURL, nil)
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetCustomCall", err,
+				"Failure at GetCustomCall, unexpected response", ""))
+			return diags
+		}
 		if *response2.Response.IsError {
 			log.Printf("[DEBUG] Error %s", response2.Response.Progress)
-			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			var errorMsg string
+			if restyResp3 == nil {
+				errorMsg = response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			} else {
+				errorMsg = restyResp3.String()
+			}
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
 				"Failure when executing TriggerSoftwareImageDistribution", err1))
