@@ -50,7 +50,12 @@ func interfaceToBoolPtr(item interface{}) *bool {
 	}
 	return nil
 }
+func interfaceToBool(item interface{}) bool {
+	nItem := interfaceToString(item)
 
+	nItemBool := nItem == "true"
+	return nItemBool
+}
 func getResourceItems(item interface{}) *[]map[string]interface{} {
 	vItems, ok1 := item.([]interface{})
 	if !ok1 {
