@@ -14,7 +14,10 @@ resource "dnacenter_deploy_template" "example" {
     target_info {
       host_name             = "string"
       id                    = "string"
-      params                = ["string"]
+      params                = {
+        key1   ="value1"
+        key2   ="value2"
+      }
       resource_params       = ["string"]
       type                  = "string"
       versioned_template_id = "string"
