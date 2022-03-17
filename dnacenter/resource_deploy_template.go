@@ -113,7 +113,7 @@ func resourceDeployTemplate() *schema.Resource {
 									"params": &schema.Schema{
 										Description: `Template params/values to be provisioned
 			`,
-										Type:     schema.TypeList,
+										Type:     schema.TypeMap,
 										Optional: true,
 										ForceNew: true,
 										Elem: &schema.Schema{
@@ -331,7 +331,7 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfo(ctx co
 		request.ID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".params")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".params")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".params")))) {
-		request.Params = expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoParams(ctx, key+".params.0", d)
+		request.Params = expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoParams(ctx, key+".params", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".resource_params")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".resource_params")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".resource_params")))) {
 		request.ResourceParams = expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoResourceParamsArray(ctx, key+".resource_params", d)
@@ -351,7 +351,7 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfo(ctx co
 
 func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoParams {
 	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoParams
-	request = d.Get(fixKeyAccess(key))
+	request = d.Get(fixKeyAccess(key)).(map[string]interface{})
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
