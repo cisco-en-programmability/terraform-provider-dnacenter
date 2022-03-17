@@ -197,1705 +197,60 @@ Pagination and sorting are also supported by this endpoint
 				},
 			},
 
-			"items": &schema.Schema{
+			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"item_id": &schema.Schema{
+						"type_id": &schema.Schema{
+							Description: `Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"day_zero_config": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"type_id": &schema.Schema{
-										Description: `Id`,
+									"config": &schema.Schema{
+										Description: `Config`,
 										Type:        schema.TypeString,
 										Computed:    true,
-									},
-
-									"day_zero_config": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"config": &schema.Schema{
-													Description: `Config`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
-									},
-
-									"day_zero_config_preview": &schema.Schema{
-										Description: `Day Zero Config Preview`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"device_info": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"aaa_credentials": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"password": &schema.Schema{
-																Description: `Password`,
-																Type:        schema.TypeString,
-																Sensitive:   true,
-																Computed:    true,
-															},
-
-															"username": &schema.Schema{
-																Description: `Username`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"added_on": &schema.Schema{
-													Description: `Added On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"addn_mac_addrs": &schema.Schema{
-													Description: `Addn Mac Addrs`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"agent_type": &schema.Schema{
-													Description: `Agent Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"auth_status": &schema.Schema{
-													Description: `Auth Status`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"authenticated_mic_number": &schema.Schema{
-													Description: `Authenticated Mic Number`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"authenticated_sudi_serial_no": &schema.Schema{
-													Description: `Authenticated Sudi Serial No`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"capabilities_supported": &schema.Schema{
-													Description: `Capabilities Supported`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"cm_state": &schema.Schema{
-													Description: `Cm State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"description": &schema.Schema{
-													Description: `Description`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"device_sudi_serial_nos": &schema.Schema{
-													Description: `Device Sudi Serial Nos`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"device_type": &schema.Schema{
-													Description: `Device Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"features_supported": &schema.Schema{
-													Description: `Features Supported`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"file_system_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"freespace": &schema.Schema{
-																Description: `Freespace`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"name": &schema.Schema{
-																Description: `Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"readable": &schema.Schema{
-																Description: `Readable`,
-
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-
-															"size": &schema.Schema{
-																Description: `Size`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"type": &schema.Schema{
-																Description: `Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"writeable": &schema.Schema{
-																Description: `Writeable`,
-
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-
-												"first_contact": &schema.Schema{
-													Description: `First Contact`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"hostname": &schema.Schema{
-													Description: `Hostname`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"http_headers": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"key": &schema.Schema{
-																Description: `Key`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"value": &schema.Schema{
-																Description: `Value`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"image_file": &schema.Schema{
-													Description: `Image File`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"image_version": &schema.Schema{
-													Description: `Image Version`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"ip_interfaces": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"ipv4_address": &schema.Schema{
-																Description: `Ipv4 Address`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"ipv6_address_list": &schema.Schema{
-																Description: `Ipv6 Address List`,
-																Type:        schema.TypeList,
-																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-															},
-
-															"mac_address": &schema.Schema{
-																Description: `Mac Address`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"name": &schema.Schema{
-																Description: `Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"status": &schema.Schema{
-																Description: `Status`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"last_contact": &schema.Schema{
-													Description: `Last Contact`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"last_sync_time": &schema.Schema{
-													Description: `Last Sync Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"last_update_on": &schema.Schema{
-													Description: `Last Update On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"location": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"address": &schema.Schema{
-																Description: `Address`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"altitude": &schema.Schema{
-																Description: `Altitude`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"latitude": &schema.Schema{
-																Description: `Latitude`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"longitude": &schema.Schema{
-																Description: `Longitude`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"site_id": &schema.Schema{
-																Description: `Site Id`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"mac_address": &schema.Schema{
-													Description: `Mac Address`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"mode": &schema.Schema{
-													Description: `Mode`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"neighbor_links": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"local_interface_name": &schema.Schema{
-																Description: `Local Interface Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"local_mac_address": &schema.Schema{
-																Description: `Local Mac Address`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"local_short_interface_name": &schema.Schema{
-																Description: `Local Short Interface Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_device_name": &schema.Schema{
-																Description: `Remote Device Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_interface_name": &schema.Schema{
-																Description: `Remote Interface Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_mac_address": &schema.Schema{
-																Description: `Remote Mac Address`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_platform": &schema.Schema{
-																Description: `Remote Platform`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_short_interface_name": &schema.Schema{
-																Description: `Remote Short Interface Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_version": &schema.Schema{
-																Description: `Remote Version`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"onb_state": &schema.Schema{
-													Description: `Onb State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"pid": &schema.Schema{
-													Description: `Pid`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"pnp_profile_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"created_by": &schema.Schema{
-																Description: `Created By`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"discovery_created": &schema.Schema{
-																Description: `Discovery Created`,
-
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-
-															"primary_endpoint": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"certificate": &schema.Schema{
-																			Description: `Certificate`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"fqdn": &schema.Schema{
-																			Description: `Fqdn`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"ipv4_address": &schema.Schema{
-																			Description: `Ipv4 Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"ipv6_address": &schema.Schema{
-																			Description: `Ipv6 Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"port": &schema.Schema{
-																			Description: `Port`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"protocol": &schema.Schema{
-																			Description: `Protocol`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-
-															"profile_name": &schema.Schema{
-																Description: `Profile Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"secondary_endpoint": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"certificate": &schema.Schema{
-																			Description: `Certificate`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"fqdn": &schema.Schema{
-																			Description: `Fqdn`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"ipv4_address": &schema.Schema{
-																			Description: `Ipv4 Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"ipv6_address": &schema.Schema{
-																			Description: `Ipv6 Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"port": &schema.Schema{
-																			Description: `Port`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"protocol": &schema.Schema{
-																			Description: `Protocol`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-
-												"populate_inventory": &schema.Schema{
-													Description: `Populate Inventory`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"pre_workflow_cli_ouputs": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"cli": &schema.Schema{
-																Description: `Cli`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"cli_output": &schema.Schema{
-																Description: `Cli Output`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"project_id": &schema.Schema{
-													Description: `Project Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"project_name": &schema.Schema{
-													Description: `Project Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"reload_requested": &schema.Schema{
-													Description: `Reload Requested`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"serial_number": &schema.Schema{
-													Description: `Serial Number`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"site_id": &schema.Schema{
-													Description: `Site Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"site_name": &schema.Schema{
-													Description: `Site Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"smart_account_id": &schema.Schema{
-													Description: `Smart Account Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"source": &schema.Schema{
-													Description: `Source`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"stack": &schema.Schema{
-													Description: `Stack`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"stack_info": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"is_full_ring": &schema.Schema{
-																Description: `Is Full Ring`,
-
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-
-															"stack_member_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"hardware_version": &schema.Schema{
-																			Description: `Hardware Version`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"license_level": &schema.Schema{
-																			Description: `License Level`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"license_type": &schema.Schema{
-																			Description: `License Type`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"mac_address": &schema.Schema{
-																			Description: `Mac Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"pid": &schema.Schema{
-																			Description: `Pid`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"priority": &schema.Schema{
-																			Description: `Priority`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"role": &schema.Schema{
-																			Description: `Role`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"serial_number": &schema.Schema{
-																			Description: `Serial Number`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"software_version": &schema.Schema{
-																			Description: `Software Version`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"stack_number": &schema.Schema{
-																			Description: `Stack Number`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"state": &schema.Schema{
-																			Description: `State`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"sudi_serial_number": &schema.Schema{
-																			Description: `Sudi Serial Number`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-
-															"stack_ring_protocol": &schema.Schema{
-																Description: `Stack Ring Protocol`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"supports_stack_workflows": &schema.Schema{
-																Description: `Supports Stack Workflows`,
-
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-
-															"total_member_count": &schema.Schema{
-																Description: `Total Member Count`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"valid_license_levels": &schema.Schema{
-																Description: `Valid License Levels`,
-																Type:        schema.TypeList,
-																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-															},
-														},
-													},
-												},
-
-												"state": &schema.Schema{
-													Description: `State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"sudi_required": &schema.Schema{
-													Description: `Sudi Required`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"tags": &schema.Schema{
-													Description: `Tags`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"user_mic_numbers": &schema.Schema{
-													Description: `User Mic Numbers`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"user_sudi_serial_nos": &schema.Schema{
-													Description: `User Sudi Serial Nos`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"virtual_account_id": &schema.Schema{
-													Description: `Virtual Account Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"workflow_id": &schema.Schema{
-													Description: `Workflow Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"workflow_name": &schema.Schema{
-													Description: `Workflow Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
-									},
-
-									"run_summary_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"details": &schema.Schema{
-													Description: `Details`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"error_flag": &schema.Schema{
-													Description: `Error Flag`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"history_task_info": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"addn_details": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"key": &schema.Schema{
-																			Description: `Key`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"value": &schema.Schema{
-																			Description: `Value`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-
-															"name": &schema.Schema{
-																Description: `Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"time_taken": &schema.Schema{
-																Description: `Time Taken`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"type": &schema.Schema{
-																Description: `Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Description: `Command`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"end_time": &schema.Schema{
-																			Description: `End Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"output_str": &schema.Schema{
-																			Description: `Output Str`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"start_time": &schema.Schema{
-																			Description: `Start Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"state": &schema.Schema{
-																			Description: `State`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"time_taken": &schema.Schema{
-																			Description: `Time Taken`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-
-												"timestamp": &schema.Schema{
-													Description: `Timestamp`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-											},
-										},
-									},
-
-									"system_reset_workflow": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"type_id": &schema.Schema{
-													Description: `Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"add_to_inventory": &schema.Schema{
-													Description: `Add To Inventory`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"added_on": &schema.Schema{
-													Description: `Added On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"config_id": &schema.Schema{
-													Description: `Config Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"curr_task_idx": &schema.Schema{
-													Description: `Curr Task Idx`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"description": &schema.Schema{
-													Description: `Description`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"end_time": &schema.Schema{
-													Description: `End Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"exec_time": &schema.Schema{
-													Description: `Exec Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"image_id": &schema.Schema{
-													Description: `Image Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"instance_type": &schema.Schema{
-													Description: `Instance Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"lastupdate_on": &schema.Schema{
-													Description: `Lastupdate On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"start_time": &schema.Schema{
-													Description: `Start Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"state": &schema.Schema{
-													Description: `State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"tasks": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"curr_work_item_idx": &schema.Schema{
-																Description: `Curr Work Item Idx`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"end_time": &schema.Schema{
-																Description: `End Time`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"name": &schema.Schema{
-																Description: `Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"start_time": &schema.Schema{
-																Description: `Start Time`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"state": &schema.Schema{
-																Description: `State`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"task_seq_no": &schema.Schema{
-																Description: `Task Seq No`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"time_taken": &schema.Schema{
-																Description: `Time Taken`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"type": &schema.Schema{
-																Description: `Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Description: `Command`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"end_time": &schema.Schema{
-																			Description: `End Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"output_str": &schema.Schema{
-																			Description: `Output Str`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"start_time": &schema.Schema{
-																			Description: `Start Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"state": &schema.Schema{
-																			Description: `State`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"time_taken": &schema.Schema{
-																			Description: `Time Taken`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-
-												"tenant_id": &schema.Schema{
-													Description: `Tenant Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"type": &schema.Schema{
-													Description: `Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"use_state": &schema.Schema{
-													Description: `Use State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"version": &schema.Schema{
-													Description: `Version`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-											},
-										},
-									},
-
-									"system_workflow": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"type_id": &schema.Schema{
-													Description: `Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"add_to_inventory": &schema.Schema{
-													Description: `Add To Inventory`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"added_on": &schema.Schema{
-													Description: `Added On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"config_id": &schema.Schema{
-													Description: `Config Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"curr_task_idx": &schema.Schema{
-													Description: `Curr Task Idx`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"description": &schema.Schema{
-													Description: `Description`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"end_time": &schema.Schema{
-													Description: `End Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"exec_time": &schema.Schema{
-													Description: `Exec Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"image_id": &schema.Schema{
-													Description: `Image Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"instance_type": &schema.Schema{
-													Description: `Instance Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"lastupdate_on": &schema.Schema{
-													Description: `Lastupdate On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"start_time": &schema.Schema{
-													Description: `Start Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"state": &schema.Schema{
-													Description: `State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"tasks": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"curr_work_item_idx": &schema.Schema{
-																Description: `Curr Work Item Idx`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"end_time": &schema.Schema{
-																Description: `End Time`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"name": &schema.Schema{
-																Description: `Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"start_time": &schema.Schema{
-																Description: `Start Time`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"state": &schema.Schema{
-																Description: `State`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"task_seq_no": &schema.Schema{
-																Description: `Task Seq No`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"time_taken": &schema.Schema{
-																Description: `Time Taken`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"type": &schema.Schema{
-																Description: `Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Description: `Command`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"end_time": &schema.Schema{
-																			Description: `End Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"output_str": &schema.Schema{
-																			Description: `Output Str`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"start_time": &schema.Schema{
-																			Description: `Start Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"state": &schema.Schema{
-																			Description: `State`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"time_taken": &schema.Schema{
-																			Description: `Time Taken`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-
-												"tenant_id": &schema.Schema{
-													Description: `Tenant Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"type": &schema.Schema{
-													Description: `Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"use_state": &schema.Schema{
-													Description: `Use State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"version": &schema.Schema{
-													Description: `Version`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-											},
-										},
-									},
-
-									"tenant_id": &schema.Schema{
-										Description: `Tenant Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"version": &schema.Schema{
-										Description: `Version`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
-									},
-
-									"workflow": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"type_id": &schema.Schema{
-													Description: `Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"add_to_inventory": &schema.Schema{
-													Description: `Add To Inventory`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"added_on": &schema.Schema{
-													Description: `Added On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"config_id": &schema.Schema{
-													Description: `Config Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"curr_task_idx": &schema.Schema{
-													Description: `Curr Task Idx`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"description": &schema.Schema{
-													Description: `Description`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"end_time": &schema.Schema{
-													Description: `End Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"exec_time": &schema.Schema{
-													Description: `Exec Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"image_id": &schema.Schema{
-													Description: `Image Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"instance_type": &schema.Schema{
-													Description: `Instance Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"lastupdate_on": &schema.Schema{
-													Description: `Lastupdate On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"start_time": &schema.Schema{
-													Description: `Start Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"state": &schema.Schema{
-													Description: `State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"tasks": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"curr_work_item_idx": &schema.Schema{
-																Description: `Curr Work Item Idx`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"end_time": &schema.Schema{
-																Description: `End Time`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"name": &schema.Schema{
-																Description: `Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"start_time": &schema.Schema{
-																Description: `Start Time`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"state": &schema.Schema{
-																Description: `State`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"task_seq_no": &schema.Schema{
-																Description: `Task Seq No`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"time_taken": &schema.Schema{
-																Description: `Time Taken`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"type": &schema.Schema{
-																Description: `Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Description: `Command`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"end_time": &schema.Schema{
-																			Description: `End Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"output_str": &schema.Schema{
-																			Description: `Output Str`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"start_time": &schema.Schema{
-																			Description: `Start Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"state": &schema.Schema{
-																			Description: `State`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"time_taken": &schema.Schema{
-																			Description: `Time Taken`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-
-												"tenant_id": &schema.Schema{
-													Description: `Tenant Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"type": &schema.Schema{
-													Description: `Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"use_state": &schema.Schema{
-													Description: `Use State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"version": &schema.Schema{
-													Description: `Version`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-											},
-										},
-									},
-
-									"workflow_parameters": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"config_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"config_id": &schema.Schema{
-																Description: `Config Id`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"config_parameters": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"key": &schema.Schema{
-																			Description: `Key`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"value": &schema.Schema{
-																			Description: `Value`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-
-												"license_level": &schema.Schema{
-													Description: `License Level`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"license_type": &schema.Schema{
-													Description: `License Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"top_of_stack_serial_number": &schema.Schema{
-													Description: `Top Of Stack Serial Number`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
 									},
 								},
 							},
 						},
 
-						"item_name": &schema.Schema{
+						"day_zero_config_preview": &schema.Schema{
+							Description: `Day Zero Config Preview`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"device_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"type_id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"day_zero_config": &schema.Schema{
+									"aaa_credentials": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"config": &schema.Schema{
-													Description: `Config`,
+												"password": &schema.Schema{
+													Description: `Password`,
+													Type:        schema.TypeString,
+													Sensitive:   true,
+													Computed:    true,
+												},
+
+												"username": &schema.Schema{
+													Description: `Username`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -1903,33 +258,431 @@ Pagination and sorting are also supported by this endpoint
 										},
 									},
 
-									"day_zero_config_preview": &schema.Schema{
-										Description: `Day Zero Config Preview`,
+									"added_on": &schema.Schema{
+										Description: `Added On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"addn_mac_addrs": &schema.Schema{
+										Description: `Addn Mac Addrs`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"agent_type": &schema.Schema{
+										Description: `Agent Type`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
 
-									"device_info": &schema.Schema{
+									"auth_status": &schema.Schema{
+										Description: `Auth Status`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"authenticated_mic_number": &schema.Schema{
+										Description: `Authenticated Mic Number`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"authenticated_sudi_serial_no": &schema.Schema{
+										Description: `Authenticated Sudi Serial No`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"capabilities_supported": &schema.Schema{
+										Description: `Capabilities Supported`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"cm_state": &schema.Schema{
+										Description: `Cm State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"description": &schema.Schema{
+										Description: `Description`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"device_sudi_serial_nos": &schema.Schema{
+										Description: `Device Sudi Serial Nos`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"device_type": &schema.Schema{
+										Description: `Device Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"features_supported": &schema.Schema{
+										Description: `Features Supported`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"file_system_list": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"aaa_credentials": &schema.Schema{
+												"freespace": &schema.Schema{
+													Description: `Freespace`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"name": &schema.Schema{
+													Description: `Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"readable": &schema.Schema{
+													Description: `Readable`,
+
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"size": &schema.Schema{
+													Description: `Size`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"type": &schema.Schema{
+													Description: `Type`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"writeable": &schema.Schema{
+													Description: `Writeable`,
+
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+
+									"first_contact": &schema.Schema{
+										Description: `First Contact`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"hostname": &schema.Schema{
+										Description: `Hostname`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"http_headers": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"key": &schema.Schema{
+													Description: `Key`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"value": &schema.Schema{
+													Description: `Value`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"image_file": &schema.Schema{
+										Description: `Image File`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"image_version": &schema.Schema{
+										Description: `Image Version`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"ip_interfaces": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"ipv4_address": &schema.Schema{
+													Description: `Ipv4 Address`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"ipv6_address_list": &schema.Schema{
+													Description: `Ipv6 Address List`,
+													Type:        schema.TypeList,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+
+												"mac_address": &schema.Schema{
+													Description: `Mac Address`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"name": &schema.Schema{
+													Description: `Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"status": &schema.Schema{
+													Description: `Status`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"last_contact": &schema.Schema{
+										Description: `Last Contact`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"last_sync_time": &schema.Schema{
+										Description: `Last Sync Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"last_update_on": &schema.Schema{
+										Description: `Last Update On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"location": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"address": &schema.Schema{
+													Description: `Address`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"altitude": &schema.Schema{
+													Description: `Altitude`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"latitude": &schema.Schema{
+													Description: `Latitude`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"longitude": &schema.Schema{
+													Description: `Longitude`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"site_id": &schema.Schema{
+													Description: `Site Id`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"mac_address": &schema.Schema{
+										Description: `Mac Address`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"mode": &schema.Schema{
+										Description: `Mode`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"name": &schema.Schema{
+										Description: `Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"neighbor_links": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"local_interface_name": &schema.Schema{
+													Description: `Local Interface Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"local_mac_address": &schema.Schema{
+													Description: `Local Mac Address`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"local_short_interface_name": &schema.Schema{
+													Description: `Local Short Interface Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_device_name": &schema.Schema{
+													Description: `Remote Device Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_interface_name": &schema.Schema{
+													Description: `Remote Interface Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_mac_address": &schema.Schema{
+													Description: `Remote Mac Address`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_platform": &schema.Schema{
+													Description: `Remote Platform`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_short_interface_name": &schema.Schema{
+													Description: `Remote Short Interface Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_version": &schema.Schema{
+													Description: `Remote Version`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"onb_state": &schema.Schema{
+										Description: `Onb State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"pid": &schema.Schema{
+										Description: `Pid`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"pnp_profile_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"created_by": &schema.Schema{
+													Description: `Created By`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"discovery_created": &schema.Schema{
+													Description: `Discovery Created`,
+
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"primary_endpoint": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"password": &schema.Schema{
-																Description: `Password`,
+															"certificate": &schema.Schema{
+																Description: `Certificate`,
 																Type:        schema.TypeString,
-																Sensitive:   true,
 																Computed:    true,
 															},
 
-															"username": &schema.Schema{
-																Description: `Username`,
+															"fqdn": &schema.Schema{
+																Description: `Fqdn`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"ipv4_address": &schema.Schema{
+																Description: `Ipv4 Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"ipv6_address": &schema.Schema{
+																Description: `Ipv6 Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"port": &schema.Schema{
+																Description: `Port`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"protocol": &schema.Schema{
+																Description: `Protocol`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -1937,150 +690,353 @@ Pagination and sorting are also supported by this endpoint
 													},
 												},
 
-												"added_on": &schema.Schema{
-													Description: `Added On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"addn_mac_addrs": &schema.Schema{
-													Description: `Addn Mac Addrs`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"agent_type": &schema.Schema{
-													Description: `Agent Type`,
+												"profile_name": &schema.Schema{
+													Description: `Profile Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 
-												"auth_status": &schema.Schema{
-													Description: `Auth Status`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"authenticated_mic_number": &schema.Schema{
-													Description: `Authenticated Mic Number`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"authenticated_sudi_serial_no": &schema.Schema{
-													Description: `Authenticated Sudi Serial No`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"capabilities_supported": &schema.Schema{
-													Description: `Capabilities Supported`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"cm_state": &schema.Schema{
-													Description: `Cm State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"description": &schema.Schema{
-													Description: `Description`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"device_sudi_serial_nos": &schema.Schema{
-													Description: `Device Sudi Serial Nos`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"device_type": &schema.Schema{
-													Description: `Device Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"features_supported": &schema.Schema{
-													Description: `Features Supported`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"file_system_list": &schema.Schema{
+												"secondary_endpoint": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"freespace": &schema.Schema{
-																Description: `Freespace`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"name": &schema.Schema{
-																Description: `Name`,
+															"certificate": &schema.Schema{
+																Description: `Certificate`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
 
-															"readable": &schema.Schema{
-																Description: `Readable`,
-
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-
-															"size": &schema.Schema{
-																Description: `Size`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"type": &schema.Schema{
-																Description: `Type`,
+															"fqdn": &schema.Schema{
+																Description: `Fqdn`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
 
-															"writeable": &schema.Schema{
-																Description: `Writeable`,
+															"ipv4_address": &schema.Schema{
+																Description: `Ipv4 Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
 
-																Type:     schema.TypeString,
-																Computed: true,
+															"ipv6_address": &schema.Schema{
+																Description: `Ipv6 Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"port": &schema.Schema{
+																Description: `Port`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"protocol": &schema.Schema{
+																Description: `Protocol`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+
+									"populate_inventory": &schema.Schema{
+										Description: `Populate Inventory`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"pre_workflow_cli_ouputs": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"cli": &schema.Schema{
+													Description: `Cli`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"cli_output": &schema.Schema{
+													Description: `Cli Output`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"project_id": &schema.Schema{
+										Description: `Project Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"project_name": &schema.Schema{
+										Description: `Project Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"reload_requested": &schema.Schema{
+										Description: `Reload Requested`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"serial_number": &schema.Schema{
+										Description: `Serial Number`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"site_id": &schema.Schema{
+										Description: `Site Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"site_name": &schema.Schema{
+										Description: `Site Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"smart_account_id": &schema.Schema{
+										Description: `Smart Account Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"source": &schema.Schema{
+										Description: `Source`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"stack": &schema.Schema{
+										Description: `Stack`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"stack_info": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"is_full_ring": &schema.Schema{
+													Description: `Is Full Ring`,
+
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"stack_member_list": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"hardware_version": &schema.Schema{
+																Description: `Hardware Version`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"license_level": &schema.Schema{
+																Description: `License Level`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"license_type": &schema.Schema{
+																Description: `License Type`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"mac_address": &schema.Schema{
+																Description: `Mac Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"pid": &schema.Schema{
+																Description: `Pid`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"priority": &schema.Schema{
+																Description: `Priority`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"role": &schema.Schema{
+																Description: `Role`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"serial_number": &schema.Schema{
+																Description: `Serial Number`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"software_version": &schema.Schema{
+																Description: `Software Version`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"stack_number": &schema.Schema{
+																Description: `Stack Number`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"state": &schema.Schema{
+																Description: `State`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"sudi_serial_number": &schema.Schema{
+																Description: `Sudi Serial Number`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
 												},
 
-												"first_contact": &schema.Schema{
-													Description: `First Contact`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"hostname": &schema.Schema{
-													Description: `Hostname`,
+												"stack_ring_protocol": &schema.Schema{
+													Description: `Stack Ring Protocol`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 
-												"http_headers": &schema.Schema{
+												"supports_stack_workflows": &schema.Schema{
+													Description: `Supports Stack Workflows`,
+
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"total_member_count": &schema.Schema{
+													Description: `Total Member Count`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"valid_license_levels": &schema.Schema{
+													Description: `Valid License Levels`,
+													Type:        schema.TypeList,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
+
+									"state": &schema.Schema{
+										Description: `State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"sudi_required": &schema.Schema{
+										Description: `Sudi Required`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"tags": &schema.Schema{
+										Description: `Tags`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"user_mic_numbers": &schema.Schema{
+										Description: `User Mic Numbers`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"user_sudi_serial_nos": &schema.Schema{
+										Description: `User Sudi Serial Nos`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"virtual_account_id": &schema.Schema{
+										Description: `Virtual Account Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"workflow_id": &schema.Schema{
+										Description: `Workflow Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"workflow_name": &schema.Schema{
+										Description: `Workflow Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"run_summary_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"details": &schema.Schema{
+										Description: `Details`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"error_flag": &schema.Schema{
+										Description: `Error Flag`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"history_task_info": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"addn_details": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
@@ -2101,643 +1057,56 @@ Pagination and sorting are also supported by this endpoint
 													},
 												},
 
-												"image_file": &schema.Schema{
-													Description: `Image File`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"image_version": &schema.Schema{
-													Description: `Image Version`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"ip_interfaces": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"ipv4_address": &schema.Schema{
-																Description: `Ipv4 Address`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"ipv6_address_list": &schema.Schema{
-																Description: `Ipv6 Address List`,
-																Type:        schema.TypeList,
-																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-															},
-
-															"mac_address": &schema.Schema{
-																Description: `Mac Address`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"name": &schema.Schema{
-																Description: `Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"status": &schema.Schema{
-																Description: `Status`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"last_contact": &schema.Schema{
-													Description: `Last Contact`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"last_sync_time": &schema.Schema{
-													Description: `Last Sync Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"last_update_on": &schema.Schema{
-													Description: `Last Update On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"location": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"address": &schema.Schema{
-																Description: `Address`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"altitude": &schema.Schema{
-																Description: `Altitude`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"latitude": &schema.Schema{
-																Description: `Latitude`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"longitude": &schema.Schema{
-																Description: `Longitude`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"site_id": &schema.Schema{
-																Description: `Site Id`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"mac_address": &schema.Schema{
-													Description: `Mac Address`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"mode": &schema.Schema{
-													Description: `Mode`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
 												"name": &schema.Schema{
 													Description: `Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 
-												"neighbor_links": &schema.Schema{
+												"time_taken": &schema.Schema{
+													Description: `Time Taken`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"type": &schema.Schema{
+													Description: `Type`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"work_item_list": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"local_interface_name": &schema.Schema{
-																Description: `Local Interface Name`,
+															"command": &schema.Schema{
+																Description: `Command`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
 
-															"local_mac_address": &schema.Schema{
-																Description: `Local Mac Address`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"local_short_interface_name": &schema.Schema{
-																Description: `Local Short Interface Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_device_name": &schema.Schema{
-																Description: `Remote Device Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_interface_name": &schema.Schema{
-																Description: `Remote Interface Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_mac_address": &schema.Schema{
-																Description: `Remote Mac Address`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_platform": &schema.Schema{
-																Description: `Remote Platform`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_short_interface_name": &schema.Schema{
-																Description: `Remote Short Interface Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"remote_version": &schema.Schema{
-																Description: `Remote Version`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"onb_state": &schema.Schema{
-													Description: `Onb State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"pid": &schema.Schema{
-													Description: `Pid`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"pnp_profile_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"created_by": &schema.Schema{
-																Description: `Created By`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"discovery_created": &schema.Schema{
-																Description: `Discovery Created`,
-
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-
-															"primary_endpoint": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"certificate": &schema.Schema{
-																			Description: `Certificate`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"fqdn": &schema.Schema{
-																			Description: `Fqdn`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"ipv4_address": &schema.Schema{
-																			Description: `Ipv4 Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"ipv6_address": &schema.Schema{
-																			Description: `Ipv6 Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"port": &schema.Schema{
-																			Description: `Port`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"protocol": &schema.Schema{
-																			Description: `Protocol`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-
-															"profile_name": &schema.Schema{
-																Description: `Profile Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"secondary_endpoint": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"certificate": &schema.Schema{
-																			Description: `Certificate`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"fqdn": &schema.Schema{
-																			Description: `Fqdn`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"ipv4_address": &schema.Schema{
-																			Description: `Ipv4 Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"ipv6_address": &schema.Schema{
-																			Description: `Ipv6 Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"port": &schema.Schema{
-																			Description: `Port`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"protocol": &schema.Schema{
-																			Description: `Protocol`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-
-												"populate_inventory": &schema.Schema{
-													Description: `Populate Inventory`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"pre_workflow_cli_ouputs": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"cli": &schema.Schema{
-																Description: `Cli`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"cli_output": &schema.Schema{
-																Description: `Cli Output`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"project_id": &schema.Schema{
-													Description: `Project Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"project_name": &schema.Schema{
-													Description: `Project Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"reload_requested": &schema.Schema{
-													Description: `Reload Requested`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"serial_number": &schema.Schema{
-													Description: `Serial Number`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"site_id": &schema.Schema{
-													Description: `Site Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"site_name": &schema.Schema{
-													Description: `Site Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"smart_account_id": &schema.Schema{
-													Description: `Smart Account Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"source": &schema.Schema{
-													Description: `Source`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"stack": &schema.Schema{
-													Description: `Stack`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"stack_info": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"is_full_ring": &schema.Schema{
-																Description: `Is Full Ring`,
-
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-
-															"stack_member_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"hardware_version": &schema.Schema{
-																			Description: `Hardware Version`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"license_level": &schema.Schema{
-																			Description: `License Level`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"license_type": &schema.Schema{
-																			Description: `License Type`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"mac_address": &schema.Schema{
-																			Description: `Mac Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"pid": &schema.Schema{
-																			Description: `Pid`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"priority": &schema.Schema{
-																			Description: `Priority`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"role": &schema.Schema{
-																			Description: `Role`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"serial_number": &schema.Schema{
-																			Description: `Serial Number`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"software_version": &schema.Schema{
-																			Description: `Software Version`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"stack_number": &schema.Schema{
-																			Description: `Stack Number`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"state": &schema.Schema{
-																			Description: `State`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"sudi_serial_number": &schema.Schema{
-																			Description: `Sudi Serial Number`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-
-															"stack_ring_protocol": &schema.Schema{
-																Description: `Stack Ring Protocol`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"supports_stack_workflows": &schema.Schema{
-																Description: `Supports Stack Workflows`,
-
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-
-															"total_member_count": &schema.Schema{
-																Description: `Total Member Count`,
+															"end_time": &schema.Schema{
+																Description: `End Time`,
 																Type:        schema.TypeFloat,
 																Computed:    true,
 															},
 
-															"valid_license_levels": &schema.Schema{
-																Description: `Valid License Levels`,
-																Type:        schema.TypeList,
+															"output_str": &schema.Schema{
+																Description: `Output Str`,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-															},
-														},
-													},
-												},
-
-												"state": &schema.Schema{
-													Description: `State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"sudi_required": &schema.Schema{
-													Description: `Sudi Required`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"tags": &schema.Schema{
-													Description: `Tags`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"user_mic_numbers": &schema.Schema{
-													Description: `User Mic Numbers`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"user_sudi_serial_nos": &schema.Schema{
-													Description: `User Sudi Serial Nos`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-
-												"virtual_account_id": &schema.Schema{
-													Description: `Virtual Account Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"workflow_id": &schema.Schema{
-													Description: `Workflow Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"workflow_name": &schema.Schema{
-													Description: `Workflow Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
-									},
-
-									"run_summary_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"details": &schema.Schema{
-													Description: `Details`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"error_flag": &schema.Schema{
-													Description: `Error Flag`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"history_task_info": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"addn_details": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"key": &schema.Schema{
-																			Description: `Key`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"value": &schema.Schema{
-																			Description: `Value`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
 															},
 
-															"name": &schema.Schema{
-																Description: `Name`,
+															"start_time": &schema.Schema{
+																Description: `Start Time`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"state": &schema.Schema{
+																Description: `State`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -2747,139 +1116,127 @@ Pagination and sorting are also supported by this endpoint
 																Type:        schema.TypeFloat,
 																Computed:    true,
 															},
-
-															"type": &schema.Schema{
-																Description: `Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Description: `Command`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"end_time": &schema.Schema{
-																			Description: `End Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"output_str": &schema.Schema{
-																			Description: `Output Str`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"start_time": &schema.Schema{
-																			Description: `Start Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"state": &schema.Schema{
-																			Description: `State`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"time_taken": &schema.Schema{
-																			Description: `Time Taken`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
 														},
 													},
-												},
-
-												"timestamp": &schema.Schema{
-													Description: `Timestamp`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
 												},
 											},
 										},
 									},
 
-									"system_reset_workflow": &schema.Schema{
+									"timestamp": &schema.Schema{
+										Description: `Timestamp`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"system_reset_workflow": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"type_id": &schema.Schema{
+										Description: `Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"add_to_inventory": &schema.Schema{
+										Description: `Add To Inventory`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"added_on": &schema.Schema{
+										Description: `Added On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"config_id": &schema.Schema{
+										Description: `Config Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"curr_task_idx": &schema.Schema{
+										Description: `Curr Task Idx`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"description": &schema.Schema{
+										Description: `Description`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"end_time": &schema.Schema{
+										Description: `End Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"exec_time": &schema.Schema{
+										Description: `Exec Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"image_id": &schema.Schema{
+										Description: `Image Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"instance_type": &schema.Schema{
+										Description: `Instance Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"lastupdate_on": &schema.Schema{
+										Description: `Lastupdate On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"name": &schema.Schema{
+										Description: `Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"start_time": &schema.Schema{
+										Description: `Start Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"state": &schema.Schema{
+										Description: `State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"tasks": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"type_id": &schema.Schema{
-													Description: `Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"add_to_inventory": &schema.Schema{
-													Description: `Add To Inventory`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"added_on": &schema.Schema{
-													Description: `Added On`,
+												"curr_work_item_idx": &schema.Schema{
+													Description: `Curr Work Item Idx`,
 													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"config_id": &schema.Schema{
-													Description: `Config Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"curr_task_idx": &schema.Schema{
-													Description: `Curr Task Idx`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"description": &schema.Schema{
-													Description: `Description`,
-													Type:        schema.TypeString,
 													Computed:    true,
 												},
 
 												"end_time": &schema.Schema{
 													Description: `End Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"exec_time": &schema.Schema{
-													Description: `Exec Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"image_id": &schema.Schema{
-													Description: `Image Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"instance_type": &schema.Schema{
-													Description: `Instance Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"lastupdate_on": &schema.Schema{
-													Description: `Lastupdate On`,
 													Type:        schema.TypeFloat,
 													Computed:    true,
 												},
@@ -2902,15 +1259,33 @@ Pagination and sorting are also supported by this endpoint
 													Computed:    true,
 												},
 
-												"tasks": &schema.Schema{
+												"task_seq_no": &schema.Schema{
+													Description: `Task Seq No`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"time_taken": &schema.Schema{
+													Description: `Time Taken`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"type": &schema.Schema{
+													Description: `Type`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"work_item_list": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"curr_work_item_idx": &schema.Schema{
-																Description: `Curr Work Item Idx`,
-																Type:        schema.TypeFloat,
+															"command": &schema.Schema{
+																Description: `Command`,
+																Type:        schema.TypeString,
 																Computed:    true,
 															},
 
@@ -2920,8 +1295,8 @@ Pagination and sorting are also supported by this endpoint
 																Computed:    true,
 															},
 
-															"name": &schema.Schema{
-																Description: `Name`,
+															"output_str": &schema.Schema{
+																Description: `Output Str`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -2938,314 +1313,13 @@ Pagination and sorting are also supported by this endpoint
 																Computed:    true,
 															},
 
-															"task_seq_no": &schema.Schema{
-																Description: `Task Seq No`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
 															"time_taken": &schema.Schema{
 																Description: `Time Taken`,
 																Type:        schema.TypeFloat,
 																Computed:    true,
 															},
-
-															"type": &schema.Schema{
-																Description: `Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Description: `Command`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"end_time": &schema.Schema{
-																			Description: `End Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"output_str": &schema.Schema{
-																			Description: `Output Str`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"start_time": &schema.Schema{
-																			Description: `Start Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"state": &schema.Schema{
-																			Description: `State`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"time_taken": &schema.Schema{
-																			Description: `Time Taken`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
 														},
 													},
-												},
-
-												"tenant_id": &schema.Schema{
-													Description: `Tenant Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"type": &schema.Schema{
-													Description: `Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"use_state": &schema.Schema{
-													Description: `Use State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"version": &schema.Schema{
-													Description: `Version`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-											},
-										},
-									},
-
-									"system_workflow": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"type_id": &schema.Schema{
-													Description: `Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"add_to_inventory": &schema.Schema{
-													Description: `Add To Inventory`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"added_on": &schema.Schema{
-													Description: `Added On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"config_id": &schema.Schema{
-													Description: `Config Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"curr_task_idx": &schema.Schema{
-													Description: `Curr Task Idx`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"description": &schema.Schema{
-													Description: `Description`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"end_time": &schema.Schema{
-													Description: `End Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"exec_time": &schema.Schema{
-													Description: `Exec Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"image_id": &schema.Schema{
-													Description: `Image Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"instance_type": &schema.Schema{
-													Description: `Instance Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"lastupdate_on": &schema.Schema{
-													Description: `Lastupdate On`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"start_time": &schema.Schema{
-													Description: `Start Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"state": &schema.Schema{
-													Description: `State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"tasks": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"curr_work_item_idx": &schema.Schema{
-																Description: `Curr Work Item Idx`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"end_time": &schema.Schema{
-																Description: `End Time`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"name": &schema.Schema{
-																Description: `Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"start_time": &schema.Schema{
-																Description: `Start Time`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"state": &schema.Schema{
-																Description: `State`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"task_seq_no": &schema.Schema{
-																Description: `Task Seq No`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"time_taken": &schema.Schema{
-																Description: `Time Taken`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
-															"type": &schema.Schema{
-																Description: `Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Description: `Command`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"end_time": &schema.Schema{
-																			Description: `End Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"output_str": &schema.Schema{
-																			Description: `Output Str`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"start_time": &schema.Schema{
-																			Description: `Start Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"state": &schema.Schema{
-																			Description: `State`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"time_taken": &schema.Schema{
-																			Description: `Time Taken`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-
-												"tenant_id": &schema.Schema{
-													Description: `Tenant Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"type": &schema.Schema{
-													Description: `Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"use_state": &schema.Schema{
-													Description: `Use State`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"version": &schema.Schema{
-													Description: `Version`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
 												},
 											},
 										},
@@ -3257,81 +1331,132 @@ Pagination and sorting are also supported by this endpoint
 										Computed:    true,
 									},
 
+									"type": &schema.Schema{
+										Description: `Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"use_state": &schema.Schema{
+										Description: `Use State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
 									"version": &schema.Schema{
 										Description: `Version`,
 										Type:        schema.TypeFloat,
 										Computed:    true,
 									},
+								},
+							},
+						},
 
-									"workflow": &schema.Schema{
+						"system_workflow": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"type_id": &schema.Schema{
+										Description: `Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"add_to_inventory": &schema.Schema{
+										Description: `Add To Inventory`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"added_on": &schema.Schema{
+										Description: `Added On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"config_id": &schema.Schema{
+										Description: `Config Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"curr_task_idx": &schema.Schema{
+										Description: `Curr Task Idx`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"description": &schema.Schema{
+										Description: `Description`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"end_time": &schema.Schema{
+										Description: `End Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"exec_time": &schema.Schema{
+										Description: `Exec Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"image_id": &schema.Schema{
+										Description: `Image Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"instance_type": &schema.Schema{
+										Description: `Instance Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"lastupdate_on": &schema.Schema{
+										Description: `Lastupdate On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"name": &schema.Schema{
+										Description: `Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"start_time": &schema.Schema{
+										Description: `Start Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"state": &schema.Schema{
+										Description: `State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"tasks": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"type_id": &schema.Schema{
-													Description: `Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"add_to_inventory": &schema.Schema{
-													Description: `Add To Inventory`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"added_on": &schema.Schema{
-													Description: `Added On`,
+												"curr_work_item_idx": &schema.Schema{
+													Description: `Curr Work Item Idx`,
 													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"config_id": &schema.Schema{
-													Description: `Config Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"curr_task_idx": &schema.Schema{
-													Description: `Curr Task Idx`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"description": &schema.Schema{
-													Description: `Description`,
-													Type:        schema.TypeString,
 													Computed:    true,
 												},
 
 												"end_time": &schema.Schema{
 													Description: `End Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"exec_time": &schema.Schema{
-													Description: `Exec Time`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"image_id": &schema.Schema{
-													Description: `Image Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"instance_type": &schema.Schema{
-													Description: `Instance Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"lastupdate_on": &schema.Schema{
-													Description: `Lastupdate On`,
 													Type:        schema.TypeFloat,
 													Computed:    true,
 												},
@@ -3354,15 +1479,33 @@ Pagination and sorting are also supported by this endpoint
 													Computed:    true,
 												},
 
-												"tasks": &schema.Schema{
+												"task_seq_no": &schema.Schema{
+													Description: `Task Seq No`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"time_taken": &schema.Schema{
+													Description: `Time Taken`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"type": &schema.Schema{
+													Description: `Type`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"work_item_list": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"curr_work_item_idx": &schema.Schema{
-																Description: `Curr Work Item Idx`,
-																Type:        schema.TypeFloat,
+															"command": &schema.Schema{
+																Description: `Command`,
+																Type:        schema.TypeString,
 																Computed:    true,
 															},
 
@@ -3372,8 +1515,8 @@ Pagination and sorting are also supported by this endpoint
 																Computed:    true,
 															},
 
-															"name": &schema.Schema{
-																Description: `Name`,
+															"output_str": &schema.Schema{
+																Description: `Output Str`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -3390,75 +1533,193 @@ Pagination and sorting are also supported by this endpoint
 																Computed:    true,
 															},
 
-															"task_seq_no": &schema.Schema{
-																Description: `Task Seq No`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-
 															"time_taken": &schema.Schema{
 																Description: `Time Taken`,
 																Type:        schema.TypeFloat,
 																Computed:    true,
 															},
-
-															"type": &schema.Schema{
-																Description: `Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Description: `Command`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"end_time": &schema.Schema{
-																			Description: `End Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"output_str": &schema.Schema{
-																			Description: `Output Str`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"start_time": &schema.Schema{
-																			Description: `Start Time`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-
-																		"state": &schema.Schema{
-																			Description: `State`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"time_taken": &schema.Schema{
-																			Description: `Time Taken`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
 														},
 													},
 												},
+											},
+										},
+									},
 
-												"tenant_id": &schema.Schema{
-													Description: `Tenant Id`,
+									"tenant_id": &schema.Schema{
+										Description: `Tenant Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"type": &schema.Schema{
+										Description: `Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"use_state": &schema.Schema{
+										Description: `Use State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"version": &schema.Schema{
+										Description: `Version`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"tenant_id": &schema.Schema{
+							Description: `Tenant Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"version": &schema.Schema{
+							Description: `Version`,
+							Type:        schema.TypeFloat,
+							Computed:    true,
+						},
+
+						"workflow": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"type_id": &schema.Schema{
+										Description: `Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"add_to_inventory": &schema.Schema{
+										Description: `Add To Inventory`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"added_on": &schema.Schema{
+										Description: `Added On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"config_id": &schema.Schema{
+										Description: `Config Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"curr_task_idx": &schema.Schema{
+										Description: `Curr Task Idx`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"description": &schema.Schema{
+										Description: `Description`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"end_time": &schema.Schema{
+										Description: `End Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"exec_time": &schema.Schema{
+										Description: `Exec Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"image_id": &schema.Schema{
+										Description: `Image Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"instance_type": &schema.Schema{
+										Description: `Instance Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"lastupdate_on": &schema.Schema{
+										Description: `Lastupdate On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"name": &schema.Schema{
+										Description: `Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"start_time": &schema.Schema{
+										Description: `Start Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"state": &schema.Schema{
+										Description: `State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"tasks": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"curr_work_item_idx": &schema.Schema{
+													Description: `Curr Work Item Idx`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"end_time": &schema.Schema{
+													Description: `End Time`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"name": &schema.Schema{
+													Description: `Name`,
 													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"start_time": &schema.Schema{
+													Description: `Start Time`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"state": &schema.Schema{
+													Description: `State`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"task_seq_no": &schema.Schema{
+													Description: `Task Seq No`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"time_taken": &schema.Schema{
+													Description: `Time Taken`,
+													Type:        schema.TypeFloat,
 													Computed:    true,
 												},
 
@@ -3468,82 +1729,1812 @@ Pagination and sorting are also supported by this endpoint
 													Computed:    true,
 												},
 
-												"use_state": &schema.Schema{
-													Description: `Use State`,
+												"work_item_list": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"command": &schema.Schema{
+																Description: `Command`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"end_time": &schema.Schema{
+																Description: `End Time`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"output_str": &schema.Schema{
+																Description: `Output Str`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"start_time": &schema.Schema{
+																Description: `Start Time`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"state": &schema.Schema{
+																Description: `State`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"time_taken": &schema.Schema{
+																Description: `Time Taken`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+
+									"tenant_id": &schema.Schema{
+										Description: `Tenant Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"type": &schema.Schema{
+										Description: `Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"use_state": &schema.Schema{
+										Description: `Use State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"version": &schema.Schema{
+										Description: `Version`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"workflow_parameters": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"config_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"config_id": &schema.Schema{
+													Description: `Config Id`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 
-												"version": &schema.Schema{
-													Description: `Version`,
-													Type:        schema.TypeFloat,
+												"config_parameters": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"key": &schema.Schema{
+																Description: `Key`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"value": &schema.Schema{
+																Description: `Value`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+
+									"license_level": &schema.Schema{
+										Description: `License Level`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"license_type": &schema.Schema{
+										Description: `License Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"top_of_stack_serial_number": &schema.Schema{
+										Description: `Top Of Stack Serial Number`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+
+			"item_name": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"type_id": &schema.Schema{
+							Description: `Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"day_zero_config": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"config": &schema.Schema{
+										Description: `Config`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"day_zero_config_preview": &schema.Schema{
+							Description: `Day Zero Config Preview`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"device_info": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"aaa_credentials": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"password": &schema.Schema{
+													Description: `Password`,
+													Type:        schema.TypeString,
+													Sensitive:   true,
+													Computed:    true,
+												},
+
+												"username": &schema.Schema{
+													Description: `Username`,
+													Type:        schema.TypeString,
 													Computed:    true,
 												},
 											},
 										},
 									},
 
-									"workflow_parameters": &schema.Schema{
+									"added_on": &schema.Schema{
+										Description: `Added On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"addn_mac_addrs": &schema.Schema{
+										Description: `Addn Mac Addrs`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"agent_type": &schema.Schema{
+										Description: `Agent Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"auth_status": &schema.Schema{
+										Description: `Auth Status`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"authenticated_mic_number": &schema.Schema{
+										Description: `Authenticated Mic Number`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"authenticated_sudi_serial_no": &schema.Schema{
+										Description: `Authenticated Sudi Serial No`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"capabilities_supported": &schema.Schema{
+										Description: `Capabilities Supported`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"cm_state": &schema.Schema{
+										Description: `Cm State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"description": &schema.Schema{
+										Description: `Description`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"device_sudi_serial_nos": &schema.Schema{
+										Description: `Device Sudi Serial Nos`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"device_type": &schema.Schema{
+										Description: `Device Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"features_supported": &schema.Schema{
+										Description: `Features Supported`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"file_system_list": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"config_list": &schema.Schema{
-													Type:     schema.TypeList,
+												"freespace": &schema.Schema{
+													Description: `Freespace`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"name": &schema.Schema{
+													Description: `Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"readable": &schema.Schema{
+													Description: `Readable`,
+
+													Type:     schema.TypeString,
 													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"config_id": &schema.Schema{
-																Description: `Config Id`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"config_parameters": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"key": &schema.Schema{
-																			Description: `Key`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-
-																		"value": &schema.Schema{
-																			Description: `Value`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-														},
-													},
 												},
 
-												"license_level": &schema.Schema{
-													Description: `License Level`,
+												"size": &schema.Schema{
+													Description: `Size`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"type": &schema.Schema{
+													Description: `Type`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 
-												"license_type": &schema.Schema{
-													Description: `License Type`,
+												"writeable": &schema.Schema{
+													Description: `Writeable`,
+
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+
+									"first_contact": &schema.Schema{
+										Description: `First Contact`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"hostname": &schema.Schema{
+										Description: `Hostname`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"http_headers": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"key": &schema.Schema{
+													Description: `Key`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 
-												"top_of_stack_serial_number": &schema.Schema{
-													Description: `Top Of Stack Serial Number`,
+												"value": &schema.Schema{
+													Description: `Value`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 											},
 										},
+									},
+
+									"image_file": &schema.Schema{
+										Description: `Image File`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"image_version": &schema.Schema{
+										Description: `Image Version`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"ip_interfaces": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"ipv4_address": &schema.Schema{
+													Description: `Ipv4 Address`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"ipv6_address_list": &schema.Schema{
+													Description: `Ipv6 Address List`,
+													Type:        schema.TypeList,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+
+												"mac_address": &schema.Schema{
+													Description: `Mac Address`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"name": &schema.Schema{
+													Description: `Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"status": &schema.Schema{
+													Description: `Status`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"last_contact": &schema.Schema{
+										Description: `Last Contact`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"last_sync_time": &schema.Schema{
+										Description: `Last Sync Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"last_update_on": &schema.Schema{
+										Description: `Last Update On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"location": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"address": &schema.Schema{
+													Description: `Address`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"altitude": &schema.Schema{
+													Description: `Altitude`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"latitude": &schema.Schema{
+													Description: `Latitude`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"longitude": &schema.Schema{
+													Description: `Longitude`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"site_id": &schema.Schema{
+													Description: `Site Id`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"mac_address": &schema.Schema{
+										Description: `Mac Address`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"mode": &schema.Schema{
+										Description: `Mode`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"name": &schema.Schema{
+										Description: `Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"neighbor_links": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"local_interface_name": &schema.Schema{
+													Description: `Local Interface Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"local_mac_address": &schema.Schema{
+													Description: `Local Mac Address`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"local_short_interface_name": &schema.Schema{
+													Description: `Local Short Interface Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_device_name": &schema.Schema{
+													Description: `Remote Device Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_interface_name": &schema.Schema{
+													Description: `Remote Interface Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_mac_address": &schema.Schema{
+													Description: `Remote Mac Address`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_platform": &schema.Schema{
+													Description: `Remote Platform`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_short_interface_name": &schema.Schema{
+													Description: `Remote Short Interface Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"remote_version": &schema.Schema{
+													Description: `Remote Version`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"onb_state": &schema.Schema{
+										Description: `Onb State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"pid": &schema.Schema{
+										Description: `Pid`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"pnp_profile_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"created_by": &schema.Schema{
+													Description: `Created By`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"discovery_created": &schema.Schema{
+													Description: `Discovery Created`,
+
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"primary_endpoint": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"certificate": &schema.Schema{
+																Description: `Certificate`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"fqdn": &schema.Schema{
+																Description: `Fqdn`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"ipv4_address": &schema.Schema{
+																Description: `Ipv4 Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"ipv6_address": &schema.Schema{
+																Description: `Ipv6 Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"port": &schema.Schema{
+																Description: `Port`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"protocol": &schema.Schema{
+																Description: `Protocol`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+
+												"profile_name": &schema.Schema{
+													Description: `Profile Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"secondary_endpoint": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"certificate": &schema.Schema{
+																Description: `Certificate`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"fqdn": &schema.Schema{
+																Description: `Fqdn`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"ipv4_address": &schema.Schema{
+																Description: `Ipv4 Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"ipv6_address": &schema.Schema{
+																Description: `Ipv6 Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"port": &schema.Schema{
+																Description: `Port`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"protocol": &schema.Schema{
+																Description: `Protocol`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+
+									"populate_inventory": &schema.Schema{
+										Description: `Populate Inventory`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"pre_workflow_cli_ouputs": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"cli": &schema.Schema{
+													Description: `Cli`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"cli_output": &schema.Schema{
+													Description: `Cli Output`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"project_id": &schema.Schema{
+										Description: `Project Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"project_name": &schema.Schema{
+										Description: `Project Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"reload_requested": &schema.Schema{
+										Description: `Reload Requested`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"serial_number": &schema.Schema{
+										Description: `Serial Number`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"site_id": &schema.Schema{
+										Description: `Site Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"site_name": &schema.Schema{
+										Description: `Site Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"smart_account_id": &schema.Schema{
+										Description: `Smart Account Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"source": &schema.Schema{
+										Description: `Source`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"stack": &schema.Schema{
+										Description: `Stack`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"stack_info": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"is_full_ring": &schema.Schema{
+													Description: `Is Full Ring`,
+
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"stack_member_list": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"hardware_version": &schema.Schema{
+																Description: `Hardware Version`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"license_level": &schema.Schema{
+																Description: `License Level`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"license_type": &schema.Schema{
+																Description: `License Type`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"mac_address": &schema.Schema{
+																Description: `Mac Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"pid": &schema.Schema{
+																Description: `Pid`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"priority": &schema.Schema{
+																Description: `Priority`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"role": &schema.Schema{
+																Description: `Role`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"serial_number": &schema.Schema{
+																Description: `Serial Number`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"software_version": &schema.Schema{
+																Description: `Software Version`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"stack_number": &schema.Schema{
+																Description: `Stack Number`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"state": &schema.Schema{
+																Description: `State`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"sudi_serial_number": &schema.Schema{
+																Description: `Sudi Serial Number`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+
+												"stack_ring_protocol": &schema.Schema{
+													Description: `Stack Ring Protocol`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"supports_stack_workflows": &schema.Schema{
+													Description: `Supports Stack Workflows`,
+
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"total_member_count": &schema.Schema{
+													Description: `Total Member Count`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"valid_license_levels": &schema.Schema{
+													Description: `Valid License Levels`,
+													Type:        schema.TypeList,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
+
+									"state": &schema.Schema{
+										Description: `State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"sudi_required": &schema.Schema{
+										Description: `Sudi Required`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"tags": &schema.Schema{
+										Description: `Tags`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"user_mic_numbers": &schema.Schema{
+										Description: `User Mic Numbers`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"user_sudi_serial_nos": &schema.Schema{
+										Description: `User Sudi Serial Nos`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"virtual_account_id": &schema.Schema{
+										Description: `Virtual Account Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"workflow_id": &schema.Schema{
+										Description: `Workflow Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"workflow_name": &schema.Schema{
+										Description: `Workflow Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"run_summary_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"details": &schema.Schema{
+										Description: `Details`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"error_flag": &schema.Schema{
+										Description: `Error Flag`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"history_task_info": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"addn_details": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"key": &schema.Schema{
+																Description: `Key`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"value": &schema.Schema{
+																Description: `Value`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+
+												"name": &schema.Schema{
+													Description: `Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"time_taken": &schema.Schema{
+													Description: `Time Taken`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"type": &schema.Schema{
+													Description: `Type`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"work_item_list": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"command": &schema.Schema{
+																Description: `Command`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"end_time": &schema.Schema{
+																Description: `End Time`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"output_str": &schema.Schema{
+																Description: `Output Str`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"start_time": &schema.Schema{
+																Description: `Start Time`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"state": &schema.Schema{
+																Description: `State`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"time_taken": &schema.Schema{
+																Description: `Time Taken`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+
+									"timestamp": &schema.Schema{
+										Description: `Timestamp`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"system_reset_workflow": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"type_id": &schema.Schema{
+										Description: `Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"add_to_inventory": &schema.Schema{
+										Description: `Add To Inventory`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"added_on": &schema.Schema{
+										Description: `Added On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"config_id": &schema.Schema{
+										Description: `Config Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"curr_task_idx": &schema.Schema{
+										Description: `Curr Task Idx`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"description": &schema.Schema{
+										Description: `Description`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"end_time": &schema.Schema{
+										Description: `End Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"exec_time": &schema.Schema{
+										Description: `Exec Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"image_id": &schema.Schema{
+										Description: `Image Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"instance_type": &schema.Schema{
+										Description: `Instance Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"lastupdate_on": &schema.Schema{
+										Description: `Lastupdate On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"name": &schema.Schema{
+										Description: `Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"start_time": &schema.Schema{
+										Description: `Start Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"state": &schema.Schema{
+										Description: `State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"tasks": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"curr_work_item_idx": &schema.Schema{
+													Description: `Curr Work Item Idx`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"end_time": &schema.Schema{
+													Description: `End Time`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"name": &schema.Schema{
+													Description: `Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"start_time": &schema.Schema{
+													Description: `Start Time`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"state": &schema.Schema{
+													Description: `State`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"task_seq_no": &schema.Schema{
+													Description: `Task Seq No`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"time_taken": &schema.Schema{
+													Description: `Time Taken`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"type": &schema.Schema{
+													Description: `Type`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"work_item_list": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"command": &schema.Schema{
+																Description: `Command`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"end_time": &schema.Schema{
+																Description: `End Time`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"output_str": &schema.Schema{
+																Description: `Output Str`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"start_time": &schema.Schema{
+																Description: `Start Time`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"state": &schema.Schema{
+																Description: `State`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"time_taken": &schema.Schema{
+																Description: `Time Taken`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+
+									"tenant_id": &schema.Schema{
+										Description: `Tenant Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"type": &schema.Schema{
+										Description: `Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"use_state": &schema.Schema{
+										Description: `Use State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"version": &schema.Schema{
+										Description: `Version`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"system_workflow": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"type_id": &schema.Schema{
+										Description: `Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"add_to_inventory": &schema.Schema{
+										Description: `Add To Inventory`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"added_on": &schema.Schema{
+										Description: `Added On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"config_id": &schema.Schema{
+										Description: `Config Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"curr_task_idx": &schema.Schema{
+										Description: `Curr Task Idx`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"description": &schema.Schema{
+										Description: `Description`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"end_time": &schema.Schema{
+										Description: `End Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"exec_time": &schema.Schema{
+										Description: `Exec Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"image_id": &schema.Schema{
+										Description: `Image Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"instance_type": &schema.Schema{
+										Description: `Instance Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"lastupdate_on": &schema.Schema{
+										Description: `Lastupdate On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"name": &schema.Schema{
+										Description: `Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"start_time": &schema.Schema{
+										Description: `Start Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"state": &schema.Schema{
+										Description: `State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"tasks": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"curr_work_item_idx": &schema.Schema{
+													Description: `Curr Work Item Idx`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"end_time": &schema.Schema{
+													Description: `End Time`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"name": &schema.Schema{
+													Description: `Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"start_time": &schema.Schema{
+													Description: `Start Time`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"state": &schema.Schema{
+													Description: `State`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"task_seq_no": &schema.Schema{
+													Description: `Task Seq No`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"time_taken": &schema.Schema{
+													Description: `Time Taken`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"type": &schema.Schema{
+													Description: `Type`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"work_item_list": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"command": &schema.Schema{
+																Description: `Command`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"end_time": &schema.Schema{
+																Description: `End Time`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"output_str": &schema.Schema{
+																Description: `Output Str`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"start_time": &schema.Schema{
+																Description: `Start Time`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"state": &schema.Schema{
+																Description: `State`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"time_taken": &schema.Schema{
+																Description: `Time Taken`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+
+									"tenant_id": &schema.Schema{
+										Description: `Tenant Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"type": &schema.Schema{
+										Description: `Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"use_state": &schema.Schema{
+										Description: `Use State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"version": &schema.Schema{
+										Description: `Version`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"tenant_id": &schema.Schema{
+							Description: `Tenant Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"version": &schema.Schema{
+							Description: `Version`,
+							Type:        schema.TypeFloat,
+							Computed:    true,
+						},
+
+						"workflow": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"type_id": &schema.Schema{
+										Description: `Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"add_to_inventory": &schema.Schema{
+										Description: `Add To Inventory`,
+
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"added_on": &schema.Schema{
+										Description: `Added On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"config_id": &schema.Schema{
+										Description: `Config Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"curr_task_idx": &schema.Schema{
+										Description: `Curr Task Idx`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"description": &schema.Schema{
+										Description: `Description`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"end_time": &schema.Schema{
+										Description: `End Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"exec_time": &schema.Schema{
+										Description: `Exec Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"image_id": &schema.Schema{
+										Description: `Image Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"instance_type": &schema.Schema{
+										Description: `Instance Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"lastupdate_on": &schema.Schema{
+										Description: `Lastupdate On`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"name": &schema.Schema{
+										Description: `Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"start_time": &schema.Schema{
+										Description: `Start Time`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"state": &schema.Schema{
+										Description: `State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"tasks": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"curr_work_item_idx": &schema.Schema{
+													Description: `Curr Work Item Idx`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"end_time": &schema.Schema{
+													Description: `End Time`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"name": &schema.Schema{
+													Description: `Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"start_time": &schema.Schema{
+													Description: `Start Time`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"state": &schema.Schema{
+													Description: `State`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"task_seq_no": &schema.Schema{
+													Description: `Task Seq No`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"time_taken": &schema.Schema{
+													Description: `Time Taken`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"type": &schema.Schema{
+													Description: `Type`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"work_item_list": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"command": &schema.Schema{
+																Description: `Command`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"end_time": &schema.Schema{
+																Description: `End Time`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"output_str": &schema.Schema{
+																Description: `Output Str`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"start_time": &schema.Schema{
+																Description: `Start Time`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+
+															"state": &schema.Schema{
+																Description: `State`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"time_taken": &schema.Schema{
+																Description: `Time Taken`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+
+									"tenant_id": &schema.Schema{
+										Description: `Tenant Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"type": &schema.Schema{
+										Description: `Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"use_state": &schema.Schema{
+										Description: `Use State`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"version": &schema.Schema{
+										Description: `Version`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"workflow_parameters": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"config_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"config_id": &schema.Schema{
+													Description: `Config Id`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"config_parameters": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"key": &schema.Schema{
+																Description: `Key`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"value": &schema.Schema{
+																Description: `Value`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+
+									"license_level": &schema.Schema{
+										Description: `License Level`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"license_type": &schema.Schema{
+										Description: `License Type`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"top_of_stack_serial_number": &schema.Schema{
+										Description: `Top Of Stack Serial Number`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 								},
 							},
@@ -3671,7 +3662,7 @@ func dataSourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenDeviceOnboardingPnpGetDeviceList2Items(response1)
-		if err := d.Set("items", vItems1); err != nil {
+		if err := d.Set("item_name", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceList2 response",
 				err))
@@ -3700,7 +3691,7 @@ func dataSourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenDeviceOnboardingPnpGetDeviceByIDItem(response2)
-		if err := d.Set("item", vItem2); err != nil {
+		if err := d.Set("item_id", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceByID response",
 				err))
