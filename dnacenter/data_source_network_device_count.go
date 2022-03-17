@@ -30,26 +30,7 @@ location name
 				Optional: true,
 			},
 
-			"item_id": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"response": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-
-						"version": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-					},
-				},
-			},
-
-			"item_name": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -77,13 +58,13 @@ func dataSourceNetworkDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 	var diags diag.Diagnostics
 	vDeviceID, okDeviceID := d.GetOk("device_id")
 
-	method1 := []bool{okDeviceID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	//method1 := []bool{okDeviceID}
+	//log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	//method2 := []bool{}
+	//log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
-	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 1 {
+	//selectedMethod := pickMethod([][]bool{method1, method2})
+	if okDeviceID {
 		log.Printf("[DEBUG] Selected method 1: GetDeviceInterfaceCount2")
 		vvDeviceID := vDeviceID.(string)
 
@@ -100,9 +81,17 @@ func dataSourceNetworkDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		vItemID2 := flattenDevicesGetDeviceCount2ItemID(response1)
+		if err := d.Set("item", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceInterfaceCount2 response",
+				err))
+			return diags
+		}
+		d.SetId(getUnixTimeString())
+		return diags
 
-	}
-	if selectedMethod == 2 {
+	} else {
 		log.Printf("[DEBUG] Selected method 2: GetDeviceCount2")
 
 		response2, restyResp2, err := client.Devices.GetDeviceCount2()
@@ -120,16 +109,7 @@ func dataSourceNetworkDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemName2 := flattenDevicesGetDeviceCount2ItemName(response2)
-		if err := d.Set("item_name", vItemName2); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetDeviceCount2 response",
-				err))
-			return diags
-		}
-		d.SetId(getUnixTimeString())
-		return diags
-		vItemID2 := flattenDevicesGetDeviceCount2ItemID(response2)
-		if err := d.Set("item_id", vItemID2); err != nil {
+		if err := d.Set("item", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceCount2 response",
 				err))
@@ -154,7 +134,7 @@ func flattenDevicesGetDeviceCount2ItemName(item *dnacentersdkgo.ResponseDevicesG
 	}
 }
 
-func flattenDevicesGetDeviceCount2ItemID(item *dnacentersdkgo.ResponseDevicesGetDeviceCount2) []map[string]interface{} {
+func flattenDevicesGetDeviceCount2ItemID(item *dnacentersdkgo.ResponseDevicesGetDeviceInterfaceCount2) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

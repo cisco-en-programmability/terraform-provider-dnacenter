@@ -26,7 +26,7 @@ data "dnacenter_pnp_device" "example" {
 }
 
 output "dnacenter_pnp_device_example" {
-  value = data.dnacenter_pnp_device.example.item_name
+  value = data.dnacenter_pnp_device.example.items
 }
 
 data "dnacenter_pnp_device" "example" {
@@ -35,5 +35,5 @@ data "dnacenter_pnp_device" "example" {
 }
 
 output "dnacenter_pnp_device_example" {
-  value = data.dnacenter_pnp_device.example.item_id
+  value = data.dnacenter_pnp_device.example.item
 }
