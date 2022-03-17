@@ -197,7 +197,7 @@ Pagination and sorting are also supported by this endpoint
 				},
 			},
 
-			"item_id": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -1870,7 +1870,7 @@ Pagination and sorting are also supported by this endpoint
 				},
 			},
 
-			"item_name": &schema.Schema{
+			"items": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -3662,7 +3662,7 @@ func dataSourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenDeviceOnboardingPnpGetDeviceList2Items(response1)
-		if err := d.Set("item_name", vItems1); err != nil {
+		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceList2 response",
 				err))
@@ -3691,7 +3691,7 @@ func dataSourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenDeviceOnboardingPnpGetDeviceByIDItem(response2)
-		if err := d.Set("item_id", vItem2); err != nil {
+		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceByID response",
 				err))
