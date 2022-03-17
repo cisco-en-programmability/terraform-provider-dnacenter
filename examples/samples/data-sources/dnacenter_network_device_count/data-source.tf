@@ -13,13 +13,9 @@ provider "dnacenter" {
 
 data "dnacenter_network_device_count" "example" {
   provider  = dnacenter
-  device_id = "string"
+  #device_id = "3923aed0-16e5-4ed0-b430-ff6dcfd9c517"
 }
 
 output "dnacenter_network_device_count_example" {
-  value = data.dnacenter_network_device_count.example.item_name
-}
-
-output "dnacenter_network_device_count_example" {
-  value = data.dnacenter_network_device_count.example.item_id
+  value = data.dnacenter_network_device_count.example.item
 }
