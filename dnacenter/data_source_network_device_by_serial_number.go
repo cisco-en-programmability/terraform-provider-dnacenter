@@ -104,7 +104,7 @@ func dataSourceNetworkDeviceBySerialNumber() *schema.Resource {
 						},
 
 						"last_update_time": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
