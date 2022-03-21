@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 
@@ -294,19 +295,20 @@ func resourceDeployTemplateV1Create(ctx context.Context, d *schema.ResourceData,
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
 
-	if err != nil || response1 == nil || !isValidUUID(response1.DeploymentID) {
+	if err != nil || response1 == nil || !isValidUUID(getLastString(response1.DeploymentID)) {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
+		err1 := errors.New(response1.DeploymentID)
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeployTemplateV1", err,
+			"Failure when executing DeployTemplateV1", err1,
 			"Failure at DeployTemplateV1, unexpected response", ""))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 	resourceMap := make(map[string]string)
-	resourceMap["deployment_id"] = response1.DeploymentID
+	resourceMap["deployment_id"] = (getLastString(response1.DeploymentID))
 	d.SetId(joinResourceID(resourceMap))
 
 	return resourceDeployTemplateV1Read(ctx, d, m)

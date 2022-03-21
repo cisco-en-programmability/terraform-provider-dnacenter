@@ -36,11 +36,132 @@ func resourceDeployTemplate() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"task_id": &schema.Schema{
+						"deployment_id": &schema.Schema{
+							Description: `UUID of deployment
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"url": &schema.Schema{
+						"deployment_name": &schema.Schema{
+							Description: `Name of deployment
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"devices": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"detailed_status_message": &schema.Schema{
+										Description: `Device detailed status message
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"device_id": &schema.Schema{
+										Description: `UUID of device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"duration": &schema.Schema{
+										Description: `Total duration of deployment
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"end_time": &schema.Schema{
+										Description: `EndTime of deployment
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"identifier": &schema.Schema{
+										Description: `Identifier of device based on the target type
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"ip_address": &schema.Schema{
+										Description: `Device IPAddress
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"name": &schema.Schema{
+										Description: `Name of device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"start_time": &schema.Schema{
+										Description: `StartTime of deployment
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"status": &schema.Schema{
+										Description: `Current status of device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"target_type": &schema.Schema{
+										Description: `Target type of device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"duration": &schema.Schema{
+							Description: `Total deployment duration
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"end_time": &schema.Schema{
+							Description: `Deployment end time
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"project_name": &schema.Schema{
+							Description: `Name of project
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"start_time": &schema.Schema{
+							Description: `Deployment start time
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"status": &schema.Schema{
+							Description: `Current status of deployment
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"status_message": &schema.Schema{
+							Description: `Status message of deployment
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"template_name": &schema.Schema{
+							Description: `Name of template deployed
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"template_version": &schema.Schema{
+							Description: `Version of template deployed
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -165,7 +286,7 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-
+	var deploymentId string
 	log.Printf("[DEBUG] Selected method 1: DeployTemplateV2")
 	request1 := expandRequestConfigurationTemplateDeployV2DeployTemplateV2(ctx, "parameters.0", d)
 
@@ -193,8 +314,14 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 	taskId := response1.Response.TaskID
 	log.Printf("[DEBUG] TASKID => %s", taskId)
 	if taskId != "" {
+
 		time.Sleep(5 * time.Second)
 		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if response2.Response == nil {
+			diags = append(diags, diagError(
+				"Failure when executing GetTaskByID", err))
+			return diags
+		}
 		if err != nil || response2 == nil {
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
@@ -204,32 +331,71 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 				"Failure at GetTaskByID, unexpected response", ""))
 			return diags
 		}
-		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+		for response2.Response.EndTime == nil || response2.Response.EndTime != nil && *response2.Response.EndTime == 0 {
+			time.Sleep(5 * time.Second)
+			response2, restyResp2, err = client.Task.GetTaskByID(taskId)
+			if response2.Response == nil {
+				diags = append(diags, diagError(
+					"Failure when executing GetTaskByID", err))
+				return diags
+			}
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetTaskByID", err,
+					"Failure at GetTaskByID, unexpected response", ""))
+				return diags
+			}
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError || !isValidUUID(getLastString(response2.Response.Progress)) {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.Progress)
+			errorMsg := response2.Response.Progress
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
 				"Failure when executing DeployTemplateV2", err1))
 			return diags
 		}
+		deploymentId = getLastString(response2.Response.Progress)
 	}
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-	vItem1 := flattenConfigurationTemplatesDeployTemplateV2Item(response1.Response)
-	if err := d.Set("item", vItem1); err != nil {
-		diags = append(diags, diagError(
-			"Failure when setting DeployTemplateV2 response",
-			err))
-		return diags
-	}
-	d.SetId(getUnixTimeString())
+	resourceMap := make(map[string]string)
+	resourceMap["deployment_id"] = deploymentId
+	d.SetId(joinResourceID(resourceMap))
 
 	return resourceDeployTemplateRead(ctx, d, m)
 }
 
 func resourceDeployTemplateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	//client := m.(*dnacentersdkgo.Client)
+	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vDeploymentID := resourceMap["deployment_id"]
+	log.Printf("[DEBUG] Selected method 1: StatusOfTemplateDeployment")
+	response1, restyResp1, err := client.ConfigurationTemplates.StatusOfTemplateDeployment(vDeploymentID)
+
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing StatusOfTemplateDeployment", err,
+			"Failure at StatusOfTemplateDeployment, unexpected response", ""))
+		return diags
+	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	vItem1 := flattenConfigurationTemplatesStatusOfTemplateDeploymentItem(response1)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting StatusOfTemplateDeployment response",
+			err))
+		return diags
+	}
 	return diags
 }
 
