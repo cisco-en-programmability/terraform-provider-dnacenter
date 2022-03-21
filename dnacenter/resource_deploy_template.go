@@ -349,19 +349,45 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 				return diags
 			}
 		}
-		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError || !isValidUUID(getLastString(response2.Response.Progress)) {
-			log.Printf("[DEBUG] Error reason %s", response2.Response.Progress)
-			errorMsg := response2.Response.Progress
-			err1 := errors.New(errorMsg)
-			diags = append(diags, diagError(
-				"Failure when executing DeployTemplateV2", err1))
-			return diags
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError || response2.Response != nil && !isValidUUID(getLastString(response2.Response.Progress)) {
+			if response2.Response.Progress != "Provisioning success for template basic" {
+				log.Printf("[DEBUG] Error reason %s", response2.Response.Progress)
+				errorMsg := response2.Response.Progress
+				err1 := errors.New(errorMsg)
+				diags = append(diags, diagError(
+					"Failure when executing DeployTemplateV2", err1))
+				return diags
+			} else {
+				deploymentId = ""
+			}
+		} else {
+			deploymentId = getLastString(response2.Response.Progress)
+			response3, restyResp3, err := client.ConfigurationTemplates.StatusOfTemplateDeployment(deploymentId)
+			if err != nil || response3 == nil {
+				if restyResp3 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing StatusOfTemplateDeployment", err,
+					"Failure at StatusOfTemplateDeployment, unexpected response", ""))
+				return diags
+			}
+
+			if response3.Status == "FAILURE" {
+				errorMsg := response2.Response.Progress
+				err1 := errors.New(errorMsg)
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing StatusOfTemplateDeployment", err1,
+					"Failure at StatusOfTemplateDeployment, unexpected response", ""))
+				return diags
+			}
 		}
-		deploymentId = getLastString(response2.Response.Progress)
 	}
+
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 	resourceMap := make(map[string]string)
 	resourceMap["deployment_id"] = deploymentId
+	resourceMap["time_updated"] = getUnixTimeString()
 	d.SetId(joinResourceID(resourceMap))
 
 	return resourceDeployTemplateRead(ctx, d, m)
@@ -375,27 +401,30 @@ func resourceDeployTemplateRead(ctx context.Context, d *schema.ResourceData, m i
 	resourceMap := separateResourceID(resourceID)
 	vDeploymentID := resourceMap["deployment_id"]
 	log.Printf("[DEBUG] Selected method 1: StatusOfTemplateDeployment")
-	response1, restyResp1, err := client.ConfigurationTemplates.StatusOfTemplateDeployment(vDeploymentID)
+	if vDeploymentID != "" {
+		response1, restyResp1, err := client.ConfigurationTemplates.StatusOfTemplateDeployment(vDeploymentID)
 
-	if err != nil || response1 == nil {
-		if restyResp1 != nil {
-			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing StatusOfTemplateDeployment", err,
+				"Failure at StatusOfTemplateDeployment, unexpected response", ""))
+			return diags
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing StatusOfTemplateDeployment", err,
-			"Failure at StatusOfTemplateDeployment, unexpected response", ""))
-		return diags
+
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+		vItem1 := flattenConfigurationTemplatesStatusOfTemplateDeploymentItem(response1)
+		if err := d.Set("item", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting StatusOfTemplateDeployment response",
+				err))
+			return diags
+		}
 	}
 
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	vItem1 := flattenConfigurationTemplatesStatusOfTemplateDeploymentItem(response1)
-	if err := d.Set("item", vItem1); err != nil {
-		diags = append(diags, diagError(
-			"Failure when setting StatusOfTemplateDeployment response",
-			err))
-		return diags
-	}
 	return diags
 }
 
