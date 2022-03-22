@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"strings"
 	"time"
 
 	"log"
@@ -361,7 +362,8 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 				deploymentId = ""
 			}
 		} else {
-			deploymentId = getLastString(response2.Response.Progress)
+			newProgress := strings.Trim(response2.Response.Progress, " ")
+			deploymentId = getLastString(newProgress)
 			response3, restyResp3, err := client.ConfigurationTemplates.StatusOfTemplateDeployment(deploymentId)
 			if err != nil || response3 == nil {
 				if restyResp3 != nil {
