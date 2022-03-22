@@ -367,8 +367,10 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 				if restyResp3 != nil {
 					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
+				errorMsg := response2.Response.Progress
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing StatusOfTemplateDeployment", err,
+					"Failure when executing StatusOfTemplateDeployment", err1,
 					"Failure at StatusOfTemplateDeployment, unexpected response", ""))
 				return diags
 			}
