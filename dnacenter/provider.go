@@ -51,6 +51,7 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"dnacenter_business_sda_wireless_controller":         resourceBusinessSdaWirelessController(),
 			"dnacenter_deploy_template_v1":                       resourceDeployTemplateV1(),
 			"dnacenter_image_device_activation":                  resourceImageDeviceActivation(),
 			"dnacenter_image_distribution":                       resourceImageDistribution(),
