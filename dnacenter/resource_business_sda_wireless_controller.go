@@ -14,17 +14,17 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceBusinessSdaWirelessController() *schema.Resource {
+func resourceBusinessSdaWirelessControllerCreate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Fabric Wireless.
 - Add WLC to Fabric Domain
 		Missing.
 `,
 
-		CreateContext: resourceBusinessSdaWirelessControllerCreate,
-		ReadContext:   resourceBusinessSdaWirelessControllerRead,
-		UpdateContext: resourceBusinessSdaWirelessControllerUpdate,
-		DeleteContext: resourceBusinessSdaWirelessControllerDelete,
+		CreateContext: resourceBusinessSdaWirelessControllerCreateCreate,
+		ReadContext:   resourceBusinessSdaWirelessControllerCreateRead,
+		UpdateContext: resourceBusinessSdaWirelessControllerCreateUpdate,
+		DeleteContext: resourceBusinessSdaWirelessControllerCreateDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
@@ -85,7 +85,7 @@ func resourceBusinessSdaWirelessController() *schema.Resource {
 	}
 }
 
-func resourceBusinessSdaWirelessControllerCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceBusinessSdaWirelessControllerCreateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
@@ -96,7 +96,7 @@ func resourceBusinessSdaWirelessControllerCreate(ctx context.Context, d *schema.
 	vSite_name_hierarchy := resourceItem["site_name_hierarchy"]
 	vvSite_name_hierarchy := interfaceToString(vSite_name_hierarchy)
 
-	request1 := expandRequestBusinessSdaWirelessControllerCreateAddWLCToFabricDomain(ctx, "parameters.0", d)
+	request1 := expandRequestBusinessSdaWirelessControllerCreateCreateAddWLCToFabricDomain(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	response1, restyResp1, err := client.FabricWireless.AddWLCToFabricDomain(request1)
@@ -159,20 +159,20 @@ func resourceBusinessSdaWirelessControllerCreate(ctx context.Context, d *schema.
 	resourceMap["device_name"] = vvDevice_name
 	resourceMap["site_name_hierarchy"] = vvSite_name_hierarchy
 	d.SetId(joinResourceID(resourceMap))
-	return resourceBusinessSdaWirelessControllerRead(ctx, d, m)
+	return resourceBusinessSdaWirelessControllerCreateRead(ctx, d, m)
 }
 
-func resourceBusinessSdaWirelessControllerRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceBusinessSdaWirelessControllerCreateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
 }
 
-func resourceBusinessSdaWirelessControllerUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceBusinessSdaWirelessControllerRead(ctx, d, m)
+func resourceBusinessSdaWirelessControllerCreateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return resourceBusinessSdaWirelessControllerCreateRead(ctx, d, m)
 }
 
-func resourceBusinessSdaWirelessControllerDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceBusinessSdaWirelessControllerCreateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	client := m.(*dnacentersdkgo.Client)
 
@@ -252,7 +252,7 @@ func resourceBusinessSdaWirelessControllerDelete(ctx context.Context, d *schema.
 	return diags
 }
 
-func expandRequestBusinessSdaWirelessControllerCreateAddWLCToFabricDomain(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestFabricWirelessAddWLCToFabricDomain {
+func expandRequestBusinessSdaWirelessControllerCreateCreateAddWLCToFabricDomain(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestFabricWirelessAddWLCToFabricDomain {
 	request := dnacentersdkgo.RequestFabricWirelessAddWLCToFabricDomain{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_name")))) {
 		request.DeviceName = interfaceToString(v)
