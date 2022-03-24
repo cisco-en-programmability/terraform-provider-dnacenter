@@ -155,10 +155,6 @@ func resourceBusinessSdaWirelessControllerDeleteRead(ctx context.Context, d *sch
 	return diags
 }
 
-func resourceBusinessSdaWirelessControllerDeleteUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceBusinessSdaWirelessControllerDeleteRead(ctx, d, m)
-}
-
 func resourceBusinessSdaWirelessControllerDeleteDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 	return diags
