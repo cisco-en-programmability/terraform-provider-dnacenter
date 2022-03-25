@@ -51,6 +51,9 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"dnacenter_itsm_integration_events_retry":              resourceItsmIntegrationEventsRetry(),
+			"dnacenter_network_device_export":                      resourceNetworkDeviceExport(),
+			"dnacenter_device_configurations_export":               resourceDeviceConfigurationsExport(),
 			"dnacenter_site_assign_credential":                     resourceSiteAssignCredential(),
 			"dnacenter_compliance":                                 resourceCompliance(),
 			"dnacenter_authentication_import_certificate_p12":      resourceAuthenticationImportCertificateP12(),
