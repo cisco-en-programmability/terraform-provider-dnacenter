@@ -51,6 +51,10 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"dnacenter_sensor_test_delete":                         resourceSensorTestDelete(),
+			"dnacenter_sensor_test_create":                         resourceSensorTestCreate(),
+			"dnacenter_virtual_account_devices_sync":               resourcePnpVirtualAccountDevicesSync(),
+			"dnacenter_pnp_device_reset":                           resourcePnpDeviceReset(),
 			"dnacenter_itsm_integration_events_retry":              resourceItsmIntegrationEventsRetry(),
 			"dnacenter_network_device_export":                      resourceNetworkDeviceExport(),
 			"dnacenter_device_configurations_export":               resourceDeviceConfigurationsExport(),
