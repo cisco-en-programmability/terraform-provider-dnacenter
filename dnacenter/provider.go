@@ -51,6 +51,10 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"dnacenter_wireless_provision_device_update":           resourceWirelessProvisionDeviceUpdate(),
+			"dnacenter_wireless_provision_device_create":           resourceWirelessProvisionDeviceCreate(),
+			"dnacenter_wireless_provision_access_point":            resourceWirelessProvisionAccessPoint(),
+			"dnacenter_template_preview":                           resourceTemplatePreview(),
 			"dnacenter_sensor_test_delete":                         resourceSensorTestDelete(),
 			"dnacenter_sensor_test_create":                         resourceSensorTestCreate(),
 			"dnacenter_virtual_account_devices_sync":               resourcePnpVirtualAccountDevicesSync(),
