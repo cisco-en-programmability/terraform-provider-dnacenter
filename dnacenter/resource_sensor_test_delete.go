@@ -13,8 +13,8 @@ import (
 
 func resourceSensorTestDelete() *schema.Resource {
 	return &schema.Resource{
-		Description: `It performs create operation on Sensors.
-		- Intent API to create a SENSOR test template with a new SSID, existing SSID, or both new and existing SSID
+		Description: `It performs delete operation on Sensors.
+		- Intent API to delete an existing SENSOR test template
 	
 `,
 
