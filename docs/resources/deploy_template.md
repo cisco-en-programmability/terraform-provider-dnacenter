@@ -35,9 +35,12 @@ resource "dnacenter_deploy_template" "example" {
     is_composite                    = "false"
     member_template_deployment_info = []
     target_info {
-      host_name             = "string"
-      id                    = "string"
-      params                = ["string"]
+      host_name = "string"
+      id        = "string"
+      params = {
+        key1 = "value1"
+        key2 = "value2"
+      }
       resource_params       = ["string"]
       type                  = "string"
       versioned_template_id = "string"
@@ -96,7 +99,7 @@ Optional:
 
 - **host_name** (String) Hostname of device is required if targetType is MANAGED_DEVICE_HOSTNAME
 - **id** (String) UUID of target is required if targetType is MANAGED_DEVICE_UUID
-- **params** (List of String) Template params/values to be provisioned
+- **params** (Map of String) Template params/values to be provisioned
 - **resource_params** (List of String) Resource params to be provisioned
 - **type** (String) Target type of device
 - **versioned_template_id** (String) Versioned templateUUID to be provisioned
@@ -108,7 +111,32 @@ Optional:
 
 Read-Only:
 
-- **task_id** (String)
-- **url** (String)
+- **deployment_id** (String)
+- **deployment_name** (String)
+- **devices** (List of Object) (see [below for nested schema](#nestedobjatt--item--devices))
+- **duration** (String)
+- **end_time** (String)
+- **project_name** (String)
+- **start_time** (String)
+- **status** (String)
+- **status_message** (String)
+- **template_name** (String)
+- **template_version** (String)
+
+<a id="nestedobjatt--item--devices"></a>
+### Nested Schema for `item.devices`
+
+Read-Only:
+
+- **detailed_status_message** (String)
+- **device_id** (String)
+- **duration** (String)
+- **end_time** (String)
+- **identifier** (String)
+- **ip_address** (String)
+- **name** (String)
+- **start_time** (String)
+- **status** (String)
+- **target_type** (String)
 
 
