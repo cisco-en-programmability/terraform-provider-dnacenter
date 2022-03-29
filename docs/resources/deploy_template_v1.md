@@ -36,9 +36,12 @@ resource "dnacenter_deploy_template_v1" "example" {
     is_composite                    = "false"
     member_template_deployment_info = []
     target_info {
-      host_name             = "string"
-      id                    = "string"
-      params                = ["string"]
+      host_name = "string"
+      id        = "string"
+      params = {
+        key1 = "value1"
+        key2 = "value2"
+      }
       resource_params       = ["string"]
       type                  = "string"
       versioned_template_id = "string"
@@ -87,7 +90,7 @@ Optional:
 
 - **host_name** (String) Hostname of device is required if targetType is MANAGED_DEVICE_HOSTNAME
 - **id** (String) UUID of target is required if targetType is MANAGED_DEVICE_UUID
-- **params** (List of String) Template params/values to be provisioned
+- **params** (Map of String) Template params/values to be provisioned
 - **resource_params** (List of String) Resource params to be provisioned
 - **type** (String) Target type of device
 - **versioned_template_id** (String) Versioned templateUUID to be provisioned

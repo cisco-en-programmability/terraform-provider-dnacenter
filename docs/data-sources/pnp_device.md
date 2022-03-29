@@ -47,7 +47,7 @@ data "dnacenter_pnp_device" "example" {
 }
 
 output "dnacenter_pnp_device_example" {
-  value = data.dnacenter_pnp_device.example.item_name
+  value = data.dnacenter_pnp_device.example.items
 }
 
 data "dnacenter_pnp_device" "example" {
@@ -56,7 +56,7 @@ data "dnacenter_pnp_device" "example" {
 }
 
 output "dnacenter_pnp_device_example" {
-  value = data.dnacenter_pnp_device.example.item_id
+  value = data.dnacenter_pnp_device.example.item
 }
 ```
 
@@ -90,40 +90,40 @@ output "dnacenter_pnp_device_example" {
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
 
-<a id="nestedatt--item_id"></a>
-### Nested Schema for `item_id`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
-- **day_zero_config** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--day_zero_config))
+- **day_zero_config** (List of Object) (see [below for nested schema](#nestedobjatt--item--day_zero_config))
 - **day_zero_config_preview** (String)
-- **device_info** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info))
-- **run_summary_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--run_summary_list))
-- **system_reset_workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--system_reset_workflow))
-- **system_workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--system_workflow))
+- **device_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info))
+- **run_summary_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--run_summary_list))
+- **system_reset_workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item--system_reset_workflow))
+- **system_workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item--system_workflow))
 - **tenant_id** (String)
 - **type_id** (String)
 - **version** (Number)
-- **workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--workflow))
-- **workflow_parameters** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--workflow_parameters))
+- **workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item--workflow))
+- **workflow_parameters** (List of Object) (see [below for nested schema](#nestedobjatt--item--workflow_parameters))
 
-<a id="nestedobjatt--item_id--day_zero_config"></a>
-### Nested Schema for `item_id.day_zero_config`
+<a id="nestedobjatt--item--day_zero_config"></a>
+### Nested Schema for `item.day_zero_config`
 
 Read-Only:
 
 - **config** (String)
 
 
-<a id="nestedobjatt--item_id--device_info"></a>
-### Nested Schema for `item_id.device_info`
+<a id="nestedobjatt--item--device_info"></a>
+### Nested Schema for `item.device_info`
 
 Read-Only:
 
-- **aaa_credentials** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--aaa_credentials))
+- **aaa_credentials** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--aaa_credentials))
 - **added_on** (Number)
 - **addn_mac_addrs** (List of String)
 - **agent_type** (String)
@@ -136,26 +136,26 @@ Read-Only:
 - **device_sudi_serial_nos** (List of String)
 - **device_type** (String)
 - **features_supported** (List of String)
-- **file_system_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--file_system_list))
+- **file_system_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--file_system_list))
 - **first_contact** (Number)
 - **hostname** (String)
-- **http_headers** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--http_headers))
+- **http_headers** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--http_headers))
 - **image_file** (String)
 - **image_version** (String)
-- **ip_interfaces** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--ip_interfaces))
+- **ip_interfaces** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--ip_interfaces))
 - **last_contact** (Number)
 - **last_sync_time** (Number)
 - **last_update_on** (Number)
-- **location** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--location))
+- **location** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--location))
 - **mac_address** (String)
 - **mode** (String)
 - **name** (String)
-- **neighbor_links** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--neighbor_links))
+- **neighbor_links** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--neighbor_links))
 - **onb_state** (String)
 - **pid** (String)
-- **pnp_profile_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--pnp_profile_list))
+- **pnp_profile_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--pnp_profile_list))
 - **populate_inventory** (String)
-- **pre_workflow_cli_ouputs** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--pre_workflow_cli_ouputs))
+- **pre_workflow_cli_ouputs** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--pre_workflow_cli_ouputs))
 - **project_id** (String)
 - **project_name** (String)
 - **reload_requested** (String)
@@ -165,7 +165,7 @@ Read-Only:
 - **smart_account_id** (String)
 - **source** (String)
 - **stack** (String)
-- **stack_info** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--stack_info))
+- **stack_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--stack_info))
 - **state** (String)
 - **sudi_required** (String)
 - **tags** (String)
@@ -175,8 +175,8 @@ Read-Only:
 - **workflow_id** (String)
 - **workflow_name** (String)
 
-<a id="nestedobjatt--item_id--device_info--aaa_credentials"></a>
-### Nested Schema for `item_id.device_info.aaa_credentials`
+<a id="nestedobjatt--item--device_info--aaa_credentials"></a>
+### Nested Schema for `item.device_info.aaa_credentials`
 
 Read-Only:
 
@@ -184,8 +184,8 @@ Read-Only:
 - **username** (String)
 
 
-<a id="nestedobjatt--item_id--device_info--file_system_list"></a>
-### Nested Schema for `item_id.device_info.file_system_list`
+<a id="nestedobjatt--item--device_info--file_system_list"></a>
+### Nested Schema for `item.device_info.file_system_list`
 
 Read-Only:
 
@@ -197,8 +197,8 @@ Read-Only:
 - **writeable** (String)
 
 
-<a id="nestedobjatt--item_id--device_info--http_headers"></a>
-### Nested Schema for `item_id.device_info.http_headers`
+<a id="nestedobjatt--item--device_info--http_headers"></a>
+### Nested Schema for `item.device_info.http_headers`
 
 Read-Only:
 
@@ -206,8 +206,8 @@ Read-Only:
 - **value** (String)
 
 
-<a id="nestedobjatt--item_id--device_info--ip_interfaces"></a>
-### Nested Schema for `item_id.device_info.ip_interfaces`
+<a id="nestedobjatt--item--device_info--ip_interfaces"></a>
+### Nested Schema for `item.device_info.ip_interfaces`
 
 Read-Only:
 
@@ -218,8 +218,8 @@ Read-Only:
 - **status** (String)
 
 
-<a id="nestedobjatt--item_id--device_info--location"></a>
-### Nested Schema for `item_id.device_info.location`
+<a id="nestedobjatt--item--device_info--location"></a>
+### Nested Schema for `item.device_info.location`
 
 Read-Only:
 
@@ -230,8 +230,8 @@ Read-Only:
 - **site_id** (String)
 
 
-<a id="nestedobjatt--item_id--device_info--neighbor_links"></a>
-### Nested Schema for `item_id.device_info.neighbor_links`
+<a id="nestedobjatt--item--device_info--neighbor_links"></a>
+### Nested Schema for `item.device_info.neighbor_links`
 
 Read-Only:
 
@@ -246,32 +246,19 @@ Read-Only:
 - **remote_version** (String)
 
 
-<a id="nestedobjatt--item_id--device_info--pnp_profile_list"></a>
-### Nested Schema for `item_id.device_info.pnp_profile_list`
+<a id="nestedobjatt--item--device_info--pnp_profile_list"></a>
+### Nested Schema for `item.device_info.pnp_profile_list`
 
 Read-Only:
 
 - **created_by** (String)
 - **discovery_created** (String)
-- **primary_endpoint** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--pnp_profile_list--primary_endpoint))
+- **primary_endpoint** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--pnp_profile_list--primary_endpoint))
 - **profile_name** (String)
-- **secondary_endpoint** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--pnp_profile_list--secondary_endpoint))
+- **secondary_endpoint** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--pnp_profile_list--secondary_endpoint))
 
-<a id="nestedobjatt--item_id--device_info--pnp_profile_list--primary_endpoint"></a>
-### Nested Schema for `item_id.device_info.pnp_profile_list.secondary_endpoint`
-
-Read-Only:
-
-- **certificate** (String)
-- **fqdn** (String)
-- **ipv4_address** (String)
-- **ipv6_address** (String)
-- **port** (Number)
-- **protocol** (String)
-
-
-<a id="nestedobjatt--item_id--device_info--pnp_profile_list--secondary_endpoint"></a>
-### Nested Schema for `item_id.device_info.pnp_profile_list.secondary_endpoint`
+<a id="nestedobjatt--item--device_info--pnp_profile_list--primary_endpoint"></a>
+### Nested Schema for `item.device_info.pnp_profile_list.secondary_endpoint`
 
 Read-Only:
 
@@ -283,9 +270,22 @@ Read-Only:
 - **protocol** (String)
 
 
+<a id="nestedobjatt--item--device_info--pnp_profile_list--secondary_endpoint"></a>
+### Nested Schema for `item.device_info.pnp_profile_list.secondary_endpoint`
 
-<a id="nestedobjatt--item_id--device_info--pre_workflow_cli_ouputs"></a>
-### Nested Schema for `item_id.device_info.pre_workflow_cli_ouputs`
+Read-Only:
+
+- **certificate** (String)
+- **fqdn** (String)
+- **ipv4_address** (String)
+- **ipv6_address** (String)
+- **port** (Number)
+- **protocol** (String)
+
+
+
+<a id="nestedobjatt--item--device_info--pre_workflow_cli_ouputs"></a>
+### Nested Schema for `item.device_info.pre_workflow_cli_ouputs`
 
 Read-Only:
 
@@ -293,20 +293,20 @@ Read-Only:
 - **cli_output** (String)
 
 
-<a id="nestedobjatt--item_id--device_info--stack_info"></a>
-### Nested Schema for `item_id.device_info.stack_info`
+<a id="nestedobjatt--item--device_info--stack_info"></a>
+### Nested Schema for `item.device_info.stack_info`
 
 Read-Only:
 
 - **is_full_ring** (String)
-- **stack_member_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--device_info--stack_info--stack_member_list))
+- **stack_member_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_info--stack_info--stack_member_list))
 - **stack_ring_protocol** (String)
 - **supports_stack_workflows** (String)
 - **total_member_count** (Number)
 - **valid_license_levels** (List of String)
 
-<a id="nestedobjatt--item_id--device_info--stack_info--stack_member_list"></a>
-### Nested Schema for `item_id.device_info.stack_info.valid_license_levels`
+<a id="nestedobjatt--item--device_info--stack_info--stack_member_list"></a>
+### Nested Schema for `item.device_info.stack_info.valid_license_levels`
 
 Read-Only:
 
@@ -326,29 +326,29 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item_id--run_summary_list"></a>
-### Nested Schema for `item_id.run_summary_list`
+<a id="nestedobjatt--item--run_summary_list"></a>
+### Nested Schema for `item.run_summary_list`
 
 Read-Only:
 
 - **details** (String)
 - **error_flag** (String)
-- **history_task_info** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--run_summary_list--history_task_info))
+- **history_task_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--run_summary_list--history_task_info))
 - **timestamp** (Number)
 
-<a id="nestedobjatt--item_id--run_summary_list--history_task_info"></a>
-### Nested Schema for `item_id.run_summary_list.history_task_info`
+<a id="nestedobjatt--item--run_summary_list--history_task_info"></a>
+### Nested Schema for `item.run_summary_list.history_task_info`
 
 Read-Only:
 
-- **addn_details** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--run_summary_list--history_task_info--addn_details))
+- **addn_details** (List of Object) (see [below for nested schema](#nestedobjatt--item--run_summary_list--history_task_info--addn_details))
 - **name** (String)
 - **time_taken** (Number)
 - **type** (String)
-- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--run_summary_list--history_task_info--work_item_list))
+- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--run_summary_list--history_task_info--work_item_list))
 
-<a id="nestedobjatt--item_id--run_summary_list--history_task_info--addn_details"></a>
-### Nested Schema for `item_id.run_summary_list.history_task_info.work_item_list`
+<a id="nestedobjatt--item--run_summary_list--history_task_info--addn_details"></a>
+### Nested Schema for `item.run_summary_list.history_task_info.work_item_list`
 
 Read-Only:
 
@@ -356,8 +356,8 @@ Read-Only:
 - **value** (String)
 
 
-<a id="nestedobjatt--item_id--run_summary_list--history_task_info--work_item_list"></a>
-### Nested Schema for `item_id.run_summary_list.history_task_info.work_item_list`
+<a id="nestedobjatt--item--run_summary_list--history_task_info--work_item_list"></a>
+### Nested Schema for `item.run_summary_list.history_task_info.work_item_list`
 
 Read-Only:
 
@@ -371,8 +371,8 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item_id--system_reset_workflow"></a>
-### Nested Schema for `item_id.system_reset_workflow`
+<a id="nestedobjatt--item--system_reset_workflow"></a>
+### Nested Schema for `item.system_reset_workflow`
 
 Read-Only:
 
@@ -389,15 +389,15 @@ Read-Only:
 - **name** (String)
 - **start_time** (Number)
 - **state** (String)
-- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--system_reset_workflow--tasks))
+- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--item--system_reset_workflow--tasks))
 - **tenant_id** (String)
 - **type** (String)
 - **type_id** (String)
 - **use_state** (String)
 - **version** (Number)
 
-<a id="nestedobjatt--item_id--system_reset_workflow--tasks"></a>
-### Nested Schema for `item_id.system_reset_workflow.tasks`
+<a id="nestedobjatt--item--system_reset_workflow--tasks"></a>
+### Nested Schema for `item.system_reset_workflow.tasks`
 
 Read-Only:
 
@@ -409,10 +409,10 @@ Read-Only:
 - **task_seq_no** (Number)
 - **time_taken** (Number)
 - **type** (String)
-- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--system_reset_workflow--tasks--work_item_list))
+- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--system_reset_workflow--tasks--work_item_list))
 
-<a id="nestedobjatt--item_id--system_reset_workflow--tasks--work_item_list"></a>
-### Nested Schema for `item_id.system_reset_workflow.tasks.work_item_list`
+<a id="nestedobjatt--item--system_reset_workflow--tasks--work_item_list"></a>
+### Nested Schema for `item.system_reset_workflow.tasks.work_item_list`
 
 Read-Only:
 
@@ -426,8 +426,8 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item_id--system_workflow"></a>
-### Nested Schema for `item_id.system_workflow`
+<a id="nestedobjatt--item--system_workflow"></a>
+### Nested Schema for `item.system_workflow`
 
 Read-Only:
 
@@ -444,15 +444,15 @@ Read-Only:
 - **name** (String)
 - **start_time** (Number)
 - **state** (String)
-- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--system_workflow--tasks))
+- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--item--system_workflow--tasks))
 - **tenant_id** (String)
 - **type** (String)
 - **type_id** (String)
 - **use_state** (String)
 - **version** (Number)
 
-<a id="nestedobjatt--item_id--system_workflow--tasks"></a>
-### Nested Schema for `item_id.system_workflow.tasks`
+<a id="nestedobjatt--item--system_workflow--tasks"></a>
+### Nested Schema for `item.system_workflow.tasks`
 
 Read-Only:
 
@@ -464,10 +464,10 @@ Read-Only:
 - **task_seq_no** (Number)
 - **time_taken** (Number)
 - **type** (String)
-- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--system_workflow--tasks--work_item_list))
+- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--system_workflow--tasks--work_item_list))
 
-<a id="nestedobjatt--item_id--system_workflow--tasks--work_item_list"></a>
-### Nested Schema for `item_id.system_workflow.tasks.work_item_list`
+<a id="nestedobjatt--item--system_workflow--tasks--work_item_list"></a>
+### Nested Schema for `item.system_workflow.tasks.work_item_list`
 
 Read-Only:
 
@@ -481,8 +481,8 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item_id--workflow"></a>
-### Nested Schema for `item_id.workflow`
+<a id="nestedobjatt--item--workflow"></a>
+### Nested Schema for `item.workflow`
 
 Read-Only:
 
@@ -499,15 +499,15 @@ Read-Only:
 - **name** (String)
 - **start_time** (Number)
 - **state** (String)
-- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--workflow--tasks))
+- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--item--workflow--tasks))
 - **tenant_id** (String)
 - **type** (String)
 - **type_id** (String)
 - **use_state** (String)
 - **version** (Number)
 
-<a id="nestedobjatt--item_id--workflow--tasks"></a>
-### Nested Schema for `item_id.workflow.tasks`
+<a id="nestedobjatt--item--workflow--tasks"></a>
+### Nested Schema for `item.workflow.tasks`
 
 Read-Only:
 
@@ -519,10 +519,10 @@ Read-Only:
 - **task_seq_no** (Number)
 - **time_taken** (Number)
 - **type** (String)
-- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--workflow--tasks--work_item_list))
+- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--workflow--tasks--work_item_list))
 
-<a id="nestedobjatt--item_id--workflow--tasks--work_item_list"></a>
-### Nested Schema for `item_id.workflow.tasks.work_item_list`
+<a id="nestedobjatt--item--workflow--tasks--work_item_list"></a>
+### Nested Schema for `item.workflow.tasks.work_item_list`
 
 Read-Only:
 
@@ -536,26 +536,26 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item_id--workflow_parameters"></a>
-### Nested Schema for `item_id.workflow_parameters`
+<a id="nestedobjatt--item--workflow_parameters"></a>
+### Nested Schema for `item.workflow_parameters`
 
 Read-Only:
 
-- **config_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--workflow_parameters--config_list))
+- **config_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--workflow_parameters--config_list))
 - **license_level** (String)
 - **license_type** (String)
 - **top_of_stack_serial_number** (String)
 
-<a id="nestedobjatt--item_id--workflow_parameters--config_list"></a>
-### Nested Schema for `item_id.workflow_parameters.config_list`
+<a id="nestedobjatt--item--workflow_parameters--config_list"></a>
+### Nested Schema for `item.workflow_parameters.config_list`
 
 Read-Only:
 
 - **config_id** (String)
-- **config_parameters** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--workflow_parameters--config_list--config_parameters))
+- **config_parameters** (List of Object) (see [below for nested schema](#nestedobjatt--item--workflow_parameters--config_list--config_parameters))
 
-<a id="nestedobjatt--item_id--workflow_parameters--config_list--config_parameters"></a>
-### Nested Schema for `item_id.workflow_parameters.config_list.config_parameters`
+<a id="nestedobjatt--item--workflow_parameters--config_list--config_parameters"></a>
+### Nested Schema for `item.workflow_parameters.config_list.config_parameters`
 
 Read-Only:
 
@@ -566,37 +566,37 @@ Read-Only:
 
 
 
-<a id="nestedatt--item_name"></a>
-### Nested Schema for `item_name`
+<a id="nestedatt--items"></a>
+### Nested Schema for `items`
 
 Read-Only:
 
-- **day_zero_config** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--day_zero_config))
+- **day_zero_config** (List of Object) (see [below for nested schema](#nestedobjatt--items--day_zero_config))
 - **day_zero_config_preview** (String)
-- **device_info** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info))
-- **run_summary_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--run_summary_list))
-- **system_reset_workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--system_reset_workflow))
-- **system_workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--system_workflow))
+- **device_info** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info))
+- **id** (String)
+- **run_summary_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--run_summary_list))
+- **system_reset_workflow** (List of Object) (see [below for nested schema](#nestedobjatt--items--system_reset_workflow))
+- **system_workflow** (List of Object) (see [below for nested schema](#nestedobjatt--items--system_workflow))
 - **tenant_id** (String)
-- **type_id** (String)
 - **version** (Number)
-- **workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--workflow))
-- **workflow_parameters** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--workflow_parameters))
+- **workflow** (List of Object) (see [below for nested schema](#nestedobjatt--items--workflow))
+- **workflow_parameters** (List of Object) (see [below for nested schema](#nestedobjatt--items--workflow_parameters))
 
-<a id="nestedobjatt--item_name--day_zero_config"></a>
-### Nested Schema for `item_name.day_zero_config`
+<a id="nestedobjatt--items--day_zero_config"></a>
+### Nested Schema for `items.day_zero_config`
 
 Read-Only:
 
 - **config** (String)
 
 
-<a id="nestedobjatt--item_name--device_info"></a>
-### Nested Schema for `item_name.device_info`
+<a id="nestedobjatt--items--device_info"></a>
+### Nested Schema for `items.device_info`
 
 Read-Only:
 
-- **aaa_credentials** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--aaa_credentials))
+- **aaa_credentials** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--aaa_credentials))
 - **added_on** (Number)
 - **addn_mac_addrs** (List of String)
 - **agent_type** (String)
@@ -609,26 +609,26 @@ Read-Only:
 - **device_sudi_serial_nos** (List of String)
 - **device_type** (String)
 - **features_supported** (List of String)
-- **file_system_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--file_system_list))
+- **file_system_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--file_system_list))
 - **first_contact** (Number)
 - **hostname** (String)
-- **http_headers** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--http_headers))
+- **http_headers** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--http_headers))
 - **image_file** (String)
 - **image_version** (String)
-- **ip_interfaces** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--ip_interfaces))
+- **ip_interfaces** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--ip_interfaces))
 - **last_contact** (Number)
 - **last_sync_time** (Number)
 - **last_update_on** (Number)
-- **location** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--location))
+- **location** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--location))
 - **mac_address** (String)
 - **mode** (String)
 - **name** (String)
-- **neighbor_links** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--neighbor_links))
+- **neighbor_links** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--neighbor_links))
 - **onb_state** (String)
 - **pid** (String)
-- **pnp_profile_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--pnp_profile_list))
+- **pnp_profile_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--pnp_profile_list))
 - **populate_inventory** (String)
-- **pre_workflow_cli_ouputs** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--pre_workflow_cli_ouputs))
+- **pre_workflow_cli_ouputs** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--pre_workflow_cli_ouputs))
 - **project_id** (String)
 - **project_name** (String)
 - **reload_requested** (String)
@@ -638,7 +638,7 @@ Read-Only:
 - **smart_account_id** (String)
 - **source** (String)
 - **stack** (String)
-- **stack_info** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--stack_info))
+- **stack_info** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--stack_info))
 - **state** (String)
 - **sudi_required** (String)
 - **tags** (String)
@@ -648,8 +648,8 @@ Read-Only:
 - **workflow_id** (String)
 - **workflow_name** (String)
 
-<a id="nestedobjatt--item_name--device_info--aaa_credentials"></a>
-### Nested Schema for `item_name.device_info.aaa_credentials`
+<a id="nestedobjatt--items--device_info--aaa_credentials"></a>
+### Nested Schema for `items.device_info.aaa_credentials`
 
 Read-Only:
 
@@ -657,8 +657,8 @@ Read-Only:
 - **username** (String)
 
 
-<a id="nestedobjatt--item_name--device_info--file_system_list"></a>
-### Nested Schema for `item_name.device_info.file_system_list`
+<a id="nestedobjatt--items--device_info--file_system_list"></a>
+### Nested Schema for `items.device_info.file_system_list`
 
 Read-Only:
 
@@ -670,8 +670,8 @@ Read-Only:
 - **writeable** (String)
 
 
-<a id="nestedobjatt--item_name--device_info--http_headers"></a>
-### Nested Schema for `item_name.device_info.http_headers`
+<a id="nestedobjatt--items--device_info--http_headers"></a>
+### Nested Schema for `items.device_info.http_headers`
 
 Read-Only:
 
@@ -679,8 +679,8 @@ Read-Only:
 - **value** (String)
 
 
-<a id="nestedobjatt--item_name--device_info--ip_interfaces"></a>
-### Nested Schema for `item_name.device_info.ip_interfaces`
+<a id="nestedobjatt--items--device_info--ip_interfaces"></a>
+### Nested Schema for `items.device_info.ip_interfaces`
 
 Read-Only:
 
@@ -691,8 +691,8 @@ Read-Only:
 - **status** (String)
 
 
-<a id="nestedobjatt--item_name--device_info--location"></a>
-### Nested Schema for `item_name.device_info.location`
+<a id="nestedobjatt--items--device_info--location"></a>
+### Nested Schema for `items.device_info.location`
 
 Read-Only:
 
@@ -703,8 +703,8 @@ Read-Only:
 - **site_id** (String)
 
 
-<a id="nestedobjatt--item_name--device_info--neighbor_links"></a>
-### Nested Schema for `item_name.device_info.neighbor_links`
+<a id="nestedobjatt--items--device_info--neighbor_links"></a>
+### Nested Schema for `items.device_info.neighbor_links`
 
 Read-Only:
 
@@ -719,32 +719,19 @@ Read-Only:
 - **remote_version** (String)
 
 
-<a id="nestedobjatt--item_name--device_info--pnp_profile_list"></a>
-### Nested Schema for `item_name.device_info.pnp_profile_list`
+<a id="nestedobjatt--items--device_info--pnp_profile_list"></a>
+### Nested Schema for `items.device_info.pnp_profile_list`
 
 Read-Only:
 
 - **created_by** (String)
 - **discovery_created** (String)
-- **primary_endpoint** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--pnp_profile_list--primary_endpoint))
+- **primary_endpoint** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--pnp_profile_list--primary_endpoint))
 - **profile_name** (String)
-- **secondary_endpoint** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--pnp_profile_list--secondary_endpoint))
+- **secondary_endpoint** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--pnp_profile_list--secondary_endpoint))
 
-<a id="nestedobjatt--item_name--device_info--pnp_profile_list--primary_endpoint"></a>
-### Nested Schema for `item_name.device_info.pnp_profile_list.secondary_endpoint`
-
-Read-Only:
-
-- **certificate** (String)
-- **fqdn** (String)
-- **ipv4_address** (String)
-- **ipv6_address** (String)
-- **port** (Number)
-- **protocol** (String)
-
-
-<a id="nestedobjatt--item_name--device_info--pnp_profile_list--secondary_endpoint"></a>
-### Nested Schema for `item_name.device_info.pnp_profile_list.secondary_endpoint`
+<a id="nestedobjatt--items--device_info--pnp_profile_list--primary_endpoint"></a>
+### Nested Schema for `items.device_info.pnp_profile_list.secondary_endpoint`
 
 Read-Only:
 
@@ -756,9 +743,22 @@ Read-Only:
 - **protocol** (String)
 
 
+<a id="nestedobjatt--items--device_info--pnp_profile_list--secondary_endpoint"></a>
+### Nested Schema for `items.device_info.pnp_profile_list.secondary_endpoint`
 
-<a id="nestedobjatt--item_name--device_info--pre_workflow_cli_ouputs"></a>
-### Nested Schema for `item_name.device_info.pre_workflow_cli_ouputs`
+Read-Only:
+
+- **certificate** (String)
+- **fqdn** (String)
+- **ipv4_address** (String)
+- **ipv6_address** (String)
+- **port** (Number)
+- **protocol** (String)
+
+
+
+<a id="nestedobjatt--items--device_info--pre_workflow_cli_ouputs"></a>
+### Nested Schema for `items.device_info.pre_workflow_cli_ouputs`
 
 Read-Only:
 
@@ -766,20 +766,20 @@ Read-Only:
 - **cli_output** (String)
 
 
-<a id="nestedobjatt--item_name--device_info--stack_info"></a>
-### Nested Schema for `item_name.device_info.stack_info`
+<a id="nestedobjatt--items--device_info--stack_info"></a>
+### Nested Schema for `items.device_info.stack_info`
 
 Read-Only:
 
 - **is_full_ring** (String)
-- **stack_member_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--device_info--stack_info--stack_member_list))
+- **stack_member_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info--stack_info--stack_member_list))
 - **stack_ring_protocol** (String)
 - **supports_stack_workflows** (String)
 - **total_member_count** (Number)
 - **valid_license_levels** (List of String)
 
-<a id="nestedobjatt--item_name--device_info--stack_info--stack_member_list"></a>
-### Nested Schema for `item_name.device_info.stack_info.valid_license_levels`
+<a id="nestedobjatt--items--device_info--stack_info--stack_member_list"></a>
+### Nested Schema for `items.device_info.stack_info.valid_license_levels`
 
 Read-Only:
 
@@ -799,29 +799,29 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item_name--run_summary_list"></a>
-### Nested Schema for `item_name.run_summary_list`
+<a id="nestedobjatt--items--run_summary_list"></a>
+### Nested Schema for `items.run_summary_list`
 
 Read-Only:
 
 - **details** (String)
 - **error_flag** (String)
-- **history_task_info** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--run_summary_list--history_task_info))
+- **history_task_info** (List of Object) (see [below for nested schema](#nestedobjatt--items--run_summary_list--history_task_info))
 - **timestamp** (Number)
 
-<a id="nestedobjatt--item_name--run_summary_list--history_task_info"></a>
-### Nested Schema for `item_name.run_summary_list.history_task_info`
+<a id="nestedobjatt--items--run_summary_list--history_task_info"></a>
+### Nested Schema for `items.run_summary_list.history_task_info`
 
 Read-Only:
 
-- **addn_details** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--run_summary_list--history_task_info--addn_details))
+- **addn_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--run_summary_list--history_task_info--addn_details))
 - **name** (String)
 - **time_taken** (Number)
 - **type** (String)
-- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--run_summary_list--history_task_info--work_item_list))
+- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--run_summary_list--history_task_info--work_item_list))
 
-<a id="nestedobjatt--item_name--run_summary_list--history_task_info--addn_details"></a>
-### Nested Schema for `item_name.run_summary_list.history_task_info.work_item_list`
+<a id="nestedobjatt--items--run_summary_list--history_task_info--addn_details"></a>
+### Nested Schema for `items.run_summary_list.history_task_info.work_item_list`
 
 Read-Only:
 
@@ -829,8 +829,8 @@ Read-Only:
 - **value** (String)
 
 
-<a id="nestedobjatt--item_name--run_summary_list--history_task_info--work_item_list"></a>
-### Nested Schema for `item_name.run_summary_list.history_task_info.work_item_list`
+<a id="nestedobjatt--items--run_summary_list--history_task_info--work_item_list"></a>
+### Nested Schema for `items.run_summary_list.history_task_info.work_item_list`
 
 Read-Only:
 
@@ -844,8 +844,8 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item_name--system_reset_workflow"></a>
-### Nested Schema for `item_name.system_reset_workflow`
+<a id="nestedobjatt--items--system_reset_workflow"></a>
+### Nested Schema for `items.system_reset_workflow`
 
 Read-Only:
 
@@ -862,15 +862,15 @@ Read-Only:
 - **name** (String)
 - **start_time** (Number)
 - **state** (String)
-- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--system_reset_workflow--tasks))
+- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--items--system_reset_workflow--tasks))
 - **tenant_id** (String)
 - **type** (String)
 - **type_id** (String)
 - **use_state** (String)
 - **version** (Number)
 
-<a id="nestedobjatt--item_name--system_reset_workflow--tasks"></a>
-### Nested Schema for `item_name.system_reset_workflow.tasks`
+<a id="nestedobjatt--items--system_reset_workflow--tasks"></a>
+### Nested Schema for `items.system_reset_workflow.tasks`
 
 Read-Only:
 
@@ -882,10 +882,10 @@ Read-Only:
 - **task_seq_no** (Number)
 - **time_taken** (Number)
 - **type** (String)
-- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--system_reset_workflow--tasks--work_item_list))
+- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--system_reset_workflow--tasks--work_item_list))
 
-<a id="nestedobjatt--item_name--system_reset_workflow--tasks--work_item_list"></a>
-### Nested Schema for `item_name.system_reset_workflow.tasks.work_item_list`
+<a id="nestedobjatt--items--system_reset_workflow--tasks--work_item_list"></a>
+### Nested Schema for `items.system_reset_workflow.tasks.work_item_list`
 
 Read-Only:
 
@@ -899,8 +899,8 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item_name--system_workflow"></a>
-### Nested Schema for `item_name.system_workflow`
+<a id="nestedobjatt--items--system_workflow"></a>
+### Nested Schema for `items.system_workflow`
 
 Read-Only:
 
@@ -917,15 +917,15 @@ Read-Only:
 - **name** (String)
 - **start_time** (Number)
 - **state** (String)
-- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--system_workflow--tasks))
+- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--items--system_workflow--tasks))
 - **tenant_id** (String)
 - **type** (String)
 - **type_id** (String)
 - **use_state** (String)
 - **version** (Number)
 
-<a id="nestedobjatt--item_name--system_workflow--tasks"></a>
-### Nested Schema for `item_name.system_workflow.tasks`
+<a id="nestedobjatt--items--system_workflow--tasks"></a>
+### Nested Schema for `items.system_workflow.tasks`
 
 Read-Only:
 
@@ -937,10 +937,10 @@ Read-Only:
 - **task_seq_no** (Number)
 - **time_taken** (Number)
 - **type** (String)
-- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--system_workflow--tasks--work_item_list))
+- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--system_workflow--tasks--work_item_list))
 
-<a id="nestedobjatt--item_name--system_workflow--tasks--work_item_list"></a>
-### Nested Schema for `item_name.system_workflow.tasks.work_item_list`
+<a id="nestedobjatt--items--system_workflow--tasks--work_item_list"></a>
+### Nested Schema for `items.system_workflow.tasks.work_item_list`
 
 Read-Only:
 
@@ -954,8 +954,8 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item_name--workflow"></a>
-### Nested Schema for `item_name.workflow`
+<a id="nestedobjatt--items--workflow"></a>
+### Nested Schema for `items.workflow`
 
 Read-Only:
 
@@ -972,15 +972,15 @@ Read-Only:
 - **name** (String)
 - **start_time** (Number)
 - **state** (String)
-- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--workflow--tasks))
+- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--items--workflow--tasks))
 - **tenant_id** (String)
 - **type** (String)
 - **type_id** (String)
 - **use_state** (String)
 - **version** (Number)
 
-<a id="nestedobjatt--item_name--workflow--tasks"></a>
-### Nested Schema for `item_name.workflow.tasks`
+<a id="nestedobjatt--items--workflow--tasks"></a>
+### Nested Schema for `items.workflow.tasks`
 
 Read-Only:
 
@@ -992,10 +992,10 @@ Read-Only:
 - **task_seq_no** (Number)
 - **time_taken** (Number)
 - **type** (String)
-- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--workflow--tasks--work_item_list))
+- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--workflow--tasks--work_item_list))
 
-<a id="nestedobjatt--item_name--workflow--tasks--work_item_list"></a>
-### Nested Schema for `item_name.workflow.tasks.work_item_list`
+<a id="nestedobjatt--items--workflow--tasks--work_item_list"></a>
+### Nested Schema for `items.workflow.tasks.work_item_list`
 
 Read-Only:
 
@@ -1009,26 +1009,26 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item_name--workflow_parameters"></a>
-### Nested Schema for `item_name.workflow_parameters`
+<a id="nestedobjatt--items--workflow_parameters"></a>
+### Nested Schema for `items.workflow_parameters`
 
 Read-Only:
 
-- **config_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--workflow_parameters--config_list))
+- **config_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--workflow_parameters--config_list))
 - **license_level** (String)
 - **license_type** (String)
 - **top_of_stack_serial_number** (String)
 
-<a id="nestedobjatt--item_name--workflow_parameters--config_list"></a>
-### Nested Schema for `item_name.workflow_parameters.config_list`
+<a id="nestedobjatt--items--workflow_parameters--config_list"></a>
+### Nested Schema for `items.workflow_parameters.config_list`
 
 Read-Only:
 
 - **config_id** (String)
-- **config_parameters** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--workflow_parameters--config_list--config_parameters))
+- **config_parameters** (List of Object) (see [below for nested schema](#nestedobjatt--items--workflow_parameters--config_list--config_parameters))
 
-<a id="nestedobjatt--item_name--workflow_parameters--config_list--config_parameters"></a>
-### Nested Schema for `item_name.workflow_parameters.config_list.config_parameters`
+<a id="nestedobjatt--items--workflow_parameters--config_list--config_parameters"></a>
+### Nested Schema for `items.workflow_parameters.config_list.config_parameters`
 
 Read-Only:
 

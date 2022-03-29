@@ -72,14 +72,26 @@ output "dnacenter_pnp_device_site_claim_example" {
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
+Required:
+
+- **image_info** (Block List, Min: 1) (see [below for nested schema](#nestedblock--parameters--image_info))
+
 Optional:
 
 - **config_info** (Block List) (see [below for nested schema](#nestedblock--parameters--config_info))
 - **device_id** (String)
 - **hostname** (String)
-- **image_info** (Block List) (see [below for nested schema](#nestedblock--parameters--image_info))
 - **site_id** (String)
 - **type** (String)
+
+<a id="nestedblock--parameters--image_info"></a>
+### Nested Schema for `parameters.image_info`
+
+Required:
+
+- **image_id** (String)
+- **skip** (String)
+
 
 <a id="nestedblock--parameters--config_info"></a>
 ### Nested Schema for `parameters.config_info`
@@ -92,20 +104,11 @@ Optional:
 <a id="nestedblock--parameters--config_info--config_parameters"></a>
 ### Nested Schema for `parameters.config_info.config_parameters`
 
-Optional:
+Required:
 
 - **key** (String)
 - **value** (String)
 
-
-
-<a id="nestedblock--parameters--image_info"></a>
-### Nested Schema for `parameters.image_info`
-
-Optional:
-
-- **image_id** (String)
-- **skip** (String)
 
 
 
@@ -116,3 +119,5 @@ Read-Only:
 
 - **response** (String)
 - **version** (String)
+
+
