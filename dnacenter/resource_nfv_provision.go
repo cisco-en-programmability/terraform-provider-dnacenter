@@ -23,9 +23,6 @@ func resourceNfvProvision() *schema.Resource {
 		CreateContext: resourceNfvProvisionCreate,
 		ReadContext:   resourceNfvProvisionRead,
 		DeleteContext: resourceNfvProvisionDelete,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{

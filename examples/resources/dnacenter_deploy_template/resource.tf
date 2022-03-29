@@ -12,11 +12,11 @@ resource "dnacenter_deploy_template" "example" {
     is_composite                    = "false"
     member_template_deployment_info = []
     target_info {
-      host_name             = "string"
-      id                    = "string"
-      params                = {
-        key1   ="value1"
-        key2   ="value2"
+      host_name = "string"
+      id        = "string"
+      params = {
+        key1 = "value1"
+        key2 = "value2"
       }
       resource_params       = ["string"]
       type                  = "string"
