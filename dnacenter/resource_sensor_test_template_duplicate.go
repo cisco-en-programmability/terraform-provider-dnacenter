@@ -565,6 +565,7 @@ func resourceSensorTestTemplateDuplicate() *schema.Resource {
 				Required: true,
 				MaxItems: 1,
 				MinItems: 1,
+				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"new_template_name": &schema.Schema{

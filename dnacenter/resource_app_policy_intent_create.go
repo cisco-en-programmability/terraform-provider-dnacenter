@@ -52,6 +52,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 				Required: true,
 				MaxItems: 1,
 				MinItems: 1,
+				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"create_list": &schema.Schema{
