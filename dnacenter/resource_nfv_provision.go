@@ -54,31 +54,12 @@ func resourceNfvProvision() *schema.Resource {
 					},
 				},
 			},
-			"runsync": &schema.Schema{
-				Description: `__runsync header parameter. Enable this parameter to execute the API and return a response synchronously
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
-			"timeout": &schema.Schema{
-				Description: `__timeout header parameter. During synchronous execution, this defines the maximum time to wait for a response, before the API execution is terminated
-			`,
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"persistbapioutput": &schema.Schema{
-				Description: `__persistbapioutput header parameter. Persist bapi sync response
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
 				MaxItems: 1,
 				MinItems: 1,
+				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"provisioning": &schema.Schema{
