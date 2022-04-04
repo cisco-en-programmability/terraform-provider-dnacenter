@@ -12,6 +12,10 @@ description: |-
 It performs create operation on Device Onboarding (PnP).
 		- Recovers a device from a Workflow Execution Error state
 
+~>**Warning:**
+This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+
 ## Example Usage
 
 ```terraform
@@ -36,9 +40,10 @@ resource "dnacenter_pnp_device_reset" "example" {
       license_level              = "string"
       license_type               = "string"
       top_of_stack_serial_number = "string"
+      project_id                 = "string"
+      workflow_id                = "string"
     }
-    project_id  = "string"
-    workflow_id = "string"
+
   }
 }
 ```

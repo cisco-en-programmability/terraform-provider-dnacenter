@@ -17,7 +17,6 @@ It performs create operation on Wireless.
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
-
 ## Example Usage
 
 ```terraform
@@ -27,13 +26,15 @@ resource "dnacenter_wireless_provision_access_point" "example" {
     create_before_destroy = true
   }
   parameters {
-    custom_ap_group_name   = "string"
-    custom_flex_group_name = ["string"]
-    device_name            = "string"
-    rf_profile             = "string"
-    site_id                = "string"
-    site_name_hierarchy    = "string"
-    type                   = "string"
+    payload {
+      custom_ap_group_name   = "string"
+      custom_flex_group_name = ["string"]
+      device_name            = "string"
+      rf_profile             = "string"
+      site_id                = "string"
+      site_name_hierarchy    = "string"
+      type                   = "string"
+    }
   }
 }
 ```
@@ -59,7 +60,7 @@ resource "dnacenter_wireless_provision_access_point" "example" {
 
 Optional:
 
-- **payload** (Block List) Array of RequestWirelessAPProvision (see [below for nested schema](#nestedblock--parameters--payload))
+- **payload** (Block List, Max: 1) Array of RequestWirelessAPProvision (see [below for nested schema](#nestedblock--parameters--payload))
 - **persistbapioutput** (String) __persistbapioutput header parameter. Persist bapi sync response
 
 <a id="nestedblock--parameters--payload"></a>
