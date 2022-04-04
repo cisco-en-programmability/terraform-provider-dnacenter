@@ -25,13 +25,13 @@ resource "dnacenter_pnp_device_site_claim" "example" {
     hostname  = "Catalyst2"
     image_info {
       image_id = ""
-      skip     = "true"
+      skip="true"
     }
     config_info {
       config_id = "60657208-dc2c-433f-be40-6c002d19d0fb"
       config_parameters {
-        key   = ""
-        value = ""
+      key = ""
+      value = ""
       }
     }
   }
