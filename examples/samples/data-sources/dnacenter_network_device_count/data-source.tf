@@ -12,7 +12,7 @@ provider "dnacenter" {
 }
 
 data "dnacenter_network_device_count" "example" {
-  provider = dnacenter
+  provider  = dnacenter
   #device_id = "3923aed0-16e5-4ed0-b430-ff6dcfd9c517"
 }
 

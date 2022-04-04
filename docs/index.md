@@ -8,9 +8,14 @@ description: |-
 
 # dnacenter Provider
 
+The Cisco DNA Center provider is used to interact with Cisco DNA Center APIs (2.2.3.3). The provider needs to be configured with the proper credentials before it can be used.
+
+Use the navigation to the left to read about the available resources.
 
 
 ## Example Usage
+
+The DNA Center SDK client could be generated with the following parameters:
 
 ```terraform
 # Configure provider with your Cisco DNA Center SDK credentials

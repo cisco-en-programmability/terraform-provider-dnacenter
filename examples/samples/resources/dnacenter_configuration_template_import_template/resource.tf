@@ -18,8 +18,8 @@ resource "dnacenter_configuration_template_import_template" "example" {
     do_version   = "false"
     project_name = "string"
     payload {
-      author    = "string"
-      composite = "false"
+      author       = "string"
+      composite    = "false"
       containing_templates {
 
         composite   = "false"

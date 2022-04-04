@@ -168,7 +168,7 @@ output "dnacenter_nfv_provision_example" {
 }
 
 data "dnacenter_dnacaap_management_execution_status" "example" {
-  depends_on   = [dnacenter_nfv_provision.example]
+  depends_on = [dnacenter_nfv_provision.example]
   provider     = dnacenter
   execution_id = dnacenter_nfv_provision.example.item.0.execution_id
 }

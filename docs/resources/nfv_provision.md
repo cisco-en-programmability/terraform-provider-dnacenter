@@ -12,6 +12,12 @@ description: |-
 It performs create operation on Site Design.
 - Design and Provision single/multi NFV device with given site/area/building/floor .
 
+
+~>**Warning:**
+This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+
+
 ## Example Usage
 
 ```terraform
@@ -204,6 +210,9 @@ output "dnacenter_dnacaap_management_execution_status_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
+- **persistbapioutput** (String) __persistbapioutput header parameter. Persist bapi sync response
+- **runsync** (String) __runsync header parameter. Enable this parameter to execute the API and return a response synchronously
+- **timeout** (String) __timeout header parameter. During synchronous execution, this defines the maximum time to wait for a response, before the API execution is terminated
 
 ### Read-Only
 

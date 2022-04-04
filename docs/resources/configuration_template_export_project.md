@@ -12,6 +12,12 @@ description: |-
 It performs create operation on Configuration Templates.
 - Exports the projects for given projectNames.
 
+
+~>**Warning:**
+This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+
+
 ## Example Usage
 
 ```terraform
@@ -19,9 +25,6 @@ resource "dnacenter_configuration_template_export_project" "example" {
   provider = dnacenter
   lifecycle {
     create_before_destroy = true
-  }
-  parameters {
-    payload = ["string"]
   }
 }
 ```
