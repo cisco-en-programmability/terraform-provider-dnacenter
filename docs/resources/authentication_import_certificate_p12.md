@@ -14,12 +14,6 @@ It performs create operation on Authentication Management.
 		- This method is used to upload a PKCS#12 file.
 		Upload the file to the **p12FileUpload** form data field
 
-
-~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
-
-
 ## Example Usage
 
 ```terraform

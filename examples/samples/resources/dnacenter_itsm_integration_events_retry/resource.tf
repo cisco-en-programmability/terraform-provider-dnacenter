@@ -29,7 +29,7 @@ output "dnacenter_itsm_integration_events_retry_example" {
 
 
 data "dnacenter_dnacaap_management_execution_status" "example" {
-  depends_on = [dnacenter_itsm_integration_events_retry.example]
+  depends_on   = [dnacenter_itsm_integration_events_retry.example]
   provider     = dnacenter
   execution_id = dnacenter_itsm_integration_events_retry.example.item.0.execution_id
 }

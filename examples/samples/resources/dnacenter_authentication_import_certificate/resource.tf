@@ -22,7 +22,7 @@ resource "dnacenter_authentication_import_certificate" "example" {
   parameters {
     cert_file_path = "string"
     cert_file_name = "string"
-    pk_file_name      = "string"
+    pk_file_name   = "string"
     list_of_users  = ["string"]
     pk_file_path   = "string"
     pk_password    = "******"
