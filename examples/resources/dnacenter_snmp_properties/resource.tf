@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_snmp_properties" "example" {
   provider = dnacenter

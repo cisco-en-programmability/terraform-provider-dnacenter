@@ -16,6 +16,10 @@ It manages create and read operations on Discovery.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_snmp_properties" "example" {
   provider = dnacenter
   parameters {

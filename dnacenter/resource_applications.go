@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -549,8 +550,10 @@ func resourceApplicationsCreate(ctx context.Context, d *schema.ResourceData, m i
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing CreateApplication", err))
+				"Failure when executing CreateApplication", err1))
 			return diags
 		}
 	}
@@ -670,8 +673,10 @@ func resourceApplicationsUpdate(ctx context.Context, d *schema.ResourceData, m i
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing UdpateApplication", err))
+					"Failure when executing UdpateApplication", err1))
 				return diags
 			}
 		}
@@ -747,8 +752,10 @@ func resourceApplicationsDelete(ctx context.Context, d *schema.ResourceData, m i
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing DeleteApplication", err))
+				"Failure when executing DeleteApplication", err1))
 			return diags
 		}
 	}

@@ -22,6 +22,10 @@ WAN, to associate WAN interfaces with specific SP Profile and to be able to defi
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_qos_device_interface" "example" {
   provider = dnacenter
   parameters {

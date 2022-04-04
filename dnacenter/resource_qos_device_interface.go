@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -486,8 +487,10 @@ func resourceQosDeviceInterfaceCreate(ctx context.Context, d *schema.ResourceDat
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing CreateQuosDeviceInterface", err))
+				"Failure when executing CreateQuosDeviceInterface", err1))
 			return diags
 		}
 	}
@@ -605,8 +608,10 @@ func resourceQosDeviceInterfaceUpdate(ctx context.Context, d *schema.ResourceDat
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing UpdateQuosDeviceInterface", err))
+					"Failure when executing UpdateQuosDeviceInterface", err1))
 				return diags
 			}
 		}
@@ -669,8 +674,10 @@ func resourceQosDeviceInterfaceDelete(ctx context.Context, d *schema.ResourceDat
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing DeleteQosDeviceInterfaceInfo", err))
+				"Failure when executing DeleteQosDeviceInterfaceInfo", err1))
 			return diags
 		}
 	}

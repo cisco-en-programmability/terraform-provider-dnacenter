@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -206,8 +207,10 @@ func resourceGlobalCredentialHTTPWriteCreate(ctx context.Context, d *schema.Reso
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing CreateHTTPWriteCredentials", err))
+				"Failure when executing CreateHTTPWriteCredentials", err1))
 			return diags
 		}
 	}
@@ -316,8 +319,10 @@ func resourceGlobalCredentialHTTPWriteUpdate(ctx context.Context, d *schema.Reso
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing UpdateHTTPWriteCredentials", err))
+					"Failure when executing UpdateHTTPWriteCredentials", err1))
 				return diags
 			}
 		}

@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_configuration_template" "example" {
   provider = dnacenter

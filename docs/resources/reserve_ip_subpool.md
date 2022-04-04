@@ -20,6 +20,10 @@ It manages create, read, update and delete operations on Network Settings.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_reserve_ip_subpool" "example" {
   provider = dnacenter
   parameters {

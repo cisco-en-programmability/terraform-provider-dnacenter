@@ -16,6 +16,10 @@ It manages read and update operations on Device Onboarding (PnP).
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_pnp_global_settings" "example" {
   provider = dnacenter
   parameters {

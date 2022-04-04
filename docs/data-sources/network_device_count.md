@@ -35,7 +35,7 @@ data "dnacenter_network_device_count" "example" {
 }
 
 output "dnacenter_network_device_count_example" {
-  value = data.dnacenter_network_device_count.example.item_id
+  value = data.dnacenter_network_device_count.example.item
 }
 ```
 
@@ -49,20 +49,10 @@ output "dnacenter_network_device_count_example" {
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 
-<a id="nestedatt--item_id"></a>
-### Nested Schema for `item_id`
-
-Read-Only:
-
-- **response** (Number)
-- **version** (String)
-
-
-<a id="nestedatt--item_name"></a>
-### Nested Schema for `item_name`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 

@@ -25,6 +25,16 @@ func compareSGT(first_sgt, second_sgt string) bool {
 	return oldClear == newClear
 }
 
+func getLastString(a string) string {
+	res1 := strings.SplitAfter(a, " ")
+	return res1[len(res1)-1]
+}
+
+func isValidUUID(text string) bool {
+	r := regexp.MustCompile("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[8|9|aA|bB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$")
+	return r.Match([]byte(text))
+}
+
 func replaceRegExStrings(first_str, second_str, regex_src, sub_repl string) (string, string) {
 	m1 := regexp.MustCompile(regex_src)
 	first_repl := m1.ReplaceAllString(first_str, sub_repl)

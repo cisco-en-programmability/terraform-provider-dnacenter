@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -227,8 +228,10 @@ func resourceGlobalCredentialSNMPv3Create(ctx context.Context, d *schema.Resourc
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing CreateSNMPv3Credentials", err))
+				"Failure when executing CreateSNMPv3Credentials", err1))
 			return diags
 		}
 	}
@@ -338,8 +341,10 @@ func resourceGlobalCredentialSNMPv3Update(ctx context.Context, d *schema.Resourc
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing UpdateSNMPv3Credentials", err))
+					"Failure when executing UpdateSNMPv3Credentials", err1))
 				return diags
 			}
 		}

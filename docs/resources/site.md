@@ -20,6 +20,10 @@ It manages create, read, update and delete operations on Sites.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_site" "example" {
   provider = dnacenter
   parameters {

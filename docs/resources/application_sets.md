@@ -18,6 +18,10 @@ It manages create, read and delete operations on Application Policy.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_application_sets" "example" {
   provider = dnacenter
   parameters {

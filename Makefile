@@ -3,8 +3,8 @@ HOSTNAME=hashicorp.com
 NAMESPACE=edu
 NAME=dnacenter
 BINARY=terraform-provider-${NAME}
-VERSION=0.2.0-beta
-OS_ARCH=darwin_arm64
+VERSION=0.3.0-beta
+OS_ARCH=darwin_amd64
 GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
 WEBSITE_REPO=github.com/hashicorp/terraform-website
 
@@ -12,7 +12,7 @@ WEBSITE_REPO=github.com/hashicorp/terraform-website
 default: install
 
 build: fmtcheck
-	go build -o ${BINARY}
+	go build -o ${BINARY}_${VERSION}_${OS_ARCH}
 
 release:
 	GOOS=darwin GOARCH=amd64 go build -o ./bin/${BINARY}_${VERSION}_darwin_amd64
@@ -30,7 +30,7 @@ release:
 
 install: build
 	mkdir -p ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
-	mv ${BINARY} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
+	mv ${BINARY}_${VERSION}_${OS_ARCH} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
 
 test: fmtcheck
 	go test -i $(TEST) || exit 1                                                   
@@ -47,6 +47,10 @@ fmtcheck:
 
 errcheck:
 	scripts/errcheck.sh
+
+developtest:
+	mkdir -p ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
+	cp ./bin/${BINARY}_${VERSION}_${OS_ARCH} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
 
 vet:
 	@echo "go vet ."

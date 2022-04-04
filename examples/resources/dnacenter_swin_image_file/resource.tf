@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_swim_image_file" "example" {
   provider = dnacenter
