@@ -1,7 +1,12 @@
-FEATURES:
-## 0.3.1-beta (April 04, 2022)
+## 0.3.0-beta (April 04, 2022)
 
 FEATURES:
+* **New Resource:** `resource_deploy_template_v1`
+* **New Resource:** `resource_deploy_template`
+* **New Resource:** `resource_pnp_device_site_claim`
+* **New Resource:** `resource_pnp_device_import`
+* **New Resource:** `resource_image_distribution`
+* **New Resource:** `resource_image_device_activation`
 * **New Resource:** `resource_app_policy_intent_create`
 * **New Resource:** `resource_associate_site_to_network_profile`
 * **New Resource:** `resource_authentication_import_certificate`
@@ -35,16 +40,6 @@ FEATURES:
 * **New Resource:** `resource_wireless_provision_device_update.`
 * **New Resource:** `resource_wireless_provision_ssid_create_provision`
 * **New Resource:** `resource_wireless_provision_ssid_delete_reprovisio`
-
-## 0.3.0-beta (March 14, 2022)
-
-FEATURES:
-* **New Resource:** `resource_deploy_template_v1`
-* **New Resource:** `resource_deploy_template`
-* **New Resource:** `resource_pnp_device_site_claim`
-* **New Resource:** `resource_pnp_device_import`
-* **New Resource:** `resource_image_distribution`
-* **New Resource:** `resource_image_device_activation`
 
 ## 0.2.0-beta (March 01, 2022)
 
