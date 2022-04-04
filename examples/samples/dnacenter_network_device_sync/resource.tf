@@ -6,6 +6,5 @@ resource "dnacenter_network_device_sync" "example" {
   }
   parameters {
     force_sync = "false"
-    payload = ["string"]
   }
 }

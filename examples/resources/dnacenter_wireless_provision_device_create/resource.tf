@@ -5,6 +5,7 @@ resource "dnacenter_wireless_provision_device_create" "example" {
     create_before_destroy = true
   }
   parameters {
+    payload{
     device_name = "string"
     dynamic_interfaces {
 
@@ -17,5 +18,6 @@ resource "dnacenter_wireless_provision_device_create" "example" {
     }
     managed_aplocations = ["string"]
     site                = "string"
+    }
   }
 }

@@ -73,6 +73,8 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 							Description: `Array of RequestWirelessAPProvision`,
 							Type:        schema.TypeList,
 							Optional:    true,
+							MaxItems:    1,
+							MinItems:    1,
 							ForceNew:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{

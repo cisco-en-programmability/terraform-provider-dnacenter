@@ -1,5 +1,5 @@
 
-resource "dnacenter_sensor_delete" "example" {
+resource "dnacenter_sensor_test_delete" "example" {
   provider = dnacenter
   lifecycle {
     create_before_destroy = true

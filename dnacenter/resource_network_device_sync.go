@@ -64,6 +64,8 @@ can be seen in the child task of each device
 							Optional:    true,
 						},
 						"payload": &schema.Schema{
+							MaxItems:    1,
+							MinItems:    1,
 							Description: `Array of RequestDevicesSyncDevices`,
 							Type:        schema.TypeList,
 							Elem: &schema.Schema{
