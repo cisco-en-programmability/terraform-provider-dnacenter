@@ -4,7 +4,7 @@ NAMESPACE=edu
 NAME=dnacenter
 BINARY=terraform-provider-${NAME}
 VERSION=0.3.0-beta
-OS_ARCH=darwin_amd64
+OS_ARCH=linux_arm
 GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
 WEBSITE_REPO=github.com/hashicorp/terraform-website
 
