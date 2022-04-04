@@ -12,6 +12,12 @@ description: |-
 It performs create operation on Software Image Management (SWIM).
 	- Activates a software image on a given device. Software image must be present in the device flash
 
+
+~>**Warning:**
+This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+
+
 ## Example Usage
 
 ```terraform
