@@ -57,7 +57,7 @@ func Provider() *schema.Provider {
 			"dnacenter_template_preview":                           resourceTemplatePreview(),
 			"dnacenter_sensor_test_delete":                         resourceSensorTestDelete(),
 			"dnacenter_sensor_test_create":                         resourceSensorTestCreate(),
-			"dnacenter_virtual_account_devices_sync":               resourcePnpVirtualAccountDevicesSync(),
+			"dnacenter_pnp_virtual_account_devices_sync":           resourcePnpVirtualAccountDevicesSync(),
 			"dnacenter_pnp_device_reset":                           resourcePnpDeviceReset(),
 			"dnacenter_itsm_integration_events_retry":              resourceItsmIntegrationEventsRetry(),
 			"dnacenter_network_device_export":                      resourceNetworkDeviceExport(),
