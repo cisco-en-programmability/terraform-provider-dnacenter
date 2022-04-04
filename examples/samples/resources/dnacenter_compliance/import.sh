@@ -1,1 +1,0 @@
-terraform import dnacenter_compliance.example "id:=string"
