@@ -4,9 +4,12 @@ resource "dnacenter_authentication_import_certificate" "example" {
   lifecycle {
     create_before_destroy = true
   }
-  cert_file_path = "string"
-  file_name      = "string"
-  list_of_users  = ["string"]
-  pk_file_path   = "string"
-  pk_password    = "******"
+  parameters {
+    cert_file_path = "string"
+    cert_file_name = "string"
+    pk_file_name   = "string"
+    list_of_users  = ["string"]
+    pk_file_path   = "string"
+    pk_password    = "******"
+  }
 }
