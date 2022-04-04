@@ -12,12 +12,6 @@ description: |-
 It performs update operation on Wireless.
 		- Updates wireless provisioning
 
-
-~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
-
-
 ## Example Usage
 
 ```terraform
@@ -27,17 +21,19 @@ resource "dnacenter_wireless_provision_device_update" "example" {
     create_before_destroy = true
   }
   parameters {
-    device_name = "string"
-    dynamic_interfaces {
+    payload {
+      device_name = "string"
+      dynamic_interfaces {
 
-      interface_gateway          = "string"
-      interface_ipaddress        = "string"
-      interface_name             = "string"
-      interface_netmask_in_cid_r = 1
-      lag_or_port_number         = 1
-      vlan_id                    = 1
+        interface_gateway          = "string"
+        interface_ipaddress        = "string"
+        interface_name             = "string"
+        interface_netmask_in_cid_r = 1
+        lag_or_port_number         = 1
+        vlan_id                    = 1
+      }
+      managed_aplocations = ["string"]
     }
-    managed_aplocations = ["string"]
   }
 }
 ```
