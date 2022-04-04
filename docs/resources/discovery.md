@@ -24,6 +24,10 @@ by range" API.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_discovery" "example" {
   provider = dnacenter
   parameters {

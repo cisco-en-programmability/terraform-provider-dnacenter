@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 	"time"
 
@@ -150,6 +151,46 @@ func resourceGoldenImageCreate(ctx context.Context, d *schema.ResourceData, m in
 			"Failure when executing TagAsGoldenImage", err))
 		return diags
 	}
+	if resp1.Response == nil {
+		diags = append(diags, diagError(
+			"Failure when executing TagAsGoldenImage", err))
+		return diags
+	}
+	taskId := resp1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			restyResp3, err := client.CustomCall.GetCustomCall(response2.Response.AdditionalStatusURL, nil)
+			if err != nil {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetCustomCall", err,
+					"Failure at GetCustomCall, unexpected response", ""))
+				return diags
+			}
+			var errorMsg string
+			if restyResp3 == nil {
+				errorMsg = response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			} else {
+				errorMsg = restyResp3.String()
+			}
+			err1 := errors.New(errorMsg)
+			diags = append(diags, diagError(
+				"Failure when executing TagAsGoldenImage", err1))
+			return diags
+		}
+	}
 	resourceMap := make(map[string]string)
 	resourceMap["site_id"] = vvSiteID
 	resourceMap["device_family_identifier"] = vvDeviceFamilyIDentifier
@@ -262,8 +303,22 @@ func resourceGoldenImageDelete(ctx context.Context, d *schema.ResourceData, m in
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			restyResp3, err := client.CustomCall.GetCustomCall(response2.Response.AdditionalStatusURL, nil)
+			if err != nil {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetCustomCall", err,
+					"Failure at GetCustomCall, unexpected response", ""))
+				return diags
+			}
+			var errorMsg string
+			if restyResp3 == nil {
+				errorMsg = response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			} else {
+				errorMsg = restyResp3.String()
+			}
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing CreateConfigurationTemplateProject", err))
+				"Failure when executing RemoveGoldenTagForImage", err1))
 			return diags
 		}
 	}

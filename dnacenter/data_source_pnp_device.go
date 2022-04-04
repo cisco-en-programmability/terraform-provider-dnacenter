@@ -197,7 +197,7 @@ Pagination and sorting are also supported by this endpoint
 				},
 			},
 
-			"item_id": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -1870,13 +1870,13 @@ Pagination and sorting are also supported by this endpoint
 				},
 			},
 
-			"item_name": &schema.Schema{
+			"items": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"type_id": &schema.Schema{
+						"id": &schema.Schema{
 							Description: `Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
@@ -3721,6 +3721,7 @@ func flattenDeviceOnboardingPnpGetDeviceList2Items(items *dnacentersdkgo.Respons
 		respItem["day_zero_config_preview"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsDayZeroConfigPreview(item.DayZeroConfigPreview)
 		respItem["version"] = item.Version
 		respItem["tenant_id"] = item.TenantID
+		respItem["id"] = item.ID
 		respItems = append(respItems, respItem)
 	}
 	return respItems

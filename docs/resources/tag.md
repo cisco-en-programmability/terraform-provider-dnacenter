@@ -20,6 +20,10 @@ It manages create, read, update and delete operations on Tag.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_tag" "example" {
   provider = dnacenter
   parameters {

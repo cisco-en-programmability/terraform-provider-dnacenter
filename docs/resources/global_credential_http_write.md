@@ -20,6 +20,10 @@ It manages create, read, update and delete operations on Discovery.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_global_credential_http_write" "example" {
   provider = dnacenter
   parameters {

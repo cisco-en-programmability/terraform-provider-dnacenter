@@ -21,7 +21,7 @@ Other versions of this collection have support for previous Cisco DNA Center ver
 | Cisco DNA Center version | Terraform "dnacenter" provider version |
 |--------------------------|----------------------------------------|
 | 2.1.1                    | 0.0.4                                  |
-| 2.2.3.3                  | 0.2.0-beta                             |
+| 2.2.3.3                  | 0.3.0-beta                             |
 
 ## Using the provider
 
@@ -29,45 +29,29 @@ There are two ways to get and use the provider.
 1. Downloading & installing it from registry.terraform.io
 2. Building it from source
 
-### From registry
-
-To install this provider, copy and paste this code into your Terraform configuration. Then, run terraform init. 
-
-```hcl
-terraform {
-  required_providers {
-    dnacenter = {
-      source = "cisco-en-programmability/dnacenter"
-      version = "0.2.0-beta"
-    }
-  }
-}
-
-provider "dnacenter" {
-  # Configuration options
-  # More info at https://registry.terraform.io/providers/cisco-en-programmability/dnacenter/latest/docs#example-usage
-}
-```
-
-### From build
+### From build (For test)
 
 Clone this repository to: `$GOPATH/src/github.com/cisco-en-programmability/terraform-provider-dnacenter`
 
 ```sh
 $ mkdir -p $GOPATH/src/github.com/cisco-en-programmability/
 $ cd $GOPATH/src/github.com/cisco-en-programmability/
-$ git clone https://github.com/cisco-en-programmability/{config.names.terraform}}.git
+$ git clone https://github.com/cisco-en-programmability/terraform-provider-dnacenter.git
 ```
 
 Enter the provider directory and build the provider
 
+! **NOTE**:
+It is important to check the architecture of your operating system in the file [MakeFile](./Makefile)
+
 ```sh
 $ cd $GOPATH/src/github.com/cisco-en-programmability/terraform-provider-dnacenter
-$ make build
+$ make developtest
 ```
 
 If the Makefile values (HOSTNAME, NAMESPACE, NAME, VERSION) were not changed, then the following code could used without changes.
 Otherwise change the values accordingly.
+
 
 To use this provider, copy and paste this code into your Terraform configuration. Then, run terraform init.
 
@@ -76,17 +60,36 @@ terraform {
   required_providers {
     dnacenter = {
       source = "hashicorp.com/edu/dnacenter"
-      version = "0.2.0-beta"
+      version = "0.3.0-beta"
     }
   }
 }
 
+# Configure provider with your Cisco DNA Center SDK credentials
 provider "dnacenter" {
-  # Configuration options
-  # More info at https://registry.terraform.io/providers/cisco-en-programmability/dnacenter/latest/docs#example-usage
+  # Cisco DNA Center user name
+  username = "admin"
+  # it can be set using the environment variable DNAC_BASE_URL
+
+  # Cisco DNA Center password
+  password = "admin123"
+  # it can be set using the environment variable DNAC_USERNAME
+
+  # Cisco DNA Center base URL, FQDN or IP
+  base_url = "https://172.168.196.2"
+  # it can be set using the environment variable DNAC_PASSWORD
+
+  # Boolean to enable debugging
+  debug = "false"
+  # it can be set using the environment variable DNAC_DEBUG
+
+  # Boolean to enable or disable SSL certificate verification
+  ssl_verify = "false"
+  # it can be set using the environment variable DNAC_SSL_VERIFY
 }
 ```
 
+There are several examples of the use of the provider within the folder [samples](./examples/samples)
 
 ## Developing the Provider
 
@@ -119,21 +122,23 @@ $ make testacc
 
 ## Documentation
 
-In the docs directory you can find the documentation source.
+In the [docs directory](./docs/) you can find the documentation source for this 0.3.0-beta version.
 
-You can find the documentation online at [Terraform Registry - Cisco DNA Center provider](https://registry.terraform.io/providers/cisco-en-programmability/dnacenter/latest/docs).
+You can find the documentation online for the previously released versions at [Terraform Registry - Cisco DNA Center provider](https://registry.terraform.io/providers/cisco-en-programmability/dnacenter/latest/docs).
 
 # Contributing
 
 Ongoing development efforts and contributions to this provider are tracked as issues in this repository.
 
-We welcome community contributions to this project. If you find problems, need an enhancement or need a new data-source or resource, please open an issue or create a PR against the [Terraform Provider for Cisco DNA Center repository](https://github.com/cisco-en-programmability/{config.names.terraform}}/issues).
+We welcome community contributions to this project. If you find problems, need an enhancement or need a new data-source or resource, please open an issue or create a PR against the [Terraform Provider for Cisco DNA Center repository](https://github.com/cisco-en-programmability/terraform-provider-dnacenter/issues).
 
 # Change log
 
 All notable changes to this project will be documented in the [CHANGELOG](./CHANGELOG.md) file.
 
 The development team may make additional changes as the library evolves with the Cisco DNA Center.
+
+**NOTE**: Consider reviewing the Changelog to review the new features of the 0.3.0-beta version.
 
 ## License
 

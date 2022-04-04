@@ -1,3 +1,6 @@
+provider "dnacenter" {
+  debug = "true"
+}
 
 resource "dnacenter_global_credential_http_write" "example" {
   provider = dnacenter

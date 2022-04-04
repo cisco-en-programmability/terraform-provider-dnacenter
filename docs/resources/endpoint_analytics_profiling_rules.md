@@ -20,6 +20,10 @@ It manages create, read, update and delete operations on Policy.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_endpoint_analytics_profiling_rules" "example" {
   provider = dnacenter
   parameters {

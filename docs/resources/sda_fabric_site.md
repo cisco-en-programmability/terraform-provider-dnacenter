@@ -18,6 +18,10 @@ It manages create, read and delete operations on SDA.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_sda_fabric_site" "example" {
   provider = dnacenter
   parameters {

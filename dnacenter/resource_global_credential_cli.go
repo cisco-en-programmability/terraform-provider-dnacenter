@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -179,8 +180,10 @@ func resourceGlobalCredentialCliCreate(ctx context.Context, d *schema.ResourceDa
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing CreateCliCredentials", err))
+				"Failure when executing CreateCliCredentials", err1))
 			return diags
 		}
 	}
@@ -292,8 +295,10 @@ func resourceGlobalCredentialCliUpdate(ctx context.Context, d *schema.ResourceDa
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing UpdateCliCredentials", err))
+					"Failure when executing UpdateCliCredentials", err1))
 				return diags
 			}
 		}

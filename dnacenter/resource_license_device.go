@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 	"time"
 
@@ -154,8 +155,10 @@ func resourceLicenseDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 		}
 		if response3.Response != nil && response3.Response.IsError != nil && *response3.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response3.Response.FailureReason)
+			errorMsg := response3.Response.Progress + "\nFailure Reason: " + response3.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing ChangeVirtualAccount", err))
+				"Failure when executing ChangeVirtualAccount", err1))
 			return diags
 		}
 	}
@@ -255,8 +258,10 @@ func resourceLicenseDeviceUpdate(ctx context.Context, d *schema.ResourceData, m 
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing DeviceRegistration", err))
+					"Failure when executing DeviceRegistration", err1))
 				return diags
 			}
 		}
@@ -306,8 +311,10 @@ func resourceLicenseDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing DeviceDeregistration", err))
+				"Failure when executing DeviceDeregistration", err1))
 			return diags
 		}
 	}
