@@ -1,4 +1,41 @@
 FEATURES:
+## 0.3.1-beta (April 04, 2022)
+
+FEATURES:
+* **New Resource:** `resource_app_policy_intent_create`
+* **New Resource:** `resource_associate_site_to_network_profile`
+* **New Resource:** `resource_authentication_import_certificate`
+* **New Resource:** `resource_authentication_import_certificate_p12`
+* **New Resource:** `resource_business_sda_wireless_controller_create`
+* **New Resource:** `resource_business_sda_wireless_controller_delete`
+* **New Resource:** `resource_command_runner_run_command`
+* **New Resource:** `resource_compliance`
+* **New Resource:** `resource_configuration_template_clone`
+* **New Resource:** `resource_configuration_template_export_project.`
+* **New Resource:** `resource_configuration_template_export_template.`
+* **New Resource:** `resource_configuration_template_import_project`
+* **New Resource:** `resource_device_configurations_export`
+* **New Resource:** `resource_device_replacement_deploy`
+* **New Resource:** `resource_disassociate_site_to_network_profile`
+* **New Resource:** `resource_itsm_integration_events_retry`
+* **New Resource:** `resource_network_device_export`
+* **New Resource:** `resource_network_device_sync.`
+* **New Resource:** `resource_nfv_provision`
+* **New Resource:** `resource_profiling_rules_in_bulk_create`
+* **New Resource:** `resource_sensor_test_create`
+* **New Resource:** `resource_sensor_test_delete`
+* **New Resource:** `resource_sensor_test_run`
+* **New Resource:** `resource_sensor_test_template_duplicate`
+* **New Resource:** `resource_sensor_test_template_edit`
+* **New Resource:** `resource_site_assign_credential`
+* **New Resource:** `resource_template_preview`
+* **New Resource:** `resource_virtual_account_devices_sync`
+* **New Resource:** `resource_wireless_provision_access_point.`
+* **New Resource:** `resource_wireless_provision_device_create.`
+* **New Resource:** `resource_wireless_provision_device_update.`
+* **New Resource:** `resource_wireless_provision_ssid_create_provision`
+* **New Resource:** `resource_wireless_provision_ssid_delete_reprovisio`
+
 ## 0.3.0-beta (March 14, 2022)
 
 FEATURES:
