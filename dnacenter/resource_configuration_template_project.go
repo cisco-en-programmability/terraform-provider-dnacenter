@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -617,13 +617,6 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 											},
 										},
 									},
-									"document_database": &schema.Schema{
-										Description: `Document Database
-`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
 									"failure_policy": &schema.Schema{
 										Description: `Define failure policy if template provisioning fails
 `,
@@ -663,13 +656,6 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"parent_template_id": &schema.Schema{
 										Description: `Parent templateID
 `,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"project_associated": &schema.Schema{
-										Description: `Project Associated
-`,
-
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1734,14 +1720,6 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 											},
 										},
 									},
-									"document_database": &schema.Schema{
-										Description: `Document Database
-`,
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-									},
 									"failure_policy": &schema.Schema{
 										Description: `Define failure policy if template provisioning fails
 `,
@@ -1783,14 +1761,6 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
-									},
-									"project_associated": &schema.Schema{
-										Description: `Project Associated
-`,
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
 									},
 									"project_id": &schema.Schema{
 										Description: `Project UUID
@@ -2709,9 +2679,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplates(ctx context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_types")))) {
 		request.DeviceTypes = expandRequestConfigurationTemplateProjectCreateProjectTemplatesDeviceTypesArray(ctx, key+".device_types", d)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".document_database")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".document_database")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".document_database")))) {
-		request.DocumentDatabase = interfaceToBoolPtr(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".failure_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".failure_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".failure_policy")))) {
 		request.FailurePolicy = interfaceToString(v)
 	}
@@ -2732,9 +2699,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplates(ctx context
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_template_id")))) {
 		request.ParentTemplateID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_associated")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_associated")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_associated")))) {
-		request.ProjectAssociated = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_id")))) {
 		request.ProjectID = interfaceToString(v)
@@ -3855,9 +3819,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplates(ctx context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_types")))) {
 		request.DeviceTypes = expandRequestConfigurationTemplateProjectUpdateProjectTemplatesDeviceTypesArray(ctx, key+".device_types", d)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".document_database")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".document_database")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".document_database")))) {
-		request.DocumentDatabase = interfaceToBoolPtr(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".failure_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".failure_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".failure_policy")))) {
 		request.FailurePolicy = interfaceToString(v)
 	}
@@ -3878,9 +3839,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplates(ctx context
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_template_id")))) {
 		request.ParentTemplateID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_associated")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_associated")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_associated")))) {
-		request.ProjectAssociated = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_id")))) {
 		request.ProjectID = interfaceToString(v)

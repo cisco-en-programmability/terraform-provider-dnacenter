@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -48,6 +48,11 @@ func dataSourceEventSeries() *schema.Resource {
 				Type:     schema.TypeFloat,
 				Optional: true,
 			},
+			"namespace": &schema.Schema{
+				Description: `namespace query parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Start Offset
 `,
@@ -64,6 +69,12 @@ func dataSourceEventSeries() *schema.Resource {
 				Description: `severity query parameter.`,
 				Type:        schema.TypeString,
 				Optional:    true,
+			},
+			"site_id": &schema.Schema{
+				Description: `siteId query parameter. Site Id
+`,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"sort_by": &schema.Schema{
 				Description: `sortBy query parameter. Sort By column
@@ -87,6 +98,11 @@ func dataSourceEventSeries() *schema.Resource {
 `,
 				Type:     schema.TypeString,
 				Optional: true,
+			},
+			"tags": &schema.Schema{
+				Description: `tags query parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"type": &schema.Schema{
 				Description: `type query parameter.`,
@@ -148,10 +164,31 @@ func dataSourceEventSeries() *schema.Resource {
 							Computed:    true,
 						},
 
-						"name_space": &schema.Schema{
-							Description: `Name Space`,
+						"namespace": &schema.Schema{
+							Description: `Namespace`,
 							Type:        schema.TypeString,
 							Computed:    true,
+						},
+
+						"network": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"device_id": &schema.Schema{
+										Description: `Device Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"site_id": &schema.Schema{
+										Description: `Site Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+								},
+							},
 						},
 
 						"severity": &schema.Schema{
@@ -213,6 +250,9 @@ func dataSourceEventSeriesRead(ctx context.Context, d *schema.ResourceData, m in
 	vLimit, okLimit := d.GetOk("limit")
 	vSortBy, okSortBy := d.GetOk("sort_by")
 	vOrder, okOrder := d.GetOk("order")
+	vTags, okTags := d.GetOk("tags")
+	vNamespace, okNamespace := d.GetOk("namespace")
+	vSiteID, okSiteID := d.GetOk("site_id")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -258,6 +298,15 @@ func dataSourceEventSeriesRead(ctx context.Context, d *schema.ResourceData, m in
 		if okOrder {
 			queryParams1.Order = vOrder.(string)
 		}
+		if okTags {
+			queryParams1.Tags = vTags.(string)
+		}
+		if okNamespace {
+			queryParams1.Namespace = vNamespace.(string)
+		}
+		if okSiteID {
+			queryParams1.SiteID = vSiteID.(string)
+		}
 
 		response1, restyResp1, err := client.EventManagement.GetNotifications(&queryParams1)
 
@@ -296,7 +345,7 @@ func flattenEventManagementGetNotificationsItems(items *dnacentersdkgo.ResponseE
 		respItem := make(map[string]interface{})
 		respItem["event_id"] = item.EventID
 		respItem["instance_id"] = item.InstanceID
-		respItem["name_space"] = item.NameSpace
+		respItem["namespace"] = item.Namespace
 		respItem["name"] = item.Name
 		respItem["description"] = item.Description
 		respItem["version"] = item.Version
@@ -309,7 +358,22 @@ func flattenEventManagementGetNotificationsItems(items *dnacentersdkgo.ResponseE
 		respItem["timestamp"] = item.Timestamp
 		respItem["details"] = item.Details
 		respItem["event_hierarchy"] = item.EventHierarchy
+		respItem["network"] = flattenEventManagementGetNotificationsItemsNetwork(item.Network)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
+}
+
+func flattenEventManagementGetNotificationsItemsNetwork(item *dnacentersdkgo.ResponseItemEventManagementGetNotificationsNetwork) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["site_id"] = item.SiteID
+	respItem["device_id"] = item.DeviceID
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
 }

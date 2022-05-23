@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -391,8 +391,11 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString,
+																Type:     schema.TypeList,
 																Computed: true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
 															},
 														},
 													},
@@ -615,8 +618,11 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString,
+																Type:     schema.TypeList,
 																Computed: true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
 															},
 														},
 													},
@@ -687,14 +693,6 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 							},
 						},
 
-						"document_database": &schema.Schema{
-							Description: `Document Database
-`,
-
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
 						"failure_policy": &schema.Schema{
 							Description: `Define failure policy if template provisioning fails
 `,
@@ -740,14 +738,6 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 						"parent_template_id": &schema.Schema{
 							Description: `Parent templateID
 `,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"project_associated": &schema.Schema{
-							Description: `Project Associated
-`,
-
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -957,8 +947,11 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -1202,8 +1195,11 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -1553,7 +1549,6 @@ func flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItem(item *dnacente
 	respItem["custom_params_order"] = boolPtrToString(item.CustomParamsOrder)
 	respItem["description"] = item.Description
 	respItem["device_types"] = flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItemDeviceTypes(item.DeviceTypes)
-	respItem["document_database"] = boolPtrToString(item.DocumentDatabase)
 	respItem["failure_policy"] = item.FailurePolicy
 	respItem["id"] = item.ID
 	respItem["language"] = item.Language
@@ -1561,7 +1556,6 @@ func flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItem(item *dnacente
 	respItem["latest_version_time"] = item.LatestVersionTime
 	respItem["name"] = item.Name
 	respItem["parent_template_id"] = item.ParentTemplateID
-	respItem["project_associated"] = boolPtrToString(item.ProjectAssociated)
 	respItem["project_id"] = item.ProjectID
 	respItem["project_name"] = item.ProjectName
 	respItem["rollback_template_content"] = item.RollbackTemplateContent

@@ -2,12 +2,8 @@ package dnacenter
 
 import (
 	"context"
-	"errors"
-	"time"
 
-	"log"
-
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -82,18 +78,11 @@ func resourceConfigurationTemplateClone() *schema.Resource {
 }
 
 func resourceConfigurationTemplateCloneCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
+	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-	resourceItem := *getResourceItem(d.Get("parameters"))
-	vName := resourceItem["name"]
-	vTemplateID := resourceItem["name"]
-	vProjectID := resourceItem["name"]
-	vvName := vName.(string)
-	vvTemplateID := vTemplateID.(string)
-	vvProjectID := vProjectID.(string)
 
-	response1, restyResp1, err := client.ConfigurationTemplates.CreatesACloneOfTheGivenTemplate(vvName, vvTemplateID, vvProjectID)
+	/*response1, restyResp1, err := client.ConfigurationTemplates.CreatesACloneOfTheGivenTemplate(vvName, vvTemplateID, vvProjectID)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -142,7 +131,7 @@ func resourceConfigurationTemplateCloneCreate(ctx context.Context, d *schema.Res
 			"Failure when setting CreatesACloneOfTheGivenTemplate response",
 			err))
 		return diags
-	}
+	}*/
 
 	d.SetId(getUnixTimeString())
 	return diags

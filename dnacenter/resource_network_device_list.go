@@ -10,7 +10,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -46,8 +46,11 @@ func resourceNetworkDeviceList() *schema.Resource {
 
 						"ap_ethernet_mac_address": &schema.Schema{
 							Description: `Ap Ethernet Mac Address`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"ap_manager_interface_ip": &schema.Schema{
@@ -172,14 +175,20 @@ func resourceNetworkDeviceList() *schema.Resource {
 
 						"location": &schema.Schema{
 							Description: `Location`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"location_name": &schema.Schema{
 							Description: `Location Name`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"mac_address": &schema.Schema{
@@ -287,8 +296,11 @@ func resourceNetworkDeviceList() *schema.Resource {
 
 						"tunnel_udp_port": &schema.Schema{
 							Description: `Tunnel Udp Port`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"type": &schema.Schema{
@@ -311,17 +323,18 @@ func resourceNetworkDeviceList() *schema.Resource {
 
 						"waas_device_mode": &schema.Schema{
 							Description: `Waas Device Mode`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 					},
 				},
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -455,14 +468,6 @@ func resourceNetworkDeviceList() *schema.Resource {
 							},
 						},
 						"user_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"role": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"role_source": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 						},
@@ -632,64 +637,10 @@ func resourceNetworkDeviceListUpdate(ctx context.Context, d *schema.ResourceData
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
-		if d.HasChange("parameters.0.role") || d.HasChange("parameters.0.role_source") {
-			request2 := expandRequestNetworkDeviceUpdateRoleUpdateDeviceRole(ctx, "parameters.0", d)
-			if request2 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request2))
-			}
-			if request2 != nil && item != nil && request2.ID == "" {
-				request2.ID = item.ID
-			}
-			response2, restyResp2, err := client.Devices.UpdateDeviceRole(request2)
-			if err != nil || response2 == nil {
-				if restyResp2 != nil {
-					log.Printf("[DEBUG] resty response for update operation => %v", restyResp2.String())
-					diags = append(diags, diagErrorWithAltAndResponse(
-						"Failure when executing UpdateDeviceRole", err, restyResp2.String(),
-						"Failure at UpdateDeviceRole, unexpected response", ""))
-					return diags
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing UpdateDeviceRole", err,
-					"Failure at UpdateDeviceRole, unexpected response", ""))
-				return diags
-			}
-			if response2.Response == nil {
-				diags = append(diags, diagError(
-					"Failure when executing UpdateDeviceRole", err))
-				return diags
-			}
-			taskId := response2.Response.TaskID
-			log.Printf("[DEBUG] TASKID => %s", taskId)
-			if taskId != "" {
-				time.Sleep(5 * time.Second)
-				response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-				if err != nil || response2 == nil {
-					if restyResp2 != nil {
-						log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-					}
-					diags = append(diags, diagErrorWithAlt(
-						"Failure when executing GetTaskByID", err,
-						"Failure at GetTaskByID, unexpected response", ""))
-					return diags
-				}
-				if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-					log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-					errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
-					err1 := errors.New(errorMsg)
-					diags = append(diags, diagError(
-						"Failure when executing UpdateDeviceRole", err1))
-					return diags
-				}
-			}
-		}
 		log.Printf("[DEBUG] Name used for update operation %s", vSerialNumber)
 		request1 := expandRequestNetworkDeviceListSyncDevices2(ctx, "parameters.0", d)
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		if request1 != nil && item != nil && request1.ID == "" {
-			request1.ID = item.ID
 		}
 		response1, restyResp1, err := client.Devices.SyncDevices2(request1)
 		if err != nil || response1 == nil {
@@ -830,7 +781,6 @@ func expandRequestNetworkDeviceListAddDevice2(ctx context.Context, key string, d
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -854,7 +804,6 @@ func expandRequestNetworkDeviceListAddDevice2UpdateMgmtIPaddressListArray(ctx co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -869,25 +818,6 @@ func expandRequestNetworkDeviceListAddDevice2UpdateMgmtIPaddressList(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
-	return &request
-}
-
-func expandRequestNetworkDeviceUpdateRoleUpdateDeviceRole(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDevicesUpdateDeviceRole {
-	request := dnacentersdkgo.RequestDevicesUpdateDeviceRole{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
-		request.ID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".role")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".role")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".role")))) {
-		request.Role = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".role_source")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".role_source")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".role_source")))) {
-		request.RoleSource = interfaceToString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -977,7 +907,6 @@ func expandRequestNetworkDeviceListSyncDevices2(ctx context.Context, key string,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1001,7 +930,6 @@ func expandRequestNetworkDeviceListSyncDevices2UpdateMgmtIPaddressListArray(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1016,7 +944,6 @@ func expandRequestNetworkDeviceListSyncDevices2UpdateMgmtIPaddressList(ctx conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 

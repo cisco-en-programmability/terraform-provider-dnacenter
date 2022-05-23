@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -273,7 +273,7 @@ func resourceDeviceReplacementRead(ctx context.Context, d *schema.ResourceData, 
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenDeviceReplacementReturnReplacementDevicesWithReplacementDetailsItems(response1)
+		vItems1 := flattenDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetailsItem(response1)
 		if err := d.Set("item", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetsTheTemplatesAvailable response",

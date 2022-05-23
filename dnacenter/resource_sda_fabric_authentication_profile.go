@@ -2,12 +2,13 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,7 +22,7 @@ func resourceSdaFabricAuthenticationProfile() *schema.Resource {
 
 - Update default authentication profile in SDA Fabric
 
-- Add default authentication profile in SDA Fabric
+- Delete default authentication profile in SDA Fabric
 `,
 
 		CreateContext: resourceSdaFabricAuthenticationProfileCreate,
@@ -64,45 +65,46 @@ func resourceSdaFabricAuthenticationProfile() *schema.Resource {
 				},
 			},
 			"parameters": &schema.Schema{
-				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Description: `Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabric`,
+				Type:        schema.TypeList,
+				Required:    true,
+				MaxItems:    1,
+				MinItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"authenticate_template_name": &schema.Schema{
-							Description: `Authenticate Template Name. Allowed values are 'No Authentication ', 'Open Authentication', 'Closed Authentication', 'Low Impact'.
+							Description: `Authenticate Template Name
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"authentication_order": &schema.Schema{
-							Description: `Authentication Order. Allowed values are 'dot1x ', 'mac'.
+							Description: `Authentication Order
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"dot1x_to_mab_fallback_timeout": &schema.Schema{
-							Description: `In a network that includes both devices that support and devices that do not support IEEE 802.1X, MAB can be deployed as a fallback, or complementary, mechanism to IEEE 802.1X. If the network does not have any IEEE 802.1X-capable devices, MAB can be deployed as a standalone authentication mechanism (e.g. [3-120])
+							Description: `Dot1x To MabFallback Timeout( Allowed range is [3-120])
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"number_of_hosts": &schema.Schema{
-							Description: `Number of hosts specifies the number of data hosts that can be connected to a port. With Single selected, you can have only one data client  on the port. With Unlimited selected, you can have multiple data clients and one voice client on the port
+							Description: `Number Of Hosts
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy should be a valid fabric site name hierarchy. e.g Global/USA/San Jose
+							Description: `Path of sda Fabric Site
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"wake_on_lan": &schema.Schema{
-							Description: `The IEEE 802.1X Wake on LAN (WoL) Support feature allows dormant systems to be powered up when the  switch receives a specific Ethernet frame. You can use this feature in cases when hosts on power save and needs to receive a  magic packet to turn them on. This feature works on a per subnet basis and send the subnet broadcast to all hosts in the subnet
+							Description: `Wake On Lan
 `,
 
 							Type:         schema.TypeString,
@@ -123,7 +125,7 @@ func resourceSdaFabricAuthenticationProfileCreate(ctx context.Context, d *schema
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 
-	request1 := expandRequestSdaFabricAuthenticationProfileDeployAuthenticationTemplateInSdaFabric(ctx, "parameters.0", d)
+	request1 := expandRequestSdaFabricAuthenticationProfileAddDefaultAuthenticationTemplateInSdaFabric(ctx, "parameters.0", d)
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
@@ -143,7 +145,7 @@ func resourceSdaFabricAuthenticationProfileCreate(ctx context.Context, d *schema
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaFabricAuthenticationProfileRead(ctx, d, m)
 	}
-	response1, restyResp1, err := client.Sda.DeployAuthenticationTemplateInSdaFabric(request1)
+	response1, restyResp1, err := client.Sda.AddDefaultAuthenticationTemplateInSdaFabric(request1)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
@@ -408,8 +410,42 @@ func resourceSdaFabricAuthenticationProfileDelete(ctx context.Context, d *schema
 
 	return diags
 }
-func expandRequestSdaFabricAuthenticationProfileDeployAuthenticationTemplateInSdaFabric(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaDeployAuthenticationTemplateInSdaFabric {
-	request := dnacentersdkgo.RequestSdaDeployAuthenticationTemplateInSdaFabric{}
+func expandRequestSdaFabricAuthenticationProfileAddDefaultAuthenticationTemplateInSdaFabric(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddDefaultAuthenticationTemplateInSdaFabric {
+	request := dnacentersdkgo.RequestSdaAddDefaultAuthenticationTemplateInSdaFabric{}
+	if v := expandRequestSdaFabricAuthenticationProfileAddDefaultAuthenticationTemplateInSdaFabricItemArray(ctx, key+".payload", d); v != nil {
+		request = *v
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricAuthenticationProfileAddDefaultAuthenticationTemplateInSdaFabricItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddDefaultAuthenticationTemplateInSdaFabric {
+	request := []dnacentersdkgo.RequestItemSdaAddDefaultAuthenticationTemplateInSdaFabric{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaFabricAuthenticationProfileAddDefaultAuthenticationTemplateInSdaFabricItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricAuthenticationProfileAddDefaultAuthenticationTemplateInSdaFabricItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddDefaultAuthenticationTemplateInSdaFabric {
+	request := dnacentersdkgo.RequestItemSdaAddDefaultAuthenticationTemplateInSdaFabric{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_name_hierarchy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_name_hierarchy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_name_hierarchy")))) {
 		request.SiteNameHierarchy = interfaceToString(v)
 	}
@@ -419,12 +455,45 @@ func expandRequestSdaFabricAuthenticationProfileDeployAuthenticationTemplateInSd
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestSdaFabricAuthenticationProfileUpdateDefaultAuthenticationProfileInSdaFabric(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaUpdateDefaultAuthenticationProfileInSdaFabric {
 	request := dnacentersdkgo.RequestSdaUpdateDefaultAuthenticationProfileInSdaFabric{}
+	if v := expandRequestSdaFabricAuthenticationProfileUpdateDefaultAuthenticationProfileInSdaFabricItemArray(ctx, key+".payload", d); v != nil {
+		request = *v
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricAuthenticationProfileUpdateDefaultAuthenticationProfileInSdaFabricItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaUpdateDefaultAuthenticationProfileInSdaFabric {
+	request := []dnacentersdkgo.RequestItemSdaUpdateDefaultAuthenticationProfileInSdaFabric{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaFabricAuthenticationProfileUpdateDefaultAuthenticationProfileInSdaFabricItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricAuthenticationProfileUpdateDefaultAuthenticationProfileInSdaFabricItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaUpdateDefaultAuthenticationProfileInSdaFabric {
+	request := dnacentersdkgo.RequestItemSdaUpdateDefaultAuthenticationProfileInSdaFabric{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_name_hierarchy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_name_hierarchy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_name_hierarchy")))) {
 		request.SiteNameHierarchy = interfaceToString(v)
 	}
@@ -446,6 +515,5 @@ func expandRequestSdaFabricAuthenticationProfileUpdateDefaultAuthenticationProfi
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

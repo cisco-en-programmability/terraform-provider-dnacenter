@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -126,6 +126,15 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Computed: true,
+									},
+
+									"nas_options": &schema.Schema{
+										Description: `Nas Options`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"passphrase": &schema.Schema{
@@ -260,6 +269,7 @@ func flattenWirelessGetEnterpriseSSIDItemsSSIDDetails(items *[]dnacentersdkgo.Re
 		respItem["fast_transition"] = item.FastTransition
 		respItem["radio_policy"] = item.RadioPolicy
 		respItem["enable_broadcast_ssi_d"] = boolPtrToString(item.EnableBroadcastSSID)
+		respItem["nas_options"] = item.NasOptions
 		respItems = append(respItems, respItem)
 	}
 	return respItems

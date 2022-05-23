@@ -5,21 +5,27 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func dataSourceSdaCount() *schema.Resource {
+func dataSourceBusinessSdaVirtualNetworkSummary() *schema.Resource {
 	return &schema.Resource{
-		Description: `It performs read operation on SDA.
+		Description: `It performs read operation.
 
-- Get SDA Fabric Count
+- Get Virtual Network Summary
 `,
 
-		ReadContext: dataSourceSdaCountRead,
+		ReadContext: dataSourceBusinessSdaVirtualNetworkSummaryRead,
 		Schema: map[string]*schema.Schema{
+			"site_name_hierarchy": &schema.Schema{
+				Description: `siteNameHierarchy query parameter. Complete fabric siteNameHierarchy Path
+`,
+				Type:     schema.TypeString,
+				Required: true,
+			},
 
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -51,33 +57,37 @@ func dataSourceSdaCount() *schema.Resource {
 	}
 }
 
-func dataSourceSdaCountRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceBusinessSdaVirtualNetworkSummaryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
+	vSiteNameHierarchy := d.Get("site_name_hierarchy")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSdaFabricCount")
+		log.Printf("[DEBUG] Selected method 1: GetVirtualNetworkSummary")
+		queryParams1 := dnacentersdkgo.GetVirtualNetworkSummaryQueryParams{}
 
-		response1, restyResp1, err := client.Sda.GetSdaFabricCount()
+		queryParams1.SiteNameHierarchy = vSiteNameHierarchy.(string)
+
+		response1, restyResp1, err := client.Sda.GetVirtualNetworkSummary(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSdaFabricCount", err,
-				"Failure at GetSdaFabricCount, unexpected response", ""))
+				"Failure when executing GetVirtualNetworkSummary", err,
+				"Failure at GetVirtualNetworkSummary, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenSdaGetSdaFabricCountItem(response1.Response)
+		vItem1 := flattenGetVirtualNetworkSummaryItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetSdaFabricCount response",
+				"Failure when setting GetVirtualNetworkSummary response",
 				err))
 			return diags
 		}
@@ -88,7 +98,7 @@ func dataSourceSdaCountRead(ctx context.Context, d *schema.ResourceData, m inter
 	return diags
 }
 
-func flattenSdaGetSdaFabricCountItem(item *dnacentersdkgo.ResponseSdaGetSdaFabricCountResponse) []map[string]interface{} {
+func flattenGetVirtualNetworkSummaryItem(item *dnacentersdkgo.ResponseSdaGetVirtualNetworkSummaryResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

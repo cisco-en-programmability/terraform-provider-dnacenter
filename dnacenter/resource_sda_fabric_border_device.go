@@ -2,11 +2,13 @@ package dnacenter
 
 import (
 	"context"
-	"log"
+	"fmt"
 	"reflect"
 	"time"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	"log"
+
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,9 +18,9 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and delete operations on SDA.
 
-- Adds border device in SDA Fabric
+- Add border device in SDA Fabric
 
-- Deletes border device from SDA Fabric
+- Delete border device from SDA Fabric
 `,
 
 		CreateContext: resourceSdaFabricBorderDeviceCreate,
@@ -790,110 +792,167 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 				},
 			},
 			"parameters": &schema.Schema{
-				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Description: `Array of RequestSdaAddBorderDeviceInSDAFabric`,
+				Type:        schema.TypeList,
+				Required:    true,
+				MaxItems:    1,
+				MinItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"payload": &schema.Schema{
+							Type:     schema.TypeList,
+							Required: true,
+							MinItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"border_session_type": &schema.Schema{
+										Description: `Border Session Type
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"border_with_external_connectivity": &schema.Schema{
+										Description: `Border With External Connectivity (Note: True for transit and False for non-transit border)
+`,
 
-						"border_session_type": &schema.Schema{
-							Description: `Border Session Type
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"connected_to_internet": &schema.Schema{
-							Description: `Connected to Internet
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"connected_to_internet": &schema.Schema{
+										Description: `Connected to Internet
 `,
 
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"device_management_ip_address": &schema.Schema{
-							Description: `Management Ip Address of the Device which is provisioned successfully
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"device_management_ip_address": &schema.Schema{
+										Description: `Management Ip Address of the provisioned Device
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"external_autonomou_system_number": &schema.Schema{
-							Description: `External Autonomous System Number  will be used to automate IP routing between Border Node and remote peer (e.g.,1-65535)
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"device_role": &schema.Schema{
+										Description: `Supported Device Roles in SD-Access fabric. Allowed roles are "Border_Node","Control_Plane_Node","Edge_Node". E.g. ["Border_Node"] or ["Border_Node", "Control_Plane_Node"] or ["Border_Node", "Control_Plane_Node","Edge_Node"]
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"external_connectivity_ip_pool_name": &schema.Schema{
-							Description: `IP pool to use to automate IP routing between the border node and remote peer.
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"external_connectivity_ip_pool_name": &schema.Schema{
+										Description: `External Connectivity IpPool Name
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"external_connectivity_settings": &schema.Schema{
-							Description: `External Connectivity Settings information of L3 Handoff
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"external_connectivity_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"external_autonomou_system_number": &schema.Schema{
+													Description: `External Autonomous System Number peer (e.g.,1-65535)
 `,
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"interface_description": &schema.Schema{
+													Description: `Interface Description
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"interface_name": &schema.Schema{
+													Description: `Interface Name
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"l2_handoff": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"virtual_network_name": &schema.Schema{
+																Description: `Virtual Network Name, that is associated to Fabric Site
+`,
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"vlan_name": &schema.Schema{
+																Description: `Vlan Name of L2 Handoff
+`,
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"l3_handoff": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"virtual_network": &schema.Schema{
+																Type:     schema.TypeList,
+																Optional: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"virtual_network_name": &schema.Schema{
+																			Description: `Virtual Network Name, that is associated to Fabric Site
+`,
+																			Type:     schema.TypeString,
+																			Optional: true,
+																		},
+																		"vlan_id": &schema.Schema{
+																			Description: `Vlan Id (e.g.,2-4096 except for reserved VLANs (1002-1005, 2046, 4095))
+`,
+																			Type:     schema.TypeString,
+																			Optional: true,
+																		},
+																	},
+																},
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"external_domain_routing_protocol_name": &schema.Schema{
+										Description: `External Domain Routing Protocol Name
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"internal_autonomou_system_number": &schema.Schema{
+										Description: `Internal Autonomouns System Number (e.g.,1-65535)
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"sda_transit_network_name": &schema.Schema{
+										Description: `SD-Access Transit Network Name
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"site_name_hierarchy": &schema.Schema{
+										Description: `Site Name Hierarchy of provisioned Device(site should be part of Fabric Site)
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
 							},
-						},
-						"external_domain_routing_protocol_name": &schema.Schema{
-							Description: `External Domain Routing Protocol  Name. (Example: BGP)
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"interface_name": &schema.Schema{
-							Description: `Interface Name
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"internal_autonomou_system_number": &schema.Schema{
-							Description: `Internal Autonomouns System Number used by border node to communicate with remote peer (e.g.,1-65535)
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"l3_handoff": &schema.Schema{
-							Description: `L3 Handoff information
-`,
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy for device location(site should be fabric site)
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"virtual_network": &schema.Schema{
-							Description: `Virtual Network information of L3 Hand off
-`,
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-						"virtual_network_name": &schema.Schema{
-							Description: `Virtual Network Name assigned to site
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"vlan_id": &schema.Schema{
-							Description: `Vlan Id (e.g.,2-4096 except for reserved VLANs (1002-1005, 2046, 4095))
-`,
-							Type:     schema.TypeString,
-							Optional: true,
 						},
 					},
 				},
@@ -908,7 +967,7 @@ func resourceSdaFabricBorderDeviceCreate(ctx context.Context, d *schema.Resource
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestSdaFabricBorderDeviceAddsBorderDeviceInSdaFabric(ctx, "parameters.0", d)
+	request1 := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabric(ctx, "parameters.0", d)
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
@@ -916,11 +975,11 @@ func resourceSdaFabricBorderDeviceCreate(ctx context.Context, d *schema.Resource
 	vDeviceManagementIPAddress := resourceItem["device_management_ip_address"]
 	vvDeviceManagementIPAddress := interfaceToString(vDeviceManagementIPAddress)
 
-	queryParams1 := dnacentersdkgo.GetsBorderDeviceDetailFromSdaFabricQueryParams{}
+	queryParams1 := dnacentersdkgo.GetBorderDeviceDetailFromSdaFabricQueryParams{}
 
 	queryParams1.DeviceManagementIPAddress = vvDeviceManagementIPAddress
 
-	getResponse2, restyResp1, err := client.Sda.GetsBorderDeviceDetailFromSdaFabric(&queryParams1)
+	getResponse2, restyResp1, err := client.Sda.GetBorderDeviceDetailFromSdaFabric(&queryParams1)
 
 	if err == nil && getResponse2 != nil {
 		resourceMap := make(map[string]string)
@@ -929,15 +988,15 @@ func resourceSdaFabricBorderDeviceCreate(ctx context.Context, d *schema.Resource
 		return resourceSdaFabricBorderDeviceRead(ctx, d, m)
 	}
 
-	response1, restyResp1, err := client.Sda.AddsBorderDeviceInSdaFabric(request1)
+	response1, restyResp1, err := client.Sda.AddBorderDeviceInSdaFabric(request1)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
-				"Failure when executing AddsBorderDeviceInSdaFabric", err, restyResp1.String()))
+				"Failure when executing AddBorderDeviceInSdaFabric", err, restyResp1.String()))
 			return diags
 		}
 		diags = append(diags, diagError(
-			"Failure when executing AddsBorderDeviceInSdaFabric", err))
+			"Failure when executing AddBorderDeviceInSdaFabric", err))
 		return diags
 	}
 	executionId := response1.ExecutionID
@@ -970,7 +1029,7 @@ func resourceSdaFabricBorderDeviceCreate(ctx context.Context, d *schema.Resource
 		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
-				"Failure when executing AddsBorderDeviceInSdaFabric", err))
+				"Failure when executing AddBorderDeviceInSdaFabric", err))
 			return diags
 		}
 	}
@@ -991,12 +1050,12 @@ func resourceSdaFabricBorderDeviceRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetsBorderDeviceDetailFromSdaFabric")
-		queryParams1 := dnacentersdkgo.GetsBorderDeviceDetailFromSdaFabricQueryParams{}
+		log.Printf("[DEBUG] Selected method 1: GetBorderDeviceDetailFromSdaFabric")
+		queryParams1 := dnacentersdkgo.GetBorderDeviceDetailFromSdaFabricQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
 
-		response1, restyResp1, err := client.Sda.GetsBorderDeviceDetailFromSdaFabric(&queryParams1)
+		response1, restyResp1, err := client.Sda.GetBorderDeviceDetailFromSdaFabric(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -1008,10 +1067,10 @@ func resourceSdaFabricBorderDeviceRead(ctx context.Context, d *schema.ResourceDa
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenSdaGetsBorderDeviceDetailFromSdaFabricItem(response1)
+		vItem1 := flattenSdaGetBorderDeviceDetailFromSdaFabricItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetsBorderDeviceDetailFromSdaFabric response",
+				"Failure when setting GetBorderDeviceDetailFromSdaFabric response",
 				err))
 			return diags
 		}
@@ -1035,10 +1094,10 @@ func resourceSdaFabricBorderDeviceDelete(ctx context.Context, d *schema.Resource
 	resourceMap := separateResourceID(resourceID)
 	vDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
 
-	queryParams1 := dnacentersdkgo.GetsBorderDeviceDetailFromSdaFabricQueryParams{}
+	queryParams1 := dnacentersdkgo.GetBorderDeviceDetailFromSdaFabricQueryParams{}
 	queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
 
-	item, restyResp1, err := client.Sda.GetsBorderDeviceDetailFromSdaFabric(&queryParams1)
+	item, restyResp1, err := client.Sda.GetBorderDeviceDetailFromSdaFabric(&queryParams1)
 
 	if err != nil || item == nil {
 		if restyResp1 != nil {
@@ -1048,20 +1107,20 @@ func resourceSdaFabricBorderDeviceDelete(ctx context.Context, d *schema.Resource
 		return diags
 	}
 
-	queryParams2 := dnacentersdkgo.DeletesBorderDeviceFromSdaFabricQueryParams{}
+	queryParams2 := dnacentersdkgo.DeleteBorderDeviceFromSdaFabricQueryParams{}
 	queryParams2.DeviceManagementIPAddress = vDeviceManagementIPAddress
-	response1, restyResp1, err := client.Sda.DeletesBorderDeviceFromSdaFabric(&queryParams2)
+	response1, restyResp1, err := client.Sda.DeleteBorderDeviceFromSdaFabric(&queryParams2)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
-				"Failure when executing DeletesBorderDeviceFromSdaFabric", err, restyResp1.String(),
-				"Failure at DeletesBorderDeviceFromSdaFabric, unexpected response", ""))
+				"Failure when executing DeleteBorderDeviceFromSdaFabric", err, restyResp1.String(),
+				"Failure at DeleteBorderDeviceFromSdaFabric, unexpected response", ""))
 			return diags
 		}
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeletesBorderDeviceFromSdaFabric", err,
-			"Failure at DeletesBorderDeviceFromSdaFabric, unexpected response", ""))
+			"Failure when executing DeleteBorderDeviceFromSdaFabric", err,
+			"Failure at DeleteBorderDeviceFromSdaFabric, unexpected response", ""))
 		return diags
 	}
 
@@ -1095,7 +1154,7 @@ func resourceSdaFabricBorderDeviceDelete(ctx context.Context, d *schema.Resource
 		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
-				"Failure when executing DeletesBorderDeviceFromSdaFabric", err))
+				"Failure when executing DeleteBorderDeviceFromSdaFabric", err))
 			return diags
 		}
 	}
@@ -1105,13 +1164,53 @@ func resourceSdaFabricBorderDeviceDelete(ctx context.Context, d *schema.Resource
 
 	return diags
 }
-func expandRequestSdaFabricBorderDeviceAddsBorderDeviceInSdaFabric(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddsBorderDeviceInSdaFabric {
-	request := dnacentersdkgo.RequestSdaAddsBorderDeviceInSdaFabric{}
+
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabric(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddBorderDeviceInSdaFabric {
+	request := dnacentersdkgo.RequestSdaAddBorderDeviceInSdaFabric{}
+	if v := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemArray(ctx, key+".payload", d); v != nil {
+		request = *v
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabric {
+	request := []dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabric{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabric {
+	request := dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabric{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_management_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_management_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_management_ip_address")))) {
 		request.DeviceManagementIPAddress = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_name_hierarchy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_name_hierarchy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_name_hierarchy")))) {
 		request.SiteNameHierarchy = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_role")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_role")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_role")))) {
+		request.DeviceRole = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".external_domain_routing_protocol_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".external_domain_routing_protocol_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".external_domain_routing_protocol_name")))) {
 		request.ExternalDomainRoutingProtocolName = interfaceToString(v)
@@ -1128,21 +1227,126 @@ func expandRequestSdaFabricBorderDeviceAddsBorderDeviceInSdaFabric(ctx context.C
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connected_to_internet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connected_to_internet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connected_to_internet")))) {
 		request.ConnectedToInternet = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".external_connectivity_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".external_connectivity_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".external_connectivity_settings")))) {
-		request.ExternalConnectivitySettings = expandRequestSdaFabricBorderDeviceAddsBorderDeviceInSdaFabricExternalConnectivitySettings(ctx, key+".external_connectivity_settings.0", d)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sda_transit_network_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sda_transit_network_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sda_transit_network_name")))) {
+		request.SdaTransitNetworkName = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".border_with_external_connectivity")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".border_with_external_connectivity")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".border_with_external_connectivity")))) {
+		request.BorderWithExternalConnectivity = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".external_connectivity_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".external_connectivity_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".external_connectivity_settings")))) {
+		request.ExternalConnectivitySettings = expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsArray(ctx, key+".external_connectivity_settings", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettings {
+	request := []dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettings{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettings(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettings(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettings {
+	request := dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettings{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".interface_name")))) {
 		request.InterfaceName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".interface_description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".interface_description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".interface_description")))) {
+		request.InterfaceDescription = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".external_autonomou_system_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".external_autonomou_system_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".external_autonomou_system_number")))) {
 		request.ExternalAutonomouSystemNumber = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".l3_handoff")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".l3_handoff")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".l3_handoff")))) {
-		request.L3Handoff = expandRequestSdaFabricBorderDeviceAddsBorderDeviceInSdaFabricL3Handoff(ctx, key+".l3_handoff.0", d)
+		request.L3Handoff = expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffArray(ctx, key+".l3_handoff", d)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".l2_handoff")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".l2_handoff")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".l2_handoff")))) {
+		request.L2Handoff = expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL2HandoffArray(ctx, key+".l2_handoff", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3Handoff {
+	request := []dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3Handoff{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3Handoff(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3Handoff(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3Handoff {
+	request := dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3Handoff{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network")))) {
-		request.VirtualNetwork = expandRequestSdaFabricBorderDeviceAddsBorderDeviceInSdaFabricVirtualNetwork(ctx, key+".virtual_network.0", d)
+		request.VirtualNetwork = expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetworkArray(ctx, key+".virtual_network", d)
 	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetworkArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork {
+	request := []dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetwork(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetwork(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork {
+	request := dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network_name")))) {
 		request.VirtualNetworkName = interfaceToString(v)
 	}
@@ -1152,36 +1356,42 @@ func expandRequestSdaFabricBorderDeviceAddsBorderDeviceInSdaFabric(ctx context.C
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func expandRequestSdaFabricBorderDeviceAddsBorderDeviceInSdaFabricExternalConnectivitySettings(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddsBorderDeviceInSdaFabricExternalConnectivitySettings {
-	var request dnacentersdkgo.RequestSdaAddsBorderDeviceInSdaFabricExternalConnectivitySettings
-	request = d.Get(fixKeyAccess(key))
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL2HandoffArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL2Handoff {
+	request := []dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL2Handoff{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL2Handoff(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func expandRequestSdaFabricBorderDeviceAddsBorderDeviceInSdaFabricL3Handoff(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddsBorderDeviceInSdaFabricL3Handoff {
-	var request dnacentersdkgo.RequestSdaAddsBorderDeviceInSdaFabricL3Handoff
-	request = d.Get(fixKeyAccess(key))
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL2Handoff(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL2Handoff {
+	request := dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL2Handoff{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network_name")))) {
+		request.VirtualNetworkName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan_name")))) {
+		request.VLANName = interfaceToString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
-	return &request
-}
-
-func expandRequestSdaFabricBorderDeviceAddsBorderDeviceInSdaFabricVirtualNetwork(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddsBorderDeviceInSdaFabricVirtualNetwork {
-	var request dnacentersdkgo.RequestSdaAddsBorderDeviceInSdaFabricVirtualNetwork
-	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }

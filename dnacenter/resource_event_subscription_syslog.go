@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -63,11 +63,26 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 									},
 
 									"domains_subdomains": &schema.Schema{
-										Description: `Domains Subdomains`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"domain": &schema.Schema{
+													Description: `Domain`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"sub_domains": &schema.Schema{
+													Description: `Sub Domains`,
+													Type:        schema.TypeList,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
 										},
 									},
 
@@ -98,6 +113,15 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 										},
 									},
 
+									"site_ids": &schema.Schema{
+										Description: `Site Ids`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
 									"sources": &schema.Schema{
 										Description: `Sources`,
 										Type:        schema.TypeList,
@@ -121,8 +145,9 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 
 						"is_private": &schema.Schema{
 							Description: `Is Private`,
-							Type:        schema.TypeString,
-							Computed:    true,
+
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"name": &schema.Schema{
@@ -155,6 +180,24 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
+												"base_path": &schema.Schema{
+													Description: `Base Path`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"body": &schema.Schema{
+													Description: `Body`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"connect_timeout": &schema.Schema{
+													Description: `Connect Timeout`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
 												"connector_type": &schema.Schema{
 													Description: `Connector Type`,
 													Type:        schema.TypeString,
@@ -167,8 +210,29 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 													Computed:    true,
 												},
 
+												"headers": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"string": &schema.Schema{
+																Description: `String`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+
 												"instance_id": &schema.Schema{
 													Description: `Instance Id`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"method": &schema.Schema{
+													Description: `Method`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -179,55 +243,58 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 													Computed:    true,
 												},
 
-												"syslog_config": &schema.Schema{
+												"path_params": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"config_id": &schema.Schema{
-																Description: `Config Id`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"description": &schema.Schema{
-																Description: `Description`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"host": &schema.Schema{
-																Description: `Host`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"name": &schema.Schema{
-																Description: `Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"port": &schema.Schema{
-																Description: `Port`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"tenant_id": &schema.Schema{
-																Description: `Tenant Id`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-
-															"version": &schema.Schema{
-																Description: `Version`,
+															"string": &schema.Schema{
+																Description: `String`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
 														},
 													},
+												},
+
+												"query_params": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"string": &schema.Schema{
+																Description: `String`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+
+												"read_timeout": &schema.Schema{
+													Description: `Read Timeout`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"resource": &schema.Schema{
+													Description: `Resource`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"trust_cert": &schema.Schema{
+													Description: `Trust Cert`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"url": &schema.Schema{
+													Description: `Url`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -259,9 +326,7 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 			"parameters": &schema.Schema{
 				Description: `Array of RequestEventManagementCreateSyslogEventSubscription`,
 				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
+				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -278,11 +343,73 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"categories": &schema.Schema{
+										Description: `Categories`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"domains_subdomains": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"domain": &schema.Schema{
+													Description: `Domain`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"sub_domains": &schema.Schema{
+													Description: `Sub Domains`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
 									"event_ids": &schema.Schema{
 										Description: `Event Ids (Comma separated event ids)
 `,
 										Type:     schema.TypeList,
 										Optional: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"severities": &schema.Schema{
+										Description: `Severities`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"site_ids": &schema.Schema{
+										Description: `Site Ids`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"sources": &schema.Schema{
+										Description: `Sources`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"types": &schema.Schema{
+										Description: `Types`,
+										Type:        schema.TypeList,
+										Optional:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -294,7 +421,7 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 							Description: `Name
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"subscription_endpoints": &schema.Schema{
 							Type:     schema.TypeList,
@@ -485,8 +612,8 @@ func resourceEventSubscriptionSyslogDelete(ctx context.Context, d *schema.Resour
 	vName, _ := resourceMap["name"]
 	vSubscriptionID, _ := resourceMap["subscription_id"]
 
-	queryParams1 := dnacentersdkgo.GetEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
+	queryParams1 := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
+	item, err := searchEventManagementGetSyslogEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
 	if err != nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetEventSubscriptions", err,
@@ -526,13 +653,12 @@ func resourceEventSubscriptionSyslogDelete(ctx context.Context, d *schema.Resour
 }
 func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscription(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementCreateSyslogEventSubscription {
 	request := dnacentersdkgo.RequestEventManagementCreateSyslogEventSubscription{}
-	if v := expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -556,7 +682,6 @@ func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemArray(
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -583,7 +708,6 @@ func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItem(ctx c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -607,7 +731,6 @@ func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemSubscr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -622,7 +745,6 @@ func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemSubscr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -634,7 +756,6 @@ func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemSubscr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -643,22 +764,75 @@ func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemFilter
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".event_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".event_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".event_ids")))) {
 		request.EventIDs = interfaceToSliceString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domains_subdomains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domains_subdomains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domains_subdomains")))) {
+		request.DomainsSubdomains = expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemFilterDomainsSubdomainsArray(ctx, key+".domains_subdomains", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".types")))) {
+		request.Types = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".categories")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".categories")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".categories")))) {
+		request.Categories = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".severities")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".severities")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".severities")))) {
+		request.Severities = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sources")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sources")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sources")))) {
+		request.Sources = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_ids")))) {
+		request.SiteIDs = interfaceToSliceString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
 
+func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemFilterDomainsSubdomainsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemEventManagementCreateSyslogEventSubscriptionFilterDomainsSubdomains {
+	request := []dnacentersdkgo.RequestItemEventManagementCreateSyslogEventSubscriptionFilterDomainsSubdomains{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemFilterDomainsSubdomains(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscriptionItemFilterDomainsSubdomains(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemEventManagementCreateSyslogEventSubscriptionFilterDomainsSubdomains {
+	request := dnacentersdkgo.RequestItemEventManagementCreateSyslogEventSubscriptionFilterDomainsSubdomains{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domain")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domain")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domain")))) {
+		request.Domain = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sub_domains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sub_domains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sub_domains")))) {
+		request.SubDomains = interfaceToSliceString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
 func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscription(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementUpdateSyslogEventSubscription {
 	request := dnacentersdkgo.RequestEventManagementUpdateSyslogEventSubscription{}
-	if v := expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -682,7 +856,6 @@ func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemArray(
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -709,7 +882,6 @@ func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItem(ctx c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -733,7 +905,6 @@ func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemSubscr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -748,7 +919,6 @@ func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemSubscr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -760,7 +930,6 @@ func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemSubscr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -769,10 +938,64 @@ func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemFilter
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".event_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".event_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".event_ids")))) {
 		request.EventIDs = interfaceToSliceString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domains_subdomains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domains_subdomains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domains_subdomains")))) {
+		request.DomainsSubdomains = expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemFilterDomainsSubdomainsArray(ctx, key+".domains_subdomains", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".types")))) {
+		request.Types = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".categories")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".categories")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".categories")))) {
+		request.Categories = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".severities")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".severities")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".severities")))) {
+		request.Severities = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sources")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sources")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sources")))) {
+		request.Sources = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_ids")))) {
+		request.SiteIDs = interfaceToSliceString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
 
+func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemFilterDomainsSubdomainsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemEventManagementUpdateSyslogEventSubscriptionFilterDomainsSubdomains {
+	request := []dnacentersdkgo.RequestItemEventManagementUpdateSyslogEventSubscriptionFilterDomainsSubdomains{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemFilterDomainsSubdomains(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemFilterDomainsSubdomains(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemEventManagementUpdateSyslogEventSubscriptionFilterDomainsSubdomains {
+	request := dnacentersdkgo.RequestItemEventManagementUpdateSyslogEventSubscriptionFilterDomainsSubdomains{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domain")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domain")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domain")))) {
+		request.Domain = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sub_domains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sub_domains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sub_domains")))) {
+		request.SubDomains = interfaceToSliceString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 

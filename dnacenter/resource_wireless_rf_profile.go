@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -35,9 +35,203 @@ func resourceWirelessRfProfile() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
+			"items": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"a_radio_channels": &schema.Schema{
+							Description: `A Radio Channels`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"b_radio_channels": &schema.Schema{
+							Description: `B Radio Channels`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"c_radio_channels": &schema.Schema{
+							Description: `C Radio Channels`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"channel_width": &schema.Schema{
+							Description: `Channel Width`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"data_rates_a": &schema.Schema{
+							Description: `Data Rates A`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"data_rates_b": &schema.Schema{
+							Description: `Data Rates B`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"data_rates_c": &schema.Schema{
+							Description: `Data Rates C`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"default_rf_profile": &schema.Schema{
+							Description: `Default Rf Profile`,
+
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"enable_a_radio_type": &schema.Schema{
+							Description: `Enable ARadio Type`,
+
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"enable_b_radio_type": &schema.Schema{
+							Description: `Enable BRadio Type`,
+
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"enable_brown_field": &schema.Schema{
+							Description: `Enable Brown Field`,
+
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"enable_c_radio_type": &schema.Schema{
+							Description: `Enable CRadio Type`,
+
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"enable_custom": &schema.Schema{
+							Description: `Enable Custom`,
+
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"mandatory_data_rates_a": &schema.Schema{
+							Description: `Mandatory Data Rates A`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"mandatory_data_rates_b": &schema.Schema{
+							Description: `Mandatory Data Rates B`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"mandatory_data_rates_c": &schema.Schema{
+							Description: `Mandatory Data Rates C`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"max_power_level_a": &schema.Schema{
+							Description: `Max Power Level A`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"max_power_level_b": &schema.Schema{
+							Description: `Max Power Level B`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"min_power_level_a": &schema.Schema{
+							Description: `Min Power Level A`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"min_power_level_b": &schema.Schema{
+							Description: `Min Power Level B`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"min_power_level_c": &schema.Schema{
+							Description: `Min Power Level C`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"name": &schema.Schema{
+							Description: `Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"parent_profile_a": &schema.Schema{
+							Description: `Parent Profile A`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"parent_profile_b": &schema.Schema{
+							Description: `Parent Profile B`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"power_threshold_v1_a": &schema.Schema{
+							Description: `Power Threshold V1 A`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"power_threshold_v1_b": &schema.Schema{
+							Description: `Power Threshold V1 B`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"power_threshold_v1_c": &schema.Schema{
+							Description: `Power Threshold V1 C`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"rx_sop_threshold_a": &schema.Schema{
+							Description: `Rx Sop Threshold A`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"rx_sop_threshold_b": &schema.Schema{
+							Description: `Rx Sop Threshold B`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"rx_sop_threshold_c": &schema.Schema{
+							Description: `Rx Sop Threshold C`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -45,247 +239,61 @@ func resourceWirelessRfProfile() *schema.Resource {
 							Description: `Channel Width
 `,
 							Type:     schema.TypeString,
-							Computed: true,
+							Optional: true,
 						},
-
 						"default_rf_profile": &schema.Schema{
-							Description: `is default radio profile
+							Description: `is Default Rf Profile
 `,
 
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
-
 						"enable_brown_field": &schema.Schema{
-							Description: `is brownfield enabled
+							Description: `Enable Brown Field
 `,
 
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
-
 						"enable_custom": &schema.Schema{
-							Description: `is Custom Enable
+							Description: `Enable Custom
 `,
 
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
-
 						"enable_radio_type_a": &schema.Schema{
 							Description: `Enable Radio Type A
 `,
 
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
-
 						"enable_radio_type_b": &schema.Schema{
 							Description: `Enable Radio Type B
 `,
 
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
+						"enable_radio_type_c": &schema.Schema{
+							Description: `Enable Radio Type C (6GHz)
+`,
 
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
 						"name": &schema.Schema{
-							Description: `radio profile name
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"radio_type_a_properties": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"data_rates": &schema.Schema{
-										Description: `Data Rates
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"mandatory_data_rates": &schema.Schema{
-										Description: `Mandatory Data Rates
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"max_power_level": &schema.Schema{
-										Description: `Max Power Level
-`,
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-
-									"min_power_level": &schema.Schema{
-										Description: `Min Power Level
-`,
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-
-									"parent_profile": &schema.Schema{
-										Description: `Parent Profile name
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"power_threshold_v1": &schema.Schema{
-										Description: `Power Threshold V1
-`,
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-
-									"radio_channels": &schema.Schema{
-										Description: `Radio Channels
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"rx_sop_threshold": &schema.Schema{
-										Description: `Rx Sop Threshold
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-
-						"radio_type_b_properties": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"data_rates": &schema.Schema{
-										Description: `Data Rates
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"mandatory_data_rates": &schema.Schema{
-										Description: `Mandatory Data Rates
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"max_power_level": &schema.Schema{
-										Description: `Max Power Level
-`,
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-
-									"min_power_level": &schema.Schema{
-										Description: `Min Power Level
-`,
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-
-									"parent_profile": &schema.Schema{
-										Description: `Parent Profile name
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"power_threshold_v1": &schema.Schema{
-										Description: `Power Threshold V1
-`,
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-
-									"radio_channels": &schema.Schema{
-										Description: `Radio Channels
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"rx_sop_threshold": &schema.Schema{
-										Description: `Rx Sop Threshold
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-			"parameters": &schema.Schema{
-				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"channel_width": &schema.Schema{
-							Description: `rf-profile channel width
+							Description: `RF Profile Name
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-						},
-						"default_rf_profile": &schema.Schema{
-							Description: `isDefault rf-profile
-`,
-
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"enable_brown_field": &schema.Schema{
-							Description: `true if enable brown field for rf-profile else false
-`,
-
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"enable_custom": &schema.Schema{
-							Description: `true if enable custom rf-profile else false
-`,
-
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"enable_radio_type_a": &schema.Schema{
-							Description: `tru if Enable Radio Type A else false
-`,
-
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"enable_radio_type_b": &schema.Schema{
-							Description: `true if Enable Radio Type B else false
-`,
-
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"name": &schema.Schema{
-							Description: `custom RF profile name
-`,
-							Type:     schema.TypeString,
-							Required: true,
 						},
 						"radio_type_a_properties": &schema.Schema{
 							Type:     schema.TypeList,
@@ -313,13 +321,13 @@ func resourceWirelessRfProfile() *schema.Resource {
 										Optional: true,
 									},
 									"min_power_level": &schema.Schema{
-										Description: `Min Power Level
+										Description: `Rx Sop Threshold
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
 									},
 									"parent_profile": &schema.Schema{
-										Description: `Parent rf-profile name
+										Description: `Parent Profile
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -377,7 +385,65 @@ func resourceWirelessRfProfile() *schema.Resource {
 										Optional: true,
 									},
 									"parent_profile": &schema.Schema{
-										Description: `Parent rf-profile name
+										Description: `Parent Profile
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"power_threshold_v1": &schema.Schema{
+										Description: `Power Threshold V1
+`,
+										Type:     schema.TypeFloat,
+										Optional: true,
+									},
+									"radio_channels": &schema.Schema{
+										Description: `Radio Channels
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"rx_sop_threshold": &schema.Schema{
+										Description: `Rx Sop Threshold
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"radio_type_c_properties": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"data_rates": &schema.Schema{
+										Description: `Data Rates
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"mandatory_data_rates": &schema.Schema{
+										Description: `Mandatory Data Rates
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"max_power_level": &schema.Schema{
+										Description: `Max Power Level
+`,
+										Type:     schema.TypeFloat,
+										Optional: true,
+									},
+									"min_power_level": &schema.Schema{
+										Description: `Min Power Level
+`,
+										Type:     schema.TypeFloat,
+										Optional: true,
+									},
+									"parent_profile": &schema.Schema{
+										Description: `Parent Profile
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -407,7 +473,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 							Description: `rfProfileName path parameter. RF profile name to be deleted(required) *non-custom RF profile cannot be deleted
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 					},
 				},
@@ -637,10 +703,15 @@ func expandRequestWirelessRfProfileCreateOrUpdateRfProfile(ctx context.Context, 
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".radio_type_b_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".radio_type_b_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".radio_type_b_properties")))) {
 		request.RadioTypeBProperties = expandRequestWirelessRfProfileCreateOrUpdateRfProfileRadioTypeBProperties(ctx, key+".radio_type_b_properties.0", d)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".radio_type_c_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".radio_type_c_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".radio_type_c_properties")))) {
+		request.RadioTypeCProperties = expandRequestWirelessRfProfileCreateOrUpdateRfProfileRadioTypeCProperties(ctx, key+".radio_type_c_properties.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_radio_type_c")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_radio_type_c")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_radio_type_c")))) {
+		request.EnableRadioTypeC = interfaceToBoolPtr(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -673,7 +744,6 @@ func expandRequestWirelessRfProfileCreateOrUpdateRfProfileRadioTypeAProperties(c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -706,7 +776,38 @@ func expandRequestWirelessRfProfileCreateOrUpdateRfProfileRadioTypeBProperties(c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
 
+func expandRequestWirelessRfProfileCreateOrUpdateRfProfileRadioTypeCProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateOrUpdateRfProfileRadioTypeCProperties {
+	request := dnacentersdkgo.RequestWirelessCreateOrUpdateRfProfileRadioTypeCProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_profile")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_profile")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_profile")))) {
+		request.ParentProfile = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".radio_channels")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".radio_channels")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".radio_channels")))) {
+		request.RadioChannels = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data_rates")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data_rates")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data_rates")))) {
+		request.DataRates = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mandatory_data_rates")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mandatory_data_rates")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mandatory_data_rates")))) {
+		request.MandatoryDataRates = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rx_sop_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rx_sop_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rx_sop_threshold")))) {
+		request.RxSopThreshold = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_power_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_power_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_power_level")))) {
+		request.MinPowerLevel = interfaceToFloat64Ptr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_power_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_power_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_power_level")))) {
+		request.MaxPowerLevel = interfaceToFloat64Ptr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".power_threshold_v1")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".power_threshold_v1")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".power_threshold_v1")))) {
+		request.PowerThresholdV1 = interfaceToFloat64Ptr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 

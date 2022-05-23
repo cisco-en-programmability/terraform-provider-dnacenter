@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -41,8 +41,11 @@ func dataSourceGlobalPool() *schema.Resource {
 
 						"client_options": &schema.Schema{
 							Description: `Client Options`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"configure_external_dhcp": &schema.Schema{
@@ -131,8 +134,9 @@ func dataSourceGlobalPool() *schema.Resource {
 
 						"ipv6": &schema.Schema{
 							Description: `Ipv6`,
-							Type:        schema.TypeString,
-							Computed:    true,
+
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"last_update_time": &schema.Schema{
@@ -143,8 +147,9 @@ func dataSourceGlobalPool() *schema.Resource {
 
 						"overlapping": &schema.Schema{
 							Description: `Overlapping`,
-							Type:        schema.TypeString,
-							Computed:    true,
+
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"owner": &schema.Schema{
@@ -161,8 +166,9 @@ func dataSourceGlobalPool() *schema.Resource {
 
 						"shared": &schema.Schema{
 							Description: `Shared`,
-							Type:        schema.TypeString,
-							Computed:    true,
+
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"total_ip_address_count": &schema.Schema{

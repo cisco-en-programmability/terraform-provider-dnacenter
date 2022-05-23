@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -107,20 +107,46 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"authentication_policy_name": &schema.Schema{
-							Description: `Deprecated, same as vlanName, please use vlanName
+						"auto_generate_vlan_name": &schema.Schema{
+							Description: `It will auto generate vlanName, if vlanName is empty(applicable for L3  and INFRA_VN)
 `,
-							Type:     schema.TypeString,
-							Optional: true,
+
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"ip_pool_name": &schema.Schema{
-							Description: `Ip Pool Name, that is reserved to fabric siteNameHierarchy
+							Description: `Ip Pool Name, that is reserved to Fabric Site for (applicable for L3 and INFRA_VN)
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
+						"is_common_pool": &schema.Schema{
+							Description: `Common Pool enablement flag(applicable for L3 and L2 and default value is False )
+`,
+
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"is_ip_directed_broadcast": &schema.Schema{
+							Description: `Ip Directed Broadcast enablement flag(applicable for L3 and default value is False )
+`,
+
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
 						"is_l2_flooding_enabled": &schema.Schema{
-							Description: `Layer2 flooding enablement flag
+							Description: `Layer2 flooding enablement flag(applicable for L3 , L2 and always true for L2 and default value is False )
+`,
+
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"is_layer2_only": &schema.Schema{
+							Description: `Layer2 Only enablement flag and default value is False 
 `,
 
 							Type:         schema.TypeString,
@@ -128,7 +154,7 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 							Optional:     true,
 						},
 						"is_this_critical_pool": &schema.Schema{
-							Description: `Critical pool enablement flag where depending on the pool type (data or voice), a corresponding Critical Vlan gets assigned to the Critical Pool
+							Description: `Critical pool enablement(applicable for L3 and default value is False )
 `,
 
 							Type:         schema.TypeString,
@@ -136,43 +162,51 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 							Optional:     true,
 						},
 						"is_wireless_pool": &schema.Schema{
-							Description: `Wireless Pool enablement flag
+							Description: `Wireless Pool enablement flag(applicable for L3  and L2 and default value is False )
 `,
-							Type:     schema.TypeString,
-							Optional: true,
+
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"pool_type": &schema.Schema{
-							Description: `Pool Type (needed when assigning segment to INFRA_VN) (Example: AP.)
+							Description: `Pool Type (applicable for  INFRA_VN)
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"scalable_group_name": &schema.Schema{
-							Description: `Scalable Group, that is associated to Virtual Network
+							Description: `Scalable Group Name(applicable for L3)
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Full path of sda fabric siteNameHierarchy
+							Description: `Path of sda Fabric Site
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"traffic_type": &schema.Schema{
-							Description: `Traffic type
+							Description: `Traffic type(applicable for L3  and L2)
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"virtual_network_name": &schema.Schema{
-							Description: `Virtual Network Name, that is associated to fabric siteNameHierarchy
+							Description: `Virtual Network Name, that is associated to Fabric Site
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"vlan_id": &schema.Schema{
+							Description: `vlan Id(applicable for L3 , L2 and  INFRA_VN)
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"vlan_name": &schema.Schema{
-							Description: `Vlan name for this segment, represent the segment name, if empty, vlanName would be auto generated by API
+							Description: `Vlan name represent the segment name, if empty, vlanName would be auto generated by API
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -398,14 +432,23 @@ func expandRequestSdaVirtualNetworkIPPoolAddIPPoolInSdaVirtualNetwork(ctx contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network_name")))) {
 		request.VirtualNetworkName = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_layer2_only")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_layer2_only")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_layer2_only")))) {
+		request.IsLayer2Only = interfaceToBoolPtr(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_pool_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_pool_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_pool_name")))) {
 		request.IPPoolName = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan_id")))) {
+		request.VLANID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan_name")))) {
+		request.VLANName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auto_generate_vlan_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auto_generate_vlan_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auto_generate_vlan_name")))) {
+		request.AutoGenerateVLANName = interfaceToBoolPtr(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".traffic_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".traffic_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".traffic_type")))) {
 		request.TrafficType = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".authentication_policy_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".authentication_policy_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".authentication_policy_name")))) {
-		request.AuthenticationPolicyName = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".scalable_group_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".scalable_group_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".scalable_group_name")))) {
 		request.ScalableGroupName = interfaceToString(v)
@@ -416,18 +459,20 @@ func expandRequestSdaVirtualNetworkIPPoolAddIPPoolInSdaVirtualNetwork(ctx contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_this_critical_pool")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_this_critical_pool")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_this_critical_pool")))) {
 		request.IsThisCriticalPool = interfaceToBoolPtr(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_wireless_pool")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_wireless_pool")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_wireless_pool")))) {
+		request.IsWirelessPool = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_ip_directed_broadcast")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_ip_directed_broadcast")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_ip_directed_broadcast")))) {
+		request.IsIPDirectedBroadcast = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_common_pool")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_common_pool")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_common_pool")))) {
+		request.IsCommonPool = interfaceToBoolPtr(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".pool_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".pool_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".pool_type")))) {
 		request.PoolType = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan_name")))) {
-		request.VLANName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_wireless_pool")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_wireless_pool")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_wireless_pool")))) {
-		request.IsWirelessPool = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -20,20 +20,37 @@ func dataSourceEventSubscriptionDetailsRest() *schema.Resource {
 
 		ReadContext: dataSourceEventSubscriptionDetailsRestRead,
 		Schema: map[string]*schema.Schema{
-			"connector_type": &schema.Schema{
-				Description: `connectorType query parameter. Connector Type [REST]
-`,
-				Type:     schema.TypeString,
-				Required: true,
-			},
 			"instance_id": &schema.Schema{
 				Description: `instanceId query parameter. Instance Id of the specific configuration
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"limit": &schema.Schema{
+				Description: `limit query parameter. The number of Rest/Webhook Subscription detail's to limit in the resultset whose default value 10
+`,
+				Type:     schema.TypeFloat,
+				Optional: true,
+			},
 			"name": &schema.Schema{
 				Description: `name query parameter. Name of the specific configuration
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"offset": &schema.Schema{
+				Description: `offset query parameter. The number of Rest/Webhook Subscription detail's to offset in the resultset whose default value 0
+`,
+				Type:     schema.TypeFloat,
+				Optional: true,
+			},
+			"order": &schema.Schema{
+				Description: `order query parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"sort_by": &schema.Schema{
+				Description: `sortBy query parameter. SortBy field name
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -136,22 +153,35 @@ func dataSourceEventSubscriptionDetailsRestRead(ctx context.Context, d *schema.R
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-	vConnectorType := d.Get("connector_type")
 	vName, okName := d.GetOk("name")
 	vInstanceID, okInstanceID := d.GetOk("instance_id")
+	vOffset, okOffset := d.GetOk("offset")
+	vLimit, okLimit := d.GetOk("limit")
+	vSortBy, okSortBy := d.GetOk("sort_by")
+	vOrder, okOrder := d.GetOk("order")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetRestWebhookSubscriptionDetails")
 		queryParams1 := dnacentersdkgo.GetRestWebhookSubscriptionDetailsQueryParams{}
 
-		queryParams1.ConnectorType = vConnectorType.(string)
-
 		if okName {
 			queryParams1.Name = vName.(string)
 		}
 		if okInstanceID {
 			queryParams1.InstanceID = vInstanceID.(string)
+		}
+		if okOffset {
+			queryParams1.Offset = vOffset.(float64)
+		}
+		if okLimit {
+			queryParams1.Limit = vLimit.(float64)
+		}
+		if okSortBy {
+			queryParams1.SortBy = vSortBy.(string)
+		}
+		if okOrder {
+			queryParams1.Order = vOrder.(string)
 		}
 
 		response1, restyResp1, err := client.EventManagement.GetRestWebhookSubscriptionDetails(&queryParams1)

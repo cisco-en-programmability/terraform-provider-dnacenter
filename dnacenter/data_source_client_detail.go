@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -122,8 +122,11 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"ap_group": &schema.Schema{
 										Description: `Ap Group`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"auth_type": &schema.Schema{
@@ -134,14 +137,20 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"avg_rssi": &schema.Schema{
 										Description: `Avg Rssi`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"avg_snr": &schema.Schema{
 										Description: `Avg Snr`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"channel": &schema.Schema{
@@ -185,14 +194,20 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"dns_failure": &schema.Schema{
 										Description: `Dns Failure`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"dns_success": &schema.Schema{
 										Description: `Dns Success`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"frequency": &schema.Schema{
@@ -257,8 +272,11 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"host_os": &schema.Schema{
 										Description: `Host Os`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"host_type": &schema.Schema{
@@ -269,8 +287,11 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"host_version": &schema.Schema{
 										Description: `Host Version`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"id": &schema.Schema{
@@ -300,8 +321,11 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"location": &schema.Schema{
 										Description: `Location`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"onboarding": &schema.Schema{
@@ -327,8 +351,11 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"assoc_done_time": &schema.Schema{
 													Description: `Assoc Done Time`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"assoc_rootcause_list": &schema.Schema{
@@ -342,38 +369,56 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"auth_done_time": &schema.Schema{
 													Description: `Auth Done Time`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"average_assoc_duration": &schema.Schema{
 													Description: `Average Assoc Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"average_auth_duration": &schema.Schema{
 													Description: `Average Auth Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"average_dhcp_duration": &schema.Schema{
 													Description: `Average Dhcp Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"average_run_duration": &schema.Schema{
 													Description: `Average Run Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"dhcp_done_time": &schema.Schema{
 													Description: `Dhcp Done Time`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"dhcp_rootcause_list": &schema.Schema{
@@ -387,32 +432,47 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"dhcp_server_ip": &schema.Schema{
 													Description: `Dhcp Server Ip`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"max_assoc_duration": &schema.Schema{
 													Description: `Max Assoc Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"max_auth_duration": &schema.Schema{
 													Description: `Max Auth Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"max_dhcp_duration": &schema.Schema{
 													Description: `Max Dhcp Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"max_run_duration": &schema.Schema{
 													Description: `Max Run Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"other_rootcause_list": &schema.Schema{
@@ -429,14 +489,20 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"onboarding_time": &schema.Schema{
 										Description: `Onboarding Time`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"port": &schema.Schema{
 										Description: `Port`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"rssi": &schema.Schema{
@@ -477,8 +543,11 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"user_id": &schema.Schema{
 										Description: `User Id`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"vlan_id": &schema.Schema{
@@ -510,8 +579,11 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"id": &schema.Schema{
 													Description: `Id`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"label": &schema.Schema{
@@ -531,8 +603,11 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"port_utilization": &schema.Schema{
 													Description: `Port Utilization`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"source": &schema.Schema{
@@ -558,20 +633,29 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"clients": &schema.Schema{
 													Description: `Clients`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"connected_device": &schema.Schema{
 													Description: `Connected Device`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"count": &schema.Schema{
 													Description: `Count`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"description": &schema.Schema{
@@ -588,14 +672,20 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"fabric_group": &schema.Schema{
 													Description: `Fabric Group`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"family": &schema.Schema{
 													Description: `Family`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"health_score": &schema.Schema{
@@ -636,14 +726,20 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"platform_id": &schema.Schema{
 													Description: `Platform Id`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"radio_frequency": &schema.Schema{
 													Description: `Radio Frequency`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"role": &schema.Schema{
@@ -654,14 +750,20 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"software_version": &schema.Schema{
 													Description: `Software Version`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"user_id": &schema.Schema{
 													Description: `User Id`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
