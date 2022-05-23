@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -476,8 +476,8 @@ func resourceEventSubscriptionEmailDelete(ctx context.Context, d *schema.Resourc
 	vName, _ := resourceMap["name"]
 	vSubscriptionID, _ := resourceMap["subscription_id"]
 
-	queryParams1 := dnacentersdkgo.GetEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
+	queryParams1 := dnacentersdkgo.GetEmailEventSubscriptionsQueryParams{}
+	item, err := searchEventManagementGetEmailEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
 	if err != nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetEventSubscriptions", err,

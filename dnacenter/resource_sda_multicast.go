@@ -2,11 +2,13 @@ package dnacenter
 
 import (
 	"context"
-	"log"
+	"fmt"
 	"reflect"
 	"time"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	"log"
+
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -41,7 +43,14 @@ func resourceSdaMulticast() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"multicast_method": &schema.Schema{
-							Description: `Multicast Methods
+							Description: `Multicast Method
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"multicast_type": &schema.Schema{
+							Description: `Multicast Type
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -54,42 +63,54 @@ func resourceSdaMulticast() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"external_rp_ip_address": &schema.Schema{
-										Description: `External Rp Ip Address, required for muticastType=asm_with_external_rp
+										Description: `ExternalRpIpAddress, required if multicastType is asm_with_external_rp
 `,
 										Type:     schema.TypeString,
 										Computed: true,
+									},
+
+									"internal_rp_ip_address": &schema.Schema{
+										Description: `InternalRpIpAddress, required if multicastType is asm_with_internal_rp
+`,
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"ip_pool_name": &schema.Schema{
-										Description: `Ip Pool Name, that is reserved to fabricSiteNameHierarchy
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"ssm_group_range": &schema.Schema{
-										Description: `Valid SSM group range ip address(e.g., 230.0.0.0)
+										Description: `Ip Pool Name, that is reserved to Fabric Site
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"ssm_info": &schema.Schema{
-										Description: `Source-specific multicast information, required if muticastType=ssm
-`,
-										Type:     schema.TypeString,
+										Type:     schema.TypeList,
 										Computed: true,
-									},
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
 
-									"ssm_wildcard_mask": &schema.Schema{
-										Description: `Valid SSM Wildcard Mask ip address(e.g.,0.255.255.255)
+												"ssm_group_range": &schema.Schema{
+													Description: `Valid SSM group range ip address(e.g., 230.0.0.0)
 `,
-										Type:     schema.TypeString,
-										Computed: true,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"ssm_wildcard_mask": &schema.Schema{
+													Description: `Valid SSM Wildcard Mask ip address(e.g.,0.255.255.255)
+`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
 									},
 
 									"virtual_network_name": &schema.Schema{
-										Description: `Virtual Network Name, that is associated to fabricSiteNameHierarchy
+										Description: `Virtual Network Name, that is associated to Fabric Site
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -98,15 +119,8 @@ func resourceSdaMulticast() *schema.Resource {
 							},
 						},
 
-						"muticast_type": &schema.Schema{
-							Description: `Muticast Type
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Full path of sda fabric siteNameHierarchy
+							Description: `Full path of sda Fabric Site
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -116,14 +130,18 @@ func resourceSdaMulticast() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"multicast_method": &schema.Schema{
-							Description: `Multicast Methods
+							Description: `Multicast Method
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"multicast_type": &schema.Schema{
+							Description: `Multicast Type
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -131,46 +149,54 @@ func resourceSdaMulticast() *schema.Resource {
 						"multicast_vn_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
-							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"external_rp_ip_address": &schema.Schema{
-										Description: `External Rp Ip Address, required for muticastType=asm_with_external_rp
+										Description: `ExternalRpIpAddress, required if multicastType is asm_with_external_rp
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+									},
+									"internal_rp_ip_address": &schema.Schema{
+										Description: `InternalRpIpAddress, required if multicastType is asm_with_internal_rp
+`,
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"ip_pool_name": &schema.Schema{
-										Description: `Ip Pool Name, that is reserved to fabricSiteNameHierarchy
-`,
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"ssm_group_range": &schema.Schema{
-										Description: `Valid SSM group range ip address(e.g., 230.0.0.0)
+										Description: `Ip Pool Name, that is reserved to Fabric Site
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 									},
 									"ssm_info": &schema.Schema{
-										Description: `Source-specific multicast information, required if muticastType=ssm
-`,
 										Type:     schema.TypeList,
 										Optional: true,
 										MaxItems: 1,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"ssm_group_range": &schema.Schema{
+													Description: `Valid SSM group range ip address(e.g., 230.0.0.0)
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"ssm_wildcard_mask": &schema.Schema{
+													Description: `Valid SSM Wildcard Mask ip address(e.g.,0.255.255.255)
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
 										},
 									},
-									"ssm_wildcard_mask": &schema.Schema{
-										Description: `Valid SSM Wildcard Mask ip address(e.g.,0.255.255.255)
-`,
-										Type:     schema.TypeString,
-										Optional: true,
-									},
 									"virtual_network_name": &schema.Schema{
-										Description: `Virtual Network Name, that is associated to fabricSiteNameHierarchy
+										Description: `Virtual Network Name, that is associated to Fabric Site
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -178,14 +204,8 @@ func resourceSdaMulticast() *schema.Resource {
 								},
 							},
 						},
-						"muticast_type": &schema.Schema{
-							Description: `Muticast Type
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Full path of sda fabric siteNameHierarchy
+							Description: `Full path of sda Fabric Site
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -400,16 +420,38 @@ func expandRequestSdaMulticastAddMulticastInSdaFabric(ctx context.Context, key s
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".multicast_method")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".multicast_method")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".multicast_method")))) {
 		request.MulticastMethod = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".muticast_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".muticast_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".muticast_type")))) {
-		request.MuticastType = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".multicast_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".multicast_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".multicast_type")))) {
+		request.MulticastType = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".multicast_vn_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".multicast_vn_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".multicast_vn_info")))) {
-		request.MulticastVnInfo = expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfo(ctx, key+".multicast_vn_info.0", d)
+		request.MulticastVnInfo = expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfoArray(ctx, key+".multicast_vn_info", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
 
+func expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfoArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestSdaAddMulticastInSdaFabricMulticastVnInfo {
+	request := []dnacentersdkgo.RequestSdaAddMulticastInSdaFabricMulticastVnInfo{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfo(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
@@ -421,12 +463,23 @@ func expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfo(ctx context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_pool_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_pool_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_pool_name")))) {
 		request.IPPoolName = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".internal_rp_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".internal_rp_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".internal_rp_ip_address")))) {
+		request.InternalRpIPAddress = interfaceToSliceString(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".external_rp_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".external_rp_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".external_rp_ip_address")))) {
 		request.ExternalRpIPAddress = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssm_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssm_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssm_info")))) {
 		request.SsmInfo = expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfoSsmInfo(ctx, key+".ssm_info.0", d)
 	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfoSsmInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddMulticastInSdaFabricMulticastVnInfoSsmInfo {
+	request := dnacentersdkgo.RequestSdaAddMulticastInSdaFabricMulticastVnInfoSsmInfo{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssm_group_range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssm_group_range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssm_group_range")))) {
 		request.SsmGroupRange = interfaceToString(v)
 	}
@@ -436,16 +489,5 @@ func expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfo(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
-	return &request
-}
-
-func expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfoSsmInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddMulticastInSdaFabricMulticastVnInfoSsmInfo {
-	var request dnacentersdkgo.RequestSdaAddMulticastInSdaFabricMulticastVnInfoSsmInfo
-	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }

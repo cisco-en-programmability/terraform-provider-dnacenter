@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -161,8 +161,11 @@ func dataSourceEventSeriesAuditLogs() *schema.Resource {
 
 						"additional_details": &schema.Schema{
 							Description: `Additional Details`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"category": &schema.Schema{
@@ -197,8 +200,11 @@ func dataSourceEventSeriesAuditLogs() *schema.Resource {
 
 						"details": &schema.Schema{
 							Description: `Details`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"domain": &schema.Schema{

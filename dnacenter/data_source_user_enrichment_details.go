@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -84,14 +84,20 @@ user and devices that the user is connected to
 
 												"error_code": &schema.Schema{
 													Description: `Error Code`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"error_description": &schema.Schema{
 													Description: `Error Description`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"family": &schema.Schema{
@@ -156,14 +162,20 @@ user and devices that the user is connected to
 
 												"location": &schema.Schema{
 													Description: `Location`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"location_name": &schema.Schema{
 													Description: `Location Name`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"mac_address": &schema.Schema{
@@ -279,8 +291,11 @@ user and devices that the user is connected to
 
 												"tunnel_udp_port": &schema.Schema{
 													Description: `Tunnel Udp Port`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"type": &schema.Schema{
@@ -297,8 +312,11 @@ user and devices that the user is connected to
 
 												"waas_device_mode": &schema.Schema{
 													Description: `Waas Device Mode`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -315,32 +333,47 @@ user and devices that the user is connected to
 
 									"ap_group": &schema.Schema{
 										Description: `Ap Group`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"auth_type": &schema.Schema{
 										Description: `Auth Type`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"avg_rssi": &schema.Schema{
 										Description: `Avg Rssi`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"avg_snr": &schema.Schema{
 										Description: `Avg Snr`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"channel": &schema.Schema{
 										Description: `Channel`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"client_connection": &schema.Schema{
@@ -366,26 +399,38 @@ user and devices that the user is connected to
 
 									"data_rate": &schema.Schema{
 										Description: `Data Rate`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"dns_failure": &schema.Schema{
 										Description: `Dns Failure`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"dns_success": &schema.Schema{
 										Description: `Dns Success`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"frequency": &schema.Schema{
 										Description: `Frequency`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"health_score": &schema.Schema{
@@ -438,14 +483,20 @@ user and devices that the user is connected to
 
 									"host_name": &schema.Schema{
 										Description: `Host Name`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"host_os": &schema.Schema{
 										Description: `Host Os`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"host_type": &schema.Schema{
@@ -456,8 +507,11 @@ user and devices that the user is connected to
 
 									"host_version": &schema.Schema{
 										Description: `Host Version`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"id": &schema.Schema{
@@ -480,8 +534,11 @@ user and devices that the user is connected to
 
 									"location": &schema.Schema{
 										Description: `Location`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"onboarding": &schema.Schema{
@@ -492,62 +549,92 @@ user and devices that the user is connected to
 
 												"aaa_server_ip": &schema.Schema{
 													Description: `Aaa Server Ip`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"average_assoc_duration": &schema.Schema{
 													Description: `Average Assoc Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"average_auth_duration": &schema.Schema{
 													Description: `Average Auth Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"average_dhcp_duration": &schema.Schema{
 													Description: `Average Dhcp Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"average_run_duration": &schema.Schema{
 													Description: `Average Run Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"dhcp_server_ip": &schema.Schema{
 													Description: `Dhcp Server Ip`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"max_assoc_duration": &schema.Schema{
 													Description: `Max Assoc Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"max_auth_duration": &schema.Schema{
 													Description: `Max Auth Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"max_dhcp_duration": &schema.Schema{
 													Description: `Max Dhcp Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"max_run_duration": &schema.Schema{
 													Description: `Max Run Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -555,38 +642,56 @@ user and devices that the user is connected to
 
 									"onboarding_time": &schema.Schema{
 										Description: `Onboarding Time`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"port": &schema.Schema{
 										Description: `Port`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"rssi": &schema.Schema{
 										Description: `Rssi`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"rx_bytes": &schema.Schema{
 										Description: `Rx Bytes`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"snr": &schema.Schema{
 										Description: `Snr`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"ssid": &schema.Schema{
 										Description: `Ssid`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"sub_type": &schema.Schema{
@@ -597,14 +702,20 @@ user and devices that the user is connected to
 
 									"tx_bytes": &schema.Schema{
 										Description: `Tx Bytes`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"user_id": &schema.Schema{
 										Description: `User Id`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"vlan_id": &schema.Schema{

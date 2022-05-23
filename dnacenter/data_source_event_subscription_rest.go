@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,11 +15,23 @@ func dataSourceEventSubscriptionRest() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Event Management.
 
-- Gets the list of Rest/Webhook Subscriptions's based on provided offset and limit
+- Gets the list of Rest/Webhook Subscriptions's based on provided query params
 `,
 
 		ReadContext: dataSourceEventSubscriptionRestRead,
 		Schema: map[string]*schema.Schema{
+			"category": &schema.Schema{
+				Description: `category query parameter. List of subscriptions related to the respective category
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"domain": &schema.Schema{
+				Description: `domain query parameter. List of subscriptions related to the respective domain
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"event_ids": &schema.Schema{
 				Description: `eventIds query parameter. List of subscriptions related to the respective eventIds (Comma separated event ids)
 `,
@@ -30,6 +42,12 @@ func dataSourceEventSubscriptionRest() *schema.Resource {
 				Description: `limit query parameter. The number of Subscriptions's to limit in the resultset whose default value 10
 `,
 				Type:     schema.TypeFloat,
+				Optional: true,
+			},
+			"name": &schema.Schema{
+				Description: `name query parameter. List of subscriptions related to the respective name
+`,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
@@ -45,6 +63,18 @@ func dataSourceEventSubscriptionRest() *schema.Resource {
 			},
 			"sort_by": &schema.Schema{
 				Description: `sortBy query parameter. SortBy field name
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"sub_domain": &schema.Schema{
+				Description: `subDomain query parameter. List of subscriptions related to the respective sub-domain
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"type": &schema.Schema{
+				Description: `type query parameter. List of subscriptions related to the respective type
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -78,11 +108,26 @@ func dataSourceEventSubscriptionRest() *schema.Resource {
 									},
 
 									"domains_subdomains": &schema.Schema{
-										Description: `Domains Subdomains`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"domain": &schema.Schema{
+													Description: `Domain`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"sub_domains": &schema.Schema{
+													Description: `Sub Domains`,
+													Type:        schema.TypeList,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
 										},
 									},
 
@@ -113,6 +158,15 @@ func dataSourceEventSubscriptionRest() *schema.Resource {
 										},
 									},
 
+									"site_ids": &schema.Schema{
+										Description: `Site Ids`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
 									"sources": &schema.Schema{
 										Description: `Sources`,
 										Type:        schema.TypeList,
@@ -136,8 +190,9 @@ func dataSourceEventSubscriptionRest() *schema.Resource {
 
 						"is_private": &schema.Schema{
 							Description: `Is Private`,
-							Type:        schema.TypeString,
-							Computed:    true,
+
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"name": &schema.Schema{
@@ -326,6 +381,11 @@ func dataSourceEventSubscriptionRestRead(ctx context.Context, d *schema.Resource
 	vLimit, okLimit := d.GetOk("limit")
 	vSortBy, okSortBy := d.GetOk("sort_by")
 	vOrder, okOrder := d.GetOk("order")
+	vDomain, okDomain := d.GetOk("domain")
+	vSubDomain, okSubDomain := d.GetOk("sub_domain")
+	vCategory, okCategory := d.GetOk("category")
+	vType, okType := d.GetOk("type")
+	vName, okName := d.GetOk("name")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -346,6 +406,21 @@ func dataSourceEventSubscriptionRestRead(ctx context.Context, d *schema.Resource
 		}
 		if okOrder {
 			queryParams1.Order = vOrder.(string)
+		}
+		if okDomain {
+			queryParams1.Domain = vDomain.(string)
+		}
+		if okSubDomain {
+			queryParams1.SubDomain = vSubDomain.(string)
+		}
+		if okCategory {
+			queryParams1.Category = vCategory.(string)
+		}
+		if okType {
+			queryParams1.Type = vType.(string)
+		}
+		if okName {
+			queryParams1.Name = vName.(string)
 		}
 
 		response1, restyResp1, err := client.EventManagement.GetRestWebhookEventSubscriptions(&queryParams1)
@@ -484,14 +559,29 @@ func flattenEventManagementGetRestWebhookEventSubscriptionsItemsFilter(item *dna
 	respItem := make(map[string]interface{})
 	respItem["event_ids"] = item.EventIDs
 	respItem["others"] = item.Others
-	respItem["domains_subdomains"] = item.DomainsSubdomains
+	respItem["domains_subdomains"] = flattenEventManagementGetRestWebhookEventSubscriptionsItemsFilterDomainsSubdomains(item.DomainsSubdomains)
 	respItem["types"] = item.Types
 	respItem["categories"] = item.Categories
 	respItem["severities"] = item.Severities
 	respItem["sources"] = item.Sources
+	respItem["site_ids"] = item.SiteIDs
 
 	return []map[string]interface{}{
 		respItem,
 	}
 
+}
+
+func flattenEventManagementGetRestWebhookEventSubscriptionsItemsFilterDomainsSubdomains(items *[]dnacentersdkgo.ResponseItemEventManagementGetRestWebhookEventSubscriptionsFilterDomainsSubdomains) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["domain"] = item.Domain
+		respItem["sub_domains"] = item.SubDomains
+		respItems = append(respItems, respItem)
+	}
+	return respItems
 }

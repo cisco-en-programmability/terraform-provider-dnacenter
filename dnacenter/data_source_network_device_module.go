@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,7 +17,7 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 
 - Returns modules by specified device id
 
-- Returns Module info by id
+- Returns Module info by 'module id'
 `,
 
 		ReadContext: dataSourceNetworkDeviceModuleRead,
@@ -28,9 +28,10 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Description: `id path parameter.`,
-				Type:        schema.TypeString,
-				Optional:    true,
+				Description: `id path parameter. Module id
+`,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
@@ -92,8 +93,11 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 						},
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"containment_entity": &schema.Schema{
@@ -181,8 +185,11 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 						},
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"containment_entity": &schema.Schema{

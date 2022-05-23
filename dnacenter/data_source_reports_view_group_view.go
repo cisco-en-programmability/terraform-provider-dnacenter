@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -133,8 +133,11 @@ API to get the viewIds  (required as a query param for this API) for available v
 									"additional_info": &schema.Schema{
 										Description: `Additional info for managing filter options
 `,
-										Type:     schema.TypeString,
+										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"cache_filter": &schema.Schema{
@@ -164,8 +167,11 @@ API to get the viewIds  (required as a query param for this API) for available v
 											Schema: map[string]*schema.Schema{
 
 												"data_source": &schema.Schema{
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"display_value_path": &schema.Schema{

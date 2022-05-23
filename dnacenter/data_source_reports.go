@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -154,8 +154,11 @@ func dataSourceReports() *schema.Resource {
 						},
 
 						"schedule": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"tags": &schema.Schema{
@@ -257,8 +260,11 @@ func dataSourceReports() *schema.Resource {
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type.
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -449,8 +455,11 @@ func dataSourceReports() *schema.Resource {
 						},
 
 						"schedule": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"tags": &schema.Schema{
@@ -552,8 +561,11 @@ func dataSourceReports() *schema.Resource {
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type.
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},

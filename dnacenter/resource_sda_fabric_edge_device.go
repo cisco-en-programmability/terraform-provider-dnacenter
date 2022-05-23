@@ -2,12 +2,13 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -308,6 +309,40 @@ func resourceSdaFabricEdgeDeviceDelete(ctx context.Context, d *schema.ResourceDa
 }
 func expandRequestSdaFabricEdgeDeviceAddEdgeDeviceInSdaFabric(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddEdgeDeviceInSdaFabric {
 	request := dnacentersdkgo.RequestSdaAddEdgeDeviceInSdaFabric{}
+	if v := expandRequestSdaFabricEdgeDeviceAddEdgeDeviceInSdaFabricItemArray(ctx, key+".payload", d); v != nil {
+		request = *v
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricEdgeDeviceAddEdgeDeviceInSdaFabricItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddEdgeDeviceInSdaFabric {
+	request := []dnacentersdkgo.RequestItemSdaAddEdgeDeviceInSdaFabric{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaFabricEdgeDeviceAddEdgeDeviceInSdaFabricItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaFabricEdgeDeviceAddEdgeDeviceInSdaFabricItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddEdgeDeviceInSdaFabric {
+	request := dnacentersdkgo.RequestItemSdaAddEdgeDeviceInSdaFabric{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_management_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_management_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_management_ip_address")))) {
 		request.DeviceManagementIPAddress = interfaceToString(v)
 	}
@@ -317,6 +352,5 @@ func expandRequestSdaFabricEdgeDeviceAddEdgeDeviceInSdaFabric(ctx context.Contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

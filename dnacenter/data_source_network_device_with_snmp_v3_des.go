@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +15,8 @@ func dataSourceNetworkDeviceWithSNMPV3Des() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Devices.
 
-- Returns devices added to DNAC with snmp v3 DES, where siteId is mandatory & accepts offset, limit, sortby, order which
-are optional.
+- Returns devices added to Cisco DNA center with snmp v3 DES, where siteId is mandatory & accepts offset, limit, sortby,
+order which are optional.
 `,
 
 		ReadContext: dataSourceNetworkDeviceWithSNMPV3DesRead,
@@ -122,9 +122,9 @@ func dataSourceNetworkDeviceWithSNMPV3DesRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ReturnsDevicesAddedToDnaCWithSNMPV3DES")
+		log.Printf("[DEBUG] Selected method 1: ReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DES")
 		vvSiteID := vSiteID.(string)
-		queryParams1 := dnacentersdkgo.ReturnsDevicesAddedToDnaCWithSNMPV3DESQueryParams{}
+		queryParams1 := dnacentersdkgo.ReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DESQueryParams{}
 
 		if okOffset {
 			queryParams1.Offset = vOffset.(string)
@@ -139,24 +139,24 @@ func dataSourceNetworkDeviceWithSNMPV3DesRead(ctx context.Context, d *schema.Res
 			queryParams1.Order = vOrder.(string)
 		}
 
-		response1, restyResp1, err := client.Devices.ReturnsDevicesAddedToDnaCWithSNMPV3DES(vvSiteID, &queryParams1)
+		response1, restyResp1, err := client.Devices.ReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DES(vvSiteID, &queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing ReturnsDevicesAddedToDnaCWithSNMPV3DES", err,
-				"Failure at ReturnsDevicesAddedToDnaCWithSNMPV3DES, unexpected response", ""))
+				"Failure when executing ReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DES", err,
+				"Failure at ReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DES, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenDevicesReturnsDevicesAddedToDnaCWithSNMPV3DESItems(response1.Response)
+		vItems1 := flattenDevicesReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DESItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting ReturnsDevicesAddedToDnaCWithSNMPV3DES response",
+				"Failure when setting ReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DES response",
 				err))
 			return diags
 		}
@@ -167,7 +167,7 @@ func dataSourceNetworkDeviceWithSNMPV3DesRead(ctx context.Context, d *schema.Res
 	return diags
 }
 
-func flattenDevicesReturnsDevicesAddedToDnaCWithSNMPV3DESItems(items *[]dnacentersdkgo.ResponseDevicesReturnsDevicesAddedToDnaCWithSNMPV3DESResponse) []map[string]interface{} {
+func flattenDevicesReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DESItems(items *[]dnacentersdkgo.ResponseDevicesReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DESResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

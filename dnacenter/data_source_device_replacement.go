@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -284,11 +284,7 @@ func flattenDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetail
 	return respItems
 }
 
-func flattenDeviceReplacementReturnReplacementDevicesWithReplacementDetailsItems(item *dnacentersdkgo.ResponseDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetailsResponse) map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-
+func flattenDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetailsItem(item *dnacentersdkgo.ResponseDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetailsResponse) []map[string]interface{} {
 	respItem := make(map[string]interface{})
 	respItem["creation_time"] = item.CreationTime
 	respItem["family"] = item.Family
@@ -304,6 +300,7 @@ func flattenDeviceReplacementReturnReplacementDevicesWithReplacementDetailsItems
 	respItem["replacement_status"] = item.ReplacementStatus
 	respItem["replacement_time"] = item.ReplacementTime
 	respItem["workflow_id"] = item.WorkflowID
-
-	return respItem
+	return []map[string]interface{}{
+		respItem,
+	}
 }
