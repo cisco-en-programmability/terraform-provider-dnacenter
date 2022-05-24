@@ -2,7 +2,9 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
+	"time"
 
 	"log"
 
@@ -66,8 +68,9 @@ provide all the custom prompt in case of any update
 				},
 			},
 			"parameters": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
+				Required: true,
+				MaxItems: 1,
+				MinItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -96,6 +99,18 @@ func resourceNetworkDeviceCustomPromptCreate(ctx context.Context, d *schema.Reso
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNetworkDeviceCustomPromptCustomPromptPostAPI(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+
+	vPasswordPrompt := resourceItem["password_prompt"]
+
+	vvPasswordPrompt := interfaceToString(vPasswordPrompt)
+
+	vUsernamePrompt := resourceItem["username_prompt"]
+
+	vvUsernamePrompt := interfaceToString(vUsernamePrompt)
+
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	resp1, restyResp1, err := client.SystemSettings.CustomPromptPostAPI(request1)
@@ -109,7 +124,37 @@ func resourceNetworkDeviceCustomPromptCreate(ctx context.Context, d *schema.Reso
 			"Failure when executing CustomPromptPostAPI", err))
 		return diags
 	}
+	if resp1.Response == nil {
+		diags = append(diags, diagError(
+			"Failure when executing CustomPromptPostAPI", err))
+		return diags
+	}
+	taskId := resp1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
+			diags = append(diags, diagError(
+				"Failure when executing CustomPromptPostAPI", err1))
+			return diags
+		}
+	}
 	resourceMap := make(map[string]string)
+	resourceMap["password_prompt"] = vvPasswordPrompt
+	resourceMap["username_prompt"] = vvUsernamePrompt
 	d.SetId(joinResourceID(resourceMap))
 	return resourceNetworkDeviceCustomPromptRead(ctx, d, m)
 }
@@ -118,9 +163,6 @@ func resourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Resour
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-
-	resourceID := d.Id()
-	resourceMap := separateResourceID(resourceID)
 
 	selectedMethod := 1
 	if selectedMethod == 1 {

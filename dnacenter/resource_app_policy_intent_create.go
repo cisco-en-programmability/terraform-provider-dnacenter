@@ -607,10 +607,6 @@ func resourceAppPolicyIntentCreateRead(ctx context.Context, d *schema.ResourceDa
 	return diags
 }
 
-func resourceAppPolicyIntentCreateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceAppPolicyIntentCreateRead(ctx, d, m)
-}
-
 func resourceAppPolicyIntentCreateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 
