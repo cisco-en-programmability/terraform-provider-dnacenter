@@ -102,6 +102,11 @@ func Provider() *schema.Provider {
 			"dnacenter_syslog_config_update":                    resourceSyslogConfigUpdate(),
 			"dnacenter_pnp_device_authorize":                    resourcePnpDeviceAuthorize(),
 			"dnacenter_assign_device_to_site":                   resourceAssignDeviceToSite(),
+			"dnacenter_event_email_config_create":               resourceEventEmailConfigCreate(),
+			"dnacenter_event_email_config_update":               resourceEventEmailConfigUpdate(),
+			"dnacenter_event_webhook_create":                    resourceEventWebhookCreate(),
+			"dnacenter_event_webhook_update":                    resourceEventWebhookUpdate(),
+			"dnacenter_file_import":                             resourceFileImport(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"dnacenter_reserve_ip_subpool":                             dataSourceReserveIPSubpool(),
