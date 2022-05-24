@@ -3,6 +3,7 @@ package dnacenter
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"reflect"
 
@@ -128,6 +129,42 @@ func resourceAssignDeviceToSiteCreate(ctx context.Context, d *schema.ResourceDat
 				"Failure when executing AssignDevicesToSite", err,
 				"Failure at AssignDevicesToSite, unexpected response", ""))
 			return diags
+		}
+
+		executionId := response1.ExecutionID
+		log.Printf("[DEBUG] ExecutionID => %s", executionId)
+		if executionId != "" {
+			time.Sleep(5 * time.Second)
+			response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetBusinessAPIExecutionDetails", err,
+					"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+				return diags
+			}
+			for response2.Status == "IN_PROGRESS" {
+				time.Sleep(10 * time.Second)
+				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+				if err != nil || response2 == nil {
+					if restyResp1 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+					}
+					diags = append(diags, diagErrorWithAlt(
+						"Failure when executing GetExecutionByID", err,
+						"Failure at GetExecutionByID, unexpected response", ""))
+					return diags
+				}
+			}
+			if response2.Status == "FAILURE" {
+				bapiError := response2.BapiError
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing AssignDevicesToSite", err,
+					"Failure at AssignDevicesToSite execution", bapiError))
+				return diags
+			}
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
