@@ -2,8 +2,8 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -37,167 +37,16 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"group_uuid": &schema.Schema{
-							Description: `Group Uuid
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"inherited_group_name": &schema.Schema{
-							Description: `Inherited Group Name
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"inherited_group_uuid": &schema.Schema{
-							Description: `Inherited Group Uuid
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"instance_uuid": &schema.Schema{
-							Description: `Instance Uuid
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"ssid_details": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"auth_server": &schema.Schema{
-										Description: `Auth Server
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"enable_broadcast_ssi_d": &schema.Schema{
-										Description: `Enable Broadcast SSID
-`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"enable_fast_lane": &schema.Schema{
-										Description: `Enable Fast Lane
-`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"enable_mac_filtering": &schema.Schema{
-										Description: `Enable MAC Filtering
-`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"fast_transition": &schema.Schema{
-										Description: `Fast Transition
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"is_enabled": &schema.Schema{
-										Description: `Is Enabled
-`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"is_fabric": &schema.Schema{
-										Description: `Is Fabric
-`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"name": &schema.Schema{
-										Description: `SSID Name
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"passphrase": &schema.Schema{
-										Description: `Passphrase
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"radio_policy": &schema.Schema{
-										Description: `Radio Policy
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"security_level": &schema.Schema{
-										Description: `Security Level
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"traffic_type": &schema.Schema{
-										Description: `Traffic Type
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"wlan_type": &schema.Schema{
-										Description: `Wlan Type
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-
-						"version": &schema.Schema{
-							Description: `Version
-`,
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"basic_service_set_client_idle_timeout": &schema.Schema{
-							Description: `Basic Service Set Client Idle Timeout
-`,
-							Type:     schema.TypeInt,
-							Optional: true,
+							Description: `Basic Service Set Client Idle Timeout`,
+							Type:        schema.TypeInt,
+							Optional:    true,
 						},
 						"client_exclusion_timeout": &schema.Schema{
 							Description: `Client Exclusion Timeout
@@ -208,15 +57,15 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_basic_service_set_max_idle": &schema.Schema{
 							Description: `Enable Basic Service Set Max Idle 
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"enable_broadcast_ssi_d": &schema.Schema{
-							Description: `Enable Broadcast SSID
+							Description: `Enable Broadcase SSID 
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -224,23 +73,22 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_client_exclusion": &schema.Schema{
 							Description: `Enable Client Exclusion
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"enable_directed_multicast_service": &schema.Schema{
-							Description: `Enable Directed Multicast Service
-`,
-
+							Description: `Enable Directed Multicast Service`,
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"enable_fast_lane": &schema.Schema{
-							Description: `Enable Fast Lane
+							Description: `Enable FastLane
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -248,15 +96,14 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_mac_filtering": &schema.Schema{
 							Description: `Enable MAC Filtering
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"enable_neighbor_list": &schema.Schema{
-							Description: `Enable Neighbor List
-`,
-
+							Description: `Enable Neighbor List`,
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -264,7 +111,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 						"enable_session_time_out": &schema.Schema{
 							Description: `Enable Session Timeout
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -276,25 +123,32 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Optional: true,
 						},
 						"mfp_client_protection": &schema.Schema{
-							Description: `Management Frame Protection Client
+							Description: `Management Frame Protection Client`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"name": &schema.Schema{
+							Description: `SSID NAME
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
-						"name": &schema.Schema{
-							Description: `Enter SSID Name
-`,
-							Type:     schema.TypeString,
-							Required: true,
+						"nas_options": &schema.Schema{
+							Description: `Nas Options`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"passphrase": &schema.Schema{
-							Description: `Pass Phrase (Only applicable for SSID with PERSONAL security level)
+							Description: `Passphrase
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"radio_policy": &schema.Schema{
-							Description: `Radio Policy. Allowed values are 'Dual band operation (2.4GHz and 5GHz)', 'Dual band operation with band select', '5GHz only', '2.4GHz only'.
+							Description: `Radio Policy Enum (enum: Triple band operation (2.4GHz, 5GHz and 6GHz), Triple band operation with band select, 5GHz only, 2.4GHz only, 6GHz only)
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -315,10 +169,10 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Description: `ssidName path parameter. Enter the SSID name to be deleted
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 						"traffic_type": &schema.Schema{
-							Description: `Traffic Type
+							Description: `Traffic Type Enum (voicedata or data )
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -339,20 +193,10 @@ func resourceWirelessEnterpriseSSIDCreate(ctx context.Context, d *schema.Resourc
 	request1 := expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSID(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	vSSIDName := resourceItem["name"]
+	vSSIDName, okSSIDName := resourceItem["ssid_name"]
 	vvSSIDName := interfaceToString(vSSIDName)
-
-	queryParams1 := dnacentersdkgo.GetEnterpriseSSIDQueryParams{}
-	queryParams1.SSIDName = vvSSIDName
-	getResponse2, err := searchWirelessGetEnterpriseSSID(m, queryParams1)
-	if err == nil && getResponse2 != nil {
-		resourceMap := make(map[string]string)
-		resourceMap["name"] = vvSSIDName
-		d.SetId(joinResourceID(resourceMap))
-		return resourceWirelessEnterpriseSSIDRead(ctx, d, m)
-	}
-	response1, restyResp1, err := client.Wireless.CreateEnterpriseSSID(request1)
-	if err != nil || response1 == nil {
+	resp1, restyResp1, err := client.Wireless.CreateEnterpriseSSID(request1)
+	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
 				"Failure when executing CreateEnterpriseSSID", err, restyResp1.String()))
@@ -362,42 +206,8 @@ func resourceWirelessEnterpriseSSIDCreate(ctx context.Context, d *schema.Resourc
 			"Failure when executing CreateEnterpriseSSID", err))
 		return diags
 	}
-	executionId := response1.ExecutionID
-	log.Printf("[DEBUG] ExecutionID => %s", executionId)
-	if executionId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExecutionByID", err,
-				"Failure at GetExecutionByID, unexpected response", ""))
-			return diags
-		}
-		for response2.Status == "IN_PROGRESS" {
-			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-		}
-		if response2.Status == "FAILURE" {
-			log.Printf("[DEBUG] Error %s", response2.BapiError)
-			diags = append(diags, diagError(
-				"Failure when executing CreateEnterpriseSSID", err))
-			return diags
-		}
-	}
 	resourceMap := make(map[string]string)
-	resourceMap["name"] = vvSSIDName
+	resourceMap["ssid_name"] = vvSSIDName
 	d.SetId(joinResourceID(resourceMap))
 	return resourceWirelessEnterpriseSSIDRead(ctx, d, m)
 }
@@ -409,11 +219,11 @@ func resourceWirelessEnterpriseSSIDRead(ctx context.Context, d *schema.ResourceD
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSSIDName, okSSIDName := resourceMap["name"]
+	vSSIDName := resourceMap["ssid_name"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEnterpriseSSID")
+		log.Printf("[DEBUG] Selected method: GetEnterpriseSSID")
 		queryParams1 := dnacentersdkgo.GetEnterpriseSSIDQueryParams{}
 
 		if okSSIDName {
@@ -426,13 +236,24 @@ func resourceWirelessEnterpriseSSIDRead(ctx context.Context, d *schema.ResourceD
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetEnterpriseSSID", err,
+				"Failure at GetEnterpriseSSID, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenWirelessGetEnterpriseSSIDItems(response1)
+		items1 := getAllItemsWirelessGetEnterpriseSSID(m, response1, nil)
+		item1, err := searchWirelessGetEnterpriseSSID(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetEnterpriseSSID response", err,
+				"Failure when searching item from GetEnterpriseSSID, unexpected response", ""))
+			return diags
+		}
+		// Review flatten function used
+		vItem1 := flattenWirelessGetEnterpriseSSIDByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetEnterpriseSSID search response",
@@ -451,9 +272,9 @@ func resourceWirelessEnterpriseSSIDUpdate(ctx context.Context, d *schema.Resourc
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSSIDName := resourceMap["name"]
+	vSSIDName := resourceMap["ssid_name"]
 
-	queryParams1 := dnacentersdkgo.GetEnterpriseSSIDQueryParams{}
+	queryParams1 := dnacentersdkgo.GetEnterpriseSSIDQueryParams
 	queryParams1.SSIDName = vSSIDName
 	item, err := searchWirelessGetEnterpriseSSID(m, queryParams1)
 	if err != nil || item == nil {
@@ -463,16 +284,15 @@ func resourceWirelessEnterpriseSSIDUpdate(ctx context.Context, d *schema.Resourc
 		return diags
 	}
 
+	selectedMethod := 1
+	var vvID string
+	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
+	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %v", queryParams1)
+		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSID(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		if request1 != nil {
-			request1.Name = vSSIDName
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Wireless.UpdateEnterpriseSSID(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -485,38 +305,6 @@ func resourceWirelessEnterpriseSSIDUpdate(ctx context.Context, d *schema.Resourc
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing UpdateEnterpriseSSID", err,
 				"Failure at UpdateEnterpriseSSID, unexpected response", ""))
-			return diags
-		}
-		executionId := response1.ExecutionID
-		log.Printf("[DEBUG] ExecutionID => %s", executionId)
-		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExecutionByID", err,
-				"Failure at GetExecutionByID, unexpected response", ""))
-			return diags
-		}
-		for response2.Status == "IN_PROGRESS" {
-			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-		}
-		if response2.Status == "FAILURE" {
-			log.Printf("[DEBUG] Error %s", response2.BapiError)
-			diags = append(diags, diagError(
-				"Failure when executing UpdateEnterpriseSSID", err))
 			return diags
 		}
 	}
@@ -532,17 +320,41 @@ func resourceWirelessEnterpriseSSIDDelete(ctx context.Context, d *schema.Resourc
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSSIDName := resourceMap["name"]
+	vSSIDName := resourceMap["ssid_name"]
 
-	queryParams1 := dnacentersdkgo.GetEnterpriseSSIDQueryParams{}
+	queryParams1 := dnacentersdkgo.GetEnterpriseSSIDQueryParams
 	queryParams1.SSIDName = vSSIDName
-	var vvSSIDName string
 	item, err := searchWirelessGetEnterpriseSSID(m, queryParams1)
 	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetEnterpriseSSID", err,
+			"Failure at GetEnterpriseSSID, unexpected response", ""))
 		return diags
 	}
 
-	vvSSIDName = queryParams1.SSIDName
+	selectedMethod := 1
+	var vvID string
+	var vvName string
+	// REVIEW: Add getAllItems and search function to get missing params
+	if selectedMethod == 1 {
+
+		getResp1, _, err := client.Wireless.GetEnterpriseSSID(nil)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		items1 := getAllItemsWirelessGetEnterpriseSSID(m, getResp1, nil)
+		item1, err := searchWirelessGetEnterpriseSSID(m, items1, vName, vID)
+		if err != nil || item1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		if vID != item1.ID {
+			vvID = item1.ID
+		} else {
+			vvID = vID
+		}
+	}
 	response1, restyResp1, err := client.Wireless.DeleteEnterpriseSSID(vvSSIDName)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -556,41 +368,6 @@ func resourceWirelessEnterpriseSSIDDelete(ctx context.Context, d *schema.Resourc
 			"Failure when executing DeleteEnterpriseSSID", err,
 			"Failure at DeleteEnterpriseSSID, unexpected response", ""))
 		return diags
-	}
-
-	executionId := response1.ExecutionID
-	log.Printf("[DEBUG] ExecutionID => %s", executionId)
-	if executionId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExecutionByID", err,
-				"Failure at GetExecutionByID, unexpected response", ""))
-			return diags
-		}
-		for response2.Status == "IN_PROGRESS" {
-			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-		}
-		if response2.Status == "FAILURE" {
-			log.Printf("[DEBUG] Error %s", response2.BapiError)
-			diags = append(diags, diagError(
-				"Failure when executing DeleteEnterpriseSSID", err))
-			return diags
-		}
 	}
 
 	// d.SetId("") is automatically called assuming delete returns no errors, but
@@ -655,10 +432,12 @@ func expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSID(ctx context.Context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mfp_client_protection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mfp_client_protection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mfp_client_protection")))) {
 		request.MfpClientProtection = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".nas_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".nas_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".nas_options")))) {
+		request.NasOptions = interfaceToSliceString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -718,40 +497,36 @@ func expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSID(ctx context.Context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mfp_client_protection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mfp_client_protection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mfp_client_protection")))) {
 		request.MfpClientProtection = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".nas_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".nas_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".nas_options")))) {
+		request.NasOptions = interfaceToSliceString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchWirelessGetEnterpriseSSID(m interface{}, queryParams dnacentersdkgo.GetEnterpriseSSIDQueryParams) (*dnacentersdkgo.ResponseItemWirelessGetEnterpriseSSIDSSIDDetails, error) {
+func searchWirelessGetEnterpriseSSID(m interface{}, queryParams dnacentersdkgo.GetEnterpriseSSIDQueryParams) (*dnacentersdkgo.ResponseItemWirelessGetEnterpriseSSID, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseItemWirelessGetEnterpriseSSIDSSIDDetails
+	var foundItem *dnacentersdkgo.ResponseItemWirelessGetEnterpriseSSID
 	var ite *dnacentersdkgo.ResponseWirelessGetEnterpriseSSID
 	ite, _, err = client.Wireless.GetEnterpriseSSID(&queryParams)
 	if err != nil {
 		return foundItem, err
 	}
-
-	if ite == nil {
+	items := ite
+	if items == nil {
 		return foundItem, err
 	}
-
-	items := ite
-
 	itemsCopy := *items
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		itemsCopy2 := *item.SSIDDetails
-		for _, item := range itemsCopy2 {
-			if item.Name == queryParams.SSIDName {
-				var getItem *dnacentersdkgo.ResponseItemWirelessGetEnterpriseSSIDSSIDDetails
-				getItem = &item
-				foundItem = getItem
-				return foundItem, err
-			}
+		if item.Name == queryParams.Name {
+			var getItem *dnacentersdkgo.ResponseItemWirelessGetEnterpriseSSID
+			getItem = &item
+			foundItem = getItem
+			return foundItem, err
 		}
 	}
 	return foundItem, err

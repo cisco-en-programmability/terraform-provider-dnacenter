@@ -49,7 +49,7 @@ API to get the viewIds  (required as a query param for this API) for available v
 									"default": &schema.Schema{
 										Description: `true, if the delivery type is considered default
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -133,12 +133,15 @@ API to get the viewIds  (required as a query param for this API) for available v
 									"additional_info": &schema.Schema{
 										Description: `Additional info for managing filter options
 `,
-										Type:     schema.TypeString,
+										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"cache_filter": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -164,8 +167,11 @@ API to get the viewIds  (required as a query param for this API) for available v
 											Schema: map[string]*schema.Schema{
 
 												"data_source": &schema.Schema{
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"display_value_path": &schema.Schema{
@@ -202,7 +208,7 @@ API to get the viewIds  (required as a query param for this API) for available v
 									"required": &schema.Schema{
 										Description: `true if the filter is required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -270,7 +276,7 @@ API to get the viewIds  (required as a query param for this API) for available v
 									"default": &schema.Schema{
 										Description: `true, if the format type is considered default
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -317,7 +323,7 @@ API to get the viewIds  (required as a query param for this API) for available v
 									"default": &schema.Schema{
 										Description: `true, if the schedule type is default
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -368,7 +374,7 @@ func dataSourceReportsViewGroupViewRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetViewDetailsForAGivenViewGroupView")
+		log.Printf("[DEBUG] Selected method: GetViewDetailsForAGivenViewGroupView")
 		vvViewGroupID := vViewGroupID.(string)
 		vvViewID := vViewID.(string)
 

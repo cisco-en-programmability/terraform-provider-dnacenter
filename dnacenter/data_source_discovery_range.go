@@ -40,8 +40,11 @@ func dataSourceDiscoveryRange() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"cdp_level": &schema.Schema{
@@ -130,7 +133,7 @@ func dataSourceDiscoveryRange() *schema.Resource {
 									},
 
 									"secure": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -191,7 +194,7 @@ func dataSourceDiscoveryRange() *schema.Resource {
 									},
 
 									"secure": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -220,7 +223,7 @@ func dataSourceDiscoveryRange() *schema.Resource {
 						},
 
 						"is_auto_cdp": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -327,7 +330,7 @@ func dataSourceDiscoveryRange() *schema.Resource {
 						},
 
 						"update_mgmt_ip": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -352,7 +355,7 @@ func dataSourceDiscoveryRangeRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDiscoveriesByRange")
+		log.Printf("[DEBUG] Selected method: GetDiscoveriesByRange")
 		vvStartIndex := vStartIndex.(int)
 		vvRecordsToReturn := vRecordsToReturn.(int)
 

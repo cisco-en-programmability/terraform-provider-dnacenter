@@ -74,7 +74,7 @@ func dataSourceHTTPWriteCredentialUpdate() *schema.Resource {
 				Optional: true,
 			},
 			"secure": &schema.Schema{
-
+				// Type:     schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -94,7 +94,7 @@ func dataSourceHTTPWriteCredentialUpdateRead(ctx context.Context, d *schema.Reso
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateHTTPWriteCredentials")
+		log.Printf("[DEBUG] Selected method: UpdateHTTPWriteCredentials")
 		request1 := expandRequestHTTPWriteCredentialUpdateUpdateHTTPWriteCredentials(ctx, "", d)
 
 		response1, restyResp1, err := client.Discovery.UpdateHTTPWriteCredentials(request1)
@@ -161,10 +161,6 @@ func expandRequestHTTPWriteCredentialUpdateUpdateHTTPWriteCredentials(ctx contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username")))) {
 		request.Username = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

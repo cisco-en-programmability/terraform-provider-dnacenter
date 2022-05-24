@@ -124,7 +124,7 @@ func dataSourceDnacaapManagementExecutionStatusRead(ctx context.Context, d *sche
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetBusinessAPIExecutionDetails")
+		log.Printf("[DEBUG] Selected method: GetBusinessAPIExecutionDetails")
 		vvExecutionID := vExecutionID.(string)
 
 		response1, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(vvExecutionID)

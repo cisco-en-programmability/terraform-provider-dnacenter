@@ -197,7 +197,7 @@ func dataSourceDeviceInterfaceByIPRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetInterfaceByIP")
+		log.Printf("[DEBUG] Selected method: GetInterfaceByIP")
 		vvIPAddress := vIPAddress.(string)
 
 		response1, restyResp1, err := client.Devices.GetInterfaceByIP(vvIPAddress)

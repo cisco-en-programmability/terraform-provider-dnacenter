@@ -50,7 +50,7 @@ func resourcePnpWorkflow() *schema.Resource {
 						},
 						"add_to_inventory": &schema.Schema{
 							Description: `Add To Inventory`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -227,9 +227,7 @@ func resourcePnpWorkflow() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -238,7 +236,7 @@ func resourcePnpWorkflow() *schema.Resource {
 							Optional: true,
 						},
 						"add_to_inventory": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -395,34 +393,28 @@ func resourcePnpWorkflowCreate(ctx context.Context, d *schema.ResourceData, m in
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestPnpWorkflowAddAWorkflow(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
-	vName, okName := resourceItem["name"]
-	vvName := interfaceToString(vName)
 	if okID && vvID != "" {
 		getResponse2, _, err := client.DeviceOnboardingPnp.GetWorkflowByID(vvID)
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
 			return resourcePnpWorkflowRead(ctx, d, m)
 		}
-	}
-	if okName && vvName != "" {
-		queryParams1 := dnacentersdkgo.GetWorkflowsQueryParams{}
-		queryParams1.Name = append(queryParams1.Name, vvName)
-		getResponse2, err := searchDeviceOnboardingPnpGetWorkflows(m, queryParams1)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourcePnpWorkflowRead(ctx, d, m)
+	} else {
+		response2, _, err := client.DeviceOnboardingPnp.GetWorkflows(nil)
+		if response2 != nil && err == nil {
+			item2, err := searchDeviceOnboardingPnpGetWorkflows(m, items2, vvName, vvID)
+			if err == nil && item2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				d.SetId(joinResourceID(resourceMap))
+				return resourcePnpWorkflowRead(ctx, d, m)
+			}
 		}
 	}
 	resp1, restyResp1, err := client.DeviceOnboardingPnp.AddAWorkflow(request1)
@@ -438,7 +430,6 @@ func resourcePnpWorkflowCreate(ctx context.Context, d *schema.ResourceData, m in
 	}
 	resourceMap := make(map[string]string)
 	resourceMap["id"] = vvID
-	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
 	return resourcePnpWorkflowRead(ctx, d, m)
 }
@@ -450,50 +441,77 @@ func resourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+	vLimit, okLimit := resourceMap["limit"]
+	vOffset, okOffset := resourceMap["offset"]
+	vSort, okSort := resourceMap["sort"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
+	vType, okType := resourceMap["type"]
 	vName, okName := resourceMap["name"]
 	vID, okID := resourceMap["id"]
 
-	if okName && vName != "" {
-		log.Printf("[DEBUG] Selected method 1: GetWorkflows")
+	method1 := []bool{okLimit, okOffset, okSort, okSortOrder, okType, okName}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetWorkflows")
 		queryParams1 := dnacentersdkgo.GetWorkflowsQueryParams{}
 
+		if okLimit {
+			queryParams1.Limit = *stringToIntPtr(vLimit)
+		}
+		if okOffset {
+			queryParams1.Offset = *stringToIntPtr(vOffset)
+		}
+		if okSort {
+			queryParams1.Sort = interfaceToSliceString(vSort)
+		}
+		if okSortOrder {
+			queryParams1.SortOrder = vSortOrder
+		}
+		if okType {
+			queryParams1.Type = interfaceToSliceString(vType)
+		}
 		if okName {
-			queryParams1.Name = append(queryParams1.Name, vName)
+			queryParams1.Name = interfaceToSliceString(vName)
 		}
 
-		response1, err := searchDeviceOnboardingPnpGetWorkflows(m, queryParams1)
+		response1, restyResp1, err := client.DeviceOnboardingPnp.GetWorkflows(&queryParams1)
 
 		if err != nil || response1 == nil {
-			d.SetId("")
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetWorkflows", err,
+				"Failure at GetWorkflows, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		response2, restyResp2, err := client.DeviceOnboardingPnp.GetWorkflowByID(response1.TypeID)
-
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
+		items1 := getAllItemsDeviceOnboardingPnpGetWorkflows(m, response1, nil)
+		item1, err := searchDeviceOnboardingPnpGetWorkflows(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetWorkflowByID", err,
-				"Failure at GetWorkflowByID, unexpected response", ""))
+				"Failure when searching item from GetWorkflows response", err,
+				"Failure when searching item from GetWorkflows, unexpected response", ""))
 			return diags
 		}
-
-		vItem1 := flattenDeviceOnboardingPnpGetWorkflowByIDItem(response2)
+		// Review flatten function used
+		vItem1 := flattenDeviceOnboardingPnpGetWorkflowsByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetWorkflows search response",
 				err))
 			return diags
 		}
-		return diags
 
 	}
-	if okID && vID != "" {
-		log.Printf("[DEBUG] Selected method 2: GetWorkflowByID")
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method: GetWorkflowByID")
 		vvID := vID
 
 		response2, restyResp2, err := client.DeviceOnboardingPnp.GetWorkflowByID(vvID)
@@ -502,7 +520,9 @@ func resourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m inte
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetWorkflowByID", err,
+				"Failure at GetWorkflowByID, unexpected response", ""))
 			return diags
 		}
 
@@ -528,51 +548,47 @@ func resourcePnpWorkflowUpdate(ctx context.Context, d *schema.ResourceData, m in
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+	vLimit, okLimit := resourceMap["limit"]
+	vOffset, okOffset := resourceMap["offset"]
+	vSort, okSort := resourceMap["sort"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
+	vType, okType := resourceMap["type"]
+	vName, okName := resourceMap["name"]
 
-	vID := resourceMap["id"]
-	vName := resourceMap["name"]
-
-	vvID := ""
-	if vName != "" {
-		log.Printf("[DEBUG] Selected method 1: GetWorkflows")
-		queryParams1 := dnacentersdkgo.GetWorkflowsQueryParams{}
-
-		queryParams1.Name = append(queryParams1.Name, vName)
-
-		response1, err := searchDeviceOnboardingPnpGetWorkflows(m, queryParams1)
-
-		if err != nil || response1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetWorkflows", err,
-				"Failure at GetWorkflows, unexpected response", ""))
-			return diags
-		}
-		vvID = response1.TypeID
-	} else if vID != "" {
-		log.Printf("[DEBUG] Selected method 2: GetWorkflowByID")
-		vvID = vID
-		response2, restyResp2, err := client.DeviceOnboardingPnp.GetWorkflowByID(vvID)
-
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetWorkflowByID", err,
-				"Failure at GetWorkflowByID, unexpected response", ""))
-			return diags
-		}
+	queryParams1 := dnacentersdkgo.GetWorkflowsQueryParams
+	queryParams1.Limit = *stringToIntPtr(vLimit)
+	queryParams1.Offset = *stringToIntPtr(vOffset)
+	queryParams1.Sort = interfaceToSliceString(vSort)
+	queryParams1.SortOrder = vSortOrder
+	queryParams1.Type = interfaceToSliceString(vType)
+	queryParams1.Name = interfaceToSliceString(vName)
+	item, err := searchDeviceOnboardingPnpGetWorkflows(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetWorkflows", err,
+			"Failure at GetWorkflows, unexpected response", ""))
+		return diags
 	}
 
+	vID, okID := resourceMap["id"]
+
+	method1 := []bool{okLimit, okOffset, okSort, okSortOrder, okType, okName}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	var vvName string
+	// NOTE: Consider adding getAllItems and search function to get missing params
+	// if selectedMethod == 1 { }
+	if selectedMethod == 2 {
+		vvID = vID
+	}
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestPnpWorkflowUpdateWorkflow(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		if request1 != nil && request1.TypeID == "" {
-			request1.TypeID = vvID
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.DeviceOnboardingPnp.UpdateWorkflow(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -600,30 +616,66 @@ func resourcePnpWorkflowDelete(ctx context.Context, d *schema.ResourceData, m in
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+	vLimit, okLimit := resourceMap["limit"]
+	vOffset, okOffset := resourceMap["offset"]
+	vSort, okSort := resourceMap["sort"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
+	vType, okType := resourceMap["type"]
+	vName, okName := resourceMap["name"]
+
+	queryParams1 := dnacentersdkgo.GetWorkflowsQueryParams
+	queryParams1.Limit = *stringToIntPtr(vLimit)
+	queryParams1.Offset = *stringToIntPtr(vOffset)
+	queryParams1.Sort = interfaceToSliceString(vSort)
+	queryParams1.SortOrder = vSortOrder
+	queryParams1.Type = interfaceToSliceString(vType)
+	queryParams1.Name = interfaceToSliceString(vName)
+	item, err := searchDeviceOnboardingPnpGetWorkflows(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetWorkflows", err,
+			"Failure at GetWorkflows, unexpected response", ""))
+		return diags
+	}
+
+	vID, okID := resourceMap["id"]
+
+	method1 := []bool{okLimit, okOffset, okSort, okSortOrder, okType, okName}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
+	var vvName string
+	// REVIEW: Add getAllItems and search function to get missing params
+	if selectedMethod == 1 {
 
-	vID := resourceMap["id"]
-	vName := resourceMap["name"]
-
-	if vID != "" {
+		getResp1, _, err := client.DeviceOnboardingPnp.GetWorkflows(nil)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		items1 := getAllItemsDeviceOnboardingPnpGetWorkflows(m, getResp1, nil)
+		item1, err := searchDeviceOnboardingPnpGetWorkflows(m, items1, vName, vID)
+		if err != nil || item1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		if vID != item1.ID {
+			vvID = item1.ID
+		} else {
+			vvID = vID
+		}
+	}
+	if selectedMethod == 2 {
 		vvID = vID
 		getResp, _, err := client.DeviceOnboardingPnp.GetWorkflowByID(vvID)
 		if err != nil || getResp == nil {
 			// Assume that element it is already gone
 			return diags
 		}
-	} else if vName != "" {
-		queryParams1 := dnacentersdkgo.GetWorkflowsQueryParams{}
-		queryParams1.Name = append(queryParams1.Name, vName)
-
-		response1, err := searchDeviceOnboardingPnpGetWorkflows(m, queryParams1)
-		if err != nil || response1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		vvID = response1.TypeID
 	}
-
 	response1, restyResp1, err := client.DeviceOnboardingPnp.DeleteWorkflowByID(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -707,7 +759,6 @@ func expandRequestPnpWorkflowAddAWorkflow(ctx context.Context, key string, d *sc
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -731,7 +782,6 @@ func expandRequestPnpWorkflowAddAWorkflowTasksArray(ctx context.Context, key str
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -767,7 +817,6 @@ func expandRequestPnpWorkflowAddAWorkflowTasks(ctx context.Context, key string, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -791,7 +840,6 @@ func expandRequestPnpWorkflowAddAWorkflowTasksWorkItemListArray(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -818,7 +866,6 @@ func expandRequestPnpWorkflowAddAWorkflowTasksWorkItemList(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -884,7 +931,6 @@ func expandRequestPnpWorkflowUpdateWorkflow(ctx context.Context, key string, d *
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -908,7 +954,6 @@ func expandRequestPnpWorkflowUpdateWorkflowTasksArray(ctx context.Context, key s
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -944,7 +989,6 @@ func expandRequestPnpWorkflowUpdateWorkflowTasks(ctx context.Context, key string
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -968,7 +1012,6 @@ func expandRequestPnpWorkflowUpdateWorkflowTasksWorkItemListArray(ctx context.Co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -995,7 +1038,6 @@ func expandRequestPnpWorkflowUpdateWorkflowTasksWorkItemList(ctx context.Context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1008,17 +1050,14 @@ func searchDeviceOnboardingPnpGetWorkflows(m interface{}, queryParams dnacenters
 	if err != nil {
 		return foundItem, err
 	}
-
-	if ite == nil {
+	items := ite
+	if items == nil {
 		return foundItem, err
 	}
-
-	items := ite
-
 	itemsCopy := *items
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.Name[0] {
+		if item.Name == queryParams.Name {
 			var getItem *dnacentersdkgo.ResponseItemDeviceOnboardingPnpGetWorkflows
 			getItem = &item
 			foundItem = getItem

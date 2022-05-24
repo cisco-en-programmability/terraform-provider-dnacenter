@@ -75,7 +75,7 @@ func dataSourceGoldenTagImageDetails() *schema.Resource {
 						"tagged_golden": &schema.Schema{
 							Description: `Tagged Golden.
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -97,7 +97,7 @@ func dataSourceGoldenTagImageDetailsRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetGoldenTagStatusOfAnImage")
+		log.Printf("[DEBUG] Selected method: GetGoldenTagStatusOfAnImage")
 		vvSiteID := vSiteID.(string)
 		vvDeviceFamilyIDentifier := vDeviceFamilyIDentifier.(string)
 		vvDeviceRole := vDeviceRole.(string)

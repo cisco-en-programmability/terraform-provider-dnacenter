@@ -86,7 +86,7 @@ payload returns a list of synced devices
 									},
 									"make_default": &schema.Schema{
 										Description: `Make Default`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -107,7 +107,7 @@ payload returns a list of synced devices
 									},
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -211,7 +211,7 @@ payload returns a list of synced devices
 							Optional: true,
 						},
 						"make_default": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -229,7 +229,7 @@ payload returns a list of synced devices
 							Optional: true,
 						},
 						"proxy": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -309,7 +309,7 @@ func dataSourcePnpVirtualAccountDevicesSyncRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SyncVirtualAccountDevices")
+		log.Printf("[DEBUG] Selected method: SyncVirtualAccountDevices")
 		request1 := expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevices(ctx, "", d)
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.SyncVirtualAccountDevices(request1)
@@ -385,10 +385,6 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevices(ctx cont
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_account_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_account_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_account_id")))) {
 		request.VirtualAccountID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -418,10 +414,6 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesProfile(c
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".proxy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".proxy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".proxy")))) {
 		request.Proxy = interfaceToBoolPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -433,10 +425,6 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResul
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_msg")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_msg")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_msg")))) {
 		request.SyncMsg = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -457,10 +445,6 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResul
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -472,10 +456,6 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResul
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_type")))) {
 		request.SyncType = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

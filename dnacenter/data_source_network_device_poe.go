@@ -65,7 +65,7 @@ func dataSourceNetworkDevicePoeRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: PoeDetails")
+		log.Printf("[DEBUG] Selected method: PoeDetails")
 		vvDeviceUUID := vDeviceUUID.(string)
 
 		response1, restyResp1, err := client.Devices.PoeDetails(vvDeviceUUID)

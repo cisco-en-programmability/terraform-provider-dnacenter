@@ -59,7 +59,15 @@ platforms.
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"gateway": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"hostname": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"image_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 			},
@@ -82,6 +90,10 @@ platforms.
 					},
 				},
 			},
+			"ip_interface_name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -99,11 +111,33 @@ platforms.
 					},
 				},
 			},
+			"remove_inactive": &schema.Schema{
+				// Type:     schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
+			},
+			"rf_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"site_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"static_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"subnet_mask": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"vlan_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 			},
@@ -118,7 +152,7 @@ func dataSourcePnpDeviceClaimToSiteRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ClaimADeviceToASite")
+		log.Printf("[DEBUG] Selected method: ClaimADeviceToASite")
 		request1 := expandRequestPnpDeviceClaimToSiteClaimADeviceToASite(ctx, "", d)
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.ClaimADeviceToASite(request1)
@@ -173,10 +207,30 @@ func expandRequestPnpDeviceClaimToSiteClaimADeviceToASite(ctx context.Context, k
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hostname")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hostname")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hostname")))) {
 		request.Hostname = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".gateway")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".gateway")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".gateway")))) {
+		request.Gateway = interfaceToString(v)
 	}
-
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_id")))) {
+		request.ImageID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remove_inactive")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remove_inactive")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remove_inactive")))) {
+		request.RemoveInactive = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_interface_name")))) {
+		request.IPInterfaceName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rf_profile")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rf_profile")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rf_profile")))) {
+		request.RfProfile = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".static_ip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".static_ip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".static_ip")))) {
+		request.StaticIP = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subnet_mask")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subnet_mask")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subnet_mask")))) {
+		request.SubnetMask = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan_id")))) {
+		request.VLANID = interfaceToString(v)
+	}
 	return &request
 }
 
@@ -188,10 +242,6 @@ func expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteImageInfo(ctx context.C
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".skip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".skip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".skip")))) {
 		request.Skip = interfaceToBoolPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -203,10 +253,6 @@ func expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfo(ctx context.
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_parameters")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_parameters")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_parameters")))) {
 		request.ConfigParameters = expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfoConfigParametersArray(ctx, key+".config_parameters", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -221,16 +267,12 @@ func expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfoConfigParamet
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfoConfigParameters(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -242,10 +284,6 @@ func expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfoConfigParamet
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

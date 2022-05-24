@@ -79,7 +79,7 @@ func dataSourceSNMPv2ReadCommunityCredentialUpdateRead(ctx context.Context, d *s
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateSNMPReadCommunity")
+		log.Printf("[DEBUG] Selected method: UpdateSNMPReadCommunity")
 		request1 := expandRequestSNMPv2ReadCommunityCredentialUpdateUpdateSNMPReadCommunity(ctx, "", d)
 
 		response1, restyResp1, err := client.Discovery.UpdateSNMPReadCommunity(request1)
@@ -131,10 +131,6 @@ func expandRequestSNMPv2ReadCommunityCredentialUpdateUpdateSNMPReadCommunity(ctx
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".read_community")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".read_community")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".read_community")))) {
 		request.ReadCommunity = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

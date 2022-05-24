@@ -68,13 +68,6 @@ func dataSourceWirelessProvisionDeviceUpdate() *schema.Resource {
 					},
 				},
 			},
-			"persistbapioutput": &schema.Schema{
-				Description: `__persistbapioutput header parameter. Persist bapi sync response
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
 			"payload": &schema.Schema{
 				Description: `Array of RequestWirelessProvisionUpdate`,
 				Type:        schema.TypeList,
@@ -145,18 +138,16 @@ func dataSourceWirelessProvisionDeviceUpdateRead(ctx context.Context, d *schema.
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("persistbapioutput")
+	vPersistbapioutput := d.Get("persistbapioutput")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ProvisionUpdate")
+		log.Printf("[DEBUG] Selected method: ProvisionUpdate")
 		request1 := expandRequestWirelessProvisionDeviceUpdateProvisionUpdate(ctx, "", d)
 
 		headerParams1 := dnacentersdkgo.ProvisionUpdateHeaderParams{}
 
-		if okPersistbapioutput {
-			headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-		}
+		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
 		response1, restyResp1, err := client.Wireless.ProvisionUpdate(request1, &headerParams1)
 
@@ -195,10 +186,6 @@ func expandRequestWirelessProvisionDeviceUpdateProvisionUpdate(ctx context.Conte
 	if v := expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -219,10 +206,6 @@ func expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItemArray(ctx cont
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -237,10 +220,6 @@ func expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItem(ctx context.C
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dynamic_interfaces")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dynamic_interfaces")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dynamic_interfaces")))) {
 		request.DynamicInterfaces = expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItemDynamicInterfacesArray(ctx, key+".dynamic_interfaces", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -261,10 +240,6 @@ func expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItemDynamicInterfa
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -288,10 +263,6 @@ func expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItemDynamicInterfa
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".interface_name")))) {
 		request.InterfaceName = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

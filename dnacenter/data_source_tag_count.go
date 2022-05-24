@@ -87,7 +87,7 @@ func dataSourceTagCountRead(ctx context.Context, d *schema.ResourceData, m inter
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTagCount")
+		log.Printf("[DEBUG] Selected method: GetTagCount")
 		queryParams1 := dnacentersdkgo.GetTagCountQueryParams{}
 
 		if okName {

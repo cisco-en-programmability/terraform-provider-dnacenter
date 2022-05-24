@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -24,8 +24,8 @@ future more possible operations will be added to this API
 
 		ReadContext: dataSourceInterfaceOperationCreateRead,
 		Schema: map[string]*schema.Schema{
-			"deployement_mode": &schema.Schema{
-				Description: `deployementMode query parameter. Preview/Deploy ['Preview' means the configuration is not pushed to the device. 'Deploy' makes the configuration pushed to the device]
+			"deployment_mode": &schema.Schema{
+				Description: `deploymentMode query parameter. Preview/Deploy ['Preview' means the configuration is not pushed to the device. 'Deploy' makes the configuration pushed to the device]
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -77,7 +77,7 @@ func dataSourceInterfaceOperationCreateRead(ctx context.Context, d *schema.Resou
 
 	var diags diag.Diagnostics
 	vInterfaceUUID := d.Get("interface_uuid")
-	vDeployementMode, okDeployementMode := d.GetOk("deployement_mode")
+	vDeploymentMode, okDeploymentMode := d.GetOk("deployment_mode")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -86,8 +86,8 @@ func dataSourceInterfaceOperationCreateRead(ctx context.Context, d *schema.Resou
 		request1 := expandRequestInterfaceOperationCreateClearMacAddressTable(ctx, "", d)
 		queryParams1 := dnacentersdkgo.ClearMacAddressTableQueryParams{}
 
-		if okDeployementMode {
-			queryParams1.DeployementMode = vDeployementMode.(string)
+		if okDeploymentMode {
+			queryParams1.DeploymentMode = vDeploymentMode.(string)
 		}
 
 		response1, restyResp1, err := client.Devices.ClearMacAddressTable(vvInterfaceUUID, request1, &queryParams1)

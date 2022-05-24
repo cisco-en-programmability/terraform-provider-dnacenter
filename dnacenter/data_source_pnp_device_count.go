@@ -183,7 +183,7 @@ func dataSourcePnpDeviceCountRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceCount")
+		log.Printf("[DEBUG] Selected method: GetDeviceCount")
 		queryParams1 := dnacentersdkgo.GetDeviceCountQueryParams{}
 
 		if okSerialNumber {

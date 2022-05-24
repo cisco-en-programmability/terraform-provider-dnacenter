@@ -122,7 +122,7 @@ func dataSourceGlobalCredentialRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetGlobalCredentials")
+		log.Printf("[DEBUG] Selected method: GetGlobalCredentials")
 		queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
 
 		if okCredentialSubType {
@@ -161,7 +161,7 @@ func dataSourceGlobalCredentialRead(ctx context.Context, d *schema.ResourceData,
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetCredentialSubTypeByCredentialID")
+		log.Printf("[DEBUG] Selected method: GetCredentialSubTypeByCredentialID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.Discovery.GetCredentialSubTypeByCredentialID(vvID)

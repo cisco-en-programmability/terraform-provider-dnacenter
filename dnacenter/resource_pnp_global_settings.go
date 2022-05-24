@@ -33,324 +33,15 @@ func resourcePnpGlobalSettings() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"type_id": &schema.Schema{
-							Description: `Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"aaa_credentials": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"password": &schema.Schema{
-										Description: `Password`,
-										Type:        schema.TypeString,
-										Sensitive:   true,
-										Computed:    true,
-									},
-
-									"username": &schema.Schema{
-										Description: `Username`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-								},
-							},
-						},
-
-						"accept_eula": &schema.Schema{
-							Description: `Accept Eula`,
-
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"default_profile": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"cert": &schema.Schema{
-										Description: `Cert`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"fqdn_addresses": &schema.Schema{
-										Description: `Fqdn Addresses`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-
-									"ip_addresses": &schema.Schema{
-										Description: `Ip Addresses`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-
-									"port": &schema.Schema{
-										Description: `Port`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
-									},
-
-									"proxy": &schema.Schema{
-										Description: `Proxy`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-
-						"id": &schema.Schema{
-							Description: `Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"sava_mapping_list": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"auto_sync_period": &schema.Schema{
-										Description: `Auto Sync Period`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
-									},
-
-									"cco_user": &schema.Schema{
-										Description: `Cco User`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"expiry": &schema.Schema{
-										Description: `Expiry`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
-									},
-
-									"last_sync": &schema.Schema{
-										Description: `Last Sync`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
-									},
-
-									"profile": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"address_fqdn": &schema.Schema{
-													Description: `Address Fqdn`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"address_ip_v4": &schema.Schema{
-													Description: `Address Ip V4`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"cert": &schema.Schema{
-													Description: `Cert`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"make_default": &schema.Schema{
-													Description: `Make Default`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"port": &schema.Schema{
-													Description: `Port`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-
-												"profile_id": &schema.Schema{
-													Description: `Profile Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"proxy": &schema.Schema{
-													Description: `Proxy`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-
-									"smart_account_id": &schema.Schema{
-										Description: `Smart Account Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"sync_result": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"sync_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"device_sn_list": &schema.Schema{
-																Description: `Device Sn List`,
-																Type:        schema.TypeList,
-																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-															},
-
-															"sync_type": &schema.Schema{
-																Description: `Sync Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"sync_msg": &schema.Schema{
-													Description: `Sync Msg`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
-									},
-
-									"sync_result_str": &schema.Schema{
-										Description: `Sync Result Str`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"sync_start_time": &schema.Schema{
-										Description: `Sync Start Time`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
-									},
-
-									"sync_status": &schema.Schema{
-										Description: `Sync Status`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"tenant_id": &schema.Schema{
-										Description: `Tenant Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"token": &schema.Schema{
-										Description: `Token`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"virtual_account_id": &schema.Schema{
-										Description: `Virtual Account Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-								},
-							},
-						},
-
-						"task_time_outs": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"config_time_out": &schema.Schema{
-										Description: `Config Time Out`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
-									},
-
-									"general_time_out": &schema.Schema{
-										Description: `General Time Out`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
-									},
-
-									"image_download_time_out": &schema.Schema{
-										Description: `Image Download Time Out`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
-									},
-								},
-							},
-						},
-
-						"tenant_id": &schema.Schema{
-							Description: `Tenant Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"version": &schema.Schema{
-							Description: `Version`,
-							Type:        schema.TypeFloat,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"aaa_credentials": &schema.Schema{
 							Type:     schema.TypeList,
@@ -372,7 +63,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 							},
 						},
 						"accept_eula": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -407,7 +98,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 										Optional: true,
 									},
 									"proxy": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -457,7 +148,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 													Optional: true,
 												},
 												"make_default": &schema.Schema{
-
+													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -475,7 +166,7 @@ func resourcePnpGlobalSettings() *schema.Resource {
 													Optional: true,
 												},
 												"proxy": &schema.Schema{
-
+													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -592,6 +283,7 @@ func resourcePnpGlobalSettingsCreate(ctx context.Context, d *schema.ResourceData
 	// TODO: Add the path params to `item` schema
 	//       & return it individually
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
+	resourceMap["name"] = interfaceToString(resourceItem["name"])
 	d.SetId(joinResourceID(resourceMap))
 	return diags
 }
@@ -601,12 +293,12 @@ func resourcePnpGlobalSettingsRead(ctx context.Context, d *schema.ResourceData, 
 
 	var diags diag.Diagnostics
 
-	//resourceID := d.Id()
-	//resourceMap := separateResourceID(resourceID)
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetPnpGlobalSettings")
+		log.Printf("[DEBUG] Selected method: GetPnpGlobalSettings")
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.GetPnpGlobalSettings()
 
@@ -614,7 +306,9 @@ func resourcePnpGlobalSettingsRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetPnpGlobalSettings", err,
+				"Failure at GetPnpGlobalSettings, unexpected response", ""))
 			return diags
 		}
 
@@ -638,12 +332,18 @@ func resourcePnpGlobalSettingsUpdate(ctx context.Context, d *schema.ResourceData
 
 	var diags diag.Diagnostics
 
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+
+	selectedMethod := 1
+	var vvID string
+	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
+	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
+		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestPnpGlobalSettingsUpdatePnpGlobalSettings(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.DeviceOnboardingPnp.UpdatePnpGlobalSettings(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -698,7 +398,6 @@ func expandRequestPnpGlobalSettingsUpdatePnpGlobalSettings(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -713,7 +412,6 @@ func expandRequestPnpGlobalSettingsUpdatePnpGlobalSettingsAAACredentials(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -737,7 +435,6 @@ func expandRequestPnpGlobalSettingsUpdatePnpGlobalSettingsDefaultProfile(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -761,7 +458,6 @@ func expandRequestPnpGlobalSettingsUpdatePnpGlobalSettingsSavaMappingListArray(c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -809,7 +505,6 @@ func expandRequestPnpGlobalSettingsUpdatePnpGlobalSettingsSavaMappingList(ctx co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -842,7 +537,6 @@ func expandRequestPnpGlobalSettingsUpdatePnpGlobalSettingsSavaMappingListProfile
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -857,7 +551,6 @@ func expandRequestPnpGlobalSettingsUpdatePnpGlobalSettingsSavaMappingListSyncRes
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -881,7 +574,6 @@ func expandRequestPnpGlobalSettingsUpdatePnpGlobalSettingsSavaMappingListSyncRes
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -896,7 +588,6 @@ func expandRequestPnpGlobalSettingsUpdatePnpGlobalSettingsSavaMappingListSyncRes
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -914,6 +605,5 @@ func expandRequestPnpGlobalSettingsUpdatePnpGlobalSettingsTaskTimeOuts(ctx conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

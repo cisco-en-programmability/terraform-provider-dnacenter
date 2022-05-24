@@ -99,7 +99,7 @@ func dataSourceSNMPv3CredentialUpdateRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateSNMPv3Credentials")
+		log.Printf("[DEBUG] Selected method: UpdateSNMPv3Credentials")
 		request1 := expandRequestSNMPv3CredentialUpdateUpdateSNMPv3Credentials(ctx, "", d)
 
 		response1, restyResp1, err := client.Discovery.UpdateSNMPv3Credentials(request1)
@@ -172,10 +172,6 @@ func expandRequestSNMPv3CredentialUpdateUpdateSNMPv3Credentials(ctx context.Cont
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username")))) {
 		request.Username = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

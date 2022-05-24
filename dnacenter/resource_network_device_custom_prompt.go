@@ -2,11 +2,12 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,8 +17,8 @@ func resourceNetworkDeviceCustomPrompt() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create and read operations on System Settings.
 
-- Save custom prompt added by user in DNAC . API will always override the existing prompts. User should provide all the
-custom prompt in case of any update
+- Save custom prompt added by user in Cisco DNA Center. API will always override the existing prompts. User should
+provide all the custom prompt in case of any update
 `,
 
 		CreateContext: resourceNetworkDeviceCustomPromptCreate,
@@ -62,16 +63,9 @@ func resourceNetworkDeviceCustomPromptCreate(ctx context.Context, d *schema.Reso
 
 	var diags diag.Diagnostics
 
+	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNetworkDeviceCustomPromptCustomPromptPostAPI(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-
-	response1, restyResp1, err := client.SystemSettings.CustomPromptSupportGetAPI()
-
-	if err != nil || response1 != nil {
-		resourceMap := make(map[string]string)
-		d.SetId(joinResourceID(resourceMap))
-		return resourceNetworkDeviceCustomPromptRead(ctx, d, m)
-	}
 
 	resp1, restyResp1, err := client.SystemSettings.CustomPromptPostAPI(request1)
 	if err != nil || resp1 == nil {
@@ -94,6 +88,9 @@ func resourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Resour
 
 	var diags diag.Diagnostics
 
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: CustomPromptSupportGetAPI")
@@ -104,7 +101,9 @@ func resourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Resour
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing CustomPromptSupportGetAPI", err,
+				"Failure at CustomPromptSupportGetAPI, unexpected response", ""))
 			return diags
 		}
 

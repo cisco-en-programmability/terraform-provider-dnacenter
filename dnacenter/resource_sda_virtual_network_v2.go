@@ -2,8 +2,8 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -37,78 +37,16 @@ func resourceSdaVirtualNetworkV2() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"execution_status_url": &schema.Schema{
-							Description: `Execution Status Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"is_guest_virtual_network": &schema.Schema{
-							Description: `Is Guest Virtual Network`,
-
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"scalable_group_names": &schema.Schema{
-							Description: `Scalable Group Names`,
-							Type:        schema.TypeList,
-							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-
-						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"task_id": &schema.Schema{
-							Description: `Task Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"task_status_url": &schema.Schema{
-							Description: `Task Status Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"virtual_network_name": &schema.Schema{
-							Description: `Virtual Network Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"is_guest_virtual_network": &schema.Schema{
 							Description: `To create guest virtual network
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -118,21 +56,15 @@ func resourceSdaVirtualNetworkV2() *schema.Resource {
 `,
 							Type:     schema.TypeList,
 							Optional: true,
-							MaxItems: 1,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"virtual_network_name": &schema.Schema{
-							Description: `Virtual Network Name to be assigned  global level
+							Description: `Virtual Network Name to be assigned at global level
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-						},
-						"virtual_network_type": &schema.Schema{
-							Description: `Virtual Network Type`,
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 					},
 				},
@@ -148,24 +80,10 @@ func resourceSdaVirtualNetworkV2Create(ctx context.Context, d *schema.ResourceDa
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSdaVirtualNetworkV2AddVirtualNetworkWithScalableGroups(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
-	vVirtualNetworkName := resourceItem["virtual_network_name"]
-	vvVirtualNetworkName := interfaceToString(vVirtualNetworkName)
-	queryParams1 := dnacentersdkgo.GetVirtualNetworkWithScalableGroupsQueryParams{}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	queryParams1.VirtualNetworkName = vvVirtualNetworkName
-
-	getResponse2, _, err := client.Sda.GetVirtualNetworkWithScalableGroups(&queryParams1)
-	if err == nil && getResponse2 != nil {
-		resourceMap := make(map[string]string)
-		resourceMap["virtual_network_name"] = vvVirtualNetworkName
-		d.SetId(joinResourceID(resourceMap))
-		return resourceSdaVirtualNetworkV2Read(ctx, d, m)
-	}
-	response1, restyResp1, err := client.Sda.AddVirtualNetworkWithScalableGroups(request1)
-	if err != nil || response1 == nil {
+	resp1, restyResp1, err := client.Sda.AddVirtualNetworkWithScalableGroups(request1)
+	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
 				"Failure when executing AddVirtualNetworkWithScalableGroups", err, restyResp1.String()))
@@ -175,42 +93,7 @@ func resourceSdaVirtualNetworkV2Create(ctx context.Context, d *schema.ResourceDa
 			"Failure when executing AddVirtualNetworkWithScalableGroups", err))
 		return diags
 	}
-	executionId := response1.ExecutionID
-	log.Printf("[DEBUG] ExecutionID => %s", executionId)
-	if executionId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExecutionByID", err,
-				"Failure at GetExecutionByID, unexpected response", ""))
-			return diags
-		}
-		for response2.Status == "IN_PROGRESS" {
-			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-		}
-		if response2.Status == "FAILURE" {
-			log.Printf("[DEBUG] Error %s", response2.BapiError)
-			diags = append(diags, diagError(
-				"Failure when executing AddVirtualNetworkWithScalableGroups", err))
-			return diags
-		}
-	}
 	resourceMap := make(map[string]string)
-	resourceMap["virtual_network_name"] = vvVirtualNetworkName
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSdaVirtualNetworkV2Read(ctx, d, m)
 }
@@ -226,7 +109,7 @@ func resourceSdaVirtualNetworkV2Read(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetVirtualNetworkWithScalableGroups")
+		log.Printf("[DEBUG] Selected method: GetVirtualNetworkWithScalableGroups")
 		queryParams1 := dnacentersdkgo.GetVirtualNetworkWithScalableGroupsQueryParams{}
 
 		queryParams1.VirtualNetworkName = vVirtualNetworkName
@@ -237,7 +120,9 @@ func resourceSdaVirtualNetworkV2Read(ctx context.Context, d *schema.ResourceData
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetVirtualNetworkWithScalableGroups", err,
+				"Failure at GetVirtualNetworkWithScalableGroups, unexpected response", ""))
 			return diags
 		}
 
@@ -265,9 +150,9 @@ func resourceSdaVirtualNetworkV2Update(ctx context.Context, d *schema.ResourceDa
 	resourceMap := separateResourceID(resourceID)
 	vVirtualNetworkName := resourceMap["virtual_network_name"]
 
-	queryParams1 := dnacentersdkgo.GetVirtualNetworkWithScalableGroupsQueryParams{}
+	queryParams1 := dnacentersdkgo.GetVirtualNetworkWithScalableGroupsQueryParams
 	queryParams1.VirtualNetworkName = vVirtualNetworkName
-	item, _, err := client.Sda.GetVirtualNetworkWithScalableGroups(&queryParams1)
+	item, err := searchSdaGetVirtualNetworkWithScalableGroups(m, queryParams1)
 	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetVirtualNetworkWithScalableGroups", err,
@@ -275,14 +160,15 @@ func resourceSdaVirtualNetworkV2Update(ctx context.Context, d *schema.ResourceDa
 		return diags
 	}
 
+	selectedMethod := 1
+	var vvID string
 	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
+	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestSdaVirtualNetworkV2UpdateVirtualNetworkWithScalableGroups(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Sda.UpdateVirtualNetworkWithScalableGroups(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -296,40 +182,6 @@ func resourceSdaVirtualNetworkV2Update(ctx context.Context, d *schema.ResourceDa
 				"Failure when executing UpdateVirtualNetworkWithScalableGroups", err,
 				"Failure at UpdateVirtualNetworkWithScalableGroups, unexpected response", ""))
 			return diags
-		}
-		executionId := response1.ExecutionID
-		log.Printf("[DEBUG] ExecutionID => %s", executionId)
-		if executionId != "" {
-			time.Sleep(5 * time.Second)
-			response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-			for response2.Status == "IN_PROGRESS" {
-				time.Sleep(10 * time.Second)
-				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-				if err != nil || response2 == nil {
-					if restyResp1 != nil {
-						log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-					}
-					diags = append(diags, diagErrorWithAlt(
-						"Failure when executing GetExecutionByID", err,
-						"Failure at GetExecutionByID, unexpected response", ""))
-					return diags
-				}
-			}
-			if response2.Status == "FAILURE" {
-				log.Printf("[DEBUG] Error %s", response2.BapiError)
-				diags = append(diags, diagError(
-					"Failure when executing UpdateVirtualNetworkWithScalableGroups", err))
-				return diags
-			}
 		}
 	}
 
@@ -346,17 +198,35 @@ func resourceSdaVirtualNetworkV2Delete(ctx context.Context, d *schema.ResourceDa
 	resourceMap := separateResourceID(resourceID)
 	vVirtualNetworkName := resourceMap["virtual_network_name"]
 
-	queryParams1 := dnacentersdkgo.GetVirtualNetworkWithScalableGroupsQueryParams{}
+	queryParams1 := dnacentersdkgo.GetVirtualNetworkWithScalableGroupsQueryParams
 	queryParams1.VirtualNetworkName = vVirtualNetworkName
-	item, _, err := client.Sda.GetVirtualNetworkWithScalableGroups(&queryParams1)
+	item, err := searchSdaGetVirtualNetworkWithScalableGroups(m, queryParams1)
 	if err != nil || item == nil {
-		d.SetId("")
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetVirtualNetworkWithScalableGroups", err,
+			"Failure at GetVirtualNetworkWithScalableGroups, unexpected response", ""))
 		return diags
 	}
 
-	queryParams2 := dnacentersdkgo.DeleteVirtualNetworkWithScalableGroupsQueryParams{}
-	queryParams2.VirtualNetworkName = vVirtualNetworkName
-	response1, restyResp1, err := client.Sda.DeleteVirtualNetworkWithScalableGroups(&queryParams2)
+	selectedMethod := 1
+	var vvID string
+	var vvName string
+	// REVIEW: Add getAllItems and search function to get missing params
+	if selectedMethod == 1 {
+
+		getResp1, _, err := client.Sda.GetVirtualNetworkWithScalableGroups(nil)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		items1 := getAllItemsSdaGetVirtualNetworkWithScalableGroups(m, getResp1, nil)
+		item1, err := searchSdaGetVirtualNetworkWithScalableGroups(m, items1, vName, vID)
+		if err != nil || item1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+	}
+	response1, restyResp1, err := client.Sda.DeleteVirtualNetworkWithScalableGroups()
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -369,40 +239,6 @@ func resourceSdaVirtualNetworkV2Delete(ctx context.Context, d *schema.ResourceDa
 			"Failure when executing DeleteVirtualNetworkWithScalableGroups", err,
 			"Failure at DeleteVirtualNetworkWithScalableGroups, unexpected response", ""))
 		return diags
-	}
-	executionId := response1.ExecutionID
-	log.Printf("[DEBUG] ExecutionID => %s", executionId)
-	if executionId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExecutionByID", err,
-				"Failure at GetExecutionByID, unexpected response", ""))
-			return diags
-		}
-		for response2.Status == "IN_PROGRESS" {
-			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-		}
-		if response2.Status == "FAILURE" {
-			log.Printf("[DEBUG] Error %s", response2.BapiError)
-			diags = append(diags, diagError(
-				"Failure when executing DeleteVirtualNetworkWithScalableGroups", err))
-			return diags
-		}
 	}
 
 	// d.SetId("") is automatically called assuming delete returns no errors, but
@@ -422,13 +258,9 @@ func expandRequestSdaVirtualNetworkV2AddVirtualNetworkWithScalableGroups(ctx con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".scalable_group_names")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".scalable_group_names")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".scalable_group_names")))) {
 		request.ScalableGroupNames = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network_type")))) {
-		request.VirtualNetworkType = interfaceToString(v)
-	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -436,9 +268,6 @@ func expandRequestSdaVirtualNetworkV2UpdateVirtualNetworkWithScalableGroups(ctx 
 	request := dnacentersdkgo.RequestSdaUpdateVirtualNetworkWithScalableGroups{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network_name")))) {
 		request.VirtualNetworkName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network_type")))) {
-		request.VirtualNetworkType = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_guest_virtual_network")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_guest_virtual_network")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_guest_virtual_network")))) {
 		request.IsGuestVirtualNetwork = interfaceToBoolPtr(v)
@@ -449,6 +278,5 @@ func expandRequestSdaVirtualNetworkV2UpdateVirtualNetworkWithScalableGroups(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

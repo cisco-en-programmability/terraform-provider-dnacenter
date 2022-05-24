@@ -28,26 +28,6 @@ func dataSourceNfvProvisionDetails() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
-			"persistbapioutput": &schema.Schema{
-				Description: `__persistbapioutput header parameter. Persist bapi sync response
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
-			"runsync": &schema.Schema{
-				Description: `__runsync header parameter. Enable this parameter to execute the API and return a response synchronously
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
-			"runsynctimeout": &schema.Schema{
-				Description: `__runsynctimeout header parameter. During synchronous execution, this defines the maximum time to wait for a response, before the API execution is terminated
-			`,
-				Type:     schema.TypeString,
-				Optional: true,
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -80,28 +60,22 @@ func dataSourceNfvProvisionDetailsRead(ctx context.Context, d *schema.ResourceDa
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-	vRunsync, okRunsync := d.GetOk("runsync")
-	vRunsynctimeout, okRunsynctimeout := d.GetOk("runsynctimeout")
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("persistbapioutput")
+	vRunsync := d.Get("runsync")
+	vRunsynctimeout := d.Get("runsynctimeout")
+	vPersistbapioutput := d.Get("persistbapioutput")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: NfvProvisioningDetail")
+		log.Printf("[DEBUG] Selected method: NfvProvisioningDetail")
 		request1 := expandRequestNfvProvisionDetailsNfvProvisioningDetail(ctx, "", d)
 
 		headerParams1 := dnacentersdkgo.NfvProvisioningDetailHeaderParams{}
 
-		if okRunsync {
-			headerParams1.Runsync = vRunsync.(string)
-		}
+		headerParams1.Runsync = vRunsync.(string)
 
-		if okRunsynctimeout {
-			headerParams1.Runsynctimeout = vRunsynctimeout.(string)
-		}
+		headerParams1.Runsynctimeout = vRunsynctimeout.(string)
 
-		if okPersistbapioutput {
-			headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-		}
+		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
 		response1, restyResp1, err := client.SiteDesign.NfvProvisioningDetail(request1, &headerParams1)
 
@@ -140,10 +114,6 @@ func expandRequestNfvProvisionDetailsNfvProvisioningDetail(ctx context.Context, 
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_ip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_ip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_ip")))) {
 		request.DeviceIP = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

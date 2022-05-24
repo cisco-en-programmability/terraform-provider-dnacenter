@@ -204,7 +204,7 @@ func dataSourceInterfaceNetworkDeviceDetailRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetInterfaceDetailsByDeviceIDAndInterfaceName")
+		log.Printf("[DEBUG] Selected method: GetInterfaceDetailsByDeviceIDAndInterfaceName")
 		vvDeviceID := vDeviceID.(string)
 		queryParams1 := dnacentersdkgo.GetInterfaceDetailsByDeviceIDAndInterfaceNameQueryParams{}
 

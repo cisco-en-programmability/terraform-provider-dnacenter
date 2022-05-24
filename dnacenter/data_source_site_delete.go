@@ -58,7 +58,7 @@ func dataSourceSiteDeleteRead(ctx context.Context, d *schema.ResourceData, m int
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeleteSite")
+		log.Printf("[DEBUG] Selected method: DeleteSite")
 		vvSiteID := vSiteID.(string)
 
 		response1, restyResp1, err := client.Sites.DeleteSite(vvSiteID)

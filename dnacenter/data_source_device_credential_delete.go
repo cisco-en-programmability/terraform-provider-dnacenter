@@ -63,7 +63,7 @@ func dataSourceDeviceCredentialDeleteRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeleteDeviceCredential")
+		log.Printf("[DEBUG] Selected method: DeleteDeviceCredential")
 		vvID := vID.(string)
 
 		response1, restyResp1, err := client.NetworkSettings.DeleteDeviceCredential(vvID)

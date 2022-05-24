@@ -91,7 +91,7 @@ func dataSourceApplicationSetsRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetApplicationSets")
+		log.Printf("[DEBUG] Selected method: GetApplicationSets")
 		queryParams1 := dnacentersdkgo.GetApplicationSetsQueryParams{}
 
 		if okOffset {
@@ -145,21 +145,6 @@ func flattenApplicationPolicyGetApplicationSetsItems(items *[]dnacentersdkgo.Res
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenApplicationPolicyGetApplicationSetsItem(item *dnacentersdkgo.ResponseApplicationPolicyGetApplicationSetsResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-
-	respItem := make(map[string]interface{})
-	respItem["id"] = item.ID
-	respItem["identity_source"] = flattenApplicationPolicyGetApplicationSetsItemsIDentitySource(item.IDentitySource)
-	respItem["name"] = item.Name
-
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenApplicationPolicyGetApplicationSetsItemsIDentitySource(item *dnacentersdkgo.ResponseApplicationPolicyGetApplicationSetsResponseIDentitySource) []map[string]interface{} {

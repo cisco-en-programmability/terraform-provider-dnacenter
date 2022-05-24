@@ -71,8 +71,11 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"frequency": &schema.Schema{
 							Description: `Frequency`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"last_modified_time": &schema.Schema{
 							Description: `Last Modified Time`,
@@ -81,14 +84,17 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"legacy_test_suite": &schema.Schema{
 							Description: `Legacy Test Suite`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"location": &schema.Schema{
 							Description: `Location`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"location_info_list": &schema.Schema{
 							Type:     schema.TypeList,
@@ -98,7 +104,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 
 									"all_sensors": &schema.Schema{
 										Description: `All Sensors`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -150,7 +156,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"radio_as_sensor_removed": &schema.Schema{
 							Description: `Radio As Sensor Removed`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -269,14 +275,17 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"show_wlc_upgrade_banner": &schema.Schema{
 							Description: `Show Wlc Upgrade Banner`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"site_hierarchy": &schema.Schema{
 							Description: `Site Hierarchy`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"ssids": &schema.Schema{
 							Type:     schema.TypeList,
@@ -286,8 +295,11 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 
 									"auth_protocol": &schema.Schema{
 										Description: `Auth Protocol`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"auth_type": &schema.Schema{
 										Description: `Auth Type`,
@@ -296,28 +308,43 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"auth_type_rcvd": &schema.Schema{
 										Description: `Auth Type Rcvd`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"bands": &schema.Schema{
 										Description: `Bands`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"certdownloadurl": &schema.Schema{
 										Description: `Certdownloadurl`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"certfilename": &schema.Schema{
 										Description: `Certfilename`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"certpassphrase": &schema.Schema{
 										Description: `Certpassphrase`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"certstatus": &schema.Schema{
 										Description: `Certstatus`,
@@ -331,19 +358,25 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"eap_method": &schema.Schema{
 										Description: `Eap Method`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"ext_web_auth": &schema.Schema{
 										Description: `Ext Web Auth`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"ext_web_auth_access_url": &schema.Schema{
 										Description: `Ext Web Auth Access Url`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"ext_web_auth_html_tag": &schema.Schema{
 										Description: `Ext Web Auth Html Tag`,
@@ -355,13 +388,19 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"ext_web_auth_portal": &schema.Schema{
 										Description: `Ext Web Auth Portal`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"ext_web_auth_virtual_ip": &schema.Schema{
 										Description: `Ext Web Auth Virtual Ip`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"id": &schema.Schema{
 										Description: `Id`,
@@ -370,23 +409,35 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"layer3web_auth_email_address": &schema.Schema{
 										Description: `Layer3web Auth Email Address`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authpassword": &schema.Schema{
 										Description: `Layer3web Authpassword`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authsecurity": &schema.Schema{
 										Description: `Layer3web Authsecurity`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authuser_name": &schema.Schema{
 										Description: `Layer3web Authuser Name`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"num_aps": &schema.Schema{
 										Description: `Num Aps`,
@@ -400,8 +451,11 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"password": &schema.Schema{
 										Description: `Password`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"profile_name": &schema.Schema{
 										Description: `Profile Name`,
@@ -420,7 +474,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"scep": &schema.Schema{
 										Description: `Scep`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -464,7 +518,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 
 												"selected": &schema.Schema{
 													Description: `Selected`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -473,8 +527,11 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"username": &schema.Schema{
 										Description: `Username`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"valid_from": &schema.Schema{
 										Description: `Valid From`,
@@ -488,7 +545,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"white_list": &schema.Schema{
 										Description: `White List`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -499,8 +556,11 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"wlc": &schema.Schema{
 										Description: `Wlc`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 								},
 							},
@@ -532,14 +592,17 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"test_template": &schema.Schema{
 							Description: `Test Template`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"tests": &schema.Schema{
 							Description: `Tests`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"version": &schema.Schema{
 							Description: `Version`,
@@ -565,7 +628,7 @@ func dataSourceSensorTestTemplateEdit() *schema.Resource {
 
 						"all_sensors": &schema.Schema{
 							Description: `All Sensors`,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -689,7 +752,7 @@ func dataSourceSensorTestTemplateEditRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: EditSensorTestTemplate")
+		log.Printf("[DEBUG] Selected method: EditSensorTestTemplate")
 		request1 := expandRequestSensorTestTemplateEditEditSensorTestTemplate(ctx, "", d)
 
 		response1, restyResp1, err := client.Sensors.EditSensorTestTemplate(request1)
@@ -735,10 +798,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplate(ctx context.Conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".schedule")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".schedule")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".schedule")))) {
 		request.Schedule = expandRequestSensorTestTemplateEditEditSensorTestTemplateSchedule(ctx, key+".schedule.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -759,10 +818,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateLocationInfoListAr
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -780,10 +835,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateLocationInfoList(c
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".all_sensors")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".all_sensors")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".all_sensors")))) {
 		request.AllSensors = interfaceToBoolPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -798,10 +849,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateSchedule(ctx conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".schedule_range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".schedule_range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".schedule_range")))) {
 		request.ScheduleRange = expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRangeArray(ctx, key+".schedule_range", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -813,10 +860,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleFrequency(
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -837,10 +880,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -852,10 +891,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_range")))) {
 		request.TimeRange = expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRangeTimeRangeArray(ctx, key+".time_range", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -876,10 +911,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -894,10 +925,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".frequency")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".frequency")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".frequency")))) {
 		request.Frequency = expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRangeTimeRangeFrequency(ctx, key+".frequency.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -909,10 +936,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

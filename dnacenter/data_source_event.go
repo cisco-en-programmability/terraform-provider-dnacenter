@@ -76,8 +76,11 @@ func dataSourceEvent() *schema.Resource {
 
 						"details": &schema.Schema{
 							Description: `Details`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"domain": &schema.Schema{
@@ -165,7 +168,7 @@ func dataSourceEventRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEvents")
+		log.Printf("[DEBUG] Selected method: GetEvents")
 		queryParams1 := dnacentersdkgo.GetEventsQueryParams{}
 
 		if okEventID {

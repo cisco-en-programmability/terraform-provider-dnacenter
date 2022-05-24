@@ -69,7 +69,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -83,7 +83,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -214,7 +214,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -228,7 +228,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -275,7 +275,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -310,11 +310,11 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type: schema.TypeList,
+																Type:     schema.TypeList,
+																Optional: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
-																Optional: true,
 															},
 														},
 													},
@@ -418,7 +418,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -432,7 +432,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -479,7 +479,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -514,11 +514,11 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type: schema.TypeList,
+																Type:     schema.TypeList,
+																Optional: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
-																Optional: true,
 															},
 														},
 													},
@@ -544,7 +544,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 						"custom_params_order": &schema.Schema{
 							Description: `Custom Params Order
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -711,7 +711,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -725,7 +725,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -772,7 +772,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -807,11 +807,11 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type: schema.TypeList,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
-													Optional: true,
 												},
 											},
 										},
@@ -933,7 +933,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -947,7 +947,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -994,7 +994,7 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1029,11 +1029,11 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type: schema.TypeList,
+													Type:     schema.TypeList,
+													Optional: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
-													Optional: true,
 												},
 											},
 										},
@@ -1050,20 +1050,20 @@ func dataSourceConfigurationTemplateImportTemplate() *schema.Resource {
 									"rollback_template_errors": &schema.Schema{
 										Description: `Validation or design conflicts errors of rollback template
 `,
-										Type: schema.TypeList,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
-										Optional: true,
 									},
 									"template_errors": &schema.Schema{
 										Description: `Validation or design conflicts errors
 `,
-										Type: schema.TypeList,
+										Type:     schema.TypeList,
+										Optional: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
-										Optional: true,
 									},
 									"template_id": &schema.Schema{
 										Description: `UUID of template
@@ -1102,7 +1102,7 @@ func dataSourceConfigurationTemplateImportTemplateRead(ctx context.Context, d *s
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ImportsTheTemplatesProvided")
+		log.Printf("[DEBUG] Selected method: ImportsTheTemplatesProvided")
 		vvProjectName := vProjectName.(string)
 		request1 := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided(ctx, "", d)
 		queryParams1 := dnacentersdkgo.ImportsTheTemplatesProvidedQueryParams{}
@@ -1148,10 +1148,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1172,10 +1168,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1259,10 +1251,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
 		request.Version = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1283,10 +1271,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1298,10 +1282,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1322,10 +1302,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1367,10 +1343,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
 		request.Version = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1391,10 +1363,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1406,10 +1374,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1430,10 +1394,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1448,10 +1408,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_type")))) {
 		request.ProductType = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1472,10 +1428,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1535,10 +1487,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesRollbackTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1559,10 +1507,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1577,10 +1521,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1598,20 +1538,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedContainingTemplatesRollbackTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedContainingTemplatesRollbackTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1632,10 +1564,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1695,10 +1623,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1719,10 +1643,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1737,10 +1657,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1758,20 +1674,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedContainingTemplatesTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedContainingTemplatesTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1792,10 +1700,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1810,10 +1714,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_type")))) {
 		request.ProductType = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1834,10 +1734,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1897,10 +1793,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemRollbackTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1921,10 +1813,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1939,10 +1827,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1960,20 +1844,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemRollbackTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemRollbackTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedRollbackTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedRollbackTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1994,10 +1870,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2057,10 +1929,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2081,10 +1949,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2099,10 +1963,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2120,20 +1980,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2151,10 +2003,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_version")))) {
 		request.TemplateVersion = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2175,20 +2023,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsRollbackTemplateErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsRollbackTemplateErrors {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsRollbackTemplateErrors
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2209,20 +2049,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsTemplateErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsTemplateErrors {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsTemplateErrors
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

@@ -79,7 +79,7 @@ func dataSourceSNMPv2WriteCommunityCredentialUpdateRead(ctx context.Context, d *
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateSNMPWriteCommunity")
+		log.Printf("[DEBUG] Selected method: UpdateSNMPWriteCommunity")
 		request1 := expandRequestSNMPv2WriteCommunityCredentialUpdateUpdateSNMPWriteCommunity(ctx, "", d)
 
 		response1, restyResp1, err := client.Discovery.UpdateSNMPWriteCommunity(request1)
@@ -131,10 +131,6 @@ func expandRequestSNMPv2WriteCommunityCredentialUpdateUpdateSNMPWriteCommunity(c
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".write_community")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".write_community")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".write_community")))) {
 		request.WriteCommunity = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

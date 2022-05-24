@@ -217,7 +217,7 @@ func dataSourceLicenseUsageDetailsRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: LicenseUsageDetails")
+		log.Printf("[DEBUG] Selected method: LicenseUsageDetails")
 		vvSmartAccountID := vSmartAccountID.(string)
 		vvVirtualAccountName := vVirtualAccountName.(string)
 		queryParams1 := dnacentersdkgo.LicenseUsageDetailsQueryParams{}

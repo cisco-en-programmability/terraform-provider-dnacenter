@@ -65,7 +65,7 @@ func dataSourceAssociateSiteToNetworkProfileRead(ctx context.Context, d *schema.
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: Associate")
+		log.Printf("[DEBUG] Selected method: Associate")
 		vvNetworkProfileID := vNetworkProfileID.(string)
 		vvSiteID := vSiteID.(string)
 

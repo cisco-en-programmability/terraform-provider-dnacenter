@@ -76,7 +76,7 @@ func dataSourceComplianceDeviceByIDRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeviceComplianceStatus")
+		log.Printf("[DEBUG] Selected method: DeviceComplianceStatus")
 		vvDeviceUUID := vDeviceUUID.(string)
 
 		response1, restyResp1, err := client.Compliance.DeviceComplianceStatus(vvDeviceUUID)

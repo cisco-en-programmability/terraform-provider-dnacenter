@@ -41,8 +41,11 @@ func dataSourceEventAPIStatus() *schema.Resource {
 
 						"error_message": &schema.Schema{
 							Description: `Error Message`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"status_message": &schema.Schema{
@@ -65,7 +68,7 @@ func dataSourceEventAPIStatusRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetStatusAPIForEvents")
+		log.Printf("[DEBUG] Selected method: GetStatusAPIForEvents")
 		vvExecutionID := vExecutionID.(string)
 
 		response1, restyResp1, err := client.EventManagement.GetStatusAPIForEvents(vvExecutionID)

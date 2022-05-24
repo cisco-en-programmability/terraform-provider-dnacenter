@@ -173,7 +173,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_license_expired": &schema.Schema{
 							Description: `Is device license expired
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -181,7 +181,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_performance_allowed": &schema.Schema{
 							Description: `Is performance license available
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -189,7 +189,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_wireless": &schema.Schema{
 							Description: `Is device wireless controller
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -197,7 +197,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_wireless_capable": &schema.Schema{
 							Description: `Is device wireless capable
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -358,7 +358,7 @@ func dataSourceLicenseDeviceLicenseSummaryRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeviceLicenseSummary")
+		log.Printf("[DEBUG] Selected method: DeviceLicenseSummary")
 		queryParams1 := dnacentersdkgo.DeviceLicenseSummaryQueryParams{}
 
 		queryParams1.PageNumber = vPageNumber.(float64)

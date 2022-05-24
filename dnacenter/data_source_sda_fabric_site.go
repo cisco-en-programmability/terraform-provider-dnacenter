@@ -65,7 +65,7 @@ func dataSourceSdaFabricSiteRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSiteFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetSiteFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetSiteFromSdaFabricQueryParams{}
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy.(string)

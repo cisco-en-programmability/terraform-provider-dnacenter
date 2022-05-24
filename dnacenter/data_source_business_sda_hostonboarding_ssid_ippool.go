@@ -83,7 +83,7 @@ func dataSourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx context.Context, d *s
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSSIDToIPPoolMapping")
+		log.Printf("[DEBUG] Selected method: GetSSIDToIPPoolMapping")
 		queryParams1 := dnacentersdkgo.GetSSIDToIPPoolMappingQueryParams{}
 
 		queryParams1.VLANName = vVLANName.(string)

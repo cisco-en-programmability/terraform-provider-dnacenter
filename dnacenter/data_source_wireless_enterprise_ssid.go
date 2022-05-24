@@ -77,7 +77,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"enable_broadcast_ssi_d": &schema.Schema{
 										Description: `Enable Broadcast SSID
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -85,7 +85,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"enable_fast_lane": &schema.Schema{
 										Description: `Enable Fast Lane
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -93,7 +93,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"enable_mac_filtering": &schema.Schema{
 										Description: `Enable MAC Filtering
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -108,7 +108,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"is_enabled": &schema.Schema{
 										Description: `Is Enabled
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -116,7 +116,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"is_fabric": &schema.Schema{
 										Description: `Is Fabric
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -126,6 +126,15 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Computed: true,
+									},
+
+									"nas_options": &schema.Schema{
+										Description: `Nas Options`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"passphrase": &schema.Schema{
@@ -187,7 +196,7 @@ func dataSourceWirelessEnterpriseSSIDRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEnterpriseSSID")
+		log.Printf("[DEBUG] Selected method: GetEnterpriseSSID")
 		queryParams1 := dnacentersdkgo.GetEnterpriseSSIDQueryParams{}
 
 		if okSSIDName {
@@ -260,6 +269,7 @@ func flattenWirelessGetEnterpriseSSIDItemsSSIDDetails(items *[]dnacentersdkgo.Re
 		respItem["fast_transition"] = item.FastTransition
 		respItem["radio_policy"] = item.RadioPolicy
 		respItem["enable_broadcast_ssi_d"] = boolPtrToString(item.EnableBroadcastSSID)
+		respItem["nas_options"] = item.NasOptions
 		respItems = append(respItems, respItem)
 	}
 	return respItems

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourceNetworkDeviceCustomPrompt() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on System Settings.
 
-- Returns supported custom prompts by DNAC
+- Returns supported custom prompts by Cisco DNA Center
 `,
 
 		ReadContext: dataSourceNetworkDeviceCustomPromptRead,
@@ -94,7 +94,7 @@ func dataSourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Reso
 	return diags
 }
 
-func flattenSystemSettingsCustomPromptSupportGetAPIItem(item *dnacentersdkgo.ResponseSystemSettingsCustomPromptSupportGETAPIResponse) []map[string]interface{} {
+func flattenSystemSettingsCustomPromptSupportGetAPIItem(item *dnacentersdkgo.ResponseSystemSettingsCustomPromptSupportGetAPIResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

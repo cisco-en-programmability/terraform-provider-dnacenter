@@ -42,8 +42,11 @@ given point of time
 
 						"entity": &schema.Schema{
 							Description: `Entity`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"fair_count": &schema.Schema{
@@ -102,7 +105,7 @@ func dataSourceTopologyNetworkHealthRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetOverallNetworkHealth")
+		log.Printf("[DEBUG] Selected method: GetOverallNetworkHealth")
 		queryParams1 := dnacentersdkgo.GetOverallNetworkHealthQueryParams{}
 
 		if okTimestamp {

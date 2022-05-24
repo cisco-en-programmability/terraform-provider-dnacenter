@@ -188,7 +188,7 @@ func dataSourceNetworkDeviceLexicographicallySortedRead(ctx context.Context, d *
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute")
+		log.Printf("[DEBUG] Selected method: GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute")
 		queryParams1 := dnacentersdkgo.GetDeviceValuesThatMatchFullyOrPartiallyAnAttributeQueryParams{}
 
 		if okVrfName {

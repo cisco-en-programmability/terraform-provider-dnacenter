@@ -2,8 +2,8 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -37,218 +37,9 @@ func resourceReserveIPSubpool() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"group_name": &schema.Schema{
-							Description: `Group Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"group_owner": &schema.Schema{
-							Description: `Group Owner`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"id": &schema.Schema{
-							Description: `Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"ip_pools": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"client_options": &schema.Schema{
-										Description: `Client Options`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"configure_external_dhcp": &schema.Schema{
-										Description: `Configure External Dhcp`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"context": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"context_key": &schema.Schema{
-													Description: `Context Key`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"context_value": &schema.Schema{
-													Description: `Context Value`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"owner": &schema.Schema{
-													Description: `Owner`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
-									},
-
-									"create_time": &schema.Schema{
-										Description: `Create Time`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-
-									"dhcp_server_ips": &schema.Schema{
-										Description: `Dhcp Server Ips`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-
-									"dns_server_ips": &schema.Schema{
-										Description: `Dns Server Ips`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-
-									"gateways": &schema.Schema{
-										Description: `Gateways`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-
-									"group_uuid": &schema.Schema{
-										Description: `Group Uuid`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"ip_pool_cidr": &schema.Schema{
-										Description: `Ip Pool Cidr`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"ip_pool_name": &schema.Schema{
-										Description: `Ip Pool Name`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"ipv6": &schema.Schema{
-										Description: `Ipv6`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"last_update_time": &schema.Schema{
-										Description: `Last Update Time`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-
-									"overlapping": &schema.Schema{
-										Description: `Overlapping`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"owner": &schema.Schema{
-										Description: `Owner`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"parent_uuid": &schema.Schema{
-										Description: `Parent Uuid`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"shared": &schema.Schema{
-										Description: `Shared`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"total_ip_address_count": &schema.Schema{
-										Description: `Total Ip Address Count`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
-									},
-
-									"used_ip_address_count": &schema.Schema{
-										Description: `Used Ip Address Count`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
-									},
-
-									"used_percentage": &schema.Schema{
-										Description: `Used Percentage`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-								},
-							},
-						},
-
-						"site_hierarchy": &schema.Schema{
-							Description: `Site Hierarchy`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"site_id": &schema.Schema{
-							Description: `Site Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"type": &schema.Schema{
-							Description: `Type`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -256,7 +47,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `id path parameter. Id of reserve ip subpool to be deleted.
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 						"ipv4_dhcp_servers": &schema.Schema{
 							Description: `IPv4 input for dhcp server ip example: 1.1.1.1
@@ -291,7 +82,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 						"ipv4_prefix": &schema.Schema{
 							Description: `IPv4 prefix value is true, the ip4 prefix length input field is enabled , if it is false ipv4 total Host input is enable
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -317,7 +108,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 						"ipv6_address_space": &schema.Schema{
 							Description: `If the value is false only ipv4 input are required, otherwise both ipv6 and ipv4 are required
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -355,7 +146,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 						"ipv6_prefix": &schema.Schema{
 							Description: `Ipv6 prefix value is true, the ip6 prefix length input field is enabled , if it is false ipv6 total Host input is enable
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -382,7 +173,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `Name of the reserve ip sub pool
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"site_id": &schema.Schema{
 							Description: `siteId path parameter. Site id of site to update sub pool.
@@ -392,7 +183,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 						},
 						"slaac_support": &schema.Schema{
 							Description: `Slaac Support`,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -417,30 +208,13 @@ func resourceReserveIPSubpoolCreate(ctx context.Context, d *schema.ResourceData,
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestReserveIPSubpoolReserveIPSubpool(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	vSiteID := resourceItem["site_id"]
+	vSiteID, okSiteID := resourceItem["site_id"]
 	vvSiteID := interfaceToString(vSiteID)
-	vName := resourceItem["name"]
-	vvName := interfaceToString(vName)
-
-	queryParams1 := dnacentersdkgo.GetReserveIPSubpoolQueryParams{}
-
-	queryParams1.SiteID = vvSiteID
-
-	response1, err := searchNetworkSettingsGetReserveIPSubpool(m, queryParams1, vvName)
-
-	if err != nil || response1 != nil {
-		resourceMap := make(map[string]string)
-		resourceMap["site_id"] = vvSiteID
-		resourceMap["name"] = vvName
-		d.SetId(joinResourceID(resourceMap))
-		return resourceReserveIPSubpoolRead(ctx, d, m)
-	}
-
-	resp1, restyResp1, err := client.NetworkSettings.ReserveIPSubpool(vvSiteID, request1)
+	vID, okID := resourceItem["id"]
+	vvID := interfaceToString(vID)
+	resp1, restyResp1, err := client.NetworkSettings.ReserveIPSubpool(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
@@ -451,75 +225,63 @@ func resourceReserveIPSubpoolCreate(ctx context.Context, d *schema.ResourceData,
 			"Failure when executing ReserveIPSubpool", err))
 		return diags
 	}
-	executionId := resp1.ExecutionID
-	log.Printf("[DEBUG] ExecutionID => %s", executionId)
-	if executionId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExecutionByID", err,
-				"Failure at GetExecutionByID, unexpected response", ""))
-			return diags
-		}
-		for response2.Status == "IN_PROGRESS" {
-			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-		}
-		if response2.Status == "FAILURE" {
-			log.Printf("[DEBUG] Error %s", response2.BapiError)
-			diags = append(diags, diagError(
-				"Failure when executing ReserveIPSubpool", err))
-			return diags
-		}
-	}
 	resourceMap := make(map[string]string)
 	resourceMap["site_id"] = vvSiteID
-	resourceMap["name"] = vvName
+	resourceMap["id"] = vvID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceReserveIPSubpoolRead(ctx, d, m)
 }
 
 func resourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSiteID, okSiteID := resourceMap["site_id"]
-	vName := resourceMap["name"]
+	vSiteID := resourceMap["site_id"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetReserveIPSubpool")
+		log.Printf("[DEBUG] Selected method: GetReserveIPSubpool")
 		queryParams1 := dnacentersdkgo.GetReserveIPSubpoolQueryParams{}
 
 		if okSiteID {
 			queryParams1.SiteID = vSiteID
 		}
+		if okOffset {
+			queryParams1.Offset = vOffset
+		}
+		if okLimit {
+			queryParams1.Limit = vLimit
+		}
 
-		response1, err := searchNetworkSettingsGetReserveIPSubpool(m, queryParams1, vName)
+		response1, restyResp1, err := client.NetworkSettings.GetReserveIPSubpool(&queryParams1)
 
 		if err != nil || response1 == nil {
-			d.SetId("")
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetReserveIPSubpool", err,
+				"Failure at GetReserveIPSubpool, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenNetworkSettingsGetReserveIPSubpoolItem(response1)
+		items1 := getAllItemsNetworkSettingsGetReserveIPSubpool(m, response1, nil)
+		item1, err := searchNetworkSettingsGetReserveIPSubpool(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetReserveIPSubpool response", err,
+				"Failure when searching item from GetReserveIPSubpool, unexpected response", ""))
+			return diags
+		}
+		// Review flatten function used
+		vItem1 := flattenNetworkSettingsGetReserveIPSubpoolByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetReserveIPSubpool search response",
@@ -539,11 +301,14 @@ func resourceReserveIPSubpoolUpdate(ctx context.Context, d *schema.ResourceData,
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vSiteID := resourceMap["site_id"]
-	vName := resourceMap["name"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
 
-	queryParams1 := dnacentersdkgo.GetReserveIPSubpoolQueryParams{}
+	queryParams1 := dnacentersdkgo.GetReserveIPSubpoolQueryParams
 	queryParams1.SiteID = vSiteID
-	item, err := searchNetworkSettingsGetReserveIPSubpool(m, queryParams1, vName)
+	queryParams1.Offset = vOffset
+	queryParams1.Limit = vLimit
+	item, err := searchNetworkSettingsGetReserveIPSubpool(m, queryParams1)
 	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetReserveIPSubpool", err,
@@ -551,16 +316,16 @@ func resourceReserveIPSubpoolUpdate(ctx context.Context, d *schema.ResourceData,
 		return diags
 	}
 
+	selectedMethod := 1
+	var vvID string
+	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
+	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] ID used for update operation %s", vSiteID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		queryParams2 := dnacentersdkgo.UpdateReserveIPSubpoolQueryParams{}
-		queryParams2.ID = item.ID
-		response1, restyResp1, err := client.NetworkSettings.UpdateReserveIPSubpool(vSiteID, request1, &queryParams2)
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		response1, restyResp1, err := client.NetworkSettings.UpdateReserveIPSubpool(vvSiteID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
@@ -573,40 +338,6 @@ func resourceReserveIPSubpoolUpdate(ctx context.Context, d *schema.ResourceData,
 				"Failure when executing UpdateReserveIPSubpool", err,
 				"Failure at UpdateReserveIPSubpool, unexpected response", ""))
 			return diags
-		}
-		executionId := response1.ExecutionID
-		log.Printf("[DEBUG] ExecutionID => %s", executionId)
-		if executionId != "" {
-			time.Sleep(5 * time.Second)
-			response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-			for response2.Status == "IN_PROGRESS" {
-				time.Sleep(10 * time.Second)
-				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-				if err != nil || response2 == nil {
-					if restyResp1 != nil {
-						log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-					}
-					diags = append(diags, diagErrorWithAlt(
-						"Failure when executing GetExecutionByID", err,
-						"Failure at GetExecutionByID, unexpected response", ""))
-					return diags
-				}
-			}
-			if response2.Status == "FAILURE" {
-				log.Printf("[DEBUG] Error %s", response2.BapiError)
-				diags = append(diags, diagError(
-					"Failure when executing UpdateReserveIPSubpool", err))
-				return diags
-			}
 		}
 	}
 
@@ -622,20 +353,44 @@ func resourceReserveIPSubpoolDelete(ctx context.Context, d *schema.ResourceData,
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vSiteID := resourceMap["site_id"]
-	vName := resourceMap["name"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
 
-	queryParams1 := dnacentersdkgo.GetReserveIPSubpoolQueryParams{}
+	queryParams1 := dnacentersdkgo.GetReserveIPSubpoolQueryParams
 	queryParams1.SiteID = vSiteID
-	item, err := searchNetworkSettingsGetReserveIPSubpool(m, queryParams1, vName)
+	queryParams1.Offset = vOffset
+	queryParams1.Limit = vLimit
+	item, err := searchNetworkSettingsGetReserveIPSubpool(m, queryParams1)
 	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetReserveIPSubpool", err,
+			"Failure at GetReserveIPSubpool, unexpected response", ""))
 		return diags
 	}
 
+	selectedMethod := 1
 	var vvID string
+	var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
+	if selectedMethod == 1 {
 
-	vvID = item.ID
-
+		getResp1, _, err := client.NetworkSettings.GetReserveIPSubpool(nil)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		items1 := getAllItemsNetworkSettingsGetReserveIPSubpool(m, getResp1, nil)
+		item1, err := searchNetworkSettingsGetReserveIPSubpool(m, items1, vName, vID)
+		if err != nil || item1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		if vID != item1.ID {
+			vvID = item1.ID
+		} else {
+			vvID = vID
+		}
+	}
 	response1, restyResp1, err := client.NetworkSettings.ReleaseReserveIPSubpool(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -650,40 +405,7 @@ func resourceReserveIPSubpoolDelete(ctx context.Context, d *schema.ResourceData,
 			"Failure at ReleaseReserveIPSubpool, unexpected response", ""))
 		return diags
 	}
-	executionId := response1.ExecutionID
-	log.Printf("[DEBUG] ExecutionID => %s", executionId)
-	if executionId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExecutionByID", err,
-				"Failure at GetExecutionByID, unexpected response", ""))
-			return diags
-		}
-		for response2.Status == "IN_PROGRESS" {
-			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-		}
-		if response2.Status == "FAILURE" {
-			log.Printf("[DEBUG] Error %s", response2.BapiError)
-			diags = append(diags, diagError(
-				"Failure when executing ReleaseReserveIPSubpool", err))
-			return diags
-		}
-	}
+
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")
@@ -755,7 +477,6 @@ func expandRequestReserveIPSubpoolReserveIPSubpool(ctx context.Context, key stri
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -806,34 +527,30 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacentersdkgo.GetReserveIPSubpoolQueryParams, vName string) (*dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponse, error) {
+func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacentersdkgo.GetReserveIPSubpoolQueryParams) (*dnacentersdkgo.ResponseItemNetworkSettingsGetReserveIPSubpool, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponse
+	var foundItem *dnacentersdkgo.ResponseItemNetworkSettingsGetReserveIPSubpool
 	var ite *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpool
 	ite, _, err = client.NetworkSettings.GetReserveIPSubpool(&queryParams)
 	if err != nil {
 		return foundItem, err
 	}
-
-	if ite == nil {
+	items := ite
+	if items == nil {
 		return foundItem, err
 	}
-
-	if ite.Response == nil {
-		return nil, err
-	}
-
-	items := ite
-	itemsCopy := *items.Response
+	itemsCopy := *items
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		if item.GroupName == vName {
-			return &item, err
+		if item.Name == queryParams.Name {
+			var getItem *dnacentersdkgo.ResponseItemNetworkSettingsGetReserveIPSubpool
+			getItem = &item
+			foundItem = getItem
+			return foundItem, err
 		}
 	}
 	return foundItem, err

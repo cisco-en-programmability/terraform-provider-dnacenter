@@ -70,7 +70,7 @@ func dataSourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDefaultAuthenticationProfileFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetDefaultAuthenticationProfileFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetDefaultAuthenticationProfileFromSdaFabricQueryParams{}
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy.(string)

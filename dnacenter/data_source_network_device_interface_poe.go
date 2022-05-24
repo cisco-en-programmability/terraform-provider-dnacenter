@@ -91,7 +91,7 @@ func dataSourceNetworkDeviceInterfacePoeRead(ctx context.Context, d *schema.Reso
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ReturnsPoeInterfaceDetailsForTheDevice")
+		log.Printf("[DEBUG] Selected method: ReturnsPoeInterfaceDetailsForTheDevice")
 		vvDeviceUUID := vDeviceUUID.(string)
 		queryParams1 := dnacentersdkgo.ReturnsPoeInterfaceDetailsForTheDeviceQueryParams{}
 

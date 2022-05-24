@@ -29,26 +29,6 @@ func dataSourceSiteUpdate() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"runsync": &schema.Schema{
-				Description: `__runsync header parameter. Enable this parameter to execute the API and return a response synchronously
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
-			"timeout": &schema.Schema{
-				Description: `__timeout header parameter. During synchronous execution, this defines the maximum time to wait for a response, before the API execution is terminated
-			`,
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"persistbapioutput": &schema.Schema{
-				Description: `__persistbapioutput header parameter. Persist bapi sync response
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -227,26 +207,23 @@ func dataSourceSiteUpdateRead(ctx context.Context, d *schema.ResourceData, m int
 
 	var diags diag.Diagnostics
 	vSiteID := d.Get("site_id")
-	vRunsync, okRunsync := d.GetOk("runsync")
-	vTimeout, okTimeout := d.GetOk("timeout")
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("persistbapioutput")
+	vRunsync := d.Get("runsync")
+	vTimeout := d.Get("timeout")
+	vPersistbapioutput := d.Get("persistbapioutput")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateSite")
+		log.Printf("[DEBUG] Selected method: UpdateSite")
 		vvSiteID := vSiteID.(string)
 		request1 := expandRequestSiteUpdateUpdateSite(ctx, "", d)
 
 		headerParams1 := dnacentersdkgo.UpdateSiteHeaderParams{}
-		if okRunsync {
-			headerParams1.Runsync = vRunsync.(string)
-		}
-		if okTimeout {
-			headerParams1.Timeout = vTimeout.(string)
-		}
-		if okPersistbapioutput {
-			headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-		}
+
+		headerParams1.Runsync = vRunsync.(string)
+
+		headerParams1.Timeout = vTimeout.(string)
+
+		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
 		response1, restyResp1, err := client.Sites.UpdateSite(vvSiteID, request1, &headerParams1)
 
@@ -288,10 +265,6 @@ func expandRequestSiteUpdateUpdateSite(ctx context.Context, key string, d *schem
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site")))) {
 		request.Site = expandRequestSiteUpdateUpdateSiteSite(ctx, key+".site.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -306,10 +279,6 @@ func expandRequestSiteUpdateUpdateSiteSite(ctx context.Context, key string, d *s
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor")))) {
 		request.Floor = expandRequestSiteUpdateUpdateSiteSiteFloor(ctx, key+".floor.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -321,10 +290,6 @@ func expandRequestSiteUpdateUpdateSiteSiteArea(ctx context.Context, key string, 
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_name")))) {
 		request.ParentName = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -345,10 +310,6 @@ func expandRequestSiteUpdateUpdateSiteSiteBuilding(ctx context.Context, key stri
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".longitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".longitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".longitude")))) {
 		request.Longitude = interfaceToFloat64Ptr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -369,10 +330,6 @@ func expandRequestSiteUpdateUpdateSiteSiteFloor(ctx context.Context, key string,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".height")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".height")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".height")))) {
 		request.Height = interfaceToFloat64Ptr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

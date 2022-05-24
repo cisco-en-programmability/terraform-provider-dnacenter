@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -51,7 +50,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -64,7 +63,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -194,7 +193,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -207,7 +206,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -253,7 +252,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -395,7 +394,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -408,7 +407,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -454,7 +453,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -518,7 +517,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"custom_params_order": &schema.Schema{
 							Description: `Custom Params Order
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -554,13 +553,6 @@ func resourceConfigurationTemplate() *schema.Resource {
 									},
 								},
 							},
-						},
-						"document_database": &schema.Schema{
-							Description: `Document Database
-`,
-
-							Type:     schema.TypeString,
-							Computed: true,
 						},
 						"failure_policy": &schema.Schema{
 							Description: `Define failure policy if template provisioning fails
@@ -601,13 +593,6 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"parent_template_id": &schema.Schema{
 							Description: `Parent templateID
 `,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"project_associated": &schema.Schema{
-							Description: `Project Associated
-`,
-
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -698,7 +683,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -711,7 +696,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -757,7 +742,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -917,7 +902,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -930,7 +915,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -976,7 +961,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1072,9 +1057,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -1087,7 +1070,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -1101,7 +1084,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1232,7 +1215,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1246,7 +1229,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1293,7 +1276,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1438,7 +1421,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1452,7 +1435,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1499,7 +1482,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1566,7 +1549,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"custom_params_order": &schema.Schema{
 							Description: `Custom Params Order
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -1638,7 +1621,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 							Description: `Name of template
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"parent_template_id": &schema.Schema{
 							Description: `Parent templateID
@@ -1733,7 +1716,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1747,7 +1730,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1794,7 +1777,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1963,7 +1946,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1977,7 +1960,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2024,7 +2007,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2145,46 +2128,104 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTemplateID := resourceMap["id"]
-	vTemplateName := resourceMap["name"]
+	vProjectID, okProjectID := resourceMap["project_id"]
+	vSoftwareType, okSoftwareType := resourceMap["software_type"]
+	vSoftwareVersion, okSoftwareVersion := resourceMap["software_version"]
+	vProductFamily, okProductFamily := resourceMap["product_family"]
+	vProductSeries, okProductSeries := resourceMap["product_series"]
+	vProductType, okProductType := resourceMap["product_type"]
+	vFilterConflictingTemplates, okFilterConflictingTemplates := resourceMap["filter_conflicting_templates"]
+	vTags, okTags := resourceMap["tags"]
+	vProjectNames, okProjectNames := resourceMap["project_names"]
+	vUnCommitted, okUnCommitted := resourceMap["un_committed"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
+	vTemplateID, okTemplateID := resourceMap["template_id"]
+	vLatestVersion, okLatestVersion := resourceMap["latest_version"]
 
-	if vTemplateName != "" {
-		log.Printf("[DEBUG] Selected method 1: GetsTheTemplatesAvailable")
+	method1 := []bool{okProjectID, okSoftwareType, okSoftwareVersion, okProductFamily, okProductSeries, okProductType, okFilterConflictingTemplates, okTags, okProjectNames, okUnCommitted, okSortOrder}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okTemplateID, okLatestVersion}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetsTheTemplatesAvailable")
 		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
 
-		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
+		if okProjectID {
+			queryParams1.ProjectID = vProjectID
+		}
+		if okSoftwareType {
+			queryParams1.SoftwareType = vSoftwareType
+		}
+		if okSoftwareVersion {
+			queryParams1.SoftwareVersion = vSoftwareVersion
+		}
+		if okProductFamily {
+			queryParams1.ProductFamily = vProductFamily
+		}
+		if okProductSeries {
+			queryParams1.ProductSeries = vProductSeries
+		}
+		if okProductType {
+			queryParams1.ProductType = vProductType
+		}
+		if okFilterConflictingTemplates {
+			queryParams1.FilterConflictingTemplates = *stringToBooleanPtr(vFilterConflictingTemplates)
+		}
+		if okTags {
+			queryParams1.Tags = interfaceToSliceString(vTags)
+		}
+		if okProjectNames {
+			queryParams1.ProjectNames = interfaceToSliceString(vProjectNames)
+		}
+		if okUnCommitted {
+			queryParams1.UnCommitted = *stringToBooleanPtr(vUnCommitted)
+		}
+		if okSortOrder {
+			queryParams1.SortOrder = vSortOrder
+		}
+
+		response1, restyResp1, err := client.ConfigurationTemplates.GetsTheTemplatesAvailable(&queryParams1)
 
 		if err != nil || response1 == nil {
-			d.SetId("")
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetsTheTemplatesAvailable", err,
+				"Failure at GetsTheTemplatesAvailable, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
-
-		response2, restyResp2, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(response1.TemplateID, &queryParams2)
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
+		items1 := getAllItemsConfigurationTemplatesGetsTheTemplatesAvailable(m, response1, nil)
+		item1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsDetailsOfAGivenTemplate", err,
-				"Failure at GetsDetailsOfAGivenTemplate, unexpected response", ""))
+				"Failure when searching item from GetsTheTemplatesAvailable response", err,
+				"Failure when searching item from GetsTheTemplatesAvailable, unexpected response", ""))
 			return diags
 		}
-		vItems1 := flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItem(response2)
-		if err := d.Set("item", vItems1); err != nil {
+		// Review flatten function used
+		vItem1 := flattenConfigurationTemplatesGetsTheTemplatesAvailableByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetsTheTemplatesAvailable response",
+				"Failure when setting GetsTheTemplatesAvailable search response",
 				err))
 			return diags
 		}
-		return diags
-	} else if vTemplateID != "" {
-		log.Printf("[DEBUG] Selected method 2: GetsDetailsOfAGivenTemplate")
+
+	}
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method: GetsDetailsOfAGivenTemplate")
 		vvTemplateID := vTemplateID
 		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
+
+		if okLatestVersion {
+			queryParams2.LatestVersion = *stringToBooleanPtr(vLatestVersion)
+		}
 
 		response2, restyResp2, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID, &queryParams2)
 
@@ -2192,7 +2233,9 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetsDetailsOfAGivenTemplate", err,
+				"Failure at GetsDetailsOfAGivenTemplate, unexpected response", ""))
 			return diags
 		}
 
@@ -2206,6 +2249,7 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 			return diags
 		}
 		return diags
+
 	}
 	return diags
 }
@@ -2217,44 +2261,79 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTemplateID := resourceMap["id"]
-	vTemplateName := resourceMap["name"]
-	var vvTemplateID string
-	// NOTE: Consider adding getAllItems and search function to get missing params
-	if vTemplateID != "" {
-		vvTemplateID = vTemplateID
-		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
+	vProjectID, okProjectID := resourceMap["project_id"]
+	vSoftwareType, okSoftwareType := resourceMap["software_type"]
+	vSoftwareVersion, okSoftwareVersion := resourceMap["software_version"]
+	vProductFamily, okProductFamily := resourceMap["product_family"]
+	vProductSeries, okProductSeries := resourceMap["product_series"]
+	vProductType, okProductType := resourceMap["product_type"]
+	vFilterConflictingTemplates, okFilterConflictingTemplates := resourceMap["filter_conflicting_templates"]
+	vTags, okTags := resourceMap["tags"]
+	vProjectNames, okProjectNames := resourceMap["project_names"]
+	vUnCommitted, okUnCommitted := resourceMap["un_committed"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
 
-		getResp, _, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID, &queryParams2)
+	queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams
+	queryParams1.ProjectID = vProjectID
+	queryParams1.SoftwareType = vSoftwareType
+	queryParams1.SoftwareVersion = vSoftwareVersion
+	queryParams1.ProductFamily = vProductFamily
+	queryParams1.ProductSeries = vProductSeries
+	queryParams1.ProductType = vProductType
+	queryParams1.FilterConflictingTemplates = *stringToBooleanPtr(vFilterConflictingTemplates)
+	queryParams1.Tags = interfaceToSliceString(vTags)
+	queryParams1.ProjectNames = interfaceToSliceString(vProjectNames)
+	queryParams1.UnCommitted = *stringToBooleanPtr(vUnCommitted)
+	queryParams1.SortOrder = vSortOrder
+	item, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetsTheTemplatesAvailable", err,
+			"Failure at GetsTheTemplatesAvailable, unexpected response", ""))
+		return diags
+	}
+
+	vTemplateID, okTemplateID := resourceMap["template_id"]
+	vLatestVersion, okLatestVersion := resourceMap["latest_version"]
+
+	queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams
+	queryParams2.LatestVersion = *stringToBooleanPtr(vLatestVersion)
+	item, err := searchConfigurationTemplatesGetsDetailsOfAGivenTemplate(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetsDetailsOfAGivenTemplate", err,
+			"Failure at GetsDetailsOfAGivenTemplate, unexpected response", ""))
+		return diags
+	}
+
+	method1 := []bool{okProjectID, okSoftwareType, okSoftwareVersion, okProductFamily, okProductSeries, okProductType, okFilterConflictingTemplates, okTags, okProjectNames, okUnCommitted, okSortOrder}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okTemplateID, okLatestVersion}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	var vvName string
+	// NOTE: Consider adding getAllItems and search function to get missing params
+	// if selectedMethod == 1 { }
+	if selectedMethod == 2 {
+		vvID = vID
+		getResp, _, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID)
 		if err != nil || getResp == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetsDetailsOfAGivenTemplate", err,
 				"Failure at GetsDetailsOfAGivenTemplate, unexpected response", ""))
 			return diags
 		}
-	} else if vTemplateName != "" {
-		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-
-		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
-
-		if err != nil || response1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsTheTemplatesAvailable", err,
-				"Failure at GetsTheTemplatesAvailable, unexpected response", ""))
-			return diags
+		//Set value vvName = getResp.
+		if getResp.tags != nil {
+			vvName = getResp.tags.Name
 		}
-		vvTemplateID = response1.TemplateID
 	}
-
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %s", vTemplateName)
+		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestConfigurationTemplateUpdateTemplate(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		if request1 != nil && request1.ID == "" {
-			request1.ID = vvTemplateID
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.ConfigurationTemplates.UpdateTemplate(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -2269,32 +2348,6 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 				"Failure at UpdateTemplate, unexpected response", ""))
 			return diags
 		}
-		if response1.Response == nil {
-			diags = append(diags, diagError(
-				"Failure when executing UpdateTemplate", err))
-			return diags
-		}
-		taskId := response1.Response.TaskID
-		log.Printf("[DEBUG] TASKID => %s", taskId)
-		if taskId != "" {
-			time.Sleep(5 * time.Second)
-			response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-			if err != nil || response2 == nil {
-				if restyResp2 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetTaskByID", err,
-					"Failure at GetTaskByID, unexpected response", ""))
-				return diags
-			}
-			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-				diags = append(diags, diagError(
-					"Failure when executing CreateApplicationSet", err))
-				return diags
-			}
-		}
 	}
 
 	return resourceConfigurationTemplateRead(ctx, d, m)
@@ -2308,29 +2361,86 @@ func resourceConfigurationTemplateDelete(ctx context.Context, d *schema.Resource
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTemplateID := resourceMap["id"]
-	vTemplateName := resourceMap["name"]
+	vProjectID, okProjectID := resourceMap["project_id"]
+	vSoftwareType, okSoftwareType := resourceMap["software_type"]
+	vSoftwareVersion, okSoftwareVersion := resourceMap["software_version"]
+	vProductFamily, okProductFamily := resourceMap["product_family"]
+	vProductSeries, okProductSeries := resourceMap["product_series"]
+	vProductType, okProductType := resourceMap["product_type"]
+	vFilterConflictingTemplates, okFilterConflictingTemplates := resourceMap["filter_conflicting_templates"]
+	vTags, okTags := resourceMap["tags"]
+	vProjectNames, okProjectNames := resourceMap["project_names"]
+	vUnCommitted, okUnCommitted := resourceMap["un_committed"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
 
-	var vvTemplateID string
+	queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams
+	queryParams1.ProjectID = vProjectID
+	queryParams1.SoftwareType = vSoftwareType
+	queryParams1.SoftwareVersion = vSoftwareVersion
+	queryParams1.ProductFamily = vProductFamily
+	queryParams1.ProductSeries = vProductSeries
+	queryParams1.ProductType = vProductType
+	queryParams1.FilterConflictingTemplates = *stringToBooleanPtr(vFilterConflictingTemplates)
+	queryParams1.Tags = interfaceToSliceString(vTags)
+	queryParams1.ProjectNames = interfaceToSliceString(vProjectNames)
+	queryParams1.UnCommitted = *stringToBooleanPtr(vUnCommitted)
+	queryParams1.SortOrder = vSortOrder
+	item, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetsTheTemplatesAvailable", err,
+			"Failure at GetsTheTemplatesAvailable, unexpected response", ""))
+		return diags
+	}
+
+	vTemplateID, okTemplateID := resourceMap["template_id"]
+	vLatestVersion, okLatestVersion := resourceMap["latest_version"]
+
+	queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams
+	queryParams2.LatestVersion = *stringToBooleanPtr(vLatestVersion)
+	item, err := searchConfigurationTemplatesGetsDetailsOfAGivenTemplate(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetsDetailsOfAGivenTemplate", err,
+			"Failure at GetsDetailsOfAGivenTemplate, unexpected response", ""))
+		return diags
+	}
+
+	method1 := []bool{okProjectID, okSoftwareType, okSoftwareVersion, okProductFamily, okProductSeries, okProductType, okFilterConflictingTemplates, okTags, okProjectNames, okUnCommitted, okSortOrder}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okTemplateID, okLatestVersion}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
-	if vTemplateID != "" {
-		vvTemplateID = vTemplateID
-		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
+	if selectedMethod == 1 {
 
-		getResp, _, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID, &queryParams2)
-		if err != nil || getResp == nil {
+		getResp1, _, err := client.ConfigurationTemplates.GetsTheTemplatesAvailable(nil)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
 			return diags
+		}
+		items1 := getAllItemsConfigurationTemplatesGetsTheTemplatesAvailable(m, getResp1, nil)
+		item1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, items1, vName, vID)
+		if err != nil || item1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		if vID != item1.ID {
+			vvID = item1.ID
+		} else {
+			vvID = vID
 		}
 	}
-	if vTemplateName != "" {
-		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-
-		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
-
-		if err != nil || response1 == nil {
+	if selectedMethod == 2 {
+		vvID = vID
+		getResp, _, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID)
+		if err != nil || getResp == nil {
+			// Assume that element it is already gone
 			return diags
 		}
-		vvTemplateID = response1.TemplateID
 	}
 	response1, restyResp1, err := client.ConfigurationTemplates.DeletesTheTemplate(vvTemplateID)
 	if err != nil || response1 == nil {
@@ -2436,7 +2546,6 @@ func expandRequestConfigurationTemplateUpdateTemplate(ctx context.Context, key s
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2460,7 +2569,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTagsArray(ctx context.Conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2475,7 +2583,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTags(ctx context.Context, k
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2499,7 +2606,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2544,7 +2650,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplates(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2568,7 +2673,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTagsArra
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2583,7 +2687,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTags(ctx
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2607,7 +2710,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesDeviceTy
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2625,7 +2727,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesDeviceTy
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2649,7 +2750,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2712,7 +2812,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2736,7 +2835,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2754,7 +2852,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2775,7 +2872,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2785,7 +2881,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2809,7 +2904,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2872,7 +2966,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2896,7 +2989,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2914,7 +3006,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2935,7 +3026,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2945,7 +3035,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2969,7 +3058,6 @@ func expandRequestConfigurationTemplateUpdateTemplateDeviceTypesArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2987,7 +3075,6 @@ func expandRequestConfigurationTemplateUpdateTemplateDeviceTypes(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3011,7 +3098,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsArray
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3074,7 +3160,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParams(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3098,7 +3183,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsRange
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3116,7 +3200,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsRange
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3137,7 +3220,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsSelec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3147,7 +3229,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsSelec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3171,7 +3252,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsArray(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3234,7 +3314,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParams(ctx context.
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3258,7 +3337,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsRangeArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3276,7 +3354,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsRange(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3297,7 +3374,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsSelection(ctx
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3307,7 +3383,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsSelectionSele
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3328,7 +3403,6 @@ func expandRequestConfigurationTemplateUpdateTemplateValidationErrors(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3352,7 +3426,6 @@ func expandRequestConfigurationTemplateUpdateTemplateValidationErrorsRollbackTem
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3362,7 +3435,6 @@ func expandRequestConfigurationTemplateUpdateTemplateValidationErrorsRollbackTem
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3386,7 +3458,6 @@ func expandRequestConfigurationTemplateUpdateTemplateValidationErrorsTemplateErr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3396,27 +3467,31 @@ func expandRequestConfigurationTemplateUpdateTemplateValidationErrorsTemplateErr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchConfigurationTemplatesGetsTheTemplatesAvailable(m interface{}, queryParams dnacentersdkgo.GetsTheTemplatesAvailableQueryParams, vName string) (*dnacentersdkgo.ResponseItemConfigurationTemplatesGetsTheTemplatesAvailable, error) {
+func searchConfigurationTemplatesGetsTheTemplatesAvailable(m interface{}, queryParams dnacentersdkgo.GetsTheTemplatesAvailableQueryParams) (*dnacentersdkgo.ResponseItemConfigurationTemplatesGetsTheTemplatesAvailable, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseItemConfigurationTemplatesGetsTheTemplatesAvailable
-	nResponse, _, err := client.ConfigurationTemplates.GetsTheTemplatesAvailable(nil)
-
+	var ite *dnacentersdkgo.ResponseConfigurationTemplatesGetsTheTemplatesAvailable
+	ite, _, err = client.ConfigurationTemplates.GetsTheTemplatesAvailable(&queryParams)
 	if err != nil {
 		return foundItem, err
 	}
-	//maxPageSize := 10
-
-	for _, item := range *nResponse {
-		if vName == item.Name {
-			foundItem = &item
+	items := ite
+	if items == nil {
+		return foundItem, err
+	}
+	itemsCopy := *items
+	for _, item := range itemsCopy {
+		// Call get by _ method and set value to foundItem and return
+		if item.Name == queryParams.Name {
+			var getItem *dnacentersdkgo.ResponseItemConfigurationTemplatesGetsTheTemplatesAvailable
+			getItem = &item
+			foundItem = getItem
 			return foundItem, err
 		}
-
 	}
 	return foundItem, err
 }

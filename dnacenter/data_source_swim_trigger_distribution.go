@@ -71,7 +71,7 @@ func dataSourceSwimTriggerDistributionRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: TriggerSoftwareImageDistribution")
+		log.Printf("[DEBUG] Selected method: TriggerSoftwareImageDistribution")
 		request1 := expandRequestSwimTriggerDistributionTriggerSoftwareImageDistribution(ctx, "", d)
 
 		response1, restyResp1, err := client.SoftwareImageManagementSwim.TriggerSoftwareImageDistribution(request1)
@@ -111,10 +111,6 @@ func expandRequestSwimTriggerDistributionTriggerSoftwareImageDistribution(ctx co
 	if v := expandRequestSwimTriggerDistributionTriggerSoftwareImageDistributionItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -135,10 +131,6 @@ func expandRequestSwimTriggerDistributionTriggerSoftwareImageDistributionItemArr
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -150,10 +142,6 @@ func expandRequestSwimTriggerDistributionTriggerSoftwareImageDistributionItem(ct
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_uuid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_uuid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_uuid")))) {
 		request.ImageUUID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

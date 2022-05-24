@@ -52,7 +52,7 @@ func dataSourceSensor() *schema.Resource {
 
 						"is_led_enabled": &schema.Schema{
 							Description: `Is L E D Enabled`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -152,7 +152,7 @@ func dataSourceSensorRead(ctx context.Context, d *schema.ResourceData, m interfa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: Sensors")
+		log.Printf("[DEBUG] Selected method: Sensors")
 		queryParams1 := dnacentersdkgo.SensorsQueryParams{}
 
 		if okSiteID {

@@ -1,9 +1,8 @@
 package dnacenter
 
 import (
-	"strings"
-
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"strings"
 )
 
 func diffSuppressSgt() schema.SchemaDiffSuppressFunc {

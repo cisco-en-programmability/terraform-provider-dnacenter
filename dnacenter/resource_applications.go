@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -38,248 +37,10 @@ func resourceApplications() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"application_set": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"id_ref": &schema.Schema{
-										Description: `Id Ref`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-								},
-							},
-						},
-
-						"id": &schema.Schema{
-							Description: `Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"indicative_network_identity": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"display_name": &schema.Schema{
-										Description: `displayName`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"id": &schema.Schema{
-										Description: `id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"lower_port": &schema.Schema{
-										Description: `lowerPort`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-
-									"ports": &schema.Schema{
-										Description: `ports`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"protocol": &schema.Schema{
-										Description: `protocol`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"upper_port": &schema.Schema{
-										Description: `upperPort`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-								},
-							},
-						},
-
-						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"network_applications": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"app_protocol": &schema.Schema{
-										Description: `App Protocol`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"application_sub_type": &schema.Schema{
-										Description: `Application Sub Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"application_type": &schema.Schema{
-										Description: `Application Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"category_id": &schema.Schema{
-										Description: `Category Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"display_name": &schema.Schema{
-										Description: `Display Name`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"dscp": &schema.Schema{
-										Description: `Dscp`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"engine_id": &schema.Schema{
-										Description: `Engine Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"help_string": &schema.Schema{
-										Description: `Help String`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"ignore_conflict": &schema.Schema{
-										Description: `Ignore Conflict`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"long_description": &schema.Schema{
-										Description: `Long Description`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"name": &schema.Schema{
-										Description: `Name`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"popularity": &schema.Schema{
-										Description: `Popularity`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-
-									"rank": &schema.Schema{
-										Description: `Rank`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-
-									"server_name": &schema.Schema{
-										Description: `Server Name`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"traffic_class": &schema.Schema{
-										Description: `Traffic Class`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"url": &schema.Schema{
-										Description: `Url`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-								},
-							},
-						},
-
-						"network_identity": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"display_name": &schema.Schema{
-										Description: `Display Name`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"lower_port": &schema.Schema{
-										Description: `Lower Port`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-
-									"ports": &schema.Schema{
-										Description: `Ports`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"protocol": &schema.Schema{
-										Description: `Protocol`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"upper_port": &schema.Schema{
-										Description: `Upper Port`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-								},
-							},
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Description: `Array of RequestApplicationPolicyCreateApplication`,
 				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
+				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -493,29 +254,8 @@ func resourceApplicationsCreate(ctx context.Context, d *schema.ResourceData, m i
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	vName := resourceItem["name"]
-	vID := resourceItem["id"]
-	vvID := interfaceToString(vID)
-	vvName := interfaceToString(vName)
-
-	queryParams := dnacentersdkgo.GetApplicationsQueryParams{
-		Name: vvName,
-	}
-
-	item, err := searchApplicationPolicyGetApplications(m, queryParams, vvID)
-
-	if err != nil || item != nil {
-		resourceMap := make(map[string]string)
-		resourceMap["name"] = vvName
-		resourceMap["id"] = vvID
-		d.SetId(joinResourceID(resourceMap))
-		return resourceApplicationsRead(ctx, d, m)
-	}
-
 	request1 := expandRequestApplicationsCreateApplication(ctx, "parameters", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	resp1, restyResp1, err := client.ApplicationPolicy.CreateApplication(request1)
 	if err != nil || resp1 == nil {
@@ -528,68 +268,64 @@ func resourceApplicationsCreate(ctx context.Context, d *schema.ResourceData, m i
 			"Failure when executing CreateApplication", err))
 		return diags
 	}
-	if resp1.Response == nil {
-		diags = append(diags, diagError(
-			"Failure when executing CreateApplication", err))
-		return diags
-	}
-	taskId := resp1.Response.TaskID
-	log.Printf("[DEBUG] TASKID => %s", taskId)
-	if taskId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTaskByID", err,
-				"Failure at GetTaskByID, unexpected response", ""))
-			return diags
-		}
-		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			diags = append(diags, diagError(
-				"Failure when executing CreateApplicationSet", err))
-			return diags
-		}
-	}
-
 	resourceMap := make(map[string]string)
-	resourceMap["name"] = vvName
-	resourceMap["id"] = vvID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceApplicationsRead(ctx, d, m)
 }
 
 func resourceApplicationsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
 	vName := resourceMap["name"]
-	vID := resourceMap["id"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetApplications")
-		queryParams1 := dnacentersdkgo.GetApplicationsQueryParams{
-			Name: vName,
+		log.Printf("[DEBUG] Selected method: GetApplications")
+		queryParams1 := dnacentersdkgo.GetApplicationsQueryParams{}
+
+		if okOffset {
+			queryParams1.Offset = *stringToFloat64Ptr(vOffset)
 		}
-		response1, err := searchApplicationPolicyGetApplications(m, queryParams1, vID)
+		if okLimit {
+			queryParams1.Limit = *stringToFloat64Ptr(vLimit)
+		}
+		if okName {
+			queryParams1.Name = vName
+		}
+
+		response1, restyResp1, err := client.ApplicationPolicy.GetApplications(&queryParams1)
 
 		if err != nil || response1 == nil {
-			d.SetId("")
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetApplications", err,
+				"Failure at GetApplications, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItemName1 := flattenApplicationPolicyGetApplicationsItem(response1)
-		if err := d.Set("item", vItemName1); err != nil {
+		items1 := getAllItemsApplicationPolicyGetApplications(m, response1, nil)
+		item1, err := searchApplicationPolicyGetApplications(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetApplications response", err,
+				"Failure when searching item from GetApplications, unexpected response", ""))
+			return diags
+		}
+		// Review flatten function used
+		vItem1 := flattenApplicationPolicyGetApplicationsByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAllowedProtocolByName response",
+				"Failure when setting GetApplications search response",
 				err))
 			return diags
 		}
@@ -605,36 +341,31 @@ func resourceApplicationsUpdate(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
 	vName := resourceMap["name"]
-	vID := resourceMap["id"]
 
-	queryParams := dnacentersdkgo.GetApplicationsQueryParams{
-		Name: vName,
-	}
-
-	// NOTE: Consider adding getAllItems and search function to get missing params
-
-	item, err := searchApplicationPolicyGetApplications(m, queryParams, vID)
-
+	queryParams1 := dnacentersdkgo.GetApplicationsQueryParams
+	queryParams1.Offset = *stringToFloat64Ptr(vOffset)
+	queryParams1.Limit = *stringToFloat64Ptr(vLimit)
+	queryParams1.Name = vName
+	item, err := searchApplicationPolicyGetApplications(m, queryParams1)
 	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetApplications", err,
-			"Failure at yGetApplications, unexpected response", ""))
+			"Failure at GetApplications, unexpected response", ""))
 		return diags
 	}
 
+	selectedMethod := 1
+	var vvID string
+	var vvName string
+	// NOTE: Consider adding getAllItems and search function to get missing params
+	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %v", queryParams)
+		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestApplicationsEditApplication(ctx, "parameters", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		// Add ID to update
-		if request1 != nil && len(*request1) > 0 && item != nil {
-			req := *request1
-			req[0].ID = item.ID
-			request1 = &req
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.ApplicationPolicy.EditApplication(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -649,32 +380,6 @@ func resourceApplicationsUpdate(ctx context.Context, d *schema.ResourceData, m i
 				"Failure at EditApplication, unexpected response", ""))
 			return diags
 		}
-		if response1.Response == nil {
-			diags = append(diags, diagError(
-				"Failure when executing EditApplication", err))
-			return diags
-		}
-		taskId := response1.Response.TaskID
-		log.Printf("[DEBUG] TASKID => %s", taskId)
-		if taskId != "" {
-			time.Sleep(5 * time.Second)
-			response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-			if err != nil || response2 == nil {
-				if restyResp2 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetTaskByID", err,
-					"Failure at GetTaskByID, unexpected response", ""))
-				return diags
-			}
-			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-				diags = append(diags, diagError(
-					"Failure when executing UdpateApplication", err))
-				return diags
-			}
-		}
 	}
 
 	return resourceApplicationsRead(ctx, d, m)
@@ -688,31 +393,41 @@ func resourceApplicationsDelete(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
 	vName := resourceMap["name"]
-	vID := resourceMap["id"]
+
+	queryParams1 := dnacentersdkgo.GetApplicationsQueryParams
+	queryParams1.Offset = *stringToFloat64Ptr(vOffset)
+	queryParams1.Limit = *stringToFloat64Ptr(vLimit)
+	queryParams1.Name = vName
+	item, err := searchApplicationPolicyGetApplications(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetApplications", err,
+			"Failure at GetApplications, unexpected response", ""))
+		return diags
+	}
+
 	selectedMethod := 1
+	var vvID string
+	var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
 	if selectedMethod == 1 {
 
-		queryParams := dnacentersdkgo.GetApplicationsQueryParams{
-			Name: vName,
+		getResp1, _, err := client.ApplicationPolicy.GetApplications(nil)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
 		}
-		item1, err := searchApplicationPolicyGetApplications(m, queryParams, vID)
-
+		items1 := getAllItemsApplicationPolicyGetApplications(m, getResp1, nil)
+		item1, err := searchApplicationPolicyGetApplications(m, items1, vName, vID)
 		if err != nil || item1 == nil {
 			// Assume that element it is already gone
 			return diags
 		}
-		log.Printf("[DEBUG] itemID => %s", item1.ID)
-		log.Printf("[DEBUG] itemName => %s", item1.Name)
-		vID = item1.ID
 	}
-
-	queryParams1 := dnacentersdkgo.DeleteApplicationQueryParams{
-		ID: vID,
-	}
-
-	response1, restyResp1, err := client.ApplicationPolicy.DeleteApplication(&queryParams1)
+	response1, restyResp1, err := client.ApplicationPolicy.DeleteApplication()
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -726,32 +441,6 @@ func resourceApplicationsDelete(ctx context.Context, d *schema.ResourceData, m i
 			"Failure at DeleteApplication, unexpected response", ""))
 		return diags
 	}
-	if response1.Response == nil {
-		diags = append(diags, diagError(
-			"Failure when executing DeleteApplication", err))
-		return diags
-	}
-	taskId := response1.Response.TaskID
-	log.Printf("[DEBUG] TASKID => %s", taskId)
-	if taskId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTaskByID", err,
-				"Failure at GetTaskByID, unexpected response", ""))
-			return diags
-		}
-		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			diags = append(diags, diagError(
-				"Failure when executing DeleteApplication", err))
-			return diags
-		}
-	}
 
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
@@ -761,13 +450,12 @@ func resourceApplicationsDelete(ctx context.Context, d *schema.ResourceData, m i
 }
 func expandRequestApplicationsCreateApplication(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestApplicationPolicyCreateApplication {
 	request := dnacentersdkgo.RequestApplicationPolicyCreateApplication{}
-	if v := expandRequestApplicationsCreateApplicationItemArray(ctx, key, d); v != nil {
+	if v := expandRequestApplicationsCreateApplicationItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -791,7 +479,6 @@ func expandRequestApplicationsCreateApplicationItemArray(ctx context.Context, ke
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -815,7 +502,6 @@ func expandRequestApplicationsCreateApplicationItem(ctx context.Context, key str
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -839,7 +525,6 @@ func expandRequestApplicationsCreateApplicationItemNetworkApplicationsArray(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -896,7 +581,6 @@ func expandRequestApplicationsCreateApplicationItemNetworkApplications(ctx conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -920,7 +604,6 @@ func expandRequestApplicationsCreateApplicationItemNetworkIDentityArray(ctx cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -944,7 +627,6 @@ func expandRequestApplicationsCreateApplicationItemNetworkIDentity(ctx context.C
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -956,7 +638,6 @@ func expandRequestApplicationsCreateApplicationItemApplicationSet(ctx context.Co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -980,13 +661,11 @@ func expandRequestApplicationsCreateApplicationItemIndicativeNetworkIDentityArra
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestApplicationsCreateApplicationItemIndicativeNetworkIDentity(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemApplicationPolicyCreateApplicationIndicativeNetworkIDentity {
 	request := dnacentersdkgo.RequestItemApplicationPolicyCreateApplicationIndicativeNetworkIDentity{}
-
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
@@ -1008,19 +687,17 @@ func expandRequestApplicationsCreateApplicationItemIndicativeNetworkIDentity(ctx
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestApplicationsEditApplication(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestApplicationPolicyEditApplication {
 	request := dnacentersdkgo.RequestApplicationPolicyEditApplication{}
-	if v := expandRequestApplicationsEditApplicationItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestApplicationsEditApplicationItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1044,7 +721,6 @@ func expandRequestApplicationsEditApplicationItemArray(ctx context.Context, key 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1068,7 +744,6 @@ func expandRequestApplicationsEditApplicationItem(ctx context.Context, key strin
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1092,7 +767,6 @@ func expandRequestApplicationsEditApplicationItemNetworkApplicationsArray(ctx co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1152,7 +826,6 @@ func expandRequestApplicationsEditApplicationItemNetworkApplications(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1176,7 +849,6 @@ func expandRequestApplicationsEditApplicationItemNetworkIDentityArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1203,7 +875,6 @@ func expandRequestApplicationsEditApplicationItemNetworkIDentity(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1215,57 +886,31 @@ func expandRequestApplicationsEditApplicationItemApplicationSet(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchApplicationPolicyGetApplications(m interface{}, queryParams dnacentersdkgo.GetApplicationsQueryParams, vID string) (*dnacentersdkgo.ResponseApplicationPolicyGetApplicationsResponse, error) {
+func searchApplicationPolicyGetApplications(m interface{}, queryParams dnacentersdkgo.GetApplicationsQueryParams) (*dnacentersdkgo.ResponseItemApplicationPolicyGetApplications, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseApplicationPolicyGetApplicationsResponse
+	var foundItem *dnacentersdkgo.ResponseItemApplicationPolicyGetApplications
 	var ite *dnacentersdkgo.ResponseApplicationPolicyGetApplications
-
-	if queryParams.Name != "" {
-		ite, _, err = client.ApplicationPolicy.GetApplications(&queryParams)
-		if err != nil {
-			return foundItem, err
-		}
-		items := ite
-		if items == nil {
-			return foundItem, err
-		}
-		itemsCopy := *items.Response
-		if itemsCopy == nil {
-			return foundItem, err
-		}
-		for _, item := range itemsCopy {
-			// Call get by _ method and set value to foundItem and return
-			if item.Name == queryParams.Name {
-				var getItem *dnacentersdkgo.ResponseApplicationPolicyGetApplicationsResponse
-				getItem = &item
-				foundItem = getItem
-				return foundItem, err
-			}
-		}
-	} else if vID != "" {
-		queryParams.Offset = 1
-		nResponse, _, err := client.ApplicationPolicy.GetApplications(nil)
-		maxPageSize := len(*nResponse.Response)
-		//maxPageSize := 10
-		for len(*nResponse.Response) > 0 {
-			time.Sleep(15 * time.Second)
-			for _, item := range *nResponse.Response {
-				if vID == item.ID {
-					foundItem = &item
-					return foundItem, err
-				}
-			}
-			queryParams.Limit = float64(maxPageSize)
-			queryParams.Offset += float64(maxPageSize)
-			nResponse, _, err = client.ApplicationPolicy.GetApplications(&queryParams)
-		}
-		return nil, err
+	ite, _, err = client.ApplicationPolicy.GetApplications(&queryParams)
+	if err != nil {
+		return foundItem, err
 	}
-
+	items := ite
+	if items == nil {
+		return foundItem, err
+	}
+	itemsCopy := *items
+	for _, item := range itemsCopy {
+		// Call get by _ method and set value to foundItem and return
+		if item.Name == queryParams.Name {
+			var getItem *dnacentersdkgo.ResponseItemApplicationPolicyGetApplications
+			getItem = &item
+			foundItem = getItem
+			return foundItem, err
+		}
+	}
 	return foundItem, err
 }

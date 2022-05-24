@@ -34,8 +34,11 @@ func dataSourceFileNamespaceFiles() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"download_path": &schema.Schema{
@@ -44,7 +47,7 @@ func dataSourceFileNamespaceFiles() *schema.Resource {
 						},
 
 						"encrypted": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -111,7 +114,7 @@ func dataSourceFileNamespaceFilesRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetListOfFiles")
+		log.Printf("[DEBUG] Selected method: GetListOfFiles")
 		vvNameSpace := vNameSpace.(string)
 
 		response1, restyResp1, err := client.File.GetListOfFiles(vvNameSpace)

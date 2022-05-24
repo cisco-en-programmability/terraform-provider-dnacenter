@@ -48,8 +48,11 @@ func dataSourceDiscoveryJobs() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"cli_status": &schema.Schema{
@@ -144,7 +147,7 @@ func dataSourceDiscoveryJobsRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDiscoveryJobsByIP")
+		log.Printf("[DEBUG] Selected method: GetDiscoveryJobsByIP")
 		queryParams1 := dnacentersdkgo.GetDiscoveryJobsByIPQueryParams{}
 
 		if okOffset {

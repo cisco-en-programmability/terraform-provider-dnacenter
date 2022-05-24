@@ -129,7 +129,7 @@ func dataSourceSiteMembershipRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetMembership")
+		log.Printf("[DEBUG] Selected method: GetMembership")
 		vvSiteID := vSiteID.(string)
 		queryParams1 := dnacentersdkgo.GetMembershipQueryParams{}
 

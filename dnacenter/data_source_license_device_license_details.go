@@ -194,7 +194,7 @@ func dataSourceLicenseDeviceLicenseDetails() *schema.Resource {
 						"has_sup_cards": &schema.Schema{
 							Description: `Whether device has supervisor cards
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -209,7 +209,7 @@ func dataSourceLicenseDeviceLicenseDetails() *schema.Resource {
 						"is_license_expired": &schema.Schema{
 							Description: `Is device license expired
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -217,7 +217,7 @@ func dataSourceLicenseDeviceLicenseDetails() *schema.Resource {
 						"is_stacked_device": &schema.Schema{
 							Description: `Is Stacked Device
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -336,7 +336,7 @@ func dataSourceLicenseDeviceLicenseDetailsRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeviceLicenseDetails")
+		log.Printf("[DEBUG] Selected method: DeviceLicenseDetails")
 		vvDeviceUUID := vDeviceUUID.(string)
 
 		response1, restyResp1, err := client.Licenses.DeviceLicenseDetails(vvDeviceUUID)

@@ -62,7 +62,7 @@ func dataSourceNetworkDeviceSummaryRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceSummary")
+		log.Printf("[DEBUG] Selected method: GetDeviceSummary")
 		vvID := vID.(string)
 
 		response1, restyResp1, err := client.Devices.GetDeviceSummary(vvID)

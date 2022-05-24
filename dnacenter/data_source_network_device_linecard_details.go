@@ -71,7 +71,7 @@ func dataSourceNetworkDeviceLinecardDetailsRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetLinecardDetails")
+		log.Printf("[DEBUG] Selected method: GetLinecardDetails")
 		vvDeviceUUID := vDeviceUUID.(string)
 
 		response1, restyResp1, err := client.Devices.GetLinecardDetails(vvDeviceUUID)

@@ -78,7 +78,7 @@ address.
 
 						"ai_driven": &schema.Schema{
 							Description: `Ai Driven`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -170,7 +170,7 @@ func dataSourceIssuesRead(ctx context.Context, d *schema.ResourceData, m interfa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: Issues")
+		log.Printf("[DEBUG] Selected method: Issues")
 		queryParams1 := dnacentersdkgo.IssuesQueryParams{}
 
 		if okStartTime {

@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"reflect"
-	"strings"
-	"time"
 
 	"log"
 
@@ -37,290 +35,9 @@ func resourceNetworkDeviceList() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"ap_ethernet_mac_address": &schema.Schema{
-							Description: `Ap Ethernet Mac Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"ap_manager_interface_ip": &schema.Schema{
-							Description: `Ap Manager Interface Ip`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"associated_wlc_ip": &schema.Schema{
-							Description: `Associated Wlc Ip`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"boot_date_time": &schema.Schema{
-							Description: `Boot Date Time`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"collection_interval": &schema.Schema{
-							Description: `Collection Interval`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"collection_status": &schema.Schema{
-							Description: `Collection Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"device_support_level": &schema.Schema{
-							Description: `Device Support Level`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"error_code": &schema.Schema{
-							Description: `Error Code`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"error_description": &schema.Schema{
-							Description: `Error Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"family": &schema.Schema{
-							Description: `Family`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"hostname": &schema.Schema{
-							Description: `Hostname`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"id": &schema.Schema{
-							Description: `Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"instance_tenant_id": &schema.Schema{
-							Description: `Instance Tenant Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"instance_uuid": &schema.Schema{
-							Description: `Instance Uuid`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"interface_count": &schema.Schema{
-							Description: `Interface Count`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"inventory_status_detail": &schema.Schema{
-							Description: `Inventory Status Detail`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"last_update_time": &schema.Schema{
-							Description: `Last Update Time`,
-							Type:        schema.TypeInt,
-							Computed:    true,
-						},
-
-						"last_updated": &schema.Schema{
-							Description: `Last Updated`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"line_card_count": &schema.Schema{
-							Description: `Line Card Count`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"line_card_id": &schema.Schema{
-							Description: `Line Card Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"location": &schema.Schema{
-							Description: `Location`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"location_name": &schema.Schema{
-							Description: `Location Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"mac_address": &schema.Schema{
-							Description: `Mac Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"managed_atleast_once": &schema.Schema{
-							Description: `Managed Atleast Once`,
-
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"management_ip_address": &schema.Schema{
-							Description: `Management Ip Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"management_state": &schema.Schema{
-							Description: `Management State`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"memory_size": &schema.Schema{
-							Description: `Memory Size`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"platform_id": &schema.Schema{
-							Description: `Platform Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"reachability_failure_reason": &schema.Schema{
-							Description: `Reachability Failure Reason`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"reachability_status": &schema.Schema{
-							Description: `Reachability Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"role": &schema.Schema{
-							Description: `Role`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"role_source": &schema.Schema{
-							Description: `Role Source`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"serial_number": &schema.Schema{
-							Description: `Serial Number`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"series": &schema.Schema{
-							Description: `Series`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"snmp_contact": &schema.Schema{
-							Description: `Snmp Contact`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"snmp_location": &schema.Schema{
-							Description: `Snmp Location`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"software_type": &schema.Schema{
-							Description: `Software Type`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"software_version": &schema.Schema{
-							Description: `Software Version`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"tag_count": &schema.Schema{
-							Description: `Tag Count`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"tunnel_udp_port": &schema.Schema{
-							Description: `Tunnel Udp Port`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"type": &schema.Schema{
-							Description: `Type`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"up_time": &schema.Schema{
-							Description: `Up Time`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"uptime_seconds": &schema.Schema{
-							Description: `Uptime Seconds`,
-							Type:        schema.TypeInt,
-							Computed:    true,
-						},
-
-						"waas_device_mode": &schema.Schema{
-							Description: `Waas Device Mode`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -329,7 +46,7 @@ func resourceNetworkDeviceList() *schema.Resource {
 							Optional: true,
 						},
 						"compute_device": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -351,7 +68,7 @@ func resourceNetworkDeviceList() *schema.Resource {
 							Optional: true,
 						},
 						"http_secure": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -362,8 +79,7 @@ func resourceNetworkDeviceList() *schema.Resource {
 						},
 						"ip_address": &schema.Schema{
 							Type:     schema.TypeList,
-							Required: true,
-							MinItems: 1,
+							Optional: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -471,41 +187,8 @@ func resourceNetworkDeviceListCreate(ctx context.Context, d *schema.ResourceData
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNetworkDeviceListAddDevice2(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
-	vSerialNumber := resourceItem["serial_number"]
-	vvSerialNumber := interfaceToString(vSerialNumber)
-	var vIPAddress []string
-	var vvIPAddress string
-	if v, ok := d.GetOk("parameters.0.ip_address"); ok {
-		objs := v.([]interface{})
-		if len(objs) == 0 {
-			return nil
-		}
-		for item_no := range objs {
-			if i, ok := d.GetOk(fmt.Sprintf("parameters.0.ip_address.%d", item_no)); ok {
-				vIPAddress = append(vIPAddress, interfaceToString(i))
-			}
-		}
-	}
-	vvIPAddress = strings.Join(vIPAddress, ",")
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	queryParams1 := dnacentersdkgo.GetDeviceListQueryParams{}
-	if vSerialNumber != "" {
-		queryParams1.SerialNumber = []string{vvSerialNumber}
-	}
-	queryParams1.ManagementIPAddress = vIPAddress
-
-	response1, _, err := client.Devices.GetDeviceList(&queryParams1)
-
-	if err != nil || response1 != nil {
-		resourceMap := make(map[string]string)
-		resourceMap["serial_number"] = vvSerialNumber
-		resourceMap["ip_address"] = vvIPAddress
-		d.SetId(joinResourceID(resourceMap))
-		return resourceNetworkDeviceListRead(ctx, d, m)
-	}
 	resp1, restyResp1, err := client.Devices.AddDevice2(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -517,35 +200,7 @@ func resourceNetworkDeviceListCreate(ctx context.Context, d *schema.ResourceData
 			"Failure when executing AddDevice2", err))
 		return diags
 	}
-	if resp1.Response == nil {
-		diags = append(diags, diagError(
-			"Failure when executing AddDevice2", err))
-		return diags
-	}
-	taskId := resp1.Response.TaskID
-	log.Printf("[DEBUG] TASKID => %s", taskId)
-	if taskId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTaskByID", err,
-				"Failure at GetTaskByID, unexpected response", ""))
-			return diags
-		}
-		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			diags = append(diags, diagError(
-				"Failure when executing AddDevice2", err))
-			return diags
-		}
-	}
 	resourceMap := make(map[string]string)
-	resourceMap["serial_number"] = vvSerialNumber
-	resourceMap["ip_address"] = vvIPAddress
 	d.SetId(joinResourceID(resourceMap))
 	return resourceNetworkDeviceListRead(ctx, d, m)
 }
@@ -557,19 +212,148 @@ func resourceNetworkDeviceListRead(ctx context.Context, d *schema.ResourceData, 
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
+	vHostname := resourceMap["hostname"]
+	vManagementIPAddress := resourceMap["management_ip_address"]
+	vMacAddress := resourceMap["mac_address"]
+	vLocationName := resourceMap["location_name"]
 	vSerialNumber := resourceMap["serial_number"]
-	vvIPAddress := resourceMap["ip_address"]
-	vIPAddress := strings.Split(vvIPAddress, ",")
+	vLocation := resourceMap["location"]
+	vFamily := resourceMap["family"]
+	vType := resourceMap["type"]
+	vSeries := resourceMap["series"]
+	vCollectionStatus := resourceMap["collection_status"]
+	vCollectionInterval := resourceMap["collection_interval"]
+	vNotSyncedForMinutes := resourceMap["not_synced_for_minutes"]
+	vErrorCode := resourceMap["error_code"]
+	vErrorDescription := resourceMap["error_description"]
+	vSoftwareVersion := resourceMap["software_version"]
+	vSoftwareType := resourceMap["software_type"]
+	vPlatformID := resourceMap["platform_id"]
+	vRole := resourceMap["role"]
+	vReachabilityStatus := resourceMap["reachability_status"]
+	vUpTime := resourceMap["up_time"]
+	vAssociatedWlcIP := resourceMap["associated_wlc_ip"]
+	vLicensename := resourceMap["license_name"]
+	vLicensetype := resourceMap["license_type"]
+	vLicensestatus := resourceMap["license_status"]
+	vModulename := resourceMap["module_name"]
+	vModuleequpimenttype := resourceMap["module_equpimenttype"]
+	vModuleservicestate := resourceMap["module_servicestate"]
+	vModulevendorequipmenttype := resourceMap["module_vendorequipmenttype"]
+	vModulepartnumber := resourceMap["module_partnumber"]
+	vModuleoperationstatecode := resourceMap["module_operationstatecode"]
+	vID := resourceMap["id"]
+	vDeviceSupportLevel := resourceMap["device_support_level"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceList")
+		log.Printf("[DEBUG] Selected method: GetDeviceList")
 		queryParams1 := dnacentersdkgo.GetDeviceListQueryParams{}
-		if vSerialNumber != "" {
-			queryParams1.SerialNumber = []string{vSerialNumber}
+
+		if okHostname {
+			queryParams1.Hostname = interfaceToSliceString(vHostname)
 		}
-		queryParams1.ManagementIPAddress = vIPAddress
+		if okManagementIPAddress {
+			queryParams1.ManagementIPAddress = interfaceToSliceString(vManagementIPAddress)
+		}
+		if okMacAddress {
+			queryParams1.MacAddress = interfaceToSliceString(vMacAddress)
+		}
+		if okLocationName {
+			queryParams1.LocationName = interfaceToSliceString(vLocationName)
+		}
+		if okSerialNumber {
+			queryParams1.SerialNumber = interfaceToSliceString(vSerialNumber)
+		}
+		if okLocation {
+			queryParams1.Location = interfaceToSliceString(vLocation)
+		}
+		if okFamily {
+			queryParams1.Family = interfaceToSliceString(vFamily)
+		}
+		if okType {
+			queryParams1.Type = interfaceToSliceString(vType)
+		}
+		if okSeries {
+			queryParams1.Series = interfaceToSliceString(vSeries)
+		}
+		if okCollectionStatus {
+			queryParams1.CollectionStatus = interfaceToSliceString(vCollectionStatus)
+		}
+		if okCollectionInterval {
+			queryParams1.CollectionInterval = interfaceToSliceString(vCollectionInterval)
+		}
+		if okNotSyncedForMinutes {
+			queryParams1.NotSyncedForMinutes = interfaceToSliceString(vNotSyncedForMinutes)
+		}
+		if okErrorCode {
+			queryParams1.ErrorCode = interfaceToSliceString(vErrorCode)
+		}
+		if okErrorDescription {
+			queryParams1.ErrorDescription = interfaceToSliceString(vErrorDescription)
+		}
+		if okSoftwareVersion {
+			queryParams1.SoftwareVersion = interfaceToSliceString(vSoftwareVersion)
+		}
+		if okSoftwareType {
+			queryParams1.SoftwareType = interfaceToSliceString(vSoftwareType)
+		}
+		if okPlatformID {
+			queryParams1.PlatformID = interfaceToSliceString(vPlatformID)
+		}
+		if okRole {
+			queryParams1.Role = interfaceToSliceString(vRole)
+		}
+		if okReachabilityStatus {
+			queryParams1.ReachabilityStatus = interfaceToSliceString(vReachabilityStatus)
+		}
+		if okUpTime {
+			queryParams1.UpTime = interfaceToSliceString(vUpTime)
+		}
+		if okAssociatedWlcIP {
+			queryParams1.AssociatedWlcIP = interfaceToSliceString(vAssociatedWlcIP)
+		}
+		if okLicensename {
+			queryParams1.Licensename = interfaceToSliceString(vLicensename)
+		}
+		if okLicensetype {
+			queryParams1.Licensetype = interfaceToSliceString(vLicensetype)
+		}
+		if okLicensestatus {
+			queryParams1.Licensestatus = interfaceToSliceString(vLicensestatus)
+		}
+		if okModulename {
+			queryParams1.Modulename = interfaceToSliceString(vModulename)
+		}
+		if okModuleequpimenttype {
+			queryParams1.Moduleequpimenttype = interfaceToSliceString(vModuleequpimenttype)
+		}
+		if okModuleservicestate {
+			queryParams1.Moduleservicestate = interfaceToSliceString(vModuleservicestate)
+		}
+		if okModulevendorequipmenttype {
+			queryParams1.Modulevendorequipmenttype = interfaceToSliceString(vModulevendorequipmenttype)
+		}
+		if okModulepartnumber {
+			queryParams1.Modulepartnumber = interfaceToSliceString(vModulepartnumber)
+		}
+		if okModuleoperationstatecode {
+			queryParams1.Moduleoperationstatecode = interfaceToSliceString(vModuleoperationstatecode)
+		}
+		if okID {
+			queryParams1.ID = vID
+		}
+		if okDeviceSupportLevel {
+			queryParams1.DeviceSupportLevel = vDeviceSupportLevel
+		}
+		if okOffset {
+			queryParams1.Offset = *stringToFloat64Ptr(vOffset)
+		}
+		if okLimit {
+			queryParams1.Limit = *stringToFloat64Ptr(vLimit)
+		}
 
 		response1, restyResp1, err := client.Devices.GetDeviceList(&queryParams1)
 
@@ -577,13 +361,24 @@ func resourceNetworkDeviceListRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDeviceList", err,
+				"Failure at GetDeviceList, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenDevicesGetDeviceListItems(response1.Response)
+		items1 := getAllItemsDevicesGetDeviceList(m, response1, nil)
+		item1, err := searchDevicesGetDeviceList(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetDeviceList response", err,
+				"Failure when searching item from GetDeviceList, unexpected response", ""))
+			return diags
+		}
+		// Review flatten function used
+		vItem1 := flattenDevicesGetDeviceListByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceList search response",
@@ -602,31 +397,93 @@ func resourceNetworkDeviceListUpdate(ctx context.Context, d *schema.ResourceData
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+	vHostname := resourceMap["hostname"]
+	vManagementIPAddress := resourceMap["management_ip_address"]
+	vMacAddress := resourceMap["mac_address"]
+	vLocationName := resourceMap["location_name"]
 	vSerialNumber := resourceMap["serial_number"]
-	vvIPAddress := resourceMap["ip_address"]
-	vIPAddress := strings.Split(vvIPAddress, ",")
+	vLocation := resourceMap["location"]
+	vFamily := resourceMap["family"]
+	vType := resourceMap["type"]
+	vSeries := resourceMap["series"]
+	vCollectionStatus := resourceMap["collection_status"]
+	vCollectionInterval := resourceMap["collection_interval"]
+	vNotSyncedForMinutes := resourceMap["not_synced_for_minutes"]
+	vErrorCode := resourceMap["error_code"]
+	vErrorDescription := resourceMap["error_description"]
+	vSoftwareVersion := resourceMap["software_version"]
+	vSoftwareType := resourceMap["software_type"]
+	vPlatformID := resourceMap["platform_id"]
+	vRole := resourceMap["role"]
+	vReachabilityStatus := resourceMap["reachability_status"]
+	vUpTime := resourceMap["up_time"]
+	vAssociatedWlcIP := resourceMap["associated_wlc_ip"]
+	vLicensename := resourceMap["license_name"]
+	vLicensetype := resourceMap["license_type"]
+	vLicensestatus := resourceMap["license_status"]
+	vModulename := resourceMap["module_name"]
+	vModuleequpimenttype := resourceMap["module_equpimenttype"]
+	vModuleservicestate := resourceMap["module_servicestate"]
+	vModulevendorequipmenttype := resourceMap["module_vendorequipmenttype"]
+	vModulepartnumber := resourceMap["module_partnumber"]
+	vModuleoperationstatecode := resourceMap["module_operationstatecode"]
+	vID := resourceMap["id"]
+	vDeviceSupportLevel := resourceMap["device_support_level"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
 
-	queryParams1 := dnacentersdkgo.GetDeviceListQueryParams{}
-	if vSerialNumber != "" {
-		queryParams1.SerialNumber = []string{vSerialNumber}
-	}
-	queryParams1.ManagementIPAddress = vIPAddress
+	queryParams1 := dnacentersdkgo.GetDeviceListQueryParams
+	queryParams1.Hostname = interfaceToSliceString(vHostname)
+	queryParams1.ManagementIPAddress = interfaceToSliceString(vManagementIPAddress)
+	queryParams1.MacAddress = interfaceToSliceString(vMacAddress)
+	queryParams1.LocationName = interfaceToSliceString(vLocationName)
+	queryParams1.SerialNumber = interfaceToSliceString(vSerialNumber)
+	queryParams1.Location = interfaceToSliceString(vLocation)
+	queryParams1.Family = interfaceToSliceString(vFamily)
+	queryParams1.Type = interfaceToSliceString(vType)
+	queryParams1.Series = interfaceToSliceString(vSeries)
+	queryParams1.CollectionStatus = interfaceToSliceString(vCollectionStatus)
+	queryParams1.CollectionInterval = interfaceToSliceString(vCollectionInterval)
+	queryParams1.NotSyncedForMinutes = interfaceToSliceString(vNotSyncedForMinutes)
+	queryParams1.ErrorCode = interfaceToSliceString(vErrorCode)
+	queryParams1.ErrorDescription = interfaceToSliceString(vErrorDescription)
+	queryParams1.SoftwareVersion = interfaceToSliceString(vSoftwareVersion)
+	queryParams1.SoftwareType = interfaceToSliceString(vSoftwareType)
+	queryParams1.PlatformID = interfaceToSliceString(vPlatformID)
+	queryParams1.Role = interfaceToSliceString(vRole)
+	queryParams1.ReachabilityStatus = interfaceToSliceString(vReachabilityStatus)
+	queryParams1.UpTime = interfaceToSliceString(vUpTime)
+	queryParams1.AssociatedWlcIP = interfaceToSliceString(vAssociatedWlcIP)
+	queryParams1.Licensename = interfaceToSliceString(vLicensename)
+	queryParams1.Licensetype = interfaceToSliceString(vLicensetype)
+	queryParams1.Licensestatus = interfaceToSliceString(vLicensestatus)
+	queryParams1.Modulename = interfaceToSliceString(vModulename)
+	queryParams1.Moduleequpimenttype = interfaceToSliceString(vModuleequpimenttype)
+	queryParams1.Moduleservicestate = interfaceToSliceString(vModuleservicestate)
+	queryParams1.Modulevendorequipmenttype = interfaceToSliceString(vModulevendorequipmenttype)
+	queryParams1.Modulepartnumber = interfaceToSliceString(vModulepartnumber)
+	queryParams1.Moduleoperationstatecode = interfaceToSliceString(vModuleoperationstatecode)
+	queryParams1.ID = vID
+	queryParams1.DeviceSupportLevel = vDeviceSupportLevel
+	queryParams1.Offset = *stringToFloat64Ptr(vOffset)
+	queryParams1.Limit = *stringToFloat64Ptr(vLimit)
 	item, err := searchDevicesGetDeviceList(m, queryParams1)
 	if err != nil || item == nil {
-		d.SetId("")
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetDeviceList", err,
+			"Failure at GetDeviceList, unexpected response", ""))
 		return diags
 	}
 
+	selectedMethod := 1
+	var vvID string
+	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
+	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %s", vSerialNumber)
+		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestNetworkDeviceListSyncDevices2(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		if request1 != nil && item != nil && request1.ID == "" {
-			request1.ID = item.ID
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Devices.SyncDevices2(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -640,32 +497,6 @@ func resourceNetworkDeviceListUpdate(ctx context.Context, d *schema.ResourceData
 				"Failure when executing SyncDevices2", err,
 				"Failure at SyncDevices2, unexpected response", ""))
 			return diags
-		}
-		if response1.Response == nil {
-			diags = append(diags, diagError(
-				"Failure when executing AddDevice2", err))
-			return diags
-		}
-		taskId := response1.Response.TaskID
-		log.Printf("[DEBUG] TASKID => %s", taskId)
-		if taskId != "" {
-			time.Sleep(5 * time.Second)
-			response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-			if err != nil || response2 == nil {
-				if restyResp2 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetTaskByID", err,
-					"Failure at GetTaskByID, unexpected response", ""))
-				return diags
-			}
-			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-				diags = append(diags, diagError(
-					"Failure when executing SyncDevices2", err))
-				return diags
-			}
 		}
 	}
 
@@ -764,7 +595,6 @@ func expandRequestNetworkDeviceListAddDevice2(ctx context.Context, key string, d
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -788,7 +618,6 @@ func expandRequestNetworkDeviceListAddDevice2UpdateMgmtIPaddressListArray(ctx co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -803,7 +632,6 @@ func expandRequestNetworkDeviceListAddDevice2UpdateMgmtIPaddressList(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -893,7 +721,6 @@ func expandRequestNetworkDeviceListSyncDevices2(ctx context.Context, key string,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -917,7 +744,6 @@ func expandRequestNetworkDeviceListSyncDevices2UpdateMgmtIPaddressListArray(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -932,37 +758,27 @@ func expandRequestNetworkDeviceListSyncDevices2UpdateMgmtIPaddressList(ctx conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchDevicesGetDeviceList(m interface{}, queryParams dnacentersdkgo.GetDeviceListQueryParams) (*dnacentersdkgo.ResponseDevicesGetDeviceListResponse, error) {
+func searchDevicesGetDeviceList(m interface{}, queryParams dnacentersdkgo.GetDeviceListQueryParams) (*dnacentersdkgo.ResponseItemDevicesGetDeviceList, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseDevicesGetDeviceListResponse
+	var foundItem *dnacentersdkgo.ResponseItemDevicesGetDeviceList
 	var ite *dnacentersdkgo.ResponseDevicesGetDeviceList
 	ite, _, err = client.Devices.GetDeviceList(&queryParams)
 	if err != nil {
-		return nil, err
-	}
-	if ite == nil {
-		return nil, err
-	}
-
-	if ite.Response == nil {
-		return nil, err
+		return foundItem, err
 	}
 	items := ite
-	itemsCopy := *items.Response
+	if items == nil {
+		return foundItem, err
+	}
+	itemsCopy := *items
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		if strings.Contains(strings.Join(queryParams.SerialNumber, ","), item.SerialNumber) {
-			var getItem *dnacentersdkgo.ResponseDevicesGetDeviceListResponse
-			getItem = &item
-			foundItem = getItem
-			return foundItem, err
-		} else if strings.Contains(strings.Join(queryParams.ManagementIPAddress, ","), item.ManagementIPAddress) {
-			var getItem *dnacentersdkgo.ResponseDevicesGetDeviceListResponse
+		if item.Name == queryParams.Name {
+			var getItem *dnacentersdkgo.ResponseItemDevicesGetDeviceList
 			getItem = &item
 			foundItem = getItem
 			return foundItem, err

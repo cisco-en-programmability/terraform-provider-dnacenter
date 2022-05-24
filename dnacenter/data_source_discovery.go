@@ -34,8 +34,11 @@ func dataSourceDiscovery() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"cdp_level": &schema.Schema{
@@ -124,7 +127,7 @@ func dataSourceDiscovery() *schema.Resource {
 									},
 
 									"secure": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -185,7 +188,7 @@ func dataSourceDiscovery() *schema.Resource {
 									},
 
 									"secure": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -214,7 +217,7 @@ func dataSourceDiscovery() *schema.Resource {
 						},
 
 						"is_auto_cdp": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -321,7 +324,7 @@ func dataSourceDiscovery() *schema.Resource {
 						},
 
 						"update_mgmt_ip": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -345,7 +348,7 @@ func dataSourceDiscoveryRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDiscoveryByID")
+		log.Printf("[DEBUG] Selected method: GetDiscoveryByID")
 		vvID := vID.(string)
 
 		response1, restyResp1, err := client.Discovery.GetDiscoveryByID(vvID)

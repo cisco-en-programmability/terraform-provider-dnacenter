@@ -92,8 +92,11 @@ combination of a specific application with site and/or device the API gets list 
 						"application_server_latency": &schema.Schema{
 							Description: `Latency of application server
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"average_throughput": &schema.Schema{
@@ -134,8 +137,11 @@ combination of a specific application with site and/or device the API gets list 
 						"client_network_latency": &schema.Schema{
 							Description: `Latency of client network
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"device_type": &schema.Schema{
@@ -197,8 +203,11 @@ combination of a specific application with site and/or device the API gets list 
 						"jitter": &schema.Schema{
 							Description: `Jitter for application
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"location": &schema.Schema{
@@ -218,8 +227,11 @@ combination of a specific application with site and/or device the API gets list 
 						"network_latency": &schema.Schema{
 							Description: `Network latency for application
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"occurrences": &schema.Schema{
@@ -239,8 +251,11 @@ combination of a specific application with site and/or device the API gets list 
 						"packet_loss_percent": &schema.Schema{
 							Description: `Packet loss percentage for application
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"priority": &schema.Schema{
@@ -260,8 +275,11 @@ combination of a specific application with site and/or device the API gets list 
 						"server_network_latency": &schema.Schema{
 							Description: `Latency of server network
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"severity": &schema.Schema{
@@ -321,7 +339,7 @@ func dataSourceApplicationsHealthRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: Applications")
+		log.Printf("[DEBUG] Selected method: Applications")
 		queryParams1 := dnacentersdkgo.ApplicationsQueryParams{}
 
 		if okSiteID {

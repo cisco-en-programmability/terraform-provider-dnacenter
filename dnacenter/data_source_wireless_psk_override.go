@@ -25,8 +25,28 @@ func dataSourceWirelessPskOverride() *schema.Resource {
 		ReadContext: dataSourceWirelessPskOverrideRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{
-				Type:     schema.TypeString,
+				Type:     schema.TypeList,
 				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"execution_id": &schema.Schema{
+							Description: `Execution Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"execution_status_url": &schema.Schema{
+							Description: `Execution Status Url`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"message": &schema.Schema{
+							Description: `Message`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
 			},
 			"payload": &schema.Schema{
 				Description: `Array of RequestWirelessPSKOverride`,
@@ -67,25 +87,29 @@ func dataSourceWirelessPskOverrideRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: PSKOverride")
+		log.Printf("[DEBUG] Selected method: PSKOverride")
 		request1 := expandRequestWirelessPskOverridePSKOverride(ctx, "", d)
 
-		response1, err := client.Wireless.PSKOverride(request1)
+		response1, restyResp1, err := client.Wireless.PSKOverride(request1)
 
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing PSKOverride", err,
 				"Failure at PSKOverride, unexpected response", ""))
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %s", response1.String())
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		if err := d.Set("item", response1.String()); err != nil {
+		vItem1 := flattenWirelessPSKOverrideItem(response1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting PSKOverride response",
 				err))
@@ -103,10 +127,6 @@ func expandRequestWirelessPskOverridePSKOverride(ctx context.Context, key string
 	if v := expandRequestWirelessPskOverridePSKOverrideItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -127,10 +147,6 @@ func expandRequestWirelessPskOverridePSKOverrideItemArray(ctx context.Context, k
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -145,9 +161,18 @@ func expandRequestWirelessPskOverridePSKOverrideItem(ctx context.Context, key st
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".pass_phrase")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".pass_phrase")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".pass_phrase")))) {
 		request.PassPhrase = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
+	return &request
+}
+
+func flattenWirelessPSKOverrideItem(item *dnacentersdkgo.ResponseWirelessPSKOverride) []map[string]interface{} {
+	if item == nil {
 		return nil
 	}
-
-	return &request
+	respItem := make(map[string]interface{})
+	respItem["execution_id"] = item.ExecutionID
+	respItem["execution_status_url"] = item.ExecutionStatusURL
+	respItem["message"] = item.Message
+	return []map[string]interface{}{
+		respItem,
+	}
 }

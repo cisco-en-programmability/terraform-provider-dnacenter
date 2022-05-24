@@ -2,8 +2,6 @@ package dnacenter
 
 import (
 	"context"
-	"io"
-	"os"
 
 	"log"
 
@@ -88,12 +86,10 @@ func dataSourceSwimImportLocalRead(ctx context.Context, d *schema.ResourceData, 
 	vThirdPartyVendor, okThirdPartyVendor := d.GetOk("third_party_vendor")
 	vThirdPartyImageFamily, okThirdPartyImageFamily := d.GetOk("third_party_image_family")
 	vThirdPartyApplicationType, okThirdPartyApplicationType := d.GetOk("third_party_application_type")
-	vFileName := d.Get("file_name")
-	vFilePath := d.Get("file_path")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ImportLocalSoftwareImage")
+		log.Printf("[DEBUG] Selected method: ImportLocalSoftwareImage")
 		queryParams1 := dnacentersdkgo.ImportLocalSoftwareImageQueryParams{}
 
 		if okIsThirdParty {
@@ -109,36 +105,7 @@ func dataSourceSwimImportLocalRead(ctx context.Context, d *schema.ResourceData, 
 			queryParams1.ThirdPartyApplicationType = vThirdPartyApplicationType.(string)
 		}
 
-		isDir, err := IsDirectory(vFilePath.(string))
-		if err != nil || isDir {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing File", err,
-				"Failure at File, Path is a directory", ""))
-			return diags
-		}
-		f, err := os.Open(vFilePath.(string))
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing ImportLocalSoftwareImage", err,
-				"Failure at ImportLocalSoftwareImage, unexpected response", ""))
-			return diags
-		}
-		defer func() {
-			if err = f.Close(); err != nil {
-				log.Printf("File close error %s", err.Error())
-			}
-		}()
-
-		var r io.Reader
-		r = f
-
-		response1, restyResp1, err := client.SoftwareImageManagementSwim.ImportLocalSoftwareImage(
-			&queryParams1,
-			&dnacentersdkgo.ImportLocalSoftwareImageMultipartFields{
-				File:     r,
-				FileName: vFileName.(string),
-			},
-		)
+		response1, restyResp1, err := client.SoftwareImageManagementSwim.ImportLocalSoftwareImage(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

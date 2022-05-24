@@ -77,8 +77,11 @@ func dataSourceItsmIntegrationEventsFailed() *schema.Resource {
 
 									"response_received_from_itsmsystem": &schema.Schema{
 										Description: `Response Received From ITSMSystem`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 								},
 							},
@@ -146,7 +149,7 @@ func dataSourceItsmIntegrationEventsFailedRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetFailedItsmEvents")
+		log.Printf("[DEBUG] Selected method: GetFailedItsmEvents")
 		queryParams1 := dnacentersdkgo.GetFailedItsmEventsQueryParams{}
 
 		if okInstanceID {

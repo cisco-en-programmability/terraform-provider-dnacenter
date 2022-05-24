@@ -51,7 +51,7 @@ func dataSourceReportsExecutionsDownloadRead(ctx context.Context, d *schema.Reso
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DownloadReportContent")
+		log.Printf("[DEBUG] Selected method: DownloadReportContent")
 		vvReportID := vReportID.(string)
 		vvExecutionID := vExecutionID.(string)
 

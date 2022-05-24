@@ -50,7 +50,7 @@ func dataSourceDiscoveryCountRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetCountOfAllDiscoveryJobs")
+		log.Printf("[DEBUG] Selected method: GetCountOfAllDiscoveryJobs")
 
 		response1, restyResp1, err := client.Discovery.GetCountOfAllDiscoveryJobs()
 

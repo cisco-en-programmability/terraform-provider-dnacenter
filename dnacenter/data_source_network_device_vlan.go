@@ -93,7 +93,7 @@ func dataSourceNetworkDeviceVLANRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceInterfaceVLANs")
+		log.Printf("[DEBUG] Selected method: GetDeviceInterfaceVLANs")
 		vvID := vID.(string)
 		queryParams1 := dnacentersdkgo.GetDeviceInterfaceVLANsQueryParams{}
 

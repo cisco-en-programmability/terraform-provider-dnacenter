@@ -57,7 +57,7 @@ func dataSourcePnpGlobalSettings() *schema.Resource {
 
 						"accept_eula": &schema.Schema{
 							Description: `Accept Eula`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -100,7 +100,7 @@ func dataSourcePnpGlobalSettings() *schema.Resource {
 
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -170,7 +170,7 @@ func dataSourcePnpGlobalSettings() *schema.Resource {
 
 												"make_default": &schema.Schema{
 													Description: `Make Default`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -195,7 +195,7 @@ func dataSourcePnpGlobalSettings() *schema.Resource {
 
 												"proxy": &schema.Schema{
 													Description: `Proxy`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -339,7 +339,7 @@ func dataSourcePnpGlobalSettingsRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetPnpGlobalSettings")
+		log.Printf("[DEBUG] Selected method: GetPnpGlobalSettings")
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.GetPnpGlobalSettings()
 

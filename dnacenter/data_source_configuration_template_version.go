@@ -36,7 +36,7 @@ func dataSourceConfigurationTemplateVersion() *schema.Resource {
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -134,7 +134,7 @@ func dataSourceConfigurationTemplateVersionRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetsAllTheVersionsOfAGivenTemplate")
+		log.Printf("[DEBUG] Selected method: GetsAllTheVersionsOfAGivenTemplate")
 		vvTemplateID := vTemplateID.(string)
 
 		response1, restyResp1, err := client.ConfigurationTemplates.GetsAllTheVersionsOfAGivenTemplate(vvTemplateID)

@@ -106,7 +106,7 @@ func dataSourceSdaPortAssignmentForUserDeviceRead(ctx context.Context, d *schema
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetPortAssignmentForUserDeviceInSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetPortAssignmentForUserDeviceInSdaFabric")
 		queryParams1 := dnacentersdkgo.GetPortAssignmentForUserDeviceInSdaFabricQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress.(string)

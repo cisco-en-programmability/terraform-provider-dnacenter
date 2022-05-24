@@ -54,7 +54,7 @@ func dataSourceQosDeviceInterfaceInfoCountRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetQosDeviceInterfaceInfoCount")
+		log.Printf("[DEBUG] Selected method: GetQosDeviceInterfaceInfoCount")
 
 		response1, restyResp1, err := client.ApplicationPolicy.GetQosDeviceInterfaceInfoCount()
 

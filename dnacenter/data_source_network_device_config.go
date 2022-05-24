@@ -54,8 +54,11 @@ func dataSourceNetworkDeviceConfig() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"cdp_neighbors": &schema.Schema{
@@ -127,7 +130,7 @@ func dataSourceNetworkDeviceConfigRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceConfigForAllDevices")
+		log.Printf("[DEBUG] Selected method: GetDeviceConfigForAllDevices")
 
 		response1, restyResp1, err := client.Devices.GetDeviceConfigForAllDevices()
 
@@ -155,7 +158,7 @@ func dataSourceNetworkDeviceConfigRead(ctx context.Context, d *schema.ResourceDa
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceConfigByID")
+		log.Printf("[DEBUG] Selected method: GetDeviceConfigByID")
 		vvNetworkDeviceID := vNetworkDeviceID.(string)
 
 		response2, restyResp2, err := client.Devices.GetDeviceConfigByID(vvNetworkDeviceID)

@@ -104,7 +104,7 @@ func dataSourceNetworkDeviceByIP() *schema.Resource {
 						},
 
 						"last_update_time": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
@@ -242,7 +242,7 @@ func dataSourceNetworkDeviceByIPRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkDeviceByIP")
+		log.Printf("[DEBUG] Selected method: GetNetworkDeviceByIP")
 		vvIPAddress := vIPAddress.(string)
 
 		response1, restyResp1, err := client.Devices.GetNetworkDeviceByIP(vvIPAddress)

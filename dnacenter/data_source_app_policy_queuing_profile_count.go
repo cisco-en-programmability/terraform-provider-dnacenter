@@ -54,7 +54,7 @@ func dataSourceAppPolicyQueuingProfileCountRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetApplicationPolicyQueuingProfileCount")
+		log.Printf("[DEBUG] Selected method: GetApplicationPolicyQueuingProfileCount")
 
 		response1, restyResp1, err := client.ApplicationPolicy.GetApplicationPolicyQueuingProfileCount()
 

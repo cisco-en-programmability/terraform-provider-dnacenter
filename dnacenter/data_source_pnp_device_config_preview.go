@@ -34,7 +34,7 @@ func dataSourcePnpDeviceConfigPreview() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"complete": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -43,7 +43,7 @@ func dataSourcePnpDeviceConfigPreview() *schema.Resource {
 							Computed: true,
 						},
 						"error": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -97,7 +97,7 @@ func dataSourcePnpDeviceConfigPreviewRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: PreviewConfig")
+		log.Printf("[DEBUG] Selected method: PreviewConfig")
 		request1 := expandRequestPnpDeviceConfigPreviewPreviewConfig(ctx, "", d)
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.PreviewConfig(request1)
@@ -143,10 +143,6 @@ func expandRequestPnpDeviceConfigPreviewPreviewConfig(ctx context.Context, key s
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

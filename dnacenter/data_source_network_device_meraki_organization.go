@@ -59,7 +59,7 @@ func dataSourceNetworkDeviceMerakiOrganizationRead(ctx context.Context, d *schem
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetOrganizationListForMeraki")
+		log.Printf("[DEBUG] Selected method: GetOrganizationListForMeraki")
 		vvID := vID.(string)
 
 		response1, restyResp1, err := client.Devices.GetOrganizationListForMeraki(vvID)

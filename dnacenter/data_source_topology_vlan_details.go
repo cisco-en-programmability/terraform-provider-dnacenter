@@ -53,7 +53,7 @@ func dataSourceTopologyVLANDetailsRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetVLANDetails")
+		log.Printf("[DEBUG] Selected method: GetVLANDetails")
 
 		response1, restyResp1, err := client.Topology.GetVLANDetails()
 

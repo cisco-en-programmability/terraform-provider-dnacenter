@@ -46,7 +46,7 @@ func dataSourceEventArtifactCountRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: EventArtifactCount")
+		log.Printf("[DEBUG] Selected method: EventArtifactCount")
 
 		response1, restyResp1, err := client.EventManagement.EventArtifactCount()
 

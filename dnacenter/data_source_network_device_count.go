@@ -84,7 +84,7 @@ func dataSourceNetworkDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceInterfaceCount2")
+		log.Printf("[DEBUG] Selected method: GetDeviceInterfaceCount2")
 		vvDeviceID := vDeviceID.(string)
 
 		response1, restyResp1, err := client.Devices.GetDeviceInterfaceCount2(vvDeviceID)
@@ -103,7 +103,7 @@ func dataSourceNetworkDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceCount2")
+		log.Printf("[DEBUG] Selected method: GetDeviceCount2")
 
 		response2, restyResp2, err := client.Devices.GetDeviceCount2()
 

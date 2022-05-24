@@ -95,7 +95,7 @@ func dataSourceNetworkDeviceEquipmentRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ReturnPowerSupplyFanDetailsForTheGivenDevice")
+		log.Printf("[DEBUG] Selected method: ReturnPowerSupplyFanDetailsForTheGivenDevice")
 		vvDeviceUUID := vDeviceUUID.(string)
 		queryParams1 := dnacentersdkgo.ReturnPowerSupplyFanDetailsForTheGivenDeviceQueryParams{}
 

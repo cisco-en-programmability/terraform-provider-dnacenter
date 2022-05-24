@@ -115,8 +115,11 @@ func dataSourcePnpDeviceClaim() *schema.Resource {
 						},
 						"json_response": &schema.Schema{
 							Description: `Json Response`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"message": &schema.Schema{
 							Description: `Message`,
@@ -132,7 +135,7 @@ func dataSourcePnpDeviceClaim() *schema.Resource {
 				},
 			},
 			"populate_inventory": &schema.Schema{
-
+				// Type:     schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -156,7 +159,7 @@ func dataSourcePnpDeviceClaimRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ClaimDevice")
+		log.Printf("[DEBUG] Selected method: ClaimDevice")
 		request1 := expandRequestPnpDeviceClaimClaimDevice(ctx, "", d)
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.ClaimDevice(request1)
@@ -220,10 +223,6 @@ func expandRequestPnpDeviceClaimClaimDevice(ctx context.Context, key string, d *
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".workflow_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".workflow_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".workflow_id")))) {
 		request.WorkflowID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -244,10 +243,6 @@ func expandRequestPnpDeviceClaimClaimDeviceDeviceClaimListArray(ctx context.Cont
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -268,10 +263,6 @@ func expandRequestPnpDeviceClaimClaimDeviceDeviceClaimList(ctx context.Context, 
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".top_of_stack_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".top_of_stack_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".top_of_stack_serial_number")))) {
 		request.TopOfStackSerialNumber = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -292,10 +283,6 @@ func expandRequestPnpDeviceClaimClaimDeviceDeviceClaimListConfigListArray(ctx co
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -307,10 +294,6 @@ func expandRequestPnpDeviceClaimClaimDeviceDeviceClaimListConfigList(ctx context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_parameters")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_parameters")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_parameters")))) {
 		request.ConfigParameters = expandRequestPnpDeviceClaimClaimDeviceDeviceClaimListConfigListConfigParametersArray(ctx, key+".config_parameters", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -331,10 +314,6 @@ func expandRequestPnpDeviceClaimClaimDeviceDeviceClaimListConfigListConfigParame
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -346,10 +325,6 @@ func expandRequestPnpDeviceClaimClaimDeviceDeviceClaimListConfigListConfigParame
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

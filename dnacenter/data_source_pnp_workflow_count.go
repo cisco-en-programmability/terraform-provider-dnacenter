@@ -56,7 +56,7 @@ func dataSourcePnpWorkflowCountRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetWorkflowCount")
+		log.Printf("[DEBUG] Selected method: GetWorkflowCount")
 		queryParams1 := dnacentersdkgo.GetWorkflowCountQueryParams{}
 
 		if okName {

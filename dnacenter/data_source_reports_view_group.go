@@ -127,7 +127,7 @@ func dataSourceReportsViewGroupRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAllViewGroups")
+		log.Printf("[DEBUG] Selected method: GetAllViewGroups")
 
 		response1, restyResp1, err := client.Reports.GetAllViewGroups()
 
@@ -155,7 +155,7 @@ func dataSourceReportsViewGroupRead(ctx context.Context, d *schema.ResourceData,
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetViewsForAGivenViewGroup")
+		log.Printf("[DEBUG] Selected method: GetViewsForAGivenViewGroup")
 		vvViewGroupID := vViewGroupID.(string)
 
 		response2, restyResp2, err := client.Reports.GetViewsForAGivenViewGroup(vvViewGroupID)

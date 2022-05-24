@@ -64,7 +64,7 @@ func dataSourceLicenseDeviceDeregistrationRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeviceDeregistration")
+		log.Printf("[DEBUG] Selected method: DeviceDeregistration")
 		request1 := expandRequestLicenseDeviceDeregistrationDeviceDeregistration(ctx, "", d)
 
 		response1, restyResp1, err := client.Licenses.DeviceDeregistration(request1)
@@ -104,10 +104,6 @@ func expandRequestLicenseDeviceDeregistrationDeviceDeregistration(ctx context.Co
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_uuids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_uuids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_uuids")))) {
 		request.DeviceUUIDs = interfaceToSliceString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

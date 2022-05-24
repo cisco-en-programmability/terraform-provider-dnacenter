@@ -89,7 +89,7 @@ func dataSourceLicenseDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeviceCountDetails")
+		log.Printf("[DEBUG] Selected method: DeviceCountDetails")
 		queryParams1 := dnacentersdkgo.DeviceCountDetailsQueryParams{}
 
 		if okDeviceType {

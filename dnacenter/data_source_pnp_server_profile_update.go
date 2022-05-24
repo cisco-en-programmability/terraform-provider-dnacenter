@@ -86,7 +86,7 @@ updated smart & virtual account info
 									},
 									"make_default": &schema.Schema{
 										Description: `Make Default`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -107,7 +107,7 @@ updated smart & virtual account info
 									},
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -211,7 +211,7 @@ updated smart & virtual account info
 							Optional: true,
 						},
 						"make_default": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -229,7 +229,7 @@ updated smart & virtual account info
 							Optional: true,
 						},
 						"proxy": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -309,7 +309,7 @@ func dataSourcePnpServerProfileUpdateRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdatePnpServerProfile")
+		log.Printf("[DEBUG] Selected method: UpdatePnpServerProfile")
 		request1 := expandRequestPnpServerProfileUpdateUpdatePnpServerProfile(ctx, "", d)
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.UpdatePnpServerProfile(request1)
@@ -385,10 +385,6 @@ func expandRequestPnpServerProfileUpdateUpdatePnpServerProfile(ctx context.Conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_account_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_account_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_account_id")))) {
 		request.VirtualAccountID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -418,10 +414,6 @@ func expandRequestPnpServerProfileUpdateUpdatePnpServerProfileProfile(ctx contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".proxy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".proxy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".proxy")))) {
 		request.Proxy = interfaceToBoolPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -433,10 +425,6 @@ func expandRequestPnpServerProfileUpdateUpdatePnpServerProfileSyncResult(ctx con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_msg")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_msg")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_msg")))) {
 		request.SyncMsg = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -457,10 +445,6 @@ func expandRequestPnpServerProfileUpdateUpdatePnpServerProfileSyncResultSyncList
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -472,10 +456,6 @@ func expandRequestPnpServerProfileUpdateUpdatePnpServerProfileSyncResultSyncList
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_type")))) {
 		request.SyncType = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

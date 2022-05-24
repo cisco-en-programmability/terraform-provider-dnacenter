@@ -50,8 +50,11 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"function_details": &schema.Schema{
@@ -61,8 +64,11 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"attribute_info": &schema.Schema{
-										Type:     schema.TypeString,
+										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"id": &schema.Schema{
@@ -108,8 +114,11 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"device_id": &schema.Schema{
@@ -124,8 +133,11 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"attribute_info": &schema.Schema{
-										Type:     schema.TypeString,
+										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"function_details": &schema.Schema{
@@ -135,8 +147,11 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"attribute_info": &schema.Schema{
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"id": &schema.Schema{
@@ -201,7 +216,7 @@ func dataSourceNetworkDeviceFunctionalCapabilityRead(ctx context.Context, d *sch
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetFunctionalCapabilityForDevices")
+		log.Printf("[DEBUG] Selected method: GetFunctionalCapabilityForDevices")
 		queryParams1 := dnacentersdkgo.GetFunctionalCapabilityForDevicesQueryParams{}
 
 		if okDeviceID {
@@ -237,7 +252,7 @@ func dataSourceNetworkDeviceFunctionalCapabilityRead(ctx context.Context, d *sch
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetFunctionalCapabilityByID")
+		log.Printf("[DEBUG] Selected method: GetFunctionalCapabilityByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.Devices.GetFunctionalCapabilityByID(vvID)

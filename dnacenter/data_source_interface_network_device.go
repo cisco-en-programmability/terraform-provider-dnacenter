@@ -197,7 +197,7 @@ func dataSourceInterfaceNetworkDeviceRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetInterfaceInfoByID")
+		log.Printf("[DEBUG] Selected method: GetInterfaceInfoByID")
 		vvDeviceID := vDeviceID.(string)
 
 		response1, restyResp1, err := client.Devices.GetInterfaceInfoByID(vvDeviceID)

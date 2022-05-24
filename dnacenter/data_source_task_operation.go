@@ -86,7 +86,7 @@ func dataSourceTaskOperation() *schema.Resource {
 						},
 
 						"is_error": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -97,8 +97,11 @@ func dataSourceTaskOperation() *schema.Resource {
 						},
 
 						"operation_id_list": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"parent_id": &schema.Schema{
@@ -152,7 +155,7 @@ func dataSourceTaskOperationRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTaskByOperationID")
+		log.Printf("[DEBUG] Selected method: GetTaskByOperationID")
 		vvOperationID := vOperationID.(string)
 		vvOffset := vOffset.(int)
 		vvLimit := vLimit.(int)

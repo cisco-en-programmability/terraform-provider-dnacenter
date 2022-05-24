@@ -46,7 +46,7 @@ func dataSourceSdaVirtualNetworkV2() *schema.Resource {
 
 						"is_guest_virtual_network": &schema.Schema{
 							Description: `Is Guest Virtual Network`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -98,7 +98,7 @@ func dataSourceSdaVirtualNetworkV2Read(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetVirtualNetworkWithScalableGroups")
+		log.Printf("[DEBUG] Selected method: GetVirtualNetworkWithScalableGroups")
 		queryParams1 := dnacentersdkgo.GetVirtualNetworkWithScalableGroupsQueryParams{}
 
 		queryParams1.VirtualNetworkName = vVirtualNetworkName.(string)

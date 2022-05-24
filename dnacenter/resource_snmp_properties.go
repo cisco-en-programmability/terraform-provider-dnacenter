@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -34,45 +33,10 @@ func resourceSNMPProperties() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"instance_tenant_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"instance_uuid": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"int_value": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-
-						"system_property_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Description: `Array of RequestDiscoveryCreateUpdateSNMPProperties`,
 				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
+				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -110,23 +74,7 @@ func resourceSNMPPropertiesCreate(ctx context.Context, d *schema.ResourceData, m
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSNMPPropertiesCreateUpdateSNMPProperties(ctx, "parameters", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
-	vInstanceTenantId := resourceItem["instance_tenant_id"]
-	vSystemPropertyName := resourceItem["system_property_name"]
-	vvInstanceTenantId := interfaceToString(vInstanceTenantId)
-	vvSystemPropertyName := interfaceToString(vSystemPropertyName)
-
-	item, err := searchDiscoveryGetSNMPProperties(m, vvInstanceTenantId, vvSystemPropertyName)
-
-	if item != nil || err != nil {
-		resourceMap := make(map[string]string)
-		resourceMap["instance_tenant_id"] = vvInstanceTenantId
-		resourceMap["system_property_name"] = vvSystemPropertyName
-		d.SetId(joinResourceID(resourceMap))
-		return resourceSNMPPropertiesRead(ctx, d, m)
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	resp1, restyResp1, err := client.Discovery.CreateUpdateSNMPProperties(request1)
 	if err != nil || resp1 == nil {
@@ -139,60 +87,47 @@ func resourceSNMPPropertiesCreate(ctx context.Context, d *schema.ResourceData, m
 			"Failure when executing CreateUpdateSNMPProperties", err))
 		return diags
 	}
-	if resp1.Response == nil {
-		diags = append(diags, diagError(
-			"Failure when executing CreateUpdateSNMPProperties", err))
-		return diags
-	}
-	taskId := resp1.Response.TaskID
-	log.Printf("[DEBUG] TASKID => %s", taskId)
-	if taskId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTaskByID", err,
-				"Failure at GetTaskByID, unexpected response", ""))
-			return diags
-		}
-		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-			log.Printf("[DEBUG] Error => %v", response2.Response.FailureReason)
-			diags = append(diags, diagError(
-				"Failure when executing CreateUpdateSNMPProperties", err))
-			return diags
-		}
-	}
-
 	resourceMap := make(map[string]string)
-	resourceMap["instance_tenant_id"] = vvInstanceTenantId
-	resourceMap["system_property_name"] = vvSystemPropertyName
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSNMPPropertiesRead(ctx, d, m)
 }
 
 func resourceSNMPPropertiesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
+
+	var diags diag.Diagnostics
+
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vInstanceTenantId := resourceMap["instance_tenant_id"]
-	vSystemPropertyName := resourceMap["system_property_name"]
-	var diags diag.Diagnostics
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSNMPProperties")
+		log.Printf("[DEBUG] Selected method: GetSNMPProperties")
 
-		response1, err := searchDiscoveryGetSNMPProperties(m, vInstanceTenantId, vSystemPropertyName)
+		response1, restyResp1, err := client.Discovery.GetSNMPProperties()
+
 		if err != nil || response1 == nil {
-			d.SetId("")
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetSNMPProperties", err,
+				"Failure at GetSNMPProperties, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenDiscoveryGetSNMPPropertiesItem(response1)
+		items1 := getAllItemsDiscoveryGetSNMPProperties(m, response1)
+		item1, err := searchDiscoveryGetSNMPProperties(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetSNMPProperties response", err,
+				"Failure when searching item from GetSNMPProperties, unexpected response", ""))
+			return diags
+		}
+		// Review flatten function used
+		vItem1 := flattenDiscoveryGetSNMPPropertiesByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSNMPProperties search response",
@@ -216,13 +151,12 @@ func resourceSNMPPropertiesDelete(ctx context.Context, d *schema.ResourceData, m
 }
 func expandRequestSNMPPropertiesCreateUpdateSNMPProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateUpdateSNMPProperties {
 	request := dnacentersdkgo.RequestDiscoveryCreateUpdateSNMPProperties{}
-	if v := expandRequestSNMPPropertiesCreateUpdateSNMPPropertiesItemArray(ctx, key, d); v != nil {
+	if v := expandRequestSNMPPropertiesCreateUpdateSNMPPropertiesItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -246,7 +180,6 @@ func expandRequestSNMPPropertiesCreateUpdateSNMPPropertiesItemArray(ctx context.
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -270,16 +203,15 @@ func expandRequestSNMPPropertiesCreateUpdateSNMPPropertiesItem(ctx context.Conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchDiscoveryGetSNMPProperties(m interface{}, vID string, vName string) (*dnacentersdkgo.ResponseDiscoveryGetSNMPPropertiesResponse, error) {
+func searchDiscoveryGetSNMPProperties(m interface{}, queryParams dnacentersdkgo.GetSNMPPropertiesQueryParams) (*dnacentersdkgo.ResponseItemDiscoveryGetSNMPProperties, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseDiscoveryGetSNMPPropertiesResponse
+	var foundItem *dnacentersdkgo.ResponseItemDiscoveryGetSNMPProperties
 	var ite *dnacentersdkgo.ResponseDiscoveryGetSNMPProperties
-	ite, _, err = client.Discovery.GetSNMPProperties()
+	ite, _, err = client.Discovery.GetSNMPProperties(&queryParams)
 	if err != nil {
 		return foundItem, err
 	}
@@ -287,11 +219,11 @@ func searchDiscoveryGetSNMPProperties(m interface{}, vID string, vName string) (
 	if items == nil {
 		return foundItem, err
 	}
-	itemsCopy := *items.Response
+	itemsCopy := *items
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		if item.InstanceTenantID == vID || item.SystemPropertyName == vName {
-			var getItem *dnacentersdkgo.ResponseDiscoveryGetSNMPPropertiesResponse
+		if item.Name == queryParams.Name {
+			var getItem *dnacentersdkgo.ResponseItemDiscoveryGetSNMPProperties
 			getItem = &item
 			foundItem = getItem
 			return foundItem, err

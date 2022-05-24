@@ -120,7 +120,7 @@ func dataSourceTaskCountRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTaskCount")
+		log.Printf("[DEBUG] Selected method: GetTaskCount")
 		queryParams1 := dnacentersdkgo.GetTaskCountQueryParams{}
 
 		if okStartTime {

@@ -21,7 +21,7 @@ func dataSourceSite() *schema.Resource {
 		ReadContext: dataSourceSiteRead,
 		Schema: map[string]*schema.Schema{
 			"limit": &schema.Schema{
-				Description: `limit query parameter. Number of sites to be retrieved
+				Description: `limit query parameter. Number of sites to be retrieved. The default value is 500
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -33,7 +33,7 @@ func dataSourceSite() *schema.Resource {
 				Optional: true,
 			},
 			"offset": &schema.Schema{
-				Description: `offset query parameter. offset/starting row
+				Description: `offset query parameter. offset/starting row. The default value is 1
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -58,11 +58,90 @@ func dataSourceSite() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"additional_info": &schema.Schema{
-							Description: `Additional Info`,
-							Type:        schema.TypeList,
-							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"attributes": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"address": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"address_inherited_from": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"country": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"floor_index": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"height": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"latitude": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"length": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"longitude": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"offset_x": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"offset_y": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"rf_model": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"width": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+
+									"name_space": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
 							},
 						},
 
@@ -120,7 +199,7 @@ func dataSourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSite")
+		log.Printf("[DEBUG] Selected method: GetSite")
 		queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
 
 		if okName {
@@ -176,7 +255,7 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItem := make(map[string]interface{})
 		respItem["parent_id"] = item.ParentID
 		respItem["name"] = item.Name
-		respItem["additional_info"] = item.AdditionalInfo
+		respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo)
 		respItem["site_hierarchy"] = item.SiteHierarchy
 		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 		respItem["instance_tenant_id"] = item.InstanceTenantID
@@ -184,4 +263,43 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItems = append(respItems, respItem)
 	}
 	return respItems
+}
+
+func flattenSitesGetSiteItemsAdditionalInfo(items *[]dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfo) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["name_space"] = item.NameSpace
+		respItem["attributes"] = flattenSitesGetSiteItemsAdditionalInfoAttributes(item.Attributes)
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenSitesGetSiteItemsAdditionalInfoAttributes(item *dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfoAttributes) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["country"] = item.Country
+	respItem["address"] = item.Address
+	respItem["latitude"] = item.Latitude
+	respItem["address_inherited_from"] = item.AddressInheritedFrom
+	respItem["type"] = item.Type
+	respItem["longitude"] = item.Longitude
+	respItem["offset_x"] = item.OffsetX
+	respItem["offset_y"] = item.OffsetY
+	respItem["length"] = item.Length
+	respItem["width"] = item.Width
+	respItem["height"] = item.Height
+	respItem["rf_model"] = item.RfModel
+	respItem["floor_index"] = item.FloorIndex
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
 }

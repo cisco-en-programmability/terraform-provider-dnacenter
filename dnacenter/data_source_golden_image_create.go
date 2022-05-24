@@ -79,7 +79,7 @@ func dataSourceGoldenImageCreateRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: TagAsGoldenImage")
+		log.Printf("[DEBUG] Selected method: TagAsGoldenImage")
 		request1 := expandRequestGoldenImageCreateTagAsGoldenImage(ctx, "", d)
 
 		response1, restyResp1, err := client.SoftwareImageManagementSwim.TagAsGoldenImage(request1)
@@ -128,10 +128,6 @@ func expandRequestGoldenImageCreateTagAsGoldenImage(ctx context.Context, key str
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_family_identifier")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_family_identifier")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_family_identifier")))) {
 		request.DeviceFamilyIDentifier = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

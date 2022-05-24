@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"fmt"
-	"reflect"
 
 	"log"
 
@@ -44,10 +43,10 @@ func dataSourceConfigurationTemplateExportProject() *schema.Resource {
 			"payload": &schema.Schema{
 				Description: `Array of RequestConfigurationTemplatesExportsTheProjectsForAGivenCriteria`,
 				Type:        schema.TypeList,
+				Optional:    true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
-				Optional: true,
 			},
 		},
 	}
@@ -60,7 +59,7 @@ func dataSourceConfigurationTemplateExportProjectRead(ctx context.Context, d *sc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ExportsTheProjectsForAGivenCriteria")
+		log.Printf("[DEBUG] Selected method: ExportsTheProjectsForAGivenCriteria")
 		request1 := expandRequestConfigurationTemplateExportProjectExportsTheProjectsForAGivenCriteria(ctx, "", d)
 
 		response1, restyResp1, err := client.ConfigurationTemplates.ExportsTheProjectsForAGivenCriteria(request1)
@@ -100,10 +99,6 @@ func expandRequestConfigurationTemplateExportProjectExportsTheProjectsForAGivenC
 	if v := expandRequestConfigurationTemplateExportProjectExportsTheProjectsForAGivenCriteriaItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -124,20 +119,12 @@ func expandRequestConfigurationTemplateExportProjectExportsTheProjectsForAGivenC
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateExportProjectExportsTheProjectsForAGivenCriteriaItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesExportsTheProjectsForAGivenCriteria {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesExportsTheProjectsForAGivenCriteria
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

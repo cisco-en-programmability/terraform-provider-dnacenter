@@ -134,14 +134,17 @@ func dataSourceReportsExecutions() *schema.Resource {
 						"report_was_executed": &schema.Schema{
 							Description: `true if atleast one execution has started
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"schedule": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"tags": &schema.Schema{
@@ -184,8 +187,11 @@ func dataSourceReportsExecutions() *schema.Resource {
 									},
 
 									"format": &schema.Schema{
-										Type:     schema.TypeString,
+										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"name": &schema.Schema{
@@ -240,7 +246,7 @@ func dataSourceReportsExecutionsRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAllExecutionDetailsForAGivenReport")
+		log.Printf("[DEBUG] Selected method: GetAllExecutionDetailsForAGivenReport")
 		vvReportID := vReportID.(string)
 
 		response1, restyResp1, err := client.Reports.GetAllExecutionDetailsForAGivenReport(vvReportID)

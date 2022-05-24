@@ -145,7 +145,7 @@ func dataSourceNetworkDeviceChassisDetailsRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetChassisDetailsForDevice")
+		log.Printf("[DEBUG] Selected method: GetChassisDetailsForDevice")
 		vvDeviceID := vDeviceID.(string)
 
 		response1, restyResp1, err := client.Devices.GetChassisDetailsForDevice(vvDeviceID)

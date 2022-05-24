@@ -79,7 +79,7 @@ func dataSourceNetworkDeviceRegisterForWsaRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RegisterDeviceForWsa")
+		log.Printf("[DEBUG] Selected method: RegisterDeviceForWsa")
 		queryParams1 := dnacentersdkgo.RegisterDeviceForWsaQueryParams{}
 
 		if okSerialNumber {

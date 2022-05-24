@@ -57,7 +57,7 @@ func dataSourceSensorDeleteRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeleteSensorTest")
+		log.Printf("[DEBUG] Selected method: DeleteSensorTest")
 		queryParams1 := dnacentersdkgo.DeleteSensorTestQueryParams{}
 
 		if okTemplateName {

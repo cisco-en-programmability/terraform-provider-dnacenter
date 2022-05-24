@@ -92,7 +92,7 @@ func dataSourceNetworkDeviceModuleCountRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetModuleCount")
+		log.Printf("[DEBUG] Selected method: GetModuleCount")
 		queryParams1 := dnacentersdkgo.GetModuleCountQueryParams{}
 
 		queryParams1.DeviceID = vDeviceID.(string)

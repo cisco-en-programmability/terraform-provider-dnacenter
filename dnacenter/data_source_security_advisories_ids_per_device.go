@@ -62,7 +62,7 @@ func dataSourceSecurityAdvisoriesIDsPerDeviceRead(ctx context.Context, d *schema
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAdvisoryIDsPerDevice")
+		log.Printf("[DEBUG] Selected method: GetAdvisoryIDsPerDevice")
 		vvDeviceID := vDeviceID.(string)
 
 		response1, restyResp1, err := client.SecurityAdvisories.GetAdvisoryIDsPerDevice(vvDeviceID)

@@ -52,7 +52,7 @@ func dataSourceApplicationsCountRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetApplicationsCount")
+		log.Printf("[DEBUG] Selected method: GetApplicationsCount")
 
 		response1, restyResp1, err := client.ApplicationPolicy.GetApplicationsCount()
 

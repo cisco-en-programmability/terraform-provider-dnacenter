@@ -94,7 +94,7 @@ func dataSourceComplianceDeviceByIDDetail() *schema.Resource {
 
 						"last_sync_time": &schema.Schema{
 							Description: `Last Sync Time`,
-							Type:        schema.TypeInt,
+							Type:        schema.TypeString,
 							Computed:    true,
 						},
 
@@ -309,7 +309,7 @@ func dataSourceComplianceDeviceByIDDetailRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ComplianceDetailsOfDevice")
+		log.Printf("[DEBUG] Selected method: ComplianceDetailsOfDevice")
 		vvDeviceUUID := vDeviceUUID.(string)
 		queryParams1 := dnacentersdkgo.ComplianceDetailsOfDeviceQueryParams{}
 

@@ -2,8 +2,8 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -47,8 +47,11 @@ by range" API.
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"cdp_level": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -121,7 +124,7 @@ by range" API.
 										Computed: true,
 									},
 									"secure": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -172,7 +175,7 @@ by range" API.
 										Computed: true,
 									},
 									"secure": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -196,7 +199,7 @@ by range" API.
 							Computed: true,
 						},
 						"is_auto_cdp": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -282,7 +285,7 @@ by range" API.
 							Computed: true,
 						},
 						"update_mgmt_ip": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -295,15 +298,17 @@ by range" API.
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"cdp_level": &schema.Schema{
 							Description: `CDP level to which neighbor devices to be discovered
@@ -395,7 +400,7 @@ ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeS
 									"secure": &schema.Schema{
 										Description: `Flag for HTTPS
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -456,7 +461,7 @@ ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeS
 									"secure": &schema.Schema{
 										Description: `Flag for HTTPS
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -491,7 +496,7 @@ ERROR: Different types for param ipFilterList schema.TypeList schema.TypeString`
 							},
 						},
 						"is_auto_cdp": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -609,6 +614,22 @@ ERROR: Different types for param passwordList schema.TypeList schema.TypeString`
 							Type:     schema.TypeString,
 							Optional: true,
 						},
+						"snmp_ro_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"snmp_ro_community_desc": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"snmp_rw_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"snmp_rw_community_desc": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
 						"snmp_user_name": &schema.Schema{
 							Description: `SNMP username of the device
 `,
@@ -632,7 +653,7 @@ ERROR: Different types for param passwordList schema.TypeList schema.TypeString`
 							Optional: true,
 						},
 						"update_mgmt_ip": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -661,36 +682,19 @@ func resourceDiscoveryCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestDiscoveryStartDiscovery(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
-	vName, okName := resourceItem["name"]
-	vvName := interfaceToString(vName)
 	if okID && vvID != "" {
 		getResponse1, _, err := client.Discovery.GetDiscoveryByID(vvID)
 		if err == nil && getResponse1 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
 			return resourceDiscoveryRead(ctx, d, m)
 		}
 	}
-
-	if okName && vvName != "" {
-		getResponse1, err := searchDiscovery(m, vvName)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceDiscoveryRead(ctx, d, m)
-		}
-	}
-
 	resp1, restyResp1, err := client.Discovery.StartDiscovery(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -702,35 +706,8 @@ func resourceDiscoveryCreate(ctx context.Context, d *schema.ResourceData, m inte
 			"Failure when executing StartDiscovery", err))
 		return diags
 	}
-	if resp1.Response == nil {
-		diags = append(diags, diagError(
-			"Failure when executing StartDiscovery", err))
-		return diags
-	}
-	taskId := resp1.Response.TaskID
-	log.Printf("[DEBUG] TASKID => %s", taskId)
-	if taskId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTaskByID", err,
-				"Failure at GetTaskByID, unexpected response", ""))
-			return diags
-		}
-		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			diags = append(diags, diagError(
-				"Failure when executing CreateDiscovery", err))
-			return diags
-		}
-	}
 	resourceMap := make(map[string]string)
 	resourceMap["id"] = vvID
-	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
 	return resourceDiscoveryRead(ctx, d, m)
 }
@@ -743,10 +720,10 @@ func resourceDiscoveryRead(ctx context.Context, d *schema.ResourceData, m interf
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vID := resourceMap["id"]
-	vName := resourceMap["name"]
 
-	if vID != "" {
-		log.Printf("[DEBUG] Selected method 1: GetDiscoveryByID")
+	selectedMethod := 1
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetDiscoveryByID")
 		vvID := vID
 
 		response1, restyResp1, err := client.Discovery.GetDiscoveryByID(vvID)
@@ -755,7 +732,9 @@ func resourceDiscoveryRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDiscoveryByID", err,
+				"Failure at GetDiscoveryByID, unexpected response", ""))
 			return diags
 		}
 
@@ -771,35 +750,6 @@ func resourceDiscoveryRead(ctx context.Context, d *schema.ResourceData, m interf
 		return diags
 
 	}
-
-	if vName != "" {
-		response1, err := searchDiscovery(m, vName)
-		if err != nil || response1 == nil {
-			d.SetId("")
-			return diags
-		}
-
-		vID = response1.ID
-		response2, restyResp1, err := client.Discovery.GetDiscoveryByID(vID)
-
-		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDiscoveryByID", err,
-				"Failure at GetDiscoveryByID, unexpected response", ""))
-			return diags
-		}
-		vItem1 := flattenDiscoveryGetDiscoveryByIDItem(response2.Response)
-		if err := d.Set("item", vItem1); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetDiscoveryByID response",
-				err))
-			return diags
-		}
-		return diags
-	}
 	return diags
 }
 
@@ -811,11 +761,11 @@ func resourceDiscoveryUpdate(ctx context.Context, d *schema.ResourceData, m inte
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vID := resourceMap["id"]
-	vName := resourceMap["name"]
 
+	selectedMethod := 1
 	var vvID string
 	var vvName string
-	if vID != "" {
+	if selectedMethod == 1 {
 		vvID = vID
 		getResp, _, err := client.Discovery.GetDiscoveryByID(vvID)
 		if err != nil || getResp == nil {
@@ -824,25 +774,15 @@ func resourceDiscoveryUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure at GetDiscoveryByID, unexpected response", ""))
 			return diags
 		}
-	} else if vName != "" {
-		getResp, err := searchDiscovery(m, vName)
-		if err != nil || getResp == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDiscoveryByID", err,
-				"Failure at GetDiscoveryByID, unexpected response", ""))
-			return diags
+		//Set value vvName = getResp.
+		if getResp.response != nil {
+			vvName = getResp.response.Name
 		}
-		vvID = getResp.ID
 	}
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedID(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		if request1 != nil && request1.ID == "" {
-			request1.ID = vvID
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Discovery.UpdatesAnExistingDiscoveryBySpecifiedID(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -856,32 +796,6 @@ func resourceDiscoveryUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure when executing UpdatesAnExistingDiscoveryBySpecifiedID", err,
 				"Failure at UpdatesAnExistingDiscoveryBySpecifiedID, unexpected response", ""))
 			return diags
-		}
-		if response1.Response == nil {
-			diags = append(diags, diagError(
-				"Failure when executing UpdatesAnExistingDiscoveryBySpecifiedID", err))
-			return diags
-		}
-		taskId := response1.Response.TaskID
-		log.Printf("[DEBUG] TASKID => %s", taskId)
-		if taskId != "" {
-			time.Sleep(5 * time.Second)
-			response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-			if err != nil || response2 == nil {
-				if restyResp2 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetTaskByID", err,
-					"Failure at GetTaskByID, unexpected response", ""))
-				return diags
-			}
-			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-				diags = append(diags, diagError(
-					"Failure when executing UpdateDiscovery", err))
-				return diags
-			}
 		}
 	}
 
@@ -897,24 +811,16 @@ func resourceDiscoveryDelete(ctx context.Context, d *schema.ResourceData, m inte
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vID := resourceMap["id"]
-	vName := resourceMap["name"]
 
+	selectedMethod := 1
 	var vvID string
-	if vID != "" {
+	var vvName string
+	if selectedMethod == 1 {
 		vvID = vID
 		getResp, _, err := client.Discovery.GetDiscoveryByID(vvID)
 		if err != nil || getResp == nil {
 			// Assume that element it is already gone
 			return diags
-		}
-	} else if vName != "" {
-		getResp, err := searchDiscovery(m, vName)
-		if err != nil || getResp == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		if getResp != nil && getResp.ID == "" {
-			vvID = getResp.ID
 		}
 	}
 	response1, restyResp1, err := client.Discovery.DeleteDiscoveryByID(vvID)
@@ -1027,7 +933,6 @@ func expandRequestDiscoveryStartDiscovery(ctx context.Context, key string, d *sc
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1048,7 +953,6 @@ func expandRequestDiscoveryStartDiscoveryHTTPReadCredential(ctx context.Context,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1069,17 +973,13 @@ func expandRequestDiscoveryStartDiscoveryHTTPWriteCredential(ctx context.Context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedID(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedID {
 	request := dnacentersdkgo.RequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedID{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_info")))) {
-		value := d.Get(fixKeyAccess(key + ".attribute_info"))
-		if len(interfaceToString(value)) > 0 {
-			request.AttributeInfo = expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedIDAttributeInfo(ctx, key+".attribute_info", d)
-		}
+		request.AttributeInfo = expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedIDAttributeInfo(ctx, key+".attribute_info.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cdp_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cdp_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cdp_level")))) {
 		request.CdpLevel = interfaceToIntPtr(v)
@@ -1189,7 +1089,6 @@ func expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedID(ctx context.C
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1199,7 +1098,6 @@ func expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedIDAttributeInfo(
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1238,7 +1136,6 @@ func expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedIDHTTPReadCreden
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1277,34 +1174,5 @@ func expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedIDHTTPWriteCrede
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
-}
-
-func searchDiscovery(m interface{}, vName string) (*dnacentersdkgo.ResponseDiscoveryGetDiscoveriesByRangeResponse, error) {
-	client := m.(*dnacentersdkgo.Client)
-	var err error
-	var foundItem *dnacentersdkgo.ResponseDiscoveryGetDiscoveriesByRangeResponse
-	if vName != "" {
-		totalDiscovery, _, err := client.Discovery.GetCountOfAllDiscoveryJobs()
-		if err != nil || totalDiscovery == nil {
-			return foundItem, err
-		}
-
-		if err != nil || totalDiscovery.Response == nil || *totalDiscovery.Response < 1 {
-			return foundItem, err
-		}
-
-		response, _, err := client.Discovery.GetDiscoveriesByRange(1, *totalDiscovery.Response)
-		if err != nil || response == nil {
-			return foundItem, err
-		}
-
-		for _, item := range *response.Response {
-			if vName == item.Name {
-				return &item, err
-			}
-		}
-	}
-	return foundItem, err
 }

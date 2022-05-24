@@ -25,7 +25,7 @@ func dataSourceConfigurationTemplateDeploy() *schema.Resource {
 		ReadContext: dataSourceConfigurationTemplateDeployRead,
 		Schema: map[string]*schema.Schema{
 			"force_push_template": &schema.Schema{
-
+				// Type:     schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -33,7 +33,7 @@ func dataSourceConfigurationTemplateDeploy() *schema.Resource {
 			"is_composite": &schema.Schema{
 				Description: `Composite template flag
 `,
-
+				// Type:        schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -259,7 +259,7 @@ func dataSourceConfigurationTemplateDeployRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeployTemplate")
+		log.Printf("[DEBUG] Selected method: DeployTemplate")
 		request1 := expandRequestConfigurationTemplateDeployDeployTemplate(ctx, "", d)
 
 		response1, restyResp1, err := client.ConfigurationTemplates.DeployTemplate(request1)
@@ -314,10 +314,6 @@ func expandRequestConfigurationTemplateDeployDeployTemplate(ctx context.Context,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
 		request.TemplateID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -338,20 +334,12 @@ func expandRequestConfigurationTemplateDeployDeployTemplateMemberTemplateDeploym
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateDeployDeployTemplateMemberTemplateDeploymentInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateMemberTemplateDeploymentInfo {
 	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateMemberTemplateDeploymentInfo
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -372,10 +360,6 @@ func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoArray(ctx c
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -399,20 +383,12 @@ func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfo(ctx contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".versioned_template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".versioned_template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".versioned_template_id")))) {
 		request.VersionedTemplateID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateTargetInfoParams {
 	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateTargetInfoParams
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -433,20 +409,12 @@ func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoResourcePar
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoResourceParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateTargetInfoResourceParams {
 	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateTargetInfoResourceParams
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

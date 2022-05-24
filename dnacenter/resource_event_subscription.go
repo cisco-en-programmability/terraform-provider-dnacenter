@@ -19,9 +19,9 @@ func resourceEventSubscription() *schema.Resource {
 
 - Delete EventSubscriptions
 
-- Update SubscriptionEndpoint to list of registered events
+- Update SubscriptionEndpoint to list of registered events(Deprecated)
 
-- Subscribe SubscriptionEndpoint to list of registered events
+- Subscribe SubscriptionEndpoint to list of registered events (Deprecated)
 `,
 
 		CreateContext: resourceEventSubscriptionCreate,
@@ -37,135 +37,18 @@ func resourceEventSubscription() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"filter": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"event_ids": &schema.Schema{
-										Description: `Event Ids`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-								},
-							},
-						},
-
-						"is_private": &schema.Schema{
-							Description: `Is Private`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"subscription_endpoints": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"instance_id": &schema.Schema{
-										Description: `Instance Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-
-									"subscription_details": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"connector_type": &schema.Schema{
-													Description: `Connector Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"method": &schema.Schema{
-													Description: `Method`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"url": &schema.Schema{
-													Description: `Url`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
-									},
-								},
-							},
-						},
-
-						"subscription_id": &schema.Schema{
-							Description: `Subscription Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"tenant_id": &schema.Schema{
-							Description: `Tenant Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"version": &schema.Schema{
-							Description: `Version`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Description: `Array of RequestEventManagementCreateEventSubscriptions`,
 				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
+				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description: `Description
+`,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"filter": &schema.Schema{
 							Type:     schema.TypeList,
@@ -174,8 +57,71 @@ func resourceEventSubscription() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"categories": &schema.Schema{
+										Description: `Categories`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"domains_subdomains": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"domain": &schema.Schema{
+													Description: `Domain`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"sub_domains": &schema.Schema{
+													Description: `Sub Domains`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
 									"event_ids": &schema.Schema{
-										Description: `Event Ids`,
+										Description: `Event Ids (Comma separated event ids)
+`,
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"severities": &schema.Schema{
+										Description: `Severities`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"site_ids": &schema.Schema{
+										Description: `Site Ids`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"sources": &schema.Schema{
+										Description: `Sources`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"types": &schema.Schema{
+										Description: `Types`,
 										Type:        schema.TypeList,
 										Optional:    true,
 										Elem: &schema.Schema{
@@ -186,9 +132,10 @@ func resourceEventSubscription() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Required:    true,
+							Description: `Name
+`,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"subscription_endpoints": &schema.Schema{
 							Type:     schema.TypeList,
@@ -197,9 +144,10 @@ func resourceEventSubscription() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"instance_id": &schema.Schema{
-										Description: `Instance Id`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description: `(From 	Get Rest/Webhook Subscription Details --> pick instanceId)
+`,
+										Type:     schema.TypeString,
+										Optional: true,
 									},
 									"subscription_details": &schema.Schema{
 										Type:     schema.TypeList,
@@ -209,24 +157,10 @@ func resourceEventSubscription() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"connector_type": &schema.Schema{
-													Description: `Connector Type`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
-												"method": &schema.Schema{
-													Description: `Method`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
-												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
-												"url": &schema.Schema{
-													Description: `Url`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description: `Connector Type (Must be REST)
+`,
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 											},
 										},
@@ -235,14 +169,16 @@ func resourceEventSubscription() *schema.Resource {
 							},
 						},
 						"subscription_id": &schema.Schema{
-							Description: `Subscription Id`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description: `Subscription Id (Unique UUID)
+`,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"version": &schema.Schema{
-							Description: `Version`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description: `Version
+`,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -258,24 +194,7 @@ func resourceEventSubscriptionCreate(ctx context.Context, d *schema.ResourceData
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestEventSubscriptionCreateEventSubscriptions(ctx, "parameters", d)
-	vName := resourceItem["name"]
-	vvName := interfaceToString(vName)
-	vSubscriptionID := resourceItem["subscription_id"]
-	vvSubscriptionID := interfaceToString(vSubscriptionID)
-
-	queryParams1 := dnacentersdkgo.GetEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetEventSubscriptions(m, queryParams1, vvName, vvSubscriptionID)
-	if err == nil && (item != nil && len(*item) > 0) {
-		resourceMap := make(map[string]string)
-		resourceMap["name"] = vvName
-		resourceMap["subscription_id"] = vvSubscriptionID
-		d.SetId(joinResourceID(resourceMap))
-		return resourceEventSubscriptionRead(ctx, d, m)
-	}
-
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	resp1, restyResp1, err := client.EventManagement.CreateEventSubscriptions(request1)
 	if err != nil || resp1 == nil {
@@ -289,35 +208,68 @@ func resourceEventSubscriptionCreate(ctx context.Context, d *schema.ResourceData
 		return diags
 	}
 	resourceMap := make(map[string]string)
-	resourceMap["name"] = vvName
-	resourceMap["subscription_id"] = vvSubscriptionID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceEventSubscriptionRead(ctx, d, m)
 }
 
 func resourceEventSubscriptionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
+
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vName, _ := resourceMap["name"]
-	vSubscriptionID, _ := resourceMap["subscription_id"]
+	vEventIDs := resourceMap["event_ids"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
+	vSortBy := resourceMap["sort_by"]
+	vOrder := resourceMap["order"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEventSubscriptions")
+		log.Printf("[DEBUG] Selected method: GetEventSubscriptions")
 		queryParams1 := dnacentersdkgo.GetEventSubscriptionsQueryParams{}
-		item, err := searchEventManagementGetEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
-		if err != nil || item == nil || len(*item) <= 0 {
-			d.SetId("")
+
+		if okEventIDs {
+			queryParams1.EventIDs = vEventIDs
+		}
+		if okOffset {
+			queryParams1.Offset = *stringToFloat64Ptr(vOffset)
+		}
+		if okLimit {
+			queryParams1.Limit = *stringToFloat64Ptr(vLimit)
+		}
+		if okSortBy {
+			queryParams1.SortBy = vSortBy
+		}
+		if okOrder {
+			queryParams1.Order = vOrder
+		}
+
+		response1, restyResp1, err := client.EventManagement.GetEventSubscriptions(&queryParams1)
+
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetEventSubscriptions", err,
+				"Failure at GetEventSubscriptions, unexpected response", ""))
 			return diags
 		}
 
-		if item != nil {
-			log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*item))
-		}
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenEventManagementGetEventSubscriptionsItems(item)
+		items1 := getAllItemsEventManagementGetEventSubscriptions(m, response1, nil)
+		item1, err := searchEventManagementGetEventSubscriptions(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetEventSubscriptions response", err,
+				"Failure when searching item from GetEventSubscriptions, unexpected response", ""))
+			return diags
+		}
+		// Review flatten function used
+		vItem1 := flattenEventManagementGetEventSubscriptionsByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetEventSubscriptions search response",
@@ -336,31 +288,35 @@ func resourceEventSubscriptionUpdate(ctx context.Context, d *schema.ResourceData
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vName, _ := resourceMap["name"]
-	vSubscriptionID, _ := resourceMap["subscription_id"]
+	vEventIDs := resourceMap["event_ids"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
+	vSortBy := resourceMap["sort_by"]
+	vOrder := resourceMap["order"]
 
-	queryParams1 := dnacentersdkgo.GetEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
-	if err != nil || item == nil || len(*item) <= 0 {
+	queryParams1 := dnacentersdkgo.GetEventSubscriptionsQueryParams
+	queryParams1.EventIDs = vEventIDs
+	queryParams1.Offset = *stringToFloat64Ptr(vOffset)
+	queryParams1.Limit = *stringToFloat64Ptr(vLimit)
+	queryParams1.SortBy = vSortBy
+	queryParams1.Order = vOrder
+	item, err := searchEventManagementGetEventSubscriptions(m, queryParams1)
+	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetEventSubscriptions", err,
 			"Failure at GetEventSubscriptions, unexpected response", ""))
 		return diags
 	}
 
+	selectedMethod := 1
+	var vvID string
+	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
+	// if selectedMethod == 1 { }
 	if d.HasChange("parameters") {
+		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestEventSubscriptionUpdateEventSubscriptions(ctx, "parameters", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		// Add SubscriptionID to update
-		if request1 != nil && len(*request1) > 0 && item != nil && len(*item) > 0 {
-			found := *item
-			req := *request1
-			req[0].SubscriptionID = found[0].SubscriptionID
-			request1 = &req
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.EventManagement.UpdateEventSubscriptions(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -388,28 +344,45 @@ func resourceEventSubscriptionDelete(ctx context.Context, d *schema.ResourceData
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vName, _ := resourceMap["name"]
-	vSubscriptionID, _ := resourceMap["subscription_id"]
+	vEventIDs := resourceMap["event_ids"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
+	vSortBy := resourceMap["sort_by"]
+	vOrder := resourceMap["order"]
 
-	queryParams1 := dnacentersdkgo.GetEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
-	if err != nil {
+	queryParams1 := dnacentersdkgo.GetEventSubscriptionsQueryParams
+	queryParams1.EventIDs = vEventIDs
+	queryParams1.Offset = *stringToFloat64Ptr(vOffset)
+	queryParams1.Limit = *stringToFloat64Ptr(vLimit)
+	queryParams1.SortBy = vSortBy
+	queryParams1.Order = vOrder
+	item, err := searchEventManagementGetEventSubscriptions(m, queryParams1)
+	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetEventSubscriptions", err,
 			"Failure at GetEventSubscriptions, unexpected response", ""))
 		return diags
 	}
-	if item == nil || len(*item) == 0 {
-		return diags
-	}
 
+	selectedMethod := 1
+	var vvID string
+	var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
-	queryParams2 := dnacentersdkgo.DeleteEventSubscriptionsQueryParams{}
-	if len(*item) > 0 {
-		itemCopy := *item
-		queryParams2.Subscriptions = itemCopy[0].SubscriptionID
+	if selectedMethod == 1 {
+
+		getResp1, _, err := client.EventManagement.GetEventSubscriptions(nil)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		items1 := getAllItemsEventManagementGetEventSubscriptions(m, getResp1, nil)
+		item1, err := searchEventManagementGetEventSubscriptions(m, items1, vName, vID)
+		if err != nil || item1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
 	}
-	response1, restyResp1, err := client.EventManagement.DeleteEventSubscriptions(&queryParams2)
+	response1, restyResp1, err := client.EventManagement.DeleteEventSubscriptions()
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -432,13 +405,12 @@ func resourceEventSubscriptionDelete(ctx context.Context, d *schema.ResourceData
 }
 func expandRequestEventSubscriptionCreateEventSubscriptions(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementCreateEventSubscriptions {
 	request := dnacentersdkgo.RequestEventManagementCreateEventSubscriptions{}
-	if v := expandRequestEventSubscriptionCreateEventSubscriptionsItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestEventSubscriptionCreateEventSubscriptionsItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -462,7 +434,6 @@ func expandRequestEventSubscriptionCreateEventSubscriptionsItemArray(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -489,7 +460,6 @@ func expandRequestEventSubscriptionCreateEventSubscriptionsItem(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -513,7 +483,6 @@ func expandRequestEventSubscriptionCreateEventSubscriptionsItemSubscriptionEndpo
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -528,28 +497,17 @@ func expandRequestEventSubscriptionCreateEventSubscriptionsItemSubscriptionEndpo
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestEventSubscriptionCreateEventSubscriptionsItemSubscriptionEndpointsSubscriptionDetails(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemEventManagementCreateEventSubscriptionsSubscriptionEndpointsSubscriptionDetails {
 	request := dnacentersdkgo.RequestItemEventManagementCreateEventSubscriptionsSubscriptionEndpointsSubscriptionDetails{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".url")))) {
-		request.URL = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".method")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".method")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".method")))) {
-		request.Method = interfaceToString(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connector_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connector_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connector_type")))) {
 		request.ConnectorType = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -558,22 +516,75 @@ func expandRequestEventSubscriptionCreateEventSubscriptionsItemFilter(ctx contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".event_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".event_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".event_ids")))) {
 		request.EventIDs = interfaceToSliceString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domains_subdomains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domains_subdomains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domains_subdomains")))) {
+		request.DomainsSubdomains = expandRequestEventSubscriptionCreateEventSubscriptionsItemFilterDomainsSubdomainsArray(ctx, key+".domains_subdomains", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".types")))) {
+		request.Types = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".categories")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".categories")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".categories")))) {
+		request.Categories = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".severities")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".severities")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".severities")))) {
+		request.Severities = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sources")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sources")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sources")))) {
+		request.Sources = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_ids")))) {
+		request.SiteIDs = interfaceToSliceString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
 
+func expandRequestEventSubscriptionCreateEventSubscriptionsItemFilterDomainsSubdomainsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemEventManagementCreateEventSubscriptionsFilterDomainsSubdomains {
+	request := []dnacentersdkgo.RequestItemEventManagementCreateEventSubscriptionsFilterDomainsSubdomains{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestEventSubscriptionCreateEventSubscriptionsItemFilterDomainsSubdomains(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestEventSubscriptionCreateEventSubscriptionsItemFilterDomainsSubdomains(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemEventManagementCreateEventSubscriptionsFilterDomainsSubdomains {
+	request := dnacentersdkgo.RequestItemEventManagementCreateEventSubscriptionsFilterDomainsSubdomains{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domain")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domain")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domain")))) {
+		request.Domain = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sub_domains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sub_domains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sub_domains")))) {
+		request.SubDomains = interfaceToSliceString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
 func expandRequestEventSubscriptionUpdateEventSubscriptions(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementUpdateEventSubscriptions {
 	request := dnacentersdkgo.RequestEventManagementUpdateEventSubscriptions{}
-	if v := expandRequestEventSubscriptionUpdateEventSubscriptionsItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestEventSubscriptionUpdateEventSubscriptionsItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -597,7 +608,6 @@ func expandRequestEventSubscriptionUpdateEventSubscriptionsItemArray(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -624,7 +634,6 @@ func expandRequestEventSubscriptionUpdateEventSubscriptionsItem(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -648,7 +657,6 @@ func expandRequestEventSubscriptionUpdateEventSubscriptionsItemSubscriptionEndpo
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -663,28 +671,17 @@ func expandRequestEventSubscriptionUpdateEventSubscriptionsItemSubscriptionEndpo
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestEventSubscriptionUpdateEventSubscriptionsItemSubscriptionEndpointsSubscriptionDetails(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemEventManagementUpdateEventSubscriptionsSubscriptionEndpointsSubscriptionDetails {
 	request := dnacentersdkgo.RequestItemEventManagementUpdateEventSubscriptionsSubscriptionEndpointsSubscriptionDetails{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".url")))) {
-		request.URL = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".method")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".method")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".method")))) {
-		request.Method = interfaceToString(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connector_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connector_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connector_type")))) {
 		request.ConnectorType = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -693,33 +690,89 @@ func expandRequestEventSubscriptionUpdateEventSubscriptionsItemFilter(ctx contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".event_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".event_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".event_ids")))) {
 		request.EventIDs = interfaceToSliceString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domains_subdomains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domains_subdomains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domains_subdomains")))) {
+		request.DomainsSubdomains = expandRequestEventSubscriptionUpdateEventSubscriptionsItemFilterDomainsSubdomainsArray(ctx, key+".domains_subdomains", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".types")))) {
+		request.Types = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".categories")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".categories")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".categories")))) {
+		request.Categories = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".severities")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".severities")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".severities")))) {
+		request.Severities = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sources")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sources")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sources")))) {
+		request.Sources = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_ids")))) {
+		request.SiteIDs = interfaceToSliceString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchEventManagementGetEventSubscriptions(m interface{}, queryParams dnacentersdkgo.GetEventSubscriptionsQueryParams, name string, subscriptionID string) (*dnacentersdkgo.ResponseEventManagementGetEventSubscriptions, error) {
+func expandRequestEventSubscriptionUpdateEventSubscriptionsItemFilterDomainsSubdomainsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemEventManagementUpdateEventSubscriptionsFilterDomainsSubdomains {
+	request := []dnacentersdkgo.RequestItemEventManagementUpdateEventSubscriptionsFilterDomainsSubdomains{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestEventSubscriptionUpdateEventSubscriptionsItemFilterDomainsSubdomains(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestEventSubscriptionUpdateEventSubscriptionsItemFilterDomainsSubdomains(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemEventManagementUpdateEventSubscriptionsFilterDomainsSubdomains {
+	request := dnacentersdkgo.RequestItemEventManagementUpdateEventSubscriptionsFilterDomainsSubdomains{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domain")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domain")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domain")))) {
+		request.Domain = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sub_domains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sub_domains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sub_domains")))) {
+		request.SubDomains = interfaceToSliceString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func searchEventManagementGetEventSubscriptions(m interface{}, queryParams dnacentersdkgo.GetEventSubscriptionsQueryParams) (*dnacentersdkgo.ResponseItemEventManagementGetEventSubscriptions, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItems dnacentersdkgo.ResponseEventManagementGetEventSubscriptions = []dnacentersdkgo.ResponseItemEventManagementGetEventSubscriptions{}
-	var items *dnacentersdkgo.ResponseEventManagementGetEventSubscriptions
-	items, _, err = client.EventManagement.GetEventSubscriptions(&queryParams)
+	var foundItem *dnacentersdkgo.ResponseItemEventManagementGetEventSubscriptions
+	var ite *dnacentersdkgo.ResponseEventManagementGetEventSubscriptions
+	ite, _, err = client.EventManagement.GetEventSubscriptions(&queryParams)
 	if err != nil {
-		return nil, err
+		return foundItem, err
 	}
+	items := ite
 	if items == nil {
-		return nil, err
+		return foundItem, err
 	}
-
 	itemsCopy := *items
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		if item.SubscriptionID == subscriptionID || item.Name == name {
-			foundItems = append(foundItems, item)
-			break
+		if item.Name == queryParams.Name {
+			var getItem *dnacentersdkgo.ResponseItemEventManagementGetEventSubscriptions
+			getItem = &item
+			foundItem = getItem
+			return foundItem, err
 		}
 	}
-	return &foundItems, err
+	return foundItem, err
 }

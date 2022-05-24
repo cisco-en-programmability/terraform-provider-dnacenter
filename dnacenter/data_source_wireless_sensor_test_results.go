@@ -401,7 +401,7 @@ func dataSourceWirelessSensorTestResultsRead(ctx context.Context, d *schema.Reso
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SensorTestResults")
+		log.Printf("[DEBUG] Selected method: SensorTestResults")
 		queryParams1 := dnacentersdkgo.SensorTestResultsQueryParams{}
 
 		if okSiteID {

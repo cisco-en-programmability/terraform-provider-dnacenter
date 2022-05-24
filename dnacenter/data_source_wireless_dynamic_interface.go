@@ -61,7 +61,7 @@ func dataSourceWirelessDynamicInterfaceRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDynamicInterface")
+		log.Printf("[DEBUG] Selected method: GetDynamicInterface")
 		queryParams1 := dnacentersdkgo.GetDynamicInterfaceQueryParams{}
 
 		if okInterfaceName {

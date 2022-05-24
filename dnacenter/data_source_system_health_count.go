@@ -61,7 +61,7 @@ func dataSourceSystemHealthCountRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SystemHealthCountApI")
+		log.Printf("[DEBUG] Selected method: SystemHealthCountApI")
 		queryParams1 := dnacentersdkgo.SystemHealthCountApIQueryParams{}
 
 		if okDomain {

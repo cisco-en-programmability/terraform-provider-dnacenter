@@ -104,7 +104,7 @@ func dataSourceNetworkDeviceBySerialNumber() *schema.Resource {
 						},
 
 						"last_update_time": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
@@ -242,7 +242,7 @@ func dataSourceNetworkDeviceBySerialNumberRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceBySerialNumber")
+		log.Printf("[DEBUG] Selected method: GetDeviceBySerialNumber")
 		vvSerialNumber := vSerialNumber.(string)
 
 		response1, restyResp1, err := client.Devices.GetDeviceBySerialNumber(vvSerialNumber)

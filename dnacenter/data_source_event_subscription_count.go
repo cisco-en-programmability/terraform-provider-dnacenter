@@ -53,7 +53,7 @@ func dataSourceEventSubscriptionCountRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CountOfEventSubscriptions")
+		log.Printf("[DEBUG] Selected method: CountOfEventSubscriptions")
 		queryParams1 := dnacentersdkgo.CountOfEventSubscriptionsQueryParams{}
 
 		queryParams1.EventIDs = vEventIDs.(string)

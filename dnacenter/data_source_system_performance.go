@@ -182,7 +182,7 @@ func dataSourceSystemPerformanceRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SystemPerformanceApI")
+		log.Printf("[DEBUG] Selected method: SystemPerformanceApI")
 		queryParams1 := dnacentersdkgo.SystemPerformanceApIQueryParams{}
 
 		if okKpi {

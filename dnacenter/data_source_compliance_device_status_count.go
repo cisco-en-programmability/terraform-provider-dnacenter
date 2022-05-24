@@ -59,7 +59,7 @@ func dataSourceComplianceDeviceStatusCountRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetComplianceStatusCount")
+		log.Printf("[DEBUG] Selected method: GetComplianceStatusCount")
 		queryParams1 := dnacentersdkgo.GetComplianceStatusCountQueryParams{}
 
 		if okComplianceStatus {

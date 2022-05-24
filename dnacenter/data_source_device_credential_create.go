@@ -263,7 +263,7 @@ func dataSourceDeviceCredentialCreateRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateDeviceCredentials")
+		log.Printf("[DEBUG] Selected method: CreateDeviceCredentials")
 		request1 := expandRequestDeviceCredentialCreateCreateDeviceCredentials(ctx, "", d)
 
 		response1, restyResp1, err := client.NetworkSettings.CreateDeviceCredentials(request1)
@@ -301,10 +301,6 @@ func dataSourceDeviceCredentialCreateRead(ctx context.Context, d *schema.Resourc
 func expandRequestDeviceCredentialCreateCreateDeviceCredentials(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateDeviceCredentials {
 	request := dnacentersdkgo.RequestNetworkSettingsCreateDeviceCredentials{}
 	request.Settings = expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettings(ctx, key, d)
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -328,10 +324,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettings(ctx cont
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".https_write")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".https_write")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".https_write")))) {
 		request.HTTPSWrite = expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsHTTPSWriteArray(ctx, key+".https_write", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -352,10 +344,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsCliCreden
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -373,10 +361,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsCliCreden
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_password")))) {
 		request.EnablePassword = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -397,10 +381,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV2CRe
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -412,10 +392,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV2CRe
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".read_community")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".read_community")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".read_community")))) {
 		request.ReadCommunity = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -436,10 +412,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV2CWr
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -451,10 +423,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV2CWr
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".write_community")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".write_community")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".write_community")))) {
 		request.WriteCommunity = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -475,10 +443,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV3Arr
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -505,10 +469,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsSNMPV3(ct
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".snmp_mode")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".snmp_mode")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".snmp_mode")))) {
 		request.SNMPMode = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -529,10 +489,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsHTTPSRead
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -550,10 +506,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsHTTPSRead
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".port")))) {
 		request.Port = interfaceToFloat64Ptr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -574,10 +526,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsHTTPSWrit
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -595,10 +543,6 @@ func expandRequestDeviceCredentialCreateCreateDeviceCredentialsSettingsHTTPSWrit
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".port")))) {
 		request.Port = interfaceToFloat64Ptr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

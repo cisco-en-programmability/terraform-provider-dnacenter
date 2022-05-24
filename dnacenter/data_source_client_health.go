@@ -137,8 +137,11 @@ func dataSourceClientHealth() *schema.Resource {
 
 															"client_unique_count": &schema.Schema{
 																Description: `Client Unique Count`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeList,
 																Computed:    true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
 															},
 
 															"endtime": &schema.Schema{
@@ -233,7 +236,7 @@ func dataSourceClientHealthRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetOverallClientHealth")
+		log.Printf("[DEBUG] Selected method: GetOverallClientHealth")
 		queryParams1 := dnacentersdkgo.GetOverallClientHealthQueryParams{}
 
 		if okTimestamp {

@@ -80,7 +80,7 @@ files extensions are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2
 							Optional: true,
 						},
 						"third_party": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -106,7 +106,7 @@ func dataSourceSwimImportViaURLRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ImportSoftwareImageViaURL")
+		log.Printf("[DEBUG] Selected method: ImportSoftwareImageViaURL")
 		request1 := expandRequestSwimImportViaURLImportSoftwareImageViaURL(ctx, "", d)
 		queryParams1 := dnacentersdkgo.ImportSoftwareImageViaURLQueryParams{}
 
@@ -157,10 +157,6 @@ func expandRequestSwimImportViaURLImportSoftwareImageViaURL(ctx context.Context,
 	if v := expandRequestSwimImportViaURLImportSoftwareImageViaURLItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -181,10 +177,6 @@ func expandRequestSwimImportViaURLImportSoftwareImageViaURLItemArray(ctx context
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -205,10 +197,6 @@ func expandRequestSwimImportViaURLImportSoftwareImageViaURLItem(ctx context.Cont
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vendor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vendor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vendor")))) {
 		request.Vendor = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

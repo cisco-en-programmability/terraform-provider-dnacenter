@@ -269,7 +269,7 @@ func dataSourceDeviceCredentialUpdateRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateDeviceCredentials")
+		log.Printf("[DEBUG] Selected method: UpdateDeviceCredentials")
 		request1 := expandRequestDeviceCredentialUpdateUpdateDeviceCredentials(ctx, "", d)
 
 		response1, restyResp1, err := client.NetworkSettings.UpdateDeviceCredentials(request1)
@@ -307,10 +307,6 @@ func dataSourceDeviceCredentialUpdateRead(ctx context.Context, d *schema.Resourc
 func expandRequestDeviceCredentialUpdateUpdateDeviceCredentials(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsUpdateDeviceCredentials {
 	request := dnacentersdkgo.RequestNetworkSettingsUpdateDeviceCredentials{}
 	request.Settings = expandRequestDeviceCredentialUpdateUpdateDeviceCredentialsSettings(ctx, key, d)
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -334,10 +330,6 @@ func expandRequestDeviceCredentialUpdateUpdateDeviceCredentialsSettings(ctx cont
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".https_write")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".https_write")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".https_write")))) {
 		request.HTTPSWrite = expandRequestDeviceCredentialUpdateUpdateDeviceCredentialsSettingsHTTPSWrite(ctx, key+".https_write.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -358,10 +350,6 @@ func expandRequestDeviceCredentialUpdateUpdateDeviceCredentialsSettingsCliCreden
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -376,10 +364,6 @@ func expandRequestDeviceCredentialUpdateUpdateDeviceCredentialsSettingsSNMPV2CRe
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -394,10 +378,6 @@ func expandRequestDeviceCredentialUpdateUpdateDeviceCredentialsSettingsSNMPV2CWr
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -427,10 +407,6 @@ func expandRequestDeviceCredentialUpdateUpdateDeviceCredentialsSettingsSNMPV3(ct
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -451,10 +427,6 @@ func expandRequestDeviceCredentialUpdateUpdateDeviceCredentialsSettingsHTTPSRead
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -475,10 +447,6 @@ func expandRequestDeviceCredentialUpdateUpdateDeviceCredentialsSettingsHTTPSWrit
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

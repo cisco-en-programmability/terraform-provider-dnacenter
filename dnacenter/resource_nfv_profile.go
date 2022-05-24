@@ -37,284 +37,9 @@ func resourceNfvProfile() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"device": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"custom_networks": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"connection_type": &schema.Schema{
-													Description: `Type of network connection from custom network (eg: lan)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"network_name": &schema.Schema{
-													Description: `name of custom network (eg: cust-1)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"services_to_connect": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"service_name": &schema.Schema{
-																Description: `Name of service to be connected to the custom network (eg: router-1)
-`,
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-
-												"vlan_id": &schema.Schema{
-													Description: `Vlan id for the custom network(eg: 4000)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"vlan_mode": &schema.Schema{
-													Description: `Vlan network mode (eg Access or Trunk)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-
-									"custom_template": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"device_type": &schema.Schema{
-													Description: `Type of the device(eg: Cisco 5400 Enterprise Network Compute System)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"template": &schema.Schema{
-													Description: `Name of the template(eg NFVIS template)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"template_type": &schema.Schema{
-													Description: `Name of the template to which template is associated (eg: Cloud DayN Templates)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-
-									"device_tag": &schema.Schema{
-										Description: `Device Tag name(eg: dev1)
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"device_type": &schema.Schema{
-										Description: `Name of the device used in creating nfv profile(eg: Cisco 5400 Enterprise Network Compute System)
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"direct_internet_access_for_firewall": &schema.Schema{
-										Description: `Direct internet access value should be boolean (eg: false)
-`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"service_provider_profile": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"connect": &schema.Schema{
-													Description: `Connection of service provider and device value should be boolean (eg: true)
-`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"connect_default_gateway_on_wan": &schema.Schema{
-													Description: `Default gateway connect value as boolean (eg: true)
-`,
-
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"link_type": &schema.Schema{
-													Description: `Name of connection type(eg: GigabitEthernet) 
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"service_provider": &schema.Schema{
-													Description: `Name of the service provider(eg: Airtel)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-
-									"services": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"firewall_mode": &schema.Schema{
-													Description: `Mode of firewall (eg: routed, transparent)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"image_name": &schema.Schema{
-													Description: `Service image name (eg: isrv-universalk9.16.12.01a.tar.gz)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"profile_type": &schema.Schema{
-													Description: `Profile type of service (eg: ISRv-mini)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"service_name": &schema.Schema{
-													Description: `Name of service (eg: router-1)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"service_type": &schema.Schema{
-													Description: `Service type (eg: ISRV)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"v_nic_mapping": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"assign_ip_address_to_network": &schema.Schema{
-																Description: `Assign ip address to network (eg: true)
-`,
-
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-
-															"network_type": &schema.Schema{
-																Description: `Type of connection (eg:  wan, lan or internal)
-`,
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-											},
-										},
-									},
-
-									"vlan_for_l2": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"vlan_description": &schema.Schema{
-													Description: `Vlan description(eg. Access 4018)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"vlan_id": &schema.Schema{
-													Description: `Vlan id(eg.4018)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"vlan_type": &schema.Schema{
-													Description: `Vlan type(eg. Access or Trunk)
-`,
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-								},
-							},
-						},
-
-						"id": &schema.Schema{
-							Description: `Id of nfv created nfv profile
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"profile_name": &schema.Schema{
-							Description: `Name of the profile to create NFV profile( eg: Nfvis_profile)
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -385,7 +110,7 @@ func resourceNfvProfile() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"device_type": &schema.Schema{
-													Description: `Type of the device. Allowed values are 'Cisco 5400 Enterprise Network Compute System', 'Cisco Integrated Services Virtual Router', 'Cisco Adaptive Security Virtual Appliance (ASAv)', 'NFVIS', 'ASAV'.
+													Description: `Type of the device(eg: Cisco 5400 Enterprise Network Compute System), 'Cisco Integrated Services Virtual Router', 'Cisco Adaptive Security Virtual Appliance (ASAv)', 'NFVIS', 'ASAV'.
 `,
 													Type:     schema.TypeString,
 													Optional: true,
@@ -420,7 +145,7 @@ func resourceNfvProfile() *schema.Resource {
 									"direct_internet_access_for_firewall": &schema.Schema{
 										Description: `Direct internet access value should be boolean (eg: false or true)
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -434,7 +159,7 @@ func resourceNfvProfile() *schema.Resource {
 												"connect": &schema.Schema{
 													Description: `Connection of service provider and device value should be boolean (eg: true)
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -442,7 +167,7 @@ func resourceNfvProfile() *schema.Resource {
 												"connect_default_gateway_on_wan": &schema.Schema{
 													Description: `Connect default gateway connect value as boolean (eg: true)
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -562,7 +287,7 @@ func resourceNfvProfile() *schema.Resource {
 							Description: `Name of the profile to create NFV profile
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 					},
 				},
@@ -578,23 +303,15 @@ func resourceNfvProfileCreate(ctx context.Context, d *schema.ResourceData, m int
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNfvProfileCreateNfvProfile(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
-	vName := resourceItem["profile_name"]
 	vvID := interfaceToString(vID)
-	vvName := interfaceToString(vName)
 	if okID && vvID != "" {
-		queryParams1 := dnacentersdkgo.GetNfvProfileQueryParams{}
-
-		queryParams1.Name = vvName
 		getResponse1, _, err := client.SiteDesign.GetNfvProfile(vvID, nil)
 		if err == nil && getResponse1 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
-			resourceMap["profile_name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
 			return resourceNfvProfileRead(ctx, d, m)
 		}
@@ -612,7 +329,6 @@ func resourceNfvProfileCreate(ctx context.Context, d *schema.ResourceData, m int
 	}
 	resourceMap := make(map[string]string)
 	resourceMap["id"] = vvID
-	resourceMap["profile_name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
 	return resourceNfvProfileRead(ctx, d, m)
 }
@@ -625,14 +341,22 @@ func resourceNfvProfileRead(ctx context.Context, d *schema.ResourceData, m inter
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vID := resourceMap["id"]
-	vName, okName := resourceMap["profile_name"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
+	vName := resourceMap["name"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNfvProfile")
+		log.Printf("[DEBUG] Selected method: GetNfvProfile")
 		vvID := vID
 		queryParams1 := dnacentersdkgo.GetNfvProfileQueryParams{}
 
+		if okOffset {
+			queryParams1.Offset = vOffset
+		}
+		if okLimit {
+			queryParams1.Limit = vLimit
+		}
 		if okName {
 			queryParams1.Name = vName
 		}
@@ -643,13 +367,24 @@ func resourceNfvProfileRead(ctx context.Context, d *schema.ResourceData, m inter
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetNfvProfile", err,
+				"Failure at GetNfvProfile, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenSiteDesignGetNfvProfileItems(response1.Response)
+		items1 := getAllItemsSiteDesignGetNfvProfile(m, response1, vvID, nil)
+		item1, err := searchSiteDesignGetNfvProfile(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetNfvProfile response", err,
+				"Failure when searching item from GetNfvProfile, unexpected response", ""))
+			return diags
+		}
+		// Review flatten function used
+		vItem1 := flattenSiteDesignGetNfvProfileByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNfvProfile search response",
@@ -669,29 +404,33 @@ func resourceNfvProfileUpdate(ctx context.Context, d *schema.ResourceData, m int
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vID := resourceMap["id"]
-	vName := resourceMap["profile_name"]
-	var vvID string
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
+	vName := resourceMap["name"]
 
-	queryParams1 := dnacentersdkgo.GetNfvProfileQueryParams{}
+	queryParams1 := dnacentersdkgo.GetNfvProfileQueryParams
+	queryParams1.Offset = vOffset
+	queryParams1.Limit = vLimit
 	queryParams1.Name = vName
-	item, err := searchSiteDesignGetNfvProfile(m, queryParams1, &vID)
+	item, err := searchSiteDesignGetNFVProfile(m, queryParams1)
 	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetNFVProfile", err,
 			"Failure at GetNFVProfile, unexpected response", ""))
 		return diags
 	}
-	vvID = item.ID
 
+	selectedMethod := 1
+	var vvID string
+	var vvName string
+	if selectedMethod == 1 {
+		vvID = vID
+	}
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNfvProfileUpdateNfvProfile(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		queryParams2 := dnacentersdkgo.UpdateNfvProfileQueryParams{}
-		queryParams2.Name = vName
-		response1, restyResp1, err := client.SiteDesign.UpdateNfvProfile(vvID, request1, &queryParams2)
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		response1, restyResp1, err := client.SiteDesign.UpdateNfvProfile(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
@@ -719,23 +458,34 @@ func resourceNfvProfileDelete(ctx context.Context, d *schema.ResourceData, m int
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vID := resourceMap["id"]
-	vName := resourceMap["profile_name"]
+	vOffset := resourceMap["offset"]
+	vLimit := resourceMap["limit"]
+	vName := resourceMap["name"]
 
-	queryParams1 := dnacentersdkgo.GetNfvProfileQueryParams{}
+	queryParams1 := dnacentersdkgo.GetNfvProfileQueryParams
+	queryParams1.Offset = vOffset
+	queryParams1.Limit = vLimit
 	queryParams1.Name = vName
-	item, err := searchSiteDesignGetNfvProfile(m, queryParams1, &vID)
+	item, err := searchSiteDesignGetNFVProfile(m, queryParams1)
 	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetNFVProfile", err,
 			"Failure at GetNFVProfile, unexpected response", ""))
 		return diags
 	}
-	if vID == "" {
-		vID = item.ID
+
+	selectedMethod := 1
+	var vvID string
+	var vvName string
+	if selectedMethod == 1 {
+		vvID = vID
+		getResp, _, err := client.SiteDesign.GetNfvProfile(vvID)
+		if err != nil || getResp == nil {
+			// Assume that element it is already gone
+			return diags
+		}
 	}
-	queryParams2 := dnacentersdkgo.DeleteNfvProfileQueryParams{}
-	queryParams1.Name = vName
-	response1, restyResp1, err := client.SiteDesign.DeleteNfvProfile(vID, &queryParams2)
+	response1, restyResp1, err := client.SiteDesign.DeleteNfvProfile(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -767,7 +517,6 @@ func expandRequestNfvProfileCreateNfvProfile(ctx context.Context, key string, d 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -791,7 +540,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceArray(ctx context.Context, key
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -824,7 +572,6 @@ func expandRequestNfvProfileCreateNfvProfileDevice(ctx context.Context, key stri
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -848,7 +595,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServiceProviderProfileArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -869,7 +615,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServiceProviderProfile(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -893,7 +638,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServicesArray(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -920,7 +664,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServices(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -944,7 +687,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServicesVNicMappingArray(ctx c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -959,7 +701,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServicesVNicMapping(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -983,7 +724,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworksArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1007,7 +747,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworks(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1031,7 +770,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworksServicesToConnec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1043,7 +781,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworksServicesToConnec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1067,7 +804,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceVLANForL2Array(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1085,7 +821,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceVLANForL2(ctx context.Context,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1109,7 +844,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomTemplateArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1127,7 +861,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomTemplate(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1139,7 +872,6 @@ func expandRequestNfvProfileUpdateNfvProfile(ctx context.Context, key string, d 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1163,7 +895,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceArray(ctx context.Context, key
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1193,7 +924,6 @@ func expandRequestNfvProfileUpdateNfvProfileDevice(ctx context.Context, key stri
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1217,7 +947,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceServicesArray(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1244,7 +973,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceServices(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1268,7 +996,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceServicesVNicMappingArray(ctx c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1283,7 +1010,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceServicesVNicMapping(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1307,7 +1033,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworksArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1331,7 +1056,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworks(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1355,7 +1079,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworksServicesToConnec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1367,7 +1090,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworksServicesToConnec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1391,7 +1113,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceVLANForL2Array(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1409,7 +1130,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceVLANForL2(ctx context.Context,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1433,7 +1153,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomTemplateArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1451,38 +1170,27 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomTemplate(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchSiteDesignGetNfvProfile(m interface{}, queryParams dnacentersdkgo.GetNfvProfileQueryParams, id *string) (*dnacentersdkgo.ResponseSiteDesignGetNfvProfileResponse, error) {
+func searchSiteDesignGetNfvProfile(m interface{}, queryParams dnacentersdkgo.GetNfvProfileQueryParams) (*dnacentersdkgo.ResponseItemSiteDesignGetNfvProfile, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseSiteDesignGetNfvProfileResponse
+	var foundItem *dnacentersdkgo.ResponseItemSiteDesignGetNfvProfile
 	var ite *dnacentersdkgo.ResponseSiteDesignGetNfvProfile
-	if id == nil {
-		return nil, err
-	}
-	ite, _, err = client.SiteDesign.GetNfvProfile(*id, &queryParams)
+	ite, _, err = client.SiteDesign.GetNfvProfile(&queryParams)
 	if err != nil {
 		return foundItem, err
 	}
-
-	if ite == nil {
+	items := ite
+	if items == nil {
 		return foundItem, err
 	}
-
-	if ite.Response == nil {
-		return nil, err
-	}
-
-	items := ite
-
-	itemsCopy := *items.Response
+	itemsCopy := *items
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		if item.ProfileName == queryParams.Name {
-			var getItem *dnacentersdkgo.ResponseSiteDesignGetNfvProfileResponse
+		if item.Name == queryParams.Name {
+			var getItem *dnacentersdkgo.ResponseItemSiteDesignGetNfvProfile
 			getItem = &item
 			foundItem = getItem
 			return foundItem, err

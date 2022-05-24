@@ -25,7 +25,7 @@ func dataSourceConfigurationTemplateDeployV2() *schema.Resource {
 		ReadContext: dataSourceConfigurationTemplateDeployV2Read,
 		Schema: map[string]*schema.Schema{
 			"force_push_template": &schema.Schema{
-
+				// Type:     schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -33,7 +33,7 @@ func dataSourceConfigurationTemplateDeployV2() *schema.Resource {
 			"is_composite": &schema.Schema{
 				Description: `Composite template flag
 `,
-
+				// Type:        schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -138,7 +138,7 @@ func dataSourceConfigurationTemplateDeployV2Read(ctx context.Context, d *schema.
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeployTemplateV2")
+		log.Printf("[DEBUG] Selected method: DeployTemplateV2")
 		request1 := expandRequestConfigurationTemplateDeployV2DeployTemplateV2(ctx, "", d)
 
 		response1, restyResp1, err := client.ConfigurationTemplates.DeployTemplateV2(request1)
@@ -193,10 +193,6 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2(ctx context.Cont
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
 		request.TemplateID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -217,20 +213,12 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2MemberTemplateDep
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateDeployV2DeployTemplateV2MemberTemplateDeploymentInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2MemberTemplateDeploymentInfo {
 	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2MemberTemplateDeploymentInfo
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -251,10 +239,6 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoArray(c
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -278,20 +262,12 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfo(ctx co
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".versioned_template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".versioned_template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".versioned_template_id")))) {
 		request.VersionedTemplateID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoParams {
 	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoParams
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -312,20 +288,12 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoResourc
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoResourceParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoResourceParams {
 	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoResourceParams
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

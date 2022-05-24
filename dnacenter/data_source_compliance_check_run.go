@@ -57,7 +57,7 @@ func dataSourceComplianceCheckRun() *schema.Resource {
 				},
 			},
 			"trigger_full": &schema.Schema{
-
+				// Type:     schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -73,7 +73,7 @@ func dataSourceComplianceCheckRunRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RunCompliance")
+		log.Printf("[DEBUG] Selected method: RunCompliance")
 		request1 := expandRequestComplianceCheckRunRunCompliance(ctx, "", d)
 
 		response1, restyResp1, err := client.Compliance.RunCompliance(request1)
@@ -119,10 +119,6 @@ func expandRequestComplianceCheckRunRunCompliance(ctx context.Context, key strin
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_uuids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_uuids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_uuids")))) {
 		request.DeviceUUIDs = interfaceToSliceString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

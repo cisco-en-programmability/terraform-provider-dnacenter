@@ -63,7 +63,7 @@ func dataSourceTagMemberDeleteRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RemoveTagMember")
+		log.Printf("[DEBUG] Selected method: RemoveTagMember")
 		vvID := vID.(string)
 		vvMemberID := vMemberID.(string)
 

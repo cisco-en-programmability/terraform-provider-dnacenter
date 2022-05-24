@@ -85,7 +85,7 @@ func dataSourceSdaFabricControlPlaneDeviceRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetControlPlaneDeviceFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetControlPlaneDeviceFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetControlPlaneDeviceFromSdaFabricQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress.(string)

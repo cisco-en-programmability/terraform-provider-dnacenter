@@ -66,7 +66,7 @@ func dataSourceComplianceDeviceDetailsCountRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetComplianceDetailCount")
+		log.Printf("[DEBUG] Selected method: GetComplianceDetailCount")
 		queryParams1 := dnacentersdkgo.GetComplianceDetailCountQueryParams{}
 
 		if okComplianceType {

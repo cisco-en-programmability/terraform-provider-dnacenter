@@ -196,7 +196,7 @@ func dataSourceConfigurationTemplateDeployStatusRead(ctx context.Context, d *sch
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: StatusOfTemplateDeployment")
+		log.Printf("[DEBUG] Selected method: StatusOfTemplateDeployment")
 		vvDeploymentID := vDeploymentID.(string)
 
 		response1, restyResp1, err := client.ConfigurationTemplates.StatusOfTemplateDeployment(vvDeploymentID)

@@ -46,7 +46,7 @@ func dataSourcePnpVirtualAccountsRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetVirtualAccountList")
+		log.Printf("[DEBUG] Selected method: GetVirtualAccountList")
 		vvDomain := vDomain.(string)
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.GetVirtualAccountList(vvDomain)

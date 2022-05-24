@@ -24,38 +24,6 @@ func dataSourceSNMPv3CredentialCreate() *schema.Resource {
 
 		ReadContext: dataSourceSNMPv3CredentialCreateRead,
 		Schema: map[string]*schema.Schema{
-			"auth_password": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"auth_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"comments": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"credential_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"description": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"instance_tenant_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"instance_uuid": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -73,21 +41,63 @@ func dataSourceSNMPv3CredentialCreate() *schema.Resource {
 					},
 				},
 			},
-			"privacy_password": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"privacy_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"snmp_mode": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"username": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+			"payload": &schema.Schema{
+				Description: `Array of RequestDiscoveryCreateSNMPv3Credentials`,
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"auth_password": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"auth_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"comments": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"credential_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"instance_tenant_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"instance_uuid": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"privacy_password": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"privacy_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"snmp_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"username": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
 			},
 		},
 	}
@@ -100,7 +110,7 @@ func dataSourceSNMPv3CredentialCreateRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateSNMPv3Credentials")
+		log.Printf("[DEBUG] Selected method: CreateSNMPv3Credentials")
 		request1 := expandRequestSNMPv3CredentialCreateCreateSNMPv3Credentials(ctx, "", d)
 
 		response1, restyResp1, err := client.Discovery.CreateSNMPv3Credentials(request1)
@@ -137,13 +147,9 @@ func dataSourceSNMPv3CredentialCreateRead(ctx context.Context, d *schema.Resourc
 
 func expandRequestSNMPv3CredentialCreateCreateSNMPv3Credentials(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateSNMPv3Credentials {
 	request := dnacentersdkgo.RequestDiscoveryCreateSNMPv3Credentials{}
-	if v := expandRequestSNMPv3CredentialCreateCreateSNMPv3CredentialsItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestSNMPv3CredentialCreateCreateSNMPv3CredentialsItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -164,10 +170,6 @@ func expandRequestSNMPv3CredentialCreateCreateSNMPv3CredentialsItemArray(ctx con
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -209,10 +211,6 @@ func expandRequestSNMPv3CredentialCreateCreateSNMPv3CredentialsItem(ctx context.
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username")))) {
 		request.Username = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

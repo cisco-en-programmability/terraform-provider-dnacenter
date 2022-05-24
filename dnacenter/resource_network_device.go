@@ -2,6 +2,8 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
+	"reflect"
 
 	"log"
 
@@ -198,9 +200,7 @@ func resourceNetworkDevice() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -224,6 +224,7 @@ func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 	// TODO: Add the path params to `item` schema
 	//       & return it individually
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
+	resourceMap["name"] = interfaceToString(resourceItem["name"])
 	d.SetId(joinResourceID(resourceMap))
 	return diags
 }
@@ -239,7 +240,7 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceByID")
+		log.Printf("[DEBUG] Selected method: GetDeviceByID")
 		vvID := vID
 
 		response1, restyResp1, err := client.Devices.GetDeviceByID(vvID)
@@ -248,7 +249,9 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDeviceByID", err,
+				"Failure at GetDeviceByID, unexpected response", ""))
 			return diags
 		}
 
@@ -283,6 +286,7 @@ func resourceNetworkDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	var vvID string
+	var vvName string
 	if selectedMethod == 1 {
 		vvID = vID
 		getResp, _, err := client.Devices.GetDeviceByID(vvID)
@@ -291,9 +295,7 @@ func resourceNetworkDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 	}
-	queryParams1 := dnacentersdkgo.DeleteDeviceByIDQueryParams{}
-	queryParams1.CleanConfig = true
-	response1, restyResp1, err := client.Devices.DeleteDeviceByID(vvID, &queryParams1)
+	response1, restyResp1, err := client.Devices.DeleteDeviceByID(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())

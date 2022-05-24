@@ -298,7 +298,7 @@ func dataSourceNetworkDeviceInventoryInsightLinkMismatchRead(ctx context.Context
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: InventoryInsightDeviceLinkMismatchApI")
+		log.Printf("[DEBUG] Selected method: InventoryInsightDeviceLinkMismatchApI")
 		vvSiteID := vSiteID.(string)
 		queryParams1 := dnacentersdkgo.InventoryInsightDeviceLinkMismatchApIQueryParams{}
 

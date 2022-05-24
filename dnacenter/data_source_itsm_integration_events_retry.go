@@ -68,7 +68,7 @@ func dataSourceItsmIntegrationEventsRetryRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RetryIntegrationEvents")
+		log.Printf("[DEBUG] Selected method: RetryIntegrationEvents")
 		request1 := expandRequestItsmIntegrationEventsRetryRetryIntegrationEvents(ctx, "", d)
 
 		response1, restyResp1, err := client.Itsm.RetryIntegrationEvents(request1)
@@ -108,10 +108,6 @@ func expandRequestItsmIntegrationEventsRetryRetryIntegrationEvents(ctx context.C
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".payload")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".payload")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".payload")))) {
 		request = interfaceToSliceString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

@@ -110,7 +110,7 @@ func dataSourceNetworkDeviceRange() *schema.Resource {
 						},
 
 						"last_update_time": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
@@ -249,7 +249,7 @@ func dataSourceNetworkDeviceRangeRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkDeviceByPaginationRange")
+		log.Printf("[DEBUG] Selected method: GetNetworkDeviceByPaginationRange")
 		vvStartIndex := vStartIndex.(int)
 		vvRecordsToReturn := vRecordsToReturn.(int)
 

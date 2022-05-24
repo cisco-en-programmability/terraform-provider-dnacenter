@@ -59,7 +59,7 @@ func dataSourceSiteCountRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSiteCount")
+		log.Printf("[DEBUG] Selected method: GetSiteCount")
 		queryParams1 := dnacentersdkgo.GetSiteCountQueryParams{}
 
 		if okSiteID {

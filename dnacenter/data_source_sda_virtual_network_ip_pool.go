@@ -25,6 +25,11 @@ func dataSourceSdaVirtualNetworkIPPool() *schema.Resource {
 				Type:        schema.TypeString,
 				Required:    true,
 			},
+			"site_name_hierarchy": &schema.Schema{
+				Description: `siteNameHierarchy query parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
+			},
 			"virtual_network_name": &schema.Schema{
 				Description: `virtualNetworkName query parameter.`,
 				Type:        schema.TypeString,
@@ -57,14 +62,14 @@ func dataSourceSdaVirtualNetworkIPPool() *schema.Resource {
 
 						"is_l2_flooding_enabled": &schema.Schema{
 							Description: `Is L2 Flooding Enabled`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"is_this_critical_pool": &schema.Schema{
 							Description: `Is This Critical Pool`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -103,17 +108,20 @@ func dataSourceSdaVirtualNetworkIPPoolRead(ctx context.Context, d *schema.Resour
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-	vIPPoolName := d.Get("ip_pool_name")
+	vSiteNameHierarchy := d.Get("site_name_hierarchy")
 	vVirtualNetworkName := d.Get("virtual_network_name")
+	vIPPoolName := d.Get("ip_pool_name")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetIPPoolFromSdaVirtualNetwork")
+		log.Printf("[DEBUG] Selected method: GetIPPoolFromSdaVirtualNetwork")
 		queryParams1 := dnacentersdkgo.GetIPPoolFromSdaVirtualNetworkQueryParams{}
 
-		queryParams1.IPPoolName = vIPPoolName.(string)
+		queryParams1.SiteNameHierarchy = vSiteNameHierarchy.(string)
 
 		queryParams1.VirtualNetworkName = vVirtualNetworkName.(string)
+
+		queryParams1.IPPoolName = vIPPoolName.(string)
 
 		response1, restyResp1, err := client.Sda.GetIPPoolFromSdaVirtualNetwork(&queryParams1)
 

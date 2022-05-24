@@ -155,8 +155,11 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 
 						"additional_details": &schema.Schema{
 							Description: `Additional Details`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"category": &schema.Schema{
@@ -191,8 +194,11 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 
 						"details": &schema.Schema{
 							Description: `Details`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"domain": &schema.Schema{
@@ -364,7 +370,7 @@ func dataSourceEventSeriesAuditLogsParentRecordsRead(ctx context.Context, d *sch
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAuditLogParentRecords")
+		log.Printf("[DEBUG] Selected method: GetAuditLogParentRecords")
 		queryParams1 := dnacentersdkgo.GetAuditLogParentRecordsQueryParams{}
 
 		if okInstanceID {

@@ -211,7 +211,7 @@ func dataSourceInterfaceNetworkDeviceRangeRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceInterfacesBySpecifiedRange")
+		log.Printf("[DEBUG] Selected method: GetDeviceInterfacesBySpecifiedRange")
 		vvDeviceID := vDeviceID.(string)
 		vvStartIndex := vStartIndex.(int)
 		vvRecordsToReturn := vRecordsToReturn.(int)

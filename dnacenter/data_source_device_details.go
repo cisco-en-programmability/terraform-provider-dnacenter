@@ -325,7 +325,7 @@ func dataSourceDeviceDetailsRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceDetail")
+		log.Printf("[DEBUG] Selected method: GetDeviceDetail")
 		queryParams1 := dnacentersdkgo.GetDeviceDetailQueryParams{}
 
 		if okTimestamp {

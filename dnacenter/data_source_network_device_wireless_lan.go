@@ -77,13 +77,13 @@ func dataSourceNetworkDeviceWirelessLan() *schema.Resource {
 						},
 
 						"lag_mode_enabled": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"netconf_enabled": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -94,7 +94,7 @@ func dataSourceNetworkDeviceWirelessLan() *schema.Resource {
 						},
 
 						"wireless_package_installed": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -113,7 +113,7 @@ func dataSourceNetworkDeviceWirelessLanRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetWirelessLanControllerDetailsByID")
+		log.Printf("[DEBUG] Selected method: GetWirelessLanControllerDetailsByID")
 		vvID := vID.(string)
 
 		response1, restyResp1, err := client.Devices.GetWirelessLanControllerDetailsByID(vvID)

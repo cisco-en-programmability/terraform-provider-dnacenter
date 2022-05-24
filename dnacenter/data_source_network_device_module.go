@@ -17,7 +17,7 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 
 - Returns modules by specified device id
 
-- Returns Module info by id
+- Returns Module info by 'module id'
 `,
 
 		ReadContext: dataSourceNetworkDeviceModuleRead,
@@ -28,9 +28,10 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Description: `id path parameter.`,
-				Type:        schema.TypeString,
-				Optional:    true,
+				Description: `id path parameter. Module id
+`,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
@@ -92,8 +93,11 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 						},
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"containment_entity": &schema.Schema{
@@ -181,8 +185,11 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 						},
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"containment_entity": &schema.Schema{
@@ -276,7 +283,7 @@ func dataSourceNetworkDeviceModuleRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetModules")
+		log.Printf("[DEBUG] Selected method: GetModules")
 		queryParams1 := dnacentersdkgo.GetModulesQueryParams{}
 
 		if okDeviceID {
@@ -327,7 +334,7 @@ func dataSourceNetworkDeviceModuleRead(ctx context.Context, d *schema.ResourceDa
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetModuleInfoByID")
+		log.Printf("[DEBUG] Selected method: GetModuleInfoByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.Devices.GetModuleInfoByID(vvID)

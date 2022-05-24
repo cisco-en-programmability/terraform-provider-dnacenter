@@ -65,7 +65,7 @@ func dataSourceDisassociateSiteToNetworkProfileRead(ctx context.Context, d *sche
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: Disassociate")
+		log.Printf("[DEBUG] Selected method: Disassociate")
 		vvNetworkProfileID := vNetworkProfileID.(string)
 		vvSiteID := vSiteID.(string)
 

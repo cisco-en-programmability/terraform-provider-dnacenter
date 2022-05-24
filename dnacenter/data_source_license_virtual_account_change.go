@@ -78,7 +78,7 @@ func dataSourceLicenseVirtualAccountChangeRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ChangeVirtualAccount")
+		log.Printf("[DEBUG] Selected method: ChangeVirtualAccount")
 		vvSmartAccountID := vSmartAccountID.(string)
 		vvVirtualAccountName := vVirtualAccountName.(string)
 		request1 := expandRequestLicenseVirtualAccountChangeChangeVirtualAccount(ctx, "", d)
@@ -120,10 +120,6 @@ func expandRequestLicenseVirtualAccountChangeChangeVirtualAccount(ctx context.Co
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_uuids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_uuids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_uuids")))) {
 		request.DeviceUUIDs = interfaceToSliceString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

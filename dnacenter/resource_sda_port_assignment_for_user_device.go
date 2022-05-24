@@ -2,8 +2,8 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -35,78 +35,14 @@ func resourceSdaPortAssignmentForUserDevice() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"authenticate_template_name": &schema.Schema{
-							Description: `Authenticate Template Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"data_ip_address_pool_name": &schema.Schema{
-							Description: `Data Ip Address Pool Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"device_management_ip_address": &schema.Schema{
-							Description: `Device Management Ip Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"interface_name": &schema.Schema{
-							Description: `Interface Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"scalable_group_name": &schema.Schema{
-							Description: `Scalable Group Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"voice_ip_address_pool_name": &schema.Schema{
-							Description: `Voice Ip Address Pool Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"authenticate_template_name": &schema.Schema{
-							Description: `Authenticate TemplateName associated to siteNameHierarchy. Allowed values are 'Open Authentication', 'Closed Authentication', 'Low Impact', 'No Authentication', ''.
+							Description: `Authenticate TemplateName associated with siteNameHierarchy
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -124,31 +60,31 @@ func resourceSdaPortAssignmentForUserDevice() *schema.Resource {
 							Optional: true,
 						},
 						"interface_description": &schema.Schema{
-							Description: `Details or note of interface assignment
+							Description: `User defined text message for this port
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"interface_name": &schema.Schema{
-							Description: `Interface Name of the edge device
+							Description: `Interface Name of the Edge Node
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"scalable_group_name": &schema.Schema{
-							Description: `valid name of a scalable group associated with virtual network(Scalable groups are only supported on No Auth profile because the other profiles assign SGTs from ISE)
+							Description: `Scalable Group name associated with VN
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy should be a valid fabric site name hierarchy. e.g Global/USA/San Jose
+							Description: `Complete Path of SD-Access Fabric Site
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"voice_ip_address_pool_name": &schema.Schema{
-							Description: `Ip Pool Name, that is assigned to virtual network with traffic type as VOICE(can't be empty if dataIpAddressPoolName is emty)
+							Description: `Ip Pool Name, that is assigned to virtual network with traffic type as VOICE(can't be empty if dataIpAddressPoolName is empty)
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -166,32 +102,11 @@ func resourceSdaPortAssignmentForUserDeviceCreate(ctx context.Context, d *schema
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	vDeviceManagementIPAddress := resourceItem["device_management_ip_address"]
-	vInterfaceName := resourceItem["interface_name"]
-	vvDeviceManagementIPAddress := interfaceToString(vDeviceManagementIPAddress)
-	vvInterfaceName := interfaceToString(vInterfaceName)
 	request1 := expandRequestSdaPortAssignmentForUserDeviceAddPortAssignmentForUserDeviceInSdaFabric(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	queryParams1 := dnacentersdkgo.GetPortAssignmentForUserDeviceInSdaFabricQueryParams{}
-
-	queryParams1.DeviceManagementIPAddress = vvDeviceManagementIPAddress
-
-	queryParams1.InterfaceName = vvInterfaceName
-
-	getResponse2, _, err := client.Sda.GetPortAssignmentForUserDeviceInSdaFabric(&queryParams1)
-
-	if err == nil && getResponse2 != nil {
-		resourceMap := make(map[string]string)
-		resourceMap["device_management_ip_address"] = vvDeviceManagementIPAddress
-		resourceMap["interface_name"] = vvInterfaceName
-		d.SetId(joinResourceID(resourceMap))
-		return resourceSdaPortAssignmentForUserDeviceRead(ctx, d, m)
-	}
-	response1, restyResp1, err := client.Sda.AddPortAssignmentForUserDeviceInSdaFabric(request1)
-	if err != nil || response1 == nil {
+	resp1, restyResp1, err := client.Sda.AddPortAssignmentForUserDeviceInSdaFabric(request1)
+	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
 				"Failure when executing AddPortAssignmentForUserDeviceInSdaFabric", err, restyResp1.String()))
@@ -201,44 +116,7 @@ func resourceSdaPortAssignmentForUserDeviceCreate(ctx context.Context, d *schema
 			"Failure when executing AddPortAssignmentForUserDeviceInSdaFabric", err))
 		return diags
 	}
-
-	executionId := response1.ExecutionID
-	log.Printf("[DEBUG] ExecutionID => %s", executionId)
-	if executionId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExecutionByID", err,
-				"Failure at GetExecutionByID, unexpected response", ""))
-			return diags
-		}
-		for response2.Status == "IN_PROGRESS" {
-			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-		}
-		if response2.Status == "FAILURE" {
-			log.Printf("[DEBUG] Error %s", response2.BapiError)
-			diags = append(diags, diagError(
-				"Failure when executing AddPortAssignmentForUserDeviceInSdaFabric", err))
-			return diags
-		}
-	}
 	resourceMap := make(map[string]string)
-	resourceMap["device_management_ip_address"] = vvDeviceManagementIPAddress
-	resourceMap["interface_name"] = vvInterfaceName
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSdaPortAssignmentForUserDeviceRead(ctx, d, m)
 }
@@ -255,7 +133,7 @@ func resourceSdaPortAssignmentForUserDeviceRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetPortAssignmentForUserDeviceInSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetPortAssignmentForUserDeviceInSdaFabric")
 		queryParams1 := dnacentersdkgo.GetPortAssignmentForUserDeviceInSdaFabricQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
@@ -268,7 +146,9 @@ func resourceSdaPortAssignmentForUserDeviceRead(ctx context.Context, d *schema.R
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetPortAssignmentForUserDeviceInSdaFabric", err,
+				"Failure at GetPortAssignmentForUserDeviceInSdaFabric, unexpected response", ""))
 			return diags
 		}
 
@@ -302,19 +182,36 @@ func resourceSdaPortAssignmentForUserDeviceDelete(ctx context.Context, d *schema
 	vDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
 	vInterfaceName := resourceMap["interface_name"]
 
-	queryParams1 := dnacentersdkgo.GetPortAssignmentForUserDeviceInSdaFabricQueryParams{}
+	queryParams1 := dnacentersdkgo.GetPortAssignmentForUserDeviceInSdaFabricQueryParams
 	queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
 	queryParams1.InterfaceName = vInterfaceName
-	item, restyResp1, err := client.Sda.GetPortAssignmentForUserDeviceInSdaFabric(&queryParams1)
+	item, err := searchSdaGetPortAssignmentForUserDeviceInSDAFabric(m, queryParams1)
 	if err != nil || item == nil {
-		d.SetId("")
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetPortAssignmentForUserDeviceInSDAFabric", err,
+			"Failure at GetPortAssignmentForUserDeviceInSDAFabric, unexpected response", ""))
 		return diags
 	}
 
-	queryParams2 := dnacentersdkgo.DeletePortAssignmentForUserDeviceInSdaFabricQueryParams{}
-	queryParams2.DeviceManagementIPAddress = vDeviceManagementIPAddress
-	queryParams2.InterfaceName = vInterfaceName
-	response1, restyResp1, err := client.Sda.DeletePortAssignmentForUserDeviceInSdaFabric(&queryParams2)
+	selectedMethod := 1
+	var vvID string
+	var vvName string
+	// REVIEW: Add getAllItems and search function to get missing params
+	if selectedMethod == 1 {
+
+		getResp1, _, err := client.Sda.GetPortAssignmentForUserDeviceInSdaFabric(nil)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		items1 := getAllItemsSdaGetPortAssignmentForUserDeviceInSdaFabric(m, getResp1, nil)
+		item1, err := searchSdaGetPortAssignmentForUserDeviceInSdaFabric(m, items1, vName, vID)
+		if err != nil || item1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+	}
+	response1, restyResp1, err := client.Sda.DeletePortAssignmentForUserDeviceInSdaFabric()
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -327,40 +224,6 @@ func resourceSdaPortAssignmentForUserDeviceDelete(ctx context.Context, d *schema
 			"Failure when executing DeletePortAssignmentForUserDeviceInSdaFabric", err,
 			"Failure at DeletePortAssignmentForUserDeviceInSdaFabric, unexpected response", ""))
 		return diags
-	}
-	executionId := response1.ExecutionID
-	log.Printf("[DEBUG] ExecutionID => %s", executionId)
-	if executionId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExecutionByID", err,
-				"Failure at GetExecutionByID, unexpected response", ""))
-			return diags
-		}
-		for response2.Status == "IN_PROGRESS" {
-			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-		}
-		if response2.Status == "FAILURE" {
-			log.Printf("[DEBUG] Error %s", response2.BapiError)
-			diags = append(diags, diagError(
-				"Failure when executing DeletePortAssignmentForUserDeviceInSdaFabric", err))
-			return diags
-		}
 	}
 
 	// d.SetId("") is automatically called assuming delete returns no errors, but
@@ -398,6 +261,5 @@ func expandRequestSdaPortAssignmentForUserDeviceAddPortAssignmentForUserDeviceIn
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

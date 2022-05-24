@@ -158,7 +158,7 @@ func dataSourceTask() *schema.Resource {
 						},
 
 						"is_error": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -169,8 +169,11 @@ func dataSourceTask() *schema.Resource {
 						},
 
 						"operation_id_list": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"parent_id": &schema.Schema{
@@ -258,7 +261,7 @@ func dataSourceTask() *schema.Resource {
 						},
 
 						"is_error": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -269,8 +272,11 @@ func dataSourceTask() *schema.Resource {
 						},
 
 						"operation_id_list": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"parent_id": &schema.Schema{
@@ -341,7 +347,7 @@ func dataSourceTaskRead(ctx context.Context, d *schema.ResourceData, m interface
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTasks")
+		log.Printf("[DEBUG] Selected method: GetTasks")
 		queryParams1 := dnacentersdkgo.GetTasksQueryParams{}
 
 		if okStartTime {
@@ -413,7 +419,7 @@ func dataSourceTaskRead(ctx context.Context, d *schema.ResourceData, m interface
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetTaskByID")
+		log.Printf("[DEBUG] Selected method: GetTaskByID")
 		vvTaskID := vTaskID.(string)
 
 		response2, restyResp2, err := client.Task.GetTaskByID(vvTaskID)

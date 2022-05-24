@@ -24,30 +24,6 @@ func dataSourceNetconfCredentialCreate() *schema.Resource {
 
 		ReadContext: dataSourceNetconfCredentialCreateRead,
 		Schema: map[string]*schema.Schema{
-			"comments": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"credential_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"description": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"instance_tenant_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"instance_uuid": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -65,9 +41,43 @@ func dataSourceNetconfCredentialCreate() *schema.Resource {
 					},
 				},
 			},
-			"netconf_port": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+			"payload": &schema.Schema{
+				Description: `Array of RequestDiscoveryCreateNetconfCredentials`,
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"comments": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"credential_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"instance_tenant_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"instance_uuid": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"netconf_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
 			},
 		},
 	}
@@ -80,7 +90,7 @@ func dataSourceNetconfCredentialCreateRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateNetconfCredentials")
+		log.Printf("[DEBUG] Selected method: CreateNetconfCredentials")
 		request1 := expandRequestNetconfCredentialCreateCreateNetconfCredentials(ctx, "", d)
 
 		response1, restyResp1, err := client.Discovery.CreateNetconfCredentials(request1)
@@ -117,13 +127,9 @@ func dataSourceNetconfCredentialCreateRead(ctx context.Context, d *schema.Resour
 
 func expandRequestNetconfCredentialCreateCreateNetconfCredentials(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateNetconfCredentials {
 	request := dnacentersdkgo.RequestDiscoveryCreateNetconfCredentials{}
-	if v := expandRequestNetconfCredentialCreateCreateNetconfCredentialsItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestNetconfCredentialCreateCreateNetconfCredentialsItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -144,10 +150,6 @@ func expandRequestNetconfCredentialCreateCreateNetconfCredentialsItemArray(ctx c
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -174,10 +176,6 @@ func expandRequestNetconfCredentialCreateCreateNetconfCredentialsItem(ctx contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".netconf_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".netconf_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".netconf_port")))) {
 		request.NetconfPort = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

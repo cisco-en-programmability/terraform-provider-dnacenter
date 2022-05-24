@@ -63,7 +63,7 @@ func dataSourceBusinessSdaWirelessControllerDeleteRead(ctx context.Context, d *s
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RemoveWLCFromFabricDomain")
+		log.Printf("[DEBUG] Selected method: RemoveWLCFromFabricDomain")
 		queryParams1 := dnacentersdkgo.RemoveWLCFromFabricDomainQueryParams{}
 
 		queryParams1.DeviceIPAddress = vDeviceIPAddress.(string)

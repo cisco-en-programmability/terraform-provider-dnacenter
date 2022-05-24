@@ -64,7 +64,7 @@ func dataSourceDiscoveryDeviceCountRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDevicesDiscoveredByID")
+		log.Printf("[DEBUG] Selected method: GetDevicesDiscoveredByID")
 		vvID := vID.(string)
 		queryParams1 := dnacentersdkgo.GetDevicesDiscoveredByIDQueryParams{}
 

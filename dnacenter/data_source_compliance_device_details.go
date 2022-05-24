@@ -83,7 +83,7 @@ func dataSourceComplianceDeviceDetails() *schema.Resource {
 
 						"last_sync_time": &schema.Schema{
 							Description: `Last Sync Time`,
-							Type:        schema.TypeInt,
+							Type:        schema.TypeString,
 							Computed:    true,
 						},
 
@@ -123,7 +123,7 @@ func dataSourceComplianceDeviceDetailsRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetComplianceDetail")
+		log.Printf("[DEBUG] Selected method: GetComplianceDetail")
 		queryParams1 := dnacentersdkgo.GetComplianceDetailQueryParams{}
 
 		if okComplianceType {

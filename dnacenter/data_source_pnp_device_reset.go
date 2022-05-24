@@ -95,8 +95,11 @@ func dataSourcePnpDeviceReset() *schema.Resource {
 						},
 						"json_response": &schema.Schema{
 							Description: `Json Response`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"message": &schema.Schema{
 							Description: `Message`,
@@ -130,7 +133,7 @@ func dataSourcePnpDeviceResetRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ResetDevice")
+		log.Printf("[DEBUG] Selected method: ResetDevice")
 		request1 := expandRequestPnpDeviceResetResetDevice(ctx, "", d)
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.ResetDevice(request1)
@@ -176,10 +179,6 @@ func expandRequestPnpDeviceResetResetDevice(ctx context.Context, key string, d *
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".workflow_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".workflow_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".workflow_id")))) {
 		request.WorkflowID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -200,10 +199,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListArray(ctx context.Cont
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -224,10 +219,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetList(ctx context.Context, 
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".top_of_stack_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".top_of_stack_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".top_of_stack_serial_number")))) {
 		request.TopOfStackSerialNumber = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -248,10 +239,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigListArray(ctx co
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -263,10 +250,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigList(ctx context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_parameters")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_parameters")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_parameters")))) {
 		request.ConfigParameters = expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigListConfigParametersArray(ctx, key+".config_parameters", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -287,10 +270,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigListConfigParame
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -302,10 +281,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigListConfigParame
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

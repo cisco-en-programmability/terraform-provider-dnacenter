@@ -46,13 +46,10 @@ func dataSourceTagMemberCreate() *schema.Resource {
 					},
 				},
 			},
-			"payload": &schema.Schema{
-				Description: `Array of RequestAddMembersToTheTagRequest`,
-				Type:        schema.TypeList,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-				Required: true,
+			"object": &schema.Schema{
+				Description: `object`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 		},
 	}
@@ -66,7 +63,7 @@ func dataSourceTagMemberCreateRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: AddMembersToTheTag")
+		log.Printf("[DEBUG] Selected method: AddMembersToTheTag")
 		vvID := vID.(string)
 		request1 := expandRequestTagMemberCreateAddMembersToTheTag(ctx, "", d)
 
@@ -104,27 +101,9 @@ func dataSourceTagMemberCreateRead(ctx context.Context, d *schema.ResourceData, 
 
 func expandRequestTagMemberCreateAddMembersToTheTag(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagAddMembersToTheTag {
 	request := dnacentersdkgo.RequestTagAddMembersToTheTag{}
-	if v := expandRequestItemTagMemberAddMembersToTheTag(ctx, key+".payload", d); v != nil {
-		request = *v
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".object")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".object")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".object")))) {
+		request.object = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
-	return &request
-}
-
-func expandRequestItemTagMemberAddMembersToTheTag(ctx context.Context, key string, d *schema.ResourceData) *map[string][]string {
-	var request map[string][]string
-	o := d.Get(fixKeyAccess(key))
-	if o == nil {
-		return nil
-	}
-	request = o.(map[string][]string)
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

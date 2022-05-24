@@ -63,7 +63,7 @@ func dataSourceConfigurationTemplateVersionCreateRead(ctx context.Context, d *sc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: VersionTemplate")
+		log.Printf("[DEBUG] Selected method: VersionTemplate")
 		request1 := expandRequestConfigurationTemplateVersionCreateVersionTemplate(ctx, "", d)
 
 		response1, restyResp1, err := client.ConfigurationTemplates.VersionTemplate(request1)
@@ -106,10 +106,6 @@ func expandRequestConfigurationTemplateVersionCreateVersionTemplate(ctx context.
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
 		request.TemplateID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

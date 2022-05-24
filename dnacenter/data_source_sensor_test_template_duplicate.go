@@ -70,8 +70,11 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 						},
 						"frequency": &schema.Schema{
 							Description: `Frequency`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"last_modified_time": &schema.Schema{
 							Description: `Last Modified Time`,
@@ -80,14 +83,17 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 						},
 						"legacy_test_suite": &schema.Schema{
 							Description: `Legacy Test Suite`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"location": &schema.Schema{
 							Description: `Location`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"location_info_list": &schema.Schema{
 							Type:     schema.TypeList,
@@ -97,7 +103,7 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 
 									"all_sensors": &schema.Schema{
 										Description: `All Sensors`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -149,7 +155,7 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 						},
 						"radio_as_sensor_removed": &schema.Schema{
 							Description: `Radio As Sensor Removed`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -268,14 +274,17 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 						},
 						"show_wlc_upgrade_banner": &schema.Schema{
 							Description: `Show Wlc Upgrade Banner`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"site_hierarchy": &schema.Schema{
 							Description: `Site Hierarchy`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"ssids": &schema.Schema{
 							Type:     schema.TypeList,
@@ -285,8 +294,11 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 
 									"auth_protocol": &schema.Schema{
 										Description: `Auth Protocol`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"auth_type": &schema.Schema{
 										Description: `Auth Type`,
@@ -295,28 +307,43 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 									},
 									"auth_type_rcvd": &schema.Schema{
 										Description: `Auth Type Rcvd`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"bands": &schema.Schema{
 										Description: `Bands`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"certdownloadurl": &schema.Schema{
 										Description: `Certdownloadurl`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"certfilename": &schema.Schema{
 										Description: `Certfilename`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"certpassphrase": &schema.Schema{
 										Description: `Certpassphrase`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"certstatus": &schema.Schema{
 										Description: `Certstatus`,
@@ -330,23 +357,29 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 									},
 									"eap_method": &schema.Schema{
 										Description: `Eap Method`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"ext_web_auth": &schema.Schema{
 										Description: `Ext Web Auth`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"ext_web_auth_access_url": &schema.Schema{
 										Description: `Ext Web Auth Access Url`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"ext_web_auth_html_tag": &schema.Schema{
 										Description: `Ext Web Auth Html Tag`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
@@ -354,13 +387,19 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 									},
 									"ext_web_auth_portal": &schema.Schema{
 										Description: `Ext Web Auth Portal`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"ext_web_auth_virtual_ip": &schema.Schema{
 										Description: `Ext Web Auth Virtual Ip`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"id": &schema.Schema{
 										Description: `Id`,
@@ -369,23 +408,35 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 									},
 									"layer3web_auth_email_address": &schema.Schema{
 										Description: `Layer3web Auth Email Address`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authpassword": &schema.Schema{
 										Description: `Layer3web Authpassword`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authsecurity": &schema.Schema{
 										Description: `Layer3web Authsecurity`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authuser_name": &schema.Schema{
 										Description: `Layer3web Authuser Name`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"num_aps": &schema.Schema{
 										Description: `Num Aps`,
@@ -399,8 +450,11 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 									},
 									"password": &schema.Schema{
 										Description: `Password`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"profile_name": &schema.Schema{
 										Description: `Profile Name`,
@@ -419,7 +473,7 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 									},
 									"scep": &schema.Schema{
 										Description: `Scep`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -463,7 +517,7 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 
 												"selected": &schema.Schema{
 													Description: `Selected`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -472,8 +526,11 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 									},
 									"username": &schema.Schema{
 										Description: `Username`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"valid_from": &schema.Schema{
 										Description: `Valid From`,
@@ -487,7 +544,7 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 									},
 									"white_list": &schema.Schema{
 										Description: `White List`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -498,8 +555,11 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 									},
 									"wlc": &schema.Schema{
 										Description: `Wlc`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 								},
 							},
@@ -516,8 +576,11 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 						},
 						"tenant_id": &schema.Schema{
 							Description: `Tenant Id`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"test_duration_estimate": &schema.Schema{
 							Description: `Test Duration Estimate`,
@@ -531,14 +594,17 @@ func dataSourceSensorTestTemplateDuplicate() *schema.Resource {
 						},
 						"test_template": &schema.Schema{
 							Description: `Test Template`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"tests": &schema.Schema{
 							Description: `Tests`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"version": &schema.Schema{
 							Description: `Version`,
@@ -577,7 +643,7 @@ func dataSourceSensorTestTemplateDuplicateRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DuplicateSensorTestTemplate")
+		log.Printf("[DEBUG] Selected method: DuplicateSensorTestTemplate")
 		request1 := expandRequestSensorTestTemplateDuplicateDuplicateSensorTestTemplate(ctx, "", d)
 
 		response1, restyResp1, err := client.Sensors.DuplicateSensorTestTemplate(request1)
@@ -620,10 +686,6 @@ func expandRequestSensorTestTemplateDuplicateDuplicateSensorTestTemplate(ctx con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".new_template_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".new_template_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".new_template_name")))) {
 		request.NewTemplateName = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

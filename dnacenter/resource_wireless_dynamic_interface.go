@@ -2,8 +2,8 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -35,33 +35,9 @@ func resourceWirelessDynamicInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"interface_name": &schema.Schema{
-							Description: `dynamic interface name
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"vlan_id": &schema.Schema{
-							Description: `Vlan id
-`,
-							Type:     schema.TypeFloat,
-							Computed: true,
-						},
-					},
-				},
-			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -69,7 +45,7 @@ func resourceWirelessDynamicInterface() *schema.Resource {
 							Description: `dynamic-interface name
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"vlan_id": &schema.Schema{
 							Description: `Vlan Id
@@ -91,25 +67,11 @@ func resourceWirelessDynamicInterfaceCreate(ctx context.Context, d *schema.Resou
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestWirelessDynamicInterfaceCreateUpdateDynamicInterface(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	vInterfaceName := resourceItem["interface_name"]
+	vInterfaceName, okInterfaceName := resourceItem["interface_name"]
 	vvInterfaceName := interfaceToString(vInterfaceName)
-
-	queryParams1 := dnacentersdkgo.GetDynamicInterfaceQueryParams{}
-
-	queryParams1.InterfaceName = vvInterfaceName
-
-	getResponse2, err := searchWirelessGetDynamicInterface(m, queryParams1)
-	if err == nil && getResponse2 != nil {
-		resourceMap := make(map[string]string)
-		resourceMap["interface_name"] = vvInterfaceName
-		d.SetId(joinResourceID(resourceMap))
-		return resourceWirelessDynamicInterfaceRead(ctx, d, m)
-	}
-	resp1, restyResp1, err := client.Wireless.CreateUpdateDynamicInterface(request1, nil)
+	resp1, restyResp1, err := client.Wireless.CreateUpdateDynamicInterface(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
@@ -119,41 +81,6 @@ func resourceWirelessDynamicInterfaceCreate(ctx context.Context, d *schema.Resou
 		diags = append(diags, diagError(
 			"Failure when executing CreateUpdateDynamicInterface", err))
 		return diags
-	}
-	executionId := resp1.ExecutionID
-	log.Printf("[DEBUG] ExecutionID => %s", executionId)
-	if executionId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetBusinessAPIExecutionDetails", err,
-				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
-			return diags
-		}
-		for response2.Status == "IN_PROGRESS" {
-			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-		}
-		if response2.Status == "FAILURE" {
-			bapiError := response2.BapiError
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing CreateUpdateDynamicInterface", err,
-				"Failure at CreateUpdateDynamicInterface execution", bapiError))
-			return diags
-		}
 	}
 	resourceMap := make(map[string]string)
 	resourceMap["interface_name"] = vvInterfaceName
@@ -168,11 +95,11 @@ func resourceWirelessDynamicInterfaceRead(ctx context.Context, d *schema.Resourc
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vInterfaceName, okInterfaceName := resourceMap["interface_name"]
+	vInterfaceName := resourceMap["interface_name"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDynamicInterface")
+		log.Printf("[DEBUG] Selected method: GetDynamicInterface")
 		queryParams1 := dnacentersdkgo.GetDynamicInterfaceQueryParams{}
 
 		if okInterfaceName {
@@ -185,13 +112,24 @@ func resourceWirelessDynamicInterfaceRead(ctx context.Context, d *schema.Resourc
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDynamicInterface", err,
+				"Failure at GetDynamicInterface, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenWirelessGetDynamicInterfaceItems(response1)
+		items1 := getAllItemsWirelessGetDynamicInterface(m, response1, nil)
+		item1, err := searchWirelessGetDynamicInterface(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetDynamicInterface response", err,
+				"Failure when searching item from GetDynamicInterface, unexpected response", ""))
+			return diags
+		}
+		// Review flatten function used
+		vItem1 := flattenWirelessGetDynamicInterfaceByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDynamicInterface search response",
@@ -204,81 +142,6 @@ func resourceWirelessDynamicInterfaceRead(ctx context.Context, d *schema.Resourc
 }
 
 func resourceWirelessDynamicInterfaceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
-
-	var diags diag.Diagnostics
-
-	resourceID := d.Id()
-	resourceMap := separateResourceID(resourceID)
-
-	request1 := expandRequestWirelessDynamicInterfaceCreateUpdateDynamicInterface(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
-
-	vInterfaceName := resourceMap["interface_name"]
-	vvInterfaceName := interfaceToString(vInterfaceName)
-
-	queryParams1 := dnacentersdkgo.GetDynamicInterfaceQueryParams{}
-
-	queryParams1.InterfaceName = vvInterfaceName
-
-	getResponse2, err := searchWirelessGetDynamicInterface(m, queryParams1)
-	if err != nil || getResponse2 == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetDynamicInterface", err,
-			"Failure at GetDynamicInterface, unexpected response", ""))
-		return diags
-	}
-
-	if d.HasChange("parameters") {
-		resp1, restyResp1, err := client.Wireless.CreateUpdateDynamicInterface(request1, nil)
-		if err != nil || resp1 == nil {
-			if restyResp1 != nil {
-				diags = append(diags, diagErrorWithResponse(
-					"Failure when executing CreateUpdateDynamicInterface", err, restyResp1.String()))
-				return diags
-			}
-			diags = append(diags, diagError(
-				"Failure when executing CreateUpdateDynamicInterface", err))
-			return diags
-		}
-		executionId := resp1.ExecutionID
-		log.Printf("[DEBUG] ExecutionID => %s", executionId)
-		if executionId != "" {
-			time.Sleep(5 * time.Second)
-			response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp2 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetBusinessAPIExecutionDetails", err,
-					"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
-				return diags
-			}
-			for response2.Status == "IN_PROGRESS" {
-				time.Sleep(10 * time.Second)
-				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-				if err != nil || response2 == nil {
-					if restyResp1 != nil {
-						log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-					}
-					diags = append(diags, diagErrorWithAlt(
-						"Failure when executing GetExecutionByID", err,
-						"Failure at GetExecutionByID, unexpected response", ""))
-					return diags
-				}
-			}
-			if response2.Status == "FAILURE" {
-				bapiError := response2.BapiError
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing CreateUpdateDynamicInterface", err,
-					"Failure at CreateUpdateDynamicInterface execution", bapiError))
-				return diags
-			}
-		}
-	}
 	return resourceWirelessDynamicInterfaceRead(ctx, d, m)
 }
 
@@ -292,10 +155,9 @@ func resourceWirelessDynamicInterfaceDelete(ctx context.Context, d *schema.Resou
 	resourceMap := separateResourceID(resourceID)
 	vInterfaceName := resourceMap["interface_name"]
 
-	queryParams1 := dnacentersdkgo.GetDynamicInterfaceQueryParams{}
+	queryParams1 := dnacentersdkgo.GetDynamicInterfaceQueryParams
 	queryParams1.InterfaceName = vInterfaceName
 	item, err := searchWirelessGetDynamicInterface(m, queryParams1)
-	var vvInterfaceName string
 	if err != nil || item == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetDynamicInterface", err,
@@ -304,18 +166,29 @@ func resourceWirelessDynamicInterfaceDelete(ctx context.Context, d *schema.Resou
 	}
 
 	selectedMethod := 1
+	var vvID string
+	var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
 	if selectedMethod == 1 {
 
-		item1, err := searchWirelessGetDynamicInterface(m, queryParams1)
+		getResp1, _, err := client.Wireless.GetDynamicInterface(nil)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		items1 := getAllItemsWirelessGetDynamicInterface(m, getResp1, nil)
+		item1, err := searchWirelessGetDynamicInterface(m, items1, vName, vID)
 		if err != nil || item1 == nil {
 			// Assume that element it is already gone
 			return diags
 		}
-
-		vvInterfaceName = queryParams1.InterfaceName
+		if vName != item1.Name {
+			vvName = item1.Name
+		} else {
+			vvName = vName
+		}
 	}
-	restyResp1, err := client.Wireless.DeleteDynamicInterface(vvInterfaceName, nil)
+	restyResp1, err := client.Wireless.DeleteDynamicInterface(vvInterfaceName)
 	if err != nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -347,7 +220,6 @@ func expandRequestWirelessDynamicInterfaceCreateUpdateDynamicInterface(ctx conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -360,17 +232,14 @@ func searchWirelessGetDynamicInterface(m interface{}, queryParams dnacentersdkgo
 	if err != nil {
 		return foundItem, err
 	}
-
-	if ite == nil {
+	items := ite
+	if items == nil {
 		return foundItem, err
 	}
-
-	items := ite
-
 	itemsCopy := *items
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		if item.InterfaceName == queryParams.InterfaceName {
+		if item.Name == queryParams.Name {
 			var getItem *dnacentersdkgo.ResponseItemWirelessGetDynamicInterface
 			getItem = &item
 			foundItem = getItem

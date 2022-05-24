@@ -63,7 +63,7 @@ func dataSourceServiceProviderProfileDeleteRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeleteSpProfile")
+		log.Printf("[DEBUG] Selected method: DeleteSpProfile")
 		vvSpProfileName := vSpProfileName.(string)
 
 		response1, restyResp1, err := client.NetworkSettings.DeleteSpProfile(vvSpProfileName)

@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,7 +18,8 @@ func dataSourceInterfaceUpdate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on Devices.
 
-- Add/Update Interface description, VLAN membership and change Interface admin status ('UP'/'DOWN') from Request body.
+- Add/Update Interface description, VLAN membership, Voice VLAN and change Interface admin status ('UP'/'DOWN') from
+Request body.
 `,
 
 		ReadContext: dataSourceInterfaceUpdateRead,
@@ -36,32 +37,14 @@ func dataSourceInterfaceUpdate() *schema.Resource {
 				Required: true,
 			},
 			"admin_status": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"type": &schema.Schema{
-							Description: `Type`,
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-					},
-				},
+				Description: `Admin Status`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"description": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"type": &schema.Schema{
-							Description: `Type`,
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-					},
-				},
+				Description: `Description`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -76,9 +59,18 @@ func dataSourceInterfaceUpdate() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"task_id": &schema.Schema{
-										Description: `Task Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"type": &schema.Schema{
+													Description: `Type`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+											},
+										},
 									},
 									"url": &schema.Schema{
 										Type:     schema.TypeList,
@@ -114,18 +106,14 @@ func dataSourceInterfaceUpdate() *schema.Resource {
 				},
 			},
 			"vlan_id": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"type": &schema.Schema{
-							Description: `Type`,
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-					},
-				},
+				Description: `Vlan Id`,
+				Type:        schema.TypeInt,
+				Optional:    true,
+			},
+			"voice_vlan_id": &schema.Schema{
+				Description: `Voice Vlan Id`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 		},
 	}
@@ -184,37 +172,16 @@ func dataSourceInterfaceUpdateRead(ctx context.Context, d *schema.ResourceData, 
 func expandRequestInterfaceUpdateUpdateInterfaceDetails(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDevicesUpdateInterfaceDetails {
 	request := dnacentersdkgo.RequestDevicesUpdateInterfaceDetails{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
-		request.Description = expandRequestInterfaceUpdateUpdateInterfaceDetailsDescription(ctx, key+".description.0", d)
+		request.Description = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".admin_status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".admin_status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".admin_status")))) {
-		request.AdminStatus = expandRequestInterfaceUpdateUpdateInterfaceDetailsAdminStatus(ctx, key+".admin_status.0", d)
+		request.AdminStatus = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan_id")))) {
-		request.VLANID = expandRequestInterfaceUpdateUpdateInterfaceDetailsVLANID(ctx, key+".vlan_id.0", d)
+		request.VLANID = interfaceToIntPtr(v)
 	}
-	return &request
-}
-
-func expandRequestInterfaceUpdateUpdateInterfaceDetailsDescription(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDevicesUpdateInterfaceDetailsDescription {
-	request := dnacentersdkgo.RequestDevicesUpdateInterfaceDetailsDescription{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	return &request
-}
-
-func expandRequestInterfaceUpdateUpdateInterfaceDetailsAdminStatus(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDevicesUpdateInterfaceDetailsAdminStatus {
-	request := dnacentersdkgo.RequestDevicesUpdateInterfaceDetailsAdminStatus{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	return &request
-}
-
-func expandRequestInterfaceUpdateUpdateInterfaceDetailsVLANID(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDevicesUpdateInterfaceDetailsVLANID {
-	request := dnacentersdkgo.RequestDevicesUpdateInterfaceDetailsVLANID{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".voice_vlan_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".voice_vlan_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".voice_vlan_id")))) {
+		request.VoiceVLANID = interfaceToIntPtr(v)
 	}
 	return &request
 }
@@ -237,8 +204,21 @@ func flattenDevicesUpdateInterfaceDetailsItemProperties(item *dnacentersdkgo.Res
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["task_id"] = item.TaskID
+	respItem["task_id"] = flattenDevicesUpdateInterfaceDetailsItemPropertiesTaskID(item.TaskID)
 	respItem["url"] = flattenDevicesUpdateInterfaceDetailsItemPropertiesURL(item.URL)
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenDevicesUpdateInterfaceDetailsItemPropertiesTaskID(item *dnacentersdkgo.ResponseDevicesUpdateInterfaceDetailsResponsePropertiesTaskID) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["type"] = item.Type
 
 	return []map[string]interface{}{
 		respItem,

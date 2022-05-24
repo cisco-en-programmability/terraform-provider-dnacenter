@@ -85,7 +85,7 @@ func dataSourceSdaFabricEdgeDeviceRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEdgeDeviceFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetEdgeDeviceFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetEdgeDeviceFromSdaFabricQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress.(string)

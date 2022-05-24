@@ -71,7 +71,7 @@ func dataSourceNetworkDeviceSupervisorCardDetailsRead(ctx context.Context, d *sc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSupervisorCardDetail")
+		log.Printf("[DEBUG] Selected method: GetSupervisorCardDetail")
 		vvDeviceUUID := vDeviceUUID.(string)
 
 		response1, restyResp1, err := client.Devices.GetSupervisorCardDetail(vvDeviceUUID)

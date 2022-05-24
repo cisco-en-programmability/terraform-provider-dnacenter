@@ -28,10 +28,10 @@ func dataSourceConfigurationTemplateClone() *schema.Resource {
 				Required: true,
 			},
 			"project_id": &schema.Schema{
-				Description: `projectId path parameter. UUID of the project in which the template needs to be created
+				Description: `projectId query parameter. UUID of the project in which the template needs to be created
 `,
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 			},
 			"template_id": &schema.Schema{
 				Description: `templateId path parameter. UUID of the template to clone it
@@ -67,15 +67,21 @@ func dataSourceConfigurationTemplateCloneRead(ctx context.Context, d *schema.Res
 	vName := d.Get("name")
 	vTemplateID := d.Get("template_id")
 	vProjectID := d.Get("project_id")
+	vProjectID, okProjectID := d.GetOk("project_id")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreatesACloneOfTheGivenTemplate")
+		log.Printf("[DEBUG] Selected method: CreatesACloneOfTheGivenTemplate")
 		vvName := vName.(string)
 		vvTemplateID := vTemplateID.(string)
 		vvProjectID := vProjectID.(string)
+		queryParams1 := dnacentersdkgo.CreatesACloneOfTheGivenTemplateQueryParams{}
 
-		response1, restyResp1, err := client.ConfigurationTemplates.CreatesACloneOfTheGivenTemplate(vvName, vvTemplateID, vvProjectID)
+		if okProjectID {
+			queryParams1.ProjectID = vProjectID.(string)
+		}
+
+		response1, restyResp1, err := client.ConfigurationTemplates.CreatesACloneOfTheGivenTemplate(vvName, vvTemplateID, vvProjectID, &queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

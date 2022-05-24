@@ -8,21 +8,21 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // dataSourceAction
-func dataSourceEventWebhookCrete() *schema.Resource {
+func dataSourceEventWebhookCreate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Event Management.
 
 - Create Webhook Destination
 `,
 
-		ReadContext: dataSourceEventWebhookCreteRead,
+		ReadContext: dataSourceEventWebhookCreateRead,
 		Schema: map[string]*schema.Schema{
 			"description": &schema.Schema{
 				Description: `Description`,
@@ -128,7 +128,7 @@ func dataSourceEventWebhookCrete() *schema.Resource {
 	}
 }
 
-func dataSourceEventWebhookCreteRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceEventWebhookCreateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
@@ -136,7 +136,7 @@ func dataSourceEventWebhookCreteRead(ctx context.Context, d *schema.ResourceData
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: CreateWebhookDestination")
-		request1 := expandRequestEventWebhookCreteCreateWebhookDestination(ctx, "", d)
+		request1 := expandRequestEventWebhookCreateCreateWebhookDestination(ctx, "", d)
 
 		response1, restyResp1, err := client.EventManagement.CreateWebhookDestination(request1)
 
@@ -170,7 +170,7 @@ func dataSourceEventWebhookCreteRead(ctx context.Context, d *schema.ResourceData
 	return diags
 }
 
-func expandRequestEventWebhookCreteCreateWebhookDestination(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementCreateWebhookDestination {
+func expandRequestEventWebhookCreateCreateWebhookDestination(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementCreateWebhookDestination {
 	request := dnacentersdkgo.RequestEventManagementCreateWebhookDestination{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".webhook_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".webhook_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".webhook_id")))) {
 		request.WebhookID = interfaceToString(v)
@@ -191,12 +191,12 @@ func expandRequestEventWebhookCreteCreateWebhookDestination(ctx context.Context,
 		request.TrustCert = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".headers")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".headers")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".headers")))) {
-		request.Headers = expandRequestEventWebhookCreteCreateWebhookDestinationHeadersArray(ctx, key+".headers", d)
+		request.Headers = expandRequestEventWebhookCreateCreateWebhookDestinationHeadersArray(ctx, key+".headers", d)
 	}
 	return &request
 }
 
-func expandRequestEventWebhookCreteCreateWebhookDestinationHeadersArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestEventManagementCreateWebhookDestinationHeaders {
+func expandRequestEventWebhookCreateCreateWebhookDestinationHeadersArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestEventManagementCreateWebhookDestinationHeaders {
 	request := []dnacentersdkgo.RequestEventManagementCreateWebhookDestinationHeaders{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
@@ -208,7 +208,7 @@ func expandRequestEventWebhookCreteCreateWebhookDestinationHeadersArray(ctx cont
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestEventWebhookCreteCreateWebhookDestinationHeaders(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestEventWebhookCreateCreateWebhookDestinationHeaders(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
@@ -216,7 +216,7 @@ func expandRequestEventWebhookCreteCreateWebhookDestinationHeadersArray(ctx cont
 	return &request
 }
 
-func expandRequestEventWebhookCreteCreateWebhookDestinationHeaders(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementCreateWebhookDestinationHeaders {
+func expandRequestEventWebhookCreateCreateWebhookDestinationHeaders(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementCreateWebhookDestinationHeaders {
 	request := dnacentersdkgo.RequestEventManagementCreateWebhookDestinationHeaders{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)

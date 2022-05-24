@@ -74,7 +74,7 @@ func dataSourceTaskTree() *schema.Resource {
 						},
 
 						"is_error": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -85,8 +85,11 @@ func dataSourceTaskTree() *schema.Resource {
 						},
 
 						"operation_id_list": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"parent_id": &schema.Schema{
@@ -138,7 +141,7 @@ func dataSourceTaskTreeRead(ctx context.Context, d *schema.ResourceData, m inter
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTaskTree")
+		log.Printf("[DEBUG] Selected method: GetTaskTree")
 		vvTaskID := vTaskID.(string)
 
 		response1, restyResp1, err := client.Task.GetTaskTree(vvTaskID)

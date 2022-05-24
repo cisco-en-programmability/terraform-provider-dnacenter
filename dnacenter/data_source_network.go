@@ -89,7 +89,7 @@ func dataSourceNetwork() *schema.Resource {
 
 									"configure_dnac_ip": &schema.Schema{
 										Description: `Configure Dnac I P`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -126,7 +126,7 @@ func dataSourceNetworkRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetwork")
+		log.Printf("[DEBUG] Selected method: GetNetwork")
 		queryParams1 := dnacentersdkgo.GetNetworkQueryParams{}
 
 		if okSiteID {

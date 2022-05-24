@@ -2,8 +2,6 @@ package dnacenter
 
 import (
 	"context"
-	"io"
-	"os"
 
 	"log"
 
@@ -18,8 +16,7 @@ func dataSourceAuthenticationImportCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Authentication Management.
 
-- This method is used to upload a certificate.
-Upload the files to the **certFileUpload** and **pkFileUpload** form data fields
+- This method is used to upload a certificate
 `,
 
 		ReadContext: dataSourceAuthenticationImportCertificateRead,
@@ -29,12 +26,7 @@ Upload the files to the **certFileUpload** and **pkFileUpload** form data fields
 				Type:        schema.TypeString,
 				Required:    true,
 			},
-			"pk_file_name": &schema.Schema{
-				Description: `File name.`,
-				Type:        schema.TypeString,
-				Required:    true,
-			},
-			"cert_file_name": &schema.Schema{
+			"file_name": &schema.Schema{
 				Description: `File name.`,
 				Type:        schema.TypeString,
 				Required:    true,
@@ -86,14 +78,10 @@ func dataSourceAuthenticationImportCertificateRead(ctx context.Context, d *schem
 	var diags diag.Diagnostics
 	vPkPassword, okPkPassword := d.GetOk("pk_password")
 	vListOfUsers, okListOfUsers := d.GetOk("list_of_users")
-	vCertFilePath := d.Get("cert_file_path")
-	vPkFileName := d.Get("pk_file_name")
-	vCertFileName := d.Get("cert_file_name")
-	vPkFilePath := d.Get("pk_file_path")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ImportCertificate")
+		log.Printf("[DEBUG] Selected method: ImportCertificate")
 		queryParams1 := dnacentersdkgo.ImportCertificateQueryParams{}
 
 		if okPkPassword {
@@ -103,69 +91,15 @@ func dataSourceAuthenticationImportCertificateRead(ctx context.Context, d *schem
 			queryParams1.ListOfUsers = interfaceToSliceString(vListOfUsers)
 		}
 
-		isDir, err := IsDirectory(vCertFilePath.(string))
-		if err != nil || isDir {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing CertFile", err,
-				"Failure at CertFile, Path is a directory", ""))
-			return diags
-		}
-
-		isDir2, err := IsDirectory(vPkFilePath.(string))
-		if err != nil || isDir2 {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing PkFile", err,
-				"Failure at PkFile, Path is a directory", ""))
-			return diags
-		}
-
-		first_file, err := os.Open(vPkFilePath.(string))
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing PkFile", err,
-				"Failure at PkFile, unexpected response", ""))
-			return diags
-		}
-		second_file, err := os.Open(vCertFilePath.(string))
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing CertFile", err,
-				"Failure at CertFile, unexpected response", ""))
-			return diags
-		}
-		defer func() {
-			if err = first_file.Close(); err != nil {
-				log.Printf("File close error %s", err.Error())
-			}
-		}()
-
-		defer func() {
-			if err = second_file.Close(); err != nil {
-				log.Printf("File close error %s", err.Error())
-			}
-		}()
-
-		var r io.Reader
-		var r2 io.Reader
-		r = first_file
-		r2 = second_file
-		response1, restyResp1, err := client.AuthenticationManagement.ImportCertificate(
-			&queryParams1,
-			&dnacentersdkgo.ImportCertificateMultipartFields{
-				PkFileUploadName:   vPkFileName.(string),
-				PkFileUpload:       r,
-				CertFileUploadName: vCertFileName.(string),
-				CertFileUpload:     r2,
-			},
-		)
+		response1, restyResp1, err := client.AuthenticationManagement.ImportCertificate(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing CertFile or PkFIle", err,
-				"Failure at CertFile or PkFIle, unexpected response", ""))
+				"Failure when executing ImportCertificate", err,
+				"Failure at ImportCertificate, unexpected response", ""))
 			return diags
 		}
 

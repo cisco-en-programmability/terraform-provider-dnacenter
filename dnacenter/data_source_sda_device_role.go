@@ -68,7 +68,7 @@ func dataSourceSdaDeviceRoleRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceRoleInSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetDeviceRoleInSdaFabric")
 		queryParams1 := dnacentersdkgo.GetDeviceRoleInSdaFabricQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress.(string)

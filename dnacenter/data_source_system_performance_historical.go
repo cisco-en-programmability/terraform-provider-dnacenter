@@ -58,8 +58,22 @@ func dataSourceSystemPerformanceHistorical() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"data": &schema.Schema{
-										Type:     schema.TypeMap,
+										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"t1": &schema.Schema{
+													Description: `Time in  'YYYY-MM-DDT00:00:00Z' format with values for legends
+`,
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
 									},
 
 									"legends": &schema.Schema{
@@ -161,7 +175,7 @@ func dataSourceSystemPerformanceHistoricalRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SystemPerformanceHistoricalApI")
+		log.Printf("[DEBUG] Selected method: SystemPerformanceHistoricalApI")
 		queryParams1 := dnacentersdkgo.SystemPerformanceHistoricalApIQueryParams{}
 
 		if okKpi {
@@ -297,13 +311,15 @@ func flattenHealthAndPerformanceSystemPerformanceHistoricalApIItemKpisLegendsNet
 
 }
 
-func flattenHealthAndPerformanceSystemPerformanceHistoricalApIItemKpisData(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceHistoricalAPIKpisData) map[string]interface{} {
+func flattenHealthAndPerformanceSystemPerformanceHistoricalApIItemKpisData(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceHistoricalAPIKpisData) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	for key, value := range *item {
-		respItem[key] = listNicely(value)
+	respItem["t1"] = item.T1
+
+	return []map[string]interface{}{
+		respItem,
 	}
-	return respItem
+
 }

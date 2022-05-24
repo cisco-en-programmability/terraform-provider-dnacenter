@@ -88,7 +88,7 @@ func dataSourceSdaProvisionDeviceRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetProvisionedWiredDevice")
+		log.Printf("[DEBUG] Selected method: GetProvisionedWiredDevice")
 		queryParams1 := dnacentersdkgo.GetProvisionedWiredDeviceQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress.(string)

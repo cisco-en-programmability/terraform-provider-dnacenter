@@ -82,7 +82,7 @@ func dataSourceClientProximityRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ClientProximity")
+		log.Printf("[DEBUG] Selected method: ClientProximity")
 		queryParams1 := dnacentersdkgo.ClientProximityQueryParams{}
 
 		queryParams1.Username = vUsername.(string)

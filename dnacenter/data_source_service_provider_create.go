@@ -92,7 +92,7 @@ func dataSourceServiceProviderCreateRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateSpProfile")
+		log.Printf("[DEBUG] Selected method: CreateSpProfile")
 		request1 := expandRequestServiceProviderCreateCreateSpProfile(ctx, "", d)
 
 		response1, restyResp1, err := client.NetworkSettings.CreateSpProfile(request1)
@@ -130,10 +130,6 @@ func dataSourceServiceProviderCreateRead(ctx context.Context, d *schema.Resource
 func expandRequestServiceProviderCreateCreateSpProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateSpProfile {
 	request := dnacentersdkgo.RequestNetworkSettingsCreateSpProfile{}
 	request.Settings = expandRequestServiceProviderCreateCreateSpProfileSettings(ctx, key, d)
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -142,10 +138,6 @@ func expandRequestServiceProviderCreateCreateSpProfileSettings(ctx context.Conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".qos")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".qos")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".qos")))) {
 		request.Qos = expandRequestServiceProviderCreateCreateSpProfileSettingsQosArray(ctx, key+".qos", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -166,10 +158,6 @@ func expandRequestServiceProviderCreateCreateSpProfileSettingsQosArray(ctx conte
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -184,10 +172,6 @@ func expandRequestServiceProviderCreateCreateSpProfileSettingsQos(ctx context.Co
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".wan_provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".wan_provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".wan_provider")))) {
 		request.WanProvider = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

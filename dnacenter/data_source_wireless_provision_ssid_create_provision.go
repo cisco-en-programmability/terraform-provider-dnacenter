@@ -24,17 +24,10 @@ sites
 
 		ReadContext: dataSourceWirelessProvisionSSIDCreateProvisionRead,
 		Schema: map[string]*schema.Schema{
-			"persistbapioutput": &schema.Schema{
-				Description: `__persistbapioutput header parameter. Persist bapi sync response
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
 			"enable_fabric": &schema.Schema{
 				Description: `Enable SSID for Fabric
 `,
-
+				// Type:        schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -48,7 +41,7 @@ sites
 						"enable_flex_connect": &schema.Schema{
 							Description: `Enable Flex Connect
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -104,7 +97,7 @@ sites
 						"enable_broadcast_ssi_d": &schema.Schema{
 							Description: `Enable Broadcast SSID
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -112,7 +105,7 @@ sites
 						"enable_fast_lane": &schema.Schema{
 							Description: `Enable Fast Lane
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -120,7 +113,7 @@ sites
 						"enable_mac_filtering": &schema.Schema{
 							Description: `Enable MAC Filtering
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -184,18 +177,16 @@ func dataSourceWirelessProvisionSSIDCreateProvisionRead(ctx context.Context, d *
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("persistbapioutput")
+	vPersistbapioutput := d.Get("persistbapioutput")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateAndProvisionSSID")
+		log.Printf("[DEBUG] Selected method: CreateAndProvisionSSID")
 		request1 := expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSID(ctx, "", d)
 
 		headerParams1 := dnacentersdkgo.CreateAndProvisionSSIDHeaderParams{}
 
-		if okPersistbapioutput {
-			headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-		}
+		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
 		response1, restyResp1, err := client.Wireless.CreateAndProvisionSSID(request1, &headerParams1)
 
@@ -246,10 +237,6 @@ func expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSID(ctx
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".flex_connect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".flex_connect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".flex_connect")))) {
 		request.FlexConnect = expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSIDFlexConnect(ctx, key+".flex_connect.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -285,10 +272,6 @@ func expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSIDSSID
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".web_auth_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".web_auth_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".web_auth_url")))) {
 		request.WebAuthURL = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -300,10 +283,6 @@ func expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSIDFlex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".local_to_vlan")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".local_to_vlan")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".local_to_vlan")))) {
 		request.LocalToVLAN = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

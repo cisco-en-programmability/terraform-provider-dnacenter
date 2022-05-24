@@ -289,7 +289,7 @@ func dataSourceApplicationsRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetApplications")
+		log.Printf("[DEBUG] Selected method: GetApplications")
 		queryParams1 := dnacentersdkgo.GetApplicationsQueryParams{}
 
 		if okOffset {
@@ -328,22 +328,6 @@ func dataSourceApplicationsRead(ctx context.Context, d *schema.ResourceData, m i
 
 	}
 	return diags
-}
-
-func flattenApplicationPolicyGetApplicationsItem(item *dnacentersdkgo.ResponseApplicationPolicyGetApplicationsResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["id"] = item.ID
-	respItem["name"] = item.Name
-	respItem["indicative_network_identity"] = flattenApplicationPolicyGetApplicationsItemsIndicativeNetworkIDentity(item.IndicativeNetworkIDentity)
-	respItem["network_applications"] = flattenApplicationPolicyGetApplicationsItemsNetworkApplications(item.NetworkApplications)
-	respItem["network_identity"] = flattenApplicationPolicyGetApplicationsItemsNetworkIDentity(item.NetworkIDentity)
-	respItem["application_set"] = flattenApplicationPolicyGetApplicationsItemsApplicationSet(item.ApplicationSet)
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenApplicationPolicyGetApplicationsItems(items *[]dnacentersdkgo.ResponseApplicationPolicyGetApplicationsResponse) []map[string]interface{} {

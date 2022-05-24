@@ -87,7 +87,7 @@ the new profile
 									},
 									"make_default": &schema.Schema{
 										Description: `Make Default`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -108,7 +108,7 @@ the new profile
 									},
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -212,7 +212,7 @@ the new profile
 							Optional: true,
 						},
 						"make_default": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -230,7 +230,7 @@ the new profile
 							Optional: true,
 						},
 						"proxy": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -310,7 +310,7 @@ func dataSourcePnpVirtualAccountAddRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: AddVirtualAccount")
+		log.Printf("[DEBUG] Selected method: AddVirtualAccount")
 		request1 := expandRequestPnpVirtualAccountAddAddVirtualAccount(ctx, "", d)
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.AddVirtualAccount(request1)
@@ -386,10 +386,6 @@ func expandRequestPnpVirtualAccountAddAddVirtualAccount(ctx context.Context, key
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_account_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_account_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_account_id")))) {
 		request.VirtualAccountID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -419,10 +415,6 @@ func expandRequestPnpVirtualAccountAddAddVirtualAccountProfile(ctx context.Conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".proxy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".proxy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".proxy")))) {
 		request.Proxy = interfaceToBoolPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -434,10 +426,6 @@ func expandRequestPnpVirtualAccountAddAddVirtualAccountSyncResult(ctx context.Co
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_msg")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_msg")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_msg")))) {
 		request.SyncMsg = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -458,10 +446,6 @@ func expandRequestPnpVirtualAccountAddAddVirtualAccountSyncResultSyncListArray(c
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -473,10 +457,6 @@ func expandRequestPnpVirtualAccountAddAddVirtualAccountSyncResultSyncList(ctx co
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_type")))) {
 		request.SyncType = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

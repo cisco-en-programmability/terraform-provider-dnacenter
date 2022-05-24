@@ -59,7 +59,7 @@ func dataSourceDeviceReplacementDeployRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeployDeviceReplacementWorkflow")
+		log.Printf("[DEBUG] Selected method: DeployDeviceReplacementWorkflow")
 		request1 := expandRequestDeviceReplacementDeployDeployDeviceReplacementWorkflow(ctx, "", d)
 
 		response1, restyResp1, err := client.DeviceReplacement.DeployDeviceReplacementWorkflow(request1)
@@ -102,10 +102,6 @@ func expandRequestDeviceReplacementDeployDeployDeviceReplacementWorkflow(ctx con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".replacement_device_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".replacement_device_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".replacement_device_serial_number")))) {
 		request.ReplacementDeviceSerialNumber = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

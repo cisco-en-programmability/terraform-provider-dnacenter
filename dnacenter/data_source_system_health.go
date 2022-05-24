@@ -55,6 +55,16 @@ func dataSourceSystemHealth() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"cimcaddress": &schema.Schema{
+							Description: `List of configured cimc addresse(s)
+`,
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+
 						"health_events": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -159,7 +169,7 @@ func dataSourceSystemHealthRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SystemHealthApI")
+		log.Printf("[DEBUG] Selected method: SystemHealthApI")
 		queryParams1 := dnacentersdkgo.SystemHealthApIQueryParams{}
 
 		if okSummary {
@@ -214,6 +224,7 @@ func flattenHealthAndPerformanceSystemHealthApIItem(item *dnacentersdkgo.Respons
 	respItem["health_events"] = flattenHealthAndPerformanceSystemHealthApIItemHealthEvents(item.HealthEvents)
 	respItem["version"] = item.Version
 	respItem["host_name"] = item.HostName
+	respItem["cimcaddress"] = item.Cimcaddress
 	return []map[string]interface{}{
 		respItem,
 	}

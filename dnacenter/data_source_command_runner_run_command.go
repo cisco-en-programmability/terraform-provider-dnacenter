@@ -77,7 +77,7 @@ func dataSourceCommandRunnerRunCommandRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration")
+		log.Printf("[DEBUG] Selected method: RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration")
 		request1 := expandRequestCommandRunnerRunCommandRunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration(ctx, "", d)
 
 		response1, restyResp1, err := client.CommandRunner.RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration(request1)
@@ -129,10 +129,6 @@ func expandRequestCommandRunnerRunCommandRunReadOnlyCommandsOnDevicesToGetTheirR
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".timeout")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".timeout")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".timeout")))) {
 		request.Timeout = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

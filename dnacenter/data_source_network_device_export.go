@@ -78,7 +78,7 @@ func dataSourceNetworkDeviceExportRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ExportDeviceList")
+		log.Printf("[DEBUG] Selected method: ExportDeviceList")
 		request1 := expandRequestNetworkDeviceExportExportDeviceList(ctx, "", d)
 
 		response1, restyResp1, err := client.Devices.ExportDeviceList(request1)
@@ -130,10 +130,6 @@ func expandRequestNetworkDeviceExportExportDeviceList(ctx context.Context, key s
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

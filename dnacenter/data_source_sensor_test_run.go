@@ -43,7 +43,7 @@ func dataSourceSensorTestRunRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RunNowSensorTest")
+		log.Printf("[DEBUG] Selected method: RunNowSensorTest")
 		request1 := expandRequestSensorTestRunRunNowSensorTest(ctx, "", d)
 
 		response1, err := client.Sensors.RunNowSensorTest(request1)
@@ -79,9 +79,5 @@ func expandRequestSensorTestRunRunNowSensorTest(ctx context.Context, key string,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_name")))) {
 		request.TemplateName = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }

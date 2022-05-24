@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -62,6 +61,12 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"is_deletable": &schema.Schema{
+							Description: `Is deletable`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"last_update_time": &schema.Schema{
 							Description: `Update time of project
 `,
@@ -112,7 +117,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -125,7 +130,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"composite": &schema.Schema{
 													Description: `Is it composite template
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -255,7 +260,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -268,7 +273,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -314,7 +319,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -456,7 +461,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -469,7 +474,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -515,7 +520,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -579,7 +584,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"custom_params_order": &schema.Schema{
 										Description: `Custom Params Order
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -615,13 +620,6 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												},
 											},
 										},
-									},
-									"document_database": &schema.Schema{
-										Description: `Document Database
-`,
-
-										Type:     schema.TypeString,
-										Computed: true,
 									},
 									"failure_policy": &schema.Schema{
 										Description: `Define failure policy if template provisioning fails
@@ -662,13 +660,6 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"parent_template_id": &schema.Schema{
 										Description: `Parent templateID
 `,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"project_associated": &schema.Schema{
-										Description: `Project Associated
-`,
-
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -759,7 +750,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -772,7 +763,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -818,7 +809,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -978,7 +969,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -991,7 +982,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1037,7 +1028,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1136,9 +1127,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -1170,13 +1159,13 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 							Description: `Name of project
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"project_id": &schema.Schema{
 							Description: `projectId path parameter. projectId(UUID) of project to be deleted
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 						"tags": &schema.Schema{
 							Type:     schema.TypeList,
@@ -1216,7 +1205,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1230,7 +1219,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"composite": &schema.Schema{
 													Description: `Is it composite template
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1361,7 +1350,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1375,7 +1364,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1422,7 +1411,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1567,7 +1556,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1581,7 +1570,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1628,7 +1617,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1695,7 +1684,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 									"custom_params_order": &schema.Schema{
 										Description: `Custom Params Order
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1732,14 +1721,6 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												},
 											},
 										},
-									},
-									"document_database": &schema.Schema{
-										Description: `Document Database
-`,
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
 									},
 									"failure_policy": &schema.Schema{
 										Description: `Define failure policy if template provisioning fails
@@ -1782,14 +1763,6 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
-									},
-									"project_associated": &schema.Schema{
-										Description: `Project Associated
-`,
-
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
 									},
 									"project_id": &schema.Schema{
 										Description: `Project UUID
@@ -1878,7 +1851,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1892,7 +1865,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1939,7 +1912,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2102,7 +2075,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2116,7 +2089,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2163,7 +2136,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2275,33 +2248,28 @@ func resourceConfigurationTemplateProjectCreate(ctx context.Context, d *schema.R
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestConfigurationTemplateProjectCreateProject(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vProjectID, okProjectID := resourceItem["project_id"]
-	vName := resourceItem["name"]
-	vvName := interfaceToString(vName)
 	vvProjectID := interfaceToString(vProjectID)
 	if okProjectID && vvProjectID != "" {
 		getResponse2, _, err := client.ConfigurationTemplates.GetsTheDetailsOfAGivenProject(vvProjectID)
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["project_id"] = vvProjectID
-			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
 			return resourceConfigurationTemplateProjectRead(ctx, d, m)
 		}
 	} else {
-		queryParams1 := dnacentersdkgo.GetsAListOfProjectsQueryParams{}
-		queryParams1.Name = vvName
-		item2, err := searchConfigurationTemplatesGetsAListOfProjects(m, queryParams1)
-		if err == nil && item2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["project_id"] = vvProjectID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceConfigurationTemplateProjectRead(ctx, d, m)
+		response2, _, err := client.ConfigurationTemplates.GetsAListOfProjects(nil)
+		if response2 != nil && err == nil {
+			item2, err := searchConfigurationTemplatesGetsAListOfProjects(m, items2, vvName, vvID)
+			if err == nil && item2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["project_id"] = vvProjectID
+				d.SetId(joinResourceID(resourceMap))
+				return resourceConfigurationTemplateProjectRead(ctx, d, m)
+			}
 		}
 	}
 	resp1, restyResp1, err := client.ConfigurationTemplates.CreateProject(request1)
@@ -2315,35 +2283,8 @@ func resourceConfigurationTemplateProjectCreate(ctx context.Context, d *schema.R
 			"Failure when executing CreateProject", err))
 		return diags
 	}
-	if resp1.Response == nil {
-		diags = append(diags, diagError(
-			"Failure when executing CreateProject", err))
-		return diags
-	}
-	taskId := resp1.Response.TaskID
-	log.Printf("[DEBUG] TASKID => %s", taskId)
-	if taskId != "" {
-		time.Sleep(5 * time.Second)
-		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTaskByID", err,
-				"Failure at GetTaskByID, unexpected response", ""))
-			return diags
-		}
-		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			diags = append(diags, diagError(
-				"Failure when executing CreateConfigurationTemplateProject", err))
-			return diags
-		}
-	}
 	resourceMap := make(map[string]string)
 	resourceMap["project_id"] = vvProjectID
-	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
 	return resourceConfigurationTemplateProjectRead(ctx, d, m)
 }
@@ -2356,60 +2297,60 @@ func resourceConfigurationTemplateProjectRead(ctx context.Context, d *schema.Res
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vName, okName := resourceMap["name"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
 	vProjectID, okProjectID := resourceMap["project_id"]
 
-	method1 := []bool{okName}
+	method1 := []bool{okName, okSortOrder}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okProjectID}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetsAListOfProjects")
+		log.Printf("[DEBUG] Selected method: GetsAListOfProjects")
 		queryParams1 := dnacentersdkgo.GetsAListOfProjectsQueryParams{}
 
 		if okName {
 			queryParams1.Name = vName
 		}
+		if okSortOrder {
+			queryParams1.SortOrder = vSortOrder
+		}
+
 		response1, restyResp1, err := client.ConfigurationTemplates.GetsAListOfProjects(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetsAListOfProjects", err,
+				"Failure at GetsAListOfProjects, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		item2, err := searchConfigurationTemplatesGetsAListOfProjects(m, queryParams1)
-		if err != nil && item2 == nil {
-			d.SetId("")
-			return diags
-		}
-		response2, restyResp2, err := client.ConfigurationTemplates.GetsTheDetailsOfAGivenProject(item2.ID)
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
+		items1 := getAllItemsConfigurationTemplatesGetsAListOfProjects(m, response1, nil)
+		item1, err := searchConfigurationTemplatesGetsAListOfProjects(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsTheDetailsOfAGivenProject", err,
-				"Failure at GetsTheDetailsOfAGivenProject, unexpected response", ""))
+				"Failure when searching item from GetsAListOfProjects response", err,
+				"Failure when searching item from GetsAListOfProjects, unexpected response", ""))
 			return diags
 		}
-
-		vItem1 := flattenConfigurationTemplatesGetsTheDetailsOfAGivenProjectItem(response2)
+		// Review flatten function used
+		vItem1 := flattenConfigurationTemplatesGetsAListOfProjectsByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetsTheDetailsOfAGivenProject response",
+				"Failure when setting GetsAListOfProjects search response",
 				err))
 			return diags
 		}
-		return diags
+
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetsTheDetailsOfAGivenProject")
+		log.Printf("[DEBUG] Selected method: GetsTheDetailsOfAGivenProject")
 		vvProjectID := vProjectID
 
 		response2, restyResp2, err := client.ConfigurationTemplates.GetsTheDetailsOfAGivenProject(vvProjectID)
@@ -2418,7 +2359,9 @@ func resourceConfigurationTemplateProjectRead(ctx context.Context, d *schema.Res
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetsTheDetailsOfAGivenProject", err,
+				"Failure at GetsTheDetailsOfAGivenProject, unexpected response", ""))
 			return diags
 		}
 
@@ -2444,40 +2387,50 @@ func resourceConfigurationTemplateProjectUpdate(ctx context.Context, d *schema.R
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vProjectID := resourceMap["project_id"]
-	vName := resourceMap["name"]
+	vName, okName := resourceMap["name"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
 
+	queryParams1 := dnacentersdkgo.GetsAListOfProjectsQueryParams
+	queryParams1.Name = vName
+	queryParams1.SortOrder = vSortOrder
+	item, err := searchConfigurationTemplatesGetsAListOfProjects(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetsAListOfProjects", err,
+			"Failure at GetsAListOfProjects, unexpected response", ""))
+		return diags
+	}
+
+	vProjectID, okProjectID := resourceMap["project_id"]
+
+	method1 := []bool{okName, okSortOrder}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okProjectID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	if vProjectID != "" {
-		getResp, _, err := client.ConfigurationTemplates.GetsTheDetailsOfAGivenProject(vProjectID)
+	// if selectedMethod == 1 { }
+	if selectedMethod == 2 {
+		vvID = vID
+		getResp, _, err := client.ConfigurationTemplates.GetsTheDetailsOfAGivenProject(vvProjectID)
 		if err != nil || getResp == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetsTheDetailsOfAGivenProject", err,
 				"Failure at GetsTheDetailsOfAGivenProject, unexpected response", ""))
 			return diags
 		}
-	} else if vName != "" {
-		queryParams1 := dnacentersdkgo.GetsAListOfProjectsQueryParams{}
-		queryParams1.Name = vName
-		item2, err := searchConfigurationTemplatesGetsAListOfProjects(m, queryParams1)
-		if err != nil || item2 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsTheDetailsOfAGivenProject", err,
-				"Failure at GetsTheDetailsOfAGivenProject, unexpected response", ""))
-			return diags
+		//Set value vvName = getResp.
+		if getResp.tags != nil {
+			vvName = getResp.tags.Name
 		}
-		vProjectID = item2.ID
 	}
-
 	if d.HasChange("parameters") {
-		//log.Printf("[DEBUG] Name used for update operation %s", vvName)
+		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestConfigurationTemplateProjectUpdateProject(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		if request1 != nil && request1.ID == "" {
-			request1.ID = vProjectID
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.ConfigurationTemplates.UpdateProject(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -2491,32 +2444,6 @@ func resourceConfigurationTemplateProjectUpdate(ctx context.Context, d *schema.R
 				"Failure when executing UpdateProject", err,
 				"Failure at UpdateProject, unexpected response", ""))
 			return diags
-		}
-		if response1.Response == nil {
-			diags = append(diags, diagError(
-				"Failure when executing UpdateProject", err))
-			return diags
-		}
-		taskId := response1.Response.TaskID
-		log.Printf("[DEBUG] TASKID => %s", taskId)
-		if taskId != "" {
-			time.Sleep(5 * time.Second)
-			response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-			if err != nil || response2 == nil {
-				if restyResp2 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetTaskByID", err,
-					"Failure at GetTaskByID, unexpected response", ""))
-				return diags
-			}
-			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-				diags = append(diags, diagError(
-					"Failure when executing UdpateConfigurationTemplateProject", err))
-				return diags
-			}
 		}
 	}
 
@@ -2532,39 +2459,58 @@ func resourceConfigurationTemplateProjectDelete(ctx context.Context, d *schema.R
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vName, okName := resourceMap["name"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
+
+	queryParams1 := dnacentersdkgo.GetsAListOfProjectsQueryParams
+	queryParams1.Name = vName
+	queryParams1.SortOrder = vSortOrder
+	item, err := searchConfigurationTemplatesGetsAListOfProjects(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetsAListOfProjects", err,
+			"Failure at GetsAListOfProjects, unexpected response", ""))
+		return diags
+	}
+
 	vProjectID, okProjectID := resourceMap["project_id"]
 
-	method1 := []bool{okName}
+	method1 := []bool{okName, okSortOrder}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okProjectID}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	// REVIEW: Add getAllItems and search function to get missing params
 	var vvID string
+	var vvName string
+	// REVIEW: Add getAllItems and search function to get missing params
 	if selectedMethod == 1 {
-		queryParams1 := dnacentersdkgo.GetsAListOfProjectsQueryParams{}
-		queryParams1.Name = vName
-		item1, err := searchConfigurationTemplatesGetsAListOfProjects(m, queryParams1)
+
+		getResp1, _, err := client.ConfigurationTemplates.GetsAListOfProjects(nil)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		items1 := getAllItemsConfigurationTemplatesGetsAListOfProjects(m, getResp1, nil)
+		item1, err := searchConfigurationTemplatesGetsAListOfProjects(m, items1, vName, vID)
 		if err != nil || item1 == nil {
 			// Assume that element it is already gone
 			return diags
 		}
-		if vProjectID != item1.ID {
+		if vID != item1.ID {
 			vvID = item1.ID
 		} else {
-			vvID = vProjectID
+			vvID = vID
 		}
 	}
 	if selectedMethod == 2 {
-		vvID = vProjectID
-		getResp, _, err := client.ConfigurationTemplates.GetsTheDetailsOfAGivenProject(vvID)
+		vvID = vID
+		getResp, _, err := client.ConfigurationTemplates.GetsTheDetailsOfAGivenProject(vvProjectID)
 		if err != nil || getResp == nil {
 			// Assume that element it is already gone
 			return diags
 		}
 	}
-	response1, restyResp1, err := client.ConfigurationTemplates.DeletesTheProject(vvID)
+	response1, restyResp1, err := client.ConfigurationTemplates.DeletesTheProject(vvProjectID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -2611,7 +2557,6 @@ func expandRequestConfigurationTemplateProjectCreateProject(ctx context.Context,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2635,7 +2580,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTagsArray(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2650,7 +2594,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTags(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2674,7 +2617,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesArray(ctx co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2704,9 +2646,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplates(ctx context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_types")))) {
 		request.DeviceTypes = expandRequestConfigurationTemplateProjectCreateProjectTemplatesDeviceTypesArray(ctx, key+".device_types", d)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".document_database")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".document_database")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".document_database")))) {
-		request.DocumentDatabase = interfaceToBoolPtr(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".failure_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".failure_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".failure_policy")))) {
 		request.FailurePolicy = interfaceToString(v)
 	}
@@ -2727,9 +2666,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplates(ctx context
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_template_id")))) {
 		request.ParentTemplateID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_associated")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_associated")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_associated")))) {
-		request.ProjectAssociated = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_id")))) {
 		request.ProjectID = interfaceToString(v)
@@ -2767,7 +2703,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplates(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2791,7 +2726,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesTagsArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2806,7 +2740,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesTags(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2830,7 +2763,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2875,7 +2807,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2899,7 +2830,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2914,7 +2844,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2938,7 +2867,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2956,7 +2884,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2980,7 +2907,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3043,7 +2969,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3067,7 +2992,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3085,7 +3009,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3106,7 +3029,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3116,7 +3038,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3140,7 +3061,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3203,7 +3123,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3227,7 +3146,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3245,7 +3163,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3266,7 +3183,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3276,7 +3192,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3300,7 +3215,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesDeviceTypesA
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3318,7 +3232,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesDeviceTypes(
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3342,7 +3255,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3405,7 +3317,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3429,7 +3340,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3447,7 +3357,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3468,7 +3377,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3478,7 +3386,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3502,7 +3409,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3565,7 +3471,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3589,7 +3494,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3607,7 +3511,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3628,7 +3531,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3638,7 +3540,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3659,7 +3560,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesValidationEr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3683,7 +3583,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesValidationEr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3693,7 +3592,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesValidationEr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3717,7 +3615,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesValidationEr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3727,7 +3624,6 @@ func expandRequestConfigurationTemplateProjectCreateProjectTemplatesValidationEr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3757,7 +3653,6 @@ func expandRequestConfigurationTemplateProjectUpdateProject(ctx context.Context,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3781,7 +3676,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTagsArray(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3796,7 +3690,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTags(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3820,7 +3713,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesArray(ctx co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3850,9 +3742,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplates(ctx context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_types")))) {
 		request.DeviceTypes = expandRequestConfigurationTemplateProjectUpdateProjectTemplatesDeviceTypesArray(ctx, key+".device_types", d)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".document_database")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".document_database")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".document_database")))) {
-		request.DocumentDatabase = interfaceToBoolPtr(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".failure_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".failure_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".failure_policy")))) {
 		request.FailurePolicy = interfaceToString(v)
 	}
@@ -3873,9 +3762,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplates(ctx context
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_template_id")))) {
 		request.ParentTemplateID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_associated")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_associated")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_associated")))) {
-		request.ProjectAssociated = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_id")))) {
 		request.ProjectID = interfaceToString(v)
@@ -3913,7 +3799,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplates(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3937,7 +3822,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTagsArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3952,7 +3836,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTags(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3976,7 +3859,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4021,7 +3903,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4045,7 +3926,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4060,7 +3940,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4084,7 +3963,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4102,7 +3980,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4126,7 +4003,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4189,7 +4065,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4213,7 +4088,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4231,7 +4105,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4252,7 +4125,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4262,7 +4134,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4286,7 +4157,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4349,7 +4219,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4373,7 +4242,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4391,7 +4259,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4412,7 +4279,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4422,7 +4288,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesContainingTe
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4446,7 +4311,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesDeviceTypesA
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4464,7 +4328,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesDeviceTypes(
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4488,7 +4351,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4551,7 +4413,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4575,7 +4436,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4593,7 +4453,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4614,7 +4473,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4624,7 +4482,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesRollbackTemp
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4648,7 +4505,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4711,7 +4567,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4735,7 +4590,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4753,7 +4607,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4774,7 +4627,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4784,7 +4636,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesTemplatePara
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4805,7 +4656,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesValidationEr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4829,7 +4679,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesValidationEr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4839,7 +4688,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesValidationEr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4863,7 +4711,6 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesValidationEr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4873,26 +4720,22 @@ func expandRequestConfigurationTemplateProjectUpdateProjectTemplatesValidationEr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func searchConfigurationTemplatesGetsAListOfProjects(m interface{}, queryParams dnacentersdkgo.GetsAListOfProjectsQueryParams) (*dnacentersdkgo.ResponseItemConfigurationTemplatesGetsAListOfProjects, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-
 	var foundItem *dnacentersdkgo.ResponseItemConfigurationTemplatesGetsAListOfProjects
 	var ite *dnacentersdkgo.ResponseConfigurationTemplatesGetsAListOfProjects
 	ite, _, err = client.ConfigurationTemplates.GetsAListOfProjects(&queryParams)
 	if err != nil {
 		return foundItem, err
 	}
-	if ite == nil {
+	items := ite
+	if items == nil {
 		return foundItem, err
 	}
-
-	items := ite
-
 	itemsCopy := *items
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return

@@ -79,7 +79,7 @@ func dataSourceNetconfCredentialUpdateRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateNetconfCredentials")
+		log.Printf("[DEBUG] Selected method: UpdateNetconfCredentials")
 		request1 := expandRequestNetconfCredentialUpdateUpdateNetconfCredentials(ctx, "", d)
 
 		response1, restyResp1, err := client.Discovery.UpdateNetconfCredentials(request1)
@@ -137,10 +137,6 @@ func expandRequestNetconfCredentialUpdateUpdateNetconfCredentials(ctx context.Co
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".netconf_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".netconf_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".netconf_port")))) {
 		request.NetconfPort = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

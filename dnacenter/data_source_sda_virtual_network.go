@@ -91,7 +91,7 @@ func dataSourceSdaVirtualNetworkRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetVnFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetVnFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetVnFromSdaFabricQueryParams{}
 
 		queryParams1.VirtualNetworkName = vVirtualNetworkName.(string)

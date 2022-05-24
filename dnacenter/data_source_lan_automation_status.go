@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,27 +15,27 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on LAN Automation.
 
-- Invoke this API to get the LAN Automation session status
+- Invoke this API to get the LAN Automation session status.
 
-- Invoke this API to get the LAN Automation session status based on the given Lan Automation session Id
+- Invoke this API to get the LAN Automation session status based on the given Lan Automation session id.
 `,
 
 		ReadContext: dataSourceLanAutomationStatusRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Description: `id path parameter. LAN Automation Session Identifier
+				Description: `id path parameter. LAN Automation session identifier.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"limit": &schema.Schema{
-				Description: `limit query parameter. Number of LAN Automations session status to be retrieved
+				Description: `limit query parameter. Number of LAN Automation sessions to be retrieved. Limit value can range between 1 to 10.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
-				Description: `offset query parameter. Offset/starting row of the LAN Automation session from which status needs to be retrieved
+				Description: `offset query parameter. Starting index of the LAN Automation session. Minimum value is 1.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -48,14 +48,14 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"action": &schema.Schema{
-							Description: `State (START/STOP) of the LAN Automation Session
+							Description: `State (START/STOP) of the LAN Automation session. 
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"creation_time": &schema.Schema{
-							Description: `LAN Automation session creation time
+							Description: `LAN Automation session creation time.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -68,7 +68,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"ip_address_in_use_list": &schema.Schema{
-										Description: `The list of IP address used by device
+										Description: `List of IP address used by the device.
 `,
 										Type:     schema.TypeList,
 										Computed: true,
@@ -78,21 +78,21 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 									},
 
 									"name": &schema.Schema{
-										Description: `Name of the device
+										Description: `Name of the device.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"serial_number": &schema.Schema{
-										Description: `Serial number of the device
+										Description: `Serial number of the device.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"state": &schema.Schema{
-										Description: `state of the device like added to inventory/ deleted from inventory
+										Description: `State of the device (Added to inventory/Deleted from inventory).
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -102,14 +102,14 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"discovered_device_site_name_hierarchy": &schema.Schema{
-							Description: `Discovered sevice site name
+							Description: `Discovered device site name.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"id": &schema.Schema{
-							Description: `System generated identifier
+							Description: `LAN Automation session id.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -122,14 +122,14 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"ip_pool_name": &schema.Schema{
-										Description: `Name of the IP pool
+										Description: `Name of the IP pool.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"ip_pool_role": &schema.Schema{
-										Description: `Role of the IP pool
+										Description: `Role of the IP pool. Supported roles are: MAIN_POOL and PHYSICAL_LINK_POOL.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -139,7 +139,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"multicast_enabled": &schema.Schema{
-							Description: `Shows whether underlay multicast is enabled or not
+							Description: `Shows whether underlay multicast is enabled or not. 
 `,
 							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
@@ -147,14 +147,14 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"peer_device_managment_ipaddress": &schema.Schema{
-							Description: `Peer seed device management IP address
+							Description: `Peer seed device management IP address.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"primary_device_interface_names": &schema.Schema{
-							Description: `The List of interfaces on primary seed device via which the discovered devices are connected
+							Description: `The list of interfaces on primary seed via which the discovered devices are connected.
 `,
 							Type:     schema.TypeList,
 							Computed: true,
@@ -164,14 +164,22 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"primary_device_managment_ipaddress": &schema.Schema{
-							Description: `Primary seed device management IP address
+							Description: `Primary seed device management IP address.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
+						"redistribute_isis_to_bgp": &schema.Schema{
+							Description: `Shows whether advertise LAN Automation summary route into BGP is enabled or not.
+`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"status": &schema.Schema{
-							Description: `Status of LAN Automation session and provides the number of discovered devices
+							Description: `Status of the LAN Automation session along with the number of discovered devices. 
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -187,14 +195,14 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"action": &schema.Schema{
-							Description: `State (START/STOP) of the LAN Automation Session
+							Description: `State (START/STOP) of the LAN Automation session. 
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"creation_time": &schema.Schema{
-							Description: `LAN Automation session creation time
+							Description: `LAN Automation session creation time.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -207,7 +215,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"ip_address_in_use_list": &schema.Schema{
-										Description: `The list of IP address used by device
+										Description: `List of IP address used by the device.
 `,
 										Type:     schema.TypeList,
 										Computed: true,
@@ -217,21 +225,21 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 									},
 
 									"name": &schema.Schema{
-										Description: `Name of the device
+										Description: `Name of the device.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"serial_number": &schema.Schema{
-										Description: `Serial number of the device
+										Description: `Serial number of the device.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"state": &schema.Schema{
-										Description: `state of the device like added to inventory/ deleted from inventory
+										Description: `State of the device (Added to inventory/Deleted from inventory).
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -241,14 +249,14 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"discovered_device_site_name_hierarchy": &schema.Schema{
-							Description: `Discovered sevice site name
+							Description: `Discovered device site name.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"id": &schema.Schema{
-							Description: `System generated identifier
+							Description: `LAN Automation session id.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -261,14 +269,14 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"ip_pool_name": &schema.Schema{
-										Description: `Name of the IP pool
+										Description: `Name of the IP pool.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"ip_pool_role": &schema.Schema{
-										Description: `Role of the IP pool
+										Description: `Role of the IP pool. Supported roles are: MAIN_POOL and PHYSICAL_LINK_POOL.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -278,7 +286,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"multicast_enabled": &schema.Schema{
-							Description: `Shows whether underlay multicast is enabled or not
+							Description: `Shows whether underlay multicast is enabled or not. 
 `,
 							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
@@ -286,14 +294,14 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"peer_device_managment_ipaddress": &schema.Schema{
-							Description: `Peer seed device management IP address
+							Description: `Peer seed device management IP address.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"primary_device_interface_names": &schema.Schema{
-							Description: `The List of interfaces on primary seed device via which the discovered devices are connected
+							Description: `The list of interfaces on primary seed via which the discovered devices are connected.
 `,
 							Type:     schema.TypeList,
 							Computed: true,
@@ -303,14 +311,22 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"primary_device_managment_ipaddress": &schema.Schema{
-							Description: `Primary seed device management IP address
+							Description: `Primary seed device management IP address.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
+						"redistribute_isis_to_bgp": &schema.Schema{
+							Description: `Shows whether advertise LAN Automation summary route into BGP is enabled or not.
+`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"status": &schema.Schema{
-							Description: `Status of LAN Automation session and provides the number of discovered devices
+							Description: `Status of the LAN Automation session along with the number of discovered devices. 
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -422,6 +438,7 @@ func flattenLanAutomationLanAutomationStatusItems(items *[]dnacentersdkgo.Respon
 		respItem["multicast_enabled"] = boolPtrToString(item.MulticastEnabled)
 		respItem["peer_device_managment_ipaddress"] = item.PeerDeviceManagmentIPAddress
 		respItem["discovered_device_list"] = flattenLanAutomationLanAutomationStatusItemsDiscoveredDeviceList(item.DiscoveredDeviceList)
+		respItem["redistribute_isis_to_bgp"] = boolPtrToString(item.RedistributeIsisToBgp)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -475,6 +492,7 @@ func flattenLanAutomationLanAutomationStatusByIDItem(items *[]dnacentersdkgo.Res
 		respItem["multicast_enabled"] = boolPtrToString(item.MulticastEnabled)
 		respItem["peer_device_managment_ipaddress"] = item.PeerDeviceManagmentIPAddress
 		respItem["discovered_device_list"] = flattenLanAutomationLanAutomationStatusByIDItemDiscoveredDeviceList(item.DiscoveredDeviceList)
+		respItem["redistribute_isis_to_bgp"] = boolPtrToString(item.RedistributeIsisToBgp)
 		respItems = append(respItems, respItem)
 	}
 	return respItems

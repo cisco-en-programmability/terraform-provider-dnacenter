@@ -298,7 +298,7 @@ func dataSourceDiscoveryDeviceRangeRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDiscoveredDevicesByRange")
+		log.Printf("[DEBUG] Selected method: GetDiscoveredDevicesByRange")
 		vvID := vID.(string)
 		vvStartIndex := vStartIndex.(int)
 		vvRecordsToReturn := vRecordsToReturn.(int)

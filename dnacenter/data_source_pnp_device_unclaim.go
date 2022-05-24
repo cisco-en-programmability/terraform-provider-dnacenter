@@ -46,8 +46,11 @@ func dataSourcePnpDeviceUnclaim() *schema.Resource {
 						},
 						"json_response": &schema.Schema{
 							Description: `Json Response`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"message": &schema.Schema{
 							Description: `Message`,
@@ -73,7 +76,7 @@ func dataSourcePnpDeviceUnclaimRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UnClaimDevice")
+		log.Printf("[DEBUG] Selected method: UnClaimDevice")
 		request1 := expandRequestPnpDeviceUnclaimUnClaimDevice(ctx, "", d)
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.UnClaimDevice(request1)
@@ -113,10 +116,6 @@ func expandRequestPnpDeviceUnclaimUnClaimDevice(ctx context.Context, key string,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_id_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_id_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_id_list")))) {
 		request.DeviceIDList = interfaceToSliceString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

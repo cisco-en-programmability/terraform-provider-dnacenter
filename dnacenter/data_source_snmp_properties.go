@@ -65,7 +65,7 @@ func dataSourceSNMPPropertiesRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSNMPProperties")
+		log.Printf("[DEBUG] Selected method: GetSNMPProperties")
 
 		response1, restyResp1, err := client.Discovery.GetSNMPProperties()
 
@@ -110,20 +110,4 @@ func flattenDiscoveryGetSNMPPropertiesItems(items *[]dnacentersdkgo.ResponseDisc
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenDiscoveryGetSNMPPropertiesItem(item *dnacentersdkgo.ResponseDiscoveryGetSNMPPropertiesResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-
-	respItem := make(map[string]interface{})
-	respItem["id"] = item.ID
-	respItem["instance_tenant_id"] = item.InstanceTenantID
-	respItem["instance_uuid"] = item.InstanceUUID
-	respItem["int_value"] = item.IntValue
-	respItem["system_property_name"] = item.SystemPropertyName
-	return []map[string]interface{}{
-		respItem,
-	}
 }

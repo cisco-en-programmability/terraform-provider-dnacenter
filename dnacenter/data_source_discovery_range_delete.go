@@ -63,7 +63,7 @@ func dataSourceDiscoveryRangeDeleteRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeleteDiscoveryBySpecifiedRange")
+		log.Printf("[DEBUG] Selected method: DeleteDiscoveryBySpecifiedRange")
 		vvStartIndex := vStartIndex.(int)
 		vvRecordsToDelete := vRecordsToDelete.(int)
 

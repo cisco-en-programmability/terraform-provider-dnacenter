@@ -75,7 +75,7 @@ func dataSourceTagMemberCountRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTagMemberCount")
+		log.Printf("[DEBUG] Selected method: GetTagMemberCount")
 		vvID := vID.(string)
 		queryParams1 := dnacentersdkgo.GetTagMemberCountQueryParams{}
 

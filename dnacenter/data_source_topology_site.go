@@ -99,7 +99,7 @@ func dataSourceTopologySiteRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSiteTopology")
+		log.Printf("[DEBUG] Selected method: GetSiteTopology")
 
 		response1, restyResp1, err := client.Topology.GetSiteTopology()
 

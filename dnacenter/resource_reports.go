@@ -131,13 +131,16 @@ required to configure a report.
 						"report_was_executed": &schema.Schema{
 							Description: `true if atleast one execution has started
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"schedule": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"tags": &schema.Schema{
 							Description: `array of tags for report
@@ -229,8 +232,11 @@ required to configure a report.
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type.
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -244,7 +250,7 @@ required to configure a report.
 												"default": &schema.Schema{
 													Description: `true, if the format type is considered default
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -301,9 +307,7 @@ required to configure a report.
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -320,7 +324,7 @@ required to configure a report.
 							Description: `report name
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"report_id": &schema.Schema{
 							Description: `reportId path parameter. reportId of report
@@ -329,8 +333,12 @@ required to configure a report.
 							Required: true,
 						},
 						"schedule": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"tags": &schema.Schema{
 							Description: `array of tags for report
@@ -417,8 +425,12 @@ required to configure a report.
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type. Use the filter definitions from the view to fetch the options for a filter.
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -486,32 +498,28 @@ func resourceReportsCreate(ctx context.Context, d *schema.ResourceData, m interf
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestReportsCreateOrScheduleAReport(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vReportID, okReportID := resourceItem["report_id"]
 	vvReportID := interfaceToString(vReportID)
-	vName, okName := resourceItem["name"]
-	vvName := interfaceToString(vName)
 	if okReportID && vvReportID != "" {
 		getResponse2, _, err := client.Reports.GetAScheduledReport(vvReportID)
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["report_id"] = vvReportID
-			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
 			return resourceReportsRead(ctx, d, m)
 		}
-	}
-	if okName && vvName != "" {
-		getResponse2, err := searchReportsGetListOfScheduledReports(m, nil, vvName)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["report_id"] = vvReportID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceReportsRead(ctx, d, m)
+	} else {
+		response2, _, err := client.Reports.GetListOfScheduledReports(nil)
+		if response2 != nil && err == nil {
+			item2, err := searchReportsGetListOfScheduledReports(m, items2, vvName, vvID)
+			if err == nil && item2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["report_id"] = vvReportID
+				d.SetId(joinResourceID(resourceMap))
+				return resourceReportsRead(ctx, d, m)
+			}
 		}
 	}
 	resp1, restyResp1, err := client.Reports.CreateOrScheduleAReport(request1)
@@ -526,8 +534,7 @@ func resourceReportsCreate(ctx context.Context, d *schema.ResourceData, m interf
 		return diags
 	}
 	resourceMap := make(map[string]string)
-	resourceMap["report_id"] = resp1.ReportID
-	resourceMap["name"] = vvName
+	resourceMap["report_id"] = vvReportID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceReportsRead(ctx, d, m)
 }
@@ -539,45 +546,64 @@ func resourceReportsRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vReportID := resourceMap["report_id"]
-	vName := resourceMap["name"]
+	vViewGroupID, okViewGroupID := resourceMap["view_group_id"]
+	vViewID, okViewID := resourceMap["view_id"]
+	vReportID, okReportID := resourceMap["report_id"]
 
-	if vReportID != "" {
-		log.Printf("[DEBUG] Selected method 2: GetAScheduledReport")
-		vvReportID := vReportID
+	method1 := []bool{okViewGroupID, okViewID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okReportID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
-		response1, restyResp1, err := client.Reports.GetAScheduledReport(vvReportID)
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetListOfScheduledReports")
+		queryParams1 := dnacentersdkgo.GetListOfScheduledReportsQueryParams{}
+
+		if okViewGroupID {
+			queryParams1.ViewGroupID = vViewGroupID
+		}
+		if okViewID {
+			queryParams1.ViewID = vViewID
+		}
+
+		response1, restyResp1, err := client.Reports.GetListOfScheduledReports(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetListOfScheduledReports", err,
+				"Failure at GetListOfScheduledReports, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenReportsGetAScheduledReportItem(response1)
+		items1 := getAllItemsReportsGetListOfScheduledReports(m, response1, nil)
+		item1, err := searchReportsGetListOfScheduledReports(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetListOfScheduledReports response", err,
+				"Failure when searching item from GetListOfScheduledReports, unexpected response", ""))
+			return diags
+		}
+		// Review flatten function used
+		vItem1 := flattenReportsGetListOfScheduledReportsByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAScheduledReport response",
+				"Failure when setting GetListOfScheduledReports search response",
 				err))
 			return diags
 		}
-		return diags
 
 	}
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method: GetAScheduledReport")
+		vvReportID := vReportID
 
-	if vName != "" {
-		response1, err := searchReportsGetListOfScheduledReports(m, nil, vName)
-		if err != nil || response1 == nil {
-			d.SetId("")
-			return diags
-		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-		response2, restyResp2, err := client.Reports.GetAScheduledReport(response1.ReportID)
+		response2, restyResp2, err := client.Reports.GetAScheduledReport(vvReportID)
 
 		if err != nil || response2 == nil {
 			if restyResp2 != nil {
@@ -616,28 +642,59 @@ func resourceReportsDelete(ctx context.Context, d *schema.ResourceData, m interf
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+	vViewGroupID, okViewGroupID := resourceMap["view_group_id"]
+	vViewID, okViewID := resourceMap["view_id"]
 
-	vReportID := resourceMap["report_id"]
-	vName := resourceMap["name"]
+	queryParams1 := dnacentersdkgo.GetListOfScheduledReportsQueryParams
+	queryParams1.ViewGroupID = vViewGroupID
+	queryParams1.ViewID = vViewID
+	item, err := searchReportsGetListOfScheduledReports(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetListOfScheduledReports", err,
+			"Failure at GetListOfScheduledReports, unexpected response", ""))
+		return diags
+	}
+
+	vReportID, okReportID := resourceMap["report_id"]
+
+	method1 := []bool{okViewGroupID, okViewID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okReportID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
+	if selectedMethod == 1 {
 
-	if vReportID != "" {
-		getResp, _, err := client.Reports.GetAScheduledReport(vReportID)
+		getResp1, _, err := client.Reports.GetListOfScheduledReports(nil)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		items1 := getAllItemsReportsGetListOfScheduledReports(m, getResp1, nil)
+		item1, err := searchReportsGetListOfScheduledReports(m, items1, vName, vID)
+		if err != nil || item1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		if vID != item1.ID {
+			vvID = item1.ID
+		} else {
+			vvID = vID
+		}
+	}
+	if selectedMethod == 2 {
+		vvID = vID
+		getResp, _, err := client.Reports.GetAScheduledReport(vvReportID)
 		if err != nil || getResp == nil {
 			// Assume that element it is already gone
 			return diags
 		}
 	}
-	if vName != "" {
-		getResp, err := searchReportsGetListOfScheduledReports(m, nil, vName)
-		if err != nil || getResp == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		vReportID = getResp.ReportID
-	}
-
-	response1, restyResp1, err := client.Reports.DeleteAScheduledReport(vReportID)
+	response1, restyResp1, err := client.Reports.DeleteAScheduledReport(vvReportID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -670,7 +727,7 @@ func expandRequestReportsCreateOrScheduleAReport(ctx context.Context, key string
 		request.Name = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".schedule")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".schedule")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".schedule")))) {
-		request.Schedule = expandRequestReportsCreateOrScheduleAReportSchedule(ctx, key+".schedule", d)
+		request.Schedule = expandRequestReportsCreateOrScheduleAReportSchedule(ctx, key+".schedule.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".view")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".view")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".view")))) {
 		request.View = expandRequestReportsCreateOrScheduleAReportView(ctx, key+".view.0", d)
@@ -684,7 +741,6 @@ func expandRequestReportsCreateOrScheduleAReport(ctx context.Context, key string
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -708,7 +764,6 @@ func expandRequestReportsCreateOrScheduleAReportDeliveriesArray(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -718,7 +773,6 @@ func expandRequestReportsCreateOrScheduleAReportDeliveries(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -728,7 +782,6 @@ func expandRequestReportsCreateOrScheduleAReportSchedule(ctx context.Context, ke
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -752,7 +805,6 @@ func expandRequestReportsCreateOrScheduleAReportView(ctx context.Context, key st
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -776,7 +828,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFieldGroupsArray(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -794,7 +845,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFieldGroups(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -818,7 +868,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFieldGroupsFieldsArray(ctx c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -833,7 +882,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFieldGroupsFields(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -857,7 +905,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFiltersArray(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -873,12 +920,11 @@ func expandRequestReportsCreateOrScheduleAReportViewFilters(ctx context.Context,
 		request.Type = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
-		request.Value = expandRequestReportsCreateOrScheduleAReportViewFiltersValue(ctx, key+".value", d)
+		request.Value = expandRequestReportsCreateOrScheduleAReportViewFiltersValue(ctx, key+".value.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -888,7 +934,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFiltersValue(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -903,16 +948,15 @@ func expandRequestReportsCreateOrScheduleAReportViewFormat(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchReportsGetListOfScheduledReports(m interface{}, queryParams *dnacentersdkgo.GetListOfScheduledReportsQueryParams, vName string) (*dnacentersdkgo.ResponseItemReportsGetListOfScheduledReports, error) {
+func searchReportsGetListOfScheduledReports(m interface{}, queryParams dnacentersdkgo.GetListOfScheduledReportsQueryParams) (*dnacentersdkgo.ResponseItemReportsGetListOfScheduledReports, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseItemReportsGetListOfScheduledReports
 	var ite *dnacentersdkgo.ResponseReportsGetListOfScheduledReports
-	ite, _, err = client.Reports.GetListOfScheduledReports(nil)
+	ite, _, err = client.Reports.GetListOfScheduledReports(&queryParams)
 	if err != nil {
 		return foundItem, err
 	}
@@ -923,7 +967,7 @@ func searchReportsGetListOfScheduledReports(m interface{}, queryParams *dnacente
 	itemsCopy := *items
 	for _, item := range itemsCopy {
 		// Call get by _ method and set value to foundItem and return
-		if item.Name == vName {
+		if item.Name == queryParams.Name {
 			var getItem *dnacentersdkgo.ResponseItemReportsGetListOfScheduledReports
 			getItem = &item
 			foundItem = getItem

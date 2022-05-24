@@ -88,7 +88,7 @@ func dataSourceCliCredentialUpdateRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateCliCredentials")
+		log.Printf("[DEBUG] Selected method: UpdateCliCredentials")
 		request1 := expandRequestCliCredentialUpdateUpdateCliCredentials(ctx, "", d)
 
 		response1, restyResp1, err := client.Discovery.UpdateCliCredentials(request1)
@@ -152,10 +152,6 @@ func expandRequestCliCredentialUpdateUpdateCliCredentials(ctx context.Context, k
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username")))) {
 		request.Username = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

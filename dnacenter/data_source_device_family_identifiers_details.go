@@ -54,7 +54,7 @@ func dataSourceDeviceFamilyIDentifiersDetailsRead(ctx context.Context, d *schema
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceFamilyIDentifiers")
+		log.Printf("[DEBUG] Selected method: GetDeviceFamilyIDentifiers")
 
 		response1, restyResp1, err := client.SoftwareImageManagementSwim.GetDeviceFamilyIDentifiers()
 

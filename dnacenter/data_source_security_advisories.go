@@ -97,7 +97,7 @@ func dataSourceSecurityAdvisoriesRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAdvisoriesList")
+		log.Printf("[DEBUG] Selected method: GetAdvisoriesList")
 
 		response1, restyResp1, err := client.SecurityAdvisories.GetAdvisoriesList()
 

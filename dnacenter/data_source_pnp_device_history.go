@@ -56,7 +56,7 @@ func dataSourcePnpDeviceHistory() *schema.Resource {
 
 						"error_flag": &schema.Schema{
 							Description: `Error Flag`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -176,7 +176,7 @@ func dataSourcePnpDeviceHistoryRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceHistory")
+		log.Printf("[DEBUG] Selected method: GetDeviceHistory")
 		queryParams1 := dnacentersdkgo.GetDeviceHistoryQueryParams{}
 
 		queryParams1.SerialNumber = vSerialNumber.(string)

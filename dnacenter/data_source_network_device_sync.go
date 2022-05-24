@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"fmt"
-	"reflect"
 
 	"log"
 
@@ -51,10 +50,10 @@ can be seen in the child task of each device
 			"payload": &schema.Schema{
 				Description: `Array of RequestDevicesSyncDevices`,
 				Type:        schema.TypeList,
+				Optional:    true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
-				Optional: true,
 			},
 		},
 	}
@@ -68,7 +67,7 @@ func dataSourceNetworkDeviceSyncRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SyncDevices")
+		log.Printf("[DEBUG] Selected method: SyncDevices")
 		request1 := expandRequestNetworkDeviceSyncSyncDevices(ctx, "", d)
 		queryParams1 := dnacentersdkgo.SyncDevicesQueryParams{}
 
@@ -113,10 +112,6 @@ func expandRequestNetworkDeviceSyncSyncDevices(ctx context.Context, key string, 
 	if v := expandRequestNetworkDeviceSyncSyncDevicesItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -137,20 +132,12 @@ func expandRequestNetworkDeviceSyncSyncDevicesItemArray(ctx context.Context, key
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestNetworkDeviceSyncSyncDevicesItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDevicesSyncDevices {
 	var request dnacentersdkgo.RequestItemDevicesSyncDevices
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

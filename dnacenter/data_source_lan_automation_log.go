@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,27 +15,27 @@ func dataSourceLanAutomationLog() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on LAN Automation.
 
-- Invoke this API to get the LAN Automation session logs
+- Invoke this API to get the LAN Automation session logs.
 
-- Invoke this API to get the  LAN Automation session logs based on the given Lan Automation session Id
+- Invoke this API to get the LAN Automation session logs based on the given LAN Automation session id.
 `,
 
 		ReadContext: dataSourceLanAutomationLogRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Description: `id path parameter. LAN Automation Session Identifier
+				Description: `id path parameter. LAN Automation session identifier.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"limit": &schema.Schema{
-				Description: `limit query parameter. Number of LAN Automations sessions to be retrieved
+				Description: `limit query parameter. Number of LAN Automation sessions to be retrieved. Limit value can range between 1 to 10.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
-				Description: `offset query parameter. Offset/starting row of the LAN Automation session from which logs are required
+				Description: `offset query parameter. Starting index of the LAN Automation session. Minimum value is 1.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -54,28 +54,28 @@ func dataSourceLanAutomationLog() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"device_id": &schema.Schema{
-										Description: `The device serial number for which the log message is associated
+										Description: `Device serial number for which the log message is associated.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"log_level": &schema.Schema{
-										Description: `Log level and the value could be Info, Warning and Error
+										Description: `Supported levels are ERROR, INFO and WARNING.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"record": &schema.Schema{
-										Description: `Log message in detail
+										Description: `Detailed log message.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"time_stamp": &schema.Schema{
-										Description: `The time at which the log message created
+										Description: `Time at which the log message is created.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -85,7 +85,7 @@ func dataSourceLanAutomationLog() *schema.Resource {
 						},
 
 						"nw_orch_id": &schema.Schema{
-							Description: `Network Orchestration Identifier
+							Description: `LAN Automation session identifier.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -107,28 +107,28 @@ func dataSourceLanAutomationLog() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"device_id": &schema.Schema{
-										Description: `The device serial number for which the log message is associated
+										Description: `Device serial number for which the log message is associated.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"log_level": &schema.Schema{
-										Description: `Log level and the value could be Info, Warning and Error
+										Description: `Supported levels are ERROR, INFO and WARNING.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"record": &schema.Schema{
-										Description: `Log message in detail
+										Description: `Detailed log message.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"time_stamp": &schema.Schema{
-										Description: `The time at which the log message created
+										Description: `Time at which the log message is created.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -138,7 +138,7 @@ func dataSourceLanAutomationLog() *schema.Resource {
 						},
 
 						"nw_orch_id": &schema.Schema{
-							Description: `Network Orchestration Identifier
+							Description: `LAN Automation session identifier.
 `,
 							Type:     schema.TypeString,
 							Computed: true,

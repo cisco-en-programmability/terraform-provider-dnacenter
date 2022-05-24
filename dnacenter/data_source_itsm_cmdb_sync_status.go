@@ -115,7 +115,7 @@ func dataSourceItsmCmdbSyncStatusRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetCmdbSyncStatus")
+		log.Printf("[DEBUG] Selected method: GetCmdbSyncStatus")
 		queryParams1 := dnacentersdkgo.GetCmdbSyncStatusQueryParams{}
 
 		if okStatus {

@@ -63,7 +63,7 @@ func dataSourceNetworkDeviceUpdateRoleRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateDeviceRole")
+		log.Printf("[DEBUG] Selected method: UpdateDeviceRole")
 		request1 := expandRequestNetworkDeviceUpdateRoleUpdateDeviceRole(ctx, "", d)
 
 		response1, restyResp1, err := client.Devices.UpdateDeviceRole(request1)
@@ -109,10 +109,6 @@ func expandRequestNetworkDeviceUpdateRoleUpdateDeviceRole(ctx context.Context, k
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".role_source")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".role_source")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".role_source")))) {
 		request.RoleSource = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

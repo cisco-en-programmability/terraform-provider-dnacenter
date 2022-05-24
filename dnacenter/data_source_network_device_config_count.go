@@ -50,7 +50,7 @@ func dataSourceNetworkDeviceConfigCountRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceConfigCount")
+		log.Printf("[DEBUG] Selected method: GetDeviceConfigCount")
 
 		response1, restyResp1, err := client.Devices.GetDeviceConfigCount()
 

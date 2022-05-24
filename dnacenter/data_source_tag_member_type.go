@@ -53,7 +53,7 @@ func dataSourceTagMemberTypeRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTagResourceTypes")
+		log.Printf("[DEBUG] Selected method: GetTagResourceTypes")
 
 		response1, restyResp1, err := client.Tag.GetTagResourceTypes()
 

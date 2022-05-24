@@ -44,7 +44,7 @@ func dataSourceLicenseSmartAccountDetails() *schema.Resource {
 						"is_active_smart_account": &schema.Schema{
 							Description: `Is active smart account
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -69,7 +69,7 @@ func dataSourceLicenseSmartAccountDetailsRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SmartAccountDetails")
+		log.Printf("[DEBUG] Selected method: SmartAccountDetails")
 
 		response1, restyResp1, err := client.Licenses.SmartAccountDetails()
 

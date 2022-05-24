@@ -66,7 +66,7 @@ func dataSourceNetworkUpdate() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"ip_address": &schema.Schema{
-										Description: `IP address for ISE serve (eg: 1.1.1.4). Mandatory for ISE servers.
+										Description: `IP address for ISE serve (eg: 1.1.1.4)
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -90,7 +90,7 @@ func dataSourceNetworkUpdate() *schema.Resource {
 										Optional: true,
 									},
 									"shared_secret": &schema.Schema{
-										Description: `Shared secret for ISE server. Supported only by ISE servers
+										Description: `Shared secret for ISE server
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -114,19 +114,19 @@ func dataSourceNetworkUpdate() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"domain_name": &schema.Schema{
-										Description: `Domain name of DHCP (eg; cisco). It can only contain alphanumeric characters or hyphen.
+										Description: `Domain name of DHCP (eg; cisco)
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 									},
 									"primary_ip_address": &schema.Schema{
-										Description: `Primary ip address for DHCP (eg: 2.2.2.2). valid range : 1.0.0.0 - 223.255.255.255
+										Description: `Primary ip address for DHCP (eg: 2.2.2.2)
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 									},
 									"secondary_ip_address": &schema.Schema{
-										Description: `Secondary ip address for DHCP (eg: 3.3.3.3. valid range : 1.0.0.0 - 223.255.255.255)
+										Description: `Secondary ip address for DHCP (eg: 3.3.3.3)
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -183,13 +183,13 @@ func dataSourceNetworkUpdate() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"ip_address": &schema.Schema{
-										Description: `IP address for AAA and ISE server (eg: 1.1.1.1). Mandatory for ISE servers and for AAA consider this as additional Ip.
+										Description: `IP address for AAA and ISE server (eg: 1.1.1.1)
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 									},
 									"network": &schema.Schema{
-										Description: `IP address for AAA or ISE server (eg: 2.2.2.2). For AAA server consider it as primary IP and For ISE consider as Network
+										Description: `IP address for AAA or ISE server (eg: 2.2.2.2)
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -207,7 +207,7 @@ func dataSourceNetworkUpdate() *schema.Resource {
 										Optional: true,
 									},
 									"shared_secret": &schema.Schema{
-										Description: `Shared secret for ISE server. Supported only by ISE servers
+										Description: `Shared secret for ISE server
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -233,7 +233,7 @@ func dataSourceNetworkUpdate() *schema.Resource {
 									"configure_dnac_ip": &schema.Schema{
 										Description: `Configuration dnac ip for snmp server (eg: true)
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -259,7 +259,7 @@ func dataSourceNetworkUpdate() *schema.Resource {
 									"configure_dnac_ip": &schema.Schema{
 										Description: `Configuration dnac ip for syslog server (eg: true)
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -297,7 +297,7 @@ func dataSourceNetworkUpdateRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateNetwork")
+		log.Printf("[DEBUG] Selected method: UpdateNetwork")
 		vvSiteID := vSiteID.(string)
 		request1 := expandRequestNetworkUpdateUpdateNetwork(ctx, "", d)
 
@@ -336,10 +336,6 @@ func dataSourceNetworkUpdateRead(ctx context.Context, d *schema.ResourceData, m 
 func expandRequestNetworkUpdateUpdateNetwork(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsUpdateNetwork {
 	request := dnacentersdkgo.RequestNetworkSettingsUpdateNetwork{}
 	request.Settings = expandRequestNetworkUpdateUpdateNetworkSettings(ctx, key, d)
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -375,10 +371,6 @@ func expandRequestNetworkUpdateUpdateNetworkSettings(ctx context.Context, key st
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_and_endpoint_aaa")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_and_endpoint_aaa")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_and_endpoint_aaa")))) {
 		request.ClientAndEndpointAAA = expandRequestNetworkUpdateUpdateNetworkSettingsClientAndEndpointAAA(ctx, key+".client_and_endpoint_aaa.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -393,10 +385,6 @@ func expandRequestNetworkUpdateUpdateNetworkSettingsDNSServer(ctx context.Contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".secondary_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".secondary_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".secondary_ip_address")))) {
 		request.SecondaryIPAddress = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -408,10 +396,6 @@ func expandRequestNetworkUpdateUpdateNetworkSettingsSyslogServer(ctx context.Con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".configure_dnac_ip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".configure_dnac_ip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".configure_dnac_ip")))) {
 		request.ConfigureDnacIP = interfaceToBoolPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -423,10 +407,6 @@ func expandRequestNetworkUpdateUpdateNetworkSettingsSNMPServer(ctx context.Conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".configure_dnac_ip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".configure_dnac_ip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".configure_dnac_ip")))) {
 		request.ConfigureDnacIP = interfaceToBoolPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -438,10 +418,6 @@ func expandRequestNetworkUpdateUpdateNetworkSettingsNetflowcollector(ctx context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".port")))) {
 		request.Port = interfaceToFloat64Ptr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -453,10 +429,6 @@ func expandRequestNetworkUpdateUpdateNetworkSettingsMessageOfTheday(ctx context.
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".retain_existing_banner")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".retain_existing_banner")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".retain_existing_banner")))) {
 		request.RetainExistingBanner = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -477,10 +449,6 @@ func expandRequestNetworkUpdateUpdateNetworkSettingsNetworkAAA(ctx context.Conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".shared_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".shared_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".shared_secret")))) {
 		request.SharedSecret = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -501,10 +469,6 @@ func expandRequestNetworkUpdateUpdateNetworkSettingsClientAndEndpointAAA(ctx con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".shared_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".shared_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".shared_secret")))) {
 		request.SharedSecret = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

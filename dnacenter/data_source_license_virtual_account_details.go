@@ -84,7 +84,7 @@ func dataSourceLicenseVirtualAccountDetailsRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: VirtualAccountDetails")
+		log.Printf("[DEBUG] Selected method: VirtualAccountDetails")
 		vvSmartAccountID := vSmartAccountID.(string)
 
 		response1, restyResp1, err := client.Licenses.VirtualAccountDetails(vvSmartAccountID)

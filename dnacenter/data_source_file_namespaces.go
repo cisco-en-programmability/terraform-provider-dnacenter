@@ -53,7 +53,7 @@ func dataSourceFileNamespacesRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetListOfAvailableNamespaces")
+		log.Printf("[DEBUG] Selected method: GetListOfAvailableNamespaces")
 
 		response1, restyResp1, err := client.File.GetListOfAvailableNamespaces()
 

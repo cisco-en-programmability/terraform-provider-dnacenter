@@ -39,7 +39,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 			"composite": &schema.Schema{
 				Description: `Is it composite template
 `,
-
+				// Type:        schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -53,7 +53,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -184,7 +184,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -198,7 +198,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -245,7 +245,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -388,7 +388,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -402,7 +402,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -449,7 +449,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -514,7 +514,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 			"custom_params_order": &schema.Schema{
 				Description: `Custom Params Order
 `,
-
+				// Type:        schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -611,6 +611,12 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"project_id": &schema.Schema{
+				Description: `Project UUID
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"project_name": &schema.Schema{
 				Description: `Project name
 `,
@@ -692,7 +698,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 						"not_param": &schema.Schema{
 							Description: `Is it not a variable
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -706,7 +712,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 						"param_array": &schema.Schema{
 							Description: `Is it an array
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -753,7 +759,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 						"required": &schema.Schema{
 							Description: `Is param required
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -914,7 +920,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 						"not_param": &schema.Schema{
 							Description: `Is it not a variable
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -928,7 +934,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 						"param_array": &schema.Schema{
 							Description: `Is it an array
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -975,7 +981,7 @@ func dataSourceConfigurationTemplateCreate() *schema.Resource {
 						"required": &schema.Schema{
 							Description: `Is param required
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -1079,7 +1085,7 @@ func dataSourceConfigurationTemplateCreateRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateTemplate")
+		log.Printf("[DEBUG] Selected method: CreateTemplate")
 		vvProjectID := vProjectID.(string)
 		request1 := expandRequestConfigurationTemplateCreateCreateTemplate(ctx, "", d)
 
@@ -1195,10 +1201,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplate(ctx context.Context,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
 		request.Version = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1219,10 +1221,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateTagsArray(ctx context
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1234,10 +1232,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateTags(ctx context.Cont
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1258,10 +1252,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesAr
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1303,10 +1293,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplates(c
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
 		request.Version = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1327,10 +1313,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesTa
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1342,10 +1324,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesTa
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1366,10 +1344,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesDe
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1384,10 +1358,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesDe
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_type")))) {
 		request.ProductType = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1408,10 +1378,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesRo
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1471,10 +1437,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesRo
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesRollbackTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1495,10 +1457,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesRo
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1513,10 +1471,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesRo
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1534,20 +1488,12 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesRo
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesRollbackTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1568,10 +1514,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesTe
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1631,10 +1573,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesTe
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1655,10 +1593,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesTe
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1673,10 +1607,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesTe
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1694,20 +1624,12 @@ func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesTe
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateCreateCreateTemplateContainingTemplatesTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateContainingTemplatesTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1728,10 +1650,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateDeviceTypesArray(ctx 
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1746,10 +1664,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateDeviceTypes(ctx conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_type")))) {
 		request.ProductType = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1770,10 +1684,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateRollbackTemplateParam
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1833,10 +1743,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateRollbackTemplateParam
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateCreateCreateTemplateRollbackTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1857,10 +1763,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateRollbackTemplateParam
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1875,10 +1777,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateRollbackTemplateParam
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1896,20 +1794,12 @@ func expandRequestConfigurationTemplateCreateCreateTemplateRollbackTemplateParam
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateCreateCreateTemplateRollbackTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateCreateCreateTemplateRollbackTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateRollbackTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1930,10 +1820,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateTemplateParamsArray(c
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1993,10 +1879,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateTemplateParams(ctx co
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateCreateCreateTemplateTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2017,10 +1899,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateTemplateParamsRangeAr
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2035,10 +1913,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateTemplateParamsRange(c
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2056,20 +1930,12 @@ func expandRequestConfigurationTemplateCreateCreateTemplateTemplateParamsSelecti
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateCreateCreateTemplateTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateCreateCreateTemplateTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2087,10 +1953,6 @@ func expandRequestConfigurationTemplateCreateCreateTemplateValidationErrors(ctx 
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_version")))) {
 		request.TemplateVersion = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2111,20 +1973,12 @@ func expandRequestConfigurationTemplateCreateCreateTemplateValidationErrorsRollb
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateCreateCreateTemplateValidationErrorsRollbackTemplateErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsRollbackTemplateErrors {
 	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsRollbackTemplateErrors
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2145,20 +1999,12 @@ func expandRequestConfigurationTemplateCreateCreateTemplateValidationErrorsTempl
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateCreateCreateTemplateValidationErrorsTemplateErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsTemplateErrors {
 	var request dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsTemplateErrors
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

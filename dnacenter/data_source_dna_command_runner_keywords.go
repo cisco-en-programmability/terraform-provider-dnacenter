@@ -53,7 +53,7 @@ func dataSourceDnaCommandRunnerKeywordsRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAllKeywordsOfCliSAcceptedByCommandRunner")
+		log.Printf("[DEBUG] Selected method: GetAllKeywordsOfCliSAcceptedByCommandRunner")
 
 		response1, restyResp1, err := client.CommandRunner.GetAllKeywordsOfCliSAcceptedByCommandRunner()
 

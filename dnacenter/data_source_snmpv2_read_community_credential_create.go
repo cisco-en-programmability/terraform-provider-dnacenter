@@ -24,24 +24,6 @@ func dataSourceSNMPv2ReadCommunityCredentialCreate() *schema.Resource {
 
 		ReadContext: dataSourceSNMPv2ReadCommunityCredentialCreateRead,
 		Schema: map[string]*schema.Schema{
-			"comments": &schema.Schema{
-				Description: `Comments to identify the credential
-`,
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"credential_type": &schema.Schema{
-				Description: `Credential type to identify the application that uses the credential
-`,
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"description": &schema.Schema{
-				Description: `Name/Description of the credential
-`,
-				Type:     schema.TypeString,
-				Optional: true,
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -59,11 +41,39 @@ func dataSourceSNMPv2ReadCommunityCredentialCreate() *schema.Resource {
 					},
 				},
 			},
-			"read_community": &schema.Schema{
-				Description: `SNMP read community
+			"payload": &schema.Schema{
+				Description: `Array of RequestDiscoveryCreateSNMPReadCommunity`,
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"comments": &schema.Schema{
+							Description: `Comments to identify the credential
 `,
-				Type:     schema.TypeString,
-				Optional: true,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"credential_type": &schema.Schema{
+							Description: `Credential type to identify the application that uses the credential
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"description": &schema.Schema{
+							Description: `Name/Description of the credential
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"read_community": &schema.Schema{
+							Description: `SNMP read community
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
 			},
 		},
 	}
@@ -76,7 +86,7 @@ func dataSourceSNMPv2ReadCommunityCredentialCreateRead(ctx context.Context, d *s
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateSNMPReadCommunity")
+		log.Printf("[DEBUG] Selected method: CreateSNMPReadCommunity")
 		request1 := expandRequestSNMPv2ReadCommunityCredentialCreateCreateSNMPReadCommunity(ctx, "", d)
 
 		response1, restyResp1, err := client.Discovery.CreateSNMPReadCommunity(request1)
@@ -113,13 +123,9 @@ func dataSourceSNMPv2ReadCommunityCredentialCreateRead(ctx context.Context, d *s
 
 func expandRequestSNMPv2ReadCommunityCredentialCreateCreateSNMPReadCommunity(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateSNMPReadCommunity {
 	request := dnacentersdkgo.RequestDiscoveryCreateSNMPReadCommunity{}
-	if v := expandRequestSNMPv2ReadCommunityCredentialCreateCreateSNMPReadCommunityItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestSNMPv2ReadCommunityCredentialCreateCreateSNMPReadCommunityItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -140,10 +146,6 @@ func expandRequestSNMPv2ReadCommunityCredentialCreateCreateSNMPReadCommunityItem
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -161,10 +163,6 @@ func expandRequestSNMPv2ReadCommunityCredentialCreateCreateSNMPReadCommunityItem
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".read_community")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".read_community")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".read_community")))) {
 		request.ReadCommunity = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

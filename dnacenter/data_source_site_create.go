@@ -47,26 +47,6 @@ func dataSourceSiteCreate() *schema.Resource {
 					},
 				},
 			},
-			"runsync": &schema.Schema{
-				Description: `__runsync header parameter. Enable this parameter to execute the API and return a response synchronously
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
-			"timeout": &schema.Schema{
-				Description: `__timeout header parameter. During synchronous execution, this defines the maximum time to wait for a response, before the API execution is terminated
-			`,
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"persistbapioutput": &schema.Schema{
-				Description: `__persistbapioutput header parameter. Persist bapi sync response
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
 			"site": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -106,6 +86,12 @@ func dataSourceSiteCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 									},
+									"country": &schema.Schema{
+										Description: `Country (eg:United States)
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
 									"latitude": &schema.Schema{
 										Description: `Latitude coordinate of the building (eg:37.338)
 `,
@@ -139,14 +125,20 @@ func dataSourceSiteCreate() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"floor_number": &schema.Schema{
+										Description: `Floor number. (eg: 5)
+`,
+										Type:     schema.TypeFloat,
+										Optional: true,
+									},
 									"height": &schema.Schema{
-										Description: `Height of the floor (eg: 15)
+										Description: `Height of the floor. Unit of measure is ft. (eg: 15)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
 									},
 									"length": &schema.Schema{
-										Description: `Length of the floor (eg: 100)
+										Description: `Length of the floor. Unit of measure is ft. (eg: 100)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
@@ -164,13 +156,13 @@ func dataSourceSiteCreate() *schema.Resource {
 										Optional: true,
 									},
 									"rf_model": &schema.Schema{
-										Description: `Type of floor. Allowed values are 'Cubes And Walled Offices', 'Drywall Office Only', 'Indoor High Ceiling', 'Outdoor Open Space'.
+										Description: `Type of floor (eg: Cubes And Walled Offices0
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 									},
 									"width": &schema.Schema{
-										Description: `Width of the floor (eg:100)
+										Description: `Width of the floor. Unit of measure is ft. (eg: 100)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
@@ -195,25 +187,22 @@ func dataSourceSiteCreateRead(ctx context.Context, d *schema.ResourceData, m int
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-	vRunsync, okRunsync := d.GetOk("runsync")
-	vTimeout, okTimeout := d.GetOk("timeout")
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("persistbapioutput")
+	vRunsync := d.Get("runsync")
+	vTimeout := d.Get("timeout")
+	vPersistbapioutput := d.Get("persistbapioutput")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateSite")
+		log.Printf("[DEBUG] Selected method: CreateSite")
 		request1 := expandRequestSiteCreateCreateSite(ctx, "", d)
 
 		headerParams1 := dnacentersdkgo.CreateSiteHeaderParams{}
-		if okRunsync {
-			headerParams1.Runsync = vRunsync.(string)
-		}
-		if okTimeout {
-			headerParams1.Timeout = vTimeout.(string)
-		}
-		if okPersistbapioutput {
-			headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-		}
+
+		headerParams1.Runsync = vRunsync.(string)
+
+		headerParams1.Timeout = vTimeout.(string)
+
+		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
 		response1, restyResp1, err := client.Sites.CreateSite(request1, &headerParams1)
 
@@ -255,10 +244,6 @@ func expandRequestSiteCreateCreateSite(ctx context.Context, key string, d *schem
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site")))) {
 		request.Site = expandRequestSiteCreateCreateSiteSite(ctx, key+".site.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -273,10 +258,6 @@ func expandRequestSiteCreateCreateSiteSite(ctx context.Context, key string, d *s
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor")))) {
 		request.Floor = expandRequestSiteCreateCreateSiteSiteFloor(ctx, key+".floor.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -288,10 +269,6 @@ func expandRequestSiteCreateCreateSiteSiteArea(ctx context.Context, key string, 
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_name")))) {
 		request.ParentName = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -312,10 +289,9 @@ func expandRequestSiteCreateCreateSiteSiteBuilding(ctx context.Context, key stri
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".longitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".longitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".longitude")))) {
 		request.Longitude = interfaceToFloat64Ptr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".country")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".country")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".country")))) {
+		request.Country = interfaceToString(v)
 	}
-
 	return &request
 }
 
@@ -339,10 +315,9 @@ func expandRequestSiteCreateCreateSiteSiteFloor(ctx context.Context, key string,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".height")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".height")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".height")))) {
 		request.Height = interfaceToFloat64Ptr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor_number")))) {
+		request.FloorNumber = interfaceToFloat64Ptr(v)
 	}
-
 	return &request
 }
 

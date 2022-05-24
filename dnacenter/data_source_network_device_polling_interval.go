@@ -57,7 +57,7 @@ func dataSourceNetworkDevicePollingIntervalRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetPollingIntervalByID")
+		log.Printf("[DEBUG] Selected method: GetPollingIntervalByID")
 		vvID := vID.(string)
 
 		response1, restyResp1, err := client.Devices.GetPollingIntervalByID(vvID)

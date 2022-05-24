@@ -190,7 +190,7 @@ func dataSourceDeviceInterfaceOspfRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetOspfInterfaces")
+		log.Printf("[DEBUG] Selected method: GetOspfInterfaces")
 
 		response1, restyResp1, err := client.Devices.GetOspfInterfaces()
 

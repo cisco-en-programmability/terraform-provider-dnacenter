@@ -99,7 +99,7 @@ func dataSourcePlatformReleaseSummaryRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CiscoDnaCenterReleaseSummary")
+		log.Printf("[DEBUG] Selected method: CiscoDnaCenterReleaseSummary")
 
 		response1, restyResp1, err := client.PlatformConfiguration.CiscoDnaCenterReleaseSummary()
 

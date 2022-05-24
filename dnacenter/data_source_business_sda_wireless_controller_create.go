@@ -71,7 +71,7 @@ func dataSourceBusinessSdaWirelessControllerCreateRead(ctx context.Context, d *s
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: AddWLCToFabricDomain")
+		log.Printf("[DEBUG] Selected method: AddWLCToFabricDomain")
 		request1 := expandRequestBusinessSdaWirelessControllerCreateAddWLCToFabricDomain(ctx, "", d)
 
 		response1, restyResp1, err := client.FabricWireless.AddWLCToFabricDomain(request1)
@@ -114,10 +114,6 @@ func expandRequestBusinessSdaWirelessControllerCreateAddWLCToFabricDomain(ctx co
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_name_hierarchy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_name_hierarchy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_name_hierarchy")))) {
 		request.SiteNameHierarchy = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -126,10 +122,12 @@ func flattenFabricWirelessAddWLCToFabricDomainItems(items *dnacentersdkgo.Respon
 		return nil
 	}
 	var respItems []map[string]interface{}
-	respItem := make(map[string]interface{})
-	respItem["execution_id"] = items.ExecutionID
-	respItem["execution_status_url"] = items.ExecutionStatusURL
-	respItem["message"] = items.Message
-	respItems = append(respItems, respItem)
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["execution_id"] = item.ExecutionID
+		respItem["execution_status_url"] = item.ExecutionStatusURL
+		respItem["message"] = item.Message
+		respItems = append(respItems, respItem)
+	}
 	return respItems
 }

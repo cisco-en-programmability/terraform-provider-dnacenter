@@ -23,13 +23,6 @@ func dataSourceSiteAssignCredential() *schema.Resource {
 
 		ReadContext: dataSourceSiteAssignCredentialRead,
 		Schema: map[string]*schema.Schema{
-			"persistbapioutput": &schema.Schema{
-				Description: `__persistbapioutput header parameter. Persist bapi sync response
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
 			"site_id": &schema.Schema{
 				Description: `siteId path parameter. site id to assign credential.
 `,
@@ -99,19 +92,17 @@ func dataSourceSiteAssignCredentialRead(ctx context.Context, d *schema.ResourceD
 
 	var diags diag.Diagnostics
 	vSiteID := d.Get("site_id")
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("persistbapioutput")
+	vPersistbapioutput := d.Get("persistbapioutput")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: AssignCredentialToSite")
+		log.Printf("[DEBUG] Selected method: AssignCredentialToSite")
 		vvSiteID := vSiteID.(string)
 		request1 := expandRequestSiteAssignCredentialAssignCredentialToSite(ctx, "", d)
 
 		headerParams1 := dnacentersdkgo.AssignCredentialToSiteHeaderParams{}
 
-		if okPersistbapioutput {
-			headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-		}
+		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
 		response1, restyResp1, err := client.NetworkSettings.AssignCredentialToSite(vvSiteID, request1, &headerParams1)
 
@@ -165,10 +156,6 @@ func expandRequestSiteAssignCredentialAssignCredentialToSite(ctx context.Context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".snmp_v3_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".snmp_v3_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".snmp_v3_id")))) {
 		request.SNMPV3ID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

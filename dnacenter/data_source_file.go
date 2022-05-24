@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"log"
-
+	
 	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -18,19 +18,27 @@ func dataSourceFile() *schema.Resource {
 - Downloads a file specified by fileId
 `,
 
-		ReadContext: dataSourceFileRead,
+		ReadContext:   dataSourceFileRead,
 		Schema: map[string]*schema.Schema{
-			"dirpath": &schema.Schema{
-				Description: `Directory absolute path in which to save the file.`,
-				Type:        schema.TypeString,
-				Required:    true,
-			},
-			"file_id": &schema.Schema{
-				Description: `fileId path parameter. File Identification number
+      "dirpath": &schema.Schema{
+        Description: `Directory absolute path in which to save the file.`,
+        Type:        schema.TypeString,
+        Required:    true,
+      },
+      "file_id": &schema.Schema{
+        Description: `fileId path parameter. File Identification number
 `,
-				Type:     schema.TypeString,
-				Required: true,
-			},
+        Type:        schema.TypeString,
+        Required:    true,
+      },
+		
+      "item": &schema.Schema{
+        Type:     schema.TypeList,
+        Computed: true,
+        Elem:     &schema.Schema{
+          Type:   schema.TypeString,
+        },
+      },
 		},
 	}
 }
@@ -41,30 +49,50 @@ func dataSourceFileRead(ctx context.Context, d *schema.ResourceData, m interface
 	var diags diag.Diagnostics
 	vFileID := d.Get("file_id")
 
+
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DownloadAFileByFileID")
+		log.Printf("[DEBUG] Selected method: DownloadAFileByFileID")
 		vvFileID := vFileID.(string)
 
-		response1, _, err := client.File.DownloadAFileByFileID(vvFileID)
+		response1, restyResp1, err := client.File.DownloadAFileByFileID(vvFileID)
 
-		if err != nil {
-			diags = append(diags, diagError(
-				"Failure when executing DownloadAFileByFileID", err))
-			return diags
+	
+	
+		if err != nil || response1 == nil {
+		  if restyResp1 != nil {
+		    log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+		  }
+		  diags = append(diags, diagErrorWithAlt(
+		    "Failure when executing DownloadAFileByFileID", err,
+		    "Failure at DownloadAFileByFileID, unexpected response", ""))
+		  return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response")
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vvDirpath := d.Get("dirpath").(string)
-		err = response1.SaveDownload(vvDirpath)
-		if err != nil {
+		vItem1 := flattenFileDownloadAFileByFileIDItem(response1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when downloading file", err))
+				"Failure when setting DownloadAFileByFileID response",
+				err))
 			return diags
 		}
-		log.Printf("[DEBUG] Downloaded file %s", vvDirpath)
+		d.SetId(getUnixTimeString())
+		return diags
 
 	}
-	return diags
+  return diags
+}
+
+
+
+func flattenFileDownloadAFileByFileIDItem(item *dnacentersdkgo.) []interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	return []map[string]interface{}{
+		respItem,
+	}
 }

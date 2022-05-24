@@ -84,7 +84,7 @@ well. The response payload contains the deregistered smart & virtual account inf
 									},
 									"make_default": &schema.Schema{
 										Description: `Make Default`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -105,7 +105,7 @@ well. The response payload contains the deregistered smart & virtual account inf
 									},
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -199,7 +199,7 @@ func dataSourcePnpVirtualAccountDeregisterRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeregisterVirtualAccount")
+		log.Printf("[DEBUG] Selected method: DeregisterVirtualAccount")
 		queryParams1 := dnacentersdkgo.DeregisterVirtualAccountQueryParams{}
 
 		queryParams1.Domain = vDomain.(string)

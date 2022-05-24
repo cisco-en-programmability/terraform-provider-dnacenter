@@ -48,13 +48,6 @@ func dataSourceWirelessProvisionAccessPoint() *schema.Resource {
 					},
 				},
 			},
-			"persistbapioutput": &schema.Schema{
-				Description: `__persistbapioutput header parameter. Persist bapi sync response
-			`,
-				Type:         schema.TypeString,
-				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-				Optional:     true,
-			},
 			"payload": &schema.Schema{
 				Description: `Array of RequestWirelessAPProvision`,
 				Type:        schema.TypeList,
@@ -118,18 +111,16 @@ func dataSourceWirelessProvisionAccessPointRead(ctx context.Context, d *schema.R
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("persistbapioutput")
+	vPersistbapioutput := d.Get("persistbapioutput")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ApProvision")
+		log.Printf("[DEBUG] Selected method: ApProvision")
 		request1 := expandRequestWirelessProvisionAccessPointApProvision(ctx, "", d)
 
 		headerParams1 := dnacentersdkgo.ApProvisionHeaderParams{}
 
-		if okPersistbapioutput {
-			headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-		}
+		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
 		response1, restyResp1, err := client.Wireless.ApProvision(request1, &headerParams1)
 
@@ -168,10 +159,6 @@ func expandRequestWirelessProvisionAccessPointApProvision(ctx context.Context, k
 	if v := expandRequestWirelessProvisionAccessPointApProvisionItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -192,10 +179,6 @@ func expandRequestWirelessProvisionAccessPointApProvisionItemArray(ctx context.C
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -222,10 +205,6 @@ func expandRequestWirelessProvisionAccessPointApProvisionItem(ctx context.Contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_name_hierarchy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_name_hierarchy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_name_hierarchy")))) {
 		request.SiteNameHierarchy = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -234,12 +213,12 @@ func flattenWirelessApProvisionItems(items *dnacentersdkgo.ResponseWirelessApPro
 		return nil
 	}
 	var respItems []map[string]interface{}
-	// for _, item := range *items {
-	respItem := make(map[string]interface{})
-	respItem["execution_id"] = items.ExecutionID
-	respItem["execution_url"] = items.ExecutionURL
-	respItem["message"] = items.Message
-	respItems = append(respItems, respItem)
-	// }
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["execution_id"] = item.ExecutionID
+		respItem["execution_url"] = item.ExecutionURL
+		respItem["message"] = item.Message
+		respItems = append(respItems, respItem)
+	}
 	return respItems
 }

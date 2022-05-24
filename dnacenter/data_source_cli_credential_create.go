@@ -24,34 +24,6 @@ func dataSourceCliCredentialCreate() *schema.Resource {
 
 		ReadContext: dataSourceCliCredentialCreateRead,
 		Schema: map[string]*schema.Schema{
-			"comments": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"credential_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"description": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"enable_password": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"instance_tenant_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"instance_uuid": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -69,14 +41,52 @@ func dataSourceCliCredentialCreate() *schema.Resource {
 					},
 				},
 			},
-			"password": &schema.Schema{
-				Type:      schema.TypeString,
-				Optional:  true,
-				Sensitive: true,
-			},
-			"username": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+			"payload": &schema.Schema{
+				Description: `Array of RequestDiscoveryCreateCLICredentials`,
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"comments": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"credential_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"enable_password": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"instance_tenant_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"instance_uuid": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Optional:  true,
+							Sensitive: true,
+						},
+						"username": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
 			},
 		},
 	}
@@ -89,7 +99,7 @@ func dataSourceCliCredentialCreateRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateCliCredentials")
+		log.Printf("[DEBUG] Selected method: CreateCliCredentials")
 		request1 := expandRequestCliCredentialCreateCreateCliCredentials(ctx, "", d)
 
 		response1, restyResp1, err := client.Discovery.CreateCliCredentials(request1)
@@ -126,13 +136,9 @@ func dataSourceCliCredentialCreateRead(ctx context.Context, d *schema.ResourceDa
 
 func expandRequestCliCredentialCreateCreateCliCredentials(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateCliCredentials {
 	request := dnacentersdkgo.RequestDiscoveryCreateCliCredentials{}
-	if v := expandRequestCliCredentialCreateCreateCliCredentialsItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestCliCredentialCreateCreateCliCredentialsItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -153,10 +159,6 @@ func expandRequestCliCredentialCreateCreateCliCredentialsItemArray(ctx context.C
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -189,10 +191,6 @@ func expandRequestCliCredentialCreateCreateCliCredentialsItem(ctx context.Contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username")))) {
 		request.Username = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

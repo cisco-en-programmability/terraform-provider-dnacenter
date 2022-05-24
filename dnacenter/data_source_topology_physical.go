@@ -44,8 +44,11 @@ func dataSourceTopologyPhysical() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"additional_info": &schema.Schema{
-										Type:     schema.TypeString,
+										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"end_port_id": &schema.Schema{
@@ -74,7 +77,7 @@ func dataSourceTopologyPhysical() *schema.Resource {
 									},
 
 									"grey_out": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -139,14 +142,17 @@ func dataSourceTopologyPhysical() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"acl_applied": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"additional_info": &schema.Schema{
-										Type:     schema.TypeString,
+										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"custom_param": &schema.Schema{
@@ -199,13 +205,13 @@ func dataSourceTopologyPhysical() *schema.Resource {
 									},
 
 									"fixed": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"grey_out": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -315,7 +321,7 @@ func dataSourceTopologyPhysicalRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetPhysicalTopology")
+		log.Printf("[DEBUG] Selected method: GetPhysicalTopology")
 		queryParams1 := dnacentersdkgo.GetPhysicalTopologyQueryParams{}
 
 		if okNodeType {

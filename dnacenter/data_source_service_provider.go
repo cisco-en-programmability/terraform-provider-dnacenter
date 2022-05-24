@@ -104,7 +104,7 @@ func dataSourceServiceProvider() *schema.Resource {
 
 						"version": &schema.Schema{
 							Description: `Version`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 					},
@@ -121,7 +121,7 @@ func dataSourceServiceProviderRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetServiceProviderDetails")
+		log.Printf("[DEBUG] Selected method: GetServiceProviderDetails")
 
 		response1, restyResp1, err := client.NetworkSettings.GetServiceProviderDetails()
 

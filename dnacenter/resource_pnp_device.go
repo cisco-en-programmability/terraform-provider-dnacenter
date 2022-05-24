@@ -64,8 +64,11 @@ func resourcePnpDevice() *schema.Resource {
 						},
 						"day_zero_config_preview": &schema.Schema{
 							Description: `Day Zero Config Preview`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"device_info": &schema.Schema{
 							Type:     schema.TypeList,
@@ -183,7 +186,7 @@ func resourcePnpDevice() *schema.Resource {
 												},
 												"readable": &schema.Schema{
 													Description: `Readable`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -199,7 +202,7 @@ func resourcePnpDevice() *schema.Resource {
 												},
 												"writeable": &schema.Schema{
 													Description: `Writeable`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -253,8 +256,11 @@ func resourcePnpDevice() *schema.Resource {
 
 												"ipv4_address": &schema.Schema{
 													Description: `Ipv4 Address`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"ipv6_address_list": &schema.Schema{
 													Description: `Ipv6 Address List`,
@@ -423,7 +429,7 @@ func resourcePnpDevice() *schema.Resource {
 												},
 												"discovery_created": &schema.Schema{
 													Description: `Discovery Created`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -445,13 +451,19 @@ func resourcePnpDevice() *schema.Resource {
 															},
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeList,
 																Computed:    true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
 															},
 															"ipv6_address": &schema.Schema{
 																Description: `Ipv6 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeList,
 																Computed:    true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
 															},
 															"port": &schema.Schema{
 																Description: `Port`,
@@ -489,13 +501,19 @@ func resourcePnpDevice() *schema.Resource {
 															},
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeList,
 																Computed:    true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
 															},
 															"ipv6_address": &schema.Schema{
 																Description: `Ipv6 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeList,
 																Computed:    true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
 															},
 															"port": &schema.Schema{
 																Description: `Port`,
@@ -515,7 +533,7 @@ func resourcePnpDevice() *schema.Resource {
 									},
 									"populate_inventory": &schema.Schema{
 										Description: `Populate Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -550,7 +568,7 @@ func resourcePnpDevice() *schema.Resource {
 									},
 									"reload_requested": &schema.Schema{
 										Description: `Reload Requested`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -581,7 +599,7 @@ func resourcePnpDevice() *schema.Resource {
 									},
 									"stack": &schema.Schema{
 										Description: `Stack`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -593,7 +611,7 @@ func resourcePnpDevice() *schema.Resource {
 
 												"is_full_ring": &schema.Schema{
 													Description: `Is Full Ring`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -673,7 +691,7 @@ func resourcePnpDevice() *schema.Resource {
 												},
 												"supports_stack_workflows": &schema.Schema{
 													Description: `Supports Stack Workflows`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -700,7 +718,7 @@ func resourcePnpDevice() *schema.Resource {
 									},
 									"sudi_required": &schema.Schema{
 										Description: `Sudi Required`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -759,7 +777,7 @@ func resourcePnpDevice() *schema.Resource {
 									},
 									"error_flag": &schema.Schema{
 										Description: `Error Flag`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -866,7 +884,7 @@ func resourcePnpDevice() *schema.Resource {
 									},
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1054,7 +1072,7 @@ func resourcePnpDevice() *schema.Resource {
 									},
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1252,7 +1270,7 @@ func resourcePnpDevice() *schema.Resource {
 									},
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1489,9 +1507,7 @@ func resourcePnpDevice() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -1501,9 +1517,8 @@ func resourcePnpDevice() *schema.Resource {
 						},
 						"device_info": &schema.Schema{
 							Type:     schema.TypeList,
-							Required: true,
+							Optional: true,
 							MaxItems: 1,
-							MinItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -1597,7 +1612,7 @@ func resourcePnpDevice() *schema.Resource {
 													Optional: true,
 												},
 												"readable": &schema.Schema{
-
+													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1611,7 +1626,7 @@ func resourcePnpDevice() *schema.Resource {
 													Optional: true,
 												},
 												"writeable": &schema.Schema{
-
+													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1740,7 +1755,7 @@ func resourcePnpDevice() *schema.Resource {
 									},
 									"name": &schema.Schema{
 										Type:     schema.TypeString,
-										Required: true,
+										Optional: true,
 									},
 									"neighbor_links": &schema.Schema{
 										Type:     schema.TypeList,
@@ -1806,7 +1821,7 @@ func resourcePnpDevice() *schema.Resource {
 													Optional: true,
 												},
 												"discovery_created": &schema.Schema{
-
+													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1903,7 +1918,7 @@ func resourcePnpDevice() *schema.Resource {
 										},
 									},
 									"populate_inventory": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1934,7 +1949,7 @@ func resourcePnpDevice() *schema.Resource {
 										Optional: true,
 									},
 									"reload_requested": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1952,7 +1967,7 @@ func resourcePnpDevice() *schema.Resource {
 										Optional: true,
 									},
 									"stack": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -1965,7 +1980,7 @@ func resourcePnpDevice() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"is_full_ring": &schema.Schema{
-
+													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2032,7 +2047,7 @@ func resourcePnpDevice() *schema.Resource {
 													Optional: true,
 												},
 												"supports_stack_workflows": &schema.Schema{
-
+													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2056,7 +2071,7 @@ func resourcePnpDevice() *schema.Resource {
 										Optional: true,
 									},
 									"sudi_required": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2102,7 +2117,7 @@ func resourcePnpDevice() *schema.Resource {
 										Optional: true,
 									},
 									"error_flag": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2198,7 +2213,7 @@ func resourcePnpDevice() *schema.Resource {
 										Optional: true,
 									},
 									"add_to_inventory": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2356,7 +2371,7 @@ func resourcePnpDevice() *schema.Resource {
 										Optional: true,
 									},
 									"add_to_inventory": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2522,7 +2537,7 @@ func resourcePnpDevice() *schema.Resource {
 										Optional: true,
 									},
 									"add_to_inventory": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -2734,43 +2749,28 @@ func resourcePnpDeviceCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestPnpDeviceAddDevice(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
-	vName := ""
-	if _, ok := d.GetOk("parameters.0"); ok {
-		if _, ok := d.GetOk("parameters.0.device_info"); ok {
-			if _, ok := d.GetOk("parameters.0.device_info.0"); ok {
-				if v, ok := d.GetOk("parameters.0.device_info.0.name"); ok {
-					vName = interfaceToString(v)
-				}
-			}
-		}
-	}
-	var vvName string
-	vvName = vName
 	vvID := interfaceToString(vID)
 	if okID && vvID != "" {
 		getResponse2, _, err := client.DeviceOnboardingPnp.GetDeviceByID(vvID)
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
 			return resourcePnpDeviceRead(ctx, d, m)
 		}
-	} else if vName != "" {
-		queryParams1 := dnacentersdkgo.GetDeviceList2QueryParams{}
-		queryParams1.Name = append(queryParams1.Name, vvName)
-		response1, err := searchDeviceOnboardingPnpGetDeviceList2(m, queryParams1, vvName)
-		if err == nil && response1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourcePnpDeviceRead(ctx, d, m)
+	} else {
+		response2, _, err := client.DeviceOnboardingPnp.GetDeviceList2(nil)
+		if response2 != nil && err == nil {
+			item2, err := searchDeviceOnboardingPnpGetDeviceList2(m, items2, vvName, vvID)
+			if err == nil && item2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				d.SetId(joinResourceID(resourceMap))
+				return resourcePnpDeviceRead(ctx, d, m)
+			}
 		}
 	}
 	resp1, restyResp1, err := client.DeviceOnboardingPnp.AddDevice(request1)
@@ -2786,7 +2786,6 @@ func resourcePnpDeviceCreate(ctx context.Context, d *schema.ResourceData, m inte
 	}
 	resourceMap := make(map[string]string)
 	resourceMap["id"] = vvID
-	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
 	return resourcePnpDeviceRead(ctx, d, m)
 }
@@ -2798,30 +2797,137 @@ func resourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vID, okID := resourceMap["id"]
+	vLimit, okLimit := resourceMap["limit"]
+	vOffset, okOffset := resourceMap["offset"]
+	vSort, okSort := resourceMap["sort"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
+	vSerialNumber, okSerialNumber := resourceMap["serial_number"]
+	vState, okState := resourceMap["state"]
+	vOnbState, okOnbState := resourceMap["onb_state"]
+	vCmState, okCmState := resourceMap["cm_state"]
 	vName, okName := resourceMap["name"]
+	vPid, okPid := resourceMap["pid"]
+	vSource, okSource := resourceMap["source"]
+	vProjectID, okProjectID := resourceMap["project_id"]
+	vWorkflowID, okWorkflowID := resourceMap["workflow_id"]
+	vProjectName, okProjectName := resourceMap["project_name"]
+	vWorkflowName, okWorkflowName := resourceMap["workflow_name"]
+	vSmartAccountID, okSmartAccountID := resourceMap["smart_account_id"]
+	vVirtualAccountID, okVirtualAccountID := resourceMap["virtual_account_id"]
+	vLastContact, okLastContact := resourceMap["last_contact"]
+	vMacAddress, okMacAddress := resourceMap["mac_address"]
+	vHostname, okHostname := resourceMap["hostname"]
+	vSiteName, okSiteName := resourceMap["site_name"]
+	vID, okID := resourceMap["id"]
 
-	if vName != "" && okName {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceList2")
+	method1 := []bool{okLimit, okOffset, okSort, okSortOrder, okSerialNumber, okState, okOnbState, okCmState, okName, okPid, okSource, okProjectID, okWorkflowID, okProjectName, okWorkflowName, okSmartAccountID, okVirtualAccountID, okLastContact, okMacAddress, okHostname, okSiteName}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetDeviceList2")
 		queryParams1 := dnacentersdkgo.GetDeviceList2QueryParams{}
-		queryParams1.Name = append(queryParams1.Name, vName)
-		response1, err := searchDeviceOnboardingPnpGetDeviceList2(m, queryParams1, vName)
+
+		if okLimit {
+			queryParams1.Limit = *stringToIntPtr(vLimit)
+		}
+		if okOffset {
+			queryParams1.Offset = *stringToIntPtr(vOffset)
+		}
+		if okSort {
+			queryParams1.Sort = interfaceToSliceString(vSort)
+		}
+		if okSortOrder {
+			queryParams1.SortOrder = vSortOrder
+		}
+		if okSerialNumber {
+			queryParams1.SerialNumber = interfaceToSliceString(vSerialNumber)
+		}
+		if okState {
+			queryParams1.State = interfaceToSliceString(vState)
+		}
+		if okOnbState {
+			queryParams1.OnbState = interfaceToSliceString(vOnbState)
+		}
+		if okCmState {
+			queryParams1.CmState = interfaceToSliceString(vCmState)
+		}
+		if okName {
+			queryParams1.Name = interfaceToSliceString(vName)
+		}
+		if okPid {
+			queryParams1.Pid = interfaceToSliceString(vPid)
+		}
+		if okSource {
+			queryParams1.Source = interfaceToSliceString(vSource)
+		}
+		if okProjectID {
+			queryParams1.ProjectID = interfaceToSliceString(vProjectID)
+		}
+		if okWorkflowID {
+			queryParams1.WorkflowID = interfaceToSliceString(vWorkflowID)
+		}
+		if okProjectName {
+			queryParams1.ProjectName = interfaceToSliceString(vProjectName)
+		}
+		if okWorkflowName {
+			queryParams1.WorkflowName = interfaceToSliceString(vWorkflowName)
+		}
+		if okSmartAccountID {
+			queryParams1.SmartAccountID = interfaceToSliceString(vSmartAccountID)
+		}
+		if okVirtualAccountID {
+			queryParams1.VirtualAccountID = interfaceToSliceString(vVirtualAccountID)
+		}
+		if okLastContact {
+			queryParams1.LastContact = *stringToBooleanPtr(vLastContact)
+		}
+		if okMacAddress {
+			queryParams1.MacAddress = vMacAddress
+		}
+		if okHostname {
+			queryParams1.Hostname = vHostname
+		}
+		if okSiteName {
+			queryParams1.SiteName = vSiteName
+		}
+
+		response1, restyResp1, err := client.DeviceOnboardingPnp.GetDeviceList2(&queryParams1)
+
 		if err != nil || response1 == nil {
-			d.SetId("")
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDeviceList2", err,
+				"Failure at GetDeviceList2, unexpected response", ""))
 			return diags
 		}
+
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-		vItems1 := flattenDeviceOnboardingPnpGetDeviceList2Item(response1)
-		if err := d.Set("item", vItems1); err != nil {
+
+		items1 := getAllItemsDeviceOnboardingPnpGetDeviceList2(m, response1, nil)
+		item1, err := searchDeviceOnboardingPnpGetDeviceList2(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetDeviceList2 response", err,
+				"Failure when searching item from GetDeviceList2, unexpected response", ""))
+			return diags
+		}
+		// Review flatten function used
+		vItem1 := flattenDeviceOnboardingPnpGetDeviceList2ByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetDeviceList2 response",
+				"Failure when setting GetDeviceList2 search response",
 				err))
 			return diags
 		}
-		return diags
 
-	} else if vID != "" && okID {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceByID")
+	}
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method: GetDeviceByID")
 		vvID := vID
 
 		response2, restyResp2, err := client.DeviceOnboardingPnp.GetDeviceByID(vvID)
@@ -2830,14 +2936,16 @@ func resourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDeviceByID", err,
+				"Failure at GetDeviceByID, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
-		vItemID2 := flattenDeviceOnboardingPnpGetDeviceByIDItem(response2)
-		if err := d.Set("item", vItemID2); err != nil {
+		vItem2 := flattenDeviceOnboardingPnpGetDeviceByIDItem(response2)
+		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceByID response",
 				err))
@@ -2856,48 +2964,77 @@ func resourcePnpDeviceUpdate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+	vLimit, okLimit := resourceMap["limit"]
+	vOffset, okOffset := resourceMap["offset"]
+	vSort, okSort := resourceMap["sort"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
+	vSerialNumber, okSerialNumber := resourceMap["serial_number"]
+	vState, okState := resourceMap["state"]
+	vOnbState, okOnbState := resourceMap["onb_state"]
+	vCmState, okCmState := resourceMap["cm_state"]
+	vName, okName := resourceMap["name"]
+	vPid, okPid := resourceMap["pid"]
+	vSource, okSource := resourceMap["source"]
+	vProjectID, okProjectID := resourceMap["project_id"]
+	vWorkflowID, okWorkflowID := resourceMap["workflow_id"]
+	vProjectName, okProjectName := resourceMap["project_name"]
+	vWorkflowName, okWorkflowName := resourceMap["workflow_name"]
+	vSmartAccountID, okSmartAccountID := resourceMap["smart_account_id"]
+	vVirtualAccountID, okVirtualAccountID := resourceMap["virtual_account_id"]
+	vLastContact, okLastContact := resourceMap["last_contact"]
+	vMacAddress, okMacAddress := resourceMap["mac_address"]
+	vHostname, okHostname := resourceMap["hostname"]
+	vSiteName, okSiteName := resourceMap["site_name"]
 
-	vID := resourceMap["id"]
-	vName, _ := resourceMap["name"]
+	queryParams1 := dnacentersdkgo.GetDeviceList2QueryParams
+	queryParams1.Limit = *stringToIntPtr(vLimit)
+	queryParams1.Offset = *stringToIntPtr(vOffset)
+	queryParams1.Sort = interfaceToSliceString(vSort)
+	queryParams1.SortOrder = vSortOrder
+	queryParams1.SerialNumber = interfaceToSliceString(vSerialNumber)
+	queryParams1.State = interfaceToSliceString(vState)
+	queryParams1.OnbState = interfaceToSliceString(vOnbState)
+	queryParams1.CmState = interfaceToSliceString(vCmState)
+	queryParams1.Name = interfaceToSliceString(vName)
+	queryParams1.Pid = interfaceToSliceString(vPid)
+	queryParams1.Source = interfaceToSliceString(vSource)
+	queryParams1.ProjectID = interfaceToSliceString(vProjectID)
+	queryParams1.WorkflowID = interfaceToSliceString(vWorkflowID)
+	queryParams1.ProjectName = interfaceToSliceString(vProjectName)
+	queryParams1.WorkflowName = interfaceToSliceString(vWorkflowName)
+	queryParams1.SmartAccountID = interfaceToSliceString(vSmartAccountID)
+	queryParams1.VirtualAccountID = interfaceToSliceString(vVirtualAccountID)
+	queryParams1.LastContact = *stringToBooleanPtr(vLastContact)
+	queryParams1.MacAddress = vMacAddress
+	queryParams1.Hostname = vHostname
+	queryParams1.SiteName = vSiteName
+	item, err := searchDeviceOnboardingPnpGetDeviceList2(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetDeviceList2", err,
+			"Failure at GetDeviceList2, unexpected response", ""))
+		return diags
+	}
 
+	vID, okID := resourceMap["id"]
+
+	method1 := []bool{okLimit, okOffset, okSort, okSortOrder, okSerialNumber, okState, okOnbState, okCmState, okName, okPid, okSource, okProjectID, okWorkflowID, okProjectName, okWorkflowName, okSmartAccountID, okVirtualAccountID, okLastContact, okMacAddress, okHostname, okSiteName}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
-
+	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
-
-	if vID != "" {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceByID")
+	// if selectedMethod == 1 { }
+	if selectedMethod == 2 {
 		vvID = vID
-
-		response2, restyResp2, err := client.DeviceOnboardingPnp.GetDeviceByID(vvID)
-
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceByID", err,
-				"Failure at GetDeviceByID, unexpected response", ""))
-			return diags
-		}
-	} else if vName != "" {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceList2")
-		queryParams1 := dnacentersdkgo.GetDeviceList2QueryParams{}
-		queryParams1.Name = append(queryParams1.Name, vName)
-		respon1, err := searchDeviceOnboardingPnpGetDeviceList2(m, queryParams1, vName)
-		if err != nil || respon1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceList2", err,
-				"Failure at GetDeviceList2, unexpected response", ""))
-			return diags
-		}
-		vvID = respon1.ID
 	}
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestPnpDeviceUpdateDevice(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.DeviceOnboardingPnp.UpdateDevice(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -2925,23 +3062,92 @@ func resourcePnpDeviceDelete(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+	vLimit, okLimit := resourceMap["limit"]
+	vOffset, okOffset := resourceMap["offset"]
+	vSort, okSort := resourceMap["sort"]
+	vSortOrder, okSortOrder := resourceMap["sort_order"]
+	vSerialNumber, okSerialNumber := resourceMap["serial_number"]
+	vState, okState := resourceMap["state"]
+	vOnbState, okOnbState := resourceMap["onb_state"]
+	vCmState, okCmState := resourceMap["cm_state"]
+	vName, okName := resourceMap["name"]
+	vPid, okPid := resourceMap["pid"]
+	vSource, okSource := resourceMap["source"]
+	vProjectID, okProjectID := resourceMap["project_id"]
+	vWorkflowID, okWorkflowID := resourceMap["workflow_id"]
+	vProjectName, okProjectName := resourceMap["project_name"]
+	vWorkflowName, okWorkflowName := resourceMap["workflow_name"]
+	vSmartAccountID, okSmartAccountID := resourceMap["smart_account_id"]
+	vVirtualAccountID, okVirtualAccountID := resourceMap["virtual_account_id"]
+	vLastContact, okLastContact := resourceMap["last_contact"]
+	vMacAddress, okMacAddress := resourceMap["mac_address"]
+	vHostname, okHostname := resourceMap["hostname"]
+	vSiteName, okSiteName := resourceMap["site_name"]
 
-	vID := resourceMap["id"]
-	vvID := vID
-	vName := resourceMap["name"]
-	if vName != "" {
-		queryParams1 := dnacentersdkgo.GetDeviceList2QueryParams{}
-		queryParams1.Name = append(queryParams1.Name, vName)
-		response1, err := searchDeviceOnboardingPnpGetDeviceList2(m, queryParams1, vName)
-		if err != nil || response1 == nil {
+	queryParams1 := dnacentersdkgo.GetDeviceList2QueryParams
+	queryParams1.Limit = *stringToIntPtr(vLimit)
+	queryParams1.Offset = *stringToIntPtr(vOffset)
+	queryParams1.Sort = interfaceToSliceString(vSort)
+	queryParams1.SortOrder = vSortOrder
+	queryParams1.SerialNumber = interfaceToSliceString(vSerialNumber)
+	queryParams1.State = interfaceToSliceString(vState)
+	queryParams1.OnbState = interfaceToSliceString(vOnbState)
+	queryParams1.CmState = interfaceToSliceString(vCmState)
+	queryParams1.Name = interfaceToSliceString(vName)
+	queryParams1.Pid = interfaceToSliceString(vPid)
+	queryParams1.Source = interfaceToSliceString(vSource)
+	queryParams1.ProjectID = interfaceToSliceString(vProjectID)
+	queryParams1.WorkflowID = interfaceToSliceString(vWorkflowID)
+	queryParams1.ProjectName = interfaceToSliceString(vProjectName)
+	queryParams1.WorkflowName = interfaceToSliceString(vWorkflowName)
+	queryParams1.SmartAccountID = interfaceToSliceString(vSmartAccountID)
+	queryParams1.VirtualAccountID = interfaceToSliceString(vVirtualAccountID)
+	queryParams1.LastContact = *stringToBooleanPtr(vLastContact)
+	queryParams1.MacAddress = vMacAddress
+	queryParams1.Hostname = vHostname
+	queryParams1.SiteName = vSiteName
+	item, err := searchDeviceOnboardingPnpGetDeviceList2(m, queryParams1)
+	if err != nil || item == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing GetDeviceList2", err,
+			"Failure at GetDeviceList2, unexpected response", ""))
+		return diags
+	}
+
+	vID, okID := resourceMap["id"]
+
+	method1 := []bool{okLimit, okOffset, okSort, okSortOrder, okSerialNumber, okState, okOnbState, okCmState, okName, okPid, okSource, okProjectID, okWorkflowID, okProjectName, okWorkflowName, okSmartAccountID, okVirtualAccountID, okLastContact, okMacAddress, okHostname, okSiteName}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	var vvName string
+	// REVIEW: Add getAllItems and search function to get missing params
+	if selectedMethod == 1 {
+
+		getResp1, _, err := client.DeviceOnboardingPnp.GetDeviceList2(nil)
+		if err != nil || getResp1 == nil {
 			// Assume that element it is already gone
 			return diags
 		}
-		vvID = response1.ID
+		items1 := getAllItemsDeviceOnboardingPnpGetDeviceList2(m, getResp1, nil)
+		item1, err := searchDeviceOnboardingPnpGetDeviceList2(m, items1, vName, vID)
+		if err != nil || item1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		if vID != item1.ID {
+			vvID = item1.ID
+		} else {
+			vvID = vID
+		}
 	}
-	if vID != "" {
-		response2, _, err := client.DeviceOnboardingPnp.GetDeviceByID(vvID)
-		if err != nil || response2 == nil {
+	if selectedMethod == 2 {
+		vvID = vID
+		getResp, _, err := client.DeviceOnboardingPnp.GetDeviceByID(vvID)
+		if err != nil || getResp == nil {
 			// Assume that element it is already gone
 			return diags
 		}
@@ -2999,7 +3205,6 @@ func expandRequestPnpDeviceAddDevice(ctx context.Context, key string, d *schema.
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3149,7 +3354,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfo(ctx context.Context, key string, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3164,7 +3368,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoAAACredentials(ctx context.Context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3188,7 +3391,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoFileSystemListArray(ctx context.Co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3215,7 +3417,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoFileSystemList(ctx context.Context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3239,7 +3440,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoHTTPHeadersArray(ctx context.Conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3254,7 +3454,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoHTTPHeaders(ctx context.Context, k
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3278,7 +3477,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoIPInterfacesArray(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3302,7 +3500,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoIPInterfaces(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3312,7 +3509,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoIPInterfacesIPv4Address(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3336,7 +3532,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoIPInterfacesIPv6AddressListArray(c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3346,7 +3541,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoIPInterfacesIPv6AddressList(ctx co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3370,7 +3564,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoLocation(ctx context.Context, key 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3394,7 +3587,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoNeighborLinksArray(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3430,7 +3622,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoNeighborLinks(ctx context.Context,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3454,7 +3645,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPnpProfileListArray(ctx context.Co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3478,7 +3668,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPnpProfileList(ctx context.Context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3505,7 +3694,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPnpProfileListPrimaryEndpoint(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3515,7 +3703,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPnpProfileListPrimaryEndpointIPv4A
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3525,7 +3712,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPnpProfileListPrimaryEndpointIPv6A
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3552,7 +3738,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPnpProfileListSecondaryEndpoint(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3562,7 +3747,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPnpProfileListSecondaryEndpointIPv
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3572,7 +3756,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPnpProfileListSecondaryEndpointIPv
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3596,7 +3779,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPreWorkflowCliOuputsArray(ctx cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3611,7 +3793,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoPreWorkflowCliOuputs(ctx context.C
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3638,7 +3819,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoStackInfo(ctx context.Context, key
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3662,7 +3842,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoStackInfoStackMemberListArray(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3707,7 +3886,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoStackInfoStackMemberList(ctx conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3717,7 +3895,6 @@ func expandRequestPnpDeviceAddDeviceDeviceInfoTags(ctx context.Context, key stri
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3741,7 +3918,6 @@ func expandRequestPnpDeviceAddDeviceRunSummaryListArray(ctx context.Context, key
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3762,7 +3938,6 @@ func expandRequestPnpDeviceAddDeviceRunSummaryList(ctx context.Context, key stri
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3786,7 +3961,6 @@ func expandRequestPnpDeviceAddDeviceRunSummaryListHistoryTaskInfo(ctx context.Co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3810,7 +3984,6 @@ func expandRequestPnpDeviceAddDeviceRunSummaryListHistoryTaskInfoAddnDetailsArra
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3825,7 +3998,6 @@ func expandRequestPnpDeviceAddDeviceRunSummaryListHistoryTaskInfoAddnDetails(ctx
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3849,7 +4021,6 @@ func expandRequestPnpDeviceAddDeviceRunSummaryListHistoryTaskInfoWorkItemListArr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3876,7 +4047,6 @@ func expandRequestPnpDeviceAddDeviceRunSummaryListHistoryTaskInfoWorkItemList(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3942,7 +4112,6 @@ func expandRequestPnpDeviceAddDeviceSystemResetWorkflow(ctx context.Context, key
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3966,7 +4135,6 @@ func expandRequestPnpDeviceAddDeviceSystemResetWorkflowTasksArray(ctx context.Co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4002,7 +4170,6 @@ func expandRequestPnpDeviceAddDeviceSystemResetWorkflowTasks(ctx context.Context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4026,7 +4193,6 @@ func expandRequestPnpDeviceAddDeviceSystemResetWorkflowTasksWorkItemListArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4053,7 +4219,6 @@ func expandRequestPnpDeviceAddDeviceSystemResetWorkflowTasksWorkItemList(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4119,7 +4284,6 @@ func expandRequestPnpDeviceAddDeviceSystemWorkflow(ctx context.Context, key stri
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4143,7 +4307,6 @@ func expandRequestPnpDeviceAddDeviceSystemWorkflowTasksArray(ctx context.Context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4179,7 +4342,6 @@ func expandRequestPnpDeviceAddDeviceSystemWorkflowTasks(ctx context.Context, key
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4203,7 +4365,6 @@ func expandRequestPnpDeviceAddDeviceSystemWorkflowTasksWorkItemListArray(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4230,7 +4391,6 @@ func expandRequestPnpDeviceAddDeviceSystemWorkflowTasksWorkItemList(ctx context.
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4296,7 +4456,6 @@ func expandRequestPnpDeviceAddDeviceWorkflow(ctx context.Context, key string, d 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4320,7 +4479,6 @@ func expandRequestPnpDeviceAddDeviceWorkflowTasksArray(ctx context.Context, key 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4356,7 +4514,6 @@ func expandRequestPnpDeviceAddDeviceWorkflowTasks(ctx context.Context, key strin
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4380,7 +4537,6 @@ func expandRequestPnpDeviceAddDeviceWorkflowTasksWorkItemListArray(ctx context.C
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4407,7 +4563,6 @@ func expandRequestPnpDeviceAddDeviceWorkflowTasksWorkItemList(ctx context.Contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4428,7 +4583,6 @@ func expandRequestPnpDeviceAddDeviceWorkflowParameters(ctx context.Context, key 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4452,7 +4606,6 @@ func expandRequestPnpDeviceAddDeviceWorkflowParametersConfigListArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4467,7 +4620,6 @@ func expandRequestPnpDeviceAddDeviceWorkflowParametersConfigList(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4491,7 +4643,6 @@ func expandRequestPnpDeviceAddDeviceWorkflowParametersConfigListConfigParameters
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4506,7 +4657,6 @@ func expandRequestPnpDeviceAddDeviceWorkflowParametersConfigListConfigParameters
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4542,7 +4692,6 @@ func expandRequestPnpDeviceUpdateDevice(ctx context.Context, key string, d *sche
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4692,7 +4841,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfo(ctx context.Context, key strin
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4707,7 +4855,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoAAACredentials(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4731,7 +4878,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoFileSystemListArray(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4758,7 +4904,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoFileSystemList(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4782,7 +4927,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoHTTPHeadersArray(ctx context.Co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4797,7 +4941,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoHTTPHeaders(ctx context.Context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4821,7 +4964,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoIPInterfacesArray(ctx context.C
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4845,7 +4987,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoIPInterfaces(ctx context.Contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4855,7 +4996,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoIPInterfacesIPv4Address(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4879,7 +5019,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoIPInterfacesIPv6AddressListArra
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4889,7 +5028,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoIPInterfacesIPv6AddressList(ctx
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4913,7 +5051,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoLocation(ctx context.Context, k
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4937,7 +5074,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoNeighborLinksArray(ctx context.
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4973,7 +5109,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoNeighborLinks(ctx context.Conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4997,7 +5132,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPnpProfileListArray(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5021,7 +5155,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPnpProfileList(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5048,7 +5181,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPnpProfileListPrimaryEndpoint(c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5058,7 +5190,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPnpProfileListPrimaryEndpointIP
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5068,7 +5199,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPnpProfileListPrimaryEndpointIP
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5095,7 +5225,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPnpProfileListSecondaryEndpoint
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5105,7 +5234,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPnpProfileListSecondaryEndpoint
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5115,7 +5243,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPnpProfileListSecondaryEndpoint
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5139,7 +5266,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPreWorkflowCliOuputsArray(ctx c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5154,7 +5280,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoPreWorkflowCliOuputs(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5181,7 +5306,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoStackInfo(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5205,7 +5329,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoStackInfoStackMemberListArray(c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5250,7 +5373,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoStackInfoStackMemberList(ctx co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5260,7 +5382,6 @@ func expandRequestPnpDeviceUpdateDeviceDeviceInfoTags(ctx context.Context, key s
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5284,7 +5405,6 @@ func expandRequestPnpDeviceUpdateDeviceRunSummaryListArray(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5305,7 +5425,6 @@ func expandRequestPnpDeviceUpdateDeviceRunSummaryList(ctx context.Context, key s
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5329,7 +5448,6 @@ func expandRequestPnpDeviceUpdateDeviceRunSummaryListHistoryTaskInfo(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5353,7 +5471,6 @@ func expandRequestPnpDeviceUpdateDeviceRunSummaryListHistoryTaskInfoAddnDetailsA
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5368,7 +5485,6 @@ func expandRequestPnpDeviceUpdateDeviceRunSummaryListHistoryTaskInfoAddnDetails(
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5392,7 +5508,6 @@ func expandRequestPnpDeviceUpdateDeviceRunSummaryListHistoryTaskInfoWorkItemList
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5419,7 +5534,6 @@ func expandRequestPnpDeviceUpdateDeviceRunSummaryListHistoryTaskInfoWorkItemList
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5485,7 +5599,6 @@ func expandRequestPnpDeviceUpdateDeviceSystemResetWorkflow(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5509,7 +5622,6 @@ func expandRequestPnpDeviceUpdateDeviceSystemResetWorkflowTasksArray(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5545,7 +5657,6 @@ func expandRequestPnpDeviceUpdateDeviceSystemResetWorkflowTasks(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5569,7 +5680,6 @@ func expandRequestPnpDeviceUpdateDeviceSystemResetWorkflowTasksWorkItemListArray
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5596,7 +5706,6 @@ func expandRequestPnpDeviceUpdateDeviceSystemResetWorkflowTasksWorkItemList(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5662,7 +5771,6 @@ func expandRequestPnpDeviceUpdateDeviceSystemWorkflow(ctx context.Context, key s
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5686,7 +5794,6 @@ func expandRequestPnpDeviceUpdateDeviceSystemWorkflowTasksArray(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5722,7 +5829,6 @@ func expandRequestPnpDeviceUpdateDeviceSystemWorkflowTasks(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5746,7 +5852,6 @@ func expandRequestPnpDeviceUpdateDeviceSystemWorkflowTasksWorkItemListArray(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5773,7 +5878,6 @@ func expandRequestPnpDeviceUpdateDeviceSystemWorkflowTasksWorkItemList(ctx conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5839,7 +5943,6 @@ func expandRequestPnpDeviceUpdateDeviceWorkflow(ctx context.Context, key string,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5863,7 +5966,6 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowTasksArray(ctx context.Context, k
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5899,7 +6001,6 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowTasks(ctx context.Context, key st
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5923,7 +6024,6 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowTasksWorkItemListArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5950,7 +6050,6 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowTasksWorkItemList(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5971,7 +6070,6 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowParameters(ctx context.Context, k
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -5995,7 +6093,6 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowParametersConfigListArray(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -6010,7 +6107,6 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowParametersConfigList(ctx context.
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -6034,7 +6130,6 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowParametersConfigListConfigParamet
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -6049,29 +6144,31 @@ func expandRequestPnpDeviceUpdateDeviceWorkflowParametersConfigListConfigParamet
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchDeviceOnboardingPnpGetDeviceList2(m interface{}, queryParams dnacentersdkgo.GetDeviceList2QueryParams, vName string) (*dnacentersdkgo.ResponseItemDeviceOnboardingPnpGetDeviceList2, error) {
+func searchDeviceOnboardingPnpGetDeviceList2(m interface{}, queryParams dnacentersdkgo.GetDeviceList2QueryParams) (*dnacentersdkgo.ResponseItemDeviceOnboardingPnpGetDeviceList2, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseItemDeviceOnboardingPnpGetDeviceList2
-	nResponse, _, err := client.DeviceOnboardingPnp.GetDeviceList2(nil)
-	if nResponse == nil || err != nil {
+	var ite *dnacentersdkgo.ResponseDeviceOnboardingPnpGetDeviceList2
+	ite, _, err = client.DeviceOnboardingPnp.GetDeviceList2(&queryParams)
+	if err != nil {
 		return foundItem, err
 	}
-	maxPageSize := len(*nResponse)
-	for _, item := range *nResponse {
-		if item.DeviceInfo != nil && vName == item.DeviceInfo.Name {
-			foundItem = &item
+	items := ite
+	if items == nil {
+		return foundItem, err
+	}
+	itemsCopy := *items
+	for _, item := range itemsCopy {
+		// Call get by _ method and set value to foundItem and return
+		if item.Name == queryParams.Name {
+			var getItem *dnacentersdkgo.ResponseItemDeviceOnboardingPnpGetDeviceList2
+			getItem = &item
+			foundItem = getItem
 			return foundItem, err
 		}
 	}
-	queryParams.Limit = maxPageSize
-	queryParams.Offset = maxPageSize
-	nResponse, _, err = client.DeviceOnboardingPnp.GetDeviceList2(&queryParams)
 	return foundItem, err
 }
-
-//ISSUE Pnp Device- ISSUE waiting for : [{}]  we have: {}

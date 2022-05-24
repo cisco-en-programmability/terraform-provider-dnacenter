@@ -74,7 +74,7 @@ func dataSourceTagMembershipRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdatesTagMembership")
+		log.Printf("[DEBUG] Selected method: UpdatesTagMembership")
 		request1 := expandRequestTagMembershipUpdatesTagMembership(ctx, "", d)
 
 		response1, restyResp1, err := client.Tag.UpdatesTagMembership(request1)
@@ -117,10 +117,6 @@ func expandRequestTagMembershipUpdatesTagMembership(ctx context.Context, key str
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".member_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_type")))) {
 		request.MemberType = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -141,10 +137,6 @@ func expandRequestTagMembershipUpdatesTagMembershipMemberToTagsArray(ctx context
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -153,10 +145,6 @@ func expandRequestTagMembershipUpdatesTagMembershipMemberToTags(ctx context.Cont
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToSliceString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

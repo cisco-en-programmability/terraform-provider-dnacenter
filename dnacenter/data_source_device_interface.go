@@ -375,7 +375,7 @@ func dataSourceDeviceInterfaceRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAllInterfaces")
+		log.Printf("[DEBUG] Selected method: GetAllInterfaces")
 		queryParams1 := dnacentersdkgo.GetAllInterfacesQueryParams{}
 
 		if okOffset {
@@ -411,7 +411,7 @@ func dataSourceDeviceInterfaceRead(ctx context.Context, d *schema.ResourceData, 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetInterfaceByID")
+		log.Printf("[DEBUG] Selected method: GetInterfaceByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.Devices.GetInterfaceByID(vvID)

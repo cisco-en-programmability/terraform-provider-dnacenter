@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourceLanAutomationCount() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on LAN Automation.
 
-- Invoke this API to get the total count of LAN Automation sessions
+- Invoke this API to get the total count of LAN Automation sessions.
 `,
 
 		ReadContext: dataSourceLanAutomationCountRead,
@@ -28,7 +28,7 @@ func dataSourceLanAutomationCount() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"session_count": &schema.Schema{
-							Description: `Total Number of session count
+							Description: `Total number of sessions executed.
 `,
 							Type:     schema.TypeString,
 							Computed: true,

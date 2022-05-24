@@ -191,7 +191,7 @@ func dataSourceEventSeriesAuditLogsSummaryRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAuditLogSummary")
+		log.Printf("[DEBUG] Selected method: GetAuditLogSummary")
 		queryParams1 := dnacentersdkgo.GetAuditLogSummaryQueryParams{}
 
 		if okParentInstanceID {

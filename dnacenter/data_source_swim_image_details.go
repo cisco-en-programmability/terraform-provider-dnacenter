@@ -167,8 +167,11 @@ func dataSourceSwimImageDetails() *schema.Resource {
 						},
 
 						"extended_attributes": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"family": &schema.Schema{
@@ -230,7 +233,7 @@ func dataSourceSwimImageDetails() *schema.Resource {
 						},
 
 						"is_tagged_golden": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -257,8 +260,11 @@ func dataSourceSwimImageDetails() *schema.Resource {
 									},
 
 									"extended_attributes": &schema.Schema{
-										Type:     schema.TypeString,
+										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"memory": &schema.Schema{
@@ -335,7 +341,7 @@ func dataSourceSwimImageDetailsRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSoftwareImageDetails")
+		log.Printf("[DEBUG] Selected method: GetSoftwareImageDetails")
 		queryParams1 := dnacentersdkgo.GetSoftwareImageDetailsQueryParams{}
 
 		if okImageUUID {

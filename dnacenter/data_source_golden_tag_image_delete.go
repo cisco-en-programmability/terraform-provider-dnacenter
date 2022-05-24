@@ -81,7 +81,7 @@ func dataSourceGoldenTagImageDeleteRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RemoveGoldenTagForImage")
+		log.Printf("[DEBUG] Selected method: RemoveGoldenTagForImage")
 		vvSiteID := vSiteID.(string)
 		vvDeviceFamilyIDentifier := vDeviceFamilyIDentifier.(string)
 		vvDeviceRole := vDeviceRole.(string)
