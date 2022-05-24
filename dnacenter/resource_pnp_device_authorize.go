@@ -40,7 +40,10 @@ func resourcePnpDeviceAuthorize() *schema.Resource {
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
-						}}}},
+						},
+					},
+				},
+			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
