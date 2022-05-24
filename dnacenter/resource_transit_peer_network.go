@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"time"
 
 	"log"
 
@@ -34,6 +35,83 @@ func resourceTransitPeerNetwork() *schema.Resource {
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"ip_transit_settings": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"autonomous_system_number": &schema.Schema{
+										Description: `Autonomous System Number  (e.g.,1-65535)
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"routing_protocol_name": &schema.Schema{
+										Description: `Routing Protocol Name
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+
+						"sda_transit_settings": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"transit_control_plane_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"device_management_ip_address": &schema.Schema{
+													Description: `Device Management Ip Address of provisioned device
+`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"site_name_hierarchy": &schema.Schema{
+													Description: `Site Name Hierarchy where device is provisioned
+`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+
+						"transit_peer_network_name": &schema.Schema{
+							Description: `Transit Peer Network Name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"transit_peer_network_type": &schema.Schema{
+							Description: `Transit Peer Network Type
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
@@ -98,7 +176,7 @@ func resourceTransitPeerNetwork() *schema.Resource {
 							Description: `Transit Peer Network Name
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 						"transit_peer_network_type": &schema.Schema{
 							Description: `Transit Peer Network Type
@@ -120,8 +198,11 @@ func resourceTransitPeerNetworkCreate(ctx context.Context, d *schema.ResourceDat
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestTransitPeerNetworkAddTransitPeerNetwork(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+	vName := resourceItem["transit_peer_network_name"]
+	vvName := interfaceToString(vName)
 	resp1, restyResp1, err := client.Sda.AddTransitPeerNetwork(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -133,7 +214,43 @@ func resourceTransitPeerNetworkCreate(ctx context.Context, d *schema.ResourceDat
 			"Failure when executing AddTransitPeerNetwork", err))
 		return diags
 	}
+	executionId := resp1.ExecutionID
+	log.Printf("[DEBUG] ExecutionID => %s", executionId)
+	if executionId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetBusinessAPIExecutionDetails", err,
+				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+			return diags
+		}
+		for response2.Status == "IN_PROGRESS" {
+			time.Sleep(10 * time.Second)
+			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp1 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+		}
+		if response2.Status == "FAILURE" {
+			bapiError := response2.BapiError
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing AddTransitPeerNetwork", err,
+				"Failure at AddTransitPeerNetwork execution", bapiError))
+			return diags
+		}
+	}
 	resourceMap := make(map[string]string)
+	resourceMap["transit_peer_network_name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
 	return resourceTransitPeerNetworkRead(ctx, d, m)
 }
@@ -195,35 +312,11 @@ func resourceTransitPeerNetworkDelete(ctx context.Context, d *schema.ResourceDat
 	resourceMap := separateResourceID(resourceID)
 	vTransitPeerNetworkName := resourceMap["transit_peer_network_name"]
 
-	queryParams1 := dnacentersdkgo.GetTransitPeerNetworkInfoQueryParams
+	queryParams1 := dnacentersdkgo.DeleteTransitPeerNetworkQueryParams{}
 	queryParams1.TransitPeerNetworkName = vTransitPeerNetworkName
-	item, err := searchGetTransitPeerNetworkInfo(m, queryParams1)
-	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetTransitPeerNetworkInfo", err,
-			"Failure at GetTransitPeerNetworkInfo, unexpected response", ""))
-		return diags
-	}
 
-	selectedMethod := 1
-	var vvID string
-	var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
-	if selectedMethod == 1 {
-
-		getResp1, _, err := client.Sda.GetTransitPeerNetworkInfo(nil)
-		if err != nil || getResp1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		items1 := getAllItemsGetTransitPeerNetworkInfo(m, getResp1, nil)
-		item1, err := searchGetTransitPeerNetworkInfo(m, items1, vName, vID)
-		if err != nil || item1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-	}
-	response1, restyResp1, err := client.Sda.DeleteTransitPeerNetwork()
+	response1, restyResp1, err := client.Sda.DeleteTransitPeerNetwork(&queryParams1)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -237,15 +330,49 @@ func resourceTransitPeerNetworkDelete(ctx context.Context, d *schema.ResourceDat
 			"Failure at DeleteTransitPeerNetwork, unexpected response", ""))
 		return diags
 	}
-
+	executionId := response1.ExecutionID
+	log.Printf("[DEBUG] ExecutionID => %s", executionId)
+	if executionId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetBusinessAPIExecutionDetails", err,
+				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+			return diags
+		}
+		for response2.Status == "IN_PROGRESS" {
+			time.Sleep(10 * time.Second)
+			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp1 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+		}
+		if response2.Status == "FAILURE" {
+			bapiError := response2.BapiError
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing DeleteTransitPeerNetwork", err,
+				"Failure at DeleteTransitPeerNetwork execution", bapiError))
+			return diags
+		}
+	}
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")
 
 	return diags
 }
-func expandRequestTransitPeerNetworkAddTransitPeerNetwork(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestAddTransitPeerNetwork {
-	request := dnacentersdkgo.RequestAddTransitPeerNetwork{}
+func expandRequestTransitPeerNetworkAddTransitPeerNetwork(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddTransitPeerNetwork {
+	request := dnacentersdkgo.RequestSdaAddTransitPeerNetwork{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".transit_peer_network_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".transit_peer_network_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".transit_peer_network_name")))) {
 		request.TransitPeerNetworkName = interfaceToString(v)
 	}
@@ -264,8 +391,8 @@ func expandRequestTransitPeerNetworkAddTransitPeerNetwork(ctx context.Context, k
 	return &request
 }
 
-func expandRequestTransitPeerNetworkAddTransitPeerNetworkIPTransitSettings(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestAddTransitPeerNetworkIPTransitSettings {
-	request := dnacentersdkgo.RequestAddTransitPeerNetworkIPTransitSettings{}
+func expandRequestTransitPeerNetworkAddTransitPeerNetworkIPTransitSettings(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddTransitPeerNetworkIPTransitSettings {
+	request := dnacentersdkgo.RequestSdaAddTransitPeerNetworkIPTransitSettings{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".routing_protocol_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".routing_protocol_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".routing_protocol_name")))) {
 		request.RoutingProtocolName = interfaceToString(v)
 	}
@@ -278,8 +405,8 @@ func expandRequestTransitPeerNetworkAddTransitPeerNetworkIPTransitSettings(ctx c
 	return &request
 }
 
-func expandRequestTransitPeerNetworkAddTransitPeerNetworkSdaTransitSettings(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestAddTransitPeerNetworkSdaTransitSettings {
-	request := dnacentersdkgo.RequestAddTransitPeerNetworkSdaTransitSettings{}
+func expandRequestTransitPeerNetworkAddTransitPeerNetworkSdaTransitSettings(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddTransitPeerNetworkSdaTransitSettings {
+	request := dnacentersdkgo.RequestSdaAddTransitPeerNetworkSdaTransitSettings{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".transit_control_plane_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".transit_control_plane_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".transit_control_plane_settings")))) {
 		request.TransitControlPlaneSettings = expandRequestTransitPeerNetworkAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettingsArray(ctx, key+".transit_control_plane_settings", d)
 	}
@@ -289,8 +416,8 @@ func expandRequestTransitPeerNetworkAddTransitPeerNetworkSdaTransitSettings(ctx 
 	return &request
 }
 
-func expandRequestTransitPeerNetworkAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettingsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettings {
-	request := []dnacentersdkgo.RequestAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettings{}
+func expandRequestTransitPeerNetworkAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettingsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestSdaAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettings {
+	request := []dnacentersdkgo.RequestSdaAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettings{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -312,8 +439,8 @@ func expandRequestTransitPeerNetworkAddTransitPeerNetworkSdaTransitSettingsTrans
 	return &request
 }
 
-func expandRequestTransitPeerNetworkAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettings(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettings {
-	request := dnacentersdkgo.RequestAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettings{}
+func expandRequestTransitPeerNetworkAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettings(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettings {
+	request := dnacentersdkgo.RequestSdaAddTransitPeerNetworkSdaTransitSettingsTransitControlPlaneSettings{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_name_hierarchy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_name_hierarchy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_name_hierarchy")))) {
 		request.SiteNameHierarchy = interfaceToString(v)
 	}
