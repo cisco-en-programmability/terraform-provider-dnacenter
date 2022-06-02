@@ -68,6 +68,7 @@ provide all the custom prompt in case of any update
 				},
 			},
 			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
 				Required: true,
 				MaxItems: 1,
 				MinItems: 1,
@@ -212,9 +213,6 @@ func expandRequestNetworkDeviceCustomPromptCustomPromptPostAPI(ctx context.Conte
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password_prompt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password_prompt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password_prompt")))) {
 		request.PasswordPrompt = interfaceToString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
 	}
 	return &request
 }
