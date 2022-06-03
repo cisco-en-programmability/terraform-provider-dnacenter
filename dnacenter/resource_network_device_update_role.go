@@ -16,16 +16,16 @@ import (
 )
 
 // resourceAction
-func resourceDeviceReplacementDeploy() *schema.Resource {
+func resourceNetworkDeviceUpdateRole() *schema.Resource {
 	return &schema.Resource{
-		Description: `It performs create operation on Device Replacement.
+		Description: `It performs update operation on Devices.
 
-- API to trigger RMA workflow that will replace faulty device with replacement device with same configuration and images
+- Updates the role of the device as access, core, distribution, border router
 `,
 
-		CreateContext: resourceDeviceReplacementDeployCreate,
-		ReadContext:   resourceDeviceReplacementDeployRead,
-		DeleteContext: resourceDeviceReplacementDeployDelete,
+		CreateContext: resourceNetworkDeviceUpdateRoleCreate,
+		ReadContext:   resourceNetworkDeviceUpdateRoleRead,
+		DeleteContext: resourceNetworkDeviceUpdateRoleDelete,
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,12 +56,17 @@ func resourceDeviceReplacementDeploy() *schema.Resource {
 				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"faulty_device_serial_number": &schema.Schema{
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
 						},
-						"replacement_device_serial_number": &schema.Schema{
+						"role": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
+						"role_source": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
@@ -73,13 +78,13 @@ func resourceDeviceReplacementDeploy() *schema.Resource {
 	}
 }
 
-func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceNetworkDeviceUpdateRoleCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	request1 := expandRequestDeviceReplacementDeployDeployDeviceReplacementWorkflow(ctx, "parameters.0", d)
+	request1 := expandRequestNetworkDeviceUpdateRoleUpdateDeviceRole(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.DeviceReplacement.DeployDeviceReplacementWorkflow(request1)
+	response1, restyResp1, err := client.Devices.UpdateDeviceRole(request1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -90,8 +95,8 @@ func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.Resour
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeployDeviceReplacementWorkflow", err,
-			"Failure at DeployDeviceReplacementWorkflow, unexpected response", ""))
+			"Failure when executing UpdateDeviceRole", err,
+			"Failure at UpdateDeviceRole, unexpected response", ""))
 		return diags
 	}
 
@@ -99,7 +104,7 @@ func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.Resour
 
 	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when executing DeployDeviceReplacementWorkflow", err))
+			"Failure when executing UpdateDeviceRole", err))
 		return diags
 	}
 	taskId := response1.Response.TaskID
@@ -133,15 +138,15 @@ func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.Resour
 			}
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing DeployDeviceReplacementWorkflow", err1))
+				"Failure when executing UpdateDeviceRole", err1))
 			return diags
 		}
 	}
 
-	vItem1 := flattenDeviceReplacementDeployDeviceReplacementWorkflowItem(response1.Response)
+	vItem1 := flattenDevicesUpdateDeviceRoleItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
-			"Failure when setting DeployDeviceReplacementWorkflow response",
+			"Failure when setting UpdateDeviceRole response",
 			err))
 		return diags
 	}
@@ -149,31 +154,34 @@ func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.Resour
 	return diags
 
 }
-func resourceDeviceReplacementDeployRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceNetworkDeviceUpdateRoleRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
 }
 
-func resourceDeviceReplacementDeployDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceNetworkDeviceUpdateRoleDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 	return diags
 }
 
-func expandRequestDeviceReplacementDeployDeployDeviceReplacementWorkflow(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceReplacementDeployDeviceReplacementWorkflow {
-	request := dnacentersdkgo.RequestDeviceReplacementDeployDeviceReplacementWorkflow{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".faulty_device_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".faulty_device_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".faulty_device_serial_number")))) {
-		request.FaultyDeviceSerialNumber = interfaceToString(v)
+func expandRequestNetworkDeviceUpdateRoleUpdateDeviceRole(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDevicesUpdateDeviceRole {
+	request := dnacentersdkgo.RequestDevicesUpdateDeviceRole{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".replacement_device_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".replacement_device_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".replacement_device_serial_number")))) {
-		request.ReplacementDeviceSerialNumber = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".role")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".role")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".role")))) {
+		request.Role = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".role_source")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".role_source")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".role_source")))) {
+		request.RoleSource = interfaceToString(v)
 	}
 	return &request
 }
 
-func flattenDeviceReplacementDeployDeviceReplacementWorkflowItem(item *dnacentersdkgo.ResponseDeviceReplacementDeployDeviceReplacementWorkflowResponse) []map[string]interface{} {
+func flattenDevicesUpdateDeviceRoleItem(item *dnacentersdkgo.ResponseDevicesUpdateDeviceRoleResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

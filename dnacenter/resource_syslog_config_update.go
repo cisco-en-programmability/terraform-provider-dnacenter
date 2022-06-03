@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+
 	"reflect"
 
 	"log"
@@ -12,9 +13,11 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceSyslogConfigUpdate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on Event Management.
+
 - Update Syslog Destination
 `,
 
@@ -22,53 +25,9 @@ func resourceSyslogConfigUpdate() *schema.Resource {
 		ReadContext:   resourceSyslogConfigUpdateRead,
 		DeleteContext: resourceSyslogConfigUpdateDelete,
 		Schema: map[string]*schema.Schema{
-			"parameters": &schema.Schema{
-				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
-				ForceNew: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"config_id": &schema.Schema{
-							Description: `Required only for update syslog configuration
-			`,
-							Type:     schema.TypeString,
-							Optional: true,
-							ForceNew: true,
-						},
-						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
-						"host": &schema.Schema{
-							Description: `Host`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
-						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
-						"port": &schema.Schema{
-							Description: `Port`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
-						"protocol": &schema.Schema{
-							Description: `Protocol`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-						},
-					},
-				},
+			"last_updated": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -106,53 +65,98 @@ func resourceSyslogConfigUpdate() *schema.Resource {
 					},
 				},
 			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Required: true,
+				MaxItems: 1,
+				MinItems: 1,
+				ForceNew: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"config_id": &schema.Schema{
+							Description: `Required only for update syslog configuration
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
+						"description": &schema.Schema{
+							Description: `Description`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							ForceNew:    true,
+						},
+						"host": &schema.Schema{
+							Description: `Host`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							ForceNew:    true,
+						},
+						"name": &schema.Schema{
+							Description: `Name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							ForceNew:    true,
+						},
+						"port": &schema.Schema{
+							Description: `Port`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							ForceNew:    true,
+						},
+						"protocol": &schema.Schema{
+							Description: `Protocol`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							ForceNew:    true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
 
+func resourceSyslogConfigUpdateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
+	var diags diag.Diagnostics
+
+	request1 := expandRequestSyslogConfigUpdateUpdateSyslogDestination(ctx, "parameters.0", d)
+
+	response1, restyResp1, err := client.EventManagement.UpdateSyslogDestination(request1)
+
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing UpdateSyslogDestination", err,
+			"Failure at UpdateSyslogDestination, unexpected response", ""))
+		return diags
+	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	//Analizar verificacion.
+
+	vItem1 := flattenEventManagementUpdateSyslogDestinationItem(response1)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting UpdateSyslogDestination response",
+			err))
+		return diags
+	}
+	d.SetId(getUnixTimeString())
+	return diags
+
+}
 func resourceSyslogConfigUpdateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
-	return diags
-}
-
-func resourceSyslogConfigUpdateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
-
-	var diags diag.Diagnostics
-	selectedMethod := 1
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: UpdateSyslogDestination")
-		request1 := expandRequestSyslogConfigUpdateUpdateSyslogDestination(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		response1, restyResp1, err := client.EventManagement.UpdateSyslogDestination(request1)
-
-		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing UpdateSyslogDestination", err,
-				"Failure at UpdateSyslogDestination, unexpected response", ""))
-			return diags
-		}
-
-		//Analizar
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		vItem1 := flattenEventManagementUpdateSyslogDestinationItem(response1)
-		if err := d.Set("item", vItem1); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting UpdateSyslogDestination response",
-				err))
-			return diags
-		}
-		d.SetId(getUnixTimeString())
-		return diags
-	}
 	return diags
 }
 

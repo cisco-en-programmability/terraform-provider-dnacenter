@@ -2,8 +2,9 @@ package dnacenter
 
 import (
 	"context"
-	"reflect"
 	"time"
+
+	"reflect"
 
 	"log"
 
@@ -13,18 +14,18 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceWirelessProvisionSsidCreateProvision() *schema.Resource {
+// resourceAction
+func resourceWirelessProvisionSSIDCreateProvision() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Wireless.
-		- Creates SSID, updates the SSID to the corresponding site profiles and provision it to the devices matching the given
-		sites
-	
+
+- Creates SSID, updates the SSID to the corresponding site profiles and provision it to the devices matching the given
+sites
 `,
 
-		CreateContext: resourceWirelessProvisionSsidCreateProvisionCreate,
-		ReadContext:   resourceWirelessProvisionSsidCreateProvisionRead,
-		DeleteContext: resourceWirelessProvisionSsidCreateProvisionDelete,
-
+		CreateContext: resourceWirelessProvisionSSIDCreateProvisionCreate,
+		ReadContext:   resourceWirelessProvisionSSIDCreateProvisionRead,
+		DeleteContext: resourceWirelessProvisionSSIDCreateProvisionDelete,
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -62,18 +63,10 @@ func resourceWirelessProvisionSsidCreateProvision() *schema.Resource {
 				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"persistbapioutput": &schema.Schema{
-							Description: `__persistbapioutput header parameter. Persist bapi sync response
-						`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							ForceNew:     true,
-						},
 						"enable_fabric": &schema.Schema{
 							Description: `Enable SSID for Fabric
-			`,
-
+`,
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -88,8 +81,8 @@ func resourceWirelessProvisionSsidCreateProvision() *schema.Resource {
 
 									"enable_flex_connect": &schema.Schema{
 										Description: `Enable Flex Connect
-			`,
-
+`,
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -97,7 +90,7 @@ func resourceWirelessProvisionSsidCreateProvision() *schema.Resource {
 									},
 									"local_to_vlan": &schema.Schema{
 										Description: `Local To Vlan (range is 1 to 4094)
-			`,
+`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										ForceNew: true,
@@ -107,7 +100,7 @@ func resourceWirelessProvisionSsidCreateProvision() *schema.Resource {
 						},
 						"managed_aplocations": &schema.Schema{
 							Description: `Managed AP Locations (Enter entire Site(s) hierarchy)
-			`,
+`,
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
@@ -124,8 +117,8 @@ func resourceWirelessProvisionSsidCreateProvision() *schema.Resource {
 
 									"enable_broadcast_ssi_d": &schema.Schema{
 										Description: `Enable Broadcast SSID
-			`,
-
+`,
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -133,8 +126,8 @@ func resourceWirelessProvisionSsidCreateProvision() *schema.Resource {
 									},
 									"enable_fast_lane": &schema.Schema{
 										Description: `Enable Fast Lane
-			`,
-
+`,
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -142,8 +135,8 @@ func resourceWirelessProvisionSsidCreateProvision() *schema.Resource {
 									},
 									"enable_mac_filtering": &schema.Schema{
 										Description: `Enable MAC Filtering
-			`,
-
+`,
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -151,49 +144,49 @@ func resourceWirelessProvisionSsidCreateProvision() *schema.Resource {
 									},
 									"fast_transition": &schema.Schema{
 										Description: `Fast Transition
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 									},
 									"name": &schema.Schema{
 										Description: `SSID Name
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 									},
 									"passphrase": &schema.Schema{
 										Description: `Pass Phrase ( Only applicable for SSID with PERSONAL auth type )
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 									},
 									"radio_policy": &schema.Schema{
 										Description: `Radio Policy. Allowed values are 'Dual band operation (2.4GHz and 5GHz)', 'Dual band operation with band select', '5GHz only', '2.4GHz only'.
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 									},
 									"security_level": &schema.Schema{
 										Description: `Security Level(For guest SSID OPEN/WEB_AUTH, For Enterprise SSID ENTERPRISE/PERSONAL/OPEN)
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 									},
 									"traffic_type": &schema.Schema{
 										Description: `Traffic Type
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 									},
 									"web_auth_url": &schema.Schema{
 										Description: `Web Auth URL
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
@@ -203,7 +196,7 @@ func resourceWirelessProvisionSsidCreateProvision() *schema.Resource {
 						},
 						"ssid_type": &schema.Schema{
 							Description: `SSID Type
-			`,
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
@@ -215,18 +208,19 @@ func resourceWirelessProvisionSsidCreateProvision() *schema.Resource {
 	}
 }
 
-func resourceWirelessProvisionSsidCreateProvisionCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceWirelessProvisionSSIDCreateProvisionCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("parameters.0.persistbapioutput")
-	log.Printf("[DEBUG] Selected method 1: CreateAndProvisionSSID")
+
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	vPersistbapioutput := resourceItem["persistbapioutput"]
+
 	request1 := expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSID(ctx, "parameters.0", d)
+
 	headerParams1 := dnacentersdkgo.CreateAndProvisionSSIDHeaderParams{}
 
-	if okPersistbapioutput {
-		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-	}
+	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+
 	response1, restyResp1, err := client.Wireless.CreateAndProvisionSSID(request1, &headerParams1)
 
 	if request1 != nil {
@@ -242,6 +236,9 @@ func resourceWirelessProvisionSsidCreateProvisionCreate(ctx context.Context, d *
 			"Failure at CreateAndProvisionSSID, unexpected response", ""))
 		return diags
 	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
@@ -277,7 +274,7 @@ func resourceWirelessProvisionSsidCreateProvisionCreate(ctx context.Context, d *
 			return diags
 		}
 	}
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
 	vItem1 := flattenWirelessCreateAndProvisionSSIDItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -285,26 +282,23 @@ func resourceWirelessProvisionSsidCreateProvisionCreate(ctx context.Context, d *
 			err))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourceWirelessProvisionSsidCreateProvisionRead(ctx, d, m)
-}
-
-func resourceWirelessProvisionSsidCreateProvisionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	//client := m.(*dnacentersdkgo.Client)
-
-	var diags diag.Diagnostics
-
 	return diags
+
 }
-
-func resourceWirelessProvisionSsidCreateProvisionDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
+func resourceWirelessProvisionSSIDCreateProvisionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 	return diags
 }
+
+func resourceWirelessProvisionSSIDCreateProvisionDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	//client := m.(*dnacentersdkgo.Client)
+
+	var diags diag.Diagnostics
+	return diags
+}
+
 func expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSID(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateAndProvisionSSID {
 	request := dnacentersdkgo.RequestWirelessCreateAndProvisionSSID{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".managed_aplocations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".managed_aplocations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".managed_aplocations")))) {
@@ -322,10 +316,6 @@ func expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSID(ctx
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".flex_connect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".flex_connect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".flex_connect")))) {
 		request.FlexConnect = expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSIDFlexConnect(ctx, key+".flex_connect.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -361,10 +351,6 @@ func expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSIDSSID
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".web_auth_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".web_auth_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".web_auth_url")))) {
 		request.WebAuthURL = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -376,10 +362,6 @@ func expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSIDFlex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".local_to_vlan")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".local_to_vlan")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".local_to_vlan")))) {
 		request.LocalToVLAN = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

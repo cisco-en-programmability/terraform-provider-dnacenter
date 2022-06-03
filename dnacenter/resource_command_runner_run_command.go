@@ -3,8 +3,10 @@ package dnacenter
 import (
 	"context"
 	"errors"
-	"reflect"
+
 	"time"
+
+	"reflect"
 
 	"log"
 
@@ -14,16 +16,17 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceCommandRunnerRunCommand() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Command Runner.
+
 - Submit request for read-only CLIs
 `,
 
 		CreateContext: resourceCommandRunnerRunCommandCreate,
 		ReadContext:   resourceCommandRunnerRunCommandRead,
 		DeleteContext: resourceCommandRunnerRunCommandDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,34 +59,34 @@ func resourceCommandRunnerRunCommand() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"commands": &schema.Schema{
 							Type:     schema.TypeList,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 						},
 						"device_uuids": &schema.Schema{
 							Type:     schema.TypeList,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 						},
 						"timeout": &schema.Schema{
 							Type:     schema.TypeInt,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 						},
 					},
 				},
@@ -94,14 +97,16 @@ func resourceCommandRunnerRunCommand() *schema.Resource {
 
 func resourceCommandRunnerRunCommandCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
 	request1 := expandRequestCommandRunnerRunCommandRunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration(ctx, "parameters.0", d)
+
+	response1, restyResp1, err := client.CommandRunner.RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration(request1)
+
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
-	response1, restyResp1, err := client.CommandRunner.RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration(request1)
+
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -114,11 +119,9 @@ func resourceCommandRunnerRunCommandCreate(ctx context.Context, d *schema.Resour
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	vItem1 := flattenCommandRunnerRunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfigurationItem(response1.Response)
-	if err := d.Set("item", vItem1); err != nil {
+	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when setting DeployDeviceReplacementWorkflow response",
-			err))
+			"Failure when executing RunReadOnlyCommandsOnDevices", err))
 		return diags
 	}
 	taskId := response1.Response.TaskID
@@ -152,22 +155,26 @@ func resourceCommandRunnerRunCommandCreate(ctx context.Context, d *schema.Resour
 			}
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration", err1))
+				"Failure when executing RunReadOnlyCommandsOnDevices", err1))
 			return diags
 		}
 	}
+
+	vItem1 := flattenCommandRunnerRunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfigurationItem(response1.Response)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration response",
+			err))
+		return diags
+	}
 	d.SetId(getUnixTimeString())
 	return diags
-}
 
+}
 func resourceCommandRunnerRunCommandRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
-}
-
-func resourceCommandRunnerRunCommandUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceCommandRunnerRunCommandRead(ctx, d, m)
 }
 
 func resourceCommandRunnerRunCommandDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -194,10 +201,6 @@ func expandRequestCommandRunnerRunCommandRunReadOnlyCommandsOnDevicesToGetTheirR
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".timeout")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".timeout")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".timeout")))) {
 		request.Timeout = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
