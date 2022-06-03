@@ -3,9 +3,10 @@ package dnacenter
 import (
 	"context"
 	"errors"
+	"time"
+
 	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -15,16 +16,17 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceAppPolicyIntentCreate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Application Policy.
+
 - Create/Update/Delete application policy
 `,
 
 		CreateContext: resourceAppPolicyIntentCreateCreate,
 		ReadContext:   resourceAppPolicyIntentCreateRead,
 		DeleteContext: resourceAppPolicyIntentCreateDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -37,10 +39,14 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"task_id": &schema.Schema{
+							Description: `Task id
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"url": &schema.Schema{
+							Description: `Task url
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -57,41 +63,41 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"create_list": &schema.Schema{
 							Type:     schema.TypeList,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"advanced_policy_scope": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"advanced_policy_scope_element": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"group_id": &schema.Schema{
 																Description: `Group id
-			`,
+`,
 																Type:     schema.TypeList,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
 															},
 															"ssid": &schema.Schema{
 																Description: `Ssid
-			`,
+`,
 																Type:     schema.TypeList,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -101,34 +107,34 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 												},
 												"name": &schema.Schema{
 													Description: `Policy name
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 											},
 										},
 									},
 									"consumer": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"scalable_group": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"id_ref": &schema.Schema{
 																Description: `Id ref to application Scalable group
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
@@ -138,71 +144,71 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 									},
 									"contract": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"id_ref": &schema.Schema{
 													Description: `Id ref to Queueing profile
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 											},
 										},
 									},
 									"delete_policy_status": &schema.Schema{
 										Description: `NONE: deployed policy to devices, DELETED: delete policy from devices, RESTORED: restored to original configuration
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"exclusive_contract": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"clause": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"device_removal_behavior": &schema.Schema{
 																Description: `Device eemoval behavior
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"host_tracking_enabled": &schema.Schema{
 																Description: `Is host tracking enabled
-			`,
-
+`,
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																ForceNew:     true,
 																Optional:     true,
+																ForceNew:     true,
 															},
 															"relevance_level": &schema.Schema{
 																Description: `Relevance level
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"type": &schema.Schema{
 																Description: `Type
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
@@ -212,45 +218,45 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 									},
 									"name": &schema.Schema{
 										Description: `Concatination of <polcy name>_<application-set-name> or <polcy name>_global_policy_configuration or <polcy name>_queuing_customization
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"policy_scope": &schema.Schema{
 										Description: `Policy name
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"priority": &schema.Schema{
 										Description: `Set to 4095 while producer refer to application Scalable group otherwise 100
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"producer": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"scalable_group": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"id_ref": &schema.Schema{
 																Description: `Id ref to application-set or application Scalable group
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
@@ -263,58 +269,58 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 						},
 						"delete_list": &schema.Schema{
 							Description: `Delete list of Group Based Policy ids
-			`,
+`,
 							Type:     schema.TypeList,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"update_list": &schema.Schema{
 							Type:     schema.TypeList,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"advanced_policy_scope": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"advanced_policy_scope_element": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"group_id": &schema.Schema{
 																Description: `Group id
-			`,
+`,
 																Type:     schema.TypeList,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
 															},
 															"id": &schema.Schema{
 																Description: `Id of Advance policy scope element
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"ssid": &schema.Schema{
 																Description: `Ssid
-			`,
+`,
 																Type:     schema.TypeList,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -324,48 +330,48 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 												},
 												"id": &schema.Schema{
 													Description: `Id of Advance policy scope
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"name": &schema.Schema{
 													Description: `Policy name
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 											},
 										},
 									},
 									"consumer": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"id": &schema.Schema{
 													Description: `Id of Consumer
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"scalable_group": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"id_ref": &schema.Schema{
 																Description: `Id ref to application Scalable group
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
@@ -375,147 +381,147 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 									},
 									"contract": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"id_ref": &schema.Schema{
 													Description: `Id ref to Queueing profile
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 											},
 										},
 									},
 									"delete_policy_status": &schema.Schema{
 										Description: `NONE: deployed policy to devices, DELETED: delete policy from devices, RESTORED: restored to original configuration
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"exclusive_contract": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"clause": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"device_removal_behavior": &schema.Schema{
 																Description: `Device removal behavior
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"host_tracking_enabled": &schema.Schema{
 																Description: `Host tracking enabled
-			`,
-
+`,
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																ForceNew:     true,
 																Optional:     true,
+																ForceNew:     true,
 															},
 															"id": &schema.Schema{
 																Description: `Id of Business relevance or Application policy knobs clause
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"relevance_level": &schema.Schema{
 																Description: `Relevance level
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"type": &schema.Schema{
 																Description: `Type
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
 												},
 												"id": &schema.Schema{
 													Description: `Id of Exclusive contract
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 											},
 										},
 									},
 									"id": &schema.Schema{
 										Description: `Id of Group based policy
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"name": &schema.Schema{
 										Description: `Concatination of <polcy name>_<application-set-name> or <polcy name>_global_policy_configuration or <polcy name>_queuing_customization
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"policy_scope": &schema.Schema{
 										Description: `Policy name
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"priority": &schema.Schema{
 										Description: `Set to 4095 while producer refer to application Scalable group otherwise 100
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"producer": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"id": &schema.Schema{
 													Description: `Id of Producer
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"scalable_group": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"id_ref": &schema.Schema{
 																Description: `Id ref to application-set or application Scalable group
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
@@ -535,14 +541,16 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 
 func resourceAppPolicyIntentCreateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
 	request1 := expandRequestAppPolicyIntentCreateApplicationPolicyIntent(ctx, "parameters.0", d)
+
+	response1, restyResp1, err := client.ApplicationPolicy.ApplicationPolicyIntent(request1)
+
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
-	response1, restyResp1, err := client.ApplicationPolicy.ApplicationPolicyIntent(request1)
+
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -555,11 +563,9 @@ func resourceAppPolicyIntentCreateCreate(ctx context.Context, d *schema.Resource
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	vItem1 := flattenApplicationPolicyApplicationPolicyIntentItem(response1.Response)
-	if err := d.Set("item", vItem1); err != nil {
+	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when setting ApplicationPolicyIntent response",
-			err))
+			"Failure when executing ApplicationPolicyIntent", err))
 		return diags
 	}
 	taskId := response1.Response.TaskID
@@ -597,10 +603,18 @@ func resourceAppPolicyIntentCreateCreate(ctx context.Context, d *schema.Resource
 			return diags
 		}
 	}
+
+	vItem1 := flattenApplicationPolicyApplicationPolicyIntentItem(response1.Response)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting ApplicationPolicyIntent response",
+			err))
+		return diags
+	}
 	d.SetId(getUnixTimeString())
 	return diags
-}
 
+}
 func resourceAppPolicyIntentCreateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
@@ -625,10 +639,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntent(ctx context.Conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".delete_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".delete_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".delete_list")))) {
 		request.DeleteList = interfaceToSliceString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -649,10 +659,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListArray(ct
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -685,10 +691,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateList(ctx con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".consumer")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".consumer")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".consumer")))) {
 		request.Consumer = expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListConsumer(ctx, key+".consumer.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -700,10 +702,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListAdvanced
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advanced_policy_scope_element")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advanced_policy_scope_element")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advanced_policy_scope_element")))) {
 		request.AdvancedPolicyScopeElement = expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListAdvancedPolicyScopeAdvancedPolicyScopeElementArray(ctx, key+".advanced_policy_scope_element", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -724,10 +722,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListAdvanced
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -739,10 +733,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListAdvanced
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssid")))) {
 		request.SSID = interfaceToSliceString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -751,10 +741,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListExclusiv
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".clause")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".clause")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".clause")))) {
 		request.Clause = expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListExclusiveContractClauseArray(ctx, key+".clause", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -775,10 +761,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListExclusiv
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -796,10 +778,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListExclusiv
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".host_tracking_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".host_tracking_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".host_tracking_enabled")))) {
 		request.HostTrackingEnabled = interfaceToBoolPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -808,10 +786,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListContract
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id_ref")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id_ref")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id_ref")))) {
 		request.IDRef = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -820,10 +794,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListProducer
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".scalable_group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".scalable_group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".scalable_group")))) {
 		request.ScalableGroup = expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListProducerScalableGroupArray(ctx, key+".scalable_group", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -844,10 +814,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListProducer
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -856,10 +822,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListProducer
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id_ref")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id_ref")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id_ref")))) {
 		request.IDRef = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -868,10 +830,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListConsumer
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".scalable_group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".scalable_group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".scalable_group")))) {
 		request.ScalableGroup = expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListConsumerScalableGroupArray(ctx, key+".scalable_group", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -892,10 +850,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListConsumer
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -904,10 +858,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentCreateListConsumer
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id_ref")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id_ref")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id_ref")))) {
 		request.IDRef = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -928,10 +878,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListArray(ct
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -967,10 +913,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateList(ctx con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".consumer")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".consumer")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".consumer")))) {
 		request.Consumer = expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListConsumer(ctx, key+".consumer.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -985,10 +927,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListAdvanced
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advanced_policy_scope_element")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advanced_policy_scope_element")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advanced_policy_scope_element")))) {
 		request.AdvancedPolicyScopeElement = expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListAdvancedPolicyScopeAdvancedPolicyScopeElementArray(ctx, key+".advanced_policy_scope_element", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1009,10 +947,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListAdvanced
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1027,10 +961,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListAdvanced
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssid")))) {
 		request.SSID = interfaceToSliceString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1042,10 +972,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListExclusiv
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".clause")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".clause")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".clause")))) {
 		request.Clause = expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListExclusiveContractClauseArray(ctx, key+".clause", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1066,10 +992,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListExclusiv
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1090,10 +1012,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListExclusiv
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".host_tracking_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".host_tracking_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".host_tracking_enabled")))) {
 		request.HostTrackingEnabled = interfaceToBoolPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1102,10 +1020,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListContract
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id_ref")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id_ref")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id_ref")))) {
 		request.IDRef = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1117,10 +1031,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListProducer
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".scalable_group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".scalable_group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".scalable_group")))) {
 		request.ScalableGroup = expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListProducerScalableGroupArray(ctx, key+".scalable_group", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1141,10 +1051,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListProducer
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1153,10 +1059,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListProducer
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id_ref")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id_ref")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id_ref")))) {
 		request.IDRef = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1168,10 +1070,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListConsumer
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".scalable_group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".scalable_group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".scalable_group")))) {
 		request.ScalableGroup = expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListConsumerScalableGroupArray(ctx, key+".scalable_group", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1192,10 +1090,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListConsumer
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1204,10 +1098,6 @@ func expandRequestAppPolicyIntentCreateApplicationPolicyIntentUpdateListConsumer
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id_ref")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id_ref")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id_ref")))) {
 		request.IDRef = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

@@ -5,8 +5,6 @@ import (
 	"errors"
 	"time"
 
-	"reflect"
-
 	"log"
 
 	dnacentersdkgo "dnacenter-go-sdk/sdk"
@@ -16,16 +14,16 @@ import (
 )
 
 // resourceAction
-func resourceDeviceReplacementDeploy() *schema.Resource {
+func resourceGlobalCredentialDelete() *schema.Resource {
 	return &schema.Resource{
-		Description: `It performs create operation on Device Replacement.
+		Description: `It performs delete operation on Discovery.
 
-- API to trigger RMA workflow that will replace faulty device with replacement device with same configuration and images
+- Deletes global credential for the given ID
 `,
 
-		CreateContext: resourceDeviceReplacementDeployCreate,
-		ReadContext:   resourceDeviceReplacementDeployRead,
-		DeleteContext: resourceDeviceReplacementDeployDelete,
+		CreateContext: resourceGlobalCredentialDeleteCreate,
+		ReadContext:   resourceGlobalCredentialDeleteRead,
+		DeleteContext: resourceGlobalCredentialDeleteDelete,
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,14 +54,11 @@ func resourceDeviceReplacementDeploy() *schema.Resource {
 				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"faulty_device_serial_number": &schema.Schema{
+						"global_credential_id": &schema.Schema{
+							Description: `globalCredentialId path parameter. ID of global-credential
+`,
 							Type:     schema.TypeString,
-							Optional: true,
-							ForceNew: true,
-						},
-						"replacement_device_serial_number": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 							ForceNew: true,
 						},
 					},
@@ -73,25 +68,24 @@ func resourceDeviceReplacementDeploy() *schema.Resource {
 	}
 }
 
-func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceGlobalCredentialDeleteCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	request1 := expandRequestDeviceReplacementDeployDeployDeviceReplacementWorkflow(ctx, "parameters.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	vGlobalCredentialID := resourceItem["global_credential_id"]
 
-	response1, restyResp1, err := client.DeviceReplacement.DeployDeviceReplacementWorkflow(request1)
+	vvGlobalCredentialID := vGlobalCredentialID.(string)
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.Discovery.DeleteGlobalCredentialsByID(vvGlobalCredentialID)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeployDeviceReplacementWorkflow", err,
-			"Failure at DeployDeviceReplacementWorkflow, unexpected response", ""))
+			"Failure when executing DeleteGlobalCredentialsByID", err,
+			"Failure at DeleteGlobalCredentialsByID, unexpected response", ""))
 		return diags
 	}
 
@@ -99,7 +93,7 @@ func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.Resour
 
 	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when executing DeployDeviceReplacementWorkflow", err))
+			"Failure when executing DeleteGlobalCredentialsById", err))
 		return diags
 	}
 	taskId := response1.Response.TaskID
@@ -133,15 +127,15 @@ func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.Resour
 			}
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing DeployDeviceReplacementWorkflow", err1))
+				"Failure when executing DeleteGlobalCredentialsById", err1))
 			return diags
 		}
 	}
 
-	vItem1 := flattenDeviceReplacementDeployDeviceReplacementWorkflowItem(response1.Response)
+	vItem1 := flattenDiscoveryDeleteGlobalCredentialsByIDItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
-			"Failure when setting DeployDeviceReplacementWorkflow response",
+			"Failure when setting DeleteGlobalCredentialsByID response",
 			err))
 		return diags
 	}
@@ -149,31 +143,20 @@ func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.Resour
 	return diags
 
 }
-func resourceDeviceReplacementDeployRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceGlobalCredentialDeleteRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
 }
 
-func resourceDeviceReplacementDeployDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceGlobalCredentialDeleteDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 	return diags
 }
 
-func expandRequestDeviceReplacementDeployDeployDeviceReplacementWorkflow(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceReplacementDeployDeviceReplacementWorkflow {
-	request := dnacentersdkgo.RequestDeviceReplacementDeployDeviceReplacementWorkflow{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".faulty_device_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".faulty_device_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".faulty_device_serial_number")))) {
-		request.FaultyDeviceSerialNumber = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".replacement_device_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".replacement_device_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".replacement_device_serial_number")))) {
-		request.ReplacementDeviceSerialNumber = interfaceToString(v)
-	}
-	return &request
-}
-
-func flattenDeviceReplacementDeployDeviceReplacementWorkflowItem(item *dnacentersdkgo.ResponseDeviceReplacementDeployDeviceReplacementWorkflowResponse) []map[string]interface{} {
+func flattenDiscoveryDeleteGlobalCredentialsByIDItem(item *dnacentersdkgo.ResponseDiscoveryDeleteGlobalCredentialsByIDResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

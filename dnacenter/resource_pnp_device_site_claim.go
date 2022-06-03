@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+
 	"fmt"
 	"reflect"
 
@@ -13,18 +14,18 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourcePnpDeviceSiteClaim() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Device Onboarding (PnP).
-	•	Claim a device based on DNA-C Site based design process. Different parameters are required for different device
-		platforms.
-	
+
+- Claim a device based on DNA-C Site based design process. Different parameters are required for different device
+platforms.
 `,
 
 		CreateContext: resourcePnpDeviceSiteClaimCreate,
 		ReadContext:   resourcePnpDeviceSiteClaimRead,
 		DeleteContext: resourcePnpDeviceSiteClaimDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -76,12 +77,12 @@ func resourcePnpDeviceSiteClaim() *schema.Resource {
 
 												"key": &schema.Schema{
 													Type:     schema.TypeString,
-													Required: true,
+													Optional: true,
 													ForceNew: true,
 												},
 												"value": &schema.Schema{
 													Type:     schema.TypeString,
-													Required: true,
+													Optional: true,
 													ForceNew: true,
 												},
 											},
@@ -95,39 +96,81 @@ func resourcePnpDeviceSiteClaim() *schema.Resource {
 							Optional: true,
 							ForceNew: true,
 						},
+						"gateway": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
 						"hostname": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
+						"image_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
 						},
 						"image_info": &schema.Schema{
 							Type:     schema.TypeList,
-							Required: true,
+							Optional: true,
 							ForceNew: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"image_id": &schema.Schema{
 										Type:     schema.TypeString,
-										Required: true,
+										Optional: true,
 										ForceNew: true,
 									},
 									"skip": &schema.Schema{
 										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"true", "false"}),
-										Required:     true,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
 										ForceNew:     true,
 									},
 								},
 							},
+						},
+						"ip_interface_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
+						"remove_inactive": &schema.Schema{
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							ForceNew:     true,
+						},
+						"rf_profile": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
 						},
 						"site_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
 						},
+						"static_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
+						"subnet_mask": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
 						"type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
+						"vlan_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
@@ -141,11 +184,9 @@ func resourcePnpDeviceSiteClaim() *schema.Resource {
 
 func resourcePnpDeviceSiteClaimCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
-	log.Printf("[DEBUG] Selected method 1: ClaimADeviceToASite")
-	request1 := expandRequestPnpDeviceClaimToSiteClaimADeviceToASite(ctx, "parameters.0", d)
+	request1 := expandRequestPnpDeviceSiteClaimClaimADeviceToASite(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.DeviceOnboardingPnp.ClaimADeviceToASite(request1)
 
@@ -164,6 +205,9 @@ func resourcePnpDeviceSiteClaimCreate(ctx context.Context, d *schema.ResourceDat
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	//Analizar verificacion.
+
 	vItem1 := flattenDeviceOnboardingPnpClaimADeviceToASiteItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -171,31 +215,24 @@ func resourcePnpDeviceSiteClaimCreate(ctx context.Context, d *schema.ResourceDat
 			err))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourcePnpDeviceSiteClaimRead(ctx, d, m)
-}
+	return diags
 
+}
 func resourcePnpDeviceSiteClaimRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
-}
-
-func resourcePnpDeviceSiteClaimUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourcePnpDeviceSiteClaimRead(ctx, d, m)
 }
 
 func resourcePnpDeviceSiteClaimDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 	return diags
 }
-func expandRequestPnpDeviceClaimToSiteClaimADeviceToASite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASite {
+
+func expandRequestPnpDeviceSiteClaimClaimADeviceToASite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASite {
 	request := dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASite{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_id")))) {
 		request.DeviceID = interfaceToString(v)
@@ -207,75 +244,92 @@ func expandRequestPnpDeviceClaimToSiteClaimADeviceToASite(ctx context.Context, k
 		request.Type = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_info")))) {
-		request.ImageInfo = expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteImageInfo(ctx, key+".image_info.0", d)
+		request.ImageInfo = *expandRequestPnpDeviceSiteClaimClaimADeviceToASiteImageInfo(ctx, key+".image_info.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_info")))) {
-		request.ConfigInfo = expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfo(ctx, key+".config_info.0", d)
+		request.ConfigInfo = *expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfo(ctx, key+".config_info.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hostname")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hostname")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hostname")))) {
 		request.Hostname = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".gateway")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".gateway")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".gateway")))) {
+		request.Gateway = interfaceToString(v)
 	}
-
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_id")))) {
+		request.ImageID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remove_inactive")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remove_inactive")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remove_inactive")))) {
+		request.RemoveInactive = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_interface_name")))) {
+		request.IPInterfaceName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rf_profile")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rf_profile")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rf_profile")))) {
+		request.RfProfile = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".static_ip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".static_ip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".static_ip")))) {
+		request.StaticIP = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subnet_mask")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subnet_mask")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subnet_mask")))) {
+		request.SubnetMask = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan_id")))) {
+		request.VLANID = interfaceToString(v)
+	}
 	return &request
 }
 
-func expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteImageInfo(ctx context.Context, key string, d *schema.ResourceData) dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteImageInfo {
+func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteImageInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteImageInfo {
 	request := dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteImageInfo{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_id")); ok {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_id")))) {
 		request.ImageID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".skip")); ok {
-		request.Skip = interfaceToBool(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".skip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".skip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".skip")))) {
+		request.Skip = *interfaceToBoolPtr(v)
 	}
-
-	return request
+	return &request
 }
 
-func expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfo(ctx context.Context, key string, d *schema.ResourceData) dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfo {
+func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfo {
 	request := dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfo{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_id")); ok {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_id")))) {
 		request.ConfigID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_parameters")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_parameters")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_parameters")))) {
-		request.ConfigParameters = expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfoConfigParametersArray(ctx, key+".config_parameters", d)
-	} else {
-		request.ConfigParameters = []dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfoConfigParameters{}
+		request.ConfigParameters = *expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoConfigParametersArray(ctx, key+".config_parameters", d)
 	}
-	return request
+	return &request
 }
 
-func expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfoConfigParametersArray(ctx context.Context, key string, d *schema.ResourceData) []dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfoConfigParameters {
+func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoConfigParametersArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfoConfigParameters {
 	request := []dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfoConfigParameters{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
-
+	if o == nil {
+		return nil
+	}
 	objs := o.([]interface{})
 	if len(objs) == 0 {
-		return request
+		return nil
 	}
-	for item_no, _ := range objs {
-		i := expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfoConfigParameters(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-
-		request = append(request, i)
-
+	for item_no := range objs {
+		i := expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoConfigParameters(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
-
-	return request
+	return &request
 }
 
-func expandRequestPnpDeviceClaimToSiteClaimADeviceToASiteConfigInfoConfigParameters(ctx context.Context, key string, d *schema.ResourceData) dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfoConfigParameters {
+func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoConfigParameters(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfoConfigParameters {
 	request := dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfoConfigParameters{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); ok {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); ok {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-
-	return request
+	return &request
 }
 
 func flattenDeviceOnboardingPnpClaimADeviceToASiteItem(item *dnacentersdkgo.ResponseDeviceOnboardingPnpClaimADeviceToASite) []map[string]interface{} {

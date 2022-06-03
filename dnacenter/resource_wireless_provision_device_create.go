@@ -2,9 +2,10 @@ package dnacenter
 
 import (
 	"context"
+	"time"
+
 	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -14,17 +15,17 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Wireless.
-		- Provision wireless devices
-	
+
+- Provision wireless devices
 `,
 
 		CreateContext: resourceWirelessProvisionDeviceCreateCreate,
 		ReadContext:   resourceWirelessProvisionDeviceCreateRead,
 		DeleteContext: resourceWirelessProvisionDeviceCreateDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -92,7 +93,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 
 									"device_name": &schema.Schema{
 										Description: `Controller Name
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
@@ -106,42 +107,42 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 
 												"interface_gateway": &schema.Schema{
 													Description: `Interface Gateway
-			`,
+`,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
 												},
 												"interface_ipaddress": &schema.Schema{
 													Description: `Interface IP Address
-			`,
+`,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
 												},
 												"interface_name": &schema.Schema{
 													Description: `Interface Name
-			`,
+`,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
 												},
 												"interface_netmask_in_cid_r": &schema.Schema{
 													Description: `Interface Netmask In CIDR
-			`,
+`,
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
 												},
 												"lag_or_port_number": &schema.Schema{
 													Description: `Lag Or Port Number
-			`,
+`,
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
 												},
 												"vlan_id": &schema.Schema{
 													Description: `VLAN ID
-			`,
+`,
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
@@ -151,7 +152,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 									},
 									"managed_aplocations": &schema.Schema{
 										Description: `List of managed AP locations (Site Hierarchies)
-			`,
+`,
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
@@ -161,7 +162,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 									},
 									"site": &schema.Schema{
 										Description: `Full Site Hierarchy where device has to be assigned
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
@@ -178,10 +179,8 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 
 func resourceWirelessProvisionDeviceCreateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
-	log.Printf("[DEBUG] Selected method 1: Provision")
 	request1 := expandRequestWirelessProvisionDeviceCreateProvision(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.Wireless.Provision(request1)
@@ -199,6 +198,8 @@ func resourceWirelessProvisionDeviceCreateCreate(ctx context.Context, d *schema.
 			"Failure at Provision, unexpected response", ""))
 		return diags
 	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
@@ -235,7 +236,7 @@ func resourceWirelessProvisionDeviceCreateCreate(ctx context.Context, d *schema.
 			return diags
 		}
 	}
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
 	vItem1 := flattenWirelessProvisionItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -243,35 +244,28 @@ func resourceWirelessProvisionDeviceCreateCreate(ctx context.Context, d *schema.
 			err))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourceWirelessProvisionDeviceCreateRead(ctx, d, m)
-}
+	return diags
 
+}
 func resourceWirelessProvisionDeviceCreateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
 }
 
 func resourceWirelessProvisionDeviceCreateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 	return diags
 }
+
 func expandRequestWirelessProvisionDeviceCreateProvision(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessProvision {
 	request := dnacentersdkgo.RequestWirelessProvision{}
 	if v := expandRequestWirelessProvisionDeviceCreateProvisionItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -292,10 +286,6 @@ func expandRequestWirelessProvisionDeviceCreateProvisionItemArray(ctx context.Co
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -313,10 +303,6 @@ func expandRequestWirelessProvisionDeviceCreateProvisionItem(ctx context.Context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dynamic_interfaces")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dynamic_interfaces")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dynamic_interfaces")))) {
 		request.DynamicInterfaces = expandRequestWirelessProvisionDeviceCreateProvisionItemDynamicInterfacesArray(ctx, key+".dynamic_interfaces", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -337,10 +323,6 @@ func expandRequestWirelessProvisionDeviceCreateProvisionItemDynamicInterfacesArr
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -364,10 +346,6 @@ func expandRequestWirelessProvisionDeviceCreateProvisionItemDynamicInterfaces(ct
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".interface_name")))) {
 		request.InterfaceName = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

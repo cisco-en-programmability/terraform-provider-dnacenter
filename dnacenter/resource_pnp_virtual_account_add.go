@@ -15,17 +15,18 @@ import (
 )
 
 // resourceAction
-func resourcePnpVirtualAccountDevicesSync() *schema.Resource {
+func resourcePnpVirtualAccountAdd() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Device Onboarding (PnP).
 
-- Synchronizes the device info from the given smart account & virtual account with the PnP database. The response
-payload returns a list of synced devices
+- Registers a Smart Account, Virtual Account and the relevant server profile info with the PnP System & database. The
+devices present in the registered virtual account are synced with the PnP database as well. The response payload returns
+the new profile
 `,
 
-		CreateContext: resourcePnpVirtualAccountDevicesSyncCreate,
-		ReadContext:   resourcePnpVirtualAccountDevicesSyncRead,
-		DeleteContext: resourcePnpVirtualAccountDevicesSyncDelete,
+		CreateContext: resourcePnpVirtualAccountAddCreate,
+		ReadContext:   resourcePnpVirtualAccountAddRead,
+		DeleteContext: resourcePnpVirtualAccountAddDelete,
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -344,13 +345,13 @@ payload returns a list of synced devices
 	}
 }
 
-func resourcePnpVirtualAccountDevicesSyncCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourcePnpVirtualAccountAddCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	request1 := expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevices(ctx, "parameters.0", d)
+	request1 := expandRequestPnpVirtualAccountAddAddVirtualAccount(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.DeviceOnboardingPnp.SyncVirtualAccountDevices(request1)
+	response1, restyResp1, err := client.DeviceOnboardingPnp.AddVirtualAccount(request1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -361,8 +362,8 @@ func resourcePnpVirtualAccountDevicesSyncCreate(ctx context.Context, d *schema.R
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing SyncVirtualAccountDevices", err,
-			"Failure at SyncVirtualAccountDevices, unexpected response", ""))
+			"Failure when executing AddVirtualAccount", err,
+			"Failure at AddVirtualAccount, unexpected response", ""))
 		return diags
 	}
 
@@ -370,10 +371,10 @@ func resourcePnpVirtualAccountDevicesSyncCreate(ctx context.Context, d *schema.R
 
 	//Analizar verificacion.
 
-	vItem1 := flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItem(response1)
+	vItem1 := flattenDeviceOnboardingPnpAddVirtualAccountItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
-			"Failure when setting SyncVirtualAccountDevices response",
+			"Failure when setting AddVirtualAccount response",
 			err))
 		return diags
 	}
@@ -381,21 +382,21 @@ func resourcePnpVirtualAccountDevicesSyncCreate(ctx context.Context, d *schema.R
 	return diags
 
 }
-func resourcePnpVirtualAccountDevicesSyncRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourcePnpVirtualAccountAddRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
 }
 
-func resourcePnpVirtualAccountDevicesSyncDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourcePnpVirtualAccountAddDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 	return diags
 }
 
-func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevices(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevices {
-	request := dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevices{}
+func expandRequestPnpVirtualAccountAddAddVirtualAccount(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpAddVirtualAccount {
+	request := dnacentersdkgo.RequestDeviceOnboardingPnpAddVirtualAccount{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auto_sync_period")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auto_sync_period")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auto_sync_period")))) {
 		request.AutoSyncPeriod = interfaceToIntPtr(v)
 	}
@@ -409,13 +410,13 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevices(ctx cont
 		request.LastSync = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".profile")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".profile")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".profile")))) {
-		request.Profile = expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesProfile(ctx, key+".profile.0", d)
+		request.Profile = expandRequestPnpVirtualAccountAddAddVirtualAccountProfile(ctx, key+".profile.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".smart_account_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".smart_account_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".smart_account_id")))) {
 		request.SmartAccountID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_result")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_result")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_result")))) {
-		request.SyncResult = expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResult(ctx, key+".sync_result.0", d)
+		request.SyncResult = expandRequestPnpVirtualAccountAddAddVirtualAccountSyncResult(ctx, key+".sync_result.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_result_str")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_result_str")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_result_str")))) {
 		request.SyncResultStr = interfaceToString(v)
@@ -438,8 +439,8 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevices(ctx cont
 	return &request
 }
 
-func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevicesProfile {
-	request := dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevicesProfile{}
+func expandRequestPnpVirtualAccountAddAddVirtualAccountProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpAddVirtualAccountProfile {
+	request := dnacentersdkgo.RequestDeviceOnboardingPnpAddVirtualAccountProfile{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".address_fqdn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".address_fqdn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".address_fqdn")))) {
 		request.AddressFqdn = interfaceToString(v)
 	}
@@ -467,10 +468,10 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesProfile(c
 	return &request
 }
 
-func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResult(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevicesSyncResult {
-	request := dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevicesSyncResult{}
+func expandRequestPnpVirtualAccountAddAddVirtualAccountSyncResult(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpAddVirtualAccountSyncResult {
+	request := dnacentersdkgo.RequestDeviceOnboardingPnpAddVirtualAccountSyncResult{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_list")))) {
-		request.SyncList = expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResultSyncListArray(ctx, key+".sync_list", d)
+		request.SyncList = expandRequestPnpVirtualAccountAddAddVirtualAccountSyncResultSyncListArray(ctx, key+".sync_list", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_msg")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_msg")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_msg")))) {
 		request.SyncMsg = interfaceToString(v)
@@ -478,8 +479,8 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResul
 	return &request
 }
 
-func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResultSyncListArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevicesSyncResultSyncList {
-	request := []dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevicesSyncResultSyncList{}
+func expandRequestPnpVirtualAccountAddAddVirtualAccountSyncResultSyncListArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestDeviceOnboardingPnpAddVirtualAccountSyncResultSyncList {
+	request := []dnacentersdkgo.RequestDeviceOnboardingPnpAddVirtualAccountSyncResultSyncList{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -490,7 +491,7 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResul
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResultSyncList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestPnpVirtualAccountAddAddVirtualAccountSyncResultSyncList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
@@ -498,8 +499,8 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResul
 	return &request
 }
 
-func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResultSyncList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevicesSyncResultSyncList {
-	request := dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevicesSyncResultSyncList{}
+func expandRequestPnpVirtualAccountAddAddVirtualAccountSyncResultSyncList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpAddVirtualAccountSyncResultSyncList {
+	request := dnacentersdkgo.RequestDeviceOnboardingPnpAddVirtualAccountSyncResultSyncList{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_sn_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_sn_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_sn_list")))) {
 		request.DeviceSnList = interfaceToSliceString(v)
 	}
@@ -509,7 +510,7 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResul
 	return &request
 }
 
-func flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItem(item *dnacentersdkgo.ResponseDeviceOnboardingPnpSyncVirtualAccountDevices) []map[string]interface{} {
+func flattenDeviceOnboardingPnpAddVirtualAccountItem(item *dnacentersdkgo.ResponseDeviceOnboardingPnpAddVirtualAccount) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -517,9 +518,9 @@ func flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItem(item *dnacentersdkg
 	respItem["virtual_account_id"] = item.VirtualAccountID
 	respItem["auto_sync_period"] = item.AutoSyncPeriod
 	respItem["sync_result_str"] = item.SyncResultStr
-	respItem["profile"] = flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItemProfile(item.Profile)
+	respItem["profile"] = flattenDeviceOnboardingPnpAddVirtualAccountItemProfile(item.Profile)
 	respItem["cco_user"] = item.CcoUser
-	respItem["sync_result"] = flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItemSyncResult(item.SyncResult)
+	respItem["sync_result"] = flattenDeviceOnboardingPnpAddVirtualAccountItemSyncResult(item.SyncResult)
 	respItem["token"] = item.Token
 	respItem["sync_start_time"] = item.SyncStartTime
 	respItem["last_sync"] = item.LastSync
@@ -532,7 +533,7 @@ func flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItem(item *dnacentersdkg
 	}
 }
 
-func flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItemProfile(item *dnacentersdkgo.ResponseDeviceOnboardingPnpSyncVirtualAccountDevicesProfile) []map[string]interface{} {
+func flattenDeviceOnboardingPnpAddVirtualAccountItemProfile(item *dnacentersdkgo.ResponseDeviceOnboardingPnpAddVirtualAccountProfile) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -552,12 +553,12 @@ func flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItemProfile(item *dnacen
 
 }
 
-func flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItemSyncResult(item *dnacentersdkgo.ResponseDeviceOnboardingPnpSyncVirtualAccountDevicesSyncResult) []map[string]interface{} {
+func flattenDeviceOnboardingPnpAddVirtualAccountItemSyncResult(item *dnacentersdkgo.ResponseDeviceOnboardingPnpAddVirtualAccountSyncResult) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["sync_list"] = flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItemSyncResultSyncList(item.SyncList)
+	respItem["sync_list"] = flattenDeviceOnboardingPnpAddVirtualAccountItemSyncResultSyncList(item.SyncList)
 	respItem["sync_msg"] = item.SyncMsg
 
 	return []map[string]interface{}{
@@ -566,7 +567,7 @@ func flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItemSyncResult(item *dna
 
 }
 
-func flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItemSyncResultSyncList(items *[]dnacentersdkgo.ResponseDeviceOnboardingPnpSyncVirtualAccountDevicesSyncResultSyncList) []map[string]interface{} {
+func flattenDeviceOnboardingPnpAddVirtualAccountItemSyncResultSyncList(items *[]dnacentersdkgo.ResponseDeviceOnboardingPnpAddVirtualAccountSyncResultSyncList) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

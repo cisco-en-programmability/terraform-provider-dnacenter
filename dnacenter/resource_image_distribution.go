@@ -3,10 +3,10 @@ package dnacenter
 import (
 	"context"
 	"errors"
+	"time"
+
 	"fmt"
 	"reflect"
-	"strings"
-	"time"
 
 	"log"
 
@@ -16,17 +16,18 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceImageDistribution() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Software Image Management (SWIM).
-	- Distributes a software image on a given device. Software image must be imported successfully into DNA Center before it
-	can be distributed
+
+- Distributes a software image on a given device. Software image must be imported successfully into DNA Center before it
+can be distributed
 `,
 
 		CreateContext: resourceImageDistributionCreate,
 		ReadContext:   resourceImageDistributionRead,
 		DeleteContext: resourceImageDistributionDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -62,7 +63,6 @@ func resourceImageDistribution() *schema.Resource {
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
-							MinItems:    1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -88,11 +88,9 @@ func resourceImageDistribution() *schema.Resource {
 
 func resourceImageDistributionCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
-	log.Printf("[DEBUG] Selected method 1: ClaimADeviceToASite")
-	request1 := expandRequestSwimTriggerDistributionTriggerSoftwareImageDistribution(ctx, "parameters.0", d)
+	request1 := expandRequestImageDistributionTriggerSoftwareImageDistribution(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.SoftwareImageManagementSwim.TriggerSoftwareImageDistribution(request1)
 
@@ -110,6 +108,8 @@ func resourceImageDistributionCreate(ctx context.Context, d *schema.ResourceData
 		return diags
 	}
 
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
 	if response1.Response == nil {
 		diags = append(diags, diagError(
 			"Failure when executing TriggerSoftwareImageDistribution", err))
@@ -118,8 +118,9 @@ func resourceImageDistributionCreate(ctx context.Context, d *schema.ResourceData
 	taskId := response1.Response.TaskID
 	log.Printf("[DEBUG] TASKID => %s", taskId)
 	if taskId != "" {
+		time.Sleep(5 * time.Second)
 		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-		if err != nil || response2 == nil || response2.Response == nil {
+		if err != nil || response2 == nil {
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
@@ -128,43 +129,15 @@ func resourceImageDistributionCreate(ctx context.Context, d *schema.ResourceData
 				"Failure at GetTaskByID, unexpected response", ""))
 			return diags
 		}
-		if !strings.Contains(response2.Response.Progress, "Starting") && *response2.Response.IsError {
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			err1 := errors.New(response2.Response.Progress)
-			diags = append(diags, diagError(
-				"Failure when executing TriggerSoftwareImageDistribution", err1))
-			return diags
-		}
-		for strings.Contains(response2.Response.Progress, "Starting") {
-			time.Sleep(5 * time.Second)
-			response2, restyResp2, err = client.Task.GetTaskByID(taskId)
-			if err != nil || response2 == nil || response2.Response == nil {
-				if restyResp2 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-				}
+			restyResp3, err := client.CustomCall.GetCustomCall(response2.Response.AdditionalStatusURL, nil)
+			if err != nil {
 				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetTaskByID", err,
-					"Failure at GetTaskByID, unexpected response", ""))
+					"Failure when executing GetCustomCall", err,
+					"Failure at GetCustomCall, unexpected response", ""))
 				return diags
 			}
-			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-				log.Printf("[DEBUG] Error reason %s", response2.Response.Progress)
-				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
-				err1 := errors.New(errorMsg)
-				diags = append(diags, diagError(
-					"Failure when executing TriggerSoftwareImageDistribution", err1))
-				return diags
-			}
-		}
-		restyResp3, err := client.CustomCall.GetCustomCall(response2.Response.AdditionalStatusURL, nil)
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetCustomCall", err,
-				"Failure at GetCustomCall, unexpected response", ""))
-			return diags
-		}
-		if *response2.Response.IsError {
-			log.Printf("[DEBUG] Error %s", response2.Response.Progress)
 			var errorMsg string
 			if restyResp3 == nil {
 				errorMsg = response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
@@ -185,41 +158,32 @@ func resourceImageDistributionCreate(ctx context.Context, d *schema.ResourceData
 			err))
 		return diags
 	}
-
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourceImageDistributionRead(ctx, d, m)
-}
+	return diags
 
+}
 func resourceImageDistributionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
 }
 
 func resourceImageDistributionDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 	return diags
 }
-func expandRequestSwimTriggerDistributionTriggerSoftwareImageDistribution(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSoftwareImageManagementSwimTriggerSoftwareImageDistribution {
+
+func expandRequestImageDistributionTriggerSoftwareImageDistribution(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSoftwareImageManagementSwimTriggerSoftwareImageDistribution {
 	request := dnacentersdkgo.RequestSoftwareImageManagementSwimTriggerSoftwareImageDistribution{}
-	if v := expandRequestSwimTriggerDistributionTriggerSoftwareImageDistributionItemArray(ctx, key+".payload", d); v != nil {
+	if v := expandRequestImageDistributionTriggerSoftwareImageDistributionItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
-func expandRequestSwimTriggerDistributionTriggerSoftwareImageDistributionItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSoftwareImageManagementSwimTriggerSoftwareImageDistribution {
+func expandRequestImageDistributionTriggerSoftwareImageDistributionItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSoftwareImageManagementSwimTriggerSoftwareImageDistribution {
 	request := []dnacentersdkgo.RequestItemSoftwareImageManagementSwimTriggerSoftwareImageDistribution{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
@@ -231,19 +195,15 @@ func expandRequestSwimTriggerDistributionTriggerSoftwareImageDistributionItemArr
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestSwimTriggerDistributionTriggerSoftwareImageDistributionItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestImageDistributionTriggerSoftwareImageDistributionItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
-func expandRequestSwimTriggerDistributionTriggerSoftwareImageDistributionItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSoftwareImageManagementSwimTriggerSoftwareImageDistribution {
+func expandRequestImageDistributionTriggerSoftwareImageDistributionItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSoftwareImageManagementSwimTriggerSoftwareImageDistribution {
 	request := dnacentersdkgo.RequestItemSoftwareImageManagementSwimTriggerSoftwareImageDistribution{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_uuid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_uuid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_uuid")))) {
 		request.DeviceUUID = interfaceToString(v)
@@ -251,10 +211,6 @@ func expandRequestSwimTriggerDistributionTriggerSoftwareImageDistributionItem(ct
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_uuid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_uuid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_uuid")))) {
 		request.ImageUUID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

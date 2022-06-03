@@ -12,19 +12,17 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceBusinessSdaWirelessControllerDelete() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs delete operation on Fabric Wireless.
-		- Remove WLC from Fabric Domain
+
+- Remove WLC from Fabric Domain
 `,
 
 		CreateContext: resourceBusinessSdaWirelessControllerDeleteCreate,
 		ReadContext:   resourceBusinessSdaWirelessControllerDeleteRead,
 		DeleteContext: resourceBusinessSdaWirelessControllerDeleteDelete,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -37,18 +35,17 @@ func resourceBusinessSdaWirelessControllerDelete() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"execution_id": &schema.Schema{
-							Description: `Status of the job for wireless state change in fabric domain
-`,
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Execution Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"execution_status_url": &schema.Schema{
-							Description: `executionStatusURL`,
+							Description: `Execution Status Url`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"message": &schema.Schema{
-							Description: `message`,
+							Description: `Message`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -65,7 +62,7 @@ func resourceBusinessSdaWirelessControllerDelete() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"device_ipaddress": &schema.Schema{
 							Description: `deviceIPAddress query parameter. Device Management IP Address
-			`,
+`,
 							Type:     schema.TypeString,
 							Required: true,
 							ForceNew: true,
@@ -79,18 +76,17 @@ func resourceBusinessSdaWirelessControllerDelete() *schema.Resource {
 
 func resourceBusinessSdaWirelessControllerDeleteCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	vDeviceIpAddress := resourceItem["device_ipaddress"]
-	vvDeviceIpAddress := interfaceToString(vDeviceIpAddress)
+	vDeviceIPAddress := resourceItem["device_ipaddress"]
 
 	queryParams1 := dnacentersdkgo.RemoveWLCFromFabricDomainQueryParams{}
 
-	queryParams1.DeviceIPAddress = vvDeviceIpAddress
+	queryParams1.DeviceIPAddress = vDeviceIPAddress.(string)
 
 	response1, restyResp1, err := client.FabricWireless.RemoveWLCFromFabricDomain(&queryParams1)
+
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -100,15 +96,8 @@ func resourceBusinessSdaWirelessControllerDeleteCreate(ctx context.Context, d *s
 			"Failure at RemoveWLCFromFabricDomain, unexpected response", ""))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	vItems1 := flattenFabricWirelessRemoveWLCFromFabricDomainItem(response1)
-	if err := d.Set("item", vItems1); err != nil {
-		diags = append(diags, diagError(
-			"Failure when setting RemoveWLCFromFabricDomain response",
-			err))
-		return diags
-	}
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
@@ -146,10 +135,17 @@ func resourceBusinessSdaWirelessControllerDeleteCreate(ctx context.Context, d *s
 		}
 	}
 
+	vItem1 := flattenFabricWirelessRemoveWLCFromFabricDomainItem(response1)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting RemoveWLCFromFabricDomain response",
+			err))
+		return diags
+	}
 	d.SetId(getUnixTimeString())
-	return resourceBusinessSdaWirelessControllerDeleteRead(ctx, d, m)
-}
+	return diags
 
+}
 func resourceBusinessSdaWirelessControllerDeleteRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
@@ -157,6 +153,8 @@ func resourceBusinessSdaWirelessControllerDeleteRead(ctx context.Context, d *sch
 }
 
 func resourceBusinessSdaWirelessControllerDeleteDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	//client := m.(*dnacentersdkgo.Client)
+
 	var diags diag.Diagnostics
 	return diags
 }

@@ -52,6 +52,9 @@ func resourceFileImport() *schema.Resource {
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
 			},
 		},
 	}

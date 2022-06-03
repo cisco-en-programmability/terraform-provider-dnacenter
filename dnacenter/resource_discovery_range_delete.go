@@ -13,19 +13,17 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceDiscoveryRangeDelete() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs delete operation on Discovery.
+
 - Stops discovery for the given range and removes them
 `,
 
 		CreateContext: resourceDiscoveryRangeDeleteCreate,
 		ReadContext:   resourceDiscoveryRangeDeleteRead,
 		DeleteContext: resourceDiscoveryRangeDeleteDelete,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -49,27 +47,26 @@ func resourceDiscoveryRangeDelete() *schema.Resource {
 				},
 			},
 			"parameters": &schema.Schema{
-				Description: `Array of RequestDeleteDiscoveryBySpecifiedRange`,
-				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
-				ForceNew:    true,
+				Type:     schema.TypeList,
+				Required: true,
+				MaxItems: 1,
+				MinItems: 1,
+				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"records_to_delete": &schema.Schema{
 							Description: `recordsToDelete path parameter. Number of records to delete
-			`,
+`,
 							Type:     schema.TypeInt,
-							ForceNew: true,
 							Required: true,
+							ForceNew: true,
 						},
 						"start_index": &schema.Schema{
 							Description: `startIndex path parameter. Start index
-			`,
+`,
 							Type:     schema.TypeInt,
-							ForceNew: true,
 							Required: true,
+							ForceNew: true,
 						},
 					},
 				},
@@ -80,16 +77,17 @@ func resourceDiscoveryRangeDelete() *schema.Resource {
 
 func resourceDiscoveryRangeDeleteCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	vRecordsToDelete := resourceItem["records_to_delete"]
 	vStartIndex := resourceItem["start_index"]
+	vRecordsToDelete := resourceItem["records_to_delete"]
+
 	vvStartIndex := vStartIndex.(int)
 	vvRecordsToDelete := vRecordsToDelete.(int)
 
 	response1, restyResp1, err := client.Discovery.DeleteDiscoveryBySpecifiedRange(vvStartIndex, vvRecordsToDelete)
+
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -102,14 +100,11 @@ func resourceDiscoveryRangeDeleteCreate(ctx context.Context, d *schema.ResourceD
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	vItem1 := flattenDiscoveryDeleteDiscoveryBySpecifiedRangeItem(response1.Response)
-	if err := d.Set("item", vItem1); err != nil {
+	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when setting DeleteDiscoveryBySpecifiedRange response",
-			err))
+			"Failure when executing DeleteDiscoveryBySpecifiedRange", err))
 		return diags
 	}
-
 	taskId := response1.Response.TaskID
 	log.Printf("[DEBUG] TASKID => %s", taskId)
 	if taskId != "" {
@@ -145,18 +140,22 @@ func resourceDiscoveryRangeDeleteCreate(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 	}
+
+	vItem1 := flattenDiscoveryDeleteDiscoveryBySpecifiedRangeItem(response1.Response)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting DeleteDiscoveryBySpecifiedRange response",
+			err))
+		return diags
+	}
 	d.SetId(getUnixTimeString())
 	return diags
-}
 
+}
 func resourceDiscoveryRangeDeleteRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
-}
-
-func resourceDiscoveryRangeDeleteUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceDiscoveryRangeDeleteRead(ctx, d, m)
 }
 
 func resourceDiscoveryRangeDeleteDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

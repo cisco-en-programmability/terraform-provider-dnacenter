@@ -2,8 +2,8 @@ package dnacenter
 
 import (
 	"context"
-	"fmt"
 
+	"fmt"
 	"reflect"
 
 	"log"
@@ -14,9 +14,11 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceLanAutomationCreate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on LAN Automation.
+
 - Invoke this API to start LAN Automation for the given site.
 `,
 
@@ -24,121 +26,9 @@ func resourceLanAutomationCreate() *schema.Resource {
 		ReadContext:   resourceLanAutomationCreateRead,
 		DeleteContext: resourceLanAutomationCreateDelete,
 		Schema: map[string]*schema.Schema{
-			"parameters": &schema.Schema{
-				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
-				ForceNew: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"payload": &schema.Schema{
-							Description: `Array of RequestLanAutomationLANAutomation2`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							ForceNew:    true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"discovered_device_site_name_hierarchy": &schema.Schema{
-										Description: `Discovered device site name.
-			`,
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-									},
-									"host_name_file_id": &schema.Schema{
-										Description: `Use /dna/intent/api/v1/file/namespace/nw_orch api to get the file id for the already uploaded file in nw_orch namespace.
-			`,
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-									},
-									"host_name_prefix": &schema.Schema{
-										Description: `Host name prefix which shall be assigned to the discovered device.
-			`,
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-									},
-									"ip_pools": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										ForceNew: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"ip_pool_name": &schema.Schema{
-													Description: `Name of the IP pool.
-			`,
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-												},
-												"ip_pool_role": &schema.Schema{
-													Description: `Role of the IP pool. Supported roles are: MAIN_POOL and PHYSICAL_LINK_POOL.
-			`,
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-												},
-											},
-										},
-									},
-									"isis_domain_pwd": &schema.Schema{
-										Description: `IS-IS domain password in plain text.
-			`,
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-									},
-									"mulitcast_enabled": &schema.Schema{
-										Description: `To enable underlay native multicast.
-			`,
-										// Type:        schema.TypeBool,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										ForceNew:     true,
-									},
-									"peer_device_managment_ipaddress": &schema.Schema{
-										Description: `Peer seed management IP address.
-			`,
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-									},
-									"primary_device_interface_names": &schema.Schema{
-										Description: `The list of interfaces on primary seed via which the discovered devices are connected.
-			`,
-										Type:     schema.TypeList,
-										Optional: true,
-										ForceNew: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"primary_device_managment_ipaddress": &schema.Schema{
-										Description: `Primary seed management IP address.
-			`,
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-									},
-									"redistribute_isis_to_bgp": &schema.Schema{
-										Description: `Advertise LAN Automation summary route into BGP. 
-			`,
-										// Type:        schema.TypeBool,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										ForceNew:     true,
-									},
-								},
-							},
-						},
-					},
-				},
+			"last_updated": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -167,53 +57,166 @@ func resourceLanAutomationCreate() *schema.Resource {
 					},
 				},
 			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Required: true,
+				MaxItems: 1,
+				MinItems: 1,
+				ForceNew: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"payload": &schema.Schema{
+							Description: `Array of RequestLanAutomationLANAutomation2`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							ForceNew:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"discovered_device_site_name_hierarchy": &schema.Schema{
+										Description: `Discovered device site name.
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+									},
+									"host_name_file_id": &schema.Schema{
+										Description: `Use /dna/intent/api/v1/file/namespace/nw_orch api to get the file id for the already uploaded file in nw_orch namespace.
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+									},
+									"host_name_prefix": &schema.Schema{
+										Description: `Host name prefix which shall be assigned to the discovered device.
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+									},
+									"ip_pools": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										ForceNew: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"ip_pool_name": &schema.Schema{
+													Description: `Name of the IP pool.
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+												"ip_pool_role": &schema.Schema{
+													Description: `Role of the IP pool. Supported roles are: MAIN_POOL and PHYSICAL_LINK_POOL.
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+													ForceNew: true,
+												},
+											},
+										},
+									},
+									"isis_domain_pwd": &schema.Schema{
+										Description: `IS-IS domain password in plain text.
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+									},
+									"mulitcast_enabled": &schema.Schema{
+										Description: `To enable underlay native multicast.
+`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										ForceNew:     true,
+									},
+									"peer_device_managment_ipaddress": &schema.Schema{
+										Description: `Peer seed management IP address.
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+									},
+									"primary_device_interface_names": &schema.Schema{
+										Description: `The list of interfaces on primary seed via which the discovered devices are connected.
+`,
+										Type:     schema.TypeList,
+										Optional: true,
+										ForceNew: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"primary_device_managment_ipaddress": &schema.Schema{
+										Description: `Primary seed management IP address.
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+									},
+									"redistribute_isis_to_bgp": &schema.Schema{
+										Description: `Advertise LAN Automation summary route into BGP. 
+`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										ForceNew:     true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 		},
 	}
 }
 
+func resourceLanAutomationCreateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
+	var diags diag.Diagnostics
+
+	request1 := expandRequestLanAutomationCreateLanAutomation2(ctx, "parameters.0", d)
+
+	response1, restyResp1, err := client.LanAutomation.LanAutomation2(request1)
+
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing LanAutomation2", err,
+			"Failure at LanAutomation2, unexpected response", ""))
+		return diags
+	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	//Analizar verificacion.
+
+	vItem1 := flattenLanAutomationLanAutomation2Item(response1.Response)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting LanAutomation2 response",
+			err))
+		return diags
+	}
+	d.SetId(getUnixTimeString())
+	return diags
+
+}
 func resourceLanAutomationCreateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
-	return diags
-}
-
-func resourceLanAutomationCreateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
-
-	var diags diag.Diagnostics
-	selectedMethod := 1
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: LanAutomation2")
-		request1 := expandRequestLanAutomationCreateLanAutomation2(ctx, "parameters.0", d)
-
-		response1, restyResp1, err := client.LanAutomation.LanAutomation2(request1)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-
-		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing LanAutomation2", err,
-				"Failure at LanAutomation2, unexpected response", ""))
-			return diags
-		}
-
-		//Analizar
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		vItem1 := flattenLanAutomationLanAutomation2Item(response1.Response)
-		if err := d.Set("item", vItem1); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting LanAutomation2 response",
-				err))
-			return diags
-		}
-		d.SetId(getUnixTimeString())
-		return diags
-	}
 	return diags
 }
 

@@ -13,9 +13,11 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceEventEmailConfigCreate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Event Management.
+
 - Create Email Destination
 `,
 
@@ -23,6 +25,24 @@ func resourceEventEmailConfigCreate() *schema.Resource {
 		ReadContext:   resourceEventEmailConfigCreateRead,
 		DeleteContext: resourceEventEmailConfigCreateDelete,
 		Schema: map[string]*schema.Schema{
+			"last_updated": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"status_uri": &schema.Schema{
+							Description: `Status Uri`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
@@ -32,83 +52,84 @@ func resourceEventEmailConfigCreate() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"email_config_id": &schema.Schema{
-							Description: `Required only for update email configuration`,
-							Type:        schema.TypeString,
-							ForceNew:    true,
-							Optional:    true,
+							Description: `Required only for update email configuration
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
 						},
 						"from_email": &schema.Schema{
 							Description: `From Email`,
 							Type:        schema.TypeString,
-							ForceNew:    true,
 							Optional:    true,
+							ForceNew:    true,
 						},
 						"primary_smt_p_config": &schema.Schema{
 							Type:     schema.TypeList,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"host_name": &schema.Schema{
 										Description: `Host Name`,
 										Type:        schema.TypeString,
-										ForceNew:    true,
 										Optional:    true,
+										ForceNew:    true,
 									},
 									"password": &schema.Schema{
 										Description: `Password`,
 										Type:        schema.TypeString,
-										ForceNew:    true,
 										Optional:    true,
+										ForceNew:    true,
 										Sensitive:   true,
 									},
 									"port": &schema.Schema{
 										Description: `Port`,
 										Type:        schema.TypeString,
-										ForceNew:    true,
 										Optional:    true,
+										ForceNew:    true,
 									},
 									"user_name": &schema.Schema{
 										Description: `User Name`,
 										Type:        schema.TypeString,
-										ForceNew:    true,
 										Optional:    true,
+										ForceNew:    true,
 									},
 								},
 							},
 						},
 						"secondary_smt_p_config": &schema.Schema{
 							Type:     schema.TypeList,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"host_name": &schema.Schema{
 										Description: `Host Name`,
 										Type:        schema.TypeString,
-										ForceNew:    true,
 										Optional:    true,
+										ForceNew:    true,
 									},
 									"password": &schema.Schema{
 										Description: `Password`,
 										Type:        schema.TypeString,
-										ForceNew:    true,
 										Optional:    true,
+										ForceNew:    true,
 										Sensitive:   true,
 									},
 									"port": &schema.Schema{
 										Description: `Port`,
 										Type:        schema.TypeString,
-										ForceNew:    true,
 										Optional:    true,
+										ForceNew:    true,
 									},
 									"user_name": &schema.Schema{
 										Description: `User Name`,
 										Type:        schema.TypeString,
-										ForceNew:    true,
 										Optional:    true,
+										ForceNew:    true,
 									},
 								},
 							},
@@ -116,27 +137,14 @@ func resourceEventEmailConfigCreate() *schema.Resource {
 						"subject": &schema.Schema{
 							Description: `Subject`,
 							Type:        schema.TypeString,
-							ForceNew:    true,
 							Optional:    true,
+							ForceNew:    true,
 						},
 						"to_email": &schema.Schema{
 							Description: `To Email`,
 							Type:        schema.TypeString,
-							ForceNew:    true,
 							Optional:    true,
-						},
-					},
-				},
-			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"status_uri": &schema.Schema{
-							Description: `Status Uri`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							ForceNew:    true,
 						},
 					},
 				},
@@ -145,53 +153,46 @@ func resourceEventEmailConfigCreate() *schema.Resource {
 	}
 }
 
+func resourceEventEmailConfigCreateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
+	var diags diag.Diagnostics
+
+	request1 := expandRequestEventEmailConfigCreateCreateEmailDestination(ctx, "parameters.0", d)
+
+	response1, restyResp1, err := client.EventManagement.CreateEmailDestination(request1)
+
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing CreateEmailDestination", err,
+			"Failure at CreateEmailDestination, unexpected response", ""))
+		return diags
+	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	//Analizar verificacion.
+
+	vItem1 := flattenEventManagementCreateEmailDestinationItem(response1)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting CreateEmailDestination response",
+			err))
+		return diags
+	}
+	d.SetId(getUnixTimeString())
+	return diags
+
+}
 func resourceEventEmailConfigCreateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
-	return diags
-}
-
-func resourceEventEmailConfigCreateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
-
-	var diags diag.Diagnostics
-
-	selectedMethod := 1
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: CreateEmailDestination")
-		request1 := expandRequestEventEmailConfigCreateCreateEmailDestination(ctx, "parameters.0", d)
-
-		response1, restyResp1, err := client.EventManagement.CreateEmailDestination(request1)
-
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-
-		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing CreateEmailDestination", err,
-				"Failure at CreateEmailDestination, unexpected response", ""))
-			return diags
-		}
-
-		//Analizar como se puede comprobar la ejecucion.
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		vItem1 := flattenEventManagementCreateEmailDestinationItem(response1)
-		if err := d.Set("item", vItem1); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting CreateEmailDestination response",
-				err))
-			return diags
-		}
-		d.SetId(getUnixTimeString())
-		return diags
-
-	}
 	return diags
 }
 

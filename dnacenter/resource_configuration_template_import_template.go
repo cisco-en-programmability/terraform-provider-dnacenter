@@ -2,10 +2,13 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
+	"time"
+
 	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -15,16 +18,17 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Configuration Templates.
+
 - Imports the templates provided in the DTO by project Name
 `,
 
 		CreateContext: resourceConfigurationTemplateImportTemplateCreate,
 		ReadContext:   resourceConfigurationTemplateImportTemplateRead,
 		DeleteContext: resourceConfigurationTemplateImportTemplateDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -57,319 +61,317 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"do_version": &schema.Schema{
 							Description: `doVersion query parameter. If this flag is true then it creates a new version of the template with the imported contents in case if the templates already exists. " If this flag is false and if template already exists, then operation fails with 'Template already exists' error
-			`,
+`,
 							Type:     schema.TypeBool,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 						},
 						"project_name": &schema.Schema{
 							Description: `projectName path parameter. Project name to create template under the project
-			`,
+`,
 							Type:     schema.TypeString,
-							ForceNew: true,
 							Required: true,
+							ForceNew: true,
 						},
 						"payload": &schema.Schema{
 							Description: `Array of RequestConfigurationTemplatesImportsTheTemplatesProvided`,
 							Type:        schema.TypeList,
-							ForceNew:    true,
 							Optional:    true,
+							ForceNew:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"author": &schema.Schema{
 										Description: `Author of template
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"composite": &schema.Schema{
 										Description: `Is it composite template
-			`,
-
+`,
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										ForceNew:     true,
 										Optional:     true,
+										ForceNew:     true,
 									},
 									"containing_templates": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"composite": &schema.Schema{
 													Description: `Is it composite template
-			`,
-
+`,
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													ForceNew:     true,
 													Optional:     true,
+													ForceNew:     true,
 												},
 												"description": &schema.Schema{
 													Description: `Description of template
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"device_types": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"product_family": &schema.Schema{
 																Description: `Device family
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"product_series": &schema.Schema{
 																Description: `Device series
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"product_type": &schema.Schema{
 																Description: `Device type
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
 												},
 												"id": &schema.Schema{
 													Description: `UUID of template
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"language": &schema.Schema{
 													Description: `Template language (JINJA or VELOCITY)
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"name": &schema.Schema{
 													Description: `Name of template
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"project_name": &schema.Schema{
 													Description: `Project name
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"rollback_template_params": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"binding": &schema.Schema{
 																Description: `Bind to source
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"custom_order": &schema.Schema{
 																Description: `CustomOrder of template param
-			`,
+`,
 																Type:     schema.TypeInt,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"data_type": &schema.Schema{
 																Description: `Datatype of template param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"default_value": &schema.Schema{
 																Description: `Default value of template param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"description": &schema.Schema{
 																Description: `Description of template param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"display_name": &schema.Schema{
 																Description: `Display name of param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"group": &schema.Schema{
 																Description: `group
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"id": &schema.Schema{
 																Description: `UUID of template param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"instruction_text": &schema.Schema{
 																Description: `Instruction text for param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"key": &schema.Schema{
 																Description: `key
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
-			`,
-
+`,
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																ForceNew:     true,
 																Optional:     true,
+																ForceNew:     true,
 															},
 															"order": &schema.Schema{
 																Description: `Order of template param
-			`,
+`,
 																Type:     schema.TypeInt,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"param_array": &schema.Schema{
 																Description: `Is it an array
-			`,
-
+`,
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																ForceNew:     true,
 																Optional:     true,
+																ForceNew:     true,
 															},
 															"parameter_name": &schema.Schema{
 																Description: `Name of template param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"provider": &schema.Schema{
 																Description: `provider
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"range": &schema.Schema{
 																Type:     schema.TypeList,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
 																		"id": &schema.Schema{
 																			Description: `UUID of range
-			`,
+`,
 																			Type:     schema.TypeString,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																		"max_value": &schema.Schema{
 																			Description: `Max value of range
-			`,
+`,
 																			Type:     schema.TypeInt,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																		"min_value": &schema.Schema{
 																			Description: `Min value of range
-			`,
+`,
 																			Type:     schema.TypeInt,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																	},
 																},
 															},
 															"required": &schema.Schema{
 																Description: `Is param required
-			`,
-
+`,
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																ForceNew:     true,
 																Optional:     true,
+																ForceNew:     true,
 															},
 															"selection": &schema.Schema{
 																Type:     schema.TypeList,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
 																		"default_selected_values": &schema.Schema{
 																			Description: `Default selection values
-			`,
+`,
 																			Type:     schema.TypeList,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																			Elem: &schema.Schema{
 																				Type: schema.TypeString,
 																			},
 																		},
 																		"id": &schema.Schema{
 																			Description: `UUID of selection
-			`,
+`,
 																			Type:     schema.TypeString,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																		"selection_type": &schema.Schema{
 																			Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
-			`,
+`,
 																			Type:     schema.TypeString,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
-			`,
-																			Type: schema.TypeList,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
-																			ForceNew: true,
+`,
+																			Type:     schema.TypeString, //TEST,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																	},
 																},
@@ -379,231 +381,228 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 												},
 												"tags": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"id": &schema.Schema{
 																Description: `UUID of tag
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"name": &schema.Schema{
 																Description: `Name of tag
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
 												},
 												"template_content": &schema.Schema{
 													Description: `Template content
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"template_params": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"binding": &schema.Schema{
 																Description: `Bind to source
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"custom_order": &schema.Schema{
 																Description: `CustomOrder of template param
-			`,
+`,
 																Type:     schema.TypeInt,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"data_type": &schema.Schema{
 																Description: `Datatype of template param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"default_value": &schema.Schema{
 																Description: `Default value of template param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"description": &schema.Schema{
 																Description: `Description of template param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"display_name": &schema.Schema{
 																Description: `Display name of param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"group": &schema.Schema{
 																Description: `group
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"id": &schema.Schema{
 																Description: `UUID of template param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"instruction_text": &schema.Schema{
 																Description: `Instruction text for param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"key": &schema.Schema{
 																Description: `key
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
-			`,
-
+`,
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																ForceNew:     true,
 																Optional:     true,
+																ForceNew:     true,
 															},
 															"order": &schema.Schema{
 																Description: `Order of template param
-			`,
+`,
 																Type:     schema.TypeInt,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"param_array": &schema.Schema{
 																Description: `Is it an array
-			`,
-
+`,
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																ForceNew:     true,
 																Optional:     true,
+																ForceNew:     true,
 															},
 															"parameter_name": &schema.Schema{
 																Description: `Name of template param
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"provider": &schema.Schema{
 																Description: `provider
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"range": &schema.Schema{
 																Type:     schema.TypeList,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
 																		"id": &schema.Schema{
 																			Description: `UUID of range
-			`,
+`,
 																			Type:     schema.TypeString,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																		"max_value": &schema.Schema{
 																			Description: `Max value of range
-			`,
+`,
 																			Type:     schema.TypeInt,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																		"min_value": &schema.Schema{
 																			Description: `Min value of range
-			`,
+`,
 																			Type:     schema.TypeInt,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																	},
 																},
 															},
 															"required": &schema.Schema{
 																Description: `Is param required
-			`,
-
+`,
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																ForceNew:     true,
 																Optional:     true,
+																ForceNew:     true,
 															},
 															"selection": &schema.Schema{
 																Type:     schema.TypeList,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
 																		"default_selected_values": &schema.Schema{
 																			Description: `Default selection values
-			`,
+`,
 																			Type:     schema.TypeList,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																			Elem: &schema.Schema{
 																				Type: schema.TypeString,
 																			},
 																		},
 																		"id": &schema.Schema{
 																			Description: `UUID of selection
-			`,
+`,
 																			Type:     schema.TypeString,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																		"selection_type": &schema.Schema{
 																			Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
-			`,
+`,
 																			Type:     schema.TypeString,
-																			ForceNew: true,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
-			`,
-																			Type: schema.TypeList,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
-																			ForceNew: true,
+`,
+																			Type:     schema.TypeString, //TEST,
 																			Optional: true,
+																			ForceNew: true,
 																		},
 																	},
 																},
@@ -613,334 +612,331 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 												},
 												"version": &schema.Schema{
 													Description: `Current version of template
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 											},
 										},
 									},
 									"create_time": &schema.Schema{
 										Description: `Create time of template
-			`,
+`,
 										Type:     schema.TypeInt,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"custom_params_order": &schema.Schema{
 										Description: `Custom Params Order
-			`,
-
+`,
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										ForceNew:     true,
 										Optional:     true,
+										ForceNew:     true,
 									},
 									"description": &schema.Schema{
 										Description: `Description of template
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"device_types": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"product_family": &schema.Schema{
 													Description: `Device family
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"product_series": &schema.Schema{
 													Description: `Device series
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"product_type": &schema.Schema{
 													Description: `Device type
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 											},
 										},
 									},
 									"failure_policy": &schema.Schema{
 										Description: `Define failure policy if template provisioning fails
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"id": &schema.Schema{
 										Description: `UUID of template
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"language": &schema.Schema{
 										Description: `Template language (JINJA or VELOCITY)
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"last_update_time": &schema.Schema{
 										Description: `Update time of template
-			`,
+`,
 										Type:     schema.TypeInt,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"latest_version_time": &schema.Schema{
 										Description: `Latest versioned template time
-			`,
+`,
 										Type:     schema.TypeInt,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"name": &schema.Schema{
 										Description: `Name of template
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"parent_template_id": &schema.Schema{
 										Description: `Parent templateID
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"project_id": &schema.Schema{
 										Description: `Project UUID
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"project_name": &schema.Schema{
 										Description: `Project name
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"rollback_template_content": &schema.Schema{
 										Description: `Rollback template content
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"rollback_template_params": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"binding": &schema.Schema{
 													Description: `Bind to source
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"custom_order": &schema.Schema{
 													Description: `CustomOrder of template param
-			`,
+`,
 													Type:     schema.TypeInt,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"data_type": &schema.Schema{
 													Description: `Datatype of template param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"default_value": &schema.Schema{
 													Description: `Default value of template param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"description": &schema.Schema{
 													Description: `Description of template param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"display_name": &schema.Schema{
 													Description: `Display name of param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"group": &schema.Schema{
 													Description: `group
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"id": &schema.Schema{
 													Description: `UUID of template param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"instruction_text": &schema.Schema{
 													Description: `Instruction text for param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"key": &schema.Schema{
 													Description: `key
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
-			`,
-
+`,
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													ForceNew:     true,
 													Optional:     true,
+													ForceNew:     true,
 												},
 												"order": &schema.Schema{
 													Description: `Order of template param
-			`,
+`,
 													Type:     schema.TypeInt,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"param_array": &schema.Schema{
 													Description: `Is it an array
-			`,
-
+`,
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													ForceNew:     true,
 													Optional:     true,
+													ForceNew:     true,
 												},
 												"parameter_name": &schema.Schema{
 													Description: `Name of template param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"provider": &schema.Schema{
 													Description: `provider
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"range": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"id": &schema.Schema{
 																Description: `UUID of range
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"max_value": &schema.Schema{
 																Description: `Max value of range
-			`,
+`,
 																Type:     schema.TypeInt,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"min_value": &schema.Schema{
 																Description: `Min value of range
-			`,
+`,
 																Type:     schema.TypeInt,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
 												},
 												"required": &schema.Schema{
 													Description: `Is param required
-			`,
-
+`,
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													ForceNew:     true,
 													Optional:     true,
+													ForceNew:     true,
 												},
 												"selection": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"default_selected_values": &schema.Schema{
 																Description: `Default selection values
-			`,
+`,
 																Type:     schema.TypeList,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
 															},
 															"id": &schema.Schema{
 																Description: `UUID of selection
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"selection_type": &schema.Schema{
 																Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"selection_values": &schema.Schema{
 																Description: `Selection values
-			`,
-																Type: schema.TypeList,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-																ForceNew: true,
+`,
+																Type:     schema.TypeString, //TEST,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
@@ -950,252 +946,249 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 									},
 									"software_type": &schema.Schema{
 										Description: `Applicable device software type
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"software_variant": &schema.Schema{
 										Description: `Applicable device software variant
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"software_version": &schema.Schema{
 										Description: `Applicable device software version
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"tags": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"id": &schema.Schema{
 													Description: `UUID of tag
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"name": &schema.Schema{
 													Description: `Name of tag
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 											},
 										},
 									},
 									"template_content": &schema.Schema{
 										Description: `Template content
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 									"template_params": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"binding": &schema.Schema{
 													Description: `Bind to source
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"custom_order": &schema.Schema{
 													Description: `CustomOrder of template param
-			`,
+`,
 													Type:     schema.TypeInt,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"data_type": &schema.Schema{
 													Description: `Datatype of template param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"default_value": &schema.Schema{
 													Description: `Default value of template param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"description": &schema.Schema{
 													Description: `Description of template param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"display_name": &schema.Schema{
 													Description: `Display name of param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"group": &schema.Schema{
 													Description: `group
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"id": &schema.Schema{
 													Description: `UUID of template param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"instruction_text": &schema.Schema{
 													Description: `Instruction text for param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"key": &schema.Schema{
 													Description: `key
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
-			`,
-
+`,
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													ForceNew:     true,
 													Optional:     true,
+													ForceNew:     true,
 												},
 												"order": &schema.Schema{
 													Description: `Order of template param
-			`,
+`,
 													Type:     schema.TypeInt,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"param_array": &schema.Schema{
 													Description: `Is it an array
-			`,
-
+`,
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													ForceNew:     true,
 													Optional:     true,
+													ForceNew:     true,
 												},
 												"parameter_name": &schema.Schema{
 													Description: `Name of template param
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"provider": &schema.Schema{
 													Description: `provider
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"range": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"id": &schema.Schema{
 																Description: `UUID of range
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"max_value": &schema.Schema{
 																Description: `Max value of range
-			`,
+`,
 																Type:     schema.TypeInt,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"min_value": &schema.Schema{
 																Description: `Min value of range
-			`,
+`,
 																Type:     schema.TypeInt,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
 												},
 												"required": &schema.Schema{
 													Description: `Is param required
-			`,
-
+`,
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													ForceNew:     true,
 													Optional:     true,
+													ForceNew:     true,
 												},
 												"selection": &schema.Schema{
 													Type:     schema.TypeList,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"default_selected_values": &schema.Schema{
 																Description: `Default selection values
-			`,
+`,
 																Type:     schema.TypeList,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
 															},
 															"id": &schema.Schema{
 																Description: `UUID of selection
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"selection_type": &schema.Schema{
 																Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
-			`,
+`,
 																Type:     schema.TypeString,
-																ForceNew: true,
 																Optional: true,
+																ForceNew: true,
 															},
 															"selection_values": &schema.Schema{
 																Description: `Selection values
-			`,
-																Type: schema.TypeList,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-																ForceNew: true,
+`,
+																Type:     schema.TypeString, //TEST,
 																Optional: true,
+																ForceNew: true,
 															},
 														},
 													},
@@ -1205,54 +1198,54 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 									},
 									"validation_errors": &schema.Schema{
 										Type:     schema.TypeList,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"rollback_template_errors": &schema.Schema{
 													Description: `Validation or design conflicts errors of rollback template
-			`,
-													Type: schema.TypeList,
+`,
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
-													ForceNew: true,
-													Optional: true,
 												},
 												"template_errors": &schema.Schema{
 													Description: `Validation or design conflicts errors
-			`,
-													Type: schema.TypeList,
+`,
+													Type:     schema.TypeList,
+													Optional: true,
+													ForceNew: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
-													ForceNew: true,
-													Optional: true,
 												},
 												"template_id": &schema.Schema{
 													Description: `UUID of template
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 												"template_version": &schema.Schema{
 													Description: `Current version of template
-			`,
+`,
 													Type:     schema.TypeString,
-													ForceNew: true,
 													Optional: true,
+													ForceNew: true,
 												},
 											},
 										},
 									},
 									"version": &schema.Schema{
 										Description: `Current version of template
-			`,
+`,
 										Type:     schema.TypeString,
-										ForceNew: true,
 										Optional: true,
+										ForceNew: true,
 									},
 								},
 							},
@@ -1266,18 +1259,25 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 
 func resourceConfigurationTemplateImportTemplateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	vDoVersion, okDoVersion := resourceItem["do_version"]
 	vProjectName := resourceItem["project_name"]
+	vDoVersion, okDoVersion := resourceItem["do_version"]
+
 	vvProjectName := vProjectName.(string)
-	queryParams1 := dnacentersdkgo.ImportsTheTemplatesProvidedQueryParams{}
-	if okDoVersion {
-		queryParams1.DoVersion = vDoVersion.(bool)
-	}
 	request1 := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided(ctx, "parameters.0", d)
+	queryParams1 := dnacentersdkgo.ImportsTheTemplatesProvidedQueryParams{}
+
+	if okDoVersion {
+		queryParams1.DoVersion = *stringToBooleanPtr(vDoVersion.(string))
+	}
+
 	response1, restyResp1, err := client.ConfigurationTemplates.ImportsTheTemplatesProvided(vvProjectName, request1, &queryParams1)
+
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -1312,7 +1312,19 @@ func resourceConfigurationTemplateImportTemplateCreate(ctx context.Context, d *s
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			restyResp3, err := client.CustomCall.GetCustomCall(response2.Response.AdditionalStatusURL, nil)
+			if err != nil {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetCustomCall", err,
+					"Failure at GetCustomCall, unexpected response", ""))
+				return diags
+			}
+			var errorMsg string
+			if restyResp3 == nil {
+				errorMsg = response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			} else {
+				errorMsg = restyResp3.String()
+			}
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
 				"Failure when executing ImportsTheTemplatesProvided", err1))
@@ -1327,19 +1339,14 @@ func resourceConfigurationTemplateImportTemplateCreate(ctx context.Context, d *s
 			err))
 		return diags
 	}
-
 	d.SetId(getUnixTimeString())
 	return diags
-}
 
+}
 func resourceConfigurationTemplateImportTemplateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
-}
-
-func resourceConfigurationTemplateImportTemplateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceConfigurationTemplateImportTemplateRead(ctx, d, m)
 }
 
 func resourceConfigurationTemplateImportTemplateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -1354,10 +1361,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1378,10 +1381,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1465,10 +1464,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
 		request.Version = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1489,10 +1484,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1504,10 +1495,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1528,10 +1515,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1573,10 +1556,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
 		request.Version = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1597,10 +1576,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1612,10 +1587,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1636,10 +1607,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1654,10 +1621,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_type")))) {
 		request.ProductType = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1678,10 +1641,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1741,10 +1700,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesRollbackTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1765,10 +1720,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1783,10 +1734,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1804,20 +1751,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedContainingTemplatesRollbackTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedContainingTemplatesRollbackTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1838,10 +1777,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1901,10 +1836,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1925,10 +1856,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1943,10 +1870,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1964,20 +1887,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemContainingTemplatesTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedContainingTemplatesTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedContainingTemplatesTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -1998,10 +1913,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2016,10 +1927,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".product_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".product_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".product_type")))) {
 		request.ProductType = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2040,10 +1947,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2103,10 +2006,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemRollbackTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2127,10 +2026,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2145,10 +2040,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2166,20 +2057,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemRollbackTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemRollbackTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedRollbackTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedRollbackTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2200,10 +2083,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2263,10 +2142,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection")))) {
 		request.Selection = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemTemplateParamsSelection(ctx, key+".selection.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2287,10 +2162,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2305,10 +2176,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".min_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".min_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".min_value")))) {
 		request.MinValue = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2326,20 +2193,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".selection_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".selection_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".selection_values")))) {
 		request.SelectionValues = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemTemplateParamsSelectionSelectionValues(ctx, key+".selection_values.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemTemplateParamsSelectionSelectionValues(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedTemplateParamsSelectionSelectionValues {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedTemplateParamsSelectionSelectionValues
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2357,10 +2216,6 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_version")))) {
 		request.TemplateVersion = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2381,20 +2236,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsRollbackTemplateErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsRollbackTemplateErrors {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsRollbackTemplateErrors
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -2415,20 +2262,12 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsTemplateErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsTemplateErrors {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsTemplateErrors
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
