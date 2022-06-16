@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -391,11 +391,8 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeList,
+																Type:     schema.TypeString,
 																Computed: true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 														},
 													},
@@ -618,11 +615,8 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeList,
+																Type:     schema.TypeString,
 																Computed: true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 														},
 													},
@@ -947,11 +941,8 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeList,
+													Type:     schema.TypeString,
 													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 											},
 										},
@@ -1195,11 +1186,8 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeList,
+													Type:     schema.TypeString,
 													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 											},
 										},
@@ -1448,7 +1436,7 @@ func dataSourceConfigurationTemplateRead(ctx context.Context, d *schema.Resource
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetsDetailsOfAGivenTemplate")
+		log.Printf("[DEBUG] Selected method 1: GetsDetailsOfAGivenTemplate")
 		vvTemplateID := vTemplateID.(string)
 		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
 
@@ -1500,22 +1488,6 @@ func flattenConfigurationTemplatesGetsTheTemplatesAvailableItems(items *dnacente
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenConfigurationTemplatesGetsTheTemplatesAvailableItem(item *dnacentersdkgo.ResponseItemConfigurationTemplatesGetsTheTemplatesAvailable) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["composite"] = boolPtrToString(item.Composite)
-	respItem["name"] = item.Name
-	respItem["project_id"] = item.ProjectID
-	respItem["project_name"] = item.ProjectName
-	respItem["template_id"] = item.TemplateID
-	respItem["versions_info"] = flattenConfigurationTemplatesGetsTheTemplatesAvailableItemsVersionsInfo(item.VersionsInfo)
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenConfigurationTemplatesGetsTheTemplatesAvailableItemsVersionsInfo(items *[]dnacentersdkgo.ResponseItemConfigurationTemplatesGetsTheTemplatesAvailableVersionsInfo) []map[string]interface{} {

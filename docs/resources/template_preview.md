@@ -4,14 +4,14 @@ page_title: "dnacenter_template_preview Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs update operation on Configuration Templates.
-          - API to preview a template.
+  API to preview a template.
 ---
 
 # dnacenter_template_preview (Resource)
 
 It performs update operation on Configuration Templates.
-		- API to preview a template.
 
+- API to preview a template.
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
@@ -20,17 +20,23 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_template_preview" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     device_id       = "string"
-    params          = ["string"]
+    params          = "string"
     resource_params = ["string"]
     template_id     = "string"
   }
+}
+
+output "dnacenter_template_preview_example" {
+  value = dnacenter_template_preview.example
 }
 ```
 
@@ -56,7 +62,7 @@ resource "dnacenter_template_preview" "example" {
 Optional:
 
 - **device_id** (String) UUID of device to get template preview
-- **params** (List of String) Params to render preview
+- **params** (String) Params to render preview
 - **resource_params** (List of String) Resource params to render preview
 - **template_id** (String) UUID of template to get template preview
 

@@ -32,7 +32,7 @@ resource "dnacenter_discovery" "example" {
   provider = dnacenter
   parameters {
 
-    attribute_info            = ["string"]
+    attribute_info            = "string"
     cdp_level                 = 1
     device_ids                = "string"
     discovery_condition       = "string"

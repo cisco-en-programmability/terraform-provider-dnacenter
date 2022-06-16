@@ -1,1 +1,1 @@
-terraform import dnacenter_service_provicer.example "id:=string"
+terraform import dnacenter_service_provider.example "id:=string"

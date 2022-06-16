@@ -1,15 +1,65 @@
-provider "dnacenter" {
-  debug = "true"
-}
 
 resource "dnacenter_reports" "example" {
   provider = dnacenter
+  item {
+
+
+
+
+    executions {
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+    view {
+
+
+      field_groups {
+
+
+
+        fields {
+
+
+
+        }
+      }
+      filters {
+
+
+
+
+
+      }
+      format {
+
+
+
+
+      }
+
+
+
+    }
+
+
+  }
   parameters {
 
     deliveries = ["string"]
     name       = "string"
     report_id  = "string"
-    schedule   = ["string"]
+    schedule   = "string"
     tags       = ["string"]
     view {
 
@@ -28,7 +78,7 @@ resource "dnacenter_reports" "example" {
         display_name = "string"
         name         = "string"
         type         = "string"
-        value        = ["string"]
+        value        = "string"
       }
       format {
 

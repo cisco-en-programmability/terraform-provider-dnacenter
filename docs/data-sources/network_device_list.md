@@ -9,7 +9,7 @@ description: |-
   in the IP address range 192.25.18.n, issue the following request: GET /dna/intent/api/v1/network-
   device?hostname=myhost.&managementIpAddress=192.25.18..
   If id parameter is provided with comma separated ids, it will return the list of network-devices for the given ids and
-  ignores the other request parameters.
+  ignores the other request parameters. You can also specify offset & limit to get the required list.
 ---
 
 # dnacenter_network_device_list (Data Source)
@@ -21,7 +21,7 @@ You can use the .* in any value to conduct a wildcard search. For example, to fi
 in the IP address range 192.25.18.n, issue the following request: GET /dna/intent/api/v1/network-
 device?hostname=myhost.*&managementIpAddress=192.25.18..*
 If id parameter is provided with comma separated ids, it will return the list of network-devices for the given ids and
-ignores the other request parameters.
+ignores the other request parameters. You can also specify offset & limit to get the required list.
 
 ## Example Usage
 
@@ -40,6 +40,7 @@ data "dnacenter_network_device_list" "example" {
   license_name               = ["string"]
   license_status             = ["string"]
   license_type               = ["string"]
+  limit                      = 1
   location                   = ["string"]
   location_name              = ["string"]
   mac_address                = ["string"]
@@ -51,6 +52,7 @@ data "dnacenter_network_device_list" "example" {
   module_servicestate        = ["string"]
   module_vendorequipmenttype = ["string"]
   not_synced_for_minutes     = ["string"]
+  offset                     = 1
   platform_id                = ["string"]
   reachability_status        = ["string"]
   role                       = ["string"]
@@ -84,6 +86,7 @@ output "dnacenter_network_device_list_example" {
 - **license_name** (List of String) license.name query parameter.
 - **license_status** (List of String) license.status query parameter.
 - **license_type** (List of String) license.type query parameter.
+- **limit** (Number) limit query parameter. 1 <= limit <= 500 [max. no. of devices to be returned in the result]
 - **location** (List of String) location query parameter.
 - **location_name** (List of String) locationName query parameter.
 - **mac_address** (List of String) macAddress query parameter.
@@ -95,6 +98,7 @@ output "dnacenter_network_device_list_example" {
 - **module_servicestate** (List of String) module+servicestate query parameter.
 - **module_vendorequipmenttype** (List of String) module+vendorequipmenttype query parameter.
 - **not_synced_for_minutes** (List of String) notSyncedForMinutes query parameter.
+- **offset** (Number) offset query parameter. offset >= 1 [X gives results from Xth device onwards]
 - **platform_id** (List of String) platformId query parameter.
 - **reachability_status** (List of String) reachabilityStatus query parameter.
 - **role** (List of String) role query parameter.

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -77,11 +77,8 @@ func dataSourceNfvProvisionDetail() *schema.Resource {
 
 									"cli_template_user_message_dto": &schema.Schema{
 										Description: `Cli Template User Message D T O`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"duration": &schema.Schema{
@@ -98,11 +95,8 @@ func dataSourceNfvProvisionDetail() *schema.Resource {
 
 									"error_payload": &schema.Schema{
 										Description: `Error Payload`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"name": &schema.Schema{
@@ -119,11 +113,8 @@ func dataSourceNfvProvisionDetail() *schema.Resource {
 
 									"parent_task": &schema.Schema{
 										Description: `Parent Task`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"payload": &schema.Schema{
@@ -134,11 +125,8 @@ func dataSourceNfvProvisionDetail() *schema.Resource {
 
 									"provisioned_names": &schema.Schema{
 										Description: `Provisioned Names`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"start_time": &schema.Schema{

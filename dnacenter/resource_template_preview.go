@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -57,7 +57,7 @@ func resourceTemplatePreview() *schema.Resource {
 						"validation_errors": &schema.Schema{
 							Description: `Validation error in template content if any
 `,
-							Type:     schema.TypeString, //TEST,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},
@@ -81,7 +81,7 @@ func resourceTemplatePreview() *schema.Resource {
 						"params": &schema.Schema{
 							Description: `Params to render preview
 `,
-							Type:     schema.TypeString, //TEST,
+							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
 						},

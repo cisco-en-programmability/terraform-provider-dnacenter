@@ -4,41 +4,46 @@ page_title: "dnacenter_wireless_provision_device_update Resource - terraform-pro
 subcategory: ""
 description: |-
   It performs update operation on Wireless.
-          - Updates wireless provisioning
+  Updates wireless provisioning
 ---
 
 # dnacenter_wireless_provision_device_update (Resource)
 
 It performs update operation on Wireless.
-		- Updates wireless provisioning
 
+- Updates wireless provisioning
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_wireless_provision_device_update" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
-    payload {
-      device_name = "string"
-      dynamic_interfaces {
 
-        interface_gateway          = "string"
-        interface_ipaddress        = "string"
-        interface_name             = "string"
-        interface_netmask_in_cid_r = 1
-        lag_or_port_number         = 1
-        vlan_id                    = 1
-      }
-      managed_aplocations = ["string"]
+    device_name = "string"
+    dynamic_interfaces {
+
+      interface_gateway          = "string"
+      interface_ipaddress        = "string"
+      interface_name             = "string"
+      interface_netmask_in_cid_r = 1
+      lag_or_port_number         = 1
+      vlan_id                    = 1
     }
+    managed_aplocations = ["string"]
   }
+}
+
+output "dnacenter_wireless_provision_device_update_example" {
+  value = dnacenter_wireless_provision_device_update.example
 }
 ```
 
@@ -64,7 +69,6 @@ resource "dnacenter_wireless_provision_device_update" "example" {
 Optional:
 
 - **payload** (Block List) Array of RequestWirelessProvisionUpdate (see [below for nested schema](#nestedblock--parameters--payload))
-- **persistbapioutput** (String) __persistbapioutput header parameter. Persist bapi sync response
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`

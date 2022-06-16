@@ -3,7 +3,6 @@ data "dnacenter_pnp_device" "example" {
   provider           = dnacenter
   cm_state           = ["string"]
   hostname           = "string"
-  id                 = "string"
   last_contact       = "false"
   limit              = 1
   mac_address        = "string"

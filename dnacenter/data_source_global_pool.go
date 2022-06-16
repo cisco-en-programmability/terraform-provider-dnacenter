@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -41,17 +41,15 @@ func dataSourceGlobalPool() *schema.Resource {
 
 						"client_options": &schema.Schema{
 							Description: `Client Options`,
-							Type:        schema.TypeList,
+							Type:        schema.TypeString,
 							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"configure_external_dhcp": &schema.Schema{
 							Description: `Configure External Dhcp`,
-							Type:        schema.TypeString,
-							Computed:    true,
+
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"context": &schema.Schema{
@@ -271,34 +269,6 @@ func flattenNetworkSettingsGetGlobalPoolItems(items *[]dnacentersdkgo.ResponseNe
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenNetworkSettingsGetGlobalPoolItem(item *dnacentersdkgo.ResponseNetworkSettingsGetGlobalPoolResponse) map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["ip_pool_name"] = item.IPPoolName
-	respItem["dhcp_server_ips"] = item.DhcpServerIPs
-	respItem["gateways"] = item.Gateways
-	respItem["create_time"] = item.CreateTime
-	respItem["last_update_time"] = item.LastUpdateTime
-	respItem["total_ip_address_count"] = item.TotalIPAddressCount
-	respItem["used_ip_address_count"] = item.UsedIPAddressCount
-	respItem["parent_uuid"] = item.ParentUUID
-	respItem["owner"] = item.Owner
-	respItem["shared"] = boolPtrToString(item.Shared)
-	respItem["overlapping"] = boolPtrToString(item.Overlapping)
-	respItem["configure_external_dhcp"] = boolPtrToString(item.ConfigureExternalDhcp)
-	respItem["used_percentage"] = item.UsedPercentage
-	respItem["client_options"] = flattenNetworkSettingsGetGlobalPoolItemsClientOptions(item.ClientOptions)
-	respItem["dns_server_ips"] = item.DNSServerIPs
-	respItem["context"] = flattenNetworkSettingsGetGlobalPoolItemsContext(item.Context)
-	respItem["ipv6"] = boolPtrToString(item.IPv6)
-	respItem["id"] = item.ID
-	respItem["ip_pool_cidr"] = item.IPPoolCidr
-
-	return respItem
 }
 
 func flattenNetworkSettingsGetGlobalPoolItemsClientOptions(item *dnacentersdkgo.ResponseNetworkSettingsGetGlobalPoolResponseClientOptions) interface{} {

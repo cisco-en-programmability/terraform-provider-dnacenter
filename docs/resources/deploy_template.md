@@ -16,8 +16,6 @@ It performs create operation on Configuration Templates.
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
-Most commonly, this resource is used together with [configuration_template](./configuration_template.md) and [network_device](./network_device.md) to complete the deployment of a template.
-
 ## Example Usage
 
 ```terraform
@@ -27,20 +25,44 @@ provider "dnacenter" {
 
 resource "dnacenter_deploy_template" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
+  item {
+
+
+
+    devices {
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
   }
   parameters {
+
+    deployment_id                   = "string"
     force_push_template             = "false"
     is_composite                    = "false"
-    member_template_deployment_info = []
+    main_template_id                = "string"
+    member_template_deployment_info = ["string"]
     target_info {
-      host_name = "string"
-      id        = "string"
-      params = {
-        key1 = "value1"
-        key2 = "value2"
-      }
+
+      host_name             = "string"
+      id                    = "string"
+      params                = "string"
       resource_params       = ["string"]
       type                  = "string"
       versioned_template_id = "string"
@@ -51,16 +73,6 @@ resource "dnacenter_deploy_template" "example" {
 
 output "dnacenter_deploy_template_example" {
   value = dnacenter_deploy_template.example
-}
-
-data "dnacenter_task" "example" {
-  depends_on = [dnacenter_deploy_template.example]
-  provider   = dnacenter
-  task_id    = dnacenter_deploy_template.example.item.0.task_id
-}
-
-output "dnacenter_task_example" {
-  value = data.dnacenter_task.example.item
 }
 ```
 
@@ -139,4 +151,10 @@ Read-Only:
 - **status** (String)
 - **target_type** (String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import dnacenter_deploy_template.example "deployment_id:=string"
+```

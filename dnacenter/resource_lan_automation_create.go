@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -128,7 +128,7 @@ func resourceLanAutomationCreate() *schema.Resource {
 									"mulitcast_enabled": &schema.Schema{
 										Description: `To enable underlay native multicast.
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -161,7 +161,7 @@ func resourceLanAutomationCreate() *schema.Resource {
 									"redistribute_isis_to_bgp": &schema.Schema{
 										Description: `Advertise LAN Automation summary route into BGP. 
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,

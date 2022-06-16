@@ -4,7 +4,7 @@ page_title: "dnacenter_sda_fabric_authentication_profile Resource - terraform-pr
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on SDA.
-  Deploy authentication template in SDA FabricUpdate default authentication profile in SDA FabricAdd default authentication profile in SDA Fabric
+  Deploy authentication template in SDA FabricUpdate default authentication profile in SDA FabricDelete default authentication profile in SDA Fabric
 ---
 
 # dnacenter_sda_fabric_authentication_profile (Resource)
@@ -15,7 +15,7 @@ It manages create, read, update and delete operations on SDA.
 
 - Update default authentication profile in SDA Fabric
 
-- Add default authentication profile in SDA Fabric
+- Delete default authentication profile in SDA Fabric
 
 ## Example Usage
 
@@ -47,7 +47,7 @@ output "dnacenter_sda_fabric_authentication_profile_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
+- **parameters** (Block List, Min: 1, Max: 1) Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabric (see [below for nested schema](#nestedblock--parameters))
 
 ### Optional
 
@@ -63,12 +63,12 @@ output "dnacenter_sda_fabric_authentication_profile_example" {
 
 Optional:
 
-- **authenticate_template_name** (String) Authenticate Template Name. Allowed values are 'No Authentication ', 'Open Authentication', 'Closed Authentication', 'Low Impact'.
-- **authentication_order** (String) Authentication Order. Allowed values are 'dot1x ', 'mac'.
-- **dot1x_to_mab_fallback_timeout** (String) In a network that includes both devices that support and devices that do not support IEEE 802.1X, MAB can be deployed as a fallback, or complementary, mechanism to IEEE 802.1X. If the network does not have any IEEE 802.1X-capable devices, MAB can be deployed as a standalone authentication mechanism (e.g. [3-120])
-- **number_of_hosts** (String) Number of hosts specifies the number of data hosts that can be connected to a port. With Single selected, you can have only one data client  on the port. With Unlimited selected, you can have multiple data clients and one voice client on the port
-- **site_name_hierarchy** (String) Site Name Hierarchy should be a valid fabric site name hierarchy. e.g Global/USA/San Jose
-- **wake_on_lan** (String) The IEEE 802.1X Wake on LAN (WoL) Support feature allows dormant systems to be powered up when the  switch receives a specific Ethernet frame. You can use this feature in cases when hosts on power save and needs to receive a  magic packet to turn them on. This feature works on a per subnet basis and send the subnet broadcast to all hosts in the subnet
+- **authenticate_template_name** (String) Authenticate Template Name
+- **authentication_order** (String) Authentication Order
+- **dot1x_to_mab_fallback_timeout** (String) Dot1x To MabFallback Timeout( Allowed range is [3-120])
+- **number_of_hosts** (String) Number Of Hosts
+- **site_name_hierarchy** (String) Path of sda Fabric Site
+- **wake_on_lan** (String) Wake On Lan
 
 
 <a id="nestedatt--item"></a>

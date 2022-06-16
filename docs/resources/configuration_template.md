@@ -27,7 +27,6 @@ provider "dnacenter" {
 resource "dnacenter_configuration_template" "example" {
   provider = dnacenter
   parameters {
-
     author    = "string"
     composite = "false"
     containing_templates {
@@ -73,7 +72,7 @@ resource "dnacenter_configuration_template" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = ["string"]
+          selection_values        = "string"
         }
       }
       tags {
@@ -111,7 +110,7 @@ resource "dnacenter_configuration_template" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = ["string"]
+          selection_values        = "string"
         }
       }
       version = "string"
@@ -164,7 +163,7 @@ resource "dnacenter_configuration_template" "example" {
         default_selected_values = ["string"]
         id                      = "string"
         selection_type          = "string"
-        selection_values        = ["string"]
+        selection_values        = "string"
       }
     }
     software_type    = "string"
@@ -206,7 +205,7 @@ resource "dnacenter_configuration_template" "example" {
         default_selected_values = ["string"]
         id                      = "string"
         selection_type          = "string"
-        selection_values        = ["string"]
+        selection_values        = "string"
       }
     }
     validation_errors {

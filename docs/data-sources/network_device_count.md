@@ -35,7 +35,7 @@ data "dnacenter_network_device_count" "example" {
 }
 
 output "dnacenter_network_device_count_example" {
-  value = data.dnacenter_network_device_count.example.item
+  value = data.dnacenter_network_device_count.example.item_id
 }
 ```
 

@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -66,7 +66,7 @@ func resourcePnpDeviceAuthorize() *schema.Resource {
 
 									"empty": &schema.Schema{
 										Description: `Empty`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -103,7 +103,7 @@ func resourcePnpDeviceAuthorizeCreate(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: AuthorizeDevice")
+		log.Printf("[DEBUG] Selected method 1: AuthorizeDevice")
 		request1 := expandRequestPnpDeviceAuthorizeAuthorizeDevice(ctx, "parameters.0", d)
 
 		response1, restyResp1, err := client.CiscoDnaCenterSystem.AuthorizeDevice(request1)

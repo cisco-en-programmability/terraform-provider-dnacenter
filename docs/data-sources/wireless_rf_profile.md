@@ -32,7 +32,7 @@ output "dnacenter_wireless_rf_profile_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **rf_profile_name** (String) rf-profile-name query parameter.
+- **rf_profile_name** (String) rf-profile-name query parameter. RF Profile Name
 
 ### Read-Only
 
@@ -43,43 +43,35 @@ output "dnacenter_wireless_rf_profile_example" {
 
 Read-Only:
 
+- **a_radio_channels** (String)
+- **b_radio_channels** (String)
+- **c_radio_channels** (String)
 - **channel_width** (String)
+- **data_rates_a** (String)
+- **data_rates_b** (String)
+- **data_rates_c** (String)
 - **default_rf_profile** (String)
+- **enable_a_radio_type** (String)
+- **enable_b_radio_type** (String)
 - **enable_brown_field** (String)
+- **enable_c_radio_type** (String)
 - **enable_custom** (String)
-- **enable_radio_type_a** (String)
-- **enable_radio_type_b** (String)
+- **mandatory_data_rates_a** (String)
+- **mandatory_data_rates_b** (String)
+- **mandatory_data_rates_c** (String)
+- **max_power_level_a** (String)
+- **max_power_level_b** (String)
+- **min_power_level_a** (String)
+- **min_power_level_b** (String)
+- **min_power_level_c** (String)
 - **name** (String)
-- **radio_type_a_properties** (List of Object) (see [below for nested schema](#nestedobjatt--items--radio_type_a_properties))
-- **radio_type_b_properties** (List of Object) (see [below for nested schema](#nestedobjatt--items--radio_type_b_properties))
-
-<a id="nestedobjatt--items--radio_type_a_properties"></a>
-### Nested Schema for `items.radio_type_a_properties`
-
-Read-Only:
-
-- **data_rates** (String)
-- **mandatory_data_rates** (String)
-- **max_power_level** (Number)
-- **min_power_level** (Number)
-- **parent_profile** (String)
-- **power_threshold_v1** (Number)
-- **radio_channels** (String)
-- **rx_sop_threshold** (String)
-
-
-<a id="nestedobjatt--items--radio_type_b_properties"></a>
-### Nested Schema for `items.radio_type_b_properties`
-
-Read-Only:
-
-- **data_rates** (String)
-- **mandatory_data_rates** (String)
-- **max_power_level** (Number)
-- **min_power_level** (Number)
-- **parent_profile** (String)
-- **power_threshold_v1** (Number)
-- **radio_channels** (String)
-- **rx_sop_threshold** (String)
+- **parent_profile_a** (String)
+- **parent_profile_b** (String)
+- **power_threshold_v1_a** (Number)
+- **power_threshold_v1_b** (Number)
+- **power_threshold_v1_c** (Number)
+- **rx_sop_threshold_a** (String)
+- **rx_sop_threshold_b** (String)
+- **rx_sop_threshold_c** (String)
 
 

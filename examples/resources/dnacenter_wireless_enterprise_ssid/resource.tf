@@ -1,6 +1,3 @@
-provider "dnacenter" {
-  debug = "true"
-}
 
 resource "dnacenter_wireless_enterprise_ssid" "example" {
   provider = dnacenter
@@ -19,13 +16,13 @@ resource "dnacenter_wireless_enterprise_ssid" "example" {
     fast_transition                       = "string"
     mfp_client_protection                 = "string"
     name                                  = "string"
+    nas_options                           = ["string"]
     passphrase                            = "string"
     radio_policy                          = "string"
     security_level                        = "string"
     session_time_out                      = 1
     ssid_name                             = "string"
     traffic_type                          = "string"
-    site                                  = "string"
   }
 }
 

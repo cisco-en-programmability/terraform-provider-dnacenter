@@ -4,21 +4,20 @@ page_title: "dnacenter_image_distribution Resource - terraform-provider-dnacente
 subcategory: ""
 description: |-
   It performs create operation on Software Image Management (SWIM).
-      - Distributes a software image on a given device. Software image must be imported successfully into DNA Center before it
-      can be distributed
+  Distributes a software image on a given device. Software image must be imported successfully into DNA Center before it
+  can be distributed
 ---
 
 # dnacenter_image_distribution (Resource)
 
 It performs create operation on Software Image Management (SWIM).
-	- Distributes a software image on a given device. Software image must be imported successfully into DNA Center before it
-	can be distributed
+
+- Distributes a software image on a given device. Software image must be imported successfully into DNA Center before it
+can be distributed
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
-
-Most commonly, this resource is used together with [swim_image_file](./swim_image_file.md) and [network_device](./network_device.md) to distribute a software image.
 
 ## Example Usage
 
@@ -29,29 +28,15 @@ provider "dnacenter" {
 
 resource "dnacenter_image_distribution" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
-    payload {
-      device_uuid = "string"
-      image_uuid  = "string"
-    }
+
+    device_uuid = "string"
+    image_uuid  = "string"
   }
 }
 
 output "dnacenter_image_distribution_example" {
   value = dnacenter_image_distribution.example
-}
-
-data "dnacenter_task" "example" {
-  depends_on = [dnacenter_image_distribution.example]
-  provider   = dnacenter
-  task_id    = dnacenter_image_distribution.example.item.0.task_id
-}
-
-output "dnacenter_task_example" {
-  value = data.dnacenter_task.example.item
 }
 ```
 

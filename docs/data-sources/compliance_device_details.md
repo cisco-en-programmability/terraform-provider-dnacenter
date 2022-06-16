@@ -55,7 +55,7 @@ Read-Only:
 - **compliance_type** (String)
 - **device_uuid** (String)
 - **display_name** (String)
-- **last_sync_time** (Number)
+- **last_sync_time** (String)
 - **last_update_time** (Number)
 - **state** (String)
 - **status** (String)

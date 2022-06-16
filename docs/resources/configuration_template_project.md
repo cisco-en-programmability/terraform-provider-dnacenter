@@ -86,7 +86,7 @@ resource "dnacenter_configuration_template_project" "example" {
             default_selected_values = ["string"]
             id                      = "string"
             selection_type          = "string"
-            selection_values        = ["string"]
+            selection_values        = "string"
           }
         }
         tags {
@@ -124,7 +124,7 @@ resource "dnacenter_configuration_template_project" "example" {
             default_selected_values = ["string"]
             id                      = "string"
             selection_type          = "string"
-            selection_values        = ["string"]
+            selection_values        = "string"
           }
         }
         version = "string"
@@ -138,7 +138,6 @@ resource "dnacenter_configuration_template_project" "example" {
         product_series = "string"
         product_type   = "string"
       }
-      document_database         = "false"
       failure_policy            = "string"
       id                        = "string"
       language                  = "string"
@@ -146,7 +145,6 @@ resource "dnacenter_configuration_template_project" "example" {
       latest_version_time       = 1
       name                      = "string"
       parent_template_id        = "string"
-      project_associated        = "false"
       project_id                = "string"
       project_name              = "string"
       rollback_template_content = "string"
@@ -179,7 +177,7 @@ resource "dnacenter_configuration_template_project" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = ["string"]
+          selection_values        = "string"
         }
       }
       software_type    = "string"
@@ -220,7 +218,7 @@ resource "dnacenter_configuration_template_project" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = ["string"]
+          selection_values        = "string"
         }
       }
       validation_errors {
@@ -294,7 +292,6 @@ Optional:
 - **custom_params_order** (String) Custom Params Order
 - **description** (String) Description of template
 - **device_types** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--device_types))
-- **document_database** (String) Document Database
 - **failure_policy** (String) Define failure policy if template provisioning fails
 - **id** (String) UUID of template
 - **language** (String) Template language (JINJA or VELOCITY)
@@ -302,7 +299,6 @@ Optional:
 - **latest_version_time** (Number) Latest versioned template time
 - **name** (String) Name of template
 - **parent_template_id** (String) Parent templateID
-- **project_associated** (String) Project Associated
 - **project_id** (String) Project UUID
 - **project_name** (String) Project name
 - **rollback_template_content** (String) Rollback template content
@@ -604,7 +600,6 @@ Read-Only:
 - **custom_params_order** (String)
 - **description** (String)
 - **device_types** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--device_types))
-- **document_database** (String)
 - **failure_policy** (String)
 - **id** (String)
 - **language** (String)
@@ -612,7 +607,6 @@ Read-Only:
 - **latest_version_time** (Number)
 - **name** (String)
 - **parent_template_id** (String)
-- **project_associated** (String)
 - **project_id** (String)
 - **project_name** (String)
 - **rollback_template_content** (String)

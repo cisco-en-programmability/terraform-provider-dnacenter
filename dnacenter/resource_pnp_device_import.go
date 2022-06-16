@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -92,7 +92,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 									},
 									"day_zero_config_preview": &schema.Schema{
 										Description: `Day Zero Config Preview`,
-										Type:        schema.TypeString, //TEST,
+										Type:        schema.TypeString,
 										Computed:    true,
 									},
 									"device_info": &schema.Schema{
@@ -211,7 +211,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 															},
 															"readable": &schema.Schema{
 																Description: `Readable`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -227,7 +227,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 															},
 															"writeable": &schema.Schema{
 																Description: `Writeable`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -281,7 +281,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeString, //TEST,
+																Type:        schema.TypeString,
 																Computed:    true,
 															},
 															"ipv6_address_list": &schema.Schema{
@@ -451,7 +451,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 															},
 															"discovery_created": &schema.Schema{
 																Description: `Discovery Created`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -473,12 +473,12 @@ func resourcePnpDeviceImport() *schema.Resource {
 																		},
 																		"ipv4_address": &schema.Schema{
 																			Description: `Ipv4 Address`,
-																			Type:        schema.TypeString, //TEST,
+																			Type:        schema.TypeString,
 																			Computed:    true,
 																		},
 																		"ipv6_address": &schema.Schema{
 																			Description: `Ipv6 Address`,
-																			Type:        schema.TypeString, //TEST,
+																			Type:        schema.TypeString,
 																			Computed:    true,
 																		},
 																		"port": &schema.Schema{
@@ -517,12 +517,12 @@ func resourcePnpDeviceImport() *schema.Resource {
 																		},
 																		"ipv4_address": &schema.Schema{
 																			Description: `Ipv4 Address`,
-																			Type:        schema.TypeString, //TEST,
+																			Type:        schema.TypeString,
 																			Computed:    true,
 																		},
 																		"ipv6_address": &schema.Schema{
 																			Description: `Ipv6 Address`,
-																			Type:        schema.TypeString, //TEST,
+																			Type:        schema.TypeString,
 																			Computed:    true,
 																		},
 																		"port": &schema.Schema{
@@ -543,7 +543,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"populate_inventory": &schema.Schema{
 													Description: `Populate Inventory`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -578,7 +578,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"reload_requested": &schema.Schema{
 													Description: `Reload Requested`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -609,7 +609,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"stack": &schema.Schema{
 													Description: `Stack`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -621,7 +621,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 
 															"is_full_ring": &schema.Schema{
 																Description: `Is Full Ring`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -701,7 +701,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 															},
 															"supports_stack_workflows": &schema.Schema{
 																Description: `Supports Stack Workflows`,
-																// Type:        schema.TypeBool,
+
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -728,13 +728,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"sudi_required": &schema.Schema{
 													Description: `Sudi Required`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"tags": &schema.Schema{
 													Description: `Tags`,
-													Type:        schema.TypeString, //TEST,
+													Type:        schema.TypeString,
 													Computed:    true,
 												},
 												"user_mic_numbers": &schema.Schema{
@@ -784,7 +784,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"error_flag": &schema.Schema{
 													Description: `Error Flag`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -891,7 +891,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"add_to_inventory": &schema.Schema{
 													Description: `Add To Inventory`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1079,7 +1079,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"add_to_inventory": &schema.Schema{
 													Description: `Add To Inventory`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1277,7 +1277,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"add_to_inventory": &schema.Schema{
 													Description: `Add To Inventory`,
-													// Type:        schema.TypeBool,
+
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1723,7 +1723,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"ipv4_address": &schema.Schema{
-																Type:     schema.TypeString, //TEST,
+																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
 															},
@@ -1920,12 +1920,12 @@ func resourcePnpDeviceImport() *schema.Resource {
 																			ForceNew: true,
 																		},
 																		"ipv4_address": &schema.Schema{
-																			Type:     schema.TypeString, //TEST,
+																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
 																		},
 																		"ipv6_address": &schema.Schema{
-																			Type:     schema.TypeString, //TEST,
+																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
 																		},
@@ -1965,12 +1965,12 @@ func resourcePnpDeviceImport() *schema.Resource {
 																			ForceNew: true,
 																		},
 																		"ipv4_address": &schema.Schema{
-																			Type:     schema.TypeString, //TEST,
+																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
 																		},
 																		"ipv6_address": &schema.Schema{
-																			Type:     schema.TypeString, //TEST,
+																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
 																		},
@@ -2181,7 +2181,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 													ForceNew:     true,
 												},
 												"tags": &schema.Schema{
-													Type:     schema.TypeString, //TEST,
+													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
 												},

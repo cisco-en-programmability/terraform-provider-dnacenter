@@ -1,6 +1,3 @@
-provider "dnacenter" {
-  debug = "true"
-}
 
 resource "dnacenter_network_device_list" "example" {
   provider = dnacenter
@@ -37,7 +34,6 @@ resource "dnacenter_network_device_list" "example" {
       new_mgmt_ip_address   = "string"
     }
     user_name = "string"
-    role      = "string"
   }
 }
 

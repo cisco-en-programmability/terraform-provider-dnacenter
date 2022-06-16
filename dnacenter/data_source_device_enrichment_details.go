@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -150,20 +150,14 @@ about the device and neighbor topology
 
 									"location": &schema.Schema{
 										Description: `Location`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"location_name": &schema.Schema{
 										Description: `Location Name`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"mac_address": &schema.Schema{
@@ -198,11 +192,8 @@ about the device and neighbor topology
 
 															"id": &schema.Schema{
 																Description: `Id`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"label": &schema.Schema{
@@ -222,11 +213,8 @@ about the device and neighbor topology
 
 															"port_utilization": &schema.Schema{
 																Description: `Port Utilization`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"source": &schema.Schema{
@@ -252,29 +240,20 @@ about the device and neighbor topology
 
 															"clients": &schema.Schema{
 																Description: `Clients`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"connected_device": &schema.Schema{
 																Description: `Connected Device`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"count": &schema.Schema{
 																Description: `Count`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"description": &schema.Schema{
@@ -291,11 +270,8 @@ about the device and neighbor topology
 
 															"fabric_group": &schema.Schema{
 																Description: `Fabric Group`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"family": &schema.Schema{
@@ -348,11 +324,8 @@ about the device and neighbor topology
 
 															"radio_frequency": &schema.Schema{
 																Description: `Radio Frequency`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"role": &schema.Schema{
@@ -369,11 +342,8 @@ about the device and neighbor topology
 
 															"user_id": &schema.Schema{
 																Description: `User Id`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 														},
 													},
@@ -450,11 +420,8 @@ about the device and neighbor topology
 
 									"tunnel_udp_port": &schema.Schema{
 										Description: `Tunnel Udp Port`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"type": &schema.Schema{
@@ -471,11 +438,8 @@ about the device and neighbor topology
 
 									"waas_device_mode": &schema.Schema{
 										Description: `Waas Device Mode`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 								},
 							},

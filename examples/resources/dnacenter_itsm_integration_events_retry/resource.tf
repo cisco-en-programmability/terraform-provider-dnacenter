@@ -1,10 +1,9 @@
 
 resource "dnacenter_itsm_integration_events_retry" "example" {
-  provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
-  parameters {
-    payload = ["string"]
-  }
+  provider   = dnacenter
+  parameters = ["string"]
+}
+
+output "dnacenter_itsm_integration_events_retry_example" {
+  value = dnacenter_itsm_integration_events_retry.example
 }

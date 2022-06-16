@@ -12,7 +12,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -91,7 +91,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -107,7 +107,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"composite": &schema.Schema{
 													Description: `Is it composite template
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -259,7 +259,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -275,7 +275,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -329,7 +329,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -369,7 +369,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
 `,
-																			Type:     schema.TypeString, //TEST,
+																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
 																		},
@@ -490,7 +490,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -506,7 +506,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -560,7 +560,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -600,7 +600,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
 `,
-																			Type:     schema.TypeString, //TEST,
+																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
 																		},
@@ -630,7 +630,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 									"custom_params_order": &schema.Schema{
 										Description: `Custom Params Order
 `,
-										// Type:        schema.TypeBool,
+
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -824,7 +824,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -840,7 +840,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -894,7 +894,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -934,7 +934,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString, //TEST,
+																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
 															},
@@ -1076,7 +1076,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1092,7 +1092,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1146,7 +1146,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -1186,7 +1186,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString, //TEST,
+																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
 															},

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -45,11 +45,8 @@ func dataSourceTopologyLayer2() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"additional_info": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"end_port_id": &schema.Schema{
@@ -78,7 +75,7 @@ func dataSourceTopologyLayer2() *schema.Resource {
 									},
 
 									"grey_out": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -143,17 +140,14 @@ func dataSourceTopologyLayer2() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"acl_applied": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"additional_info": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"custom_param": &schema.Schema{
@@ -206,13 +200,13 @@ func dataSourceTopologyLayer2() *schema.Resource {
 									},
 
 									"fixed": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"grey_out": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},

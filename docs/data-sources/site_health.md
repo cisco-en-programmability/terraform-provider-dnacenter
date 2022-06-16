@@ -18,8 +18,8 @@ It performs read operation on Sites.
 ```terraform
 data "dnacenter_site_health" "example" {
   provider  = dnacenter
-  limit     = "#"
-  offset    = "#"
+  limit     = 1
+  offset    = 1
   site_type = "string"
   timestamp = "string"
 }
