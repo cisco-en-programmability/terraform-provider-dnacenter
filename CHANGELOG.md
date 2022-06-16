@@ -1,3 +1,7 @@
+## 0.3.0 (June 16, 2022)
+NOTES: 
+Stable version with `github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk` (Cisco DNA Center 2.2.3.3 API)
+
 ## 0.3.0-beta (April 04, 2022)
 
 FEATURES:
