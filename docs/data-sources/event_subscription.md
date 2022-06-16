@@ -4,14 +4,14 @@ page_title: "dnacenter_event_subscription Data Source - terraform-provider-dnace
 subcategory: ""
 description: |-
   It performs read operation on Event Management.
-  Gets the list of Subscriptions's based on provided offset and limit
+  Gets the list of Subscriptions's based on provided offset and limit (Deprecated)
 ---
 
 # dnacenter_event_subscription (Data Source)
 
 It performs read operation on Event Management.
 
-- Gets the list of Subscriptions's based on provided offset and limit
+- Gets the list of Subscriptions's based on provided offset and limit (Deprecated)
 
 ## Example Usage
 
@@ -19,8 +19,8 @@ It performs read operation on Event Management.
 data "dnacenter_event_subscription" "example" {
   provider  = dnacenter
   event_ids = "string"
-  limit     = "#"
-  offset    = "#"
+  limit     = 1
+  offset    = 1
   order     = "string"
   sort_by   = "string"
 }
@@ -65,7 +65,23 @@ Read-Only:
 
 Read-Only:
 
+- **categories** (List of String)
+- **domains_subdomains** (List of Object) (see [below for nested schema](#nestedobjatt--items--filter--domains_subdomains))
 - **event_ids** (List of String)
+- **others** (List of String)
+- **severities** (List of String)
+- **site_ids** (List of String)
+- **sources** (List of String)
+- **types** (List of String)
+
+<a id="nestedobjatt--items--filter--domains_subdomains"></a>
+### Nested Schema for `items.filter.domains_subdomains`
+
+Read-Only:
+
+- **domain** (String)
+- **sub_domains** (List of String)
+
 
 
 <a id="nestedobjatt--items--subscription_endpoints"></a>
@@ -73,7 +89,7 @@ Read-Only:
 
 Read-Only:
 
-- **id** (String)
+- **connector_type** (String)
 - **instance_id** (String)
 - **subscription_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--subscription_endpoints--subscription_details))
 
@@ -82,9 +98,43 @@ Read-Only:
 
 Read-Only:
 
+- **base_path** (String)
+- **body** (String)
+- **connect_timeout** (String)
 - **connector_type** (String)
+- **description** (String)
+- **headers** (List of Object) (see [below for nested schema](#nestedobjatt--items--subscription_endpoints--subscription_details--headers))
+- **instance_id** (String)
 - **method** (String)
 - **name** (String)
+- **path_params** (List of Object) (see [below for nested schema](#nestedobjatt--items--subscription_endpoints--subscription_details--path_params))
+- **query_params** (List of Object) (see [below for nested schema](#nestedobjatt--items--subscription_endpoints--subscription_details--query_params))
+- **read_timeout** (String)
+- **resource** (String)
+- **trust_cert** (String)
 - **url** (String)
+
+<a id="nestedobjatt--items--subscription_endpoints--subscription_details--headers"></a>
+### Nested Schema for `items.subscription_endpoints.subscription_details.url`
+
+Read-Only:
+
+- **string** (String)
+
+
+<a id="nestedobjatt--items--subscription_endpoints--subscription_details--path_params"></a>
+### Nested Schema for `items.subscription_endpoints.subscription_details.url`
+
+Read-Only:
+
+- **string** (String)
+
+
+<a id="nestedobjatt--items--subscription_endpoints--subscription_details--query_params"></a>
+### Nested Schema for `items.subscription_endpoints.subscription_details.url`
+
+Read-Only:
+
+- **string** (String)
 
 

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -116,7 +116,7 @@ func dataSourceTransitPeerNetworkRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetTransitPeerNetworkInfo")
+		log.Printf("[DEBUG] Selected method 1: GetTransitPeerNetworkInfo")
 		queryParams1 := dnacentersdkgo.GetTransitPeerNetworkInfoQueryParams{}
 
 		queryParams1.TransitPeerNetworkName = vTransitPeerNetworkName.(string)

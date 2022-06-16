@@ -20,17 +20,25 @@ It manages create, read, update and delete operations on Network Settings.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_service_provider" "example" {
   provider = dnacenter
   parameters {
 
     settings {
+
       qos {
-        profile_name = "Test_tf_new"
-        model        = "8-class-model"
-        wan_provider = "test1-provider"
+
+        model            = "string"
+        old_profile_name = "string"
+        profile_name     = "string"
+        wan_provider     = "string"
       }
     }
+    sp_profile_name = "string"
   }
 }
 
@@ -111,5 +119,5 @@ Read-Only:
 Import is supported using the following syntax:
 
 ```shell
-terraform import dnacenter_service_provicer.example "id:=string"
+terraform import dnacenter_service_provider.example "id:=string"
 ```

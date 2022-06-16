@@ -1,1 +1,0 @@
-terraform import dnacenter_sda_fabric.example "id:=string"

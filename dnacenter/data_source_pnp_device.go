@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -226,11 +226,8 @@ Pagination and sorting are also supported by this endpoint
 
 						"day_zero_config_preview": &schema.Schema{
 							Description: `Day Zero Config Preview`,
-							Type:        schema.TypeList,
+							Type:        schema.TypeString,
 							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"device_info": &schema.Schema{
@@ -445,11 +442,8 @@ Pagination and sorting are also supported by this endpoint
 
 												"ipv4_address": &schema.Schema{
 													Description: `Ipv4 Address`,
-													Type:        schema.TypeList,
+													Type:        schema.TypeString,
 													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"ipv6_address_list": &schema.Schema{
@@ -671,20 +665,14 @@ Pagination and sorting are also supported by this endpoint
 
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"ipv6_address": &schema.Schema{
 																Description: `Ipv6 Address`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"port": &schema.Schema{
@@ -728,20 +716,14 @@ Pagination and sorting are also supported by this endpoint
 
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"ipv6_address": &schema.Schema{
 																Description: `Ipv6 Address`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"port": &schema.Schema{
@@ -986,11 +968,8 @@ Pagination and sorting are also supported by this endpoint
 
 									"tags": &schema.Schema{
 										Description: `Tags`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"user_mic_numbers": &schema.Schema{
@@ -1914,11 +1893,8 @@ Pagination and sorting are also supported by this endpoint
 
 						"day_zero_config_preview": &schema.Schema{
 							Description: `Day Zero Config Preview`,
-							Type:        schema.TypeList,
+							Type:        schema.TypeString,
 							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"device_info": &schema.Schema{
@@ -2133,11 +2109,8 @@ Pagination and sorting are also supported by this endpoint
 
 												"ipv4_address": &schema.Schema{
 													Description: `Ipv4 Address`,
-													Type:        schema.TypeList,
+													Type:        schema.TypeString,
 													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"ipv6_address_list": &schema.Schema{
@@ -2359,20 +2332,14 @@ Pagination and sorting are also supported by this endpoint
 
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"ipv6_address": &schema.Schema{
 																Description: `Ipv6 Address`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"port": &schema.Schema{
@@ -2416,20 +2383,14 @@ Pagination and sorting are also supported by this endpoint
 
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"ipv6_address": &schema.Schema{
 																Description: `Ipv6 Address`,
-																Type:        schema.TypeList,
+																Type:        schema.TypeString,
 																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 
 															"port": &schema.Schema{
@@ -2674,11 +2635,8 @@ Pagination and sorting are also supported by this endpoint
 
 									"tags": &schema.Schema{
 										Description: `Tags`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"user_mic_numbers": &schema.Schema{

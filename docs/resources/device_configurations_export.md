@@ -4,32 +4,37 @@ page_title: "dnacenter_device_configurations_export Resource - terraform-provide
 subcategory: ""
 description: |-
   It performs create operation on Configuration Archive.
-          - Export Device configurations to an encrypted zip file.
+  Export Device configurations to an encrypted zip file.
 ---
 
 # dnacenter_device_configurations_export (Resource)
 
 It performs create operation on Configuration Archive.
-		- Export Device configurations to an encrypted zip file.
 
+- Export Device configurations to an encrypted zip file.
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
-
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_device_configurations_export" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     device_id = ["string"]
     password  = "******"
   }
+}
+
+output "dnacenter_device_configurations_export_example" {
+  value = dnacenter_device_configurations_export.example
 }
 ```
 

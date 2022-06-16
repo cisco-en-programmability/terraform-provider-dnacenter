@@ -4,14 +4,14 @@ page_title: "dnacenter_wireless_provision_access_point Resource - terraform-prov
 subcategory: ""
 description: |-
   It performs create operation on Wireless.
-          - Access Point Provision and ReProvision
+  Access Point Provision and ReProvision
 ---
 
 # dnacenter_wireless_provision_access_point (Resource)
 
 It performs create operation on Wireless.
-		- Access Point Provision and ReProvision
 
+- Access Point Provision and ReProvision
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
@@ -20,22 +20,26 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_wireless_provision_access_point" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
-    payload {
-      custom_ap_group_name   = "string"
-      custom_flex_group_name = ["string"]
-      device_name            = "string"
-      rf_profile             = "string"
-      site_id                = "string"
-      site_name_hierarchy    = "string"
-      type                   = "string"
-    }
+
+    custom_ap_group_name   = "string"
+    custom_flex_group_name = ["string"]
+    device_name            = "string"
+    rf_profile             = "string"
+    site_id                = "string"
+    site_name_hierarchy    = "string"
+    type                   = "string"
   }
+}
+
+output "dnacenter_wireless_provision_access_point_example" {
+  value = dnacenter_wireless_provision_access_point.example
 }
 ```
 
@@ -52,7 +56,7 @@ resource "dnacenter_wireless_provision_access_point" "example" {
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
 <a id="nestedblock--parameters"></a>
@@ -60,8 +64,7 @@ resource "dnacenter_wireless_provision_access_point" "example" {
 
 Optional:
 
-- **payload** (Block List, Max: 1) Array of RequestWirelessAPProvision (see [below for nested schema](#nestedblock--parameters--payload))
-- **persistbapioutput** (String) __persistbapioutput header parameter. Persist bapi sync response
+- **payload** (Block List) Array of RequestWirelessAPProvision (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
@@ -78,8 +81,8 @@ Optional:
 
 
 
-<a id="nestedatt--items"></a>
-### Nested Schema for `items`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 

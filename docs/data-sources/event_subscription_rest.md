@@ -4,25 +4,30 @@ page_title: "dnacenter_event_subscription_rest Data Source - terraform-provider-
 subcategory: ""
 description: |-
   It performs read operation on Event Management.
-  Gets the list of Rest/Webhook Subscriptions's based on provided offset and limit
+  Gets the list of Rest/Webhook Subscriptions's based on provided query params
 ---
 
 # dnacenter_event_subscription_rest (Data Source)
 
 It performs read operation on Event Management.
 
-- Gets the list of Rest/Webhook Subscriptions's based on provided offset and limit
+- Gets the list of Rest/Webhook Subscriptions's based on provided query params
 
 ## Example Usage
 
 ```terraform
 data "dnacenter_event_subscription_rest" "example" {
-  provider  = dnacenter
-  event_ids = "string"
-  limit     = "#"
-  offset    = "#"
-  order     = "string"
-  sort_by   = "string"
+  provider   = dnacenter
+  category   = "string"
+  domain     = "string"
+  event_ids  = "string"
+  limit      = 1
+  name       = "string"
+  offset     = 1
+  order      = "string"
+  sort_by    = "string"
+  sub_domain = "string"
+  type       = "string"
 }
 
 output "dnacenter_event_subscription_rest_example" {
@@ -35,12 +40,17 @@ output "dnacenter_event_subscription_rest_example" {
 
 ### Optional
 
+- **category** (String) category query parameter. List of subscriptions related to the respective category
+- **domain** (String) domain query parameter. List of subscriptions related to the respective domain
 - **event_ids** (String) eventIds query parameter. List of subscriptions related to the respective eventIds (Comma separated event ids)
 - **id** (String) The ID of this resource.
 - **limit** (Number) limit query parameter. The number of Subscriptions's to limit in the resultset whose default value 10
+- **name** (String) name query parameter. List of subscriptions related to the respective name
 - **offset** (Number) offset query parameter. The number of Subscriptions's to offset in the resultset whose default value 0
 - **order** (String) order query parameter.
 - **sort_by** (String) sortBy query parameter. SortBy field name
+- **sub_domain** (String) subDomain query parameter. List of subscriptions related to the respective sub-domain
+- **type** (String) type query parameter. List of subscriptions related to the respective type
 
 ### Read-Only
 
@@ -66,12 +76,22 @@ Read-Only:
 Read-Only:
 
 - **categories** (List of String)
-- **domains_subdomains** (List of String)
+- **domains_subdomains** (List of Object) (see [below for nested schema](#nestedobjatt--items--filter--domains_subdomains))
 - **event_ids** (List of String)
 - **others** (List of String)
 - **severities** (List of String)
+- **site_ids** (List of String)
 - **sources** (List of String)
 - **types** (List of String)
+
+<a id="nestedobjatt--items--filter--domains_subdomains"></a>
+### Nested Schema for `items.filter.domains_subdomains`
+
+Read-Only:
+
+- **domain** (String)
+- **sub_domains** (List of String)
+
 
 
 <a id="nestedobjatt--items--subscription_endpoints"></a>

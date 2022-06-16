@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -167,11 +167,8 @@ func dataSourceSwimImageDetails() *schema.Resource {
 						},
 
 						"extended_attributes": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"family": &schema.Schema{
@@ -233,7 +230,7 @@ func dataSourceSwimImageDetails() *schema.Resource {
 						},
 
 						"is_tagged_golden": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -260,11 +257,8 @@ func dataSourceSwimImageDetails() *schema.Resource {
 									},
 
 									"extended_attributes": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"memory": &schema.Schema{

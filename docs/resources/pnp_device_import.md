@@ -4,19 +4,18 @@ page_title: "dnacenter_pnp_device_import Resource - terraform-provider-dnacenter
 subcategory: ""
 description: |-
   It performs create operation on Device Onboarding (PnP).
-      •   Add devices to PnP in bulk
+  Add devices to PnP in bulk
 ---
 
 # dnacenter_pnp_device_import (Resource)
 
 It performs create operation on Device Onboarding (PnP).
-	•	Add devices to PnP in bulk
+
+- Add devices to PnP in bulk
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
-
-Most commonly, this resource is used to import [pnp_device](./pnp_device.md) in bulk.
 
 ## Example Usage
 
@@ -27,318 +26,314 @@ provider "dnacenter" {
 
 resource "dnacenter_pnp_device_import" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
-    payload {
-      id = "string"
-      device_info {
 
-        aaa_credentials {
+    id = "string"
+    device_info {
 
-          password = "******"
-          username = "string"
+      aaa_credentials {
+
+        password = "******"
+        username = "string"
+      }
+      added_on                     = 1
+      addn_mac_addrs               = ["string"]
+      agent_type                   = "string"
+      auth_status                  = "string"
+      authenticated_sudi_serial_no = "string"
+      capabilities_supported       = ["string"]
+      cm_state                     = "string"
+      description                  = "string"
+      device_sudi_serial_nos       = ["string"]
+      device_type                  = "string"
+      features_supported           = ["string"]
+      file_system_list {
+
+        freespace = 1
+        name      = "string"
+        readable  = "false"
+        size      = 1
+        type      = "string"
+        writeable = "false"
+      }
+      first_contact = 1
+      hostname      = "string"
+      http_headers {
+
+        key   = "string"
+        value = "string"
+      }
+      image_file    = "string"
+      image_version = "string"
+      ip_interfaces {
+
+        ipv4_address      = "string"
+        ipv6_address_list = ["string"]
+        mac_address       = "string"
+        name              = "string"
+        status            = "string"
+      }
+      last_contact   = 1
+      last_sync_time = 1
+      last_update_on = 1
+      location {
+
+        address   = "string"
+        altitude  = "string"
+        latitude  = "string"
+        longitude = "string"
+        site_id   = "string"
+      }
+      mac_address = "string"
+      mode        = "string"
+      name        = "string"
+      neighbor_links {
+
+        local_interface_name        = "string"
+        local_mac_address           = "string"
+        local_short_interface_name  = "string"
+        remote_device_name          = "string"
+        remote_interface_name       = "string"
+        remote_mac_address          = "string"
+        remote_platform             = "string"
+        remote_short_interface_name = "string"
+        remote_version              = "string"
+      }
+      onb_state = "string"
+      pid       = "string"
+      pnp_profile_list {
+
+        created_by        = "string"
+        discovery_created = "false"
+        primary_endpoint {
+
+          certificate  = "string"
+          fqdn         = "string"
+          ipv4_address = "string"
+          ipv6_address = "string"
+          port         = 1
+          protocol     = "string"
         }
-        added_on                     = 1
-        addn_mac_addrs               = ["string"]
-        agent_type                   = "string"
-        auth_status                  = "string"
-        authenticated_sudi_serial_no = "string"
-        capabilities_supported       = ["string"]
-        cm_state                     = "string"
-        description                  = "string"
-        device_sudi_serial_nos       = ["string"]
-        device_type                  = "string"
-        features_supported           = ["string"]
-        file_system_list {
+        profile_name = "string"
+        secondary_endpoint {
 
-          freespace = 1
-          name      = "string"
-          readable  = "false"
-          size      = 1
-          type      = "string"
-          writeable = "false"
+          certificate  = "string"
+          fqdn         = "string"
+          ipv4_address = "string"
+          ipv6_address = "string"
+          port         = 1
+          protocol     = "string"
         }
-        first_contact = 1
-        hostname      = "string"
-        http_headers {
+      }
+      populate_inventory = "false"
+      pre_workflow_cli_ouputs {
+
+        cli        = "string"
+        cli_output = "string"
+      }
+      project_id       = "string"
+      project_name     = "string"
+      reload_requested = "false"
+      serial_number    = "string"
+      smart_account_id = "string"
+      source           = "string"
+      stack            = "false"
+      stack_info {
+
+        is_full_ring = "false"
+        stack_member_list {
+
+          hardware_version   = "string"
+          license_level      = "string"
+          license_type       = "string"
+          mac_address        = "string"
+          pid                = "string"
+          priority           = 1
+          role               = "string"
+          serial_number      = "string"
+          software_version   = "string"
+          stack_number       = 1
+          state              = "string"
+          sudi_serial_number = "string"
+        }
+        stack_ring_protocol      = "string"
+        supports_stack_workflows = "false"
+        total_member_count       = 1
+        valid_license_levels     = ["string"]
+      }
+      state                = "string"
+      sudi_required        = "false"
+      tags                 = "string"
+      user_sudi_serial_nos = ["string"]
+      virtual_account_id   = "string"
+      workflow_id          = "string"
+      workflow_name        = "string"
+    }
+    run_summary_list {
+
+      details    = "string"
+      error_flag = "false"
+      history_task_info {
+
+        addn_details {
 
           key   = "string"
           value = "string"
         }
-        image_file    = "string"
-        image_version = "string"
-        ip_interfaces {
+        name       = "string"
+        time_taken = 1
+        type       = "string"
+        work_item_list {
 
-          ipv4_address      = ["string"]
-          ipv6_address_list = ["string"]
-          mac_address       = "string"
-          name              = "string"
-          status            = "string"
-        }
-        last_contact   = 1
-        last_sync_time = 1
-        last_update_on = 1
-        location {
-
-          address   = "string"
-          altitude  = "string"
-          latitude  = "string"
-          longitude = "string"
-          site_id   = "string"
-        }
-        mac_address = "string"
-        mode        = "string"
-        name        = "string"
-        neighbor_links {
-
-          local_interface_name        = "string"
-          local_mac_address           = "string"
-          local_short_interface_name  = "string"
-          remote_device_name          = "string"
-          remote_interface_name       = "string"
-          remote_mac_address          = "string"
-          remote_platform             = "string"
-          remote_short_interface_name = "string"
-          remote_version              = "string"
-        }
-        onb_state = "string"
-        pid       = "string"
-        pnp_profile_list {
-
-          created_by        = "string"
-          discovery_created = "false"
-          primary_endpoint {
-
-            certificate  = "string"
-            fqdn         = "string"
-            ipv4_address = ["string"]
-            ipv6_address = ["string"]
-            port         = 1
-            protocol     = "string"
-          }
-          profile_name = "string"
-          secondary_endpoint {
-
-            certificate  = "string"
-            fqdn         = "string"
-            ipv4_address = ["string"]
-            ipv6_address = ["string"]
-            port         = 1
-            protocol     = "string"
-          }
-        }
-        populate_inventory = "false"
-        pre_workflow_cli_ouputs {
-
-          cli        = "string"
-          cli_output = "string"
-        }
-        project_id       = "string"
-        project_name     = "string"
-        reload_requested = "false"
-        serial_number    = "string"
-        smart_account_id = "string"
-        source           = "string"
-        stack            = "false"
-        stack_info {
-
-          is_full_ring = "false"
-          stack_member_list {
-
-            hardware_version   = "string"
-            license_level      = "string"
-            license_type       = "string"
-            mac_address        = "string"
-            pid                = "string"
-            priority           = 1
-            role               = "string"
-            serial_number      = "string"
-            software_version   = "string"
-            stack_number       = 1
-            state              = "string"
-            sudi_serial_number = "string"
-          }
-          stack_ring_protocol      = "string"
-          supports_stack_workflows = "false"
-          total_member_count       = 1
-          valid_license_levels     = ["string"]
-        }
-        state                = "string"
-        sudi_required        = "false"
-        tags                 = ["string"]
-        user_sudi_serial_nos = ["string"]
-        virtual_account_id   = "string"
-        workflow_id          = "string"
-        workflow_name        = "string"
-      }
-      run_summary_list {
-
-        details    = "string"
-        error_flag = "false"
-        history_task_info {
-
-          addn_details {
-
-            key   = "string"
-            value = "string"
-          }
-          name       = "string"
+          command    = "string"
+          end_time   = 1
+          output_str = "string"
+          start_time = 1
+          state      = "string"
           time_taken = 1
-          type       = "string"
-          work_item_list {
-
-            command    = "string"
-            end_time   = 1
-            output_str = "string"
-            start_time = 1
-            state      = "string"
-            time_taken = 1
-          }
         }
-        timestamp = 1
       }
-      system_reset_workflow {
+      timestamp = 1
+    }
+    system_reset_workflow {
 
-        id               = "string"
-        add_to_inventory = "false"
-        added_on         = 1
-        config_id        = "string"
-        curr_task_idx    = 1
-        description      = "string"
-        end_time         = 1
-        exec_time        = 1
-        image_id         = "string"
-        instance_type    = "string"
-        lastupdate_on    = 1
-        name             = "string"
-        start_time       = 1
-        state            = "string"
-        tasks {
+      id               = "string"
+      add_to_inventory = "false"
+      added_on         = 1
+      config_id        = "string"
+      curr_task_idx    = 1
+      description      = "string"
+      end_time         = 1
+      exec_time        = 1
+      image_id         = "string"
+      instance_type    = "string"
+      lastupdate_on    = 1
+      name             = "string"
+      start_time       = 1
+      state            = "string"
+      tasks {
 
-          curr_work_item_idx = 1
-          end_time           = 1
-          name               = "string"
-          start_time         = 1
-          state              = "string"
-          task_seq_no        = 1
-          time_taken         = 1
-          type               = "string"
-          work_item_list {
+        curr_work_item_idx = 1
+        end_time           = 1
+        name               = "string"
+        start_time         = 1
+        state              = "string"
+        task_seq_no        = 1
+        time_taken         = 1
+        type               = "string"
+        work_item_list {
 
-            command    = "string"
-            end_time   = 1
-            output_str = "string"
-            start_time = 1
-            state      = "string"
-            time_taken = 1
-          }
+          command    = "string"
+          end_time   = 1
+          output_str = "string"
+          start_time = 1
+          state      = "string"
+          time_taken = 1
         }
-        tenant_id = "string"
-        type      = "string"
-        use_state = "string"
-        version   = 1
-      }
-      system_workflow {
-
-        id               = "string"
-        add_to_inventory = "false"
-        added_on         = 1
-        config_id        = "string"
-        curr_task_idx    = 1
-        description      = "string"
-        end_time         = 1
-        exec_time        = 1
-        image_id         = "string"
-        instance_type    = "string"
-        lastupdate_on    = 1
-        name             = "string"
-        start_time       = 1
-        state            = "string"
-        tasks {
-
-          curr_work_item_idx = 1
-          end_time           = 1
-          name               = "string"
-          start_time         = 1
-          state              = "string"
-          task_seq_no        = 1
-          time_taken         = 1
-          type               = "string"
-          work_item_list {
-
-            command    = "string"
-            end_time   = 1
-            output_str = "string"
-            start_time = 1
-            state      = "string"
-            time_taken = 1
-          }
-        }
-        tenant_id = "string"
-        type      = "string"
-        use_state = "string"
-        version   = 1
       }
       tenant_id = "string"
+      type      = "string"
+      use_state = "string"
       version   = 1
-      workflow {
+    }
+    system_workflow {
 
-        id               = "string"
-        add_to_inventory = "false"
-        added_on         = 1
-        config_id        = "string"
-        curr_task_idx    = 1
-        description      = "string"
-        end_time         = 1
-        exec_time        = 1
-        image_id         = "string"
-        instance_type    = "string"
-        lastupdate_on    = 1
-        name             = "string"
-        start_time       = 1
-        state            = "string"
-        tasks {
+      id               = "string"
+      add_to_inventory = "false"
+      added_on         = 1
+      config_id        = "string"
+      curr_task_idx    = 1
+      description      = "string"
+      end_time         = 1
+      exec_time        = 1
+      image_id         = "string"
+      instance_type    = "string"
+      lastupdate_on    = 1
+      name             = "string"
+      start_time       = 1
+      state            = "string"
+      tasks {
 
-          curr_work_item_idx = 1
-          end_time           = 1
-          name               = "string"
-          start_time         = 1
-          state              = "string"
-          task_seq_no        = 1
-          time_taken         = 1
-          type               = "string"
-          work_item_list {
+        curr_work_item_idx = 1
+        end_time           = 1
+        name               = "string"
+        start_time         = 1
+        state              = "string"
+        task_seq_no        = 1
+        time_taken         = 1
+        type               = "string"
+        work_item_list {
 
-            command    = "string"
-            end_time   = 1
-            output_str = "string"
-            start_time = 1
-            state      = "string"
-            time_taken = 1
-          }
+          command    = "string"
+          end_time   = 1
+          output_str = "string"
+          start_time = 1
+          state      = "string"
+          time_taken = 1
         }
-        tenant_id = "string"
-        type      = "string"
-        use_state = "string"
-        version   = 1
       }
-      workflow_parameters {
+      tenant_id = "string"
+      type      = "string"
+      use_state = "string"
+      version   = 1
+    }
+    tenant_id = "string"
+    version   = 1
+    workflow {
 
-        config_list {
+      id               = "string"
+      add_to_inventory = "false"
+      added_on         = 1
+      config_id        = "string"
+      curr_task_idx    = 1
+      description      = "string"
+      end_time         = 1
+      exec_time        = 1
+      image_id         = "string"
+      instance_type    = "string"
+      lastupdate_on    = 1
+      name             = "string"
+      start_time       = 1
+      state            = "string"
+      tasks {
 
-          config_id = "string"
-          config_parameters {
+        curr_work_item_idx = 1
+        end_time           = 1
+        name               = "string"
+        start_time         = 1
+        state              = "string"
+        task_seq_no        = 1
+        time_taken         = 1
+        type               = "string"
+        work_item_list {
 
-            key   = "string"
-            value = "string"
-          }
+          command    = "string"
+          end_time   = 1
+          output_str = "string"
+          start_time = 1
+          state      = "string"
+          time_taken = 1
         }
-        license_level              = "string"
-        license_type               = "string"
-        top_of_stack_serial_number = "string"
       }
+      tenant_id = "string"
+      type      = "string"
+      use_state = "string"
+      version   = 1
+    }
+    workflow_parameters {
+
+      config_list {
+
+        config_id = "string"
+        config_parameters {
+
+          key   = "string"
+          value = "string"
+        }
+      }
+      license_level              = "string"
+      license_type               = "string"
+      top_of_stack_serial_number = "string"
     }
   }
 }
@@ -353,7 +348,7 @@ output "dnacenter_pnp_device_import_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1) (see [below for nested schema](#nestedblock--parameters))
+- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Optional
 
@@ -374,12 +369,9 @@ Optional:
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
 
-Required:
-
-- **device_info** (Block List, Min: 1) (see [below for nested schema](#nestedblock--parameters--payload--device_info))
-
 Optional:
 
+- **device_info** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--device_info))
 - **id** (String) The ID of this resource.
 - **run_summary_list** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--run_summary_list))
 - **system_reset_workflow** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--system_reset_workflow))
@@ -436,7 +428,7 @@ Optional:
 - **stack_info** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--device_info--stack_info))
 - **state** (String)
 - **sudi_required** (String)
-- **tags** (List of String)
+- **tags** (String)
 - **user_sudi_serial_nos** (List of String)
 - **virtual_account_id** (String)
 - **workflow_id** (String)
@@ -478,7 +470,7 @@ Optional:
 
 Optional:
 
-- **ipv4_address** (List of String)
+- **ipv4_address** (String)
 - **ipv6_address_list** (List of String)
 - **mac_address** (String)
 - **name** (String)
@@ -531,8 +523,8 @@ Optional:
 
 - **certificate** (String)
 - **fqdn** (String)
-- **ipv4_address** (List of String)
-- **ipv6_address** (List of String)
+- **ipv4_address** (String)
+- **ipv6_address** (String)
 - **port** (Number)
 - **protocol** (String)
 
@@ -544,8 +536,8 @@ Optional:
 
 - **certificate** (String)
 - **fqdn** (String)
-- **ipv4_address** (List of String)
-- **ipv6_address** (List of String)
+- **ipv4_address** (String)
+- **ipv6_address** (String)
 - **port** (Number)
 - **protocol** (String)
 
@@ -859,14 +851,13 @@ Read-Only:
 Read-Only:
 
 - **day_zero_config** (List of Object) (see [below for nested schema](#nestedobjatt--item--success_list--day_zero_config))
-- **day_zero_config_preview** (List of String)
+- **day_zero_config_preview** (String)
 - **device_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--success_list--device_info))
 - **id** (String)
 - **run_summary_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--success_list--run_summary_list))
 - **system_reset_workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item--success_list--system_reset_workflow))
 - **system_workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item--success_list--system_workflow))
 - **tenant_id** (String)
-- **type_id** (String)
 - **version** (Number)
 - **workflow** (List of Object) (see [below for nested schema](#nestedobjatt--item--success_list--workflow))
 - **workflow_parameters** (List of Object) (see [below for nested schema](#nestedobjatt--item--success_list--workflow_parameters))
@@ -929,7 +920,7 @@ Read-Only:
 - **stack_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--success_list--device_info--stack_info))
 - **state** (String)
 - **sudi_required** (String)
-- **tags** (List of String)
+- **tags** (String)
 - **user_mic_numbers** (List of String)
 - **user_sudi_serial_nos** (List of String)
 - **virtual_account_id** (String)
@@ -972,7 +963,7 @@ Read-Only:
 
 Read-Only:
 
-- **ipv4_address** (List of String)
+- **ipv4_address** (String)
 - **ipv6_address_list** (List of String)
 - **mac_address** (String)
 - **name** (String)
@@ -1025,8 +1016,8 @@ Read-Only:
 
 - **certificate** (String)
 - **fqdn** (String)
-- **ipv4_address** (List of String)
-- **ipv6_address** (List of String)
+- **ipv4_address** (String)
+- **ipv6_address** (String)
 - **port** (Number)
 - **protocol** (String)
 
@@ -1038,8 +1029,8 @@ Read-Only:
 
 - **certificate** (String)
 - **fqdn** (String)
-- **ipv4_address** (List of String)
-- **ipv6_address** (List of String)
+- **ipv4_address** (String)
+- **ipv6_address** (String)
 - **port** (Number)
 - **protocol** (String)
 

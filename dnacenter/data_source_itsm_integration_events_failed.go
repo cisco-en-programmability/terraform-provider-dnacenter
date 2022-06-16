@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -77,11 +77,8 @@ func dataSourceItsmIntegrationEventsFailed() *schema.Resource {
 
 									"response_received_from_itsmsystem": &schema.Schema{
 										Description: `Response Received From ITSMSystem`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 								},
 							},

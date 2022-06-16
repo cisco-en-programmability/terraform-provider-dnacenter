@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -98,9 +98,6 @@ func resourceAssignDeviceToSiteCreate(ctx context.Context, d *schema.ResourceDat
 
 	var diags diag.Diagnostics
 	vSiteID := d.Get("parameters.0.site_id")
-	vRunsync := d.Get("parameters.0.runsync")
-	vPersistbapioutput := d.Get("parameters.0.persistbapioutput")
-	vRunsynctimeout := d.Get("parameters.0.runsynctimeout")
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: AssignDevicesToSite")
@@ -109,11 +106,11 @@ func resourceAssignDeviceToSiteCreate(ctx context.Context, d *schema.ResourceDat
 
 		headerParams1 := dnacentersdkgo.AssignDevicesToSiteHeaderParams{}
 
-		headerParams1.Runsync = vRunsync.(string)
+		headerParams1.Runsync = "false"
 
-		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+		headerParams1.Persistbapioutput = "false"
 
-		headerParams1.Runsynctimeout = vRunsynctimeout.(string)
+		headerParams1.Runsynctimeout = "false"
 
 		response1, restyResp1, err := client.Sites.AssignDevicesToSite(vvSiteID, request1, &headerParams1)
 

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -92,11 +92,8 @@ combination of a specific application with site and/or device the API gets list 
 						"application_server_latency": &schema.Schema{
 							Description: `Latency of application server
 `,
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"average_throughput": &schema.Schema{
@@ -137,11 +134,8 @@ combination of a specific application with site and/or device the API gets list 
 						"client_network_latency": &schema.Schema{
 							Description: `Latency of client network
 `,
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"device_type": &schema.Schema{
@@ -203,11 +197,8 @@ combination of a specific application with site and/or device the API gets list 
 						"jitter": &schema.Schema{
 							Description: `Jitter for application
 `,
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"location": &schema.Schema{
@@ -227,11 +218,8 @@ combination of a specific application with site and/or device the API gets list 
 						"network_latency": &schema.Schema{
 							Description: `Network latency for application
 `,
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"occurrences": &schema.Schema{
@@ -251,11 +239,8 @@ combination of a specific application with site and/or device the API gets list 
 						"packet_loss_percent": &schema.Schema{
 							Description: `Packet loss percentage for application
 `,
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"priority": &schema.Schema{
@@ -275,11 +260,8 @@ combination of a specific application with site and/or device the API gets list 
 						"server_network_latency": &schema.Schema{
 							Description: `Latency of server network
 `,
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"severity": &schema.Schema{

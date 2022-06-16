@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -48,11 +48,8 @@ func dataSourceDiscoveryJobs() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"cli_status": &schema.Schema{

@@ -1,6 +1,3 @@
-provider "dnacenter" {
-  debug = "true"
-}
 
 resource "dnacenter_event_subscription_rest" "example" {
   provider = dnacenter
@@ -9,7 +6,17 @@ resource "dnacenter_event_subscription_rest" "example" {
     description = "string"
     filter {
 
-      event_ids = ["string"]
+      categories = ["string"]
+      domains_subdomains {
+
+        domain      = "string"
+        sub_domains = ["string"]
+      }
+      event_ids  = ["string"]
+      severities = ["string"]
+      site_ids   = ["string"]
+      sources    = ["string"]
+      types      = ["string"]
     }
     name = "string"
     subscription_endpoints {

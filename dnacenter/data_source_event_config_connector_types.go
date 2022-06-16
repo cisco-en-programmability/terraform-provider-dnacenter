@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -41,14 +41,16 @@ func dataSourceEventConfigConnectorTypes() *schema.Resource {
 
 						"is_custom_connector": &schema.Schema{
 							Description: `Is Custom Connector`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"is_default_supported": &schema.Schema{
 							Description: `Is Default Supported`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -64,7 +66,7 @@ func dataSourceEventConfigConnectorTypesRead(ctx context.Context, d *schema.Reso
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetConnectorTypes")
+		log.Printf("[DEBUG] Selected method: GetConnectorTypes")
 
 		response1, restyResp1, err := client.EventManagement.GetConnectorTypes()
 
@@ -103,8 +105,8 @@ func flattenEventManagementGetConnectorTypesItems(items *dnacentersdkgo.Response
 		respItem := make(map[string]interface{})
 		respItem["connector_type"] = item.ConnectorType
 		respItem["display_name"] = item.DisplayName
-		respItem["is_default_supported"] = item.IsDefaultSupported
-		respItem["is_custom_connector"] = item.IsCustomConnector
+		respItem["is_default_supported"] = boolPtrToString(item.IsDefaultSupported)
+		respItem["is_custom_connector"] = boolPtrToString(item.IsCustomConnector)
 		respItems = append(respItems, respItem)
 	}
 	return respItems

@@ -19,8 +19,8 @@ It performs read operation on Event Management.
 data "dnacenter_event" "example" {
   provider = dnacenter
   event_id = "string"
-  limit    = "#"
-  offset   = "#"
+  limit    = 1
+  offset   = 1
   order    = "string"
   sort_by  = "string"
   tags     = "string"

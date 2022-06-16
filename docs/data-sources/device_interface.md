@@ -20,8 +20,8 @@ It performs read operation on Devices.
 ```terraform
 data "dnacenter_device_interface" "example" {
   provider = dnacenter
-  limit    = "#"
-  offset   = "#"
+  limit    = 1
+  offset   = 1
 }
 
 output "dnacenter_device_interface_example" {

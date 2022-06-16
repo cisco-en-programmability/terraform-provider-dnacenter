@@ -61,7 +61,7 @@ Read-Only:
 - **compliance_type** (String)
 - **device_uuid** (String)
 - **display_name** (String)
-- **last_sync_time** (Number)
+- **last_sync_time** (String)
 - **last_update_time** (Number)
 - **message** (String)
 - **source_info_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--source_info_list))

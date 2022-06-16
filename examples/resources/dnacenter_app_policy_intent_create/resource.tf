@@ -1,11 +1,8 @@
 
 resource "dnacenter_app_policy_intent_create" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
-
   parameters {
+
     create_list {
 
       advanced_policy_scope {
@@ -103,4 +100,8 @@ resource "dnacenter_app_policy_intent_create" "example" {
       }
     }
   }
+}
+
+output "dnacenter_app_policy_intent_create_example" {
+  value = dnacenter_app_policy_intent_create.example
 }

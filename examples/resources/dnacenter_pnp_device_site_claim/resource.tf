@@ -1,25 +1,34 @@
-provider "dnacenter" {
-  debug = "true"
-}
 
 resource "dnacenter_pnp_device_site_claim" "example" {
   provider = dnacenter
   parameters {
-    device_id = "string"
-    site_id   = "string"
-    type      = "string"
-    hostname  = "string"
-    image_info {
-      image_id = "string"
-      skip     = "false"
-    }
+
     config_info {
+
       config_id = "string"
       config_parameters {
+
         key   = "string"
         value = "string"
       }
     }
+    device_id = "string"
+    gateway   = "string"
+    hostname  = "string"
+    image_id  = "string"
+    image_info {
+
+      image_id = "string"
+      skip     = "false"
+    }
+    ip_interface_name = "string"
+    remove_inactive   = "false"
+    rf_profile        = "string"
+    site_id           = "string"
+    static_ip         = "string"
+    subnet_mask       = "string"
+    type              = "string"
+    vlan_id           = "string"
   }
 }
 

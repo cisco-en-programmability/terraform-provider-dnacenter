@@ -1,6 +1,3 @@
-provider "dnacenter" {
-  debug = "true"
-}
 
 resource "dnacenter_application_sets" "example" {
   provider = dnacenter

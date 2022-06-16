@@ -22,6 +22,7 @@ Other versions of this collection have support for previous Cisco DNA Center ver
 |--------------------------|----------------------------------------|
 | 2.1.1                    | 0.0.4                                  |
 | 2.2.3.3                  | 0.3.0-beta                             |
+| 2.3.3.0                  | 1.0.0-beta                             |
 
 ## Using the provider
 
@@ -60,7 +61,7 @@ terraform {
   required_providers {
     dnacenter = {
       source = "hashicorp.com/edu/dnacenter"
-      version = "0.3.0-beta"
+      version = "1.0.0-beta"
     }
   }
 }
@@ -122,7 +123,7 @@ $ make testacc
 
 ## Documentation
 
-In the [docs directory](./docs/) you can find the documentation source for this 0.3.0-beta version.
+In the [docs directory](./docs/) you can find the documentation source for this 1.0.0-beta version.
 
 You can find the documentation online for the previously released versions at [Terraform Registry - Cisco DNA Center provider](https://registry.terraform.io/providers/cisco-en-programmability/dnacenter/latest/docs).
 
@@ -138,7 +139,7 @@ All notable changes to this project will be documented in the [CHANGELOG](./CHAN
 
 The development team may make additional changes as the library evolves with the Cisco DNA Center.
 
-**NOTE**: Consider reviewing the Changelog to review the new features of the 0.3.0-beta version.
+**NOTE**: Consider reviewing the Changelog to review the new features of the 1.0.0-beta version.
 
 ## License
 

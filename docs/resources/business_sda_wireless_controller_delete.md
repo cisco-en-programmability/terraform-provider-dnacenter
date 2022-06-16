@@ -4,32 +4,32 @@ page_title: "dnacenter_business_sda_wireless_controller_delete Resource - terraf
 subcategory: ""
 description: |-
   It performs delete operation on Fabric Wireless.
-          - Remove WLC from Fabric Domain
+  Remove WLC from Fabric Domain
 ---
 
 # dnacenter_business_sda_wireless_controller_delete (Resource)
 
 It performs delete operation on Fabric Wireless.
-		- Remove WLC from Fabric Domain
 
-
+- Remove WLC from Fabric Domain
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
-
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_business_sda_wireless_controller_delete" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
-  parameters {
-    device_ipaddress = "string"
-  }
+}
+
+output "dnacenter_business_sda_wireless_controller_delete_example" {
+  value = dnacenter_business_sda_wireless_controller_delete.example
 }
 ```
 

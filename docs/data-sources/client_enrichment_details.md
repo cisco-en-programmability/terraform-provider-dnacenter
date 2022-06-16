@@ -140,7 +140,7 @@ Read-Only:
 - **device_type** (String)
 - **fabric_group** (String)
 - **family** (String)
-- **health_score** (List of String)
+- **health_score** (String)
 - **id** (String)
 - **ip** (String)
 - **level** (Number)
@@ -202,7 +202,7 @@ Read-Only:
 
 Read-Only:
 
-- **aps_impacted** (String)
+- **aps_impacted** (List of String)
 - **area** (String)
 - **building** (String)
 - **floor** (String)

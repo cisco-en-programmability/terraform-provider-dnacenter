@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -78,7 +78,7 @@ well. The response payload contains the deregistered smart & virtual account inf
 									},
 									"make_default": &schema.Schema{
 										Description: `Make Default`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -99,7 +99,7 @@ well. The response payload contains the deregistered smart & virtual account inf
 									},
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-										// Type:        schema.TypeBool,
+
 										Type:     schema.TypeString,
 										Computed: true,
 									},

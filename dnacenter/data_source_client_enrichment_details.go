@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -72,11 +72,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 												"boot_date_time": &schema.Schema{
 													Description: `Boot Date Time`,
-													Type:        schema.TypeList,
+													Type:        schema.TypeString,
 													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"cisco360view": &schema.Schema{
@@ -105,11 +102,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 												"error_description": &schema.Schema{
 													Description: `Error Description`,
-													Type:        schema.TypeList,
+													Type:        schema.TypeString,
 													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"family": &schema.Schema{
@@ -138,11 +132,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 												"interface_count": &schema.Schema{
 													Description: `Interface Count`,
-													Type:        schema.TypeList,
+													Type:        schema.TypeString,
 													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"inventory_status_detail": &schema.Schema{
@@ -165,38 +156,26 @@ user, the devices that the user is connected to and the assurance issues that th
 
 												"line_card_count": &schema.Schema{
 													Description: `Line Card Count`,
-													Type:        schema.TypeList,
+													Type:        schema.TypeString,
 													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"line_card_id": &schema.Schema{
 													Description: `Line Card Id`,
-													Type:        schema.TypeList,
+													Type:        schema.TypeString,
 													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"location": &schema.Schema{
 													Description: `Location`,
-													Type:        schema.TypeList,
+													Type:        schema.TypeString,
 													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"location_name": &schema.Schema{
 													Description: `Location Name`,
-													Type:        schema.TypeList,
+													Type:        schema.TypeString,
 													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"mac_address": &schema.Schema{
@@ -231,11 +210,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"id": &schema.Schema{
 																			Description: `Id`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"label": &schema.Schema{
@@ -255,11 +231,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"port_utilization": &schema.Schema{
 																			Description: `Port Utilization`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"source": &schema.Schema{
@@ -291,11 +264,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"count": &schema.Schema{
 																			Description: `Count`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"description": &schema.Schema{
@@ -306,38 +276,26 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"device_type": &schema.Schema{
 																			Description: `Device Type`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"fabric_group": &schema.Schema{
 																			Description: `Fabric Group`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"family": &schema.Schema{
 																			Description: `Family`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"health_score": &schema.Schema{
 																			Description: `Health Score`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"id": &schema.Schema{
@@ -348,11 +306,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"ip": &schema.Schema{
 																			Description: `Ip`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"level": &schema.Schema{
@@ -369,29 +324,20 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"node_type": &schema.Schema{
 																			Description: `Node Type`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"platform_id": &schema.Schema{
 																			Description: `Platform Id`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"radio_frequency": &schema.Schema{
 																			Description: `Radio Frequency`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"role": &schema.Schema{
@@ -402,20 +348,14 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"software_version": &schema.Schema{
 																			Description: `Software Version`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"user_id": &schema.Schema{
 																			Description: `User Id`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 																	},
 																},
@@ -510,11 +450,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 												"waas_device_mode": &schema.Schema{
 													Description: `Waas Device Mode`,
-													Type:        schema.TypeList,
+													Type:        schema.TypeString,
 													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 											},
 										},
@@ -600,11 +537,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"floor": &schema.Schema{
 																			Description: `Floor`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"site_id": &schema.Schema{
@@ -747,11 +681,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 									"auth_type": &schema.Schema{
 										Description: `Auth Type`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"client_connection": &schema.Schema{
@@ -777,11 +708,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 									"data_rate": &schema.Schema{
 										Description: `Data Rate`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"health_score": &schema.Schema{
@@ -834,20 +762,14 @@ user, the devices that the user is connected to and the assurance issues that th
 
 									"host_name": &schema.Schema{
 										Description: `Host Name`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"host_os": &schema.Schema{
 										Description: `Host Os`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"host_type": &schema.Schema{
@@ -858,11 +780,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 									"host_version": &schema.Schema{
 										Description: `Host Version`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"id": &schema.Schema{
@@ -885,56 +804,38 @@ user, the devices that the user is connected to and the assurance issues that th
 
 									"location": &schema.Schema{
 										Description: `Location`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"port": &schema.Schema{
 										Description: `Port`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"rssi": &schema.Schema{
 										Description: `Rssi`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"snr": &schema.Schema{
 										Description: `Snr`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"ssid": &schema.Schema{
 										Description: `Ssid`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"sub_type": &schema.Schema{
 										Description: `Sub Type`,
-										Type:        schema.TypeList,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"user_id": &schema.Schema{

@@ -41,13 +41,13 @@ resource "dnacenter_wireless_enterprise_ssid" "example" {
     fast_transition                       = "string"
     mfp_client_protection                 = "string"
     name                                  = "string"
+    nas_options                           = ["string"]
     passphrase                            = "string"
     radio_policy                          = "string"
     security_level                        = "string"
     session_time_out                      = 1
     ssid_name                             = "string"
     traffic_type                          = "string"
-    site                                  = "string"
   }
 }
 
@@ -77,29 +77,29 @@ output "dnacenter_wireless_enterprise_ssid_example" {
 
 Required:
 
-- **name** (String) Enter SSID Name
+- **ssid_name** (String) ssidName path parameter. Enter the SSID name to be deleted
 
 Optional:
 
 - **basic_service_set_client_idle_timeout** (Number) Basic Service Set Client Idle Timeout
 - **client_exclusion_timeout** (Number) Client Exclusion Timeout
 - **enable_basic_service_set_max_idle** (String) Enable Basic Service Set Max Idle
-- **enable_broadcast_ssi_d** (String) Enable Broadcast SSID
+- **enable_broadcast_ssi_d** (String) Enable Broadcase SSID
 - **enable_client_exclusion** (String) Enable Client Exclusion
 - **enable_directed_multicast_service** (String) Enable Directed Multicast Service
-- **enable_fast_lane** (String) Enable Fast Lane
+- **enable_fast_lane** (String) Enable FastLane
 - **enable_mac_filtering** (String) Enable MAC Filtering
 - **enable_neighbor_list** (String) Enable Neighbor List
 - **enable_session_time_out** (String) Enable Session Timeout
 - **fast_transition** (String) Fast Transition
 - **mfp_client_protection** (String) Management Frame Protection Client
-- **passphrase** (String) Pass Phrase (Only applicable for SSID with PERSONAL security level)
-- **radio_policy** (String) Radio Policy. Allowed values are 'Dual band operation (2.4GHz and 5GHz)', 'Dual band operation with band select', '5GHz only', '2.4GHz only'.
+- **name** (String) SSID NAME
+- **nas_options** (List of String) Nas Options
+- **passphrase** (String) Passphrase
+- **radio_policy** (String) Radio Policy Enum (enum: Triple band operation (2.4GHz, 5GHz and 6GHz), Triple band operation with band select, 5GHz only, 2.4GHz only, 6GHz only)
 - **security_level** (String) Security Level
 - **session_time_out** (Number) Session Time Out
-- **site** (String) site name hierarchy (ex: Global/aaa/zzz/...)
-- **ssid_name** (String) ssidName path parameter. Enter the SSID name to be deleted
-- **traffic_type** (String) Traffic Type
+- **traffic_type** (String) Traffic Type Enum (voicedata or data )
 
 
 <a id="nestedatt--item"></a>
@@ -127,6 +127,7 @@ Read-Only:
 - **is_enabled** (String)
 - **is_fabric** (String)
 - **name** (String)
+- **nas_options** (List of String)
 - **passphrase** (String)
 - **radio_policy** (String)
 - **security_level** (String)

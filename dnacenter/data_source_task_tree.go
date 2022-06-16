@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -74,7 +74,7 @@ func dataSourceTaskTree() *schema.Resource {
 						},
 
 						"is_error": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -85,11 +85,8 @@ func dataSourceTaskTree() *schema.Resource {
 						},
 
 						"operation_id_list": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"parent_id": &schema.Schema{

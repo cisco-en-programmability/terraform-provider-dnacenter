@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -154,11 +154,8 @@ func dataSourceReports() *schema.Resource {
 						},
 
 						"schedule": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"tags": &schema.Schema{
@@ -260,11 +257,8 @@ func dataSourceReports() *schema.Resource {
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type.
 `,
-													Type:     schema.TypeList,
+													Type:     schema.TypeString,
 													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 											},
 										},
@@ -455,11 +449,8 @@ func dataSourceReports() *schema.Resource {
 						},
 
 						"schedule": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"tags": &schema.Schema{
@@ -561,11 +552,8 @@ func dataSourceReports() *schema.Resource {
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type.
 `,
-													Type:     schema.TypeList,
+													Type:     schema.TypeString,
 													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 											},
 										},
@@ -697,7 +685,7 @@ func dataSourceReportsRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetAScheduledReport")
+		log.Printf("[DEBUG] Selected method 1: GetAScheduledReport")
 		vvReportID := vReportID.(string)
 
 		response2, restyResp2, err := client.Reports.GetAScheduledReport(vvReportID)

@@ -63,6 +63,7 @@ Read-Only:
 - **is_enabled** (String)
 - **is_fabric** (String)
 - **name** (String)
+- **nas_options** (List of String)
 - **passphrase** (String)
 - **radio_policy** (String)
 - **security_level** (String)

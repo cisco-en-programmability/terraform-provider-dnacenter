@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -50,11 +50,8 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"function_details": &schema.Schema{
@@ -64,11 +61,8 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"attribute_info": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"id": &schema.Schema{
@@ -114,11 +108,8 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 
 						"device_id": &schema.Schema{
@@ -133,11 +124,8 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"attribute_info": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"function_details": &schema.Schema{
@@ -147,11 +135,8 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"attribute_info": &schema.Schema{
-													Type:     schema.TypeList,
+													Type:     schema.TypeString,
 													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"id": &schema.Schema{
@@ -252,7 +237,7 @@ func dataSourceNetworkDeviceFunctionalCapabilityRead(ctx context.Context, d *sch
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetFunctionalCapabilityByID")
+		log.Printf("[DEBUG] Selected method 1: GetFunctionalCapabilityByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.Devices.GetFunctionalCapabilityByID(vvID)

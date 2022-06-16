@@ -10,7 +10,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -701,7 +701,7 @@ func resourceNfvProvision() *schema.Resource {
 												"dia": &schema.Schema{
 													Description: `Direct internet access value should be boolean (eg: false)
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -717,7 +717,7 @@ func resourceNfvProvision() *schema.Resource {
 															"connect": &schema.Schema{
 																Description: `Connection of service provider and device value should be boolean (eg: true)
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -726,7 +726,7 @@ func resourceNfvProvision() *schema.Resource {
 															"default_gateway": &schema.Schema{
 																Description: `Default gateway connect value as boolean (eg: true)
 `,
-																// Type:        schema.TypeBool,
+
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,

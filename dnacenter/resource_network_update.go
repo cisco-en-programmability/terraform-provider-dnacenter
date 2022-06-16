@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -276,7 +276,7 @@ func resourceNetworkUpdate() *schema.Resource {
 												"configure_dnac_ip": &schema.Schema{
 													Description: `Configuration dnac ip for snmp server (eg: true)
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -305,7 +305,7 @@ func resourceNetworkUpdate() *schema.Resource {
 												"configure_dnac_ip": &schema.Schema{
 													Description: `Configuration dnac ip for syslog server (eg: true)
 `,
-													// Type:        schema.TypeBool,
+
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,

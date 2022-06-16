@@ -20,16 +20,19 @@ data "dnacenter_event_series" "example" {
   provider   = dnacenter
   category   = "string"
   domain     = "string"
-  end_time   = "hh:mm"
+  end_time   = 1609459200
   event_ids  = "string"
-  limit      = "#"
-  offset     = "#"
+  limit      = 1
+  namespace  = "string"
+  offset     = 1
   order      = "string"
   severity   = "string"
+  site_id    = "string"
   sort_by    = "string"
   source     = "string"
-  start_time = "hh:mm"
+  start_time = 1609459200
   sub_domain = "string"
+  tags       = "string"
   type       = "string"
 }
 
@@ -49,13 +52,16 @@ output "dnacenter_event_series_example" {
 - **event_ids** (String) eventIds query parameter. The registered EventId should be provided
 - **id** (String) The ID of this resource.
 - **limit** (Number) limit query parameter. # of records
+- **namespace** (String) namespace query parameter.
 - **offset** (Number) offset query parameter. Start Offset
 - **order** (String) order query parameter. Ascending/Descending order [asc/desc]
 - **severity** (String) severity query parameter.
+- **site_id** (String) siteId query parameter. Site Id
 - **sort_by** (String) sortBy query parameter. Sort By column
 - **source** (String) source query parameter.
 - **start_time** (Number) startTime query parameter. Start Time in milliseconds
 - **sub_domain** (String) subDomain query parameter. Sub Domain
+- **tags** (String) tags query parameter.
 - **type** (String) type query parameter.
 
 ### Read-Only
@@ -75,12 +81,21 @@ Read-Only:
 - **event_id** (String)
 - **instance_id** (String)
 - **name** (String)
-- **name_space** (String)
+- **namespace** (String)
+- **network** (List of Object) (see [below for nested schema](#nestedobjatt--items--network))
 - **severity** (String)
 - **source** (String)
 - **sub_domain** (String)
 - **timestamp** (String)
 - **type** (String)
 - **version** (String)
+
+<a id="nestedobjatt--items--network"></a>
+### Nested Schema for `items.network`
+
+Read-Only:
+
+- **device_id** (String)
+- **site_id** (String)
 
 

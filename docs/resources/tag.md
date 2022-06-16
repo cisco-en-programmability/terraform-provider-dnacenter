@@ -26,6 +26,26 @@ provider "dnacenter" {
 
 resource "dnacenter_tag" "example" {
   provider = dnacenter
+  item {
+
+
+    dynamic_rules {
+
+
+      rules {
+
+
+
+
+
+
+      }
+    }
+
+
+
+
+  }
   parameters {
 
     description = "string"

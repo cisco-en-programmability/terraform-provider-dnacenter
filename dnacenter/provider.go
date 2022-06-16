@@ -51,6 +51,9 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"dnacenter_pnp_device_authorize":                       resourcePnpDeviceAuthorize(),
+			"dnacenter_assign_device_to_site":                      resourceAssignDeviceToSite(),
+			"dnacenter_transit_peer_network":                       resourceTransitPeerNetwork(),
 			"dnacenter_reserve_ip_subpool":                         resourceReserveIPSubpool(),
 			"dnacenter_wireless_rf_profile":                        resourceWirelessRfProfile(),
 			"dnacenter_wireless_profile":                           resourceWirelessProfile(),
@@ -159,6 +162,7 @@ func Provider() *schema.Provider {
 			"dnacenter_event_email_config_update":                  resourceEventEmailConfigUpdate(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
+			"dnacenter_transit_peer_network":                           dataSourceTransitPeerNetwork(),
 			"dnacenter_reserve_ip_subpool":                             dataSourceReserveIPSubpool(),
 			"dnacenter_wireless_rf_profile":                            dataSourceWirelessRfProfile(),
 			"dnacenter_wireless_profile":                               dataSourceWirelessProfile(),

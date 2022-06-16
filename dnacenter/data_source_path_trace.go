@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "dnacenter-go-sdk/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -3714,7 +3714,7 @@ func dataSourcePathTrace() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"control_path": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -3758,7 +3758,7 @@ func dataSourcePathTrace() *schema.Resource {
 									},
 
 									"periodic_refresh": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -3796,7 +3796,7 @@ func dataSourcePathTrace() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"control_path": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -3840,7 +3840,7 @@ func dataSourcePathTrace() *schema.Resource {
 						},
 
 						"periodic_refresh": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -3974,7 +3974,7 @@ func dataSourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: RetrievesPreviousPathtrace")
+		log.Printf("[DEBUG] Selected method 1: RetrievesPreviousPathtrace")
 		vvFlowAnalysisID := vFlowAnalysisID.(string)
 
 		response2, restyResp2, err := client.PathTrace.RetrievesPreviousPathtrace(vvFlowAnalysisID)
