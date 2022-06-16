@@ -1,4 +1,5 @@
 ## 1.0.0-beta (April 04, 2022)
+
 NOTES:
 `dnacenter-go-sdk` version changes from `github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk` to `github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk`.
 
@@ -55,6 +56,10 @@ BREAKING CHANGES:
 * Resource `resource_sda_fabric` has been removed.
 * Resource `resource_site_design_floormap` has been removed.
 
+## 0.3.0 (June 16, 2022)
+
+NOTES: 
+Stable version with `github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk` (Cisco DNA Center 2.2.3.3 API)
 
 ## 0.3.0-beta (April 04, 2022)
 
