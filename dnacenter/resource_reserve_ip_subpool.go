@@ -512,7 +512,13 @@ func resourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData, m
 
 		response1, err := searchNetworkSettingsGetReserveIPSubpool(m, queryParams1, vName)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting searchNetworkSettingsGetReserveIPSubpool search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}

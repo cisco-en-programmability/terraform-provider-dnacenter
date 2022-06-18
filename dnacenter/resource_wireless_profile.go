@@ -347,7 +347,13 @@ func resourceWirelessProfileRead(ctx context.Context, d *schema.ResourceData, m 
 
 		response1, restyResp1, err := client.Wireless.GetWirelessProfile(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetWirelessProfile", err,
+				"Failure at GetWirelessProfile, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}

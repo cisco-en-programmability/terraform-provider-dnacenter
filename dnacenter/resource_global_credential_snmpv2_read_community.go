@@ -253,7 +253,13 @@ func resourceGlobalCredentialSNMPv2ReadCommunityRead(ctx context.Context, d *sch
 		queryParams1.CredentialSubType = vCredentialSubType
 
 		response1, err := searchDiscoveryGetGlobalCredentialsSmpv2Read(m, queryParams1, vID)
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGlobalCredentials search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}

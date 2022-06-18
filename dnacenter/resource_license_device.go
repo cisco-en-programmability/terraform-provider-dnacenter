@@ -185,7 +185,13 @@ func resourceLicenseDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 
 		response1, err := searchLicensesSmartAccountDetails(m, vVirtualAccountName, vSmartAccountID)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting searchLicensesSmartAccountDetails search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}

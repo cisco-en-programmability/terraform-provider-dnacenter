@@ -220,7 +220,13 @@ func resourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema.R
 
 		response1, restyResp1, err := client.Sda.GetDefaultAuthenticationProfileFromSdaFabric(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDefaultAuthenticationProfileFromSdaFabric", err,
+				"Failure at GetDefaultAuthenticationProfileFromSdaFabric, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}

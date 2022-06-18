@@ -589,7 +589,13 @@ func resourceNetworkDeviceListRead(ctx context.Context, d *schema.ResourceData, 
 
 		response1, restyResp1, err := client.Devices.GetDeviceList(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDeviceList", err,
+				"Failure at GetDeviceList, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}

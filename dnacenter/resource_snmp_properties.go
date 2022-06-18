@@ -188,7 +188,13 @@ func resourceSNMPPropertiesRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Selected method 1: GetSNMPProperties")
 
 		response1, err := searchDiscoveryGetSNMPProperties(m, vInstanceTenantId, vSystemPropertyName)
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting searchDiscoveryGetSNMPProperties search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}

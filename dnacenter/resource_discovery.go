@@ -51,30 +51,37 @@ by range" API.
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"cdp_level": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+
 						"device_ids": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"discovery_condition": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"discovery_status": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"discovery_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"enable_password_list": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"global_credential_id_list": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -82,6 +89,7 @@ by range" API.
 								Type: schema.TypeString,
 							},
 						},
+
 						"http_read_credential": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -92,40 +100,49 @@ by range" API.
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"credential_type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"description": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"id": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"instance_tenant_id": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"instance_uuid": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"password": &schema.Schema{
 										Type:      schema.TypeString,
 										Sensitive: true,
 										Computed:  true,
 									},
+
 									"port": &schema.Schema{
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"secure": &schema.Schema{
 
+									"secure": &schema.Schema{
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"username": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
@@ -133,6 +150,7 @@ by range" API.
 								},
 							},
 						},
+
 						"http_write_credential": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -143,40 +161,49 @@ by range" API.
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"credential_type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"description": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"id": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"instance_tenant_id": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"instance_uuid": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"password": &schema.Schema{
 										Type:      schema.TypeString,
 										Sensitive: true,
 										Computed:  true,
 									},
+
 									"port": &schema.Schema{
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"secure": &schema.Schema{
 
+									"secure": &schema.Schema{
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"username": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
@@ -184,109 +211,135 @@ by range" API.
 								},
 							},
 						},
+
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"ip_address_list": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"ip_filter_list": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"is_auto_cdp": &schema.Schema{
 
+						"is_auto_cdp": &schema.Schema{
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"lldp_level": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"netconf_port": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"num_devices": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+
 						"parent_discovery_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"password_list": &schema.Schema{
 							Type:      schema.TypeString,
 							Sensitive: true,
 							Computed:  true,
 						},
+
 						"preferred_mgmt_ipmethod": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"protocol_order": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"retry_count": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+
 						"snmp_auth_passphrase": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"snmp_auth_protocol": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"snmp_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"snmp_priv_passphrase": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"snmp_priv_protocol": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"snmp_ro_community": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"snmp_ro_community_desc": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"snmp_rw_community": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"snmp_rw_community_desc": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"snmp_user_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"time_out": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-						"update_mgmt_ip": &schema.Schema{
 
+						"update_mgmt_ip": &schema.Schema{
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"user_name_list": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -754,7 +807,13 @@ func resourceDiscoveryRead(ctx context.Context, d *schema.ResourceData, m interf
 
 		response1, restyResp1, err := client.Discovery.GetDiscoveryByID(vvID)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDiscoveryByID", err,
+				"Failure at GetDiscoveryByID, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -775,7 +834,13 @@ func resourceDiscoveryRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	} else if vName != "" {
 		response1, err := searchDiscovery(m, vName)
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDiscovery search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}
@@ -783,13 +848,17 @@ func resourceDiscoveryRead(ctx context.Context, d *schema.ResourceData, m interf
 		vID = response1.ID
 		response2, restyResp1, err := client.Discovery.GetDiscoveryByID(vID)
 
-		if err != nil || response2 == nil {
+		if err != nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDiscoveryByID", err,
 				"Failure at GetDiscoveryByID, unexpected response", ""))
+			return diags
+		}
+		if response2 == nil {
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenDiscoveryGetDiscoveryByIDItem(response2.Response)

@@ -639,7 +639,13 @@ func resourceNfvProfileRead(ctx context.Context, d *schema.ResourceData, m inter
 
 		response1, restyResp1, err := client.SiteDesign.GetNfvProfile(vvID, &queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetNfvProfile", err,
+				"Failure at GetNfvProfile, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}

@@ -311,7 +311,13 @@ func resourceSdaMulticastRead(ctx context.Context, d *schema.ResourceData, m int
 
 		response1, restyResp1, err := client.Sda.GetMulticastDetailsFromSdaFabric(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetMulticastDetailsFromSdaFabric", err,
+				"Failure at GetMulticastDetailsFromSdaFabric, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}

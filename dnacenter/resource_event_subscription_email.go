@@ -63,11 +63,26 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 									},
 
 									"domains_subdomains": &schema.Schema{
-										Description: `Domains Subdomains`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"domain": &schema.Schema{
+													Description: `Domain`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"sub_domains": &schema.Schema{
+													Description: `Sub Domains`,
+													Type:        schema.TypeList,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
 										},
 									},
 
@@ -98,6 +113,15 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 										},
 									},
 
+									"site_ids": &schema.Schema{
+										Description: `Site Ids`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
 									"sources": &schema.Schema{
 										Description: `Sources`,
 										Type:        schema.TypeList,
@@ -121,8 +145,9 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 
 						"is_private": &schema.Schema{
 							Description: `Is Private`,
-							Type:        schema.TypeString,
-							Computed:    true,
+
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"name": &schema.Schema{
@@ -394,7 +419,13 @@ func resourceEventSubscriptionEmailRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Selected method 1: GetEmailEventSubscriptions")
 		queryParams1 := dnacentersdkgo.GetEmailEventSubscriptionsQueryParams{}
 		item, err := searchEventManagementGetEmailEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
-		if err != nil || item == nil || len(*item) <= 0 {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetEventSubscriptions search response",
+				err))
+			return diags
+		}
+		if item == nil || len(*item) <= 0 {
 			d.SetId("")
 			return diags
 		}
