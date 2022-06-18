@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -155,7 +155,7 @@ func dataSourceNetworkDeviceConfigRead(ctx context.Context, d *schema.ResourceDa
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceConfigByID")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceConfigByID")
 		vvNetworkDeviceID := vNetworkDeviceID.(string)
 
 		response2, restyResp2, err := client.Devices.GetDeviceConfigByID(vvNetworkDeviceID)

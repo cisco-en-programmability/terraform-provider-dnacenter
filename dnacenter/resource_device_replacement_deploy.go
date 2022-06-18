@@ -3,27 +3,29 @@ package dnacenter
 import (
 	"context"
 	"errors"
-	"reflect"
 	"time"
+
+	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceDeviceReplacementDeploy() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Device Replacement.
+
 - API to trigger RMA workflow that will replace faulty device with replacement device with same configuration and images
 `,
 
 		CreateContext: resourceDeviceReplacementDeployCreate,
 		ReadContext:   resourceDeviceReplacementDeployRead,
 		DeleteContext: resourceDeviceReplacementDeployDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,13 +58,13 @@ func resourceDeviceReplacementDeploy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"faulty_device_serial_number": &schema.Schema{
 							Type:     schema.TypeString,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 						},
 						"replacement_device_serial_number": &schema.Schema{
 							Type:     schema.TypeString,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
 						},
 					},
 				},
@@ -73,14 +75,16 @@ func resourceDeviceReplacementDeploy() *schema.Resource {
 
 func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
 	request1 := expandRequestDeviceReplacementDeployDeployDeviceReplacementWorkflow(ctx, "parameters.0", d)
+
+	response1, restyResp1, err := client.DeviceReplacement.DeployDeviceReplacementWorkflow(request1)
+
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
-	response1, restyResp1, err := client.DeviceReplacement.DeployDeviceReplacementWorkflow(request1)
+
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -93,11 +97,9 @@ func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.Resour
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	vItem1 := flattenDeviceReplacementDeployDeviceReplacementWorkflowItem(response1.Response)
-	if err := d.Set("item", vItem1); err != nil {
+	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when setting DeployDeviceReplacementWorkflow response",
-			err))
+			"Failure when executing DeployDeviceReplacementWorkflow", err))
 		return diags
 	}
 	taskId := response1.Response.TaskID
@@ -135,18 +137,22 @@ func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.Resour
 			return diags
 		}
 	}
+
+	vItem1 := flattenDeviceReplacementDeployDeviceReplacementWorkflowItem(response1.Response)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting DeployDeviceReplacementWorkflow response",
+			err))
+		return diags
+	}
 	d.SetId(getUnixTimeString())
 	return diags
-}
 
+}
 func resourceDeviceReplacementDeployRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
-}
-
-func resourceDeviceReplacementDeployUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceDeviceReplacementDeployRead(ctx, d, m)
 }
 
 func resourceDeviceReplacementDeployDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -164,10 +170,6 @@ func expandRequestDeviceReplacementDeployDeployDeviceReplacementWorkflow(ctx con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".replacement_device_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".replacement_device_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".replacement_device_serial_number")))) {
 		request.ReplacementDeviceSerialNumber = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

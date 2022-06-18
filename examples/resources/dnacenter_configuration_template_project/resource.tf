@@ -1,9 +1,211 @@
-provider "dnacenter" {
-  debug = "true"
-}
 
 resource "dnacenter_configuration_template_project" "example" {
   provider = dnacenter
+  item {
+
+
+
+
+
+
+
+    tags {
+
+
+
+    }
+    templates {
+
+
+
+      containing_templates {
+
+
+
+        device_types {
+
+
+
+
+        }
+
+
+
+
+        rollback_template_params {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          range {
+
+
+
+
+          }
+
+          selection {
+
+
+
+
+
+          }
+        }
+        tags {
+
+
+
+        }
+
+        template_params {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          range {
+
+
+
+
+          }
+
+          selection {
+
+
+
+
+
+          }
+        }
+
+      }
+
+
+
+      device_types {
+
+
+
+
+      }
+
+
+
+
+
+
+
+
+
+
+      rollback_template_params {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        range {
+
+
+
+
+        }
+
+        selection {
+
+
+
+
+
+        }
+      }
+
+
+
+      tags {
+
+
+
+      }
+
+      template_params {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        range {
+
+
+
+
+        }
+
+        selection {
+
+
+
+
+
+        }
+      }
+      validation_errors {
+
+
+
+
+
+      }
+
+    }
+  }
   parameters {
 
     create_time      = 1
@@ -64,7 +266,7 @@ resource "dnacenter_configuration_template_project" "example" {
             default_selected_values = ["string"]
             id                      = "string"
             selection_type          = "string"
-            selection_values        = ["string"]
+            selection_values        = "string"
           }
         }
         tags {
@@ -102,7 +304,7 @@ resource "dnacenter_configuration_template_project" "example" {
             default_selected_values = ["string"]
             id                      = "string"
             selection_type          = "string"
-            selection_values        = ["string"]
+            selection_values        = "string"
           }
         }
         version = "string"
@@ -116,7 +318,6 @@ resource "dnacenter_configuration_template_project" "example" {
         product_series = "string"
         product_type   = "string"
       }
-      document_database         = "false"
       failure_policy            = "string"
       id                        = "string"
       language                  = "string"
@@ -124,7 +325,6 @@ resource "dnacenter_configuration_template_project" "example" {
       latest_version_time       = 1
       name                      = "string"
       parent_template_id        = "string"
-      project_associated        = "false"
       project_id                = "string"
       project_name              = "string"
       rollback_template_content = "string"
@@ -157,7 +357,7 @@ resource "dnacenter_configuration_template_project" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = ["string"]
+          selection_values        = "string"
         }
       }
       software_type    = "string"
@@ -198,7 +398,7 @@ resource "dnacenter_configuration_template_project" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = ["string"]
+          selection_values        = "string"
         }
       }
       validation_errors {

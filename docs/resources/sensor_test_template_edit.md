@@ -3,29 +3,27 @@
 page_title: "dnacenter_sensor_test_template_edit Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
-  It performs create operation on Device Onboarding (PnP).
-      •   Claim a device based on DNA-C Site based design process. Different parameters are required for different device
-          platforms.
+  It performs update operation on Sensors.
+  Intent API to deploy, schedule, or edit and existing SENSOR test template
 ---
 
 # dnacenter_sensor_test_template_edit (Resource)
 
-It performs create operation on Device Onboarding (PnP).
-	•	Claim a device based on DNA-C Site based design process. Different parameters are required for different device
-		platforms.
+It performs update operation on Sensors.
 
-~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+- Intent API to deploy, schedule, or edit and existing SENSOR test template
+
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_sensor_test_template_edit" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     location_info_list {
 
       all_sensors    = "false"
@@ -58,6 +56,10 @@ resource "dnacenter_sensor_test_template_edit" "example" {
     }
     template_name = "string"
   }
+}
+
+output "dnacenter_sensor_test_template_edit_example" {
+  value = dnacenter_sensor_test_template_edit.example
 }
 ```
 
@@ -273,10 +275,10 @@ Read-Only:
 - **ext_web_auth_portal** (String)
 - **ext_web_auth_virtual_ip** (String)
 - **id** (Number)
-- **layer3web_auth_email_address** (String)
-- **layer3web_authpassword** (String)
-- **layer3web_authsecurity** (String)
-- **layer3web_authuser_name** (String)
+- **layer3web_auth_email_address** (List of String)
+- **layer3web_authpassword** (List of String)
+- **layer3web_authsecurity** (List of String)
+- **layer3web_authuser_name** (List of String)
 - **num_aps** (Number)
 - **num_sensors** (Number)
 - **password** (String)

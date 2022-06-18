@@ -3,21 +3,23 @@ package dnacenter
 import (
 	"context"
 	"errors"
-	"fmt"
-	"reflect"
 	"time"
+
+	"fmt"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceNetworkDeviceSync() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on Devices.
+
 - Synchronizes the devices. If forceSync param is false (default) then the sync would run in normal priority thread. If
 forceSync param is true then the sync would run in high priority thread if available, else the sync will fail. Result
 can be seen in the child task of each device
@@ -26,7 +28,6 @@ can be seen in the child task of each device
 		CreateContext: resourceNetworkDeviceSyncCreate,
 		ReadContext:   resourceNetworkDeviceSyncRead,
 		DeleteContext: resourceNetworkDeviceSyncDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -60,19 +61,17 @@ can be seen in the child task of each device
 						"force_sync": &schema.Schema{
 							Description: `forceSync query parameter.`,
 							Type:        schema.TypeBool,
-							ForceNew:    true,
 							Optional:    true,
+							ForceNew:    true,
 						},
 						"payload": &schema.Schema{
-							MaxItems:    1,
-							MinItems:    1,
 							Description: `Array of RequestDevicesSyncDevices`,
 							Type:        schema.TypeList,
+							Optional:    true,
+							ForceNew:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
-							ForceNew: true,
-							Optional: true,
 						},
 					},
 				},
@@ -83,20 +82,24 @@ can be seen in the child task of each device
 
 func resourceNetworkDeviceSyncCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	vForceSync, okForceSync := resourceItem["force_sync"]
 
 	request1 := expandRequestNetworkDeviceSyncSyncDevices(ctx, "parameters.0", d)
+	queryParams1 := dnacentersdkgo.SyncDevicesQueryParams{}
+
+	if okForceSync {
+		queryParams1.ForceSync = *stringToBooleanPtr(vForceSync.(string))
+	}
+
+	response1, restyResp1, err := client.Devices.SyncDevices(request1, &queryParams1)
+
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
-	queryParams1 := dnacentersdkgo.SyncDevicesQueryParams{}
-	if okForceSync {
-		queryParams1.ForceSync = vForceSync.(bool)
-	}
-	response1, restyResp1, err := client.Devices.SyncDevices(request1, &queryParams1)
+
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -109,11 +112,9 @@ func resourceNetworkDeviceSyncCreate(ctx context.Context, d *schema.ResourceData
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	vItem1 := flattenDevicesSyncDevicesItem(response1.Response)
-	if err := d.Set("item", vItem1); err != nil {
+	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when setting SyncDevices response",
-			err))
+			"Failure when executing SyncDevicesUsingForcesync", err))
 		return diags
 	}
 	taskId := response1.Response.TaskID
@@ -147,22 +148,26 @@ func resourceNetworkDeviceSyncCreate(ctx context.Context, d *schema.ResourceData
 			}
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing SyncDevices", err1))
+				"Failure when executing SyncDevicesUsingForcesync", err1))
 			return diags
 		}
 	}
+
+	vItem1 := flattenDevicesSyncDevicesItem(response1.Response)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting SyncDevices response",
+			err))
+		return diags
+	}
 	d.SetId(getUnixTimeString())
 	return diags
-}
 
+}
 func resourceNetworkDeviceSyncRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
-}
-
-func resourceNetworkDeviceSyncUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceNetworkDeviceSyncRead(ctx, d, m)
 }
 
 func resourceNetworkDeviceSyncDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -177,10 +182,6 @@ func expandRequestNetworkDeviceSyncSyncDevices(ctx context.Context, key string, 
 	if v := expandRequestNetworkDeviceSyncSyncDevicesItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -201,20 +202,12 @@ func expandRequestNetworkDeviceSyncSyncDevicesItemArray(ctx context.Context, key
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestNetworkDeviceSyncSyncDevicesItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDevicesSyncDevices {
 	var request dnacentersdkgo.RequestItemDevicesSyncDevices
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

@@ -20,11 +20,11 @@ data "dnacenter_event_series_count" "example" {
   provider   = dnacenter
   category   = "string"
   domain     = "string"
-  end_time   = "hh:mm"
+  end_time   = 1609459200
   event_ids  = "string"
   severity   = "string"
   source     = "string"
-  start_time = "hh:mm"
+  start_time = 1609459200
   sub_domain = "string"
   type       = "string"
 }

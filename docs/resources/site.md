@@ -27,28 +27,36 @@ provider "dnacenter" {
 resource "dnacenter_site" "example" {
   provider = dnacenter
   parameters {
+
     site {
+
       area {
+
         name        = "string"
         parent_name = "string"
       }
       building {
-        name        = "string"
+
         address     = "string"
+        country     = "string"
+        latitude    = 1.0
+        longitude   = 1.0
+        name        = "string"
         parent_name = "string"
-        latitude    = 1
-        longitude   = 1
       }
       floor {
-        height      = 1
-        length      = 1
-        name        = "string"
-        parent_name = "string"
-        rf_model    = "string"
-        width       = 1
+
+        floor_number = 1.0
+        height       = 1.0
+        length       = 1.0
+        name         = "string"
+        parent_name  = "string"
+        rf_model     = "string"
+        width        = 1.0
       }
     }
-    type = "string"
+    site_id = "string"
+    type    = "string"
   }
 }
 

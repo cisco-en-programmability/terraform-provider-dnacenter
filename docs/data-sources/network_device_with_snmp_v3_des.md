@@ -4,16 +4,16 @@ page_title: "dnacenter_network_device_with_snmp_v3_des Data Source - terraform-p
 subcategory: ""
 description: |-
   It performs read operation on Devices.
-  Returns devices added to DNAC with snmp v3 DES, where siteId is mandatory & accepts offset, limit, sortby, order which
-  are optional.
+  Returns devices added to Cisco DNA center with snmp v3 DES, where siteId is mandatory & accepts offset, limit, sortby,
+  order which are optional.
 ---
 
 # dnacenter_network_device_with_snmp_v3_des (Data Source)
 
 It performs read operation on Devices.
 
-- Returns devices added to DNAC with snmp v3 DES, where siteId is mandatory & accepts offset, limit, sortby, order which
-are optional.
+- Returns devices added to Cisco DNA center with snmp v3 DES, where siteId is mandatory & accepts offset, limit, sortby,
+order which are optional.
 
 ## Example Usage
 

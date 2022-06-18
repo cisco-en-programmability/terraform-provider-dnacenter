@@ -21,12 +21,12 @@ additional value added services.
 data "dnacenter_device_health" "example" {
   provider    = dnacenter
   device_role = "string"
-  end_time    = "hh:mm"
+  end_time    = 1609459200
   health      = "string"
-  limit       = "#"
-  offset      = "#"
+  limit       = 1
+  offset      = 1
   site_id     = "string"
-  start_time  = "hh:mm"
+  start_time  = 1609459200
 }
 
 output "dnacenter_device_health_example" {

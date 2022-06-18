@@ -6,23 +6,23 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceWirelessProvisionSsidDeleteReprovision() *schema.Resource {
+// resourceAction
+func resourceWirelessProvisionSSIDDeleteReprovision() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs delete operation on Wireless.
-		- Removes SSID or WLAN from the network profile, reprovision the device(s) and deletes the SSID or WLAN from DNA Center
-	
+
+- Removes SSID or WLAN from the network profile, reprovision the device(s) and deletes the SSID or WLAN from DNA Center
 `,
 
-		CreateContext: resourceWirelessProvisionSsidDeleteReprovisionCreate,
-		ReadContext:   resourceWirelessProvisionSsidDeleteReprovisionRead,
-		DeleteContext: resourceWirelessProvisionSsidDeleteReprovisionDelete,
-
+		CreateContext: resourceWirelessProvisionSSIDDeleteReprovisionCreate,
+		ReadContext:   resourceWirelessProvisionSSIDDeleteReprovisionRead,
+		DeleteContext: resourceWirelessProvisionSSIDDeleteReprovisionDelete,
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -72,14 +72,6 @@ func resourceWirelessProvisionSsidDeleteReprovision() *schema.Resource {
 							Required:    true,
 							ForceNew:    true,
 						},
-						"persistbapioutput": &schema.Schema{
-							Description: `__persistbapioutput header parameter. Persist bapi sync response
-						`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							ForceNew:     true,
-						},
 					},
 				},
 			},
@@ -87,24 +79,24 @@ func resourceWirelessProvisionSsidDeleteReprovision() *schema.Resource {
 	}
 }
 
-func resourceWirelessProvisionSsidDeleteReprovisionCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceWirelessProvisionSSIDDeleteReprovisionCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-	resourceItem := *getResourceItem(d.Get("parameters"))
-	vSSIDName := resourceItem["ssid_name"]
-	vvSSIDName := interfaceToString(vSSIDName)
-	vManagedApLocations := resourceItem["managed_aplocations"]
-	vvManagedApLocations := interfaceToString(vManagedApLocations)
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("persistbapioutput")
 	var diags diag.Diagnostics
 
-	log.Printf("[DEBUG] Selected method 1: DeleteSSIDAndProvisionItToDevices")
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	vSSIDName := resourceItem["ssid_name"]
+	vManagedApLocations := resourceItem["managed_aplocations"]
+	vPersistbapioutput := resourceItem["persistbapioutput"]
+
+	vvSSIDName := vSSIDName.(string)
+	vvManagedApLocations := vManagedApLocations.(string)
+
 	headerParams1 := dnacentersdkgo.DeleteSSIDAndProvisionItToDevicesHeaderParams{}
 
-	if okPersistbapioutput {
-		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-	}
+	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
 	response1, restyResp1, err := client.Wireless.DeleteSSIDAndProvisionItToDevices(vvSSIDName, vvManagedApLocations, &headerParams1)
+
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -114,6 +106,8 @@ func resourceWirelessProvisionSsidDeleteReprovisionCreate(ctx context.Context, d
 			"Failure at DeleteSSIDAndProvisionItToDevices, unexpected response", ""))
 		return diags
 	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
@@ -151,7 +145,6 @@ func resourceWirelessProvisionSsidDeleteReprovisionCreate(ctx context.Context, d
 		}
 	}
 
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 	vItem1 := flattenWirelessDeleteSSIDAndProvisionItToDevicesItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -159,21 +152,17 @@ func resourceWirelessProvisionSsidDeleteReprovisionCreate(ctx context.Context, d
 			err))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourceWirelessProvisionSsidDeleteReprovisionRead(ctx, d, m)
+	return diags
+
 }
-
-func resourceWirelessProvisionSsidDeleteReprovisionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceWirelessProvisionSSIDDeleteReprovisionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
 }
 
-func resourceWirelessProvisionSsidDeleteReprovisionDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
+func resourceWirelessProvisionSSIDDeleteReprovisionDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics

@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -241,7 +241,13 @@ func resourceGlobalCredentialHTTPReadRead(ctx context.Context, d *schema.Resourc
 		queryParams1.CredentialSubType = vCredentialSubType
 
 		response1, err := searchDiscoveryGetGlobalCredentialsHttpRead(m, queryParams1, vUsername, vID)
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGlobalCredentials search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}

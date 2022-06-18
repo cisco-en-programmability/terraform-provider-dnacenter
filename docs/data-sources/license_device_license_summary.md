@@ -21,11 +21,11 @@ data "dnacenter_license_device_license_summary" "example" {
   device_type          = "string"
   device_uuid          = "string"
   dna_level            = "string"
-  limit                = "#"
+  limit                = 1
   order                = "string"
-  page_number          = 1
+  page_number          = 1.0
   registration_status  = "string"
-  smart_account_id     = 1
+  smart_account_id     = 1.0
   sort_by              = "string"
   virtual_account_name = "string"
 }

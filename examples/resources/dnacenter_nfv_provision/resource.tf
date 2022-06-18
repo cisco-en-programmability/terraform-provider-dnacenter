@@ -1,10 +1,8 @@
 
 resource "dnacenter_nfv_provision" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     provisioning {
 
       device {
@@ -78,19 +76,19 @@ resource "dnacenter_nfv_provision" "example" {
         building {
 
           address     = "string"
-          latitude    = 1
-          longitude   = 1
+          latitude    = 1.0
+          longitude   = 1.0
           name        = "string"
           parent_name = "string"
         }
         floor {
 
-          height      = 1
-          length      = 1
+          height      = 1.0
+          length      = 1.0
           name        = "string"
           parent_name = "string"
           rf_model    = "string"
-          width       = 1
+          width       = 1.0
         }
         site_profile_name = "string"
       }
@@ -165,14 +163,4 @@ resource "dnacenter_nfv_provision" "example" {
 
 output "dnacenter_nfv_provision_example" {
   value = dnacenter_nfv_provision.example
-}
-
-data "dnacenter_dnacaap_management_execution_status" "example" {
-  depends_on   = [dnacenter_nfv_provision.example]
-  provider     = dnacenter
-  execution_id = dnacenter_nfv_provision.example.item.0.execution_id
-}
-
-output "dnacenter_dnacaap_management_execution_status_example" {
-  value = data.dnacenter_dnacaap_management_execution_status.example.item
 }

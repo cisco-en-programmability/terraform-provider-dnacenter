@@ -3,28 +3,29 @@ package dnacenter
 import (
 	"context"
 	"errors"
-	"reflect"
 	"time"
+
+	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceDeviceConfigurationsExport() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Configuration Archive.
-		- Export Device configurations to an encrypted zip file.
-	
+
+- Export Device configurations to an encrypted zip file.
 `,
 
 		CreateContext: resourceDeviceConfigurationsExportCreate,
 		ReadContext:   resourceDeviceConfigurationsExportRead,
 		DeleteContext: resourceDeviceConfigurationsExportDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -82,10 +83,8 @@ func resourceDeviceConfigurationsExport() *schema.Resource {
 
 func resourceDeviceConfigurationsExportCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
-	log.Printf("[DEBUG] Selected method 1: ExportDeviceConfigurations")
 	request1 := expandRequestDeviceConfigurationsExportExportDeviceConfigurations(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.ConfigurationArchive.ExportDeviceConfigurations(request1)
@@ -103,6 +102,8 @@ func resourceDeviceConfigurationsExportCreate(ctx context.Context, d *schema.Res
 			"Failure at ExportDeviceConfigurations, unexpected response", ""))
 		return diags
 	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 	if response1.Response == nil {
 		diags = append(diags, diagError(
@@ -125,7 +126,19 @@ func resourceDeviceConfigurationsExportCreate(ctx context.Context, d *schema.Res
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			restyResp3, err := client.CustomCall.GetCustomCall(response2.Response.AdditionalStatusURL, nil)
+			if err != nil {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetCustomCall", err,
+					"Failure at GetCustomCall, unexpected response", ""))
+				return diags
+			}
+			var errorMsg string
+			if restyResp3 == nil {
+				errorMsg = response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			} else {
+				errorMsg = restyResp3.String()
+			}
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
 				"Failure when executing ExportDeviceConfigurations", err1))
@@ -133,7 +146,6 @@ func resourceDeviceConfigurationsExportCreate(ctx context.Context, d *schema.Res
 		}
 	}
 
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 	vItem1 := flattenConfigurationArchiveExportDeviceConfigurationsItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -141,21 +153,17 @@ func resourceDeviceConfigurationsExportCreate(ctx context.Context, d *schema.Res
 			err))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourceDeviceConfigurationsExportRead(ctx, d, m)
-}
+	return diags
 
+}
 func resourceDeviceConfigurationsExportRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
 }
 
 func resourceDeviceConfigurationsExportDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
@@ -170,10 +178,6 @@ func expandRequestDeviceConfigurationsExportExportDeviceConfigurations(ctx conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

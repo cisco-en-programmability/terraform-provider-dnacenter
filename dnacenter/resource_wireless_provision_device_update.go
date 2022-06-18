@@ -2,29 +2,30 @@ package dnacenter
 
 import (
 	"context"
+	"time"
+
 	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceWirelessProvisionDeviceUpdate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on Wireless.
-		- Updates wireless provisioning
-	
+
+- Updates wireless provisioning
 `,
 
 		CreateContext: resourceWirelessProvisionDeviceUpdateCreate,
 		ReadContext:   resourceWirelessProvisionDeviceUpdateRead,
 		DeleteContext: resourceWirelessProvisionDeviceUpdateDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -82,14 +83,6 @@ func resourceWirelessProvisionDeviceUpdate() *schema.Resource {
 				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"persistbapioutput": &schema.Schema{
-							Description: `__persistbapioutput header parameter. Persist bapi sync response
-						`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							ForceNew:     true,
-						},
 						"payload": &schema.Schema{
 							Description: `Array of RequestWirelessProvisionUpdate`,
 							Type:        schema.TypeList,
@@ -171,18 +164,19 @@ func resourceWirelessProvisionDeviceUpdate() *schema.Resource {
 
 func resourceWirelessProvisionDeviceUpdateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("parameters.0.persistbapioutput")
-	log.Printf("[DEBUG] Selected method 1: ProvisionUpdate")
+
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	vPersistbapioutput := resourceItem["persistbapioutput"]
+
 	request1 := expandRequestWirelessProvisionDeviceUpdateProvisionUpdate(ctx, "parameters.0", d)
 
 	headerParams1 := dnacentersdkgo.ProvisionUpdateHeaderParams{}
 
-	if okPersistbapioutput {
-		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-	}
+	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+
 	response1, restyResp1, err := client.Wireless.ProvisionUpdate(request1, &headerParams1)
+
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
@@ -193,9 +187,11 @@ func resourceWirelessProvisionDeviceUpdateCreate(ctx context.Context, d *schema.
 		}
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing ProvisionUpdate", err,
-			"Failure at Provision, unexpected response", ""))
+			"Failure at ProvisionUpdate, unexpected response", ""))
 		return diags
 	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
@@ -232,7 +228,7 @@ func resourceWirelessProvisionDeviceUpdateCreate(ctx context.Context, d *schema.
 			return diags
 		}
 	}
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
 	vItem1 := flattenWirelessProvisionUpdateItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -240,21 +236,17 @@ func resourceWirelessProvisionDeviceUpdateCreate(ctx context.Context, d *schema.
 			err))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourceWirelessProvisionDeviceUpdateRead(ctx, d, m)
-}
+	return diags
 
+}
 func resourceWirelessProvisionDeviceUpdateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
 }
 
 func resourceWirelessProvisionDeviceUpdateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
@@ -266,10 +258,6 @@ func expandRequestWirelessProvisionDeviceUpdateProvisionUpdate(ctx context.Conte
 	if v := expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -290,10 +278,6 @@ func expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItemArray(ctx cont
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -308,10 +292,6 @@ func expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItem(ctx context.C
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dynamic_interfaces")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dynamic_interfaces")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dynamic_interfaces")))) {
 		request.DynamicInterfaces = expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItemDynamicInterfacesArray(ctx, key+".dynamic_interfaces", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -332,10 +312,6 @@ func expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItemDynamicInterfa
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -359,10 +335,6 @@ func expandRequestWirelessProvisionDeviceUpdateProvisionUpdateItemDynamicInterfa
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".interface_name")))) {
 		request.InterfaceName = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

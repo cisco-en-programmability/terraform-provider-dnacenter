@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -208,7 +208,13 @@ func resourceSdaProvisionDeviceRead(ctx context.Context, d *schema.ResourceData,
 
 		response1, restyResp1, err := client.Sda.GetProvisionedWiredDevice(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetProvisionedWiredDevice", err,
+				"Failure at GetProvisionedWiredDevice, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}

@@ -7,22 +7,23 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceDisassociateSiteToNetworkProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs delete operation on Site Design.
+
 - Disassociate a Site from a Network Profile
 `,
 
 		CreateContext: resourceDisassociateSiteToNetworkProfileCreate,
 		ReadContext:   resourceDisassociateSiteToNetworkProfileRead,
 		DeleteContext: resourceDisassociateSiteToNetworkProfileDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -35,12 +36,14 @@ func resourceDisassociateSiteToNetworkProfile() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"task_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Task Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"url": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Url`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -55,17 +58,17 @@ func resourceDisassociateSiteToNetworkProfile() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"network_profile_id": &schema.Schema{
 							Description: `networkProfileId path parameter. Network-Profile Id to be associated
-			`,
+`,
 							Type:     schema.TypeString,
-							ForceNew: true,
 							Required: true,
+							ForceNew: true,
 						},
 						"site_id": &schema.Schema{
 							Description: `siteId path parameter. Site Id to be associated
-			`,
+`,
 							Type:     schema.TypeString,
-							ForceNew: true,
 							Required: true,
+							ForceNew: true,
 						},
 					},
 				},
@@ -76,15 +79,17 @@ func resourceDisassociateSiteToNetworkProfile() *schema.Resource {
 
 func resourceDisassociateSiteToNetworkProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	vNetworkProfileID := resourceItem["network_profile_id"]
 	vSiteID := resourceItem["site_id"]
+
 	vvNetworkProfileID := vNetworkProfileID.(string)
 	vvSiteID := vSiteID.(string)
 
 	response1, restyResp1, err := client.SiteDesign.Disassociate(vvNetworkProfileID, vvSiteID)
+
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -97,11 +102,9 @@ func resourceDisassociateSiteToNetworkProfileCreate(ctx context.Context, d *sche
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	vItem1 := flattenSiteDesignDisassociateItem(response1.Response)
-	if err := d.Set("item", vItem1); err != nil {
+	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when setting Disassociate response",
-			err))
+			"Failure when executing Disassociate", err))
 		return diags
 	}
 	taskId := response1.Response.TaskID
@@ -139,18 +142,22 @@ func resourceDisassociateSiteToNetworkProfileCreate(ctx context.Context, d *sche
 			return diags
 		}
 	}
+
+	vItem1 := flattenSiteDesignDisassociateItem(response1.Response)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting Disassociate response",
+			err))
+		return diags
+	}
 	d.SetId(getUnixTimeString())
 	return diags
-}
 
+}
 func resourceDisassociateSiteToNetworkProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
-}
-
-func resourceDisassociateSiteToNetworkProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceDisassociateSiteToNetworkProfileRead(ctx, d, m)
 }
 
 func resourceDisassociateSiteToNetworkProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

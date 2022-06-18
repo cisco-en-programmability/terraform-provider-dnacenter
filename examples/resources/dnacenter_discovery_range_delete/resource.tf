@@ -1,11 +1,13 @@
 
 resource "dnacenter_discovery_range_delete" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
-    records_to_delete = 1
-    start_index       = 1
+
+    records_to_delete = []
+    start_index       = []
   }
+}
+
+output "dnacenter_discovery_range_delete_example" {
+  value = dnacenter_discovery_range_delete.example
 }

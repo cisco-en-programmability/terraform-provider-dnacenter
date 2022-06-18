@@ -1,10 +1,8 @@
 
 resource "dnacenter_pnp_device_reset" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     device_reset_list {
 
       config_list {
@@ -20,9 +18,12 @@ resource "dnacenter_pnp_device_reset" "example" {
       license_level              = "string"
       license_type               = "string"
       top_of_stack_serial_number = "string"
-      project_id                 = "string"
-      workflow_id                = "string"
     }
-
+    project_id  = "string"
+    workflow_id = "string"
   }
+}
+
+output "dnacenter_pnp_device_reset_example" {
+  value = dnacenter_pnp_device_reset.example
 }

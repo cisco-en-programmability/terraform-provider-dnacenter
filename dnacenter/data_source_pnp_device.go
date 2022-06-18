@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -1876,12 +1876,6 @@ Pagination and sorting are also supported by this endpoint
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Description: `Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
 						"day_zero_config": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -2682,6 +2676,12 @@ Pagination and sorting are also supported by this endpoint
 									},
 								},
 							},
+						},
+
+						"id": &schema.Schema{
+							Description: `Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 
 						"run_summary_list": &schema.Schema{
@@ -3673,7 +3673,7 @@ func dataSourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceByID")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.DeviceOnboardingPnp.GetDeviceByID(vvID)
@@ -3726,11 +3726,7 @@ func flattenDeviceOnboardingPnpGetDeviceList2Items(items *dnacentersdkgo.Respons
 	}
 	return respItems
 }
-
-func flattenDeviceOnboardingPnpGetDeviceList2Item(item *dnacentersdkgo.ResponseItemDeviceOnboardingPnpGetDeviceList2) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
+func flattenDeviceOnboardingPnpGetDeviceList2Items2(item *dnacentersdkgo.ResponseItemDeviceOnboardingPnpGetDeviceList2) []map[string]interface{} {
 	respItem := make(map[string]interface{})
 	respItem["device_info"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsDeviceInfo(item.DeviceInfo)
 	respItem["system_reset_workflow"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsSystemResetWorkflow(item.SystemResetWorkflow)
@@ -3742,11 +3738,11 @@ func flattenDeviceOnboardingPnpGetDeviceList2Item(item *dnacentersdkgo.ResponseI
 	respItem["day_zero_config_preview"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsDayZeroConfigPreview(item.DayZeroConfigPreview)
 	respItem["version"] = item.Version
 	respItem["tenant_id"] = item.TenantID
+	respItem["id"] = item.ID
 	return []map[string]interface{}{
 		respItem,
 	}
 }
-
 func flattenDeviceOnboardingPnpGetDeviceList2ItemsDeviceInfo(item *dnacentersdkgo.ResponseItemDeviceOnboardingPnpGetDeviceList2DeviceInfo) []map[string]interface{} {
 	if item == nil {
 		return nil

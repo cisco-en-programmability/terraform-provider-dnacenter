@@ -31,7 +31,6 @@ resource "dnacenter_sda_virtual_network_v2" "example" {
     is_guest_virtual_network = "false"
     scalable_group_names     = ["string"]
     virtual_network_name     = "string"
-    virtual_network_type     = "string"
   }
 }
 
@@ -63,8 +62,7 @@ Optional:
 
 - **is_guest_virtual_network** (String) To create guest virtual network
 - **scalable_group_names** (List of String) Scalable Group to be associated to virtual network
-- **virtual_network_name** (String) Virtual Network Name to be assigned  global level
-- **virtual_network_type** (String) Virtual Network Type
+- **virtual_network_name** (String) Virtual Network Name to be assigned at global level
 
 
 <a id="nestedatt--item"></a>

@@ -4,32 +4,37 @@ page_title: "dnacenter_disassociate_site_to_network_profile Resource - terraform
 subcategory: ""
 description: |-
   It performs delete operation on Site Design.
-  - Disassociate a Site from a Network Profile
+  Disassociate a Site from a Network Profile
 ---
 
 # dnacenter_disassociate_site_to_network_profile (Resource)
 
 It performs delete operation on Site Design.
-- Disassociate a Site from a Network Profile
 
+- Disassociate a Site from a Network Profile
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
-
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_disassociate_site_to_network_profile" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     network_profile_id = "string"
     site_id            = "string"
   }
+}
+
+output "dnacenter_disassociate_site_to_network_profile_example" {
+  value = dnacenter_disassociate_site_to_network_profile.example
 }
 ```
 

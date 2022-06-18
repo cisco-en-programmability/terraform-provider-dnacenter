@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -294,11 +294,8 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"health_score": &schema.Schema{
 																			Description: `Health Score`,
-																			Type:        schema.TypeList,
+																			Type:        schema.TypeString,
 																			Computed:    true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 
 																		"id": &schema.Schema{
@@ -519,8 +516,11 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"aps_impacted": &schema.Schema{
 																			Description: `Aps Impacted`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeList,
 																			Computed:    true,
+																			Elem: &schema.Schema{
+																				Type: schema.TypeString,
+																			},
 																		},
 
 																		"area": &schema.Schema{

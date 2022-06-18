@@ -4,12 +4,11 @@ import (
 	"context"
 	"fmt"
 	"reflect"
-	"strings"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -140,6 +139,15 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 										Computed: true,
 									},
 
+									"nas_options": &schema.Schema{
+										Description: `Nas Options`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
 									"passphrase": &schema.Schema{
 										Description: `Passphrase
 `,
@@ -196,10 +204,9 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"basic_service_set_client_idle_timeout": &schema.Schema{
-							Description: `Basic Service Set Client Idle Timeout
-`,
-							Type:     schema.TypeInt,
-							Optional: true,
+							Description: `Basic Service Set Client Idle Timeout`,
+							Type:        schema.TypeInt,
+							Optional:    true,
 						},
 						"client_exclusion_timeout": &schema.Schema{
 							Description: `Client Exclusion Timeout
@@ -216,7 +223,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Optional:     true,
 						},
 						"enable_broadcast_ssi_d": &schema.Schema{
-							Description: `Enable Broadcast SSID
+							Description: `Enable Broadcase SSID 
 `,
 
 							Type:         schema.TypeString,
@@ -232,15 +239,14 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Optional:     true,
 						},
 						"enable_directed_multicast_service": &schema.Schema{
-							Description: `Enable Directed Multicast Service
-`,
+							Description: `Enable Directed Multicast Service`,
 
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"enable_fast_lane": &schema.Schema{
-							Description: `Enable Fast Lane
+							Description: `Enable FastLane
 `,
 
 							Type:         schema.TypeString,
@@ -256,8 +262,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Optional:     true,
 						},
 						"enable_neighbor_list": &schema.Schema{
-							Description: `Enable Neighbor List
-`,
+							Description: `Enable Neighbor List`,
 
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
@@ -278,25 +283,32 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Optional: true,
 						},
 						"mfp_client_protection": &schema.Schema{
-							Description: `Management Frame Protection Client
+							Description: `Management Frame Protection Client`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"name": &schema.Schema{
+							Description: `SSID NAME
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
-						"name": &schema.Schema{
-							Description: `Enter SSID Name
-`,
-							Type:     schema.TypeString,
-							Required: true,
+						"nas_options": &schema.Schema{
+							Description: `Nas Options`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"passphrase": &schema.Schema{
-							Description: `Pass Phrase (Only applicable for SSID with PERSONAL security level)
+							Description: `Passphrase
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"radio_policy": &schema.Schema{
-							Description: `Radio Policy. Allowed values are 'Dual band operation (2.4GHz and 5GHz)', 'Dual band operation with band select', '5GHz only', '2.4GHz only'.
+							Description: `Radio Policy Enum (enum: Triple band operation (2.4GHz, 5GHz and 6GHz), Triple band operation with band select, 5GHz only, 2.4GHz only, 6GHz only)
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -317,16 +329,10 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Description: `ssidName path parameter. Enter the SSID name to be deleted
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 						"traffic_type": &schema.Schema{
-							Description: `Traffic Type
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"site": &schema.Schema{
-							Description: `site name hierarchy (ex: Global/aaa/zzz/...) 
+							Description: `Traffic Type Enum (voicedata or data )
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -430,7 +436,13 @@ func resourceWirelessEnterpriseSSIDRead(ctx context.Context, d *schema.ResourceD
 
 		response1, restyResp1, err := client.Wireless.GetEnterpriseSSID(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetEnterpriseSSID", err,
+				"Failure at GetEnterpriseSSID, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -474,7 +486,7 @@ func resourceWirelessEnterpriseSSIDUpdate(ctx context.Context, d *schema.Resourc
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
 		// NOTE: After testing, we consider that this trigger is only applicable for WPA2_PERSONAL security, so we limit it to the trigger being executed only with that type of security.
-		if d.HasChange("parameters.0.passphrase") && strings.ToLower(item.SecurityLevel) == "wpa2_personal" {
+		if d.HasChange("parameters.0.passphrase") {
 			request2 := expandRequestWirelessPskOverridePSKOverride(ctx, "parameters", d)
 			if request2 != nil {
 				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request2))
@@ -665,6 +677,59 @@ func resourceWirelessEnterpriseSSIDDelete(ctx context.Context, d *schema.Resourc
 
 	return diags
 }
+func expandRequestWirelessPskOverridePSKOverride(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessPSKOverride {
+	request := dnacentersdkgo.RequestWirelessPSKOverride{}
+	if v := expandRequestWirelessPskOverridePSKOverrideItemArray(ctx, key, d); v != nil {
+		request = *v
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestWirelessPskOverridePSKOverrideItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemWirelessPSKOverride {
+	request := []dnacentersdkgo.RequestItemWirelessPSKOverride{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestWirelessPskOverridePSKOverrideItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
+
+func expandRequestWirelessPskOverridePSKOverrideItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemWirelessPSKOverride {
+	request := dnacentersdkgo.RequestItemWirelessPSKOverride{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssid_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssid_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssid_name")))) {
+		request.SSID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site")))) {
+		request.Site = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".passphrase")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".passphrase")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".passphrase")))) {
+		request.PassPhrase = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+
+	return &request
+}
 func expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSID(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateEnterpriseSSID {
 	request := dnacentersdkgo.RequestWirelessCreateEnterpriseSSID{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
@@ -721,64 +786,12 @@ func expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSID(ctx context.Context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mfp_client_protection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mfp_client_protection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mfp_client_protection")))) {
 		request.MfpClientProtection = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
-	return &request
-}
-
-func expandRequestWirelessPskOverridePSKOverride(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessPSKOverride {
-	request := dnacentersdkgo.RequestWirelessPSKOverride{}
-	if v := expandRequestWirelessPskOverridePSKOverrideItemArray(ctx, key, d); v != nil {
-		request = *v
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".nas_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".nas_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".nas_options")))) {
+		request.NasOptions = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
-	return &request
-}
-
-func expandRequestWirelessPskOverridePSKOverrideItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemWirelessPSKOverride {
-	request := []dnacentersdkgo.RequestItemWirelessPSKOverride{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestWirelessPskOverridePSKOverrideItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
-	return &request
-}
-
-func expandRequestWirelessPskOverridePSKOverrideItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemWirelessPSKOverride {
-	request := dnacentersdkgo.RequestItemWirelessPSKOverride{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssid_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssid_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssid_name")))) {
-		request.SSID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site")))) {
-		request.Site = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".passphrase")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".passphrase")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".passphrase")))) {
-		request.PassPhrase = interfaceToString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -838,10 +851,12 @@ func expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSID(ctx context.Context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mfp_client_protection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mfp_client_protection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mfp_client_protection")))) {
 		request.MfpClientProtection = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".nas_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".nas_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".nas_options")))) {
+		request.NasOptions = interfaceToSliceString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 

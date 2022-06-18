@@ -1,9 +1,325 @@
-provider "dnacenter" {
-  debug = "true"
-}
 
 resource "dnacenter_pnp_device" "example" {
   provider = dnacenter
+  item {
+
+
+    day_zero_config {
+
+
+    }
+
+    device_info {
+
+      aaa_credentials {
+
+
+
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+      file_system_list {
+
+
+
+
+
+
+
+      }
+
+
+      http_headers {
+
+
+
+      }
+
+
+      ip_interfaces {
+
+
+
+
+
+
+      }
+
+
+
+      location {
+
+
+
+
+
+
+      }
+
+
+
+      neighbor_links {
+
+
+
+
+
+
+
+
+
+
+      }
+
+
+      pnp_profile_list {
+
+
+
+        primary_endpoint {
+
+
+
+
+
+
+
+        }
+
+        secondary_endpoint {
+
+
+
+
+
+
+
+        }
+      }
+
+      pre_workflow_cli_ouputs {
+
+
+
+      }
+
+
+
+
+
+
+
+
+
+      stack_info {
+
+
+        stack_member_list {
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+      }
+
+
+
+
+
+
+
+
+    }
+    run_summary_list {
+
+
+
+      history_task_info {
+
+        addn_details {
+
+
+
+        }
+
+
+
+        work_item_list {
+
+
+
+
+
+
+
+        }
+      }
+
+    }
+    system_reset_workflow {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      tasks {
+
+
+
+
+
+
+
+
+
+        work_item_list {
+
+
+
+
+
+
+
+        }
+      }
+
+
+
+
+    }
+    system_workflow {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      tasks {
+
+
+
+
+
+
+
+
+
+        work_item_list {
+
+
+
+
+
+
+
+        }
+      }
+
+
+
+
+    }
+
+
+    workflow {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      tasks {
+
+
+
+
+
+
+
+
+
+        work_item_list {
+
+
+
+
+
+
+
+        }
+      }
+
+
+
+
+    }
+    workflow_parameters {
+
+      config_list {
+
+
+        config_parameters {
+
+
+
+        }
+      }
+
+
+
+    }
+  }
   parameters {
 
     id = "string"
@@ -45,7 +361,7 @@ resource "dnacenter_pnp_device" "example" {
       image_version = "string"
       ip_interfaces {
 
-        ipv4_address      = ["string"]
+        ipv4_address      = "string"
         ipv6_address_list = ["string"]
         mac_address       = "string"
         name              = "string"
@@ -87,8 +403,8 @@ resource "dnacenter_pnp_device" "example" {
 
           certificate  = "string"
           fqdn         = "string"
-          ipv4_address = ["string"]
-          ipv6_address = ["string"]
+          ipv4_address = "string"
+          ipv6_address = "string"
           port         = 1
           protocol     = "string"
         }
@@ -97,8 +413,8 @@ resource "dnacenter_pnp_device" "example" {
 
           certificate  = "string"
           fqdn         = "string"
-          ipv4_address = ["string"]
-          ipv6_address = ["string"]
+          ipv4_address = "string"
+          ipv6_address = "string"
           port         = 1
           protocol     = "string"
         }
@@ -141,7 +457,7 @@ resource "dnacenter_pnp_device" "example" {
       }
       state                = "string"
       sudi_required        = "false"
-      tags                 = ["string"]
+      tags                 = "string"
       user_sudi_serial_nos = ["string"]
       virtual_account_id   = "string"
       workflow_id          = "string"

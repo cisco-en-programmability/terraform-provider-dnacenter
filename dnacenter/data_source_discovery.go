@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -124,7 +124,7 @@ func dataSourceDiscovery() *schema.Resource {
 									},
 
 									"secure": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -185,7 +185,7 @@ func dataSourceDiscovery() *schema.Resource {
 									},
 
 									"secure": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -214,7 +214,7 @@ func dataSourceDiscovery() *schema.Resource {
 						},
 
 						"is_auto_cdp": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -321,7 +321,7 @@ func dataSourceDiscovery() *schema.Resource {
 						},
 
 						"update_mgmt_ip": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

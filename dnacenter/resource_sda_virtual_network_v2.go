@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -118,21 +118,15 @@ func resourceSdaVirtualNetworkV2() *schema.Resource {
 `,
 							Type:     schema.TypeList,
 							Optional: true,
-							MaxItems: 1,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"virtual_network_name": &schema.Schema{
-							Description: `Virtual Network Name to be assigned  global level
+							Description: `Virtual Network Name to be assigned at global level
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-						},
-						"virtual_network_type": &schema.Schema{
-							Description: `Virtual Network Type`,
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 					},
 				},
@@ -233,7 +227,13 @@ func resourceSdaVirtualNetworkV2Read(ctx context.Context, d *schema.ResourceData
 
 		response1, restyResp1, err := client.Sda.GetVirtualNetworkWithScalableGroups(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetVirtualNetworkWithScalableGroups", err,
+				"Failure at GetVirtualNetworkWithScalableGroups, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -422,13 +422,9 @@ func expandRequestSdaVirtualNetworkV2AddVirtualNetworkWithScalableGroups(ctx con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".scalable_group_names")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".scalable_group_names")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".scalable_group_names")))) {
 		request.ScalableGroupNames = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network_type")))) {
-		request.VirtualNetworkType = interfaceToString(v)
-	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -436,9 +432,6 @@ func expandRequestSdaVirtualNetworkV2UpdateVirtualNetworkWithScalableGroups(ctx 
 	request := dnacentersdkgo.RequestSdaUpdateVirtualNetworkWithScalableGroups{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network_name")))) {
 		request.VirtualNetworkName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network_type")))) {
-		request.VirtualNetworkType = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_guest_virtual_network")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_guest_virtual_network")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_guest_virtual_network")))) {
 		request.IsGuestVirtualNetwork = interfaceToBoolPtr(v)
@@ -449,6 +442,5 @@ func expandRequestSdaVirtualNetworkV2UpdateVirtualNetworkWithScalableGroups(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

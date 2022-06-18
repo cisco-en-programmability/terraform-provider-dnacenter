@@ -2,27 +2,29 @@ package dnacenter
 
 import (
 	"context"
+
 	"fmt"
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceTemplatePreview() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on Configuration Templates.
-		- API to preview a template.
+
+- API to preview a template.
 `,
 
 		CreateContext: resourceTemplatePreviewCreate,
 		ReadContext:   resourceTemplatePreviewRead,
 		DeleteContext: resourceTemplatePreviewDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -71,24 +73,21 @@ func resourceTemplatePreview() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"device_id": &schema.Schema{
 							Description: `UUID of device to get template preview
-			`,
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
 						},
 						"params": &schema.Schema{
 							Description: `Params to render preview
-			`,
-							Type:     schema.TypeList,
+`,
+							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 						"resource_params": &schema.Schema{
 							Description: `Resource params to render preview
-			`,
+`,
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
@@ -98,7 +97,7 @@ func resourceTemplatePreview() *schema.Resource {
 						},
 						"template_id": &schema.Schema{
 							Description: `UUID of template to get template preview
-			`,
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
@@ -112,10 +111,8 @@ func resourceTemplatePreview() *schema.Resource {
 
 func resourceTemplatePreviewCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
-	log.Printf("[DEBUG] Selected method 1: PreviewTemplate")
 	request1 := expandRequestTemplatePreviewPreviewTemplate(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.ConfigurationTemplates.PreviewTemplate(request1)
@@ -135,6 +132,9 @@ func resourceTemplatePreviewCreate(ctx context.Context, d *schema.ResourceData, 
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	//Analizar verificacion.
+
 	vItem1 := flattenConfigurationTemplatesPreviewTemplateItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -142,21 +142,17 @@ func resourceTemplatePreviewCreate(ctx context.Context, d *schema.ResourceData, 
 			err))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourceTemplatePreviewRead(ctx, d, m)
-}
+	return diags
 
+}
 func resourceTemplatePreviewRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
 }
 
 func resourceTemplatePreviewDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
@@ -177,20 +173,12 @@ func expandRequestTemplatePreviewPreviewTemplate(ctx context.Context, key string
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
 		request.TemplateID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestTemplatePreviewPreviewTemplateParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesPreviewTemplateParams {
 	var request dnacentersdkgo.RequestConfigurationTemplatesPreviewTemplateParams
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -211,20 +199,12 @@ func expandRequestTemplatePreviewPreviewTemplateResourceParamsArray(ctx context.
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestTemplatePreviewPreviewTemplateResourceParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesPreviewTemplateResourceParams {
 	var request dnacentersdkgo.RequestConfigurationTemplatesPreviewTemplateResourceParams
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

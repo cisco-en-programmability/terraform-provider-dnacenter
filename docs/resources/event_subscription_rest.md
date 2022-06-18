@@ -29,7 +29,17 @@ resource "dnacenter_event_subscription_rest" "example" {
     description = "string"
     filter {
 
-      event_ids = ["string"]
+      categories = ["string"]
+      domains_subdomains {
+
+        domain      = "string"
+        sub_domains = ["string"]
+      }
+      event_ids  = ["string"]
+      severities = ["string"]
+      site_ids   = ["string"]
+      sources    = ["string"]
+      types      = ["string"]
     }
     name = "string"
     subscription_endpoints {
@@ -86,7 +96,22 @@ Optional:
 
 Optional:
 
+- **categories** (List of String) Categories
+- **domains_subdomains** (Block List) (see [below for nested schema](#nestedblock--parameters--filter--domains_subdomains))
 - **event_ids** (List of String) Event Ids (Comma separated event ids)
+- **severities** (List of String) Severities
+- **site_ids** (List of String) Site Ids
+- **sources** (List of String) Sources
+- **types** (List of String) Types
+
+<a id="nestedblock--parameters--filter--domains_subdomains"></a>
+### Nested Schema for `parameters.filter.domains_subdomains`
+
+Optional:
+
+- **domain** (String) Domain
+- **sub_domains** (List of String) Sub Domains
+
 
 
 <a id="nestedblock--parameters--subscription_endpoints"></a>
@@ -127,12 +152,22 @@ Read-Only:
 Read-Only:
 
 - **categories** (List of String)
-- **domains_subdomains** (List of String)
+- **domains_subdomains** (List of Object) (see [below for nested schema](#nestedobjatt--item--filter--domains_subdomains))
 - **event_ids** (List of String)
 - **others** (List of String)
 - **severities** (List of String)
+- **site_ids** (List of String)
 - **sources** (List of String)
 - **types** (List of String)
+
+<a id="nestedobjatt--item--filter--domains_subdomains"></a>
+### Nested Schema for `item.filter.domains_subdomains`
+
+Read-Only:
+
+- **domain** (String)
+- **sub_domains** (List of String)
+
 
 
 <a id="nestedobjatt--item--subscription_endpoints"></a>

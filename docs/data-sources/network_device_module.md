@@ -4,7 +4,7 @@ page_title: "dnacenter_network_device_module Data Source - terraform-provider-dn
 subcategory: ""
 description: |-
   It performs read operation on Devices.
-  Returns modules by specified device idReturns Module info by id
+  Returns modules by specified device idReturns Module info by 'module id'
 ---
 
 # dnacenter_network_device_module (Data Source)
@@ -13,7 +13,7 @@ It performs read operation on Devices.
 
 - Returns modules by specified device id
 
-- Returns Module info by id
+- Returns Module info by 'module id'
 
 ## Example Usage
 
@@ -49,7 +49,7 @@ output "dnacenter_network_device_module_example" {
 ### Optional
 
 - **device_id** (String) deviceId query parameter.
-- **id** (String) id path parameter.
+- **id** (String) id path parameter. Module id
 - **limit** (String) limit query parameter.
 - **name_list** (List of String) nameList query parameter.
 - **offset** (String) offset query parameter.

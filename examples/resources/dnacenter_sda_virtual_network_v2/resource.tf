@@ -1,6 +1,3 @@
-provider "dnacenter" {
-  debug = "true"
-}
 
 resource "dnacenter_sda_virtual_network_v2" "example" {
   provider = dnacenter
@@ -9,7 +6,6 @@ resource "dnacenter_sda_virtual_network_v2" "example" {
     is_guest_virtual_network = "false"
     scalable_group_names     = ["string"]
     virtual_network_name     = "string"
-    virtual_network_type     = "string"
   }
 }
 

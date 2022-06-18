@@ -2,26 +2,28 @@ package dnacenter
 
 import (
 	"context"
+
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceSensorTestTemplateDuplicate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on Sensors.
+
 - Intent API to duplicate an existing SENSOR test template
 `,
 
 		CreateContext: resourceSensorTestTemplateDuplicateCreate,
 		ReadContext:   resourceSensorTestTemplateDuplicateRead,
 		DeleteContext: resourceSensorTestTemplateDuplicateDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -350,7 +352,7 @@ func resourceSensorTestTemplateDuplicate() *schema.Resource {
 									},
 									"ext_web_auth_html_tag": &schema.Schema{
 										Description: `Ext Web Auth Html Tag`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
@@ -373,23 +375,35 @@ func resourceSensorTestTemplateDuplicate() *schema.Resource {
 									},
 									"layer3web_auth_email_address": &schema.Schema{
 										Description: `Layer3web Auth Email Address`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authpassword": &schema.Schema{
 										Description: `Layer3web Authpassword`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authsecurity": &schema.Schema{
 										Description: `Layer3web Authsecurity`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authuser_name": &schema.Schema{
 										Description: `Layer3web Authuser Name`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"num_aps": &schema.Schema{
 										Description: `Num Aps`,
@@ -571,14 +585,14 @@ func resourceSensorTestTemplateDuplicate() *schema.Resource {
 						"new_template_name": &schema.Schema{
 							Description: `New Template Name`,
 							Type:        schema.TypeString,
-							ForceNew:    true,
 							Optional:    true,
+							ForceNew:    true,
 						},
 						"template_name": &schema.Schema{
 							Description: `Template Name`,
 							Type:        schema.TypeString,
-							ForceNew:    true,
 							Optional:    true,
+							ForceNew:    true,
 						},
 					},
 				},
@@ -589,15 +603,16 @@ func resourceSensorTestTemplateDuplicate() *schema.Resource {
 
 func resourceSensorTestTemplateDuplicateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
 	request1 := expandRequestSensorTestTemplateDuplicateDuplicateSensorTestTemplate(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.Sensors.DuplicateSensorTestTemplate(request1)
+
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
+
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -607,7 +622,11 @@ func resourceSensorTestTemplateDuplicateCreate(ctx context.Context, d *schema.Re
 			"Failure at DuplicateSensorTestTemplate, unexpected response", ""))
 		return diags
 	}
+
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	//Analizar verificacion.
+
 	vItem1 := flattenSensorsDuplicateSensorTestTemplateItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -615,19 +634,14 @@ func resourceSensorTestTemplateDuplicateCreate(ctx context.Context, d *schema.Re
 			err))
 		return diags
 	}
-
 	d.SetId(getUnixTimeString())
 	return diags
-}
 
+}
 func resourceSensorTestTemplateDuplicateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
-}
-
-func resourceSensorTestTemplateDuplicateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSensorTestTemplateDuplicateRead(ctx, d, m)
 }
 
 func resourceSensorTestTemplateDuplicateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -645,10 +659,6 @@ func expandRequestSensorTestTemplateDuplicateDuplicateSensorTestTemplate(ctx con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".new_template_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".new_template_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".new_template_name")))) {
 		request.NewTemplateName = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

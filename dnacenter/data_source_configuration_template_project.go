@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -64,6 +64,13 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 						"id": &schema.Schema{
 							Description: `UUID of project
 `,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"is_deletable": &schema.Schema{
+							Description: `Is deletable`,
+
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -391,11 +398,8 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
 `,
-																			Type:     schema.TypeList,
+																			Type:     schema.TypeString,
 																			Computed: true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 																	},
 																},
@@ -618,11 +622,8 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
 `,
-																			Type:     schema.TypeList,
+																			Type:     schema.TypeString,
 																			Computed: true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 																	},
 																},
@@ -693,14 +694,6 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 										},
 									},
 
-									"document_database": &schema.Schema{
-										Description: `Document Database
-`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
 									"failure_policy": &schema.Schema{
 										Description: `Define failure policy if template provisioning fails
 `,
@@ -746,14 +739,6 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 									"parent_template_id": &schema.Schema{
 										Description: `Parent templateID
 `,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"project_associated": &schema.Schema{
-										Description: `Project Associated
-`,
-
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -963,11 +948,8 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeList,
+																Type:     schema.TypeString,
 																Computed: true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 														},
 													},
@@ -1211,11 +1193,8 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeList,
+																Type:     schema.TypeString,
 																Computed: true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 														},
 													},
@@ -1630,11 +1609,8 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
 `,
-																			Type:     schema.TypeList,
+																			Type:     schema.TypeString,
 																			Computed: true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 																	},
 																},
@@ -1857,11 +1833,8 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
 `,
-																			Type:     schema.TypeList,
+																			Type:     schema.TypeString,
 																			Computed: true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 																	},
 																},
@@ -1932,14 +1905,6 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 										},
 									},
 
-									"document_database": &schema.Schema{
-										Description: `Document Database
-`,
-
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
 									"failure_policy": &schema.Schema{
 										Description: `Define failure policy if template provisioning fails
 `,
@@ -1985,14 +1950,6 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 									"parent_template_id": &schema.Schema{
 										Description: `Parent templateID
 `,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"project_associated": &schema.Schema{
-										Description: `Project Associated
-`,
-
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2202,11 +2159,8 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeList,
+																Type:     schema.TypeString,
 																Computed: true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 														},
 													},
@@ -2450,11 +2404,8 @@ func dataSourceConfigurationTemplateProject() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeList,
+																Type:     schema.TypeString,
 																Computed: true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 														},
 													},
@@ -2573,7 +2524,7 @@ func dataSourceConfigurationTemplateProjectRead(ctx context.Context, d *schema.R
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetsTheDetailsOfAGivenProject")
+		log.Printf("[DEBUG] Selected method 1: GetsTheDetailsOfAGivenProject")
 		vvProjectID := vProjectID.(string)
 
 		response2, restyResp2, err := client.ConfigurationTemplates.GetsTheDetailsOfAGivenProject(vvProjectID)
@@ -2652,7 +2603,6 @@ func flattenConfigurationTemplatesGetsAListOfProjectsItemsTemplates(items *[]dna
 		respItem["custom_params_order"] = boolPtrToString(item.CustomParamsOrder)
 		respItem["description"] = item.Description
 		respItem["device_types"] = flattenConfigurationTemplatesGetsAListOfProjectsItemsTemplatesDeviceTypes(item.DeviceTypes)
-		respItem["document_database"] = boolPtrToString(item.DocumentDatabase)
 		respItem["failure_policy"] = item.FailurePolicy
 		respItem["id"] = item.ID
 		respItem["language"] = item.Language
@@ -2660,7 +2610,6 @@ func flattenConfigurationTemplatesGetsAListOfProjectsItemsTemplates(items *[]dna
 		respItem["latest_version_time"] = item.LatestVersionTime
 		respItem["name"] = item.Name
 		respItem["parent_template_id"] = item.ParentTemplateID
-		respItem["project_associated"] = boolPtrToString(item.ProjectAssociated)
 		respItem["project_id"] = item.ProjectID
 		respItem["project_name"] = item.ProjectName
 		respItem["rollback_template_content"] = item.RollbackTemplateContent
@@ -3095,6 +3044,7 @@ func flattenConfigurationTemplatesGetsTheDetailsOfAGivenProjectItem(item *dnacen
 	respItem["last_update_time"] = item.LastUpdateTime
 	respItem["name"] = item.Name
 	respItem["templates"] = flattenConfigurationTemplatesGetsTheDetailsOfAGivenProjectItemTemplates(item.Templates)
+	respItem["is_deletable"] = boolPtrToString(item.IsDeletable)
 	return []map[string]interface{}{
 		respItem,
 	}
@@ -3129,7 +3079,6 @@ func flattenConfigurationTemplatesGetsTheDetailsOfAGivenProjectItemTemplates(ite
 		respItem["custom_params_order"] = boolPtrToString(item.CustomParamsOrder)
 		respItem["description"] = item.Description
 		respItem["device_types"] = flattenConfigurationTemplatesGetsTheDetailsOfAGivenProjectItemTemplatesDeviceTypes(item.DeviceTypes)
-		respItem["document_database"] = boolPtrToString(item.DocumentDatabase)
 		respItem["failure_policy"] = item.FailurePolicy
 		respItem["id"] = item.ID
 		respItem["language"] = item.Language
@@ -3137,7 +3086,6 @@ func flattenConfigurationTemplatesGetsTheDetailsOfAGivenProjectItemTemplates(ite
 		respItem["latest_version_time"] = item.LatestVersionTime
 		respItem["name"] = item.Name
 		respItem["parent_template_id"] = item.ParentTemplateID
-		respItem["project_associated"] = boolPtrToString(item.ProjectAssociated)
 		respItem["project_id"] = item.ProjectID
 		respItem["project_name"] = item.ProjectName
 		respItem["rollback_template_content"] = item.RollbackTemplateContent

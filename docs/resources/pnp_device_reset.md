@@ -4,13 +4,14 @@ page_title: "dnacenter_pnp_device_reset Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs create operation on Device Onboarding (PnP).
-          - Recovers a device from a Workflow Execution Error state
+  Recovers a device from a Workflow Execution Error state
 ---
 
 # dnacenter_pnp_device_reset (Resource)
 
 It performs create operation on Device Onboarding (PnP).
-		- Recovers a device from a Workflow Execution Error state
+
+- Recovers a device from a Workflow Execution Error state
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
@@ -19,12 +20,14 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_pnp_device_reset" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     device_reset_list {
 
       config_list {
@@ -40,11 +43,14 @@ resource "dnacenter_pnp_device_reset" "example" {
       license_level              = "string"
       license_type               = "string"
       top_of_stack_serial_number = "string"
-      project_id                 = "string"
-      workflow_id                = "string"
     }
-
+    project_id  = "string"
+    workflow_id = "string"
   }
+}
+
+output "dnacenter_pnp_device_reset_example" {
+  value = dnacenter_pnp_device_reset.example
 }
 ```
 
@@ -70,6 +76,8 @@ resource "dnacenter_pnp_device_reset" "example" {
 Optional:
 
 - **device_reset_list** (Block List) (see [below for nested schema](#nestedblock--parameters--device_reset_list))
+- **project_id** (String)
+- **workflow_id** (String)
 
 <a id="nestedblock--parameters--device_reset_list"></a>
 ### Nested Schema for `parameters.device_reset_list`
@@ -80,9 +88,7 @@ Optional:
 - **device_id** (String)
 - **license_level** (String)
 - **license_type** (String)
-- **project_id** (String)
 - **top_of_stack_serial_number** (String)
-- **workflow_id** (String)
 
 <a id="nestedblock--parameters--device_reset_list--config_list"></a>
 ### Nested Schema for `parameters.device_reset_list.config_list`

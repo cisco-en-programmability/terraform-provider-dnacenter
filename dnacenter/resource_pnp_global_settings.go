@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -609,8 +609,13 @@ func resourcePnpGlobalSettingsRead(ctx context.Context, d *schema.ResourceData, 
 		log.Printf("[DEBUG] Selected method 1: GetPnpGlobalSettings")
 
 		response1, restyResp1, err := client.DeviceOnboardingPnp.GetPnpGlobalSettings()
-
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetPnpGlobalSettings response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}

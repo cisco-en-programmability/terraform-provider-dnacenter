@@ -4,25 +4,32 @@ page_title: "dnacenter_pnp_virtual_account_devices_sync Resource - terraform-pro
 subcategory: ""
 description: |-
   It performs create operation on Device Onboarding (PnP).
-          - Synchronizes the device info from the given smart account & virtual account with the PnP database. The response
-          payload returns a list of synced devices
+  Synchronizes the device info from the given smart account & virtual account with the PnP database. The response
+  payload returns a list of synced devices
 ---
 
 # dnacenter_pnp_virtual_account_devices_sync (Resource)
 
 It performs create operation on Device Onboarding (PnP).
-		- Synchronizes the device info from the given smart account & virtual account with the PnP database. The response
-		payload returns a list of synced devices
+
+- Synchronizes the device info from the given smart account & virtual account with the PnP database. The response
+payload returns a list of synced devices
+
+~>**Warning:**
+This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_pnp_virtual_account_devices_sync" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     auto_sync_period = 1
     cco_user         = "string"
     expiry           = 1
@@ -55,6 +62,10 @@ resource "dnacenter_pnp_virtual_account_devices_sync" "example" {
     token              = "string"
     virtual_account_id = "string"
   }
+}
+
+output "dnacenter_pnp_virtual_account_devices_sync_example" {
+  value = dnacenter_pnp_virtual_account_devices_sync.example
 }
 ```
 

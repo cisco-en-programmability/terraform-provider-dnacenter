@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -136,8 +136,11 @@ required to configure a report.
 							Computed: true,
 						},
 						"schedule": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"tags": &schema.Schema{
 							Description: `array of tags for report
@@ -229,8 +232,11 @@ required to configure a report.
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type.
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -320,7 +326,7 @@ required to configure a report.
 							Description: `report name
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"report_id": &schema.Schema{
 							Description: `reportId path parameter. reportId of report
@@ -329,8 +335,12 @@ required to configure a report.
 							Required: true,
 						},
 						"schedule": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"tags": &schema.Schema{
 							Description: `array of tags for report
@@ -417,8 +427,12 @@ required to configure a report.
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type. Use the filter definitions from the view to fetch the options for a filter.
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -548,7 +562,13 @@ func resourceReportsRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 		response1, restyResp1, err := client.Reports.GetAScheduledReport(vvReportID)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetAScheduledReport", err,
+				"Failure at GetAScheduledReport, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -571,7 +591,13 @@ func resourceReportsRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	if vName != "" {
 		response1, err := searchReportsGetListOfScheduledReports(m, nil, vName)
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting searchReportsGetListOfScheduledReports search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}
@@ -670,7 +696,7 @@ func expandRequestReportsCreateOrScheduleAReport(ctx context.Context, key string
 		request.Name = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".schedule")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".schedule")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".schedule")))) {
-		request.Schedule = expandRequestReportsCreateOrScheduleAReportSchedule(ctx, key+".schedule", d)
+		request.Schedule = expandRequestReportsCreateOrScheduleAReportSchedule(ctx, key+".schedule.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".view")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".view")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".view")))) {
 		request.View = expandRequestReportsCreateOrScheduleAReportView(ctx, key+".view.0", d)
@@ -684,7 +710,6 @@ func expandRequestReportsCreateOrScheduleAReport(ctx context.Context, key string
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -708,7 +733,6 @@ func expandRequestReportsCreateOrScheduleAReportDeliveriesArray(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -718,7 +742,6 @@ func expandRequestReportsCreateOrScheduleAReportDeliveries(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -728,7 +751,6 @@ func expandRequestReportsCreateOrScheduleAReportSchedule(ctx context.Context, ke
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -752,7 +774,6 @@ func expandRequestReportsCreateOrScheduleAReportView(ctx context.Context, key st
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -776,7 +797,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFieldGroupsArray(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -794,7 +814,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFieldGroups(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -818,7 +837,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFieldGroupsFieldsArray(ctx c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -833,7 +851,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFieldGroupsFields(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -857,7 +874,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFiltersArray(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -873,12 +889,11 @@ func expandRequestReportsCreateOrScheduleAReportViewFilters(ctx context.Context,
 		request.Type = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
-		request.Value = expandRequestReportsCreateOrScheduleAReportViewFiltersValue(ctx, key+".value", d)
+		request.Value = expandRequestReportsCreateOrScheduleAReportViewFiltersValue(ctx, key+".value.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -888,7 +903,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFiltersValue(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -903,7 +917,6 @@ func expandRequestReportsCreateOrScheduleAReportViewFormat(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 

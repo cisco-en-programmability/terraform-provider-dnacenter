@@ -4,29 +4,32 @@ page_title: "dnacenter_wireless_provision_ssid_create_provision Resource - terra
 subcategory: ""
 description: |-
   It performs create operation on Wireless.
-          - Creates SSID, updates the SSID to the corresponding site profiles and provision it to the devices matching the given
-          sites
+  Creates SSID, updates the SSID to the corresponding site profiles and provision it to the devices matching the given
+  sites
 ---
 
 # dnacenter_wireless_provision_ssid_create_provision (Resource)
 
 It performs create operation on Wireless.
-		- Creates SSID, updates the SSID to the corresponding site profiles and provision it to the devices matching the given
-		sites
 
+- Creates SSID, updates the SSID to the corresponding site profiles and provision it to the devices matching the given
+sites
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_wireless_provision_ssid_create_provision" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     enable_fabric = "false"
     flex_connect {
 
@@ -49,6 +52,10 @@ resource "dnacenter_wireless_provision_ssid_create_provision" "example" {
     }
     ssid_type = "string"
   }
+}
+
+output "dnacenter_wireless_provision_ssid_create_provision_example" {
+  value = dnacenter_wireless_provision_ssid_create_provision.example
 }
 ```
 
@@ -76,7 +83,6 @@ Optional:
 - **enable_fabric** (String) Enable SSID for Fabric
 - **flex_connect** (Block List) (see [below for nested schema](#nestedblock--parameters--flex_connect))
 - **managed_aplocations** (List of String) Managed AP Locations (Enter entire Site(s) hierarchy)
-- **persistbapioutput** (String) __persistbapioutput header parameter. Persist bapi sync response
 - **ssid_details** (Block List) (see [below for nested schema](#nestedblock--parameters--ssid_details))
 - **ssid_type** (String) SSID Type
 

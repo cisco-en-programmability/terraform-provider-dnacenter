@@ -1,6 +1,3 @@
-provider "dnacenter" {
-  debug = "true"
-}
 
 resource "dnacenter_sda_virtual_network" "example" {
   provider = dnacenter

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourceEventSubscription() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Event Management.
 
-- Gets the list of Subscriptions's based on provided offset and limit
+- Gets the list of Subscriptions's based on provided offset and limit (Deprecated)
 `,
 
 		ReadContext: dataSourceEventSubscriptionRead,
@@ -68,8 +68,86 @@ func dataSourceEventSubscription() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"categories": &schema.Schema{
+										Description: `Categories`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"domains_subdomains": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"domain": &schema.Schema{
+													Description: `Domain`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"sub_domains": &schema.Schema{
+													Description: `Sub Domains`,
+													Type:        schema.TypeList,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
+
 									"event_ids": &schema.Schema{
 										Description: `Event Ids`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"others": &schema.Schema{
+										Description: `Others`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"severities": &schema.Schema{
+										Description: `Severities`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"site_ids": &schema.Schema{
+										Description: `Site Ids`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"sources": &schema.Schema{
+										Description: `Sources`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"types": &schema.Schema{
+										Description: `Types`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Schema{
@@ -82,8 +160,9 @@ func dataSourceEventSubscription() *schema.Resource {
 
 						"is_private": &schema.Schema{
 							Description: `Is Private`,
-							Type:        schema.TypeString,
-							Computed:    true,
+
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"name": &schema.Schema{
@@ -98,8 +177,8 @@ func dataSourceEventSubscription() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
-										Description: `Id`,
+									"connector_type": &schema.Schema{
+										Description: `Connector Type`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
@@ -116,8 +195,53 @@ func dataSourceEventSubscription() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
+												"base_path": &schema.Schema{
+													Description: `Base Path`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"body": &schema.Schema{
+													Description: `Body`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"connect_timeout": &schema.Schema{
+													Description: `Connect Timeout`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
 												"connector_type": &schema.Schema{
 													Description: `Connector Type`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"description": &schema.Schema{
+													Description: `Description`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"headers": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"string": &schema.Schema{
+																Description: `String`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+
+												"instance_id": &schema.Schema{
+													Description: `Instance Id`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -130,6 +254,54 @@ func dataSourceEventSubscription() *schema.Resource {
 
 												"name": &schema.Schema{
 													Description: `Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"path_params": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"string": &schema.Schema{
+																Description: `String`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+
+												"query_params": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"string": &schema.Schema{
+																Description: `String`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
+													},
+												},
+
+												"read_timeout": &schema.Schema{
+													Description: `Read Timeout`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"resource": &schema.Schema{
+													Description: `Resource`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"trust_cert": &schema.Schema{
+													Description: `Trust Cert`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -236,14 +408,14 @@ func flattenEventManagementGetEventSubscriptionsItems(items *dnacentersdkgo.Resp
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["subscription_id"] = item.SubscriptionID
-		respItem["is_private"] = boolPtrToString(item.IsPrivate)
-		respItem["tenant_id"] = item.TenantID
 		respItem["version"] = item.Version
+		respItem["subscription_id"] = item.SubscriptionID
 		respItem["name"] = item.Name
 		respItem["description"] = item.Description
 		respItem["subscription_endpoints"] = flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpoints(item.SubscriptionEndpoints)
 		respItem["filter"] = flattenEventManagementGetEventSubscriptionsItemsFilter(item.Filter)
+		respItem["is_private"] = boolPtrToString(item.IsPrivate)
+		respItem["tenant_id"] = item.TenantID
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -257,8 +429,8 @@ func flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpoints(items
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["instance_id"] = item.InstanceID
-		respItem["id"] = item.ID
 		respItem["subscription_details"] = flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscriptionDetails(item.SubscriptionDetails)
+		respItem["connector_type"] = item.ConnectorType
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -269,15 +441,65 @@ func flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscr
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["name"] = item.Name
-	respItem["url"] = item.URL
-	respItem["method"] = item.Method
 	respItem["connector_type"] = item.ConnectorType
+	respItem["instance_id"] = item.InstanceID
+	respItem["name"] = item.Name
+	respItem["description"] = item.Description
+	respItem["url"] = item.URL
+	respItem["base_path"] = item.BasePath
+	respItem["resource"] = item.Resource
+	respItem["method"] = item.Method
+	respItem["trust_cert"] = item.TrustCert
+	respItem["headers"] = flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscriptionDetailsHeaders(item.Headers)
+	respItem["query_params"] = flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscriptionDetailsQueryParams(item.QueryParams)
+	respItem["path_params"] = flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscriptionDetailsPathParams(item.PathParams)
+	respItem["body"] = item.Body
+	respItem["connect_timeout"] = item.ConnectTimeout
+	respItem["read_timeout"] = item.ReadTimeout
 
 	return []map[string]interface{}{
 		respItem,
 	}
 
+}
+
+func flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscriptionDetailsHeaders(items *[]dnacentersdkgo.ResponseItemEventManagementGetEventSubscriptionsSubscriptionEndpointsSubscriptionDetailsHeaders) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["string"] = item.String
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscriptionDetailsQueryParams(items *[]dnacentersdkgo.ResponseItemEventManagementGetEventSubscriptionsSubscriptionEndpointsSubscriptionDetailsQueryParams) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["string"] = item.String
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscriptionDetailsPathParams(items *[]dnacentersdkgo.ResponseItemEventManagementGetEventSubscriptionsSubscriptionEndpointsSubscriptionDetailsPathParams) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["string"] = item.String
+		respItems = append(respItems, respItem)
+	}
+	return respItems
 }
 
 func flattenEventManagementGetEventSubscriptionsItemsFilter(item *dnacentersdkgo.ResponseItemEventManagementGetEventSubscriptionsFilter) []map[string]interface{} {
@@ -286,9 +508,30 @@ func flattenEventManagementGetEventSubscriptionsItemsFilter(item *dnacentersdkgo
 	}
 	respItem := make(map[string]interface{})
 	respItem["event_ids"] = item.EventIDs
+	respItem["others"] = item.Others
+	respItem["domains_subdomains"] = flattenEventManagementGetEventSubscriptionsItemsFilterDomainsSubdomains(item.DomainsSubdomains)
+	respItem["types"] = item.Types
+	respItem["categories"] = item.Categories
+	respItem["severities"] = item.Severities
+	respItem["sources"] = item.Sources
+	respItem["site_ids"] = item.SiteIDs
 
 	return []map[string]interface{}{
 		respItem,
 	}
 
+}
+
+func flattenEventManagementGetEventSubscriptionsItemsFilterDomainsSubdomains(items *[]dnacentersdkgo.ResponseItemEventManagementGetEventSubscriptionsFilterDomainsSubdomains) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["domain"] = item.Domain
+		respItem["sub_domains"] = item.SubDomains
+		respItems = append(respItems, respItem)
+	}
+	return respItems
 }

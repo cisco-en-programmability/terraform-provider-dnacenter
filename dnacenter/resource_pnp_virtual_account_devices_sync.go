@@ -2,29 +2,30 @@ package dnacenter
 
 import (
 	"context"
+
 	"fmt"
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourcePnpVirtualAccountDevicesSync() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Device Onboarding (PnP).
-		- Synchronizes the device info from the given smart account & virtual account with the PnP database. The response
-		payload returns a list of synced devices
-	
+
+- Synchronizes the device info from the given smart account & virtual account with the PnP database. The response
+payload returns a list of synced devices
 `,
 
 		CreateContext: resourcePnpVirtualAccountDevicesSyncCreate,
 		ReadContext:   resourcePnpVirtualAccountDevicesSyncRead,
 		DeleteContext: resourcePnpVirtualAccountDevicesSyncDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -232,7 +233,7 @@ func resourcePnpVirtualAccountDevicesSync() *schema.Resource {
 										ForceNew: true,
 									},
 									"make_default": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -254,7 +255,7 @@ func resourcePnpVirtualAccountDevicesSync() *schema.Resource {
 										ForceNew: true,
 									},
 									"proxy": &schema.Schema{
-
+										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -345,10 +346,8 @@ func resourcePnpVirtualAccountDevicesSync() *schema.Resource {
 
 func resourcePnpVirtualAccountDevicesSyncCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
-	log.Printf("[DEBUG] Selected method 1: SyncVirtualAccountDevices")
 	request1 := expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevices(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.DeviceOnboardingPnp.SyncVirtualAccountDevices(request1)
@@ -368,6 +367,9 @@ func resourcePnpVirtualAccountDevicesSyncCreate(ctx context.Context, d *schema.R
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	//Analizar verificacion.
+
 	vItem1 := flattenDeviceOnboardingPnpSyncVirtualAccountDevicesItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -375,27 +377,23 @@ func resourcePnpVirtualAccountDevicesSyncCreate(ctx context.Context, d *schema.R
 			err))
 		return diags
 	}
-
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourcePnpVirtualAccountDevicesSyncRead(ctx, d, m)
-}
+	return diags
 
+}
 func resourcePnpVirtualAccountDevicesSyncRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
 }
 
 func resourcePnpVirtualAccountDevicesSyncDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 	return diags
 }
+
 func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevices(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevices {
 	request := dnacentersdkgo.RequestDeviceOnboardingPnpSyncVirtualAccountDevices{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auto_sync_period")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auto_sync_period")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auto_sync_period")))) {
@@ -437,10 +435,6 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevices(ctx cont
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_account_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_account_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_account_id")))) {
 		request.VirtualAccountID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -470,10 +464,6 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesProfile(c
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".proxy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".proxy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".proxy")))) {
 		request.Proxy = interfaceToBoolPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -485,10 +475,6 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResul
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_msg")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_msg")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_msg")))) {
 		request.SyncMsg = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -509,10 +495,6 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResul
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -524,10 +506,6 @@ func expandRequestPnpVirtualAccountDevicesSyncSyncVirtualAccountDevicesSyncResul
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sync_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sync_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sync_type")))) {
 		request.SyncType = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

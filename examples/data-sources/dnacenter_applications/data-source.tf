@@ -1,9 +1,9 @@
 
 data "dnacenter_applications" "example" {
   provider = dnacenter
-  limit    = "#"
+  limit    = 1
   name     = "string"
-  offset   = "#"
+  offset   = 1
 }
 
 output "dnacenter_applications_example" {

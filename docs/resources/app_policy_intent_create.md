@@ -4,30 +4,30 @@ page_title: "dnacenter_app_policy_intent_create Resource - terraform-provider-dn
 subcategory: ""
 description: |-
   It performs create operation on Application Policy.
-  - Create/Update/Delete application policy
+  Create/Update/Delete application policy
 ---
 
 # dnacenter_app_policy_intent_create (Resource)
 
 It performs create operation on Application Policy.
-- Create/Update/Delete application policy
 
+- Create/Update/Delete application policy
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
-
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_app_policy_intent_create" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
-
   parameters {
+
     create_list {
 
       advanced_policy_scope {
@@ -125,6 +125,10 @@ resource "dnacenter_app_policy_intent_create" "example" {
       }
     }
   }
+}
+
+output "dnacenter_app_policy_intent_create_example" {
+  value = dnacenter_app_policy_intent_create.example
 }
 ```
 

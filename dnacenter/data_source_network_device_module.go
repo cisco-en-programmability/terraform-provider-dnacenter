@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,7 +17,7 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 
 - Returns modules by specified device id
 
-- Returns Module info by id
+- Returns Module info by 'module id'
 `,
 
 		ReadContext: dataSourceNetworkDeviceModuleRead,
@@ -28,9 +28,10 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Description: `id path parameter.`,
-				Type:        schema.TypeString,
-				Optional:    true,
+				Description: `id path parameter. Module id
+`,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
@@ -327,7 +328,7 @@ func dataSourceNetworkDeviceModuleRead(ctx context.Context, d *schema.ResourceDa
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetModuleInfoByID")
+		log.Printf("[DEBUG] Selected method 1: GetModuleInfoByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.Devices.GetModuleInfoByID(vvID)
