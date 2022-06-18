@@ -13,9 +13,7 @@ provider "dnacenter" {
 
 resource "dnacenter_app_policy_intent_create" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
+ 
 
   parameters {
     create_list {

@@ -15,9 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_deploy_template_v1" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
+ 
   parameters {
     force_push_template = "false"
     //is_composite                    = "true"

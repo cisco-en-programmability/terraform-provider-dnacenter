@@ -15,9 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_site_assign_credential" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
+ 
   parameters {
     site_id          = "string"
     cli_id           = "string"

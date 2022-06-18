@@ -16,9 +16,7 @@ provider "dnacenter" {
 
 resource "dnacenter_sensor_test_template_edit" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
+ 
   parameters {
     location_info_list {
 

@@ -11,9 +11,7 @@ terraform {
 
 resource "dnacenter_pnp_device_reset" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
+ 
   parameters {
     device_reset_list {
 
