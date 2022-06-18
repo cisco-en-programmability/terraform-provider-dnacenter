@@ -521,7 +521,13 @@ func resourceQosDeviceInterfaceRead(ctx context.Context, d *schema.ResourceData,
 
 		response1, err := searchApplicationPolicyGetQosDeviceInterfaceInfo(m, queryParams1, vName)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting searchApplicationPolicyGetQosDeviceInterfaceInfo search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}

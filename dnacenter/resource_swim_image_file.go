@@ -417,7 +417,13 @@ func resourceSwimImageFileRead(ctx context.Context, d *schema.ResourceData, m in
 
 		response1, err := searchSoftwareImageManagementSwimGetSoftwareImageDetailsFile(m, queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting searchSoftwareImageManagementSwimGetSoftwareImageDetailsFile search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}

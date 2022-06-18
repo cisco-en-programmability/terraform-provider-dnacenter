@@ -151,7 +151,13 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx context.Context, d *sch
 
 		response1, restyResp1, err := client.FabricWireless.GetSSIDToIPPoolMapping(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetSSIDToIPPoolMapping", err,
+				"Failure at GetSSIDToIPPoolMapping, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -191,8 +197,8 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolUpdate(ctx context.Context, d *s
 	getResp, _, err := client.FabricWireless.GetSSIDToIPPoolMapping(&queryParams1)
 	if err != nil || getResp == nil {
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetAllowedProtocolByName", err,
-			"Failure at GetAllowedProtocolByName, unexpected response", ""))
+			"Failure when executing GetSSIDToIPPoolMapping", err,
+			"Failure at GetSSIDToIPPoolMapping, unexpected response", ""))
 		return diags
 	}
 	// NOTE: Consider adding getAllItems and search function to get missing params

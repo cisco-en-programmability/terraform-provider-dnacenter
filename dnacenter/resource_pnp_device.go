@@ -2821,7 +2821,13 @@ func resourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m interf
 		queryParams1 := dnacentersdkgo.GetDeviceList2QueryParams{}
 		queryParams1.Name = append(queryParams1.Name, vName)
 		response1, err := searchDeviceOnboardingPnpGetDeviceList2(m, queryParams1, vName)
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting searchDeviceOnboardingPnpGetDeviceList2 search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}
@@ -2841,7 +2847,13 @@ func resourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m interf
 
 		response2, restyResp2, err := client.DeviceOnboardingPnp.GetDeviceByID(vvID)
 
-		if err != nil || response2 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceByID response",
+				err))
+			return diags
+		}
+		if response2 == nil {
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}

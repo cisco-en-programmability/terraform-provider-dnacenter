@@ -252,7 +252,13 @@ func resourceSdaPortAssignmentForAccessPointRead(ctx context.Context, d *schema.
 
 		response1, restyResp1, err := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetPortAssignmentForAccessPointInSdaFabric", err,
+				"Failure at GetPortAssignmentForAccessPointInSdaFabric, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}

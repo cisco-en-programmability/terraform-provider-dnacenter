@@ -3334,7 +3334,13 @@ func resourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m interf
 
 		response2, restyResp2, err := client.PathTrace.RetrievesPreviousPathtrace(vvFlowAnalysisID)
 
-		if err != nil || response2 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting RetrievesPreviousPathtrace response",
+				err))
+			return diags
+		}
+		if response2 == nil {
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}

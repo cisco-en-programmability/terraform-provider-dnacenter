@@ -532,7 +532,13 @@ func resourceEventSubscriptionRestRead(ctx context.Context, d *schema.ResourceDa
 		log.Printf("[DEBUG] Selected method 1: GetRestWebhookEventSubscriptions")
 		queryParams1 := dnacentersdkgo.GetRestWebhookEventSubscriptionsQueryParams{}
 		item, err := searchEventManagementGetRestWebhookEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
-		if err != nil || item == nil || len(*item) <= 0 {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetEventSubscriptions search response",
+				err))
+			return diags
+		}
+		if item == nil || len(*item) <= 0 {
 			d.SetId("")
 			return diags
 		}

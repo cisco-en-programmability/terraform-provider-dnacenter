@@ -463,7 +463,13 @@ func resourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		response1, err := searchDeviceOnboardingPnpGetWorkflows(m, queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting searchDeviceOnboardingPnpGetWorkflows search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}
@@ -472,7 +478,13 @@ func resourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		response2, restyResp2, err := client.DeviceOnboardingPnp.GetWorkflowByID(response1.TypeID)
 
-		if err != nil || response2 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetWorkflowByID response",
+				err))
+			return diags
+		}
+		if response2 == nil {
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
@@ -496,7 +508,13 @@ func resourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		response2, restyResp2, err := client.DeviceOnboardingPnp.GetWorkflowByID(vvID)
 
-		if err != nil || response2 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetWorkflowByID response",
+				err))
+			return diags
+		}
+		if response2 == nil {
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}

@@ -181,7 +181,13 @@ func resourceWirelessDynamicInterfaceRead(ctx context.Context, d *schema.Resourc
 
 		response1, restyResp1, err := client.Wireless.GetDynamicInterface(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDynamicInterface", err,
+				"Failure at GetDynamicInterface, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}

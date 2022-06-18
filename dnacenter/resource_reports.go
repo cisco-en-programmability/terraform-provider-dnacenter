@@ -562,7 +562,13 @@ func resourceReportsRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 		response1, restyResp1, err := client.Reports.GetAScheduledReport(vvReportID)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetAScheduledReport", err,
+				"Failure at GetAScheduledReport, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -585,7 +591,13 @@ func resourceReportsRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	if vName != "" {
 		response1, err := searchReportsGetListOfScheduledReports(m, nil, vName)
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting searchReportsGetListOfScheduledReports search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}

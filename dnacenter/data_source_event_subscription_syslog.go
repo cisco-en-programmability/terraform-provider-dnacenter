@@ -281,7 +281,7 @@ func dataSourceEventSubscriptionSyslog() *schema.Resource {
 
 															"port": &schema.Schema{
 																Description: `Port`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeInt,
 																Computed:    true,
 															},
 
@@ -416,8 +416,8 @@ func flattenEventManagementGetSyslogEventSubscriptionsItems(items *dnacentersdkg
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["version"] = item.Version
-		respItem["subscription_id"] = item.SubscriptionID
+		respItem["version"] = responseInterfaceToString(item.Version)
+		respItem["subscription_id"] = responseInterfaceToString(item.SubscriptionID)
 		respItem["name"] = item.Name
 		respItem["description"] = item.Description
 		respItem["subscription_endpoints"] = flattenEventManagementGetSyslogEventSubscriptionsItemsSubscriptionEndpoints(item.SubscriptionEndpoints)

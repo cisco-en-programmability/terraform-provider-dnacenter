@@ -180,24 +180,6 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"base_path": &schema.Schema{
-													Description: `Base Path`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"body": &schema.Schema{
-													Description: `Body`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"connect_timeout": &schema.Schema{
-													Description: `Connect Timeout`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
 												"connector_type": &schema.Schema{
 													Description: `Connector Type`,
 													Type:        schema.TypeString,
@@ -210,29 +192,8 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 													Computed:    true,
 												},
 
-												"headers": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"string": &schema.Schema{
-																Description: `String`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
 												"instance_id": &schema.Schema{
 													Description: `Instance Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"method": &schema.Schema{
-													Description: `Method`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -243,58 +204,55 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 													Computed:    true,
 												},
 
-												"path_params": &schema.Schema{
+												"syslog_config": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"string": &schema.Schema{
-																Description: `String`,
+															"config_id": &schema.Schema{
+																Description: `Config Id`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"description": &schema.Schema{
+																Description: `Description`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"host": &schema.Schema{
+																Description: `Host`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"name": &schema.Schema{
+																Description: `Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"port": &schema.Schema{
+																Description: `Port`,
+																Type:        schema.TypeInt,
+																Computed:    true,
+															},
+
+															"tenant_id": &schema.Schema{
+																Description: `Tenant Id`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+
+															"version": &schema.Schema{
+																Description: `Version`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
 														},
 													},
-												},
-
-												"query_params": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"string": &schema.Schema{
-																Description: `String`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-														},
-													},
-												},
-
-												"read_timeout": &schema.Schema{
-													Description: `Read Timeout`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"resource": &schema.Schema{
-													Description: `Resource`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"trust_cert": &schema.Schema{
-													Description: `Trust Cert`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-
-												"url": &schema.Schema{
-													Description: `Url`,
-													Type:        schema.TypeString,
-													Computed:    true,
 												},
 											},
 										},
@@ -326,44 +284,96 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 			"parameters": &schema.Schema{
 				Description: `Array of RequestEventManagementCreateSyslogEventSubscription`,
 				Type:        schema.TypeList,
-				Optional:    true,
+				Required:    true,
+				MaxItems:    1,
+				MinItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
-						"description": &schema.Schema{
-							Description: `Description
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"filter": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+						"payload": &schema.Schema{
+							Description: `Array of RequestEventManagementCreateSyslogEventSubscription`,
+							Type:        schema.TypeList,
+							Optional:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"categories": &schema.Schema{
-										Description: `Categories`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
+									"description": &schema.Schema{
+										Description: `Description
+`,
+										Type:     schema.TypeString,
+										Optional: true,
 									},
-									"domains_subdomains": &schema.Schema{
+									"filter": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"domain": &schema.Schema{
-													Description: `Domain`,
-													Type:        schema.TypeString,
+												"categories": &schema.Schema{
+													Description: `Categories`,
+													Type:        schema.TypeList,
 													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
-												"sub_domains": &schema.Schema{
-													Description: `Sub Domains`,
+												"domains_subdomains": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"domain": &schema.Schema{
+																Description: `Domain`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+															"sub_domains": &schema.Schema{
+																Description: `Sub Domains`,
+																Type:        schema.TypeList,
+																Optional:    true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
+															},
+														},
+													},
+												},
+												"event_ids": &schema.Schema{
+													Description: `Event Ids (Comma separated event ids)
+`,
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"severities": &schema.Schema{
+													Description: `Severities`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"site_ids": &schema.Schema{
+													Description: `Site Ids`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"sources": &schema.Schema{
+													Description: `Sources`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"types": &schema.Schema{
+													Description: `Types`,
 													Type:        schema.TypeList,
 													Optional:    true,
 													Elem: &schema.Schema{
@@ -373,98 +383,57 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 											},
 										},
 									},
-									"event_ids": &schema.Schema{
-										Description: `Event Ids (Comma separated event ids)
-`,
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"severities": &schema.Schema{
-										Description: `Severities`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"site_ids": &schema.Schema{
-										Description: `Site Ids`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"sources": &schema.Schema{
-										Description: `Sources`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"types": &schema.Schema{
-										Description: `Types`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-								},
-							},
-						},
-						"name": &schema.Schema{
-							Description: `Name
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"subscription_endpoints": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"instance_id": &schema.Schema{
-										Description: `(From Get Syslog Subscription Details --> pick instanceId)
+									"name": &schema.Schema{
+										Description: `Name
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 									},
-									"subscription_details": &schema.Schema{
+									"subscription_endpoints": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"connector_type": &schema.Schema{
-													Description: `Connector Type (Must be SYSLOG)
+												"instance_id": &schema.Schema{
+													Description: `(From Get Syslog Subscription Details --> pick instanceId)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 												},
+												"subscription_details": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"connector_type": &schema.Schema{
+																Description: `Connector Type (Must be SYSLOG)
+`,
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
 											},
 										},
 									},
+									"subscription_id": &schema.Schema{
+										Description: `Subscription Id (Unique UUID)
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"version": &schema.Schema{
+										Description: `Version
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
 								},
 							},
-						},
-						"subscription_id": &schema.Schema{
-							Description: `Subscription Id (Unique UUID)
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"version": &schema.Schema{
-							Description: `Version
-`,
-							Type:     schema.TypeString,
-							Optional: true,
 						},
 					},
 				},
@@ -478,19 +447,16 @@ func resourceEventSubscriptionSyslogCreate(ctx context.Context, d *schema.Resour
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestEventSubscriptionSyslogCreateSyslogEventSubscription(ctx, "parameters.0", d)
-	vName := resourceItem["name"]
+	vName := d.Get("parameters.0.payload.0.name")
 	vvName := interfaceToString(vName)
-	vSubscriptionID := resourceItem["subscription_id"]
-	vvSubscriptionID := interfaceToString(vSubscriptionID)
 
 	queryParams1 := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetSyslogEventSubscriptions(m, queryParams1, vvName, vvSubscriptionID)
+	queryParams1.Name = vvName
+	item, _, err := client.EventManagement.GetSyslogEventSubscriptions(&queryParams1)
 	if err == nil && (item != nil && len(*item) > 0) {
 		resourceMap := make(map[string]string)
 		resourceMap["name"] = vvName
-		resourceMap["subscription_id"] = vvSubscriptionID
 		d.SetId(joinResourceID(resourceMap))
 		return resourceEventSubscriptionSyslogRead(ctx, d, m)
 	}
@@ -512,28 +478,36 @@ func resourceEventSubscriptionSyslogCreate(ctx context.Context, d *schema.Resour
 	}
 	resourceMap := make(map[string]string)
 	resourceMap["name"] = vvName
-	resourceMap["subscription_id"] = vvSubscriptionID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceEventSubscriptionSyslogRead(ctx, d, m)
 }
 
 func resourceEventSubscriptionSyslogRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-
+	client := m.(*dnacentersdkgo.Client)
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vName, _ := resourceMap["name"]
-	vSubscriptionID, _ := resourceMap["subscription_id"]
-
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSyslogEventSubscriptions")
+		log.Printf("[DEBUG] Selected method 1: GetSyslogEventSubscriptions %s", vName)
+
 		queryParams1 := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
-		item, err := searchEventManagementGetSyslogEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
-		if err != nil || item == nil || len(*item) <= 0 {
+		queryParams1.Name = vName
+		item, _, err := client.EventManagement.GetSyslogEventSubscriptions(&queryParams1)
+		log.Println("[DEBUG] searchEventManagementGetSyslogEventSubscriptions")
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSyslogEventSubscriptions search response",
+				err))
+			return diags
+		}
+		if item == nil {
 			d.SetId("")
 			return diags
 		}
+
+		log.Println("[DEBUG] searchEventManagementGetSyslogEventSubscriptions 2")
 
 		if item != nil {
 			log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*item))
@@ -559,10 +533,10 @@ func resourceEventSubscriptionSyslogUpdate(ctx context.Context, d *schema.Resour
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vName, _ := resourceMap["name"]
-	vSubscriptionID, _ := resourceMap["subscription_id"]
 
 	queryParams1 := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetSyslogEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
+	queryParams1.Name = vName
+	item, _, err := client.EventManagement.GetSyslogEventSubscriptions(&queryParams1)
 	if err != nil || item == nil || len(*item) <= 0 {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetSyslogEventSubscriptions", err,
@@ -580,7 +554,7 @@ func resourceEventSubscriptionSyslogUpdate(ctx context.Context, d *schema.Resour
 		if request1 != nil && len(*request1) > 0 && item != nil && len(*item) > 0 {
 			found := *item
 			req := *request1
-			req[0].SubscriptionID = found[0].SubscriptionID
+			req[0].SubscriptionID = responseInterfaceToString(found[0].SubscriptionID)
 			request1 = &req
 		}
 		response1, restyResp1, err := client.EventManagement.UpdateSyslogEventSubscription(request1)
@@ -610,10 +584,10 @@ func resourceEventSubscriptionSyslogDelete(ctx context.Context, d *schema.Resour
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vName, _ := resourceMap["name"]
-	vSubscriptionID, _ := resourceMap["subscription_id"]
 
 	queryParams1 := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetSyslogEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
+	queryParams1.Name = vName
+	item, _, err := client.EventManagement.GetSyslogEventSubscriptions(&queryParams1)
 	if err != nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetEventSubscriptions", err,
@@ -628,7 +602,7 @@ func resourceEventSubscriptionSyslogDelete(ctx context.Context, d *schema.Resour
 	queryParams2 := dnacentersdkgo.DeleteEventSubscriptionsQueryParams{}
 	if len(*item) > 0 {
 		itemCopy := *item
-		queryParams2.Subscriptions = itemCopy[0].SubscriptionID
+		queryParams2.Subscriptions = responseInterfaceToString(itemCopy[0].SubscriptionID)
 	}
 	response1, restyResp1, err := client.EventManagement.DeleteEventSubscriptions(&queryParams2)
 	if err != nil || response1 == nil {
@@ -997,30 +971,4 @@ func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemFilter
 		return nil
 	}
 	return &request
-}
-
-func searchEventManagementGetSyslogEventSubscriptions(m interface{}, queryParams dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams, name string, subscriptionID string) (*dnacentersdkgo.ResponseEventManagementGetSyslogEventSubscriptions, error) {
-	client := m.(*dnacentersdkgo.Client)
-	var err error
-	var foundItems dnacentersdkgo.ResponseEventManagementGetSyslogEventSubscriptions
-	var items *dnacentersdkgo.ResponseEventManagementGetSyslogEventSubscriptions
-	items, _, err = client.EventManagement.GetSyslogEventSubscriptions(&queryParams)
-	if err != nil {
-		return nil, err
-	}
-	if items == nil {
-		return nil, err
-	}
-
-	itemsCopy := *items
-	for _, item := range itemsCopy {
-		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.EventIDs {
-			if item.SubscriptionID == subscriptionID || item.Name == name {
-				foundItems = append(foundItems, item)
-				break
-			}
-		}
-	}
-	return &foundItems, err
 }

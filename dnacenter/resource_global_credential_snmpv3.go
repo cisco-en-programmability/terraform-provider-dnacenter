@@ -261,7 +261,13 @@ func resourceGlobalCredentialSNMPv3Read(ctx context.Context, d *schema.ResourceD
 		queryParams1.CredentialSubType = vCredentialSubType
 
 		response1, err := searchDiscoveryGetGlobalCredentialsSmpv3(m, queryParams1, vUsername, vID)
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGlobalCredentials search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}

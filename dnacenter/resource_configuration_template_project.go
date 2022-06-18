@@ -51,30 +51,42 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+
 						"description": &schema.Schema{
 							Description: `Description of project
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"id": &schema.Schema{
 							Description: `UUID of project
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
+						"is_deletable": &schema.Schema{
+							Description: `Is deletable`,
+
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"last_update_time": &schema.Schema{
 							Description: `Update time of project
 `,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+
 						"name": &schema.Schema{
 							Description: `Name of project
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"tags": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -87,6 +99,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"name": &schema.Schema{
 										Description: `Name of tag
 `,
@@ -96,6 +109,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 								},
 							},
 						},
+
 						"templates": &schema.Schema{
 							Description: `List of templates within the project
 `,
@@ -110,6 +124,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
@@ -117,6 +132,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"containing_templates": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -130,12 +146,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"description": &schema.Schema{
 													Description: `Description of template
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"device_types": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -148,12 +166,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"product_series": &schema.Schema{
 																Description: `Device series
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"product_type": &schema.Schema{
 																Description: `Device type
 `,
@@ -163,30 +183,35 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 														},
 													},
 												},
+
 												"id": &schema.Schema{
 													Description: `UUID of template
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"language": &schema.Schema{
 													Description: `Template language (JINJA or VELOCITY)
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"name": &schema.Schema{
 													Description: `Name of template
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"project_name": &schema.Schema{
 													Description: `Project name
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"rollback_template_params": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -199,60 +224,70 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"custom_order": &schema.Schema{
 																Description: `CustomOrder of template param
 `,
 																Type:     schema.TypeInt,
 																Computed: true,
 															},
+
 															"data_type": &schema.Schema{
 																Description: `Datatype of template param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"default_value": &schema.Schema{
 																Description: `Default value of template param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"description": &schema.Schema{
 																Description: `Description of template param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"display_name": &schema.Schema{
 																Description: `Display name of param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"group": &schema.Schema{
 																Description: `group
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"id": &schema.Schema{
 																Description: `UUID of template param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"instruction_text": &schema.Schema{
 																Description: `Instruction text for param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"key": &schema.Schema{
 																Description: `key
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
@@ -260,12 +295,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"order": &schema.Schema{
 																Description: `Order of template param
 `,
 																Type:     schema.TypeInt,
 																Computed: true,
 															},
+
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
@@ -273,18 +310,21 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"parameter_name": &schema.Schema{
 																Description: `Name of template param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"provider": &schema.Schema{
 																Description: `provider
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"range": &schema.Schema{
 																Type:     schema.TypeList,
 																Computed: true,
@@ -297,12 +337,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Computed: true,
 																		},
+
 																		"max_value": &schema.Schema{
 																			Description: `Max value of range
 `,
 																			Type:     schema.TypeInt,
 																			Computed: true,
 																		},
+
 																		"min_value": &schema.Schema{
 																			Description: `Min value of range
 `,
@@ -312,6 +354,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																	},
 																},
 															},
+
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
@@ -319,6 +362,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"selection": &schema.Schema{
 																Type:     schema.TypeList,
 																Computed: true,
@@ -334,26 +378,26 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																				Type: schema.TypeString,
 																			},
 																		},
+
 																		"id": &schema.Schema{
 																			Description: `UUID of selection
 `,
 																			Type:     schema.TypeString,
 																			Computed: true,
 																		},
+
 																		"selection_type": &schema.Schema{
 																			Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 																			Type:     schema.TypeString,
 																			Computed: true,
 																		},
+
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
 `,
-																			Type:     schema.TypeList,
+																			Type:     schema.TypeString,
 																			Computed: true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 																	},
 																},
@@ -361,6 +405,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 														},
 													},
 												},
+
 												"tags": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -373,6 +418,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"name": &schema.Schema{
 																Description: `Name of tag
 `,
@@ -382,12 +428,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 														},
 													},
 												},
+
 												"template_content": &schema.Schema{
 													Description: `Template content
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"template_params": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -400,60 +448,70 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"custom_order": &schema.Schema{
 																Description: `CustomOrder of template param
 `,
 																Type:     schema.TypeInt,
 																Computed: true,
 															},
+
 															"data_type": &schema.Schema{
 																Description: `Datatype of template param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"default_value": &schema.Schema{
 																Description: `Default value of template param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"description": &schema.Schema{
 																Description: `Description of template param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"display_name": &schema.Schema{
 																Description: `Display name of param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"group": &schema.Schema{
 																Description: `group
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"id": &schema.Schema{
 																Description: `UUID of template param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"instruction_text": &schema.Schema{
 																Description: `Instruction text for param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"key": &schema.Schema{
 																Description: `key
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
@@ -461,12 +519,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"order": &schema.Schema{
 																Description: `Order of template param
 `,
 																Type:     schema.TypeInt,
 																Computed: true,
 															},
+
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
@@ -474,18 +534,21 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"parameter_name": &schema.Schema{
 																Description: `Name of template param
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"provider": &schema.Schema{
 																Description: `provider
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"range": &schema.Schema{
 																Type:     schema.TypeList,
 																Computed: true,
@@ -498,12 +561,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Computed: true,
 																		},
+
 																		"max_value": &schema.Schema{
 																			Description: `Max value of range
 `,
 																			Type:     schema.TypeInt,
 																			Computed: true,
 																		},
+
 																		"min_value": &schema.Schema{
 																			Description: `Min value of range
 `,
@@ -513,6 +578,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																	},
 																},
 															},
+
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
@@ -520,6 +586,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"selection": &schema.Schema{
 																Type:     schema.TypeList,
 																Computed: true,
@@ -535,26 +602,26 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																				Type: schema.TypeString,
 																			},
 																		},
+
 																		"id": &schema.Schema{
 																			Description: `UUID of selection
 `,
 																			Type:     schema.TypeString,
 																			Computed: true,
 																		},
+
 																		"selection_type": &schema.Schema{
 																			Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 																			Type:     schema.TypeString,
 																			Computed: true,
 																		},
+
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
 `,
-																			Type:     schema.TypeList,
+																			Type:     schema.TypeString,
 																			Computed: true,
-																			Elem: &schema.Schema{
-																				Type: schema.TypeString,
-																			},
 																		},
 																	},
 																},
@@ -562,6 +629,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 														},
 													},
 												},
+
 												"version": &schema.Schema{
 													Description: `Current version of template
 `,
@@ -571,12 +639,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 											},
 										},
 									},
+
 									"create_time": &schema.Schema{
 										Description: `Create time of template
 `,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"custom_params_order": &schema.Schema{
 										Description: `Custom Params Order
 `,
@@ -584,12 +654,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"description": &schema.Schema{
 										Description: `Description of template
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"device_types": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -602,12 +674,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"product_series": &schema.Schema{
 													Description: `Device series
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"product_type": &schema.Schema{
 													Description: `Device type
 `,
@@ -617,66 +691,77 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 											},
 										},
 									},
+
 									"failure_policy": &schema.Schema{
 										Description: `Define failure policy if template provisioning fails
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"id": &schema.Schema{
 										Description: `UUID of template
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"language": &schema.Schema{
 										Description: `Template language (JINJA or VELOCITY)
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"last_update_time": &schema.Schema{
 										Description: `Update time of template
 `,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"latest_version_time": &schema.Schema{
 										Description: `Latest versioned template time
 `,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"name": &schema.Schema{
 										Description: `Name of template
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"parent_template_id": &schema.Schema{
 										Description: `Parent templateID
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"project_id": &schema.Schema{
 										Description: `Project UUID
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"project_name": &schema.Schema{
 										Description: `Project name
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"rollback_template_content": &schema.Schema{
 										Description: `Rollback template content
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"rollback_template_params": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -689,60 +774,70 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"custom_order": &schema.Schema{
 													Description: `CustomOrder of template param
 `,
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
+
 												"data_type": &schema.Schema{
 													Description: `Datatype of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"default_value": &schema.Schema{
 													Description: `Default value of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"description": &schema.Schema{
 													Description: `Description of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"display_name": &schema.Schema{
 													Description: `Display name of param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"group": &schema.Schema{
 													Description: `group
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"id": &schema.Schema{
 													Description: `UUID of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"instruction_text": &schema.Schema{
 													Description: `Instruction text for param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"key": &schema.Schema{
 													Description: `key
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
@@ -750,12 +845,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"order": &schema.Schema{
 													Description: `Order of template param
 `,
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
+
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
@@ -763,18 +860,21 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"parameter_name": &schema.Schema{
 													Description: `Name of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"provider": &schema.Schema{
 													Description: `provider
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"range": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -787,12 +887,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"max_value": &schema.Schema{
 																Description: `Max value of range
 `,
 																Type:     schema.TypeInt,
 																Computed: true,
 															},
+
 															"min_value": &schema.Schema{
 																Description: `Min value of range
 `,
@@ -802,6 +904,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 														},
 													},
 												},
+
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
@@ -809,6 +912,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"selection": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -824,26 +928,26 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																	Type: schema.TypeString,
 																},
 															},
+
 															"id": &schema.Schema{
 																Description: `UUID of selection
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"selection_type": &schema.Schema{
 																Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeList,
+																Type:     schema.TypeString,
 																Computed: true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 														},
 													},
@@ -851,24 +955,28 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 											},
 										},
 									},
+
 									"software_type": &schema.Schema{
 										Description: `Applicable device software type
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"software_variant": &schema.Schema{
 										Description: `Applicable device software variant
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"software_version": &schema.Schema{
 										Description: `Applicable device software version
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"tags": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -881,6 +989,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"name": &schema.Schema{
 													Description: `Name of tag
 `,
@@ -890,12 +999,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 											},
 										},
 									},
+
 									"template_content": &schema.Schema{
 										Description: `Template content
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"template_params": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -908,60 +1019,70 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"custom_order": &schema.Schema{
 													Description: `CustomOrder of template param
 `,
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
+
 												"data_type": &schema.Schema{
 													Description: `Datatype of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"default_value": &schema.Schema{
 													Description: `Default value of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"description": &schema.Schema{
 													Description: `Description of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"display_name": &schema.Schema{
 													Description: `Display name of param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"group": &schema.Schema{
 													Description: `group
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"id": &schema.Schema{
 													Description: `UUID of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"instruction_text": &schema.Schema{
 													Description: `Instruction text for param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"key": &schema.Schema{
 													Description: `key
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
@@ -969,12 +1090,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"order": &schema.Schema{
 													Description: `Order of template param
 `,
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
+
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
@@ -982,18 +1105,21 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"parameter_name": &schema.Schema{
 													Description: `Name of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"provider": &schema.Schema{
 													Description: `provider
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"range": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -1006,12 +1132,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"max_value": &schema.Schema{
 																Description: `Max value of range
 `,
 																Type:     schema.TypeInt,
 																Computed: true,
 															},
+
 															"min_value": &schema.Schema{
 																Description: `Min value of range
 `,
@@ -1021,6 +1149,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 														},
 													},
 												},
+
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
@@ -1028,6 +1157,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"selection": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -1043,26 +1173,26 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 																	Type: schema.TypeString,
 																},
 															},
+
 															"id": &schema.Schema{
 																Description: `UUID of selection
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"selection_type": &schema.Schema{
 																Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
+
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeList,
+																Type:     schema.TypeString,
 																Computed: true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
 														},
 													},
@@ -1070,6 +1200,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 											},
 										},
 									},
+
 									"validation_errors": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -1085,6 +1216,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 														Type: schema.TypeString,
 													},
 												},
+
 												"template_errors": &schema.Schema{
 													Description: `Validation or design conflicts errors
 `,
@@ -1094,12 +1226,14 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 														Type: schema.TypeString,
 													},
 												},
+
 												"template_id": &schema.Schema{
 													Description: `UUID of template
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+
 												"template_version": &schema.Schema{
 													Description: `Current version of template
 `,
@@ -1109,6 +1243,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 											},
 										},
 									},
+
 									"version": &schema.Schema{
 										Description: `Current version of template
 `,
@@ -2346,7 +2481,13 @@ func resourceConfigurationTemplateProjectRead(ctx context.Context, d *schema.Res
 		}
 		response1, restyResp1, err := client.ConfigurationTemplates.GetsAListOfProjects(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetsTheDetailsOfAGivenProject", err,
+				"Failure at GetsTheDetailsOfAGivenProject, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -2386,8 +2527,13 @@ func resourceConfigurationTemplateProjectRead(ctx context.Context, d *schema.Res
 		vvProjectID := vProjectID
 
 		response2, restyResp2, err := client.ConfigurationTemplates.GetsTheDetailsOfAGivenProject(vvProjectID)
-
-		if err != nil || response2 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetsTheDetailsOfAGivenProject response",
+				err))
+			return diags
+		}
+		if response2 == nil {
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
