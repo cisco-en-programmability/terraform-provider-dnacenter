@@ -1,7 +1,7 @@
-## 1.0.0-beta (April 04, 2022)
+## 1.0.0-beta (June 17, 2022)
 
 NOTES:
-`dnacenter-go-sdk` version changes from `github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk` to `github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk`.
+`dnacenter-go-sdk` version changes from `github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk` to `github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk`.(Cisco DNA Center's v2.3.3.0 API)
 
 FEATURES: 
 * **New Data Source:** `data_source_buildings_planned_access_points`
