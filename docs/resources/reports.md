@@ -26,12 +26,65 @@ provider "dnacenter" {
 
 resource "dnacenter_reports" "example" {
   provider = dnacenter
+  item {
+
+
+
+
+    executions {
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+    view {
+
+
+      field_groups {
+
+
+
+        fields {
+
+
+
+        }
+      }
+      filters {
+
+
+
+
+
+      }
+      format {
+
+
+
+
+      }
+
+
+
+    }
+
+
+  }
   parameters {
 
     deliveries = ["string"]
     name       = "string"
     report_id  = "string"
-    schedule   = ["string"]
+    schedule   = "string"
     tags       = ["string"]
     view {
 
@@ -50,7 +103,7 @@ resource "dnacenter_reports" "example" {
         display_name = "string"
         name         = "string"
         type         = "string"
-        value        = ["string"]
+        value        = "string"
       }
       format {
 
@@ -91,13 +144,13 @@ output "dnacenter_reports_example" {
 
 Required:
 
-- **name** (String) report name
 - **report_id** (String) reportId path parameter. reportId of report
 
 Optional:
 
 - **deliveries** (List of String) Array of available delivery channels
-- **schedule** (String)
+- **name** (String) report name
+- **schedule** (List of String)
 - **tags** (List of String) array of tags for report
 - **view** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--view))
 - **view_group_id** (String) viewGroupId of the viewgroup for the report
@@ -141,7 +194,7 @@ Optional:
 - **display_name** (String) filter label/displayname
 - **name** (String) filter name
 - **type** (String) filter type
-- **value** (String) value of filter. data type is based on the filter type. Use the filter definitions from the view to fetch the options for a filter.
+- **value** (List of String) value of filter. data type is based on the filter type. Use the filter definitions from the view to fetch the options for a filter.
 
 
 <a id="nestedblock--parameters--view--format"></a>
@@ -167,7 +220,7 @@ Read-Only:
 - **name** (String)
 - **report_id** (String)
 - **report_was_executed** (String)
-- **schedule** (String)
+- **schedule** (List of String)
 - **tags** (List of String)
 - **view** (List of Object) (see [below for nested schema](#nestedobjatt--item--view))
 - **view_group_id** (String)
@@ -227,7 +280,7 @@ Read-Only:
 - **display_name** (String)
 - **name** (String)
 - **type** (String)
-- **value** (String)
+- **value** (List of String)
 
 
 <a id="nestedobjatt--item--view--format"></a>

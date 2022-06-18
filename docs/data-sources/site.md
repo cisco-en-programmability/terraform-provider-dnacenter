@@ -36,9 +36,9 @@ output "dnacenter_site_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **limit** (String) limit query parameter. Number of sites to be retrieved
+- **limit** (String) limit query parameter. Number of sites to be retrieved. The default value is 500
 - **name** (String) name query parameter. siteNameHierarchy (ex: global/groupName)
-- **offset** (String) offset query parameter. offset/starting row
+- **offset** (String) offset query parameter. offset/starting row. The default value is 1
 - **site_id** (String) siteId query parameter. Site id to which site details to retrieve.
 - **type** (String) type query parameter. type (ex: area, building, floor)
 
@@ -65,7 +65,7 @@ Read-Only:
 Read-Only:
 
 - **attributes** (List of Object) (see [below for nested schema](#nestedobjatt--items--additional_info--attributes))
-- **namespace** (String)
+- **name_space** (String)
 
 <a id="nestedobjatt--items--additional_info--attributes"></a>
 ### Nested Schema for `items.additional_info.attributes`

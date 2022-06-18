@@ -4,29 +4,33 @@ page_title: "dnacenter_sensor_test_template_duplicate Resource - terraform-provi
 subcategory: ""
 description: |-
   It performs update operation on Sensors.
-  - Intent API to duplicate an existing SENSOR test template
+  Intent API to duplicate an existing SENSOR test template
 ---
 
 # dnacenter_sensor_test_template_duplicate (Resource)
 
 It performs update operation on Sensors.
+
 - Intent API to duplicate an existing SENSOR test template
 
-~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_sensor_test_template_duplicate" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     new_template_name = "string"
     template_name     = "string"
   }
+}
+
+output "dnacenter_sensor_test_template_duplicate_example" {
+  value = dnacenter_sensor_test_template_duplicate.example
 }
 ```
 
@@ -179,14 +183,14 @@ Read-Only:
 - **eap_method** (String)
 - **ext_web_auth** (String)
 - **ext_web_auth_access_url** (String)
-- **ext_web_auth_html_tag** (String)
+- **ext_web_auth_html_tag** (List of String)
 - **ext_web_auth_portal** (String)
 - **ext_web_auth_virtual_ip** (String)
 - **id** (Number)
-- **layer3web_auth_email_address** (String)
-- **layer3web_authpassword** (String)
-- **layer3web_authsecurity** (String)
-- **layer3web_authuser_name** (String)
+- **layer3web_auth_email_address** (List of String)
+- **layer3web_authpassword** (List of String)
+- **layer3web_authsecurity** (List of String)
+- **layer3web_authuser_name** (List of String)
 - **num_aps** (Number)
 - **num_sensors** (Number)
 - **password** (String)

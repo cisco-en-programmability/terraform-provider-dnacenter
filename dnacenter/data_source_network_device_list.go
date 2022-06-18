@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -20,7 +20,7 @@ You can use the .* in any value to conduct a wildcard search. For example, to fi
 in the IP address range 192.25.18.n, issue the following request: GET /dna/intent/api/v1/network-
 device?hostname=myhost.*&managementIpAddress=192.25.18..*
 If id parameter is provided with comma separated ids, it will return the list of network-devices for the given ids and
-ignores the other request parameters.
+ignores the other request parameters. You can also specify offset & limit to get the required list.
 `,
 
 		ReadContext: dataSourceNetworkDeviceListRead,
@@ -116,6 +116,12 @@ ignores the other request parameters.
 					Type: schema.TypeString,
 				},
 			},
+			"limit": &schema.Schema{
+				Description: `limit query parameter. 1 <= limit <= 500 [max. no. of devices to be returned in the result]
+`,
+				Type:     schema.TypeFloat,
+				Optional: true,
+			},
 			"location": &schema.Schema{
 				Description: `location query parameter.`,
 				Type:        schema.TypeList,
@@ -203,6 +209,12 @@ ignores the other request parameters.
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
+			},
+			"offset": &schema.Schema{
+				Description: `offset query parameter. offset >= 1 [X gives results from Xth device onwards]
+`,
+				Type:     schema.TypeFloat,
+				Optional: true,
 			},
 			"platform_id": &schema.Schema{
 				Description: `platformId query parameter.`,
@@ -596,6 +608,8 @@ func dataSourceNetworkDeviceListRead(ctx context.Context, d *schema.ResourceData
 	vModuleoperationstatecode, okModuleoperationstatecode := d.GetOk("module_operationstatecode")
 	vID, okID := d.GetOk("id")
 	vDeviceSupportLevel, okDeviceSupportLevel := d.GetOk("device_support_level")
+	vOffset, okOffset := d.GetOk("offset")
+	vLimit, okLimit := d.GetOk("limit")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -697,6 +711,12 @@ func dataSourceNetworkDeviceListRead(ctx context.Context, d *schema.ResourceData
 		}
 		if okDeviceSupportLevel {
 			queryParams1.DeviceSupportLevel = vDeviceSupportLevel.(string)
+		}
+		if okOffset {
+			queryParams1.Offset = vOffset.(float64)
+		}
+		if okLimit {
+			queryParams1.Limit = vLimit.(float64)
 		}
 
 		response1, restyResp1, err := client.Devices.GetDeviceList(&queryParams1)

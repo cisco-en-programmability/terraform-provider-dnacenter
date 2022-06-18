@@ -4,35 +4,40 @@ page_title: "dnacenter_network_device_export Resource - terraform-provider-dnace
 subcategory: ""
 description: |-
   It performs create operation on Devices.
-          - Exports the selected network device to a file
+  Exports the selected network device to a file
 ---
 
 # dnacenter_network_device_export (Resource)
 
 It performs create operation on Devices.
-		- Exports the selected network device to a file
 
+- Exports the selected network device to a file
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
-
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_network_device_export" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     device_uuids   = ["string"]
     id             = "string"
     operation_enum = "string"
     parameters     = ["string"]
     password       = "******"
   }
+}
+
+output "dnacenter_network_device_export_example" {
+  value = dnacenter_network_device_export.example
 }
 ```
 

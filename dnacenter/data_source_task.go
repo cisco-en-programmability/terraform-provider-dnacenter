@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -158,7 +158,7 @@ func dataSourceTask() *schema.Resource {
 						},
 
 						"is_error": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -258,7 +258,7 @@ func dataSourceTask() *schema.Resource {
 						},
 
 						"is_error": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -413,7 +413,7 @@ func dataSourceTaskRead(ctx context.Context, d *schema.ResourceData, m interface
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetTaskByID")
+		log.Printf("[DEBUG] Selected method 1: GetTaskByID")
 		vvTaskID := vTaskID.(string)
 
 		response2, restyResp2, err := client.Task.GetTaskByID(vvTaskID)

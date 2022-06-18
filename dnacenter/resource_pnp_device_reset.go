@@ -2,28 +2,29 @@ package dnacenter
 
 import (
 	"context"
+
 	"fmt"
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourcePnpDeviceReset() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Device Onboarding (PnP).
-		- Recovers a device from a Workflow Execution Error state
-	
+
+- Recovers a device from a Workflow Execution Error state
 `,
 
 		CreateContext: resourcePnpDeviceResetCreate,
 		ReadContext:   resourcePnpDeviceResetRead,
 		DeleteContext: resourcePnpDeviceResetDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -131,18 +132,18 @@ func resourcePnpDeviceReset() *schema.Resource {
 										Optional: true,
 										ForceNew: true,
 									},
-									"project_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-									},
-									"workflow_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-									},
 								},
 							},
+						},
+						"project_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
+						"workflow_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
 						},
 					},
 				},
@@ -153,10 +154,8 @@ func resourcePnpDeviceReset() *schema.Resource {
 
 func resourcePnpDeviceResetCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
-	log.Printf("[DEBUG] Selected method 1: ResetDevice")
 	request1 := expandRequestPnpDeviceResetResetDevice(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.DeviceOnboardingPnp.ResetDevice(request1)
@@ -176,6 +175,10 @@ func resourcePnpDeviceResetCreate(ctx context.Context, d *schema.ResourceData, m
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	//REVIEW: '- Analizar como se puede comprobar la ejecucion.'
+	//Analizar verificacion.
+
 	vItem1 := flattenDeviceOnboardingPnpResetDeviceItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -183,26 +186,23 @@ func resourcePnpDeviceResetCreate(ctx context.Context, d *schema.ResourceData, m
 			err))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourcePnpDeviceResetRead(ctx, d, m)
-}
+	return diags
 
+}
 func resourcePnpDeviceResetRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
 }
 
 func resourcePnpDeviceResetDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 	return diags
 }
+
 func expandRequestPnpDeviceResetResetDevice(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpResetDevice {
 	request := dnacentersdkgo.RequestDeviceOnboardingPnpResetDevice{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_reset_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_reset_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_reset_list")))) {
@@ -214,10 +214,6 @@ func expandRequestPnpDeviceResetResetDevice(ctx context.Context, key string, d *
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".workflow_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".workflow_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".workflow_id")))) {
 		request.WorkflowID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -238,10 +234,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListArray(ctx context.Cont
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -262,10 +254,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetList(ctx context.Context, 
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".top_of_stack_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".top_of_stack_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".top_of_stack_serial_number")))) {
 		request.TopOfStackSerialNumber = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -286,10 +274,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigListArray(ctx co
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -301,10 +285,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigList(ctx context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_parameters")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_parameters")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_parameters")))) {
 		request.ConfigParameters = expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigListConfigParametersArray(ctx, key+".config_parameters", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -325,10 +305,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigListConfigParame
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -340,10 +316,6 @@ func expandRequestPnpDeviceResetResetDeviceDeviceResetListConfigListConfigParame
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

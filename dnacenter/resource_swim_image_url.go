@@ -2,20 +2,24 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
+	"time"
+
 	"fmt"
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceSwimImageURL() *schema.Resource {
 	return &schema.Resource{
-		Description: `It manages create and read operations on Software Image Management (SWIM).
+		Description: `It performs create operation on Software Image Management (SWIM).
 
 - Fetches a software image from remote file system (using URL for HTTP/FTP) and uploads to DNA Center. Supported image
 files extensions are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2
@@ -23,45 +27,95 @@ files extensions are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2
 
 		CreateContext: resourceSwimImageURLCreate,
 		ReadContext:   resourceSwimImageURLRead,
-		UpdateContext: resourceSwimImageURLUpdate,
 		DeleteContext: resourceSwimImageURLDelete,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"parameters": &schema.Schema{
-				Description: `Array of RequestSoftwareImageManagementSwimImportSoftwareImageViaURL`,
-				Type:        schema.TypeList,
-				Optional:    true,
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"application_type": &schema.Schema{
+						"task_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"url": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Required: true,
+				MaxItems: 1,
+				MinItems: 1,
+				ForceNew: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"schedule_at": &schema.Schema{
+							Description: `scheduleAt query parameter. Epoch Time (The number of milli-seconds since January 1 1970 UTC) at which the distribution should be scheduled (Optional) 
+`,
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
-						"image_family": &schema.Schema{
+						"schedule_desc": &schema.Schema{
+							Description: `scheduleDesc query parameter. Custom Description (Optional)
+`,
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
-						"source_url": &schema.Schema{
+						"schedule_origin": &schema.Schema{
+							Description: `scheduleOrigin query parameter. Originator of this call (Optional)
+`,
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
-						"third_party": &schema.Schema{
-							// Type:     schema.TypeBool,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"vendor": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+						"payload": &schema.Schema{
+							Description: `Array of RequestSoftwareImageManagementSwimImportSoftwareImageViaURL`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							ForceNew:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"application_type": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+									},
+									"image_family": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+									},
+									"source_url": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+									},
+									"third_party": &schema.Schema{
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										ForceNew:     true,
+									},
+									"vendor": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -71,107 +125,115 @@ files extensions are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2
 }
 
 func resourceSwimImageURLCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	//client := m.(*dnacentersdkgo.Client)
-
-	//var diags diag.Diagnostics
-
-	//resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestSwimImageURLImportSoftwareImageViaURL(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	/*
-		resp1, restyResp1, err := client.SoftwareImageManagementSwim.ImportSoftwareImageViaURL(request1)
-		if err != nil || resp1 == nil {
-			if restyResp1 != nil {
-				diags = append(diags, diagErrorWithResponse(
-					"Failure when executing ImportSoftwareImageViaURL", err, restyResp1.String()))
-				return diags
-			}
-			diags = append(diags, diagError(
-				"Failure when executing ImportSoftwareImageViaURL", err))
-			return diags
-		}*/
-	resourceMap := make(map[string]string)
-	d.SetId(joinResourceID(resourceMap))
-	return resourceSwimImageURLRead(ctx, d, m)
-}
-
-func resourceSwimImageURLRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-	/*
-		resourceID := d.Id()
-		resourceMap := separateResourceID(resourceID)
-		vImageUUID := resourceMap["image_uuid"]
-		vName := resourceMap["name"]
-		vFamily := resourceMap["family"]
-		vApplicationType := resourceMap["application_type"]
-		vImageIntegrityStatus := resourceMap["image_integrity_status"]
-		vVersion := resourceMap["version"]
-		vImageSeries := resourceMap["image_series"]
-		vImageName := resourceMap["image_name"]
-		vIsTaggedGolden := resourceMap["is_tagged_golden"]
-		vIsCCORecommended := resourceMap["is_cco_recommended"]
-		vIsCCOLatest := resourceMap["is_cco_latest"]
-		vCreatedTime := resourceMap["created_time"]
-		vImageSizeGreaterThan := resourceMap["image_size_greater_than"]
-		vImageSizeLesserThan := resourceMap["image_size_lesser_than"]
-		vSortBy := resourceMap["sort_by"]
-		vSortOrder := resourceMap["sort_order"]
-		vLimit := resourceMap["limit"]
-		vOffset := resourceMap["offset"]
-	*/
-	selectedMethod := 1
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSoftwareImageDetails")
-		queryParams1 := dnacentersdkgo.GetSoftwareImageDetailsQueryParams{}
 
-		response1, restyResp1, err := client.SoftwareImageManagementSwim.GetSoftwareImageDetails(&queryParams1)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	vScheduleAt, okScheduleAt := resourceItem["schedule_at"]
+	vScheduleDesc, okScheduleDesc := resourceItem["schedule_desc"]
+	vScheduleOrigin, okScheduleOrigin := resourceItem["schedule_origin"]
 
-		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+	request1 := expandRequestSwimImageURLImportSoftwareImageViaURL(ctx, "parameters.0", d)
+	queryParams1 := dnacentersdkgo.ImportSoftwareImageViaURLQueryParams{}
+
+	if okScheduleAt {
+		queryParams1.ScheduleAt = vScheduleAt.(string)
+	}
+	if okScheduleDesc {
+		queryParams1.ScheduleDesc = vScheduleDesc.(string)
+	}
+	if okScheduleOrigin {
+		queryParams1.ScheduleOrigin = vScheduleOrigin.(string)
+	}
+
+	response1, restyResp1, err := client.SoftwareImageManagementSwim.ImportSoftwareImageViaURL(request1, &queryParams1)
+
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing ImportSoftwareImageViaURL", err,
+			"Failure at ImportSoftwareImageViaURL, unexpected response", ""))
+		return diags
+	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	if response1.Response == nil {
+		diags = append(diags, diagError(
+			"Failure when executing ImportSoftwareImageViaURL", err))
+		return diags
+	}
+	taskId := response1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			d.SetId("")
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
 			return diags
 		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		//TODO FOR DNAC
-		/*
-			vItem1 := flattenSoftwareImageManagementSwimGetSoftwareImageDetailsItems(response1)
-			if err := d.Set("parameters", vItem1); err != nil {
-				diags = append(diags, diagError(
-					"Failure when setting GetSoftwareImageDetails search response",
-					err))
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			restyResp3, err := client.CustomCall.GetCustomCall(response2.Response.AdditionalStatusURL, nil)
+			if err != nil {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetCustomCall", err,
+					"Failure at GetCustomCall, unexpected response", ""))
 				return diags
 			}
-		*/
-
+			var errorMsg string
+			if restyResp3 == nil {
+				errorMsg = response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			} else {
+				errorMsg = restyResp3.String()
+			}
+			err1 := errors.New(errorMsg)
+			diags = append(diags, diagError(
+				"Failure when executing ImportSoftwareImageViaURL", err1))
+			return diags
+		}
 	}
-	return diags
-}
 
-func resourceSwimImageURLUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSwimImageURLRead(ctx, d, m)
+	vItem1 := flattenSoftwareImageManagementSwimImportSoftwareImageViaURLItem(response1.Response)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting ImportSoftwareImageViaURL response",
+			err))
+		return diags
+	}
+	d.SetId(getUnixTimeString())
+	return diags
+
+}
+func resourceSwimImageURLRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	//client := m.(*dnacentersdkgo.Client)
+	var diags diag.Diagnostics
+	return diags
 }
 
 func resourceSwimImageURLDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	//client := m.(*dnacentersdkgo.Client)
+
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete SwimImageURL on Dna Center
-	//       Returning empty diags to delete it on Terraform
 	return diags
 }
+
 func expandRequestSwimImageURLImportSoftwareImageViaURL(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSoftwareImageManagementSwimImportSoftwareImageViaURL {
 	request := dnacentersdkgo.RequestSoftwareImageManagementSwimImportSoftwareImageViaURL{}
-	if v := expandRequestSwimImageURLImportSoftwareImageViaURLItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestSwimImageURLImportSoftwareImageViaURLItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -186,16 +248,12 @@ func expandRequestSwimImageURLImportSoftwareImageViaURLItemArray(ctx context.Con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSwimImageURLImportSoftwareImageViaURLItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -216,35 +274,17 @@ func expandRequestSwimImageURLImportSoftwareImageViaURLItem(ctx context.Context,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vendor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vendor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vendor")))) {
 		request.Vendor = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
-func searchSoftwareImageManagementSwimGetSoftwareImageDetailsURL(m interface{}, queryParams dnacentersdkgo.GetSoftwareImageDetailsQueryParams) (*dnacentersdkgo.ResponseSoftwareImageManagementSwimGetSoftwareImageDetailsResponse, error) {
-	client := m.(*dnacentersdkgo.Client)
-	var err error
-	var foundItem *dnacentersdkgo.ResponseSoftwareImageManagementSwimGetSoftwareImageDetailsResponse
-	var ite *dnacentersdkgo.ResponseSoftwareImageManagementSwimGetSoftwareImageDetails
-	ite, _, err = client.SoftwareImageManagementSwim.GetSoftwareImageDetails(&queryParams)
-	if err != nil {
-		return foundItem, err
+func flattenSoftwareImageManagementSwimImportSoftwareImageViaURLItem(item *dnacentersdkgo.ResponseSoftwareImageManagementSwimImportSoftwareImageViaURLResponse) []map[string]interface{} {
+	if item == nil {
+		return nil
 	}
-	items := ite.Response
-	if items == nil {
-		return foundItem, err
+	respItem := make(map[string]interface{})
+	respItem["task_id"] = item.TaskID
+	respItem["url"] = item.URL
+	return []map[string]interface{}{
+		respItem,
 	}
-	itemsCopy := *items
-	for _, item := range itemsCopy {
-		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.Name {
-			var getItem *dnacentersdkgo.ResponseSoftwareImageManagementSwimGetSoftwareImageDetailsResponse
-			getItem = &item
-			foundItem = getItem
-			return foundItem, err
-		}
-	}
-	return foundItem, err
 }

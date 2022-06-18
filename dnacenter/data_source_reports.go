@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -685,7 +685,7 @@ func dataSourceReportsRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetAScheduledReport")
+		log.Printf("[DEBUG] Selected method 1: GetAScheduledReport")
 		vvReportID := vReportID.(string)
 
 		response2, restyResp2, err := client.Reports.GetAScheduledReport(vvReportID)

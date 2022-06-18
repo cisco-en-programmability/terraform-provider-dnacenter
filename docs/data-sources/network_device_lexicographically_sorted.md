@@ -30,10 +30,10 @@ data "dnacenter_network_device_lexicographically_sorted" "example" {
   error_code                  = "string"
   family                      = "string"
   hostname                    = "string"
-  limit                       = "#"
+  limit                       = 1
   mac_address                 = "string"
   management_ip_address       = "string"
-  offset                      = "#"
+  offset                      = 1
   platform_id                 = "string"
   reachability_failure_reason = "string"
   reachability_status         = "string"

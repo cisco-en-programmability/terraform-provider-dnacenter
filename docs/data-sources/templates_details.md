@@ -174,7 +174,7 @@ Read-Only:
 - **default_selected_values** (List of String)
 - **id** (String)
 - **selection_type** (String)
-- **selection_values** (List of String)
+- **selection_values** (String)
 
 
 
@@ -229,7 +229,7 @@ Read-Only:
 - **default_selected_values** (List of String)
 - **id** (String)
 - **selection_type** (String)
-- **selection_values** (List of String)
+- **selection_values** (String)
 
 
 
@@ -286,7 +286,7 @@ Read-Only:
 - **default_selected_values** (List of String)
 - **id** (String)
 - **selection_type** (String)
-- **selection_values** (List of String)
+- **selection_values** (String)
 
 
 
@@ -341,7 +341,7 @@ Read-Only:
 - **default_selected_values** (List of String)
 - **id** (String)
 - **selection_type** (String)
-- **selection_values** (List of String)
+- **selection_values** (String)
 
 
 

@@ -2,34 +2,36 @@ package dnacenter
 
 import (
 	"context"
+	"time"
+
 	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceWirelessProvisionAccessPoint() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Wireless.
-		- Access Point Provision and ReProvision
+
+- Access Point Provision and ReProvision
 `,
 
 		CreateContext: resourceWirelessProvisionAccessPointCreate,
 		ReadContext:   resourceWirelessProvisionAccessPointRead,
 		DeleteContext: resourceWirelessProvisionAccessPointDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -61,34 +63,24 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"persistbapioutput": &schema.Schema{
-							Description: `__persistbapioutput header parameter. Persist bapi sync response
-						`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							ForceNew:     true,
-						},
 						"payload": &schema.Schema{
 							Description: `Array of RequestWirelessAPProvision`,
 							Type:        schema.TypeList,
 							Optional:    true,
-							MaxItems:    1,
-							MinItems:    1,
 							ForceNew:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"custom_ap_group_name": &schema.Schema{
 										Description: `Custom AP group name
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 									},
 									"custom_flex_group_name": &schema.Schema{
 										Description: `["Custom flex group name"]
-			`,
+`,
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
@@ -98,35 +90,35 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 									},
 									"device_name": &schema.Schema{
 										Description: `Device name
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 									},
 									"rf_profile": &schema.Schema{
 										Description: `Radio frequency profile name
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 									},
 									"site_id": &schema.Schema{
 										Description: `Site name hierarchy(ex: Global/...)
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 									},
 									"site_name_hierarchy": &schema.Schema{
 										Description: `Site name hierarchy(ex: Global/...)
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 									},
 									"type": &schema.Schema{
 										Description: `ApWirelessConfiguration
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
@@ -143,17 +135,17 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 
 func resourceWirelessProvisionAccessPointCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("parameters.0.persistbapioutput")
 
-	log.Printf("[DEBUG] Selected method 1: ApProvision")
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	vPersistbapioutput := resourceItem["persistbapioutput"]
+
 	request1 := expandRequestWirelessProvisionAccessPointApProvision(ctx, "parameters.0", d)
+
 	headerParams1 := dnacentersdkgo.ApProvisionHeaderParams{}
 
-	if okPersistbapioutput {
-		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-	}
+	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+
 	response1, restyResp1, err := client.Wireless.ApProvision(request1, &headerParams1)
 
 	if request1 != nil {
@@ -169,6 +161,8 @@ func resourceWirelessProvisionAccessPointCreate(ctx context.Context, d *schema.R
 			"Failure at ApProvision, unexpected response", ""))
 		return diags
 	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
@@ -200,35 +194,30 @@ func resourceWirelessProvisionAccessPointCreate(ctx context.Context, d *schema.R
 		if response2.Status == "FAILURE" {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing ApProvision", err,
-				"Failure at ApProvision execution", bapiError))
+				"Failure when executing APProvision", err,
+				"Failure at APProvision execution", bapiError))
 			return diags
 		}
 	}
 
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-	vItem1 := flattenWirelessApProvisionItems(response1)
+	vItem1 := flattenWirelessApProvisionItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
 			"Failure when setting ApProvision response",
 			err))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourceWirelessProvisionAccessPointRead(ctx, d, m)
-}
+	return diags
 
+}
 func resourceWirelessProvisionAccessPointRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
 }
 
 func resourceWirelessProvisionAccessPointDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
@@ -240,10 +229,6 @@ func expandRequestWirelessProvisionAccessPointApProvision(ctx context.Context, k
 	if v := expandRequestWirelessProvisionAccessPointApProvisionItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -264,10 +249,6 @@ func expandRequestWirelessProvisionAccessPointApProvisionItemArray(ctx context.C
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -294,24 +275,18 @@ func expandRequestWirelessProvisionAccessPointApProvisionItem(ctx context.Contex
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_name_hierarchy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_name_hierarchy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_name_hierarchy")))) {
 		request.SiteNameHierarchy = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
-func flattenWirelessApProvisionItems(items *dnacentersdkgo.ResponseWirelessApProvision) []map[string]interface{} {
-	if items == nil {
+func flattenWirelessApProvisionItem(item *dnacentersdkgo.ResponseWirelessApProvision) []map[string]interface{} {
+	if item == nil {
 		return nil
 	}
-	var respItems []map[string]interface{}
-	// for _, item := range *items {
 	respItem := make(map[string]interface{})
-	respItem["execution_id"] = items.ExecutionID
-	respItem["execution_url"] = items.ExecutionURL
-	respItem["message"] = items.Message
-	respItems = append(respItems, respItem)
-	// }
-	return respItems
+	respItem["execution_id"] = item.ExecutionID
+	respItem["execution_url"] = item.ExecutionURL
+	respItem["message"] = item.Message
+	return []map[string]interface{}{
+		respItem,
+	}
 }

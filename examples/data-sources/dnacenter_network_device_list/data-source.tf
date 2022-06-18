@@ -13,6 +13,7 @@ data "dnacenter_network_device_list" "example" {
   license_name               = ["string"]
   license_status             = ["string"]
   license_type               = ["string"]
+  limit                      = 1
   location                   = ["string"]
   location_name              = ["string"]
   mac_address                = ["string"]
@@ -24,6 +25,7 @@ data "dnacenter_network_device_list" "example" {
   module_servicestate        = ["string"]
   module_vendorequipmenttype = ["string"]
   not_synced_for_minutes     = ["string"]
+  offset                     = 1
   platform_id                = ["string"]
   reachability_status        = ["string"]
   role                       = ["string"]

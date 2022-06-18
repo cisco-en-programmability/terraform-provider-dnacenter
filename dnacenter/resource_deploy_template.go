@@ -10,7 +10,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -43,12 +43,14 @@ func resourceDeployTemplate() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"deployment_name": &schema.Schema{
 							Description: `Name of deployment
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"devices": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -61,54 +63,63 @@ func resourceDeployTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"device_id": &schema.Schema{
 										Description: `UUID of device
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"duration": &schema.Schema{
 										Description: `Total duration of deployment
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"end_time": &schema.Schema{
 										Description: `EndTime of deployment
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"identifier": &schema.Schema{
 										Description: `Identifier of device based on the target type
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"ip_address": &schema.Schema{
 										Description: `Device IPAddress
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"name": &schema.Schema{
 										Description: `Name of device
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"start_time": &schema.Schema{
 										Description: `StartTime of deployment
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"status": &schema.Schema{
 										Description: `Current status of device
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"target_type": &schema.Schema{
 										Description: `Target type of device
 `,
@@ -118,48 +129,56 @@ func resourceDeployTemplate() *schema.Resource {
 								},
 							},
 						},
+
 						"duration": &schema.Schema{
 							Description: `Total deployment duration
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"end_time": &schema.Schema{
 							Description: `Deployment end time
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"project_name": &schema.Schema{
 							Description: `Name of project
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"start_time": &schema.Schema{
 							Description: `Deployment start time
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"status": &schema.Schema{
 							Description: `Current status of deployment
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"status_message": &schema.Schema{
 							Description: `Status message of deployment
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"template_name": &schema.Schema{
 							Description: `Name of template deployed
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
 						"template_version": &schema.Schema{
 							Description: `Version of template deployed
 `,

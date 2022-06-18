@@ -22,6 +22,48 @@ provider "dnacenter" {
 
 resource "dnacenter_network_device" "example" {
   provider = dnacenter
+  item {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
   parameters {
 
     id = "string"

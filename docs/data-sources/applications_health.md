@@ -23,12 +23,12 @@ data "dnacenter_applications_health" "example" {
   application_health = "string"
   application_name   = "string"
   device_id          = "string"
-  end_time           = "hh:mm"
-  limit              = "#"
+  end_time           = 1609459200
+  limit              = 1
   mac_address        = "string"
-  offset             = "#"
+  offset             = 1
   site_id            = "string"
-  start_time         = "hh:mm"
+  start_time         = 1609459200
 }
 
 output "dnacenter_applications_health_example" {

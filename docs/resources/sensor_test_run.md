@@ -4,29 +4,32 @@ page_title: "dnacenter_sensor_test_run Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs update operation on Sensors.
-  - Intent API to run a deployed SENSOR test
+  Intent API to run a deployed SENSOR test
 ---
 
 # dnacenter_sensor_test_run (Resource)
 
 It performs update operation on Sensors.
-- Intent API to run a deployed SENSOR test
 
-~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+- Intent API to run a deployed SENSOR test
 
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_sensor_test_run" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     template_name = "string"
   }
+}
+
+output "dnacenter_sensor_test_run_example" {
+  value = dnacenter_sensor_test_run.example
 }
 ```
 

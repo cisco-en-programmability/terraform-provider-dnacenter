@@ -3,31 +3,29 @@ package dnacenter
 import (
 	"context"
 	"errors"
-	"fmt"
-	"reflect"
 	"time"
+
+	"fmt"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceConfigurationTemplateExportProject() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Configuration Templates.
+
 - Exports the projects for given projectNames.
 `,
 
 		CreateContext: resourceConfigurationTemplateExportProjectCreate,
 		ReadContext:   resourceConfigurationTemplateExportProjectRead,
 		DeleteContext: resourceConfigurationTemplateExportProjectDelete,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -61,11 +59,11 @@ func resourceConfigurationTemplateExportProject() *schema.Resource {
 						"payload": &schema.Schema{
 							Description: `Array of RequestConfigurationTemplatesExportsTheProjectsForAGivenCriteria`,
 							Type:        schema.TypeList,
+							Optional:    true,
+							ForceNew:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
-							ForceNew: true,
-							Optional: true,
 						},
 					},
 				},
@@ -76,15 +74,16 @@ func resourceConfigurationTemplateExportProject() *schema.Resource {
 
 func resourceConfigurationTemplateExportProjectCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
 	request1 := expandRequestConfigurationTemplateExportProjectExportsTheProjectsForAGivenCriteria(ctx, "parameters.0", d)
+
+	response1, restyResp1, err := client.ConfigurationTemplates.ExportsTheProjectsForAGivenCriteria(request1)
+
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
 
-	response1, restyResp1, err := client.ConfigurationTemplates.ExportsTheProjectsForAGivenCriteria(request1)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -97,14 +96,11 @@ func resourceConfigurationTemplateExportProjectCreate(ctx context.Context, d *sc
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	vItem1 := flattenConfigurationTemplatesExportsTheProjectsForAGivenCriteriaItem(response1.Response)
-	if err := d.Set("item", vItem1); err != nil {
+	if response1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when setting ExportsTheProjectsForAGivenCriteria response",
-			err))
+			"Failure when executing ExportProjects", err))
 		return diags
 	}
-
 	taskId := response1.Response.TaskID
 	log.Printf("[DEBUG] TASKID => %s", taskId)
 	if taskId != "" {
@@ -136,22 +132,26 @@ func resourceConfigurationTemplateExportProjectCreate(ctx context.Context, d *sc
 			}
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing ExportsTheProjectsForAGivenCriteria", err1))
+				"Failure when executing ExportProjects", err1))
 			return diags
 		}
 	}
+
+	vItem1 := flattenConfigurationTemplatesExportsTheProjectsForAGivenCriteriaItem(response1.Response)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting ExportsTheProjectsForAGivenCriteria response",
+			err))
+		return diags
+	}
 	d.SetId(getUnixTimeString())
 	return diags
-}
 
+}
 func resourceConfigurationTemplateExportProjectRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	return diags
-}
-
-func resourceConfigurationTemplateExportProjectUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceConfigurationTemplateExportProjectRead(ctx, d, m)
 }
 
 func resourceConfigurationTemplateExportProjectDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -166,10 +166,6 @@ func expandRequestConfigurationTemplateExportProjectExportsTheProjectsForAGivenC
 	if v := expandRequestConfigurationTemplateExportProjectExportsTheProjectsForAGivenCriteriaItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -190,20 +186,12 @@ func expandRequestConfigurationTemplateExportProjectExportsTheProjectsForAGivenC
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateExportProjectExportsTheProjectsForAGivenCriteriaItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesExportsTheProjectsForAGivenCriteria {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesExportsTheProjectsForAGivenCriteria
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

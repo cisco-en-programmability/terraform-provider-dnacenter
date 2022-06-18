@@ -1,6 +1,3 @@
-provider "dnacenter" {
-  debug = "true"
-}
 
 resource "dnacenter_sda_fabric_edge_device" "example" {
   provider = dnacenter

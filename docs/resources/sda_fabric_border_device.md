@@ -4,16 +4,16 @@ page_title: "dnacenter_sda_fabric_border_device Resource - terraform-provider-dn
 subcategory: ""
 description: |-
   It manages create, read and delete operations on SDA.
-  Adds border device in SDA FabricDeletes border device from SDA Fabric
+  Add border device in SDA FabricDelete border device from SDA Fabric
 ---
 
 # dnacenter_sda_fabric_border_device (Resource)
 
 It manages create, read and delete operations on SDA.
 
-- Adds border device in SDA Fabric
+- Add border device in SDA Fabric
 
-- Deletes border device from SDA Fabric
+- Delete border device from SDA Fabric
 
 ## Example Usage
 
@@ -26,20 +26,35 @@ resource "dnacenter_sda_fabric_border_device" "example" {
   provider = dnacenter
   parameters {
 
-    border_session_type                   = "string"
-    connected_to_internet                 = "false"
-    device_management_ip_address          = "string"
-    external_autonomou_system_number      = "string"
-    external_connectivity_ip_pool_name    = "string"
-    external_connectivity_settings        = ["string"]
+    border_session_type                = "string"
+    border_with_external_connectivity  = "false"
+    connected_to_internet              = "false"
+    device_management_ip_address       = "string"
+    device_role                        = ["string"]
+    external_connectivity_ip_pool_name = "string"
+    external_connectivity_settings {
+
+      external_autonomou_system_number = "string"
+      interface_description            = "string"
+      interface_name                   = "string"
+      l2_handoff {
+
+        virtual_network_name = "string"
+        vlan_name            = "string"
+      }
+      l3_handoff {
+
+        virtual_network {
+
+          virtual_network_name = "string"
+          vlan_id              = "string"
+        }
+      }
+    }
     external_domain_routing_protocol_name = "string"
-    interface_name                        = "string"
     internal_autonomou_system_number      = "string"
-    l3_handoff                            = ["string"]
+    sda_transit_network_name              = "string"
     site_name_hierarchy                   = "string"
-    virtual_network                       = ["string"]
-    virtual_network_name                  = "string"
-    vlan_id                               = "string"
   }
 }
 
@@ -53,7 +68,7 @@ output "dnacenter_sda_fabric_border_device_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
+- **parameters** (Block List, Min: 1, Max: 1) Array of RequestSdaAddBorderDeviceInSDAFabric (see [below for nested schema](#nestedblock--parameters))
 
 ### Optional
 
@@ -67,22 +82,65 @@ output "dnacenter_sda_fabric_border_device_example" {
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
+Required:
+
+- **payload** (Block List, Min: 1) (see [below for nested schema](#nestedblock--parameters--payload))
+
+<a id="nestedblock--parameters--payload"></a>
+### Nested Schema for `parameters.payload`
+
 Optional:
 
 - **border_session_type** (String) Border Session Type
+- **border_with_external_connectivity** (String) Border With External Connectivity (Note: True for transit and False for non-transit border)
 - **connected_to_internet** (String) Connected to Internet
-- **device_management_ip_address** (String) Management Ip Address of the Device which is provisioned successfully
-- **external_autonomou_system_number** (String) External Autonomous System Number  will be used to automate IP routing between Border Node and remote peer (e.g.,1-65535)
-- **external_connectivity_ip_pool_name** (String) IP pool to use to automate IP routing between the border node and remote peer.
-- **external_connectivity_settings** (List of String) External Connectivity Settings information of L3 Handoff
-- **external_domain_routing_protocol_name** (String) External Domain Routing Protocol  Name. (Example: BGP)
+- **device_management_ip_address** (String) Management Ip Address of the provisioned Device
+- **device_role** (List of String) Supported Device Roles in SD-Access fabric. Allowed roles are "Border_Node","Control_Plane_Node","Edge_Node". E.g. ["Border_Node"] or ["Border_Node", "Control_Plane_Node"] or ["Border_Node", "Control_Plane_Node","Edge_Node"]
+- **external_connectivity_ip_pool_name** (String) External Connectivity IpPool Name
+- **external_connectivity_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--payload--external_connectivity_settings))
+- **external_domain_routing_protocol_name** (String) External Domain Routing Protocol Name
+- **internal_autonomou_system_number** (String) Internal Autonomouns System Number (e.g.,1-65535)
+- **sda_transit_network_name** (String) SD-Access Transit Network Name
+- **site_name_hierarchy** (String) Site Name Hierarchy of provisioned Device(site should be part of Fabric Site)
+
+<a id="nestedblock--parameters--payload--external_connectivity_settings"></a>
+### Nested Schema for `parameters.payload.external_connectivity_settings`
+
+Optional:
+
+- **external_autonomou_system_number** (String) External Autonomous System Number peer (e.g.,1-65535)
+- **interface_description** (String) Interface Description
 - **interface_name** (String) Interface Name
-- **internal_autonomou_system_number** (String) Internal Autonomouns System Number used by border node to communicate with remote peer (e.g.,1-65535)
-- **l3_handoff** (List of String) L3 Handoff information
-- **site_name_hierarchy** (String) Site Name Hierarchy for device location(site should be fabric site)
-- **virtual_network** (List of String) Virtual Network information of L3 Hand off
-- **virtual_network_name** (String) Virtual Network Name assigned to site
+- **l2_handoff** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--external_connectivity_settings--l2_handoff))
+- **l3_handoff** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--external_connectivity_settings--l3_handoff))
+
+<a id="nestedblock--parameters--payload--external_connectivity_settings--l2_handoff"></a>
+### Nested Schema for `parameters.payload.external_connectivity_settings.l3_handoff`
+
+Optional:
+
+- **virtual_network_name** (String) Virtual Network Name, that is associated to Fabric Site
+- **vlan_name** (String) Vlan Name of L2 Handoff
+
+
+<a id="nestedblock--parameters--payload--external_connectivity_settings--l3_handoff"></a>
+### Nested Schema for `parameters.payload.external_connectivity_settings.l3_handoff`
+
+Optional:
+
+- **virtual_network** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--external_connectivity_settings--l3_handoff--virtual_network))
+
+<a id="nestedblock--parameters--payload--external_connectivity_settings--l3_handoff--virtual_network"></a>
+### Nested Schema for `parameters.payload.external_connectivity_settings.l3_handoff.virtual_network`
+
+Optional:
+
+- **virtual_network_name** (String) Virtual Network Name, that is associated to Fabric Site
 - **vlan_id** (String) Vlan Id (e.g.,2-4096 except for reserved VLANs (1002-1005, 2046, 4095))
+
+
+
+
 
 
 <a id="nestedatt--item"></a>

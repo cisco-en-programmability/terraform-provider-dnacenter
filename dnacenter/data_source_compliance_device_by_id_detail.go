@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -94,7 +94,7 @@ func dataSourceComplianceDeviceByIDDetail() *schema.Resource {
 
 						"last_sync_time": &schema.Schema{
 							Description: `Last Sync Time`,
-							Type:        schema.TypeInt,
+							Type:        schema.TypeString,
 							Computed:    true,
 						},
 

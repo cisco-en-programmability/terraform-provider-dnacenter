@@ -19,6 +19,7 @@ It performs read operation on SDA.
 data "dnacenter_sda_virtual_network_ip_pool" "example" {
   provider             = dnacenter
   ip_pool_name         = "string"
+  site_name_hierarchy  = "string"
   virtual_network_name = "string"
 }
 
@@ -33,6 +34,7 @@ output "dnacenter_sda_virtual_network_ip_pool_example" {
 ### Required
 
 - **ip_pool_name** (String) ipPoolName query parameter.
+- **site_name_hierarchy** (String) siteNameHierarchy query parameter.
 - **virtual_network_name** (String) virtualNetworkName query parameter.
 
 ### Optional

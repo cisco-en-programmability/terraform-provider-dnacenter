@@ -1,14 +1,19 @@
+
 resource "dnacenter_service_provider" "example" {
   provider = dnacenter
   parameters {
 
     settings {
+
       qos {
-        profile_name = "Test_tf_new"
-        model        = "8-class-model"
-        wan_provider = "test1-provider"
+
+        model            = "string"
+        old_profile_name = "string"
+        profile_name     = "string"
+        wan_provider     = "string"
       }
     }
+    sp_profile_name = "string"
   }
 }
 

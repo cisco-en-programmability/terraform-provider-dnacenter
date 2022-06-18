@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,7 +34,14 @@ func dataSourceSdaMulticast() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"multicast_method": &schema.Schema{
-							Description: `Multicast Methods
+							Description: `Multicast Method
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"multicast_type": &schema.Schema{
+							Description: `Multicast Type
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -47,42 +54,54 @@ func dataSourceSdaMulticast() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"external_rp_ip_address": &schema.Schema{
-										Description: `External Rp Ip Address, required for muticastType=asm_with_external_rp
+										Description: `ExternalRpIpAddress, required if multicastType is asm_with_external_rp
 `,
 										Type:     schema.TypeString,
 										Computed: true,
+									},
+
+									"internal_rp_ip_address": &schema.Schema{
+										Description: `InternalRpIpAddress, required if multicastType is asm_with_internal_rp
+`,
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 
 									"ip_pool_name": &schema.Schema{
-										Description: `Ip Pool Name, that is reserved to fabricSiteNameHierarchy
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"ssm_group_range": &schema.Schema{
-										Description: `Valid SSM group range ip address(e.g., 230.0.0.0)
+										Description: `Ip Pool Name, that is reserved to Fabric Site
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"ssm_info": &schema.Schema{
-										Description: `Source-specific multicast information, required if muticastType=ssm
-`,
-										Type:     schema.TypeString,
+										Type:     schema.TypeList,
 										Computed: true,
-									},
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
 
-									"ssm_wildcard_mask": &schema.Schema{
-										Description: `Valid SSM Wildcard Mask ip address(e.g.,0.255.255.255)
+												"ssm_group_range": &schema.Schema{
+													Description: `Valid SSM group range ip address(e.g., 230.0.0.0)
 `,
-										Type:     schema.TypeString,
-										Computed: true,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"ssm_wildcard_mask": &schema.Schema{
+													Description: `Valid SSM Wildcard Mask ip address(e.g.,0.255.255.255)
+`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
 									},
 
 									"virtual_network_name": &schema.Schema{
-										Description: `Virtual Network Name, that is associated to fabricSiteNameHierarchy
+										Description: `Virtual Network Name, that is associated to Fabric Site
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -91,15 +110,8 @@ func dataSourceSdaMulticast() *schema.Resource {
 							},
 						},
 
-						"muticast_type": &schema.Schema{
-							Description: `Muticast Type
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Full path of sda fabric siteNameHierarchy
+							Description: `Full path of sda Fabric Site
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -159,37 +171,40 @@ func flattenSdaGetMulticastDetailsFromSdaFabricItem(item *dnacentersdkgo.Respons
 	respItem := make(map[string]interface{})
 	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 	respItem["multicast_method"] = item.MulticastMethod
-	respItem["muticast_type"] = item.MuticastType
+	respItem["multicast_type"] = item.MulticastType
 	respItem["multicast_vn_info"] = flattenSdaGetMulticastDetailsFromSdaFabricItemMulticastVnInfo(item.MulticastVnInfo)
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenSdaGetMulticastDetailsFromSdaFabricItemMulticastVnInfo(item *dnacentersdkgo.ResponseSdaGetMulticastDetailsFromSdaFabricMulticastVnInfo) []map[string]interface{} {
+func flattenSdaGetMulticastDetailsFromSdaFabricItemMulticastVnInfo(items *[]dnacentersdkgo.ResponseSdaGetMulticastDetailsFromSdaFabricMulticastVnInfo) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["virtual_network_name"] = item.VirtualNetworkName
+		respItem["ip_pool_name"] = item.IPPoolName
+		respItem["internal_rp_ip_address"] = item.InternalRpIPAddress
+		respItem["external_rp_ip_address"] = item.ExternalRpIPAddress
+		respItem["ssm_info"] = flattenSdaGetMulticastDetailsFromSdaFabricItemMulticastVnInfoSsmInfo(item.SsmInfo)
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenSdaGetMulticastDetailsFromSdaFabricItemMulticastVnInfoSsmInfo(item *dnacentersdkgo.ResponseSdaGetMulticastDetailsFromSdaFabricMulticastVnInfoSsmInfo) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["virtual_network_name"] = item.VirtualNetworkName
-	respItem["ip_pool_name"] = item.IPPoolName
-	respItem["external_rp_ip_address"] = item.ExternalRpIPAddress
-	respItem["ssm_info"] = flattenSdaGetMulticastDetailsFromSdaFabricItemMulticastVnInfoSsmInfo(item.SsmInfo)
 	respItem["ssm_group_range"] = item.SsmGroupRange
 	respItem["ssm_wildcard_mask"] = item.SsmWildcardMask
 
 	return []map[string]interface{}{
 		respItem,
 	}
-
-}
-
-func flattenSdaGetMulticastDetailsFromSdaFabricItemMulticastVnInfoSsmInfo(item *dnacentersdkgo.ResponseSdaGetMulticastDetailsFromSdaFabricMulticastVnInfoSsmInfo) interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := *item
-
-	return responseInterfaceToString(respItem)
 
 }

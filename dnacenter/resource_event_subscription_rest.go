@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -63,11 +63,26 @@ func resourceEventSubscriptionRest() *schema.Resource {
 									},
 
 									"domains_subdomains": &schema.Schema{
-										Description: `Domains Subdomains`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"domain": &schema.Schema{
+													Description: `Domain`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"sub_domains": &schema.Schema{
+													Description: `Sub Domains`,
+													Type:        schema.TypeList,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
 										},
 									},
 
@@ -98,6 +113,15 @@ func resourceEventSubscriptionRest() *schema.Resource {
 										},
 									},
 
+									"site_ids": &schema.Schema{
+										Description: `Site Ids`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
 									"sources": &schema.Schema{
 										Description: `Sources`,
 										Type:        schema.TypeList,
@@ -121,8 +145,9 @@ func resourceEventSubscriptionRest() *schema.Resource {
 
 						"is_private": &schema.Schema{
 							Description: `Is Private`,
-							Type:        schema.TypeString,
-							Computed:    true,
+
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"name": &schema.Schema{
@@ -320,11 +345,73 @@ func resourceEventSubscriptionRest() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"categories": &schema.Schema{
+										Description: `Categories`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"domains_subdomains": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"domain": &schema.Schema{
+													Description: `Domain`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"sub_domains": &schema.Schema{
+													Description: `Sub Domains`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
 									"event_ids": &schema.Schema{
 										Description: `Event Ids (Comma separated event ids)
 `,
 										Type:     schema.TypeList,
 										Optional: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"severities": &schema.Schema{
+										Description: `Severities`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"site_ids": &schema.Schema{
+										Description: `Site Ids`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"sources": &schema.Schema{
+										Description: `Sources`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"types": &schema.Schema{
+										Description: `Types`,
+										Type:        schema.TypeList,
+										Optional:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -445,7 +532,13 @@ func resourceEventSubscriptionRestRead(ctx context.Context, d *schema.ResourceDa
 		log.Printf("[DEBUG] Selected method 1: GetRestWebhookEventSubscriptions")
 		queryParams1 := dnacentersdkgo.GetRestWebhookEventSubscriptionsQueryParams{}
 		item, err := searchEventManagementGetRestWebhookEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
-		if err != nil || item == nil || len(*item) <= 0 {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetEventSubscriptions search response",
+				err))
+			return diags
+		}
+		if item == nil || len(*item) <= 0 {
 			d.SetId("")
 			return diags
 		}
@@ -527,8 +620,8 @@ func resourceEventSubscriptionRestDelete(ctx context.Context, d *schema.Resource
 	vName, _ := resourceMap["name"]
 	vSubscriptionID, _ := resourceMap["subscription_id"]
 
-	queryParams1 := dnacentersdkgo.GetEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
+	queryParams1 := dnacentersdkgo.GetRestWebhookEventSubscriptionsQueryParams{}
+	item, err := searchEventManagementGetRestWebhookEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
 	if err != nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing GetEventSubscriptions", err,
@@ -568,13 +661,12 @@ func resourceEventSubscriptionRestDelete(ctx context.Context, d *schema.Resource
 }
 func expandRequestEventSubscriptionRestCreateRestWebhookEventSubscription(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementCreateRestWebhookEventSubscription {
 	request := dnacentersdkgo.RequestEventManagementCreateRestWebhookEventSubscription{}
-	if v := expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -598,7 +690,6 @@ func expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemArr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -625,7 +716,6 @@ func expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItem(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -649,7 +739,6 @@ func expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemSub
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -664,7 +753,6 @@ func expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemSub
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -676,7 +764,6 @@ func expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemSub
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -685,22 +772,75 @@ func expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemFil
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".event_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".event_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".event_ids")))) {
 		request.EventIDs = interfaceToSliceString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domains_subdomains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domains_subdomains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domains_subdomains")))) {
+		request.DomainsSubdomains = expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemFilterDomainsSubdomainsArray(ctx, key+".domains_subdomains", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".types")))) {
+		request.Types = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".categories")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".categories")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".categories")))) {
+		request.Categories = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".severities")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".severities")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".severities")))) {
+		request.Severities = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sources")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sources")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sources")))) {
+		request.Sources = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_ids")))) {
+		request.SiteIDs = interfaceToSliceString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
 
+func expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemFilterDomainsSubdomainsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemEventManagementCreateRestWebhookEventSubscriptionFilterDomainsSubdomains {
+	request := []dnacentersdkgo.RequestItemEventManagementCreateRestWebhookEventSubscriptionFilterDomainsSubdomains{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemFilterDomainsSubdomains(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestEventSubscriptionRestCreateRestWebhookEventSubscriptionItemFilterDomainsSubdomains(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemEventManagementCreateRestWebhookEventSubscriptionFilterDomainsSubdomains {
+	request := dnacentersdkgo.RequestItemEventManagementCreateRestWebhookEventSubscriptionFilterDomainsSubdomains{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domain")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domain")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domain")))) {
+		request.Domain = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sub_domains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sub_domains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sub_domains")))) {
+		request.SubDomains = interfaceToSliceString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
 func expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscription(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementUpdateRestWebhookEventSubscription {
 	request := dnacentersdkgo.RequestEventManagementUpdateRestWebhookEventSubscription{}
-	if v := expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -724,7 +864,6 @@ func expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemArr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -751,7 +890,6 @@ func expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItem(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -775,7 +913,6 @@ func expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemSub
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -790,7 +927,6 @@ func expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemSub
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -802,7 +938,6 @@ func expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemSub
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -811,10 +946,64 @@ func expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemFil
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".event_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".event_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".event_ids")))) {
 		request.EventIDs = interfaceToSliceString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domains_subdomains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domains_subdomains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domains_subdomains")))) {
+		request.DomainsSubdomains = expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemFilterDomainsSubdomainsArray(ctx, key+".domains_subdomains", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".types")))) {
+		request.Types = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".categories")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".categories")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".categories")))) {
+		request.Categories = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".severities")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".severities")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".severities")))) {
+		request.Severities = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sources")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sources")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sources")))) {
+		request.Sources = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_ids")))) {
+		request.SiteIDs = interfaceToSliceString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
 
+func expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemFilterDomainsSubdomainsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemEventManagementUpdateRestWebhookEventSubscriptionFilterDomainsSubdomains {
+	request := []dnacentersdkgo.RequestItemEventManagementUpdateRestWebhookEventSubscriptionFilterDomainsSubdomains{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemFilterDomainsSubdomains(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestEventSubscriptionRestUpdateRestWebhookEventSubscriptionItemFilterDomainsSubdomains(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemEventManagementUpdateRestWebhookEventSubscriptionFilterDomainsSubdomains {
+	request := dnacentersdkgo.RequestItemEventManagementUpdateRestWebhookEventSubscriptionFilterDomainsSubdomains{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domain")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domain")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domain")))) {
+		request.Domain = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sub_domains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sub_domains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sub_domains")))) {
+		request.SubDomains = interfaceToSliceString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 

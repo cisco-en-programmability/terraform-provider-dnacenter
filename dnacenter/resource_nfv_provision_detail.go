@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -94,7 +94,13 @@ func resourceNfvProvisionDetailRead(ctx context.Context, d *schema.ResourceData,
 
 		response1, restyResp1, err := client.SiteDesign.GetDeviceDetailsByIP(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDeviceDetailsByIP", err,
+				"Failure at GetDeviceDetailsByIP, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}

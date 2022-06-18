@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -584,7 +584,7 @@ func dataSourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m in
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetWorkflowByID")
+		log.Printf("[DEBUG] Selected method 1: GetWorkflowByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.DeviceOnboardingPnp.GetWorkflowByID(vvID)

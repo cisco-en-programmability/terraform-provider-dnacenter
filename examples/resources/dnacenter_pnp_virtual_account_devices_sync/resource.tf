@@ -1,10 +1,8 @@
 
 resource "dnacenter_pnp_virtual_account_devices_sync" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     auto_sync_period = 1
     cco_user         = "string"
     expiry           = 1
@@ -37,4 +35,8 @@ resource "dnacenter_pnp_virtual_account_devices_sync" "example" {
     token              = "string"
     virtual_account_id = "string"
   }
+}
+
+output "dnacenter_pnp_virtual_account_devices_sync_example" {
+  value = dnacenter_pnp_virtual_account_devices_sync.example
 }

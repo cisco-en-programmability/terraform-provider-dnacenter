@@ -4,14 +4,14 @@ page_title: "dnacenter_sda_fabric_border_device Data Source - terraform-provider
 subcategory: ""
 description: |-
   It performs read operation on SDA.
-  Gets border device detail from SDA Fabric
+  Get border device detail from SDA Fabric
 ---
 
 # dnacenter_sda_fabric_border_device (Data Source)
 
 It performs read operation on SDA.
 
-- Gets border device detail from SDA Fabric
+- Get border device detail from SDA Fabric
 
 ## Example Usage
 

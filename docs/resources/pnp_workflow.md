@@ -26,6 +26,47 @@ provider "dnacenter" {
 
 resource "dnacenter_pnp_workflow" "example" {
   provider = dnacenter
+  item {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    tasks {
+
+
+
+
+
+
+
+
+
+      work_item_list {
+
+
+
+
+
+
+
+      }
+    }
+
+
+
+
+  }
   parameters {
 
     id               = "string"

@@ -19,8 +19,8 @@ It performs read operation on Health and Performance.
 data "dnacenter_system_health" "example" {
   provider  = dnacenter
   domain    = "string"
-  limit     = "#"
-  offset    = "#"
+  limit     = 1
+  offset    = 1
   subdomain = "string"
   summary   = "false"
 }
@@ -51,6 +51,7 @@ output "dnacenter_system_health_example" {
 
 Read-Only:
 
+- **cimcaddress** (List of String)
 - **health_events** (List of Object) (see [below for nested schema](#nestedobjatt--item--health_events))
 - **host_name** (String)
 - **version** (String)

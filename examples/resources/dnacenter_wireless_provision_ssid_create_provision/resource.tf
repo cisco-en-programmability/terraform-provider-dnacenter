@@ -1,10 +1,8 @@
 
 resource "dnacenter_wireless_provision_ssid_create_provision" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     enable_fabric = "false"
     flex_connect {
 
@@ -27,4 +25,8 @@ resource "dnacenter_wireless_provision_ssid_create_provision" "example" {
     }
     ssid_type = "string"
   }
+}
+
+output "dnacenter_wireless_provision_ssid_create_provision_example" {
+  value = dnacenter_wireless_provision_ssid_create_provision.example
 }

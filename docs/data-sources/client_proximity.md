@@ -25,7 +25,7 @@ CLIENTS-3-506 Client Proximity Report.
 data "dnacenter_client_proximity" "example" {
   provider        = dnacenter
   number_days     = 1
-  time_resolution = 1
+  time_resolution = 1.0
   username        = "string"
 }
 

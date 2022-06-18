@@ -62,7 +62,7 @@ Read-Only:
 - **instance_uuid** (String)
 - **interface_count** (String)
 - **inventory_status_detail** (String)
-- **last_update_time** (String)
+- **last_update_time** (Number)
 - **last_updated** (String)
 - **line_card_count** (String)
 - **line_card_id** (String)

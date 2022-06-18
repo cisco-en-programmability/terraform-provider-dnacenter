@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -155,7 +155,7 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 
 						"additional_details": &schema.Schema{
 							Description: `Additional Details`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -173,7 +173,7 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 
 						"cisco_dna_event_link": &schema.Schema{
 							Description: `Cisco Dna Event Link`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -191,7 +191,7 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 
 						"details": &schema.Schema{
 							Description: `Details`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -203,7 +203,7 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 
 						"event_hierarchy": &schema.Schema{
 							Description: `Event Hierarchy`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -233,7 +233,7 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 
 						"message_params": &schema.Schema{
 							Description: `Message Params`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -251,19 +251,19 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 
 						"network": &schema.Schema{
 							Description: `Network`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"note": &schema.Schema{
 							Description: `Note`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"parent_instance_id": &schema.Schema{
 							Description: `Parent Instance Id`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -364,7 +364,7 @@ func dataSourceEventSeriesAuditLogsParentRecordsRead(ctx context.Context, d *sch
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAuditLogParentRecords")
+		log.Printf("[DEBUG] Selected method: GetAuditLogParentRecords")
 		queryParams1 := dnacentersdkgo.GetAuditLogParentRecordsQueryParams{}
 
 		if okInstanceID {
@@ -481,18 +481,18 @@ func flattenEventManagementGetAuditLogParentRecordsItems(items *dnacentersdkgo.R
 		respItem["timestamp"] = item.Timestamp
 		respItem["tags"] = flattenEventManagementGetAuditLogParentRecordsItemsTags(item.Tags)
 		respItem["details"] = flattenEventManagementGetAuditLogParentRecordsItemsDetails(item.Details)
-		respItem["cisco_dna_event_link"] = item.CiscoDnaEventLink
-		respItem["note"] = item.Note
+		respItem["cisco_dna_event_link"] = flattenEventManagementGetAuditLogParentRecordsItemsCiscoDnaEventLink(item.CiscoDnaEventLink)
+		respItem["note"] = flattenEventManagementGetAuditLogParentRecordsItemsNote(item.Note)
 		respItem["tnt_id"] = item.TntID
 		respItem["context"] = item.Context
 		respItem["user_id"] = item.UserID
 		respItem["i18n"] = item.I18N
-		respItem["event_hierarchy"] = item.EventHierarchy
+		respItem["event_hierarchy"] = flattenEventManagementGetAuditLogParentRecordsItemsEventHierarchy(item.EventHierarchy)
 		respItem["message"] = item.Message
-		respItem["message_params"] = item.MessageParams
+		respItem["message_params"] = flattenEventManagementGetAuditLogParentRecordsItemsMessageParams(item.MessageParams)
 		respItem["additional_details"] = flattenEventManagementGetAuditLogParentRecordsItemsAdditionalDetails(item.AdditionalDetails)
-		respItem["parent_instance_id"] = item.ParentInstanceID
-		respItem["network"] = item.Network
+		respItem["parent_instance_id"] = flattenEventManagementGetAuditLogParentRecordsItemsParentInstanceID(item.ParentInstanceID)
+		respItem["network"] = flattenEventManagementGetAuditLogParentRecordsItemsNetwork(item.Network)
 		respItem["child_count"] = item.ChildCount
 		respItem["tenant_id"] = item.TenantID
 		respItems = append(respItems, respItem)
@@ -522,7 +522,67 @@ func flattenEventManagementGetAuditLogParentRecordsItemsDetails(item *dnacenters
 
 }
 
+func flattenEventManagementGetAuditLogParentRecordsItemsCiscoDnaEventLink(item *dnacentersdkgo.ResponseItemEventManagementGetAuditLogParentRecordsCiscoDnaEventLink) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
+}
+
+func flattenEventManagementGetAuditLogParentRecordsItemsNote(item *dnacentersdkgo.ResponseItemEventManagementGetAuditLogParentRecordsNote) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
+}
+
+func flattenEventManagementGetAuditLogParentRecordsItemsEventHierarchy(item *dnacentersdkgo.ResponseItemEventManagementGetAuditLogParentRecordsEventHierarchy) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
+}
+
+func flattenEventManagementGetAuditLogParentRecordsItemsMessageParams(item *dnacentersdkgo.ResponseItemEventManagementGetAuditLogParentRecordsMessageParams) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
+}
+
 func flattenEventManagementGetAuditLogParentRecordsItemsAdditionalDetails(item *dnacentersdkgo.ResponseItemEventManagementGetAuditLogParentRecordsAdditionalDetails) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
+}
+
+func flattenEventManagementGetAuditLogParentRecordsItemsParentInstanceID(item *dnacentersdkgo.ResponseItemEventManagementGetAuditLogParentRecordsParentInstanceID) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
+}
+
+func flattenEventManagementGetAuditLogParentRecordsItemsNetwork(item *dnacentersdkgo.ResponseItemEventManagementGetAuditLogParentRecordsNetwork) interface{} {
 	if item == nil {
 		return nil
 	}

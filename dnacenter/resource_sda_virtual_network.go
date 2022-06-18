@@ -2,12 +2,13 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -115,7 +116,7 @@ func resourceSdaVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestSdaVirtualNetworkAddVnInSdaFabric(ctx, "parameters.0", d)
+	request1 := expandRequestSdaVirtualNetworkAddVnInFabric(ctx, "parameters.0", d)
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
@@ -138,15 +139,15 @@ func resourceSdaVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaVirtualNetworkRead(ctx, d, m)
 	}
-	response1, restyResp1, err := client.Sda.AddVnInSdaFabric(request1)
+	response1, restyResp1, err := client.Sda.AddVnInFabric(request1)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
-				"Failure when executing AddVnInSdaFabric", err, restyResp1.String()))
+				"Failure when executing AddVnInFabric", err, restyResp1.String()))
 			return diags
 		}
 		diags = append(diags, diagError(
-			"Failure when executing AddVnInSdaFabric", err))
+			"Failure when executing AddVnInFabric", err))
 		return diags
 	}
 	executionId := response1.ExecutionID
@@ -179,7 +180,7 @@ func resourceSdaVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData
 		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
-				"Failure when executing AddVnInSdaFabric", err))
+				"Failure when executing AddVnInFabric", err))
 			return diags
 		}
 	}
@@ -211,7 +212,13 @@ func resourceSdaVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, 
 
 		response1, restyResp1, err := client.Sda.GetVnFromSdaFabric(&queryParams1)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetVnFromSdaFabric", err,
+				"Failure at GetVnFromSdaFabric, unexpected response", ""))
+			return diags
+		}
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -317,8 +324,42 @@ func resourceSdaVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData
 
 	return diags
 }
-func expandRequestSdaVirtualNetworkAddVnInSdaFabric(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddVnInSdaFabric {
-	request := dnacentersdkgo.RequestSdaAddVnInSdaFabric{}
+func expandRequestSdaVirtualNetworkAddVnInFabric(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddVnInFabric {
+	request := dnacentersdkgo.RequestSdaAddVnInFabric{}
+	if v := expandRequestSdaVirtualNetworkAddVnInFabricItemArray(ctx, key+".payload", d); v != nil {
+		request = *v
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaVirtualNetworkAddVnInFabricItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddVnInFabric {
+	request := []dnacentersdkgo.RequestItemSdaAddVnInFabric{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaVirtualNetworkAddVnInFabricItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaVirtualNetworkAddVnInFabricItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddVnInFabric {
+	request := dnacentersdkgo.RequestItemSdaAddVnInFabric{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network_name")))) {
 		request.VirtualNetworkName = interfaceToString(v)
 	}
@@ -328,6 +369,5 @@ func expandRequestSdaVirtualNetworkAddVnInSdaFabric(ctx context.Context, key str
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

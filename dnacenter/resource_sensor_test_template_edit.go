@@ -2,29 +2,29 @@ package dnacenter
 
 import (
 	"context"
+
 	"fmt"
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceSensorTestEdit() *schema.Resource {
+// resourceAction
+func resourceSensorTestTemplateEdit() *schema.Resource {
 	return &schema.Resource{
-		Description: `It performs create operation on Device Onboarding (PnP).
-	•	Claim a device based on DNA-C Site based design process. Different parameters are required for different device
-		platforms.
-	
+		Description: `It performs update operation on Sensors.
+
+- Intent API to deploy, schedule, or edit and existing SENSOR test template
 `,
 
-		CreateContext: resourceSensorTestEditCreate,
-		ReadContext:   resourceSensorTestEditRead,
-		DeleteContext: resourceSensorTestEditDelete,
-
+		CreateContext: resourceSensorTestTemplateEditCreate,
+		ReadContext:   resourceSensorTestTemplateEditRead,
+		DeleteContext: resourceSensorTestTemplateEditDelete,
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -376,23 +376,35 @@ func resourceSensorTestEdit() *schema.Resource {
 									},
 									"layer3web_auth_email_address": &schema.Schema{
 										Description: `Layer3web Auth Email Address`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authpassword": &schema.Schema{
 										Description: `Layer3web Authpassword`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authsecurity": &schema.Schema{
 										Description: `Layer3web Authsecurity`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"layer3web_authuser_name": &schema.Schema{
 										Description: `Layer3web Authuser Name`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeList,
 										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
 									},
 									"num_aps": &schema.Schema{
 										Description: `Num Aps`,
@@ -718,12 +730,10 @@ func resourceSensorTestEdit() *schema.Resource {
 	}
 }
 
-func resourceSensorTestEditCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceSensorTestTemplateEditCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
-	log.Printf("[DEBUG] Selected method 1: EditSensorTestTemplate")
 	request1 := expandRequestSensorTestTemplateEditEditSensorTestTemplate(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.Sensors.EditSensorTestTemplate(request1)
@@ -743,6 +753,9 @@ func resourceSensorTestEditCreate(ctx context.Context, d *schema.ResourceData, m
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	//Analizar verificacion.
+
 	vItem1 := flattenSensorsEditSensorTestTemplateItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -750,21 +763,17 @@ func resourceSensorTestEditCreate(ctx context.Context, d *schema.ResourceData, m
 			err))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 	d.SetId(getUnixTimeString())
-	return resourceSensorTestEditRead(ctx, d, m)
+	return diags
+
 }
-
-func resourceSensorTestEditRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceSensorTestTemplateEditRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
 }
 
-func resourceSensorTestEditDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
+func resourceSensorTestTemplateEditDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
@@ -782,10 +791,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplate(ctx context.Conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".schedule")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".schedule")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".schedule")))) {
 		request.Schedule = expandRequestSensorTestTemplateEditEditSensorTestTemplateSchedule(ctx, key+".schedule.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -806,10 +811,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateLocationInfoListAr
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -827,10 +828,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateLocationInfoList(c
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".all_sensors")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".all_sensors")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".all_sensors")))) {
 		request.AllSensors = interfaceToBoolPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -845,10 +842,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateSchedule(ctx conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".schedule_range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".schedule_range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".schedule_range")))) {
 		request.ScheduleRange = expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRangeArray(ctx, key+".schedule_range", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -860,10 +853,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleFrequency(
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -884,10 +873,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -899,10 +884,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_range")))) {
 		request.TimeRange = expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRangeTimeRangeArray(ctx, key+".time_range", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -923,10 +904,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -941,10 +918,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".frequency")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".frequency")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".frequency")))) {
 		request.Frequency = expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRangeTimeRangeFrequency(ctx, key+".frequency.0", d)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -956,10 +929,6 @@ func expandRequestSensorTestTemplateEditEditSensorTestTemplateScheduleScheduleRa
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToIntPtr(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

@@ -4,35 +4,40 @@ page_title: "dnacenter_command_runner_run_command Resource - terraform-provider-
 subcategory: ""
 description: |-
   It performs create operation on Command Runner.
-  - Submit request for read-only CLIs
+  Submit request for read-only CLIs
 ---
 
 # dnacenter_command_runner_run_command (Resource)
 
 It performs create operation on Command Runner.
-- Submit request for read-only CLIs
 
+- Submit request for read-only CLIs
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
-
 ## Example Usage
 
 ```terraform
+provider "dnacenter" {
+  debug = "true"
+}
+
 resource "dnacenter_command_runner_run_command" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     commands     = ["string"]
     description  = "string"
     device_uuids = ["string"]
     name         = "string"
     timeout      = 1
   }
+}
+
+output "dnacenter_command_runner_run_command_example" {
+  value = dnacenter_command_runner_run_command.example
 }
 ```
 

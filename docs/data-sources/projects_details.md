@@ -80,7 +80,6 @@ Read-Only:
 - **custom_params_order** (String)
 - **description** (String)
 - **device_types** (List of Object) (see [below for nested schema](#nestedobjatt--items--templates--device_types))
-- **document_database** (String)
 - **failure_policy** (String)
 - **id** (String)
 - **language** (String)
@@ -88,7 +87,6 @@ Read-Only:
 - **latest_version_time** (Number)
 - **name** (String)
 - **parent_template_id** (String)
-- **project_associated** (String)
 - **project_id** (String)
 - **project_name** (String)
 - **rollback_template_content** (String)
@@ -172,7 +170,7 @@ Read-Only:
 - **default_selected_values** (List of String)
 - **id** (String)
 - **selection_type** (String)
-- **selection_values** (List of String)
+- **selection_values** (String)
 
 
 
@@ -227,7 +225,7 @@ Read-Only:
 - **default_selected_values** (List of String)
 - **id** (String)
 - **selection_type** (String)
-- **selection_values** (List of String)
+- **selection_values** (String)
 
 
 
@@ -284,7 +282,7 @@ Read-Only:
 - **default_selected_values** (List of String)
 - **id** (String)
 - **selection_type** (String)
-- **selection_values** (List of String)
+- **selection_values** (String)
 
 
 
@@ -339,7 +337,7 @@ Read-Only:
 - **default_selected_values** (List of String)
 - **id** (String)
 - **selection_type** (String)
-- **selection_values** (List of String)
+- **selection_values** (String)
 
 
 

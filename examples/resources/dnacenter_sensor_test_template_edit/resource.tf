@@ -1,10 +1,8 @@
 
 resource "dnacenter_sensor_test_template_edit" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
   parameters {
+
     location_info_list {
 
       all_sensors    = "false"
@@ -37,4 +35,8 @@ resource "dnacenter_sensor_test_template_edit" "example" {
     }
     template_name = "string"
   }
+}
+
+output "dnacenter_sensor_test_template_edit_example" {
+  value = dnacenter_sensor_test_template_edit.example
 }

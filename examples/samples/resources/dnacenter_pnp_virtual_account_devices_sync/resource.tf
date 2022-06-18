@@ -3,7 +3,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "0.3.0"
+      version = "1.0.0-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -11,9 +11,7 @@ terraform {
 }
 resource "dnacenter_pnp_virtual_account_devices_sync" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
+ 
   parameters {
     auto_sync_period = 1
     cco_user         = "string"

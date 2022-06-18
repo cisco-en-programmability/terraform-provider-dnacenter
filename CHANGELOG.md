@@ -1,4 +1,63 @@
+## 1.0.0-beta (June 17, 2022)
+
+NOTES:
+`dnacenter-go-sdk` version changes from `github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk` to `github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk`.(Cisco DNA Center's v2.3.3.0 API)
+
+FEATURES: 
+* **New Data Source:** `data_source_buildings_planned_access_points`
+* **New Data Source:** `data_source_event_config_connector_types`
+* **New Data Source:** `data_source_interface`
+* **New Data Source:** `data_source_lan_automation_count`
+* **New Data Source:** `data_source_lan_automation_log`
+* **New Data Source:** `data_source_lan_automation_status`
+* **New Data Source:** `data_source_network_device_custom_prompt`
+* **New Data Source:** `data_source_network_device_interface_neighbor`
+* **New Data Source:** `data_source_planned_access_points`
+* **New Data Source:** `data_source_transit_peer_network`
+* **New Resource:** `resource_network_device_custom_prompt`
+* **New Resource:** `resource_transit_peer_network`
+* **New Resource:** `resource_assign_device_to_site`
+* **New Resource:** `resource_pnp_device_authorize`
+* **New Resource:** `resource_interface_operation_create`
+* **New Resource:** `resource_interface_update`
+* **New Resource:** `resource_lan_automation_create`
+* **New Resource:** `resource_lan_automation_delete`
+* **New Resource:** `resource_syslog_config_create`
+* **New Resource:** `resource_syslog_config_update`
+* **New Resource:** `resource_event_email_config_update`
+* **New Resource:** `resource_event_email_config_create`
+* **New Resource:** `resource_event_webhook_create`
+* **New Resource:** `resource_event_webhook_update`
+* **New Resource:** `resource_file_import`
+* **New Resource:** `resource_global_credential_delete`
+* **New Resource:** `resource_global_credential_update`
+* **New Resource:** `resource_network_create`
+* **New Resource:** `resource_network_device_update_role`
+* **New Resource:** `resource_network_update`
+* **New Resource:** `resource_pnp_device_config_preview`
+* **New Resource:** `resource_pnp_server_profile_update`
+* **New Resource:** `resource_pnp_virtual_account_add`
+* **New Resource:** `resource_pnp_virtual_account_deregister`
+  
+BREAKING CHANGES:
+* Data Source `data_source_disasterrecovery_system_operationstatus` has been removed.
+* Data Source `data_source_disasterrecovery_system_status` has been removed.
+* Data Source `data_source_endpoint_analytics_profiling_rules` has been removed.
+* Data Source `data_source_profiling_rules_count` has been removed.
+* Data Source `data_source_sda_fabric` has been removed.
+* Data Source `data_source_site_design_floormap` has been removed.
+* Data Source `data_source_threat_detail` has been removed.
+* Data Source `data_source_threat_detail_count` has been removed.
+* Data Source `data_source_threat_summary` has been removed.
+* Resource `resource_authentication_import_certificate` has been removed.
+* Resource `resource_authentication_import_certificate_p12` has been removed.
+* Resource `resource_endpoint_analytics_profiling_rules` has been removed.
+* Resource `resource_profiling_rules_in_bulk_create` has been removed.
+* Resource `resource_sda_fabric` has been removed.
+* Resource `resource_site_design_floormap` has been removed.
+
 ## 0.3.0 (June 16, 2022)
+
 NOTES: 
 Stable version with `github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk` (Cisco DNA Center 2.2.3.3 API)
 

@@ -4,21 +4,20 @@ page_title: "dnacenter_pnp_device_site_claim Resource - terraform-provider-dnace
 subcategory: ""
 description: |-
   It performs create operation on Device Onboarding (PnP).
-      •   Claim a device based on DNA-C Site based design process. Different parameters are required for different device
-          platforms.
+  Claim a device based on DNA-C Site based design process. Different parameters are required for different device
+  platforms.
 ---
 
 # dnacenter_pnp_device_site_claim (Resource)
 
 It performs create operation on Device Onboarding (PnP).
-	•	Claim a device based on DNA-C Site based design process. Different parameters are required for different device
-		platforms.
+
+- Claim a device based on DNA-C Site based design process. Different parameters are required for different device
+platforms.
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
-
-Most commonly, this resource is used together with [site](./site.md) and [pnp_device](./pnp_device.md) to claim a device.
 
 ## Example Usage
 
@@ -30,21 +29,33 @@ provider "dnacenter" {
 resource "dnacenter_pnp_device_site_claim" "example" {
   provider = dnacenter
   parameters {
-    device_id = "string"
-    site_id   = "string"
-    type      = "string"
-    hostname  = "string"
-    image_info {
-      image_id = "string"
-      skip     = "false"
-    }
+
     config_info {
+
       config_id = "string"
       config_parameters {
+
         key   = "string"
         value = "string"
       }
     }
+    device_id = "string"
+    gateway   = "string"
+    hostname  = "string"
+    image_id  = "string"
+    image_info {
+
+      image_id = "string"
+      skip     = "false"
+    }
+    ip_interface_name = "string"
+    remove_inactive   = "false"
+    rf_profile        = "string"
+    site_id           = "string"
+    static_ip         = "string"
+    subnet_mask       = "string"
+    type              = "string"
+    vlan_id           = "string"
   }
 }
 
@@ -72,26 +83,22 @@ output "dnacenter_pnp_device_site_claim_example" {
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
-Required:
-
-- **image_info** (Block List, Min: 1) (see [below for nested schema](#nestedblock--parameters--image_info))
-
 Optional:
 
 - **config_info** (Block List) (see [below for nested schema](#nestedblock--parameters--config_info))
 - **device_id** (String)
+- **gateway** (String)
 - **hostname** (String)
-- **site_id** (String)
-- **type** (String)
-
-<a id="nestedblock--parameters--image_info"></a>
-### Nested Schema for `parameters.image_info`
-
-Required:
-
 - **image_id** (String)
-- **skip** (String)
-
+- **image_info** (Block List) (see [below for nested schema](#nestedblock--parameters--image_info))
+- **ip_interface_name** (String)
+- **remove_inactive** (String)
+- **rf_profile** (String)
+- **site_id** (String)
+- **static_ip** (String)
+- **subnet_mask** (String)
+- **type** (String)
+- **vlan_id** (String)
 
 <a id="nestedblock--parameters--config_info"></a>
 ### Nested Schema for `parameters.config_info`
@@ -104,11 +111,20 @@ Optional:
 <a id="nestedblock--parameters--config_info--config_parameters"></a>
 ### Nested Schema for `parameters.config_info.config_parameters`
 
-Required:
+Optional:
 
 - **key** (String)
 - **value** (String)
 
+
+
+<a id="nestedblock--parameters--image_info"></a>
+### Nested Schema for `parameters.image_info`
+
+Optional:
+
+- **image_id** (String)
+- **skip** (String)
 
 
 

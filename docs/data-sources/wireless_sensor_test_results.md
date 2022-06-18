@@ -18,9 +18,9 @@ It performs read operation on Wireless.
 ```terraform
 data "dnacenter_wireless_sensor_test_results" "example" {
   provider        = dnacenter
-  end_time        = "hh:mm"
+  end_time        = 1609459200
   site_id         = "string"
-  start_time      = "hh:mm"
+  start_time      = 1609459200
   test_failure_by = "string"
 }
 

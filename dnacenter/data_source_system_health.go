@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -54,6 +54,16 @@ func dataSourceSystemHealth() *schema.Resource {
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+
+						"cimcaddress": &schema.Schema{
+							Description: `List of configured cimc addresse(s)
+`,
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
 
 						"health_events": &schema.Schema{
 							Type:     schema.TypeList,
@@ -214,6 +224,7 @@ func flattenHealthAndPerformanceSystemHealthApIItem(item *dnacentersdkgo.Respons
 	respItem["health_events"] = flattenHealthAndPerformanceSystemHealthApIItemHealthEvents(item.HealthEvents)
 	respItem["version"] = item.Version
 	respItem["host_name"] = item.HostName
+	respItem["cimcaddress"] = item.Cimcaddress
 	return []map[string]interface{}{
 		respItem,
 	}

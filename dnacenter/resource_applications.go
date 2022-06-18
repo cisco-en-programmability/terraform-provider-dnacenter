@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -582,7 +582,13 @@ func resourceApplicationsRead(ctx context.Context, d *schema.ResourceData, m int
 		}
 		response1, err := searchApplicationPolicyGetApplications(m, queryParams1, vID)
 
-		if err != nil || response1 == nil {
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetApplications search response",
+				err))
+			return diags
+		}
+		if response1 == nil {
 			d.SetId("")
 			return diags
 		}
@@ -592,7 +598,7 @@ func resourceApplicationsRead(ctx context.Context, d *schema.ResourceData, m int
 		vItemName1 := flattenApplicationPolicyGetApplicationsItem(response1)
 		if err := d.Set("item", vItemName1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAllowedProtocolByName response",
+				"Failure when setting GetApplications response",
 				err))
 			return diags
 		}
