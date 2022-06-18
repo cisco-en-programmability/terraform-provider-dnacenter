@@ -5,7 +5,7 @@ resource "dnacenter_template_preview" "example" {
 
     device_id       = "string"
     params          = "string"
-    resource_params = ["string"]
+    resource_params = "string"
     template_id     = "string"
   }
 }

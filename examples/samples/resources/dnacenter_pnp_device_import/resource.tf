@@ -15,9 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_pnp_device_import" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
+ 
   parameters {
     payload {
       device_info {

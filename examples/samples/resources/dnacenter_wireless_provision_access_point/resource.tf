@@ -10,9 +10,7 @@ terraform {
 
 resource "dnacenter_wireless_provision_access_point" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
+ 
   parameters {
     payload {
       custom_ap_group_name   = "string"

@@ -16,9 +16,7 @@ provider "dnacenter" {
 
 resource "dnacenter_profiling_rules_in_bulk_create" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
+ 
   parameters {
     profiling_rules {
 

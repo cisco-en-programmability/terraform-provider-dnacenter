@@ -228,8 +228,6 @@ resource "dnacenter_configuration_template_project" "example" {
       custom_params_order = false
       last_update_time    = 1636580362198
       latest_version_time = 0
-      project_associated  = true
-      document_database   = false
     }
   }
 }

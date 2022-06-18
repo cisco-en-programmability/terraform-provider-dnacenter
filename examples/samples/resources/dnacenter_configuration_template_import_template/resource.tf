@@ -11,9 +11,7 @@ terraform {
 
 resource "dnacenter_configuration_template_import_template" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
+ 
   parameters {
     do_version   = "false"
     project_name = "string"

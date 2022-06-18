@@ -10,9 +10,7 @@ terraform {
 
 resource "dnacenter_wireless_provision_device_update" "example" {
   provider = dnacenter
-  lifecycle {
-    create_before_destroy = true
-  }
+ 
   parameters {
     payload {
       device_name = "string"
