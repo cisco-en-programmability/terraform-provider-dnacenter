@@ -41,6 +41,30 @@ func resourceSdaFabricSite() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"site_name_hierarchy": &schema.Schema{
+							Description: `Description`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"fabric_name": &schema.Schema{
+							Description: `Description`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"fabric_type": &schema.Schema{
+							Description: `Description`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"fabric_domain_type": &schema.Schema{
+							Description: `Description`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
 						"description": &schema.Schema{
 							Description: `Description`,
 							Type:        schema.TypeString,
@@ -106,7 +130,7 @@ func resourceSdaFabricSiteCreate(ctx context.Context, d *schema.ResourceData, m 
 	queryParams1.SiteNameHierarchy = vvSiteNameHierarchy
 
 	getResponse2, _, err := client.Sda.GetSiteFromSdaFabric(&queryParams1)
-	if err == nil && getResponse2 != nil {
+	if err == nil && getResponse2 != nil && getResponse2.Status != "failed" {
 		resourceMap := make(map[string]string)
 		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 		d.SetId(joinResourceID(resourceMap))
