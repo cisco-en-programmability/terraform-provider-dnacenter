@@ -209,7 +209,7 @@ func dataSourceEventSubscription() *schema.Resource {
 
 												"connect_timeout": &schema.Schema{
 													Description: `Connect Timeout`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeInt,
 													Computed:    true,
 												},
 
@@ -290,7 +290,7 @@ func dataSourceEventSubscription() *schema.Resource {
 
 												"read_timeout": &schema.Schema{
 													Description: `Read Timeout`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeInt,
 													Computed:    true,
 												},
 
@@ -449,7 +449,7 @@ func flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscr
 	respItem["base_path"] = item.BasePath
 	respItem["resource"] = item.Resource
 	respItem["method"] = item.Method
-	respItem["trust_cert"] = item.TrustCert
+	respItem["trust_cert"] = boolPtrToString(item.TrustCert)
 	respItem["headers"] = flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscriptionDetailsHeaders(item.Headers)
 	respItem["query_params"] = flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscriptionDetailsQueryParams(item.QueryParams)
 	respItem["path_params"] = flattenEventManagementGetEventSubscriptionsItemsSubscriptionEndpointsSubscriptionDetailsPathParams(item.PathParams)

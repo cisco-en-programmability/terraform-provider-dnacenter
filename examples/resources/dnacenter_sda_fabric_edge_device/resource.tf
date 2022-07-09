@@ -2,9 +2,10 @@
 resource "dnacenter_sda_fabric_edge_device" "example" {
   provider = dnacenter
   parameters {
-
-    device_management_ip_address = "string"
-    site_name_hierarchy          = "string"
+    payload{
+      device_management_ip_address = "string"
+      site_name_hierarchy          = "string"
+    }
   }
 }
 
