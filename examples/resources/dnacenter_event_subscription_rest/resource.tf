@@ -2,7 +2,7 @@
 resource "dnacenter_event_subscription_rest" "example" {
   provider = dnacenter
   parameters {
-
+    payload {
     description = "string"
     filter {
 
@@ -29,6 +29,7 @@ resource "dnacenter_event_subscription_rest" "example" {
     }
     subscription_id = "string"
     version         = "string"
+  }
   }
 }
 

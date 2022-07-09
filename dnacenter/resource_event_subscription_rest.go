@@ -331,41 +331,92 @@ func resourceEventSubscriptionRest() *schema.Resource {
 				MinItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
-						"description": &schema.Schema{
-							Description: `Description
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"filter": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+						"payload": &schema.Schema{
+							Description: `Array of RequestEventManagementCreateRestWebhookEventSubscription`,
+							Type:        schema.TypeList,
+							Required:    true,
+							MinItems:    1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"categories": &schema.Schema{
-										Description: `Categories`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
+									"description": &schema.Schema{
+										Description: `Description
+`,
+										Type:     schema.TypeString,
+										Optional: true,
 									},
-									"domains_subdomains": &schema.Schema{
+									"filter": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"domain": &schema.Schema{
-													Description: `Domain`,
-													Type:        schema.TypeString,
+												"categories": &schema.Schema{
+													Description: `Categories`,
+													Type:        schema.TypeList,
 													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
-												"sub_domains": &schema.Schema{
-													Description: `Sub Domains`,
+												"domains_subdomains": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"domain": &schema.Schema{
+																Description: `Domain`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+															"sub_domains": &schema.Schema{
+																Description: `Sub Domains`,
+																Type:        schema.TypeList,
+																Optional:    true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
+															},
+														},
+													},
+												},
+												"event_ids": &schema.Schema{
+													Description: `Event Ids (Comma separated event ids)
+`,
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"severities": &schema.Schema{
+													Description: `Severities`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"site_ids": &schema.Schema{
+													Description: `Site Ids`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"sources": &schema.Schema{
+													Description: `Sources`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"types": &schema.Schema{
+													Description: `Types`,
 													Type:        schema.TypeList,
 													Optional:    true,
 													Elem: &schema.Schema{
@@ -375,98 +426,57 @@ func resourceEventSubscriptionRest() *schema.Resource {
 											},
 										},
 									},
-									"event_ids": &schema.Schema{
-										Description: `Event Ids (Comma separated event ids)
-`,
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"severities": &schema.Schema{
-										Description: `Severities`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"site_ids": &schema.Schema{
-										Description: `Site Ids`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"sources": &schema.Schema{
-										Description: `Sources`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"types": &schema.Schema{
-										Description: `Types`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-								},
-							},
-						},
-						"name": &schema.Schema{
-							Description: `Name
-`,
-							Type:     schema.TypeString,
-							Required: true,
-						},
-						"subscription_endpoints": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"instance_id": &schema.Schema{
-										Description: `(From 	Get Rest/Webhook Subscription Details --> pick instanceId)
+									"name": &schema.Schema{
+										Description: `Name
 `,
 										Type:     schema.TypeString,
-										Optional: true,
+										Required: true,
 									},
-									"subscription_details": &schema.Schema{
+									"subscription_endpoints": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"connector_type": &schema.Schema{
-													Description: `Connector Type (Must be REST)
+												"instance_id": &schema.Schema{
+													Description: `(From 	Get Rest/Webhook Subscription Details --> pick instanceId)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 												},
+												"subscription_details": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"connector_type": &schema.Schema{
+																Description: `Connector Type (Must be REST)
+`,
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
 											},
 										},
 									},
+									"subscription_id": &schema.Schema{
+										Description: `Subscription Id (Unique UUID)
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"version": &schema.Schema{
+										Description: `Version
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
 								},
 							},
-						},
-						"subscription_id": &schema.Schema{
-							Description: `Subscription Id (Unique UUID)
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"version": &schema.Schema{
-							Description: `Version
-`,
-							Type:     schema.TypeString,
-							Optional: true,
 						},
 					},
 				},

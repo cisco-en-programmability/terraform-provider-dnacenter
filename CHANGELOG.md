@@ -1,3 +1,15 @@
+## 1.0.1-beta (July 17, 2022)
+BUG FIXES:
+* Add `site_name_hierarchy`,`fabric_name`,`fabric_type`,`fabric_domain_type` parameters to `item` schema of `data_source_sda_fabric_site`
+* `payload` for array request added in following resources: `resource_event_subscription`,`resource_event_subscription_rest`,`resource_sda_fabric_authentication_profile`,`resource_sda_fabric_control_plane_device`,`resource_sda_fabric_edge_device`,`resource_sda_fabric_site`,`resource_sda_virtual_network` 
+
+IMPROVEMENTS:
+* In `resource_event_subscription` a `CustomCall` was added for verify creation state.
+* * `dnacenter_sda_fabric_site` examples were added.
+
+REMOVED:
+* `dnacenter_sda_fabric` examples were removed.
+
 ## 1.0.0-beta (June 17, 2022)
 
 NOTES:

@@ -14,7 +14,7 @@ provider "dnacenter" {
 
 data "dnacenter_sda_fabric_site" "example" {
   provider            = dnacenter
-  site_name_hierarchy = "Global/San Francisco"
+  site_name_hierarchy = "Global/New Jersey/MurrayHill/test/TestFloor"
 }
 
 output "dnacenter_sda_fabric_site_example" {

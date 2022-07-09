@@ -90,18 +90,27 @@ func resourceSdaVirtualNetwork() *schema.Resource {
 				MinItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"payload": &schema.Schema{
+							Type:     schema.TypeList,
+							Required: true,
+							MinItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy should be a valid fabric site name hierarchy.( e.g. Global/USA/San Jose)
+									"site_name_hierarchy": &schema.Schema{
+										Description: `Site Name Hierarchy should be a valid fabric site name hierarchy.( e.g. Global/USA/San Jose)
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"virtual_network_name": &schema.Schema{
-							Description: `Virtual Network Name, that is created in Global level
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"virtual_network_name": &schema.Schema{
+										Description: `Virtual Network Name, that is created in Global level
 `,
-							Type:     schema.TypeString,
-							Optional: true,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
 						},
 					},
 				},
