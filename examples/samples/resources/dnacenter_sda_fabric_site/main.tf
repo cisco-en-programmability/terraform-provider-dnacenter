@@ -9,13 +9,17 @@ terraform {
 }
 
 provider "dnacenter" {
+  debug = "true"
 }
 
-data "dnacenter_sda_fabric" "example" {
-  provider    = dnacenter
-  fabric_name = "DNAC_Guide_Fabric"
+resource "dnacenter_sda_fabric_site" "example" {
+  provider = dnacenter
+  parameters {
+    fabric_name = "Default LAN Fabric"
+    site_name_hierarchy = "Global/New Jersey/MurrayHill/test/TestFloor"
+  }
 }
 
-output "dnacenter_sda_fabric_example" {
-  value = data.dnacenter_sda_fabric.example
+output "dnacenter_sda_fabric_site_example" {
+  value = dnacenter_sda_fabric_site.example
 }

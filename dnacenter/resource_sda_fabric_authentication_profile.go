@@ -72,44 +72,54 @@ func resourceSdaFabricAuthenticationProfile() *schema.Resource {
 				MinItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"payload": &schema.Schema{
+							Description: `Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabric`,
+							Type:        schema.TypeList,
+							Required:    true,
+							MinItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-						"authenticate_template_name": &schema.Schema{
-							Description: `Authenticate Template Name
+									"authenticate_template_name": &schema.Schema{
+										Description: `Authenticate Template Name
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"authentication_order": &schema.Schema{
-							Description: `Authentication Order
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"authentication_order": &schema.Schema{
+										Description: `Authentication Order
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"dot1x_to_mab_fallback_timeout": &schema.Schema{
-							Description: `Dot1x To MabFallback Timeout( Allowed range is [3-120])
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"dot1x_to_mab_fallback_timeout": &schema.Schema{
+										Description: `Dot1x To MabFallback Timeout( Allowed range is [3-120])
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"number_of_hosts": &schema.Schema{
-							Description: `Number Of Hosts
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"number_of_hosts": &schema.Schema{
+										Description: `Number Of Hosts
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"site_name_hierarchy": &schema.Schema{
-							Description: `Path of sda Fabric Site
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"site_name_hierarchy": &schema.Schema{
+										Description: `Path of sda Fabric Site
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"wake_on_lan": &schema.Schema{
-							Description: `Wake On Lan
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"wake_on_lan": &schema.Schema{
+										Description: `Wake On Lan
 `,
 
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+								},
+							},
 						},
 					},
 				},

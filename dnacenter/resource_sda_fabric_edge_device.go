@@ -90,18 +90,27 @@ func resourceSdaFabricEdgeDevice() *schema.Resource {
 				MinItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"payload": &schema.Schema{
+							Type:     schema.TypeList,
+							Required: true,
+							MinItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-						"device_management_ip_address": &schema.Schema{
-							Description: `Management Ip Address of the Device which is provisioned successfully
+									"device_management_ip_address": &schema.Schema{
+										Description: `Management Ip Address of the Device which is provisioned successfully
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy of provisioned Device
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"site_name_hierarchy": &schema.Schema{
+										Description: `Site Name Hierarchy of provisioned Device
 `,
-							Type:     schema.TypeString,
-							Optional: true,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
 						},
 					},
 				},

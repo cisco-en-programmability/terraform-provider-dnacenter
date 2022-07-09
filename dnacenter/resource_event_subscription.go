@@ -2,8 +2,10 @@ package dnacenter
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"reflect"
+	"strings"
 
 	"log"
 
@@ -196,7 +198,7 @@ func resourceEventSubscription() *schema.Resource {
 
 												"connect_timeout": &schema.Schema{
 													Description: `Connect Timeout`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeInt,
 													Computed:    true,
 												},
 
@@ -277,7 +279,7 @@ func resourceEventSubscription() *schema.Resource {
 
 												"read_timeout": &schema.Schema{
 													Description: `Read Timeout`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeInt,
 													Computed:    true,
 												},
 
@@ -331,41 +333,92 @@ func resourceEventSubscription() *schema.Resource {
 				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
-						"description": &schema.Schema{
-							Description: `Description
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"filter": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+						"payload": &schema.Schema{
+							Description: `Array of RequestEventManagementCreateEventSubscriptions`,
+							Type:        schema.TypeList,
+							Required:    true,
+							MinItems:    1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"categories": &schema.Schema{
-										Description: `Categories`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
+									"description": &schema.Schema{
+										Description: `Description
+`,
+										Type:     schema.TypeString,
+										Optional: true,
 									},
-									"domains_subdomains": &schema.Schema{
+									"filter": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"domain": &schema.Schema{
-													Description: `Domain`,
-													Type:        schema.TypeString,
+												"categories": &schema.Schema{
+													Description: `Categories`,
+													Type:        schema.TypeList,
 													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
-												"sub_domains": &schema.Schema{
-													Description: `Sub Domains`,
+												"domains_subdomains": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"domain": &schema.Schema{
+																Description: `Domain`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+															"sub_domains": &schema.Schema{
+																Description: `Sub Domains`,
+																Type:        schema.TypeList,
+																Optional:    true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
+															},
+														},
+													},
+												},
+												"event_ids": &schema.Schema{
+													Description: `Event Ids (Comma separated event ids)
+`,
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"severities": &schema.Schema{
+													Description: `Severities`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"site_ids": &schema.Schema{
+													Description: `Site Ids`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"sources": &schema.Schema{
+													Description: `Sources`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"types": &schema.Schema{
+													Description: `Types`,
 													Type:        schema.TypeList,
 													Optional:    true,
 													Elem: &schema.Schema{
@@ -375,98 +428,57 @@ func resourceEventSubscription() *schema.Resource {
 											},
 										},
 									},
-									"event_ids": &schema.Schema{
-										Description: `Event Ids (Comma separated event ids)
-`,
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"severities": &schema.Schema{
-										Description: `Severities`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"site_ids": &schema.Schema{
-										Description: `Site Ids`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"sources": &schema.Schema{
-										Description: `Sources`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"types": &schema.Schema{
-										Description: `Types`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-								},
-							},
-						},
-						"name": &schema.Schema{
-							Description: `Name
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"subscription_endpoints": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"instance_id": &schema.Schema{
-										Description: `(From 	Get Rest/Webhook Subscription Details --> pick instanceId)
+									"name": &schema.Schema{
+										Description: `Name
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 									},
-									"subscription_details": &schema.Schema{
+									"subscription_endpoints": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"connector_type": &schema.Schema{
-													Description: `Connector Type (Must be REST)
+												"instance_id": &schema.Schema{
+													Description: `(From 	Get Rest/Webhook Subscription Details --> pick instanceId)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 												},
+												"subscription_details": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"connector_type": &schema.Schema{
+																Description: `Connector Type (Must be REST)
+`,
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
 											},
 										},
 									},
+									"subscription_id": &schema.Schema{
+										Description: `Subscription Id (Unique UUID)
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"version": &schema.Schema{
+										Description: `Version
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
 								},
 							},
-						},
-						"subscription_id": &schema.Schema{
-							Description: `Subscription Id (Unique UUID)
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"version": &schema.Schema{
-							Description: `Version
-`,
-							Type:     schema.TypeString,
-							Optional: true,
 						},
 					},
 				},
@@ -480,8 +492,12 @@ func resourceEventSubscriptionCreate(ctx context.Context, d *schema.ResourceData
 
 	var diags diag.Diagnostics
 
+	type Error struct {
+		APIStatus string `json:"apiStatus,omitempty"` // Error
+	}
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestEventSubscriptionCreateEventSubscriptions(ctx, "parameters", d)
+	request1 := expandRequestEventSubscriptionCreateEventSubscriptions(ctx, "parameters.0", d)
 	vName := resourceItem["name"]
 	vvName := interfaceToString(vName)
 	vSubscriptionID := resourceItem["subscription_id"]
@@ -502,7 +518,8 @@ func resourceEventSubscriptionCreate(ctx context.Context, d *schema.ResourceData
 	}
 
 	resp1, restyResp1, err := client.EventManagement.CreateEventSubscriptions(request1)
-	if err != nil || resp1 == nil {
+
+	if err != nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
 				"Failure when executing CreateEventSubscriptions", err, restyResp1.String()))
@@ -512,6 +529,31 @@ func resourceEventSubscriptionCreate(ctx context.Context, d *schema.ResourceData
 			"Failure when executing CreateEventSubscriptions", err))
 		return diags
 	}
+
+	restyResp3, err := client.CustomCall.GetCustomCall(resp1.StatusURI, nil)
+	var errorValid Error
+	err = json.Unmarshal(restyResp3.Body(), &errorValid)
+	if err != nil {
+		if restyResp3 != nil {
+			diags = append(diags, diagErrorWithResponse(
+				"Failure when executing CreateEventSubscriptions", err, restyResp3.String()))
+			return diags
+		}
+		diags = append(diags, diagError(
+			"Failure when executing CreateEventSubscriptions", err))
+		return diags
+	}
+	if err != nil || strings.ToUpper(errorValid.APIStatus) == "FAILURE" {
+		if restyResp3 != nil {
+			diags = append(diags, diagErrorWithResponse(
+				"Failure when executing CreateEventSubscriptions", err, restyResp3.String()))
+			return diags
+		}
+		diags = append(diags, diagError(
+			"Failure when executing CreateEventSubscriptions", err))
+		return diags
+	}
+
 	resourceMap := make(map[string]string)
 	resourceMap["name"] = vvName
 	resourceMap["subscription_id"] = vvSubscriptionID
@@ -580,7 +622,7 @@ func resourceEventSubscriptionUpdate(ctx context.Context, d *schema.ResourceData
 
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
-		request1 := expandRequestEventSubscriptionUpdateEventSubscriptions(ctx, "parameters", d)
+		request1 := expandRequestEventSubscriptionUpdateEventSubscriptions(ctx, "parameters.0", d)
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
