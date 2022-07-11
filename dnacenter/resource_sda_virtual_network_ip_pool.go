@@ -231,13 +231,17 @@ func resourceSdaVirtualNetworkIPPoolCreate(ctx context.Context, d *schema.Resour
 	}
 	vIPPoolName := resourceItem["ip_pool_name"]
 	vVirtualNetworkName := resourceItem["virtual_network_name"]
+	vSiteNameHierarchy := resourceItem["site_name_hierarchy"]
 	vvIPPoolName := interfaceToString(vIPPoolName)
 	vvVirtualNetworkName := interfaceToString(vVirtualNetworkName)
+	vvSiteNameHierarchy := interfaceToString(vSiteNameHierarchy)
 	queryParams1 := dnacentersdkgo.GetIPPoolFromSdaVirtualNetworkQueryParams{}
 
 	queryParams1.IPPoolName = vvIPPoolName
 
 	queryParams1.VirtualNetworkName = vvVirtualNetworkName
+
+	queryParams1.SiteNameHierarchy = vvSiteNameHierarchy
 
 	getResponse2, _, err := client.Sda.GetIPPoolFromSdaVirtualNetwork(&queryParams1)
 	if err == nil && getResponse2 != nil && strings.ToLower(getResponse2.Status) != "failed" {
@@ -308,6 +312,7 @@ func resourceSdaVirtualNetworkIPPoolRead(ctx context.Context, d *schema.Resource
 	resourceMap := separateResourceID(resourceID)
 	vIPPoolName := resourceMap["ip_pool_name"]
 	vVirtualNetworkName := resourceMap["virtual_network_name"]
+	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -317,6 +322,8 @@ func resourceSdaVirtualNetworkIPPoolRead(ctx context.Context, d *schema.Resource
 		queryParams1.IPPoolName = vIPPoolName
 
 		queryParams1.VirtualNetworkName = vVirtualNetworkName
+
+		queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 
 		response1, restyResp1, err := client.Sda.GetIPPoolFromSdaVirtualNetwork(&queryParams1)
 
@@ -363,10 +370,12 @@ func resourceSdaVirtualNetworkIPPoolDelete(ctx context.Context, d *schema.Resour
 	resourceMap := separateResourceID(resourceID)
 	vIPPoolName := resourceMap["ip_pool_name"]
 	vVirtualNetworkName := resourceMap["virtual_network_name"]
+	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
 
 	queryParams1 := dnacentersdkgo.GetIPPoolFromSdaVirtualNetworkQueryParams{}
 	queryParams1.IPPoolName = vIPPoolName
 	queryParams1.VirtualNetworkName = vVirtualNetworkName
+	queryParams1.VirtualNetworkName = vSiteNameHierarchy
 	item, restyResp1, err := client.Sda.GetIPPoolFromSdaVirtualNetwork(&queryParams1)
 	if err != nil || item == nil {
 		d.SetId("")
