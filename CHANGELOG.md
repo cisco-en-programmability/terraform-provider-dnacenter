@@ -1,3 +1,15 @@
+## 1.0.4-beta (July 11, 2022)
+BUGFIXES:
+* `site_name_hierarchy` was added to `resource_sda_virtual_network_ip_pool`.
+* `resource_event_subscription`  changes `resourceItem("parameters")` to `resourceItem("parameters.0.payload")`.
+* `resource_event_subscription_rest` changes `resourceItem("parameters")` to `resourceItem("parameters.0.payload")`.
+* `resource_sda_fabric_authentication_profile` changes `resourceItem("parameters")` to `resourceItem("parameters.0.payload")`.
+* `resource_sda_fabric_border_device` changes `resourceItem("parameters")` to `resourceItem("parameters.0.payload")`.
+* `resource_sda_fabric_control_plane_device` changes `resourceItem("parameters")` to `resourceItem("parameters.0.payload")`.
+* `resource_sda_fabric_edge_device` changes `resourceItem("parameters")` to `resourceItem("parameters.0.payload")`.
+* `resource_wireless_provision_access_point` changes `resourceItem("parameters")` to `resourceItem("parameters.0.payload")`.
+* `resource_wireless_provision_device_update` changes `resourceItem("parameters")` to `resourceItem("parameters.0.payload")`.
+
 ## 1.0.3-beta (July 11, 2022)
 BUGFIXES:
 * `resource_sda_virtual_network` is now able to create the resource.
