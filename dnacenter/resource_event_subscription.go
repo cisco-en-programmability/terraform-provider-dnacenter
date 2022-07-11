@@ -496,7 +496,7 @@ func resourceEventSubscriptionCreate(ctx context.Context, d *schema.ResourceData
 		APIStatus string `json:"apiStatus,omitempty"` // Error
 	}
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
+	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
 	request1 := expandRequestEventSubscriptionCreateEventSubscriptions(ctx, "parameters.0", d)
 	vName := resourceItem["name"]
 	vvName := interfaceToString(vName)
