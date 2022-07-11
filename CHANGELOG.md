@@ -1,3 +1,15 @@
+## 1.0.3-beta (July 11, 2022)
+BUGFIXES:
+* `resource_sda_virtual_network` is now able to create the resource.
+* `resource_sda_fabric_border_device` is now able to create the resource.
+* `resource_sda_fabric_control_plane_device` is now able to create the resource.
+* `resource_sda_fabric_edge_device` is now able to create the resource.
+* `resource_sda_port_assignment_for_access_point` is now able to create the resource.
+* `resource_sda_port_assignment_for_user_device` is now able to create the resource.
+* `resource_sda_provision_device` is now able to create the resource.
+* `resource_sda_virtual_network_ip_pool` is now able to create the resource.
+* `resource_sda_virtual_network_v2` is now able to create the resource.
+
 ## 1.0.2-beta (July 10, 2022)
 BUGFIXES:
 * `resource_sda_virtual_network` is now able to create the resource.
