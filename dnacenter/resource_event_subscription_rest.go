@@ -490,7 +490,7 @@ func resourceEventSubscriptionRestCreate(ctx context.Context, d *schema.Resource
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
+	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
 	request1 := expandRequestEventSubscriptionRestCreateRestWebhookEventSubscription(ctx, "parameters.0", d)
 	vName := resourceItem["name"]
 	vvName := interfaceToString(vName)
