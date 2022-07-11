@@ -1,3 +1,4 @@
+
 terraform {
   required_providers {
     dnacenter = {
@@ -8,15 +9,19 @@ terraform {
   }
 }
 
+
 provider "dnacenter" {
+  debug = "true"
 }
 
-data "dnacenter_client_detail" "example" {
-  provider    = dnacenter
-  mac_address = "string"
-  timestamp   = "string"
+resource "dnacenter_sda_fabric_site" "example" {
+  provider = dnacenter
+  parameters {
+    fabric_name = "Default LAN Fabric"
+    site_name_hierarchy = "Global/New Jersey/MurrayHill/test/TestFloor"
+  }
 }
 
-output "dnacenter_client_detail_example" {
-  value = data.dnacenter_client_detail.example.item
+output "dnacenter_sda_fabric_site_example" {
+  value = dnacenter_sda_fabric_site.example
 }
