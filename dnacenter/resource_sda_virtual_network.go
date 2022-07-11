@@ -124,7 +124,7 @@ func resourceSdaVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
+	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
 	request1 := expandRequestSdaVirtualNetworkAddVnInFabric(ctx, "parameters.0", d)
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -141,7 +141,7 @@ func resourceSdaVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData
 	queryParams1.SiteNameHierarchy = vvSiteNameHierarchy
 
 	getResponse2, restyResp1, err := client.Sda.GetVnFromSdaFabric(&queryParams1)
-	if err == nil && getResponse2 != nil {
+	if err == nil && getResponse2 != nil && getResponse2.Status != "failed" {
 		resourceMap := make(map[string]string)
 		resourceMap["virtual_network_name"] = vvVirtualNetworkName
 		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
@@ -209,7 +209,8 @@ func resourceSdaVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, 
 	resourceMap := separateResourceID(resourceID)
 	vVirtualNetworkName := resourceMap["virtual_network_name"]
 	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
-
+	log.Printf("[DEBUG] test %s", vVirtualNetworkName)
+	log.Printf("[DEBUG] test %s", vSiteNameHierarchy)
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetVnFromSdaFabric")

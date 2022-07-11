@@ -1,0 +1,1 @@
+terraform import dnacenter_sda_virtual_network.example "id:=string"

@@ -1,3 +1,11 @@
+## 1.0.2-beta (July 10, 2022)
+BUGFIXES:
+* `resource_sda_virtual_network` is now able to create the resource.
+* `resource_site` is now able to read resource information.
+
+IMPROVEMENTS:
+* An example for resource `dnacenter_sda_virtual_network` was added.
+
 ## 1.0.1-beta (July 08, 2022)
 BUG FIXES:
 * Add `site_name_hierarchy`,`fabric_name`,`fabric_type`,`fabric_domain_type` parameters to `item` schema of `data_source_sda_fabric_site`
