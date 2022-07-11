@@ -137,7 +137,7 @@ func resourceWirelessProvisionAccessPointCreate(ctx context.Context, d *schema.R
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
+	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
 	vPersistbapioutput := resourceItem["persistbapioutput"]
 
 	request1 := expandRequestWirelessProvisionAccessPointApProvision(ctx, "parameters.0", d)

@@ -166,7 +166,7 @@ func resourceWirelessProvisionDeviceUpdateCreate(ctx context.Context, d *schema.
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
+	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
 	vPersistbapioutput := resourceItem["persistbapioutput"]
 
 	request1 := expandRequestWirelessProvisionDeviceUpdateProvisionUpdate(ctx, "parameters.0", d)
