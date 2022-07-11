@@ -3,6 +3,7 @@ package dnacenter
 import (
 	"context"
 	"reflect"
+	"strings"
 	"time"
 
 	"log"
@@ -106,7 +107,7 @@ func resourceSdaFabricSiteCreate(ctx context.Context, d *schema.ResourceData, m 
 	queryParams1.SiteNameHierarchy = vvSiteNameHierarchy
 
 	getResponse2, _, err := client.Sda.GetSiteFromSdaFabric(&queryParams1)
-	if err == nil && getResponse2 != nil {
+	if err == nil && getResponse2 != nil && strings.ToUpper(getResponse2.Status) != "FAILED" {
 		resourceMap := make(map[string]string)
 		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 		d.SetId(joinResourceID(resourceMap))
