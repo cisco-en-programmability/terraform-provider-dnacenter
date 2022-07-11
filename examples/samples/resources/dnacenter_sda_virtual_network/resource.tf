@@ -8,14 +8,16 @@ terraform {
   }
 }
 
-provider "dnacenter" {
-}
-
-data "dnacenter_site_design_floormap" "example" {
+resource "dnacenter_sda_virtual_network" "example" {
   provider = dnacenter
-  floor_id = "0f6661c2-ba34-4f4d-ae60-459cf293f689"
+  parameters {
+    payload{
+      site_name_hierarchy  = "Global/New Jersey/MurrayHill/test/TestFloor"
+      virtual_network_name = "TEST_VNs"
+    }
+  }
 }
 
-output "dnacenter_site_design_floormap_example" {
-  value = data.dnacenter_site_design_floormap.example.item
+output "dnacenter_sda_virtual_network_example" {
+  value = dnacenter_sda_virtual_network.example
 }

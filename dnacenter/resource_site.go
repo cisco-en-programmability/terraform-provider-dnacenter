@@ -46,9 +46,8 @@ func resourceSite() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"additional_info": &schema.Schema{
-							Description: `Additional Info`,
-							Type:        schema.TypeList,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -59,90 +58,76 @@ func resourceSite() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"address": &schema.Schema{
-													Description: `address`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"address_inherited_from": &schema.Schema{
-													Description: `addressInheritedFrom`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"country": &schema.Schema{
-													Description: `country`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"floor_index": &schema.Schema{
-													Description: `floorIndex`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"height": &schema.Schema{
-													Description: `height`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"latitude": &schema.Schema{
-													Description: `latitude`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"length": &schema.Schema{
-													Description: `length`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"longitude": &schema.Schema{
-													Description: `longitude`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"offset_x": &schema.Schema{
-													Description: `offsetX`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"offset_y": &schema.Schema{
-													Description: `offsetY`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"rf_model": &schema.Schema{
-													Description: `rfModel`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"type": &schema.Schema{
-													Description: `type`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"width": &schema.Schema{
-													Description: `width`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
 									},
 
-									"namespace": &schema.Schema{
-										Description: `namespace`,
-										Type:        schema.TypeString,
-										Computed:    true,
+									"name_space": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
