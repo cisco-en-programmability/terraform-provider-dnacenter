@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"strings"
 	"time"
 
 	"log"
@@ -138,7 +139,7 @@ func resourceSdaFabricEdgeDeviceCreate(ctx context.Context, d *schema.ResourceDa
 
 	getResponse2, _, err := client.Sda.GetEdgeDeviceFromSdaFabric(&queryParams1)
 
-	if err == nil && getResponse2 != nil {
+	if err == nil && getResponse2 != nil && strings.ToLower(getResponse2.Status) != "failed" {
 		resourceMap := make(map[string]string)
 		resourceMap["device_management_ip_address"] = vvDeviceManagementIPAddress
 		d.SetId(joinResourceID(resourceMap))

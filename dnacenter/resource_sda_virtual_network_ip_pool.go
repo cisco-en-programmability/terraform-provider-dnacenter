@@ -3,6 +3,7 @@ package dnacenter
 import (
 	"context"
 	"reflect"
+	"strings"
 	"time"
 
 	"log"
@@ -239,7 +240,7 @@ func resourceSdaVirtualNetworkIPPoolCreate(ctx context.Context, d *schema.Resour
 	queryParams1.VirtualNetworkName = vvVirtualNetworkName
 
 	getResponse2, _, err := client.Sda.GetIPPoolFromSdaVirtualNetwork(&queryParams1)
-	if err == nil && getResponse2 != nil {
+	if err == nil && getResponse2 != nil && strings.ToLower(getResponse2.Status) != "failed" {
 		resourceMap := make(map[string]string)
 		resourceMap["ip_pool_name"] = vvIPPoolName
 		resourceMap["virtual_network_name"] = vvVirtualNetworkName

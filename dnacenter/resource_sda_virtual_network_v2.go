@@ -3,6 +3,7 @@ package dnacenter
 import (
 	"context"
 	"reflect"
+	"strings"
 	"time"
 
 	"log"
@@ -152,7 +153,7 @@ func resourceSdaVirtualNetworkV2Create(ctx context.Context, d *schema.ResourceDa
 	queryParams1.VirtualNetworkName = vvVirtualNetworkName
 
 	getResponse2, _, err := client.Sda.GetVirtualNetworkWithScalableGroups(&queryParams1)
-	if err == nil && getResponse2 != nil {
+	if err == nil && getResponse2 != nil && strings.ToLower(getResponse2.Status) != "failed" {
 		resourceMap := make(map[string]string)
 		resourceMap["virtual_network_name"] = vvVirtualNetworkName
 		d.SetId(joinResourceID(resourceMap))

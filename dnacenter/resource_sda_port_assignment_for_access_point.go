@@ -3,6 +3,7 @@ package dnacenter
 import (
 	"context"
 	"reflect"
+	"strings"
 	"time"
 
 	"log"
@@ -170,7 +171,7 @@ func resourceSdaPortAssignmentForAccessPointCreate(ctx context.Context, d *schem
 	queryParams1.InterfaceName = vvInterfaceName
 
 	getResponse2, _, err := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParams1)
-	if err == nil && getResponse2 != nil {
+	if err == nil && getResponse2 != nil && strings.ToLower(getResponse2.Status) != "failed" {
 		resourceMap := make(map[string]string)
 		resourceMap["device_management_ip_address"] = vvDeviceManagementIPAddress
 		resourceMap["interface_name"] = vvInterfaceName
