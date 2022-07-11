@@ -1,3 +1,10 @@
+## 0.3.1 (July 10, 2022)
+BUGFIXES:
+* `resource_sda_fabric_site` is now able to create resource.
+
+## 0.3.0 (June 17, 2022)
+NOTES:
+* Stable version with Cisco DNA Center 2.2.3.3 API
 ## 0.3.0-beta (April 04, 2022)
 
 FEATURES:
