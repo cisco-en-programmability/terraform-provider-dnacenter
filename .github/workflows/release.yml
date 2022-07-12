@@ -27,10 +27,8 @@ jobs:
         with:
           go-version: 1.17
       - name: Import GPG key
-        id: set-default-cache-ttl
-        run: |
-          gpg-agent --daemon --default-cache-ttl 7200
-        shell: bash
+        id: import_gpg
+        uses: hashicorp/ghaction-import-gpg@v2.1.0
         env:
           # These secrets will need to be configured for the repository:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
