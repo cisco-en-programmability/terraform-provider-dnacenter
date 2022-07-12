@@ -13,7 +13,7 @@ provider "dnacenter" {
 
 resource "dnacenter_app_policy_intent_create" "example" {
   provider = dnacenter
- 
+
 
   parameters {
     create_list {

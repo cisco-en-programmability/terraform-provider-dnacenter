@@ -10,7 +10,7 @@ terraform {
 
 resource "dnacenter_wireless_provision_device_create" "example" {
   provider = dnacenter
- 
+
   parameters {
     payload {
       device_name = "string"

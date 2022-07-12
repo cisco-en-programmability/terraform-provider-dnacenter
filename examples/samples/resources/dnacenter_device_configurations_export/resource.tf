@@ -15,7 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_device_configurations_export" "example" {
   provider = dnacenter
- 
+
   parameters {
     device_id = ["string"]
     password  = "******"

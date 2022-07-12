@@ -15,7 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_authentication_import_certificate_p12" "example" {
   provider = dnacenter
- 
+
   parameters {
     file_name     = "string"
     list_of_users = ["string"]

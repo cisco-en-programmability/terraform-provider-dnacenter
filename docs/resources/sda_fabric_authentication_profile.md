@@ -20,20 +20,17 @@ It manages create, read, update and delete operations on SDA.
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_sda_fabric_authentication_profile" "example" {
   provider = dnacenter
   parameters {
-
-    authenticate_template_name    = "string"
-    authentication_order          = "string"
-    dot1x_to_mab_fallback_timeout = "string"
-    number_of_hosts               = "string"
-    site_name_hierarchy           = "string"
-    wake_on_lan                   = "false"
+    payload {
+      authenticate_template_name    = "string"
+      authentication_order          = "string"
+      dot1x_to_mab_fallback_timeout = "string"
+      number_of_hosts               = "string"
+      site_name_hierarchy           = "string"
+      wake_on_lan                   = "false"
+    }
   }
 }
 
@@ -61,6 +58,13 @@ output "dnacenter_sda_fabric_authentication_profile_example" {
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
+Required:
+
+- **payload** (Block List, Min: 1) Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabric (see [below for nested schema](#nestedblock--parameters--payload))
+
+<a id="nestedblock--parameters--payload"></a>
+### Nested Schema for `parameters.payload`
+
 Optional:
 
 - **authenticate_template_name** (String) Authenticate Template Name
@@ -69,6 +73,7 @@ Optional:
 - **number_of_hosts** (String) Number Of Hosts
 - **site_name_hierarchy** (String) Path of sda Fabric Site
 - **wake_on_lan** (String) Wake On Lan
+
 
 
 <a id="nestedatt--item"></a>

@@ -10,7 +10,7 @@ terraform {
 
 resource "dnacenter_configuration_template_import_project" "example" {
   provider = dnacenter
- 
+
   parameters {
     do_version = "false"
   }

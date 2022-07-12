@@ -15,7 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_deploy_template" "example" {
   provider = dnacenter
- 
+
   parameters {
     force_push_template = "false"
     //is_composite                    = "true"

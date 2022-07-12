@@ -11,7 +11,7 @@ terraform {
 resource "dnacenter_sda_virtual_network" "example" {
   provider = dnacenter
   parameters {
-    payload{
+    payload {
       site_name_hierarchy  = "Global/New Jersey/MurrayHill/test/TestFloor"
       virtual_network_name = "TEST_VNs"
     }

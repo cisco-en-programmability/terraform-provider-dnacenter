@@ -16,7 +16,7 @@ provider "dnacenter" {
 
 resource "dnacenter_sensor_test_template_edit" "example" {
   provider = dnacenter
- 
+
   parameters {
     location_info_list {
 

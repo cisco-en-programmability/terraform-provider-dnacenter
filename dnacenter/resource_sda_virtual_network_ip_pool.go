@@ -248,6 +248,7 @@ func resourceSdaVirtualNetworkIPPoolCreate(ctx context.Context, d *schema.Resour
 		resourceMap := make(map[string]string)
 		resourceMap["ip_pool_name"] = vvIPPoolName
 		resourceMap["virtual_network_name"] = vvVirtualNetworkName
+		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaVirtualNetworkIPPoolRead(ctx, d, m)
 	}
@@ -299,6 +300,7 @@ func resourceSdaVirtualNetworkIPPoolCreate(ctx context.Context, d *schema.Resour
 	resourceMap := make(map[string]string)
 	resourceMap["ip_pool_name"] = vvIPPoolName
 	resourceMap["virtual_network_name"] = vvVirtualNetworkName
+	resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSdaVirtualNetworkIPPoolRead(ctx, d, m)
 }

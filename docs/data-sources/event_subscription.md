@@ -100,7 +100,7 @@ Read-Only:
 
 - **base_path** (String)
 - **body** (String)
-- **connect_timeout** (String)
+- **connect_timeout** (Number)
 - **connector_type** (String)
 - **description** (String)
 - **headers** (List of Object) (see [below for nested schema](#nestedobjatt--items--subscription_endpoints--subscription_details--headers))
@@ -109,7 +109,7 @@ Read-Only:
 - **name** (String)
 - **path_params** (List of Object) (see [below for nested schema](#nestedobjatt--items--subscription_endpoints--subscription_details--path_params))
 - **query_params** (List of Object) (see [below for nested schema](#nestedobjatt--items--subscription_endpoints--subscription_details--query_params))
-- **read_timeout** (String)
+- **read_timeout** (Number)
 - **resource** (String)
 - **trust_cert** (String)
 - **url** (String)

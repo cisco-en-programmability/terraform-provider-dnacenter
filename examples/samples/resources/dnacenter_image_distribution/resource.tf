@@ -15,7 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_image_distribution" "example" {
   provider = dnacenter
- 
+
   parameters {
     payload {
       device_uuid = "3eb928b8-2414-4121-ac35-1247e5d666a5"

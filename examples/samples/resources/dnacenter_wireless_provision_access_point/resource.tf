@@ -10,7 +10,7 @@ terraform {
 
 resource "dnacenter_wireless_provision_access_point" "example" {
   provider = dnacenter
- 
+
   parameters {
     payload {
       custom_ap_group_name   = "string"

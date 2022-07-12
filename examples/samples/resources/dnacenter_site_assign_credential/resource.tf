@@ -15,7 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_site_assign_credential" "example" {
   provider = dnacenter
- 
+
   parameters {
     site_id          = "string"
     cli_id           = "string"
