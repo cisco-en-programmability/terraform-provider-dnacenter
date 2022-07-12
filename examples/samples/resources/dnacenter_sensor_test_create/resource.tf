@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.0.4-beta"
+      version = "1.0.5-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source, change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -12,7 +12,7 @@ terraform {
 
 resource "dnacenter_sensor_test_create" "example" {
   provider = dnacenter
- 
+
   parameters {
     ap_coverage {
 

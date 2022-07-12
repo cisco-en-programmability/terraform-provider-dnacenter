@@ -18,16 +18,13 @@ It manages create, read and delete operations on SDA.
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_sda_virtual_network" "example" {
   provider = dnacenter
   parameters {
-
-    site_name_hierarchy  = "string"
-    virtual_network_name = "string"
+    payload {
+      site_name_hierarchy  = "string"
+      virtual_network_name = "string"
+    }
   }
 }
 
@@ -55,10 +52,18 @@ output "dnacenter_sda_virtual_network_example" {
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
+Required:
+
+- **payload** (Block List, Min: 1) (see [below for nested schema](#nestedblock--parameters--payload))
+
+<a id="nestedblock--parameters--payload"></a>
+### Nested Schema for `parameters.payload`
+
 Optional:
 
 - **site_name_hierarchy** (String) Site Name Hierarchy should be a valid fabric site name hierarchy.( e.g. Global/USA/San Jose)
 - **virtual_network_name** (String) Virtual Network Name, that is created in Global level
+
 
 
 <a id="nestedatt--item"></a>

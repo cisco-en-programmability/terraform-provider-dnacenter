@@ -18,40 +18,37 @@ It manages create, read and update operations on Event Management.
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_event_subscription_rest" "example" {
   provider = dnacenter
   parameters {
+    payload {
+      description = "string"
+      filter {
 
-    description = "string"
-    filter {
+        categories = ["string"]
+        domains_subdomains {
 
-      categories = ["string"]
-      domains_subdomains {
-
-        domain      = "string"
-        sub_domains = ["string"]
+          domain      = "string"
+          sub_domains = ["string"]
+        }
+        event_ids  = ["string"]
+        severities = ["string"]
+        site_ids   = ["string"]
+        sources    = ["string"]
+        types      = ["string"]
       }
-      event_ids  = ["string"]
-      severities = ["string"]
-      site_ids   = ["string"]
-      sources    = ["string"]
-      types      = ["string"]
-    }
-    name = "string"
-    subscription_endpoints {
+      name = "string"
+      subscription_endpoints {
 
-      instance_id = "string"
-      subscription_details {
+        instance_id = "string"
+        subscription_details {
 
-        connector_type = "string"
+          connector_type = "string"
+        }
       }
+      subscription_id = "string"
+      version         = "string"
     }
-    subscription_id = "string"
-    version         = "string"
   }
 }
 
@@ -81,31 +78,38 @@ output "dnacenter_event_subscription_rest_example" {
 
 Required:
 
+- **payload** (Block List, Min: 1) Array of RequestEventManagementCreateRestWebhookEventSubscription (see [below for nested schema](#nestedblock--parameters--payload))
+
+<a id="nestedblock--parameters--payload"></a>
+### Nested Schema for `parameters.payload`
+
+Required:
+
 - **name** (String) Name
 
 Optional:
 
 - **description** (String) Description
-- **filter** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--filter))
-- **subscription_endpoints** (Block List) (see [below for nested schema](#nestedblock--parameters--subscription_endpoints))
+- **filter** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--payload--filter))
+- **subscription_endpoints** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--subscription_endpoints))
 - **subscription_id** (String) Subscription Id (Unique UUID)
 - **version** (String) Version
 
-<a id="nestedblock--parameters--filter"></a>
-### Nested Schema for `parameters.filter`
+<a id="nestedblock--parameters--payload--filter"></a>
+### Nested Schema for `parameters.payload.filter`
 
 Optional:
 
 - **categories** (List of String) Categories
-- **domains_subdomains** (Block List) (see [below for nested schema](#nestedblock--parameters--filter--domains_subdomains))
+- **domains_subdomains** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--filter--domains_subdomains))
 - **event_ids** (List of String) Event Ids (Comma separated event ids)
 - **severities** (List of String) Severities
 - **site_ids** (List of String) Site Ids
 - **sources** (List of String) Sources
 - **types** (List of String) Types
 
-<a id="nestedblock--parameters--filter--domains_subdomains"></a>
-### Nested Schema for `parameters.filter.domains_subdomains`
+<a id="nestedblock--parameters--payload--filter--domains_subdomains"></a>
+### Nested Schema for `parameters.payload.filter.types`
 
 Optional:
 
@@ -114,20 +118,21 @@ Optional:
 
 
 
-<a id="nestedblock--parameters--subscription_endpoints"></a>
-### Nested Schema for `parameters.subscription_endpoints`
+<a id="nestedblock--parameters--payload--subscription_endpoints"></a>
+### Nested Schema for `parameters.payload.subscription_endpoints`
 
 Optional:
 
 - **instance_id** (String) (From 	Get Rest/Webhook Subscription Details --> pick instanceId)
-- **subscription_details** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--subscription_endpoints--subscription_details))
+- **subscription_details** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--payload--subscription_endpoints--subscription_details))
 
-<a id="nestedblock--parameters--subscription_endpoints--subscription_details"></a>
-### Nested Schema for `parameters.subscription_endpoints.subscription_details`
+<a id="nestedblock--parameters--payload--subscription_endpoints--subscription_details"></a>
+### Nested Schema for `parameters.payload.subscription_endpoints.subscription_details`
 
 Optional:
 
 - **connector_type** (String) Connector Type (Must be REST)
+
 
 
 
