@@ -18,16 +18,13 @@ It manages create, read and delete operations on SDA.
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_sda_fabric_edge_device" "example" {
   provider = dnacenter
   parameters {
-
-    device_management_ip_address = "string"
-    site_name_hierarchy          = "string"
+    payload {
+      device_management_ip_address = "string"
+      site_name_hierarchy          = "string"
+    }
   }
 }
 
@@ -55,10 +52,18 @@ output "dnacenter_sda_fabric_edge_device_example" {
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
+Required:
+
+- **payload** (Block List, Min: 1) (see [below for nested schema](#nestedblock--parameters--payload))
+
+<a id="nestedblock--parameters--payload"></a>
+### Nested Schema for `parameters.payload`
+
 Optional:
 
 - **device_management_ip_address** (String) Management Ip Address of the Device which is provisioned successfully
 - **site_name_hierarchy** (String) Site Name Hierarchy of provisioned Device
+
 
 
 <a id="nestedatt--item"></a>

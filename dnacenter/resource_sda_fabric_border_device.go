@@ -975,7 +975,6 @@ func resourceSdaFabricBorderDeviceCreate(ctx context.Context, d *schema.Resource
 
 	vDeviceManagementIPAddress := resourceItem["device_management_ip_address"]
 	vvDeviceManagementIPAddress := interfaceToString(vDeviceManagementIPAddress)
-
 	queryParams1 := dnacentersdkgo.GetBorderDeviceDetailFromSdaFabricQueryParams{}
 
 	queryParams1.DeviceManagementIPAddress = vvDeviceManagementIPAddress
@@ -1048,6 +1047,7 @@ func resourceSdaFabricBorderDeviceRead(ctx context.Context, d *schema.ResourceDa
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
+	log.Printf("[DEBUG] vvDeviceManagementIPAddress => %s", vDeviceManagementIPAddress)
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -1329,8 +1329,8 @@ func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalCon
 	return &request
 }
 
-func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetworkArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork {
-	request := []dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork{}
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetworkArray(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork {
+	request := dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -1340,12 +1340,10 @@ func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalCon
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no := range objs {
-		i := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetwork(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
+	if v := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetwork(ctx, fmt.Sprintf("%s.%d", key, 0), d); v != nil {
+		request = *v
 	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

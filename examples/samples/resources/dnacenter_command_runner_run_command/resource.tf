@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.0.4-beta"
+      version = "1.0.5-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -14,7 +14,7 @@ provider "dnacenter" {
 
 resource "dnacenter_command_runner_run_command" "example" {
   provider = dnacenter
- 
+
   parameters {
     commands     = ["string"]
     description  = "string"

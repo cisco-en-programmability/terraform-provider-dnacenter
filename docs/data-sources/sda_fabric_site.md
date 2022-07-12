@@ -48,6 +48,10 @@ Read-Only:
 
 - **description** (String)
 - **execution_status_url** (String)
+- **fabric_domain_type** (String)
+- **fabric_name** (String)
+- **fabric_type** (String)
+- **site_name_hierarchy** (String)
 - **status** (String)
 
 
