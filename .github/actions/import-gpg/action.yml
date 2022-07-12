@@ -1,13 +1,8 @@
 name: "GPG key import"
-description: "Import private GPG key"
+description: "Import private GPG key. Patched version of hashicorp/ghaction-import-gpg"
 runs:
   using: "composite"
   steps:
-    - id: set-default-cache-ttl
-      run: |
-        gpg-agent --daemon --default-cache-ttl 7200
-      shell: bash
-      name: set default cache ttl
     - run: |
         #
         echo -e "${{ env.GPG_PRIVATE_KEY }}" | gpg --import --batch --no-tty
