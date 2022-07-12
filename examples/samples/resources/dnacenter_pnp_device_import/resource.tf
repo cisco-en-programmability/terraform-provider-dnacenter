@@ -15,7 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_pnp_device_import" "example" {
   provider = dnacenter
- 
+
   parameters {
     payload {
       device_info {

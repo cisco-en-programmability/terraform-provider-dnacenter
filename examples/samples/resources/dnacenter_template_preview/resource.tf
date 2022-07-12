@@ -10,7 +10,7 @@ terraform {
 
 resource "dnacenter_template_preview" "example" {
   provider = dnacenter
- 
+
   parameters {
     device_id       = "string"
     params          = "string"

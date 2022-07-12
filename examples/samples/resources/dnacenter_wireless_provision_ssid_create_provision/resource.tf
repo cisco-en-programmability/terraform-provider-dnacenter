@@ -15,7 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_wireless_provision_ssid_create_provision" "example" {
   provider = dnacenter
- 
+
   parameters {
     enable_fabric = "false"
     flex_connect {

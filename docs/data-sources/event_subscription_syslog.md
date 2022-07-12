@@ -123,7 +123,7 @@ Read-Only:
 - **description** (String)
 - **host** (String)
 - **name** (String)
-- **port** (String)
+- **port** (Number)
 - **tenant_id** (String)
 - **version** (String)
 

@@ -15,7 +15,7 @@ provider "dnacenter" {
 resource "dnacenter_sda_fabric_site" "example" {
   provider = dnacenter
   parameters {
-    fabric_name = "Default LAN Fabric"
+    fabric_name         = "Default LAN Fabric"
     site_name_hierarchy = "Global/New Jersey/MurrayHill/test/TestFloor"
   }
 }

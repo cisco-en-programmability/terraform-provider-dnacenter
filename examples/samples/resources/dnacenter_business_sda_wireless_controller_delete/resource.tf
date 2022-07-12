@@ -29,7 +29,7 @@ provider "dnacenter" {
 
 resource "dnacenter_business_sda_wireless_controller_delete" "example" {
   provider = dnacenter
- 
+
   parameters {
     device_ipaddress = "string"
   }

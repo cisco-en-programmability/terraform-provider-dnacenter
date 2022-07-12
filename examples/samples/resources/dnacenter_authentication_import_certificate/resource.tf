@@ -16,7 +16,7 @@ provider "dnacenter" {
 
 resource "dnacenter_authentication_import_certificate" "example" {
   provider = dnacenter
- 
+
   parameters {
     cert_file_path = "string"
     cert_file_name = "string"

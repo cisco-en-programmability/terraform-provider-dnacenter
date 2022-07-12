@@ -11,7 +11,7 @@ terraform {
 
 resource "dnacenter_sensor_test_run" "example" {
   provider = dnacenter
- 
+
   parameters {
     template_name = "string"
   }

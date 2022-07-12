@@ -16,7 +16,7 @@ provider "dnacenter" {
 
 resource "dnacenter_profiling_rules_in_bulk_create" "example" {
   provider = dnacenter
- 
+
   parameters {
     profiling_rules {
 

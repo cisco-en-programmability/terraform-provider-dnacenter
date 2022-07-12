@@ -10,7 +10,7 @@ terraform {
 
 resource "dnacenter_sensor_test_delete" "example" {
   provider = dnacenter
- 
+
   parameters {
     template_name = "string"
   }

@@ -10,7 +10,7 @@ terraform {
 
 resource "dnacenter_configuration_template_clone" "example" {
   provider = dnacenter
- 
+
   parameters {
     name        = "string"
     project_id  = "string"

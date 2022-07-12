@@ -15,7 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_device_replacement_deploy" "example" {
   provider = dnacenter
- 
+
   parameters {
     faulty_device_serial_number      = "string"
     replacement_device_serial_number = "string"

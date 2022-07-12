@@ -1,3 +1,12 @@
+## 1.0.5-beta (July 11, 2022)
+BUGFIXES:
+* `site_name_hierarchy` was added to `resource_sda_virtual_network_ip_pool`.* `site_name_hierarchy` was added to `resource_sda_virtual_network_ip_pool`.
+* `*[]dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork` turns to `*dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork`
+
+IMPROVEMENTS:
+* Documentation was updated.
+* `go.mod` and `go.sum` were updated.
+  
 ## 1.0.4-beta (July 11, 2022)
 BUGFIXES:
 * `site_name_hierarchy` was added to `resource_sda_virtual_network_ip_pool`.

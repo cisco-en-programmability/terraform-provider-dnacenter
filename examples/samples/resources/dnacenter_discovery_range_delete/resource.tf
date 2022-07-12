@@ -15,7 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_discovery_range_delete" "example" {
   provider = dnacenter
- 
+
   parameters {
     records_to_delete = 1
     start_index       = 1

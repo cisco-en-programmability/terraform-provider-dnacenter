@@ -15,7 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_pnp_device_site_claim" "example" {
   provider = dnacenter
- 
+
   parameters {
     device_id = "61fd411fd86a6c29631156f2"
     site_id   = "9625864c-2228-42ec-ac9c-1d0e8e099825"

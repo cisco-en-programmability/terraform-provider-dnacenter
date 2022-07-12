@@ -14,7 +14,7 @@ provider "dnacenter" {
 
 resource "dnacenter_command_runner_run_command" "example" {
   provider = dnacenter
- 
+
   parameters {
     commands     = ["string"]
     description  = "string"

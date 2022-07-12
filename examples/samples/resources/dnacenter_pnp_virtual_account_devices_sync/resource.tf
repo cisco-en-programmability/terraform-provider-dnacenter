@@ -11,7 +11,7 @@ terraform {
 }
 resource "dnacenter_pnp_virtual_account_devices_sync" "example" {
   provider = dnacenter
- 
+
   parameters {
     auto_sync_period = 1
     cco_user         = "string"

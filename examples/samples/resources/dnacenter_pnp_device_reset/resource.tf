@@ -11,7 +11,7 @@ terraform {
 
 resource "dnacenter_pnp_device_reset" "example" {
   provider = dnacenter
- 
+
   parameters {
     device_reset_list {
 

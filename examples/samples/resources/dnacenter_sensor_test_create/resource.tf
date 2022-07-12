@@ -12,7 +12,7 @@ terraform {
 
 resource "dnacenter_sensor_test_create" "example" {
   provider = dnacenter
- 
+
   parameters {
     ap_coverage {
 

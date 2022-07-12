@@ -15,7 +15,7 @@ provider "dnacenter" {
 
 resource "dnacenter_image_device_activation" "example" {
   provider = dnacenter
- 
+
   parameters {
     //client_type=                    "string"
     //client_url=                     "string"
