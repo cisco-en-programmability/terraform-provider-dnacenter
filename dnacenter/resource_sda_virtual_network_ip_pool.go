@@ -377,9 +377,9 @@ func resourceSdaVirtualNetworkIPPoolDelete(ctx context.Context, d *schema.Resour
 	queryParams1 := dnacentersdkgo.GetIPPoolFromSdaVirtualNetworkQueryParams{}
 	queryParams1.IPPoolName = vIPPoolName
 	queryParams1.VirtualNetworkName = vVirtualNetworkName
-	queryParams1.VirtualNetworkName = vSiteNameHierarchy
+	queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 	item, restyResp1, err := client.Sda.GetIPPoolFromSdaVirtualNetwork(&queryParams1)
-	if err != nil || item == nil {
+	if err != nil || item == nil || strings.ToLower(item.Status) == "failed" {
 		d.SetId("")
 		return diags
 	}
@@ -388,6 +388,7 @@ func resourceSdaVirtualNetworkIPPoolDelete(ctx context.Context, d *schema.Resour
 	queryParams2 := dnacentersdkgo.DeleteIPPoolFromSdaVirtualNetworkQueryParams{}
 	queryParams2.IPPoolName = vIPPoolName
 	queryParams2.VirtualNetworkName = vVirtualNetworkName
+	queryParams2.SiteNameHierarchy = vSiteNameHierarchy
 	response1, restyResp1, err := client.Sda.DeleteIPPoolFromSdaVirtualNetwork(&queryParams2)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
