@@ -1,3 +1,7 @@
+## 1.0.7-beta (July 18, 2022)
+BUGFIXES:
+* Resource `dnacenter_discovery destroy method` fixed to delete only the resource managed.
+
 ## 1.0.6-beta (July 12, 2022)
 BUGFIXES:
 * `site_name_hierarchy` added to `resource_sda_virtual_network_ip_pool` on `destroy`.
