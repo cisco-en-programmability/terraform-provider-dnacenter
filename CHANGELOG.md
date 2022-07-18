@@ -1,6 +1,6 @@
 ## 1.0.7-beta (July 18, 2022)
 BUGFIXES:
-* Resource `dnacenter_discovery destroy method` fixed to delete only the resource managed.
+* Resource `dnacenter_discovery destroy method` fixed to delete only the managed resource.
 
 ## 1.0.6-beta (July 12, 2022)
 BUGFIXES:
