@@ -69,8 +69,8 @@ resource "dnacenter_discovery" "example" {
     # password_list = []
     #preferred_mgmt_ipmethod = "string"
     protocol_order = "ssh"
-    retry       = 1
-    retry_count = 3
+    retry          = 1
+    retry_count    = 3
     #snmp_auth_passphrase = "string"
     #snmp_auth_protocol = "string"
     #snmp_mode = "string"
