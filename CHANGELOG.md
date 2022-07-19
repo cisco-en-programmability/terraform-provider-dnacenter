@@ -1,3 +1,9 @@
+## 1.0.7-beta (July 18, 2022)
+BUGFIXES:
+* Resource `dnacenter_discovery destroy method` fixed to delete only the managed resource.
+* Resource `dnacenter_sda_fabric_border_device` item updated.
+* Data Source `dnacenter_sda_fabric_border_device` item and flatten updated.
+
 ## 1.0.6-beta (July 12, 2022)
 BUGFIXES:
 * `site_name_hierarchy` added to `resource_sda_virtual_network_ip_pool` on `destroy`.
