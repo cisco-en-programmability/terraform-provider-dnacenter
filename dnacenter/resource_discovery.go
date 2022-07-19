@@ -985,7 +985,7 @@ func resourceDiscoveryDelete(ctx context.Context, d *schema.ResourceData, m inte
 			// Assume that element it is already gone
 			return diags
 		}
-		if getResp != nil && getResp.ID == "" {
+		if getResp != nil {
 			vvID = getResp.ID
 		}
 	}
