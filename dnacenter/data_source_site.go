@@ -198,46 +198,71 @@ func dataSourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface
 	vLimit, okLimit := d.GetOk("limit")
 
 	selectedMethod := 1
+
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetSite")
-		queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
+		if vSiteID == "" {
+			queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
 
-		if okName {
-			queryParams1.Name = vName.(string)
-		}
-		if okSiteID {
-			queryParams1.SiteID = vSiteID.(string)
-		}
-		if okType {
-			queryParams1.Type = vType.(string)
-		}
-		if okOffset {
-			queryParams1.Offset = vOffset.(string)
-		}
-		if okLimit {
-			queryParams1.Limit = vLimit.(string)
-		}
-
-		response1, restyResp1, err := client.Sites.GetSite(&queryParams1)
-
-		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if okName {
+				queryParams1.Name = vName.(string)
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSite", err,
-				"Failure at GetSite, unexpected response", ""))
-			return diags
-		}
+			if okSiteID {
+				queryParams1.SiteID = vSiteID.(string)
+			}
+			if okType {
+				queryParams1.Type = vType.(string)
+			}
+			if okOffset {
+				queryParams1.Offset = vOffset.(string)
+			}
+			if okLimit {
+				queryParams1.Limit = vLimit.(string)
+			}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+			response1, restyResp1, err := client.Sites.GetSite(&queryParams1)
 
-		vItems1 := flattenSitesGetSiteItems(response1.Response)
-		if err := d.Set("items", vItems1); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetSite response",
-				err))
-			return diags
+			if err != nil || response1 == nil {
+				if restyResp1 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetSite", err,
+					"Failure at GetSite, unexpected response", ""))
+				return diags
+			}
+
+			log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+			vItems1 := flattenSitesGetSiteItems(response1.Response)
+			if err := d.Set("items", vItems1); err != nil {
+				diags = append(diags, diagError(
+					"Failure when setting GetSite response",
+					err))
+				return diags
+			}
+		} else {
+			response1, restyResp1, err := client.Sites.GetSiteByID(vSiteID.(string))
+
+			if err != nil || response1 == nil {
+				if restyResp1 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetSite", err,
+					"Failure at GetSite, unexpected response", ""))
+				return diags
+			}
+
+			log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+			vItems1 := flattenSitesGetSiteItem(response1)
+			if err := d.Set("items", vItems1); err != nil {
+				diags = append(diags, diagError(
+					"Failure when setting GetSite2 response",
+					err))
+				return diags
+			}
 		}
 		d.SetId(getUnixTimeString())
 		return diags
@@ -262,6 +287,25 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItem["id"] = item.ID
 		respItems = append(respItems, respItem)
 	}
+	return respItems
+}
+
+func flattenSitesGetSiteItem(item *dnacentersdkgo.ResponseSitesGetSiteResponse) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+
+	respItem := make(map[string]interface{})
+	respItem["parent_id"] = item.ParentID
+	respItem["name"] = item.Name
+	respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo)
+	respItem["site_hierarchy"] = item.SiteHierarchy
+	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+	respItem["instance_tenant_id"] = item.InstanceTenantID
+	respItem["id"] = item.ID
+	respItems = append(respItems, respItem)
+
 	return respItems
 }
 

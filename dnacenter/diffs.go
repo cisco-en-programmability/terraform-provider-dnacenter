@@ -12,6 +12,12 @@ func diffSuppressSgt() schema.SchemaDiffSuppressFunc {
 	}
 }
 
+func diffSupressOptional() schema.SchemaDiffSuppressFunc {
+	return func(k, old, new string, d *schema.ResourceData) bool {
+		return compareOptional(new, old)
+	}
+}
+
 func diffSuppressAlways() schema.SchemaDiffSuppressFunc {
 	return func(k, old, new string, d *schema.ResourceData) bool {
 		return true
