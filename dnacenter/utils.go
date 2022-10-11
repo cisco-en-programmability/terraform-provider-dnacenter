@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"fmt"
+	"log"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -17,6 +18,10 @@ import (
 
 func fixKeyAccess(key string) string {
 	return strings.Trim(key, ".")
+}
+
+func compareOptional(new_value string, old_value string) bool {
+	return new_value == "" || new_value == old_value
 }
 
 func compareSGT(first_sgt, second_sgt string) bool {
@@ -86,12 +91,14 @@ func joinResourceID(result_params map[string]string) string {
 	ID := ""
 	params := []string{}
 	for key, value := range result_params {
+		log.Printf("[DEBUG] Retrieved error keys %s", key)
 		if value != "" {
 			params = append(params, fmt.Sprintf("%s%s%s", key, PARAM_VALUE_SEPARATOR, value))
 		}
 	}
 	sort.Strings(params) // Sort params
 	ID = strings.Join(params, PARAMS_SEPARATOR)
+	log.Printf("[DEBUG] Retrieved error keys %s", ID)
 	return ID
 }
 

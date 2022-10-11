@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.0.7-beta"
+      version = "1.0.8-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -25,7 +25,7 @@ resource "dnacenter_site" "example" {
     
     */
       building {
-        name        = "testBuilding"
+        name        = "MyTestFinal2"
         address     = "255 China Basin Street, San Francisco, California 94158, United States"
         parent_name = "Global"
         latitude    = 37.77178651716143
@@ -33,6 +33,7 @@ resource "dnacenter_site" "example" {
       }
     }
     type = "building"
+    # site_id ="70c232d5-141e-4a03-918e-5a81acda6f38"
   }
 }
 
