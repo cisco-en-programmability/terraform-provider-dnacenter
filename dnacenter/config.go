@@ -23,7 +23,7 @@ type Config struct {
 func (c *Config) NewClient() (*dnacentersdkgo.Client, error) {
 	client, err := dnacentersdkgo.NewClientWithOptions(c.BaseURL,
 		c.Username, c.Password,
-		c.Debug, c.SSLVerify,
+		c.Debug, c.SSLVerify, nil,
 	)
 	if err != nil {
 		return client, err

@@ -1,3 +1,8 @@
+## 1.0.8-beta (Oct 10, 2022)
+BUGFIXES:
+* Resource `dnacenter_site` fixed to update name and delete.
+* Data source `dnacenter_site` fixed to make request by site_id.
+  
 ## 1.0.7-beta (July 18, 2022)
 BUGFIXES:
 * Resource `dnacenter_discovery destroy method` fixed to delete only the managed resource.
