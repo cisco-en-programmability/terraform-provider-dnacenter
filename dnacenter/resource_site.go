@@ -568,17 +568,16 @@ func resourceSiteDelete(ctx context.Context, d *schema.ResourceData, m interface
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vName := resourceMap["name"]
 	vSiteID := resourceMap["site_id"]
-
-	queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
-	queryParams1.Name = vName
-	queryParams1.SiteID = vSiteID
-	item, err := searchSitesGetSite(m, queryParams1)
-	if err != nil || item == nil {
-		d.SetId("")
-		return diags
-	}
+	time.Sleep(1 * time.Minute)
+	// queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
+	// queryParams1.Name = vName
+	// queryParams1.SiteID = vSiteID
+	// item, err := searchSitesGetSite(m, queryParams1)
+	// if err != nil || item == nil {
+	// 	d.SetId("")
+	// 	return diags
+	// }
 
 	// if vSiteID != item.ID {
 	// 	vSiteID = item.ID
@@ -599,11 +598,41 @@ func resourceSiteDelete(ctx context.Context, d *schema.ResourceData, m interface
 		return diags
 	}
 
-	if response1.Status == "FAILURE" {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeleteSite", err,
-			"Failure at DeleteSite, unexpected response", ""))
-		return diags
+	executionId := response1.ExecutionID
+	log.Printf("[DEBUG] ExecutionID => %s", executionId)
+	if executionId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response1 %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetBusinessAPIExecutionDetails", err,
+				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+			return diags
+		}
+		for response2.Status == "IN_PROGRESS" {
+			time.Sleep(10 * time.Second)
+			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp1 != nil {
+					log.Printf("[DEBUG] Retrieved error response2 %s", restyResp1.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+		}
+
+		if response2.Status == "FAILURE" {
+			bapiError := response2.BapiError
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing DeleteSite22222", err,
+				"Failure at DeleteSite execution1111", bapiError))
+			return diags
+		}
 	}
 
 	// d.SetId("") is automatically called assuming delete returns no errors, but

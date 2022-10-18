@@ -1,3 +1,7 @@
+## 1.0.9-beta (Oct 18, 2022)
+BUGFIXES:
+* Added `time.Sleep` for `DELETE_SITE`.
+
 ## 1.0.8-beta (Oct 10, 2022)
 BUGFIXES:
 * Resource `dnacenter_site` fixed to update name and delete.
