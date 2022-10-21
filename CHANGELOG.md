@@ -1,3 +1,7 @@
+## 1.0.10-beta (Oct 21, 2022)
+BUGFIXES:
+* Repariring set `item` on site resource.
+
 ## 1.0.9-beta (Oct 18, 2022)
 BUGFIXES:
 * Added `time.Sleep` for `DELETE_SITE`.
