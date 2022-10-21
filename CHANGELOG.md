@@ -1,4 +1,4 @@
-## 1.0.10-beta (Oct 18, 2022)
+## 1.0.10-beta (Oct 21, 2022)
 BUGFIXES:
 * Repariring set `item` on site resource.
 
