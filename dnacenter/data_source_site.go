@@ -256,7 +256,7 @@ func dataSourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface
 
 			log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-			vItems1 := flattenSitesGetSiteItem(response1)
+			vItems1 := flattenSitesGetSiteItem(response1.Response)
 			if err := d.Set("items", vItems1); err != nil {
 				diags = append(diags, diagError(
 					"Failure when setting GetSite2 response",

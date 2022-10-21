@@ -482,6 +482,7 @@ func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}
 			}
 
 			vItem1 := flattenSitesGetSiteItems(response1.Response)
+			log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem1))
 			if err := d.Set("item", vItem1); err != nil {
 				diags = append(diags, diagError(
 					"Failure when setting GetSite search response",
@@ -499,7 +500,8 @@ func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}
 				return diags
 			}
 
-			vItem1 := flattenSitesGetSiteItem(response1)
+			vItem1 := flattenSitesGetSiteItem(response1.Response)
+			log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem1))
 			if err := d.Set("item", vItem1); err != nil {
 				diags = append(diags, diagError(
 					"Failure when setting GetSite search response",
@@ -896,9 +898,9 @@ func searchSitesGetSite(m interface{}, queryParams dnacentersdkgo.GetSiteQueryPa
 				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
 			}
 			log.Printf("[DEBUG] Error =>%s", err.Error())
-			return foundItem, err
+			return foundItem.Response, err
 		}
-		return foundItem, err
+		return foundItem.Response, err
 	}
 	return foundItem, err
 }
