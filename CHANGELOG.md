@@ -1,4 +1,4 @@
-## 1.0.11-beta (Oct 21, 2022)
+## 1.0.11-beta (Nov 14, 2022)
 BUGFIXES:
 * Resource `dnacenter_sda_fabric_border_device` fixed to allow array at `payload.external_connectivity_settings.l3_handoff.virtual_network` parameter.
 
