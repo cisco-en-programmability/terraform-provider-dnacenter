@@ -1171,7 +1171,6 @@ func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabric(ctx context.Co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1195,7 +1194,6 @@ func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemArray(ctx c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1320,8 +1318,8 @@ func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalCon
 	return &request
 }
 
-func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetworkArray(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork {
-	request := dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork{}
+func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetworkArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork {
+	request := []dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -1331,10 +1329,12 @@ func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalCon
 	if len(objs) == 0 {
 		return nil
 	}
-	if v := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetwork(ctx, fmt.Sprintf("%s.%d", key, 0), d); v != nil {
-		request = *v
+	for item_no := range objs {
+		i := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetwork(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
-
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
