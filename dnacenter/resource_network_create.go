@@ -348,16 +348,11 @@ func resourceNetworkCreateCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	vSiteID := resourceItem["site_id"]
-	vPersistbapioutput := resourceItem["persistbapioutput"]
 
 	vvSiteID := vSiteID.(string)
 	request1 := expandRequestNetworkCreateCreateNetwork(ctx, "parameters.0", d)
 
-	headerParams1 := dnacentersdkgo.CreateNetworkHeaderParams{}
-
-	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-
-	response1, restyResp1, err := client.NetworkSettings.CreateNetwork(vvSiteID, request1, &headerParams1)
+	response1, restyResp1, err := client.NetworkSettings.CreateNetwork(vvSiteID, request1, nil)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))

@@ -1,4 +1,3 @@
-
 terraform {
   required_providers {
     dnacenter = {
@@ -8,11 +7,19 @@ terraform {
     }
   }
 }
-resource "dnacenter_associate_site_to_network_profile" "example" {
-  provider = dnacenter
 
+resource "dnacenter_network_create" "global" {
+  provider = dnacenter
+    
   parameters {
-    network_profile_id = "string"
-    site_id            = "string"
+
+    settings {
+      dhcp_server = ["1.1.1.1"]
+    }
+
+    site_id = "771662ca-cb7e-47ff-9eaf-9b8c85e8e389"
   }
+}
+output "dnacenter_network_create_example" {
+  value = dnacenter_network_create.global
 }
