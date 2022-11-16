@@ -1221,13 +1221,13 @@ func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItem(ctx contex
 		request.BorderSessionType = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connected_to_internet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connected_to_internet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connected_to_internet")))) {
-		request.ConnectedToInternet = interfaceToBoolPtr(v)
+		request.ConnectedToInternet = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sda_transit_network_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sda_transit_network_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sda_transit_network_name")))) {
 		request.SdaTransitNetworkName = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".border_with_external_connectivity")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".border_with_external_connectivity")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".border_with_external_connectivity")))) {
-		request.BorderWithExternalConnectivity = interfaceToBoolPtr(v)
+		request.BorderWithExternalConnectivity = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".external_connectivity_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".external_connectivity_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".external_connectivity_settings")))) {
 		request.ExternalConnectivitySettings = expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsArray(ctx, key+".external_connectivity_settings", d)
@@ -1291,11 +1291,15 @@ func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalCon
 	if o == nil {
 		return nil
 	}
+	log.Printf("[DEBUG] Key1 => %s", key)
+
 	objs := o.([]interface{})
 	if len(objs) == 0 {
 		return nil
 	}
+	log.Printf("[DEBUG] Len => %d", len(objs))
 	for item_no := range objs {
+		log.Printf("[DEBUG] Key => %s", fmt.Sprintf("%s.%d", key, item_no))
 		i := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3Handoff(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1310,30 +1314,7 @@ func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalCon
 func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3Handoff(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3Handoff {
 	request := dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3Handoff{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_network")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_network")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_network")))) {
-		request.VirtualNetwork = expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetworkArray(ctx, key+".virtual_network", d)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetworkArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork {
-	request := []dnacentersdkgo.RequestItemSdaAddBorderDeviceInSdaFabricExternalConnectivitySettingsL3HandoffVirtualNetwork{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetwork(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
+		request.VirtualNetwork = expandRequestSdaFabricBorderDeviceAddBorderDeviceInSdaFabricItemExternalConnectivitySettingsL3HandoffVirtualNetwork(ctx, key+".virtual_network.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
