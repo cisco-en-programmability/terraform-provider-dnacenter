@@ -1,3 +1,14 @@
+## 1.0.12-beta (Nov 16, 2022)
+BUGFIXES:
+* Resource `dnacenter_sda_fabric_border_device` change following parameters from `boolean` to `string`:
+    - `connected_to_internet`
+    - `border_with_external_connectivity`
+* Resource `dnacenter_sda_fabric_border_device` fixed to not allow array at `payload.external_connectivity_settings.l3_handoff.virtual_network` parameter.
+* Resource `dnacenter_network_create` fixed.
+
+IMPROVEMENTS:
+* Examples added.
+* `go.mod` and `go.sum` were updated.
 ## 1.0.11-beta (Nov 14, 2022)
 BUGFIXES:
 * Resource `dnacenter_sda_fabric_border_device` fixed to allow array at `payload.external_connectivity_settings.l3_handoff.virtual_network` parameter.
