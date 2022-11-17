@@ -306,7 +306,6 @@ settings.
 												"configure_dnac_ip": &schema.Schema{
 													Description: `Configuration dnac ip for syslog server (eg: true)
 `,
-
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -347,6 +346,7 @@ func resourceNetworkCreateCreate(ctx context.Context, d *schema.ResourceData, m 
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vSiteID := resourceItem["site_id"]
 
 	vvSiteID := vSiteID.(string)
@@ -413,6 +413,7 @@ func resourceNetworkCreateCreate(ctx context.Context, d *schema.ResourceData, m 
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 
@@ -432,7 +433,7 @@ func resourceNetworkCreateDelete(ctx context.Context, d *schema.ResourceData, m 
 
 func expandRequestNetworkCreateCreateNetwork(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateNetwork {
 	request := dnacentersdkgo.RequestNetworkSettingsCreateNetwork{}
-	request.Settings = expandRequestNetworkCreateCreateNetworkSettings(ctx, key, d)
+	request.Settings = expandRequestNetworkCreateCreateNetworkSettings(ctx, fixKeyAccess(key+".settings.0"), d)
 	return &request
 }
 
