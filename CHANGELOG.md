@@ -1,3 +1,7 @@
+## 1.0.13-beta (Nov 17, 2022)
+BUGFIXES:
+* Resource `dnacenter_network_create` expand functions fixed.
+
 ## 1.0.12-beta (Nov 16, 2022)
 BUGFIXES:
 * Resource `dnacenter_sda_fabric_border_device` change following parameters from `boolean` to `string`:
