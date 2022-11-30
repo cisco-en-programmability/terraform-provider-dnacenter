@@ -214,7 +214,7 @@ func resourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema.R
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSiteNameHierarchy, okAuthenticateTemplateName := resourceMap["site_name_hierarchy"]
+	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
 	vAuthenticateTemplateName := resourceMap["authenticate_template_name"]
 
 	selectedMethod := 1
@@ -224,9 +224,7 @@ func resourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema.R
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 
-		if okAuthenticateTemplateName {
-			queryParams1.AuthenticateTemplateName = vAuthenticateTemplateName
-		}
+		queryParams1.AuthenticateTemplateName = vAuthenticateTemplateName
 
 		response1, restyResp1, err := client.Sda.GetDefaultAuthenticationProfileFromSdaFabric(&queryParams1)
 
