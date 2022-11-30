@@ -13,8 +13,8 @@ provider "dnacenter" {
 
 data "dnacenter_sda_fabric_authentication_profile" "example" {
   provider                   = dnacenter
-  authenticate_template_name = "string"
-  site_name_hierarchy        = "string"
+  # authenticate_template_name = "Test"
+  site_name_hierarchy        = "Global/Pennsylvania"
 }
 
 output "dnacenter_sda_fabric_authentication_profile_example" {
