@@ -1,3 +1,10 @@
+## 1.0.14-beta (Nov 30, 2022)
+BUGFIXES:
+* Resource `dnacenter_reserve_ip_subpool` expand functions fixed.
+
+IMPROVEMENTS:
+* Examples added.
+
 ## 1.0.13-beta (Nov 17, 2022)
 BUGFIXES:
 * Resource `dnacenter_network_create` expand functions fixed.
