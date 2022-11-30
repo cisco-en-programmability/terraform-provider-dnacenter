@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.0.13-beta"
+      version = "1.0.14-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source, change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -16,7 +16,7 @@ resource "dnacenter_sda_fabric_site" "example" {
   provider = dnacenter
   parameters {
     fabric_name         = "Default LAN Fabric"
-    site_name_hierarchy = "Global/New Jersey/MurrayHill/test/TestFloor"
+    site_name_hierarchy = "Global/San Francisco"
   }
 }
 

@@ -714,7 +714,10 @@ func expandRequestReserveIPSubpoolReserveIPSubpool(ctx context.Context, key stri
 		request.IPv4Prefix = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_prefix_length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_prefix_length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_prefix_length")))) {
-		request.IPv4PrefixLength = interfaceToIntPtr(v)
+		log.Printf("[DEBUG] IPv4PrefixLength%d", interfaceToIntPtr(v))
+		if interfaceToIntPtr(v) != nil && *interfaceToIntPtr(v) != 0 {
+			request.IPv4PrefixLength = interfaceToIntPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_subnet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_subnet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_subnet")))) {
 		request.IPv4Subnet = interfaceToString(v)
@@ -735,7 +738,9 @@ func expandRequestReserveIPSubpoolReserveIPSubpool(ctx context.Context, key stri
 		request.IPv6Prefix = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_prefix_length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) {
-		request.IPv6PrefixLength = interfaceToIntPtr(v)
+		if interfaceToIntPtr(v) != nil && *interfaceToIntPtr(v) != 0 {
+			request.IPv6PrefixLength = interfaceToIntPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_subnet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_subnet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_subnet")))) {
 		request.IPv6Subnet = interfaceToString(v)
@@ -786,7 +791,11 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 		request.IPv6Prefix = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_prefix_length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) {
-		request.IPv6PrefixLength = interfaceToIntPtr(v)
+		log.Printf("[DEBUG] IPv6PrefixLength%d", interfaceToIntPtr(v))
+		if interfaceToIntPtr(v) != nil && *interfaceToIntPtr(v) != 0 {
+			request.IPv6PrefixLength = interfaceToIntPtr(v)
+		}
+
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_subnet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_subnet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_subnet")))) {
 		request.IPv6Subnet = interfaceToString(v)
@@ -801,7 +810,10 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 		request.IPv6DNSServers = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_total_host")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_total_host")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_total_host")))) {
-		request.IPv6TotalHost = interfaceToIntPtr(v)
+		log.Printf("[DEBUG] IPv6PrefixLength%d", interfaceToIntPtr(v))
+		if interfaceToIntPtr(v) != nil && *interfaceToIntPtr(v) != 0 {
+			request.IPv6TotalHost = interfaceToIntPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".slaac_support")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".slaac_support")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".slaac_support")))) {
 		request.SLAacSupport = interfaceToBoolPtr(v)
