@@ -10,6 +10,7 @@ assignees: ''
 **Prerequisites**
 * [ ] Have you tested the operation in the API directly?
 * [ ] Do you have the latest Terraform provider version?
+* [ ] Review the [compatibility matrix](https://github.com/cisco-en-programmability/terraform-provider-dnacenter/tree/main#compatibility-matrix) before opening an issue. 
 
 **Describe the bug**
 A clear and concise description of what the bug is.
@@ -25,9 +26,6 @@ Please provide an screenshot of the successful API call with cuRL, Postman, etc.
 * Terraform version:
 * Cisco DNA Center provider version:
 * OS Version: 
-
-**Verify compatibility**
-* https://github.com/cisco-en-programmability/terraform-provider-dnacenter/tree/main#compatibility-matrix
 
 **Additional context**
 Add any other context about the problem here.
