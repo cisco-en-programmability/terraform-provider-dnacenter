@@ -17,6 +17,7 @@ This collection has been tested and supports Cisco DNA Center 2.2.3.3.
 Other versions of this collection have support for previous Cisco DNA Center versions. The recommended versions are listed below on the [Compatibility matrix](#compatibility-matrix).
 
 ## Compatibility matrix
+The following table shows the supported versions.
 
 | Cisco DNA Center version | Terraform "dnacenter" provider version |
 |--------------------------|----------------------------------------|
@@ -24,6 +25,8 @@ Other versions of this collection have support for previous Cisco DNA Center ver
 | 2.2.3.3                  | 0.3.0-beta                             |
 | 2.2.3.3                  | 0.3.0                                  |
 | 2.3.3.0                  | 1.0.14-beta                             |
+
+If your SDK, Terraform provider is older please consider updating it first.
 
 ## Using the provider
 
