@@ -26,5 +26,8 @@ Please provide an screenshot of the successful API call with cuRL, Postman, etc.
 * Cisco DNA Center provider version:
 * OS Version: 
 
+**Verify compatibility**
+* https://github.com/cisco-en-programmability/terraform-provider-dnacenter/tree/develop#compatibility-matrix
+
 **Additional context**
 Add any other context about the problem here.
