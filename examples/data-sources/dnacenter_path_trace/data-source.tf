@@ -5,9 +5,9 @@ data "dnacenter_path_trace" "example" {
   dest_port        = "string"
   gt_create_time   = "string"
   last_update_time = "string"
-  limit            = "string"
+  limit            = 1
   lt_create_time   = "string"
-  offset           = "string"
+  offset           = 1
   order            = "string"
   periodic_refresh = "false"
   protocol         = "string"

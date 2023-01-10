@@ -55,7 +55,7 @@ func dataSourcePathTrace() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of resources returned
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"lt_create_time": &schema.Schema{
@@ -67,7 +67,7 @@ func dataSourcePathTrace() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Start index of resources returned (1-based)
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -3936,10 +3936,10 @@ func dataSourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m inte
 			queryParams1.LastUpdateTime = vLastUpdateTime.(string)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(string)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(string)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okOrder {
 			queryParams1.Order = vOrder.(string)

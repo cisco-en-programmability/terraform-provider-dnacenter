@@ -42,13 +42,13 @@ additional value added services.
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Max number of device entries in the response (default to 50.  Max at 1000)
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The offset of the first device in the returned data
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"site_id": &schema.Schema{
@@ -364,10 +364,10 @@ func dataSourceDeviceHealthRead(ctx context.Context, d *schema.ResourceData, m i
 			queryParams1.EndTime = vEndTime.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 
 		response1, restyResp1, err := client.Devices.Devices(&queryParams1)

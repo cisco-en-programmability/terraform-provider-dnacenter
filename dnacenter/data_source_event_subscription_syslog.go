@@ -41,7 +41,7 @@ func dataSourceEventSubscriptionSyslog() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. The number of Subscriptions's to limit in the resultset whose default value 10
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"name": &schema.Schema{
@@ -53,7 +53,7 @@ func dataSourceEventSubscriptionSyslog() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The number of Subscriptions's to offset in the resultset whose default value 0
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -354,10 +354,10 @@ func dataSourceEventSubscriptionSyslogRead(ctx context.Context, d *schema.Resour
 			queryParams1.EventIDs = vEventIDs.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okSortBy {
 			queryParams1.SortBy = vSortBy.(string)

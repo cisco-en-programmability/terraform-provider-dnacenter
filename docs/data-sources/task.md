@@ -25,8 +25,8 @@ data "dnacenter_task" "example" {
   error_code     = "string"
   failure_reason = "string"
   is_error       = "string"
-  limit          = "string"
-  offset         = "string"
+  limit          = 1
+  offset         = 1
   order          = "string"
   parent_id      = "string"
   progress       = "string"

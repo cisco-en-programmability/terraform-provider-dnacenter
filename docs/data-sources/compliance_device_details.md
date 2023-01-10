@@ -21,8 +21,8 @@ data "dnacenter_compliance_device_details" "example" {
   compliance_status = "string"
   compliance_type   = "string"
   device_uuid       = "string"
-  limit             = "string"
-  offset            = "string"
+  limit             = 1
+  offset            = 1
 }
 
 output "dnacenter_compliance_device_details_example" {

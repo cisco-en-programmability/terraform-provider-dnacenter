@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"reflect"
-	"strconv"
 	"time"
 
 	"log"
@@ -739,7 +738,7 @@ func searchNetworkSettingsGetGlobalPool(m interface{}, queryParams dnacentersdkg
 	var err error
 	var foundItems []dnacentersdkgo.ResponseNetworkSettingsGetGlobalPoolResponse
 	offset := 1
-	queryParams.Offset = strconv.Itoa(offset)
+	queryParams.Offset = offset
 
 	nResponse, _, err := client.NetworkSettings.GetGlobalPool(&queryParams)
 	if err != nil {
@@ -766,9 +765,9 @@ func searchNetworkSettingsGetGlobalPool(m interface{}, queryParams dnacentersdkg
 			}
 		}
 
-		queryParams.Limit = strconv.Itoa(maxPageSize)
+		queryParams.Limit = maxPageSize
 		offset += maxPageSize
-		queryParams.Offset = strconv.Itoa(offset)
+		queryParams.Offset = offset
 		time.Sleep(15 * time.Second)
 		nResponse, _, err = client.NetworkSettings.GetGlobalPool(&queryParams)
 	}

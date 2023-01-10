@@ -55,7 +55,7 @@ device management IP addresses that match fully or partially the provided attrib
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"mac_address": &schema.Schema{
@@ -70,7 +70,7 @@ device management IP addresses that match fully or partially the provided attrib
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"platform_id": &schema.Schema{
@@ -252,10 +252,10 @@ func dataSourceNetworkDeviceLexicographicallySortedRead(ctx context.Context, d *
 			queryParams1.AssociatedWlcIP = vAssociatedWlcIP.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 
 		response1, restyResp1, err := client.Devices.GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute(&queryParams1)

@@ -29,13 +29,13 @@ func dataSourceEventArtifact() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. # of records to return in result set
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Record start offset
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -279,10 +279,10 @@ func dataSourceEventArtifactRead(ctx context.Context, d *schema.ResourceData, m 
 			queryParams1.Tags = vTags.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okSortBy {
 			queryParams1.SortBy = vSortBy.(string)

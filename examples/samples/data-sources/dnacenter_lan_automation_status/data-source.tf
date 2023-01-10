@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.0.14-beta"
+      version = "1.0.15-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source, change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -10,8 +10,8 @@ terraform {
 
 data "dnacenter_lan_automation_status" "example" {
   provider = dnacenter
-  //limit = "string"
-  //offset = "string"
+  //limit = 1
+  //offset = 1
 }
 
 output "dnacenter_lan_automation_status_example" {
