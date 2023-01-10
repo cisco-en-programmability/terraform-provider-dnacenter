@@ -51,7 +51,7 @@ func dataSourceTag() *schema.Resource {
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeString,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"name": &schema.Schema{
@@ -62,7 +62,7 @@ func dataSourceTag() *schema.Resource {
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeString,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"order": &schema.Schema{
@@ -310,10 +310,10 @@ func dataSourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{
 			queryParams1.Level = vLevel.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(string)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(string)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okSize {
 			queryParams1.Size = vSize.(string)

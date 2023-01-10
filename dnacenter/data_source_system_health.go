@@ -28,12 +28,12 @@ func dataSourceSystemHealth() *schema.Resource {
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"subdomain": &schema.Schema{
@@ -182,10 +182,10 @@ func dataSourceSystemHealthRead(ctx context.Context, d *schema.ResourceData, m i
 			queryParams1.Subdomain = vSubdomain.(string)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 
 		response1, restyResp1, err := client.HealthAndPerformance.SystemHealthApI(&queryParams1)

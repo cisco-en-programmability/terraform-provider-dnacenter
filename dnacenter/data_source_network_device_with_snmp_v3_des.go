@@ -24,13 +24,13 @@ order which are optional.
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Default value is 500
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Row Number.  Default value is 1
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -127,10 +127,10 @@ func dataSourceNetworkDeviceWithSNMPV3DesRead(ctx context.Context, d *schema.Res
 		queryParams1 := dnacentersdkgo.ReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DESQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(string)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(string)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okSortBy {
 			queryParams1.SortBy = vSortBy.(string)

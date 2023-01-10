@@ -1,8 +1,8 @@
 
 data "dnacenter_lan_automation_log" "example" {
   provider = dnacenter
-  limit    = "string"
-  offset   = "string"
+  limit    = 1
+  offset   = 1
 }
 
 output "dnacenter_lan_automation_log_example" {

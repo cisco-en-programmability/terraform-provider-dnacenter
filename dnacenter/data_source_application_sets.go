@@ -22,7 +22,7 @@ func dataSourceApplicationSets() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"name": &schema.Schema{
@@ -32,7 +32,7 @@ func dataSourceApplicationSets() *schema.Resource {
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 
@@ -95,10 +95,10 @@ func dataSourceApplicationSetsRead(ctx context.Context, d *schema.ResourceData, 
 		queryParams1 := dnacentersdkgo.GetApplicationSetsQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okName {
 			queryParams1.Name = vName.(string)

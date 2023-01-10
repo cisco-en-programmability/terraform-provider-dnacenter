@@ -5,9 +5,9 @@ data "dnacenter_tag" "example" {
   additional_info_name_space = "string"
   field                      = "string"
   level                      = "string"
-  limit                      = "string"
+  limit                      = 1
   name                       = "string"
-  offset                     = "string"
+  offset                     = 1
   order                      = "string"
   size                       = "string"
   sort_by                    = "string"

@@ -35,7 +35,7 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeString,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"name_list": &schema.Schema{
@@ -48,7 +48,7 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeString,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"operational_state_code_list": &schema.Schema{
@@ -284,10 +284,10 @@ func dataSourceNetworkDeviceModuleRead(ctx context.Context, d *schema.ResourceDa
 			queryParams1.DeviceID = vDeviceID.(string)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(string)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(string)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okNameList {
 			queryParams1.NameList = interfaceToSliceString(vNameList)

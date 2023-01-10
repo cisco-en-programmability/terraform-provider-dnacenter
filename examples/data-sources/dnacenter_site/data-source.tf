@@ -1,9 +1,9 @@
 
 data "dnacenter_site" "example" {
   provider = dnacenter
-  limit    = "string"
+  limit    = 1
   name     = "string"
-  offset   = "string"
+  offset   = 1
   site_id  = "string"
   type     = "string"
 }

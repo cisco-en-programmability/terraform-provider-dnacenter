@@ -23,13 +23,13 @@ func dataSourceGlobalPool() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. No of Global Pools to be retrieved
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. offset/starting row
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 
@@ -206,10 +206,10 @@ func dataSourceGlobalPoolRead(ctx context.Context, d *schema.ResourceData, m int
 		queryParams1 := dnacentersdkgo.GetGlobalPoolQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(string)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(string)
+			queryParams1.Limit = vLimit.(int)
 		}
 
 		response1, restyResp1, err := client.NetworkSettings.GetGlobalPool(&queryParams1)
