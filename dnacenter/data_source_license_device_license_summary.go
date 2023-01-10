@@ -40,7 +40,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Required:    true,
 			},
 			"order": &schema.Schema{

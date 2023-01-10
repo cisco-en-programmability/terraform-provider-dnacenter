@@ -23,7 +23,7 @@ func dataSourceSite() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of sites to be retrieved. The default value is 500
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"name": &schema.Schema{
@@ -35,7 +35,7 @@ func dataSourceSite() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. offset/starting row. The default value is 1
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"site_id": &schema.Schema{
@@ -214,10 +214,10 @@ func dataSourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface
 				queryParams1.Type = vType.(string)
 			}
 			if okOffset {
-				queryParams1.Offset = vOffset.(string)
+				queryParams1.Offset = vOffset.(int)
 			}
 			if okLimit {
-				queryParams1.Limit = vLimit.(string)
+				queryParams1.Limit = vLimit.(int)
 			}
 
 			response1, restyResp1, err := client.Sites.GetSite(&queryParams1)

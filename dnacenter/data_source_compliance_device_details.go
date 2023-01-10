@@ -41,13 +41,13 @@ func dataSourceComplianceDeviceDetails() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of records to be retrieved
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. offset/starting row
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 
@@ -136,10 +136,10 @@ func dataSourceComplianceDeviceDetailsRead(ctx context.Context, d *schema.Resour
 			queryParams1.DeviceUUID = vDeviceUUID.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(string)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(string)
+			queryParams1.Limit = vLimit.(int)
 		}
 
 		response1, restyResp1, err := client.Compliance.GetComplianceDetail(&queryParams1)

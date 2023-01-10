@@ -48,7 +48,7 @@ combination of a specific application with site and/or device the API gets list 
 			"limit": &schema.Schema{
 				Description: `limit query parameter. The max number of application entries in returned data [1, 1000] (optionally used with siteId only)
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"mac_address": &schema.Schema{
@@ -60,7 +60,7 @@ combination of a specific application with site and/or device the API gets list 
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The offset of the first application in the returned data (optionally used with siteId only)
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"site_id": &schema.Schema{
@@ -343,10 +343,10 @@ func dataSourceApplicationsHealthRead(ctx context.Context, d *schema.ResourceDat
 			queryParams1.ApplicationHealth = vApplicationHealth.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okApplicationName {
 			queryParams1.ApplicationName = vApplicationName.(string)

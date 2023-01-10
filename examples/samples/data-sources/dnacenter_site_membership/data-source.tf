@@ -2,8 +2,8 @@
 data "dnacenter_site_membership" "example" {
   provider      = dnacenter
   device_family = "string"
-  limit         = "string"
-  offset        = "string"
+  limit         = 1
+  offset        = 1
   serial_number = "string"
   site_id       = "string"
 }

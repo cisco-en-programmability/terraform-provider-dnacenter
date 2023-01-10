@@ -29,7 +29,7 @@ func dataSourceNfvProfile() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of profile to be retrieved
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"name": &schema.Schema{
@@ -41,7 +41,7 @@ func dataSourceNfvProfile() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. offset/starting row
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 
@@ -338,10 +338,10 @@ func dataSourceNfvProfileRead(ctx context.Context, d *schema.ResourceData, m int
 		queryParams1 := dnacentersdkgo.GetNfvProfileQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(string)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(string)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okName {
 			queryParams1.Name = vName.(string)

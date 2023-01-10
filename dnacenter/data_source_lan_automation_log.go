@@ -31,13 +31,13 @@ func dataSourceLanAutomationLog() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of LAN Automation sessions to be retrieved. Limit value can range between 1 to 10.
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Starting index of the LAN Automation session. Minimum value is 1.
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 
@@ -169,10 +169,10 @@ func dataSourceLanAutomationLogRead(ctx context.Context, d *schema.ResourceData,
 		queryParams1 := dnacentersdkgo.LanAutomationLogQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(string)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(string)
+			queryParams1.Limit = vLimit.(int)
 		}
 
 		response1, restyResp1, err := client.LanAutomation.LanAutomationLog(&queryParams1)

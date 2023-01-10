@@ -1,3 +1,7 @@
+## 1.0.15-beta (Jan 10, 2023)
+BUGFIXES:
+* `Offset` and `Limit` query params change to `int`.
+
 ## 1.0.14-beta (Nov 30, 2022)
 BUGFIXES:
 * Resource `dnacenter_reserve_ip_subpool` expand functions fixed.

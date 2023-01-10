@@ -83,7 +83,7 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of Audit Log records to be returned per page.
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"name": &schema.Schema{
@@ -95,7 +95,7 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Position of a particular Audit Log record in the data. 
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -413,10 +413,10 @@ func dataSourceEventSeriesAuditLogsParentRecordsRead(ctx context.Context, d *sch
 			queryParams1.Description = vDescription.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okStartTime {
 			queryParams1.StartTime = vStartTime.(float64)
