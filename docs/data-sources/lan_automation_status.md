@@ -20,8 +20,8 @@ It performs read operation on LAN Automation.
 ```terraform
 data "dnacenter_lan_automation_status" "example" {
   provider = dnacenter
-  limit    = "string"
-  offset   = "string"
+  limit    = 1
+  offset   = 1
 }
 
 output "dnacenter_lan_automation_status_example" {

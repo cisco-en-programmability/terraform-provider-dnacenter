@@ -28,12 +28,12 @@ func dataSourceBuildingsPlannedAccessPoints() *schema.Resource {
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"radios": &schema.Schema{
@@ -298,10 +298,10 @@ func dataSourceBuildingsPlannedAccessPointsRead(ctx context.Context, d *schema.R
 		queryParams1 := dnacentersdkgo.GetPlannedAccessPointsForBuildingQueryParams{}
 
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okRadios {
 			queryParams1.Radios = vRadios.(bool)

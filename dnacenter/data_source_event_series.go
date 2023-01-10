@@ -45,7 +45,7 @@ func dataSourceEventSeries() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. # of records
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"namespace": &schema.Schema{
@@ -56,7 +56,7 @@ func dataSourceEventSeries() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Start Offset
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -287,10 +287,10 @@ func dataSourceEventSeriesRead(ctx context.Context, d *schema.ResourceData, m in
 			queryParams1.Source = vSource.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okSortBy {
 			queryParams1.SortBy = vSortBy.(string)

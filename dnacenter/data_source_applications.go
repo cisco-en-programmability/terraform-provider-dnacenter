@@ -23,7 +23,7 @@ func dataSourceApplications() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. The maximum number of applications to be returned
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"name": &schema.Schema{
@@ -35,7 +35,7 @@ func dataSourceApplications() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The offset of the first application to be returned
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 
@@ -293,10 +293,10 @@ func dataSourceApplicationsRead(ctx context.Context, d *schema.ResourceData, m i
 		queryParams1 := dnacentersdkgo.GetApplicationsQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okName {
 			queryParams1.Name = vName.(string)

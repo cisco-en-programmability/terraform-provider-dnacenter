@@ -119,7 +119,7 @@ ignores the other request parameters. You can also specify offset & limit to get
 			"limit": &schema.Schema{
 				Description: `limit query parameter. 1 <= limit <= 500 [max. no. of devices to be returned in the result]
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"location": &schema.Schema{
@@ -213,7 +213,7 @@ ignores the other request parameters. You can also specify offset & limit to get
 			"offset": &schema.Schema{
 				Description: `offset query parameter. offset >= 1 [X gives results from Xth device onwards]
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"platform_id": &schema.Schema{
@@ -713,10 +713,10 @@ func dataSourceNetworkDeviceListRead(ctx context.Context, d *schema.ResourceData
 			queryParams1.DeviceSupportLevel = vDeviceSupportLevel.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 
 		response1, restyResp1, err := client.Devices.GetDeviceList(&queryParams1)

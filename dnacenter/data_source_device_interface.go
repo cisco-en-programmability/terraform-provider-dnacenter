@@ -30,12 +30,12 @@ func dataSourceDeviceInterface() *schema.Resource {
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 
@@ -379,10 +379,10 @@ func dataSourceDeviceInterfaceRead(ctx context.Context, d *schema.ResourceData, 
 		queryParams1 := dnacentersdkgo.GetAllInterfacesQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 
 		response1, restyResp1, err := client.Devices.GetAllInterfaces(&queryParams1)

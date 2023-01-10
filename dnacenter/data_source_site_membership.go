@@ -29,13 +29,13 @@ func dataSourceSiteMembership() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of sites to be retrieved
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. offset/starting row
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"serial_number": &schema.Schema{
@@ -134,10 +134,10 @@ func dataSourceSiteMembershipRead(ctx context.Context, d *schema.ResourceData, m
 		queryParams1 := dnacentersdkgo.GetMembershipQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(string)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(string)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okDeviceFamily {
 			queryParams1.DeviceFamily = vDeviceFamily.(string)

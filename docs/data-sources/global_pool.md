@@ -18,8 +18,8 @@ It performs read operation on Network Settings.
 ```terraform
 data "dnacenter_global_pool" "example" {
   provider = dnacenter
-  limit    = "string"
-  offset   = "string"
+  limit    = 1
+  offset   = 1
 }
 
 output "dnacenter_global_pool_example" {

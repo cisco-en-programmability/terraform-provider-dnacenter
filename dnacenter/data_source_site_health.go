@@ -23,13 +23,13 @@ func dataSourceSiteHealth() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. The max number of sites in the returned data set.  Default is 25, and max at 50
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The offset value, starting from 1, of the first returned site entry.  Default is 1.
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"site_type": &schema.Schema{
@@ -426,10 +426,10 @@ func dataSourceSiteHealthRead(ctx context.Context, d *schema.ResourceData, m int
 			queryParams1.SiteType = vSiteType.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 
 		response1, restyResp1, err := client.Sites.GetSiteHealth(&queryParams1)

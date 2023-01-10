@@ -19,9 +19,9 @@ It performs read operation on Site Design.
 data "dnacenter_nfv_profile" "example" {
   provider = dnacenter
   id       = "string"
-  limit    = "string"
+  limit    = 1
   name     = "string"
-  offset   = "string"
+  offset   = 1
 }
 
 output "dnacenter_nfv_profile_example" {

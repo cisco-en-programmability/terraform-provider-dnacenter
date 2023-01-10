@@ -1273,8 +1273,8 @@ func searchApplicationPolicyGetApplications(m interface{}, queryParams dnacenter
 					return foundItem, err
 				}
 			}
-			queryParams.Limit = float64(maxPageSize)
-			queryParams.Offset += float64(maxPageSize)
+			queryParams.Limit = maxPageSize
+			queryParams.Offset += maxPageSize
 			nResponse, _, err = client.ApplicationPolicy.GetApplications(&queryParams)
 		}
 		return nil, err

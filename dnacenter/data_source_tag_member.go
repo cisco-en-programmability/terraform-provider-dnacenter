@@ -34,7 +34,7 @@ func dataSourceTagMember() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Used to Number of maximum members to return in the result
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"member_association_type": &schema.Schema{
@@ -52,7 +52,7 @@ func dataSourceTagMember() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Used for pagination. It indicates the starting row number out of available member records
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Optional: true,
 			},
 
@@ -93,10 +93,10 @@ func dataSourceTagMemberRead(ctx context.Context, d *schema.ResourceData, m inte
 		queryParams1.MemberType = vMemberType.(string)
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(string)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(string)
+			queryParams1.Limit = vLimit.(int)
 		}
 		if okMemberAssociationType {
 			queryParams1.MemberAssociationType = vMemberAssociationType.(string)
