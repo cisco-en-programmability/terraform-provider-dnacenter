@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.0.15-beta"
+      version = "1.0.16-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -28,6 +28,16 @@ resource "dnacenter_wireless_profile" "example" {
         }
         interface_name = "management"
         name           = "Test2"
+        type           = "string"
+      }
+      ssid_details {
+        enable_fabric = "true"
+        flex_connect {
+          enable_flex_connect = "false"
+          local_to_vlan       = 0
+        }
+        interface_name = "management"
+        name           = "Test22"
         type           = "string"
       }
     }
