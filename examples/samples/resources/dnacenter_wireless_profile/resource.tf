@@ -30,6 +30,16 @@ resource "dnacenter_wireless_profile" "example" {
         name           = "Test2"
         type           = "string"
       }
+      ssid_details {
+        enable_fabric = "true"
+        flex_connect {
+          enable_flex_connect = "false"
+          local_to_vlan       = 0
+        }
+        interface_name = "management"
+        name           = "Test22"
+        type           = "string"
+      }
     }
     #wireless_profile_name = "string"
   }

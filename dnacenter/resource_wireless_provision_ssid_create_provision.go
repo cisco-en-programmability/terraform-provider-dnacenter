@@ -212,16 +212,16 @@ func resourceWirelessProvisionSSIDCreateProvisionCreate(ctx context.Context, d *
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
-	vPersistbapioutput := resourceItem["persistbapioutput"]
+	// resourceItem := *getResourceItem(d.Get("parameters"))
+	// vPersistbapioutput := resourceItem["persistbapioutput"]
 
 	request1 := expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSID(ctx, "parameters.0", d)
 
-	headerParams1 := dnacentersdkgo.CreateAndProvisionSSIDHeaderParams{}
+	// headerParams1 := dnacentersdkgo.CreateAndProvisionSSIDHeaderParams{}
 
-	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+	// headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
-	response1, restyResp1, err := client.Wireless.CreateAndProvisionSSID(request1, &headerParams1)
+	response1, restyResp1, err := client.Wireless.CreateAndProvisionSSID(request1, nil)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
