@@ -1,3 +1,11 @@
+## 1.0.16-beta (Jan 17, 2023)
+BUGFIXES:
+* Changing `response` answer on `pnp_device_import` resource, parameter `id` turns to `type_id`.
+* Changing `response` answer and `request` schema on `pnp_device` resource, parameter `id` turns to `type_id`.
+* Allowing more than one `ssid_details` block on `wireless_profile` resource.
+* Nil pointer exception fixed on `wireless_provision_ssid_create_provision` resource.
+* Corrected key name from `items` to `item` in `response` schema of `wireless_rf_profile` resource.
+
 ## 1.0.15-beta (Jan 10, 2023)
 BUGFIXES:
 * `Offset` and `Limit` query params change to `int`.

@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.0.15-beta"
+      version = "1.0.16-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -19,14 +19,14 @@ resource "dnacenter_pnp_device_import" "example" {
   parameters {
     payload {
       device_info {
-        serial_number = "FOCTEST5113"
+        serial_number = "FOCTEST5115"
       }
     }
-    payload {
-      device_info {
-        serial_number = "FOCTEST511"
-      }
-    }
+  #   payload {
+  #     device_info {
+  #       serial_number = "FOCTEST511"
+  #     }
+  #   }
   }
 }
 

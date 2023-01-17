@@ -35,7 +35,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{

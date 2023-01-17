@@ -71,7 +71,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"type_id": &schema.Schema{
 										Description: `Id`,
 										Type:        schema.TypeString,
 										Computed:    true,
