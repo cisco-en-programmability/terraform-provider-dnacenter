@@ -18,20 +18,20 @@ resource "dnacenter_pnp_device" "example" {
   parameters {
 
     id = "61f1c861264f342e4fa1a78e"
-    device_info {
-      agent_type         = "POSIX"
-      cm_state           = "Not Contacted"
-      onb_state          = "Not Contacted"
-      populate_inventory = "false"
-      reload_requested   = "true"
-      serial_number      = "FLM2213W05R"
-      stack              = "false"
-      # state= "Unclaimed"
-      state         = "Planned"
-      sudi_required = "false"
-      name          = "FLM2213W05R"
-      last_contact  = 1
-    }
+    # device_info {
+    #   agent_type         = "POSIX"
+    #   cm_state           = "Not Contacted"
+    #   onb_state          = "Not Contacted"
+    #   populate_inventory = "false"
+    #   reload_requested   = "true"
+    #   serial_number      = "FLM2213W05R"
+    #   stack              = "false"
+    #   # state= "Unclaimed"
+    #   state         = "Planned"
+    #   sudi_required = "false"
+    #   name          = "FLM2213W05R"
+    #   last_contact  = 1
+    # }
   }
 }
 

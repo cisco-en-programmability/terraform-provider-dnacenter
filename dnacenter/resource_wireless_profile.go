@@ -170,7 +170,6 @@ should be provided.
 									"ssid_details": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
