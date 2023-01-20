@@ -48,6 +48,11 @@ func resourcePnpDevice() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
+						"id": &schema.Schema{
+							Description: `Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
 
 						"day_zero_config": &schema.Schema{
 							Type:     schema.TypeList,

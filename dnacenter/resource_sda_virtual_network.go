@@ -220,14 +220,14 @@ func resourceSdaVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, 
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 
-		response1, restyResp1, err := client.Sda.GetVnFromSdaFabric(&queryParams1)
+		response1, restyResp1, _ := client.Sda.GetVnFromSdaFabric(&queryParams1)
 
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetVnFromSdaFabric", err,
-				"Failure at GetVnFromSdaFabric, unexpected response", ""))
-			return diags
-		}
+		// if err != nil {
+		// 	diags = append(diags, diagErrorWithAlt(
+		// 		"Failure when executing GetVnFromSdaFabric", err,
+		// 		"Failure at GetVnFromSdaFabric, unexpected response", ""))
+		// 	return diags
+		// }
 		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())

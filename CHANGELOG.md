@@ -1,3 +1,8 @@
+## 1.0.17-beta (Jan 20, 2023)
+BUGFIXES:
+* Removed error behavior when externally deleting a resource.
+* 
+
 ## 1.0.16-beta (Jan 17, 2023)
 BUGFIXES:
 * Changing `response` answer on `pnp_device_import` resource, parameter `id` turns to `type_id`.

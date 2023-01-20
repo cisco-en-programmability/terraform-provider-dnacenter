@@ -587,14 +587,14 @@ func resourceNetworkDeviceListRead(ctx context.Context, d *schema.ResourceData, 
 		}
 		queryParams1.ManagementIPAddress = vIPAddress
 
-		response1, restyResp1, err := client.Devices.GetDeviceList(&queryParams1)
+		response1, restyResp1, _ := client.Devices.GetDeviceList(&queryParams1)
 
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceList", err,
-				"Failure at GetDeviceList, unexpected response", ""))
-			return diags
-		}
+		/*		if err != nil {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetDeviceList", err,
+					"Failure at GetDeviceList, unexpected response", ""))
+				return diags
+			}*/
 		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
