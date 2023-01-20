@@ -213,14 +213,14 @@ func resourceSdaFabricControlPlaneDeviceRead(ctx context.Context, d *schema.Reso
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
 
-		response1, restyResp1, err := client.Sda.GetControlPlaneDeviceFromSdaFabric(&queryParams1)
+		response1, restyResp1, _ := client.Sda.GetControlPlaneDeviceFromSdaFabric(&queryParams1)
 
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetControlPlaneDeviceFromSdaFabric", err,
-				"Failure at GetControlPlaneDeviceFromSdaFabric, unexpected response", ""))
-			return diags
-		}
+		/*		if err != nil {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetControlPlaneDeviceFromSdaFabric", err,
+					"Failure at GetControlPlaneDeviceFromSdaFabric, unexpected response", ""))
+				return diags
+			}*/
 		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())

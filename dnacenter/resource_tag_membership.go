@@ -169,14 +169,14 @@ func resourceTagMembershipRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method 1: GetTagMembersByID")
 		queryParams1 := dnacentersdkgo.GetTagMembersByIDQueryParams{}
 		queryParams1.MemberType = vMemberType
-		response1, restyResp1, err := client.Tag.GetTagMembersByID(vID, &queryParams1)
+		response1, restyResp1, _ := client.Tag.GetTagMembersByID(vID, &queryParams1)
 
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTagMembersByID", err,
-				"Failure at GetTagMembersByID, unexpected response", ""))
-			return diags
-		}
+		/*		if err != nil {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetTagMembersByID", err,
+					"Failure at GetTagMembersByID, unexpected response", ""))
+				return diags
+			}*/
 		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())

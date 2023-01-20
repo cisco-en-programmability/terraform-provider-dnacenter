@@ -608,13 +608,13 @@ func resourcePnpGlobalSettingsRead(ctx context.Context, d *schema.ResourceData, 
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetPnpGlobalSettings")
 
-		response1, restyResp1, err := client.DeviceOnboardingPnp.GetPnpGlobalSettings()
-		if err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetPnpGlobalSettings response",
-				err))
-			return diags
-		}
+		response1, restyResp1, _ := client.DeviceOnboardingPnp.GetPnpGlobalSettings()
+		/*		if err != nil {
+				diags = append(diags, diagError(
+					"Failure when setting GetPnpGlobalSettings response",
+					err))
+				return diags
+			}*/
 		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
