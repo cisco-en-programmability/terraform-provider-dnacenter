@@ -1,7 +1,7 @@
 ## 1.0.17-beta (Jan 20, 2023)
 BUGFIXES:
 * Removed error behavior when externally deleting a resource.
-* 
+* Updating examples.
 
 ## 1.0.16-beta (Jan 17, 2023)
 BUGFIXES:
