@@ -473,7 +473,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 							Description: `rfProfileName path parameter. RF profile name to be deleted(required) *non-custom RF profile cannot be deleted
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 					},
 				},
@@ -572,15 +572,15 @@ func resourceWirelessRfProfileRead(ctx context.Context, d *schema.ResourceData, 
 			queryParams1.RfProfileName = vRfProfileName
 		}
 
-		response1, restyResp1, err := client.Wireless.RetrieveRfProfiles(&queryParams1)
+		response1, restyResp1, _ := client.Wireless.RetrieveRfProfiles(&queryParams1)
 
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing RetrieveRfProfiles", err,
-				"Failure at RetrieveRfProfiles, unexpected response", ""))
-			return diags
-		}
-		if response1 == nil {
+		// if err != nil {
+		// 	diags = append(diags, diagErrorWithAlt(
+		// 		"Failure when executing RetrieveRfProfiles", err,
+		// 		"Failure at RetrieveRfProfiles, unexpected response", ""))
+		// 	return diags
+		// }
+		if response1 == nil || len(*response1.Response) == 0 {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}

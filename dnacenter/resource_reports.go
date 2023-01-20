@@ -560,14 +560,14 @@ func resourceReportsRead(ctx context.Context, d *schema.ResourceData, m interfac
 		log.Printf("[DEBUG] Selected method 2: GetAScheduledReport")
 		vvReportID := vReportID
 
-		response1, restyResp1, err := client.Reports.GetAScheduledReport(vvReportID)
+		response1, restyResp1, _ := client.Reports.GetAScheduledReport(vvReportID)
 
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAScheduledReport", err,
-				"Failure at GetAScheduledReport, unexpected response", ""))
-			return diags
-		}
+		/*		if err != nil {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetAScheduledReport", err,
+					"Failure at GetAScheduledReport, unexpected response", ""))
+				return diags
+			}*/
 		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())

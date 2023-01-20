@@ -251,14 +251,14 @@ func resourceSdaPortAssignmentForAccessPointRead(ctx context.Context, d *schema.
 
 		queryParams1.InterfaceName = vInterfaceName
 
-		response1, restyResp1, err := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParams1)
+		response1, restyResp1, _ := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParams1)
 
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetPortAssignmentForAccessPointInSdaFabric", err,
-				"Failure at GetPortAssignmentForAccessPointInSdaFabric, unexpected response", ""))
-			return diags
-		}
+		/*		if err != nil {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetPortAssignmentForAccessPointInSdaFabric", err,
+					"Failure at GetPortAssignmentForAccessPointInSdaFabric, unexpected response", ""))
+				return diags
+			}*/
 		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
