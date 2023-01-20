@@ -434,14 +434,14 @@ func resourceWirelessEnterpriseSSIDRead(ctx context.Context, d *schema.ResourceD
 			queryParams1.SSIDName = vSSIDName
 		}
 
-		response1, restyResp1, err := client.Wireless.GetEnterpriseSSID(&queryParams1)
+		response1, restyResp1, _ := client.Wireless.GetEnterpriseSSID(&queryParams1)
 
-		if err != nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEnterpriseSSID", err,
-				"Failure at GetEnterpriseSSID, unexpected response", ""))
-			return diags
-		}
+		/*		if err != nil {
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetEnterpriseSSID", err,
+					"Failure at GetEnterpriseSSID, unexpected response", ""))
+				return diags
+			}*/
 		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())

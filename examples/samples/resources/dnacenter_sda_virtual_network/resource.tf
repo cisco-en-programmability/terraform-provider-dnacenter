@@ -18,18 +18,18 @@ resource "dnacenter_sda_virtual_network" "example" {
   }
 }
 
-resource "dnacenter_sda_virtual_network" "example2" {
-  provider = dnacenter
-  depends_on = [
-    dnacenter_sda_virtual_network.example
-  ]
-  parameters {
-    payload {
-      site_name_hierarchy  = "Global/New Jersey/MurrayHill/test/TestFloor"
-      virtual_network_name = " TEST_VNs"
-    }
-  }
-}
+# resource "dnacenter_sda_virtual_network" "example2" {
+#   provider = dnacenter
+#   depends_on = [
+#     dnacenter_sda_virtual_network.example
+#   ]
+#   parameters {
+#     payload {
+#       site_name_hierarchy  = "Global/New Jersey/MurrayHill/test/TestFloor"
+#       virtual_network_name = " TEST_VNs"
+#     }
+#   }
+# }
 
 output "dnacenter_sda_virtual_network_example" {
   value = dnacenter_sda_virtual_network.example
