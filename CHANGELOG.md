@@ -1,3 +1,7 @@
+## 1.0.18-beta (Feb 02, 2023)
+BUGFIXES:
+* Issue #131 => dnacenter_pnp_device_import does not save device id to terraform state [Fixed]
+
 ## 1.0.17-beta (Jan 20, 2023)
 BUGFIXES:
 * Removed error behavior when externally deleting a resource.

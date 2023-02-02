@@ -72,6 +72,11 @@ func resourcePnpDeviceImport() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"type_id": &schema.Schema{
+										Description: `_Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"id": &schema.Schema{
 										Description: `Id`,
 										Type:        schema.TypeString,
 										Computed:    true,
@@ -3006,6 +3011,7 @@ func resourcePnpDeviceImportCreate(ctx context.Context, d *schema.ResourceData, 
 	//Analizar verificacion.
 
 	vItem1 := flattenDeviceOnboardingPnpImportDevicesInBulkItem(response1)
+	log.Printf("[DEBUG] vItem1 => %v", responseInterfaceToString(vItem1))
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
 			"Failure when setting ImportDevicesInBulk response",
@@ -4396,6 +4402,7 @@ func flattenDeviceOnboardingPnpImportDevicesInBulkItemSuccessList(items *[]dnace
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["type_id"] = item.TypeID
+		respItem["id"] = item.ID
 		respItem["device_info"] = flattenDeviceOnboardingPnpImportDevicesInBulkItemSuccessListDeviceInfo(item.DeviceInfo)
 		respItem["system_reset_workflow"] = flattenDeviceOnboardingPnpImportDevicesInBulkItemSuccessListSystemResetWorkflow(item.SystemResetWorkflow)
 		respItem["system_workflow"] = flattenDeviceOnboardingPnpImportDevicesInBulkItemSuccessListSystemWorkflow(item.SystemWorkflow)
