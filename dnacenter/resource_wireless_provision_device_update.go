@@ -166,16 +166,16 @@ func resourceWirelessProvisionDeviceUpdateCreate(ctx context.Context, d *schema.
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
-	vPersistbapioutput := resourceItem["persistbapioutput"]
+	// resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
+	// vPersistbapioutput := resourceItem["persistbapioutput"]
 
 	request1 := expandRequestWirelessProvisionDeviceUpdateProvisionUpdate(ctx, "parameters.0", d)
 
-	headerParams1 := dnacentersdkgo.ProvisionUpdateHeaderParams{}
+	// headerParams1 := dnacentersdkgo.ProvisionUpdateHeaderParams{}
 
-	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+	// headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
-	response1, restyResp1, err := client.Wireless.ProvisionUpdate(request1, &headerParams1)
+	response1, restyResp1, err := client.Wireless.ProvisionUpdate(request1, nil)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
