@@ -1,3 +1,9 @@
+## 1.0.19-beta (Mar 03, 2023)
+BUGFIXES:
+* Provider crash on dnacenter_wireless_provision_device_update #139 removing header params to avoid crash    
+* Provider crash on dnacenter_wireless_provision_access_point #140 removing header params to avoid crash
+* dnacenter_lan_automation_create does not accept any values in parameters block #141 updating documentation.
+
 ## 1.0.18-beta (Feb 02, 2023)
 BUGFIXES:
 * Issue #131 => dnacenter_pnp_device_import does not save device id to terraform state [Fixed]
