@@ -27,21 +27,22 @@ provider "dnacenter" {
 resource "dnacenter_lan_automation_create" "example" {
   provider = dnacenter
   parameters {
+    payload {
+      discovered_device_site_name_hierarchy = "string"
+      host_name_file_id                     = "string"
+      host_name_prefix                      = "string"
+      ip_pools {
 
-    discovered_device_site_name_hierarchy = "string"
-    host_name_file_id                     = "string"
-    host_name_prefix                      = "string"
-    ip_pools {
-
-      ip_pool_name = "string"
-      ip_pool_role = "string"
+        ip_pool_name = "string"
+        ip_pool_role = "string"
+      }
+      isis_domain_pwd                    = "string"
+      mulitcast_enabled                  = "false"
+      peer_device_managment_ipaddress    = "string"
+      primary_device_interface_names     = ["string"]
+      primary_device_managment_ipaddress = "string"
+      redistribute_isis_to_bgp           = "false"
     }
-    isis_domain_pwd                    = "string"
-    mulitcast_enabled                  = "false"
-    peer_device_managment_ipaddress    = "string"
-    primary_device_interface_names     = ["string"]
-    primary_device_managment_ipaddress = "string"
-    redistribute_isis_to_bgp           = "false"
   }
 }
 
@@ -55,47 +56,44 @@ output "dnacenter_lan_automation_create_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **payload** (Block List) Array of RequestLanAutomationLANAutomation2 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestLanAutomationLANAutomation2 (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
 
 Optional:
 
-- **discovered_device_site_name_hierarchy** (String) Discovered device site name.
-- **host_name_file_id** (String) Use /dna/intent/api/v1/file/namespace/nw_orch api to get the file id for the already uploaded file in nw_orch namespace.
-- **host_name_prefix** (String) Host name prefix which shall be assigned to the discovered device.
-- **ip_pools** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--ip_pools))
-- **isis_domain_pwd** (String) IS-IS domain password in plain text.
-- **mulitcast_enabled** (String) To enable underlay native multicast.
-- **peer_device_managment_ipaddress** (String) Peer seed management IP address.
-- **primary_device_interface_names** (List of String) The list of interfaces on primary seed via which the discovered devices are connected.
-- **primary_device_managment_ipaddress** (String) Primary seed management IP address.
-- **redistribute_isis_to_bgp** (String) Advertise LAN Automation summary route into BGP.
+- `discovered_device_site_name_hierarchy` (String) Discovered device site name.
+- `host_name_file_id` (String) Use /dna/intent/api/v1/file/namespace/nw_orch api to get the file id for the already uploaded file in nw_orch namespace.
+- `host_name_prefix` (String) Host name prefix which shall be assigned to the discovered device.
+- `ip_pools` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--ip_pools))
+- `isis_domain_pwd` (String) IS-IS domain password in plain text.
+- `mulitcast_enabled` (String) To enable underlay native multicast.
+- `peer_device_managment_ipaddress` (String) Peer seed management IP address.
+- `primary_device_interface_names` (List of String) The list of interfaces on primary seed via which the discovered devices are connected.
+- `primary_device_managment_ipaddress` (String) Primary seed management IP address.
+- `redistribute_isis_to_bgp` (String) Advertise LAN Automation summary route into BGP.
 
 <a id="nestedblock--parameters--payload--ip_pools"></a>
 ### Nested Schema for `parameters.payload.ip_pools`
 
 Optional:
 
-- **ip_pool_name** (String) Name of the IP pool.
-- **ip_pool_role** (String) Role of the IP pool. Supported roles are: MAIN_POOL and PHYSICAL_LINK_POOL.
+- `ip_pool_name` (String) Name of the IP pool.
+- `ip_pool_role` (String) Role of the IP pool. Supported roles are: MAIN_POOL and PHYSICAL_LINK_POOL.
 
 
 
@@ -105,8 +103,8 @@ Optional:
 
 Read-Only:
 
-- **detail** (String)
-- **error_code** (String)
-- **message** (String)
+- `detail` (String)
+- `error_code` (String)
+- `message` (String)
 
 

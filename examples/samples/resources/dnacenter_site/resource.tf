@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.0.18-beta"
+      version = "1.0.19-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -25,8 +25,8 @@ resource "dnacenter_site" "example" {
     
     */
       building {
-        name        = "MyTestFinal2"
-        address     = "255 China Basin Street, San Francisco, California 94158, United States"
+        name        = "MyTestFinal${count.index}"
+        address     = "255 China Basin Street, San Francisco, California 94158, United States 2"
         parent_name = "Global"
         latitude    = 37.77178651716143
         longitude   = -122.39062051589885
