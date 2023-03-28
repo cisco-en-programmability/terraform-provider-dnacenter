@@ -64,7 +64,9 @@ To use this provider, copy and paste this code into your Terraform configuration
 terraform {
   required_providers {
     dnacenter = {
-      source = "hashicorp.com/edu/dnacenter"      version = "1.0.19-beta"    }
+      source = "cisco-en-programmability/dnacenter"      
+      version = "1.0.19-beta"    
+    }
   }
 }
 
