@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -29,13 +29,13 @@ func dataSourceEventSubscription() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. The number of Subscriptions's to limit in the resultset whose default value 10
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The number of Subscriptions's to offset in the resultset whose default value 0
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -160,7 +160,7 @@ func dataSourceEventSubscription() *schema.Resource {
 
 						"is_private": &schema.Schema{
 							Description: `Is Private`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -302,8 +302,9 @@ func dataSourceEventSubscription() *schema.Resource {
 
 												"trust_cert": &schema.Schema{
 													Description: `Trust Cert`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"url": &schema.Schema{
@@ -354,17 +355,17 @@ func dataSourceEventSubscriptionRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEventSubscriptions")
+		log.Printf("[DEBUG] Selected method: GetEventSubscriptions")
 		queryParams1 := dnacentersdkgo.GetEventSubscriptionsQueryParams{}
 
 		if okEventIDs {
 			queryParams1.EventIDs = vEventIDs.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okSortBy {
 			queryParams1.SortBy = vSortBy.(string)
@@ -394,6 +395,7 @@ func dataSourceEventSubscriptionRead(ctx context.Context, d *schema.ResourceData
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

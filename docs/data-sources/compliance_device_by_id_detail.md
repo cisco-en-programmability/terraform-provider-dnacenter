@@ -36,72 +36,72 @@ output "dnacenter_compliance_device_by_id_detail_example" {
 
 ### Required
 
-- **device_uuid** (String) deviceUuid path parameter.
+- `device_uuid` (String) deviceUuid path parameter.
 
 ### Optional
 
-- **category** (String) category query parameter. complianceCategory can have any value among 'INTENT', 'RUNNING_CONFIG'
-- **compliance_type** (String) complianceType query parameter. complianceType can have any value among 'NETWORK_DESIGN', 'NETWORK_PROFILE', 'FABRIC', 'POLICY', 'RUNNING_CONFIG'
-- **diff_list** (Boolean) diffList query parameter. diff list [ pass true to fetch the diff list ]
-- **id** (String) The ID of this resource.
-- **key** (String) key query parameter. extended attribute key
-- **value** (String) value query parameter. extended attribute value
+- `category` (String) category query parameter. complianceCategory can have any value among 'INTENT', 'RUNNING_CONFIG'
+- `compliance_type` (String) complianceType query parameter. complianceType can have any value among 'NETWORK_DESIGN', 'NETWORK_PROFILE', 'FABRIC', 'POLICY', 'RUNNING_CONFIG'
+- `diff_list` (Boolean) diffList query parameter. diff list [ pass true to fetch the diff list ]
+- `key` (String) key query parameter. extended attribute key
+- `value` (String) value query parameter. extended attribute value
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **additional_data_url** (String)
-- **category** (String)
-- **compliance_type** (String)
-- **device_uuid** (String)
-- **display_name** (String)
-- **last_sync_time** (String)
-- **last_update_time** (Number)
-- **message** (String)
-- **source_info_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--source_info_list))
-- **state** (String)
-- **status** (String)
+- `additional_data_url` (String)
+- `category` (String)
+- `compliance_type` (String)
+- `device_uuid` (String)
+- `display_name` (String)
+- `last_sync_time` (Number)
+- `last_update_time` (Number)
+- `message` (String)
+- `source_info_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--source_info_list))
+- `state` (String)
+- `status` (String)
 
 <a id="nestedobjatt--items--source_info_list"></a>
 ### Nested Schema for `items.source_info_list`
 
 Read-Only:
 
-- **app_name** (String)
-- **business_key** (List of Object) (see [below for nested schema](#nestedobjatt--items--source_info_list--business_key))
-- **count** (Number)
-- **diff_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--source_info_list--diff_list))
-- **display_name** (String)
-- **license_app_name** (String)
-- **name** (String)
-- **name_with_business_key** (String)
-- **network_profile_name** (String)
-- **provisioning_area** (String)
-- **source_enum** (String)
-- **type** (String)
+- `app_name` (String)
+- `business_key` (List of Object) (see [below for nested schema](#nestedobjatt--items--source_info_list--business_key))
+- `count` (Number)
+- `diff_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--source_info_list--diff_list))
+- `display_name` (String)
+- `license_app_name` (String)
+- `name` (String)
+- `name_with_business_key` (String)
+- `network_profile_name` (String)
+- `provisioning_area` (String)
+- `source_enum` (String)
+- `type` (String)
 
 <a id="nestedobjatt--items--source_info_list--business_key"></a>
 ### Nested Schema for `items.source_info_list.business_key`
 
 Read-Only:
 
-- **business_key_attributes** (String)
-- **other_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--items--source_info_list--business_key--other_attributes))
-- **resource_name** (String)
+- `business_key_attributes` (String)
+- `other_attributes` (List of Object) (see [below for nested schema](#nestedobjatt--items--source_info_list--business_key--other_attributes))
+- `resource_name` (String)
 
 <a id="nestedobjatt--items--source_info_list--business_key--other_attributes"></a>
 ### Nested Schema for `items.source_info_list.business_key.resource_name`
 
 Read-Only:
 
-- **cfs_attributes** (String)
-- **name** (String)
+- `cfs_attributes` (String)
+- `name` (String)
 
 
 
@@ -110,13 +110,13 @@ Read-Only:
 
 Read-Only:
 
-- **business_key** (String)
-- **configured_value** (String)
-- **display_name** (String)
-- **extended_attributes** (String)
-- **intended_value** (String)
-- **move_from_path** (String)
-- **op** (String)
-- **path** (String)
+- `business_key` (String)
+- `configured_value` (String)
+- `display_name` (String)
+- `extended_attributes` (String)
+- `intended_value` (String)
+- `move_from_path` (String)
+- `op` (String)
+- `path` (String)
 
 

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -38,42 +38,52 @@ func dataSourceSdaVirtualNetwork() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Virtual Network info retrieved successfully from SDA Fabric
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
-						"device_management_ip_address": &schema.Schema{
-							Description: `Device Management Ip Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"fabric_name": &schema.Schema{
+							Description: `Fabric Name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
-						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"is_default_vn": &schema.Schema{
+							Description: `Default VN
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
-						"roles": &schema.Schema{
-							Description: `Roles`,
-							Type:        schema.TypeList,
-							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
+						"is_infra_vn": &schema.Schema{
+							Description: `Infra VN
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
-						"site_hierarchy": &schema.Schema{
-							Description: `Site Hierarchy`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"site_name_hierarchy": &schema.Schema{
+							Description: `Path of sda Fabric Site
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"virtual_network_name": &schema.Schema{
+							Description: `Virtual Network Name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -91,7 +101,7 @@ func dataSourceSdaVirtualNetworkRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetVnFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetVnFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetVnFromSdaFabricQueryParams{}
 
 		queryParams1.VirtualNetworkName = vVirtualNetworkName.(string)
@@ -119,6 +129,7 @@ func dataSourceSdaVirtualNetworkRead(ctx context.Context, d *schema.ResourceData
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -131,12 +142,13 @@ func flattenSdaGetVnFromSdaFabricItem(item *dnacentersdkgo.ResponseSdaGetVnFromS
 		return nil
 	}
 	respItem := make(map[string]interface{})
+	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+	respItem["virtual_network_name"] = item.VirtualNetworkName
+	respItem["fabric_name"] = item.FabricName
+	respItem["is_infra_vn"] = item.IsInfraVn
+	respItem["is_default_vn"] = item.IsDefaultVn
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
-	respItem["name"] = item.Name
-	respItem["roles"] = item.Roles
-	respItem["device_management_ip_address"] = item.DeviceManagementIPAddress
-	respItem["site_hierarchy"] = item.SiteHierarchy
 	return []map[string]interface{}{
 		respItem,
 	}

@@ -31,25 +31,22 @@ output "dnacenter_compliance_device_by_id_example" {
 
 ### Required
 
-- **device_uuid** (String) deviceUuid path parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_uuid` (String) deviceUuid path parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **compliance_status** (String)
-- **device_uuid** (String)
-- **last_update_time** (Number)
-- **message** (String)
-- **schedule_time** (Number)
+- `compliance_status` (String)
+- `device_uuid` (String)
+- `last_update_time` (Number)
+- `message` (String)
+- `schedule_time` (Number)
 
 

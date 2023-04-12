@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -29,13 +29,13 @@ func dataSourceEvent() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. The number of Registries to limit in the resultset whose default value 10
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The number of Registries to offset in the resultset whose default value 0
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -76,7 +76,7 @@ func dataSourceEvent() *schema.Resource {
 
 						"details": &schema.Schema{
 							Description: `Details`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -165,7 +165,7 @@ func dataSourceEventRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEvents")
+		log.Printf("[DEBUG] Selected method: GetEvents")
 		queryParams1 := dnacentersdkgo.GetEventsQueryParams{}
 
 		if okEventID {
@@ -174,10 +174,10 @@ func dataSourceEventRead(ctx context.Context, d *schema.ResourceData, m interfac
 		queryParams1.Tags = vTags.(string)
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okSortBy {
 			queryParams1.SortBy = vSortBy.(string)
@@ -207,6 +207,7 @@ func dataSourceEventRead(ctx context.Context, d *schema.ResourceData, m interfac
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -66,27 +66,30 @@ sites
 						"enable_fabric": &schema.Schema{
 							Description: `Enable SSID for Fabric
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							ForceNew:     true,
+							Computed:     true,
 						},
 						"flex_connect": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"enable_flex_connect": &schema.Schema{
 										Description: `Enable Flex Connect
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"local_to_vlan": &schema.Schema{
 										Description: `Local To Vlan (range is 1 to 4094)
@@ -94,6 +97,7 @@ sites
 										Type:     schema.TypeInt,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 								},
 							},
@@ -104,6 +108,7 @@ sites
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -112,35 +117,39 @@ sites
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"enable_broadcast_ssi_d": &schema.Schema{
 										Description: `Enable Broadcast SSID
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"enable_fast_lane": &schema.Schema{
 										Description: `Enable Fast Lane
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"enable_mac_filtering": &schema.Schema{
 										Description: `Enable MAC Filtering
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"fast_transition": &schema.Schema{
 										Description: `Fast Transition
@@ -148,6 +157,7 @@ sites
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"name": &schema.Schema{
 										Description: `SSID Name
@@ -155,6 +165,7 @@ sites
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"passphrase": &schema.Schema{
 										Description: `Pass Phrase ( Only applicable for SSID with PERSONAL auth type )
@@ -162,13 +173,15 @@ sites
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"radio_policy": &schema.Schema{
-										Description: `Radio Policy. Allowed values are 'Dual band operation (2.4GHz and 5GHz)', 'Dual band operation with band select', '5GHz only', '2.4GHz only'.
+										Description: `Radio Policy
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"security_level": &schema.Schema{
 										Description: `Security Level(For guest SSID OPEN/WEB_AUTH, For Enterprise SSID ENTERPRISE/PERSONAL/OPEN)
@@ -176,6 +189,7 @@ sites
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"traffic_type": &schema.Schema{
 										Description: `Traffic Type
@@ -183,6 +197,7 @@ sites
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"web_auth_url": &schema.Schema{
 										Description: `Web Auth URL
@@ -190,6 +205,7 @@ sites
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 								},
 							},
@@ -200,6 +216,15 @@ sites
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
+						},
+						"persistbapioutput": &schema.Schema{
+							Description:  `Device Name`,
+							Type:         schema.TypeString,
+							Optional:     true,
+							ForceNew:     true,
+							Default:      "false",
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 						},
 					},
 				},
@@ -212,16 +237,17 @@ func resourceWirelessProvisionSSIDCreateProvisionCreate(ctx context.Context, d *
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	// resourceItem := *getResourceItem(d.Get("parameters"))
-	// vPersistbapioutput := resourceItem["persistbapioutput"]
+	resourceItem := *getResourceItem(d.Get("parameters"))
+
+	vPersistbapioutput := resourceItem["persistbapioutput"]
 
 	request1 := expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSID(ctx, "parameters.0", d)
 
-	// headerParams1 := dnacentersdkgo.CreateAndProvisionSSIDHeaderParams{}
+	headerParams1 := dnacentersdkgo.CreateAndProvisionSSIDHeaderParams{}
 
-	// headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
-	response1, restyResp1, err := client.Wireless.CreateAndProvisionSSID(request1, nil)
+	response1, restyResp1, err := client.Wireless.CreateAndProvisionSSID(request1, &headerParams1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -231,9 +257,9 @@ func resourceWirelessProvisionSSIDCreateProvisionCreate(ctx context.Context, d *
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing CreateAndProvisionSSID", err,
-			"Failure at CreateAndProvisionSSID, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -282,6 +308,7 @@ func resourceWirelessProvisionSSIDCreateProvisionCreate(ctx context.Context, d *
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

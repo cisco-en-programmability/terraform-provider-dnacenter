@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -33,55 +33,49 @@ func dataSourceSdaVirtualNetworkV2() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"execution_status_url": &schema.Schema{
-							Description: `Execution Status Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Virtual network info retrieved successfully
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"is_guest_virtual_network": &schema.Schema{
-							Description: `Is Guest Virtual Network`,
-
+							Description: `Guest Virtual Network
+`,
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"scalable_group_names": &schema.Schema{
-							Description: `Scalable Group Names`,
-							Type:        schema.TypeList,
-							Computed:    true,
+							Description: `Scalable Group Names
+`,
+							Type:     schema.TypeList,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
-						"task_id": &schema.Schema{
-							Description: `Task Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"task_status_url": &schema.Schema{
-							Description: `Task Status Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"v_manage_vpn_id": &schema.Schema{
+							Description: `vManage vpn id for SD-WAN
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"virtual_network_name": &schema.Schema{
-							Description: `Virtual Network Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Virtual Network Name to be assigned at global level
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -98,7 +92,7 @@ func dataSourceSdaVirtualNetworkV2Read(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetVirtualNetworkWithScalableGroups")
+		log.Printf("[DEBUG] Selected method: GetVirtualNetworkWithScalableGroups")
 		queryParams1 := dnacentersdkgo.GetVirtualNetworkWithScalableGroupsQueryParams{}
 
 		queryParams1.VirtualNetworkName = vVirtualNetworkName.(string)
@@ -124,6 +118,7 @@ func dataSourceSdaVirtualNetworkV2Read(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -139,11 +134,9 @@ func flattenSdaGetVirtualNetworkWithScalableGroupsItem(item *dnacentersdkgo.Resp
 	respItem["virtual_network_name"] = item.VirtualNetworkName
 	respItem["is_guest_virtual_network"] = boolPtrToString(item.IsGuestVirtualNetwork)
 	respItem["scalable_group_names"] = item.ScalableGroupNames
+	respItem["v_manage_vpn_id"] = item.VManageVpnID
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
-	respItem["task_id"] = item.TaskID
-	respItem["task_status_url"] = item.TaskStatusURL
-	respItem["execution_status_url"] = item.ExecutionStatusURL
 	return []map[string]interface{}{
 		respItem,
 	}

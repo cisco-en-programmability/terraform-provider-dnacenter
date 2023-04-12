@@ -56,48 +56,48 @@ output "dnacenter_path_trace_example" {
 
 ### Optional
 
-- **dest_ip** (String) destIP query parameter. Destination IP adress
-- **dest_port** (String) destPort query parameter. Destination port
-- **flow_analysis_id** (String) flowAnalysisId path parameter. Flow analysis request id
-- **gt_create_time** (String) gtCreateTime query parameter. Analyses requested after this time
-- **id** (String) The ID of this resource.
-- **last_update_time** (String) lastUpdateTime query parameter. Last update time
-- **limit** (String) limit query parameter. Number of resources returned
-- **lt_create_time** (String) ltCreateTime query parameter. Analyses requested before this time
-- **offset** (String) offset query parameter. Start index of resources returned (1-based)
-- **order** (String) order query parameter. Order by this field
-- **periodic_refresh** (Boolean) periodicRefresh query parameter. Is analysis periodically refreshed?
-- **protocol** (String) protocol query parameter.
-- **sort_by** (String) sortBy query parameter. Sort by this field
-- **source_ip** (String) sourceIP query parameter. Source IP address
-- **source_port** (String) sourcePort query parameter. Source port
-- **status** (String) status query parameter.
-- **task_id** (String) taskId query parameter. Task ID
+- `dest_ip` (String) destIP query parameter. Destination IP adress
+- `dest_port` (String) destPort query parameter. Destination port
+- `flow_analysis_id` (String) flowAnalysisId path parameter. Flow analysis request id
+- `gt_create_time` (String) gtCreateTime query parameter. Analyses requested after this time
+- `last_update_time` (String) lastUpdateTime query parameter. Last update time
+- `limit` (Number) limit query parameter. Number of resources returned
+- `lt_create_time` (String) ltCreateTime query parameter. Analyses requested before this time
+- `offset` (Number) offset query parameter. Start index of resources returned (1-based)
+- `order` (String) order query parameter. Order by this field
+- `periodic_refresh` (Boolean) periodicRefresh query parameter. Is analysis periodically refreshed?
+- `protocol` (String) protocol query parameter.
+- `sort_by` (String) sortBy query parameter. Sort by this field
+- `source_ip` (String) sourceIP query parameter. Source IP address
+- `source_port` (String) sourcePort query parameter. Source port
+- `status` (String) status query parameter.
+- `task_id` (String) taskId query parameter. Task ID
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **detailed_status** (List of Object) (see [below for nested schema](#nestedobjatt--item--detailed_status))
-- **last_update** (String)
-- **network_elements** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements))
-- **network_elements_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info))
-- **properties** (List of String)
-- **request** (List of Object) (see [below for nested schema](#nestedobjatt--item--request))
+- `detailed_status` (List of Object) (see [below for nested schema](#nestedobjatt--item--detailed_status))
+- `last_update` (String)
+- `network_elements` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements))
+- `network_elements_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info))
+- `properties` (List of String)
+- `request` (List of Object) (see [below for nested schema](#nestedobjatt--item--request))
 
 <a id="nestedobjatt--item--detailed_status"></a>
 ### Nested Schema for `item.detailed_status`
 
 Read-Only:
 
-- **acl_trace_calculation** (String)
-- **acl_trace_calculation_failure_reason** (String)
+- `acl_trace_calculation` (String)
+- `acl_trace_calculation_failure_reason` (String)
 
 
 <a id="nestedobjatt--item--network_elements"></a>
@@ -105,36 +105,36 @@ Read-Only:
 
 Read-Only:
 
-- **accuracy_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--accuracy_list))
-- **detailed_status** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--detailed_status))
-- **device_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--device_statistics))
-- **device_stats_collection** (String)
-- **device_stats_collection_failure_reason** (String)
-- **egress_physical_interface** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface))
-- **egress_virtual_interface** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface))
-- **flex_connect** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect))
-- **id** (String)
-- **ingress_physical_interface** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface))
-- **ingress_virtual_interface** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface))
-- **ip** (String)
-- **link_information_source** (String)
-- **name** (String)
-- **perf_mon_collection** (String)
-- **perf_mon_collection_failure_reason** (String)
-- **perf_mon_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--perf_mon_statistics))
-- **role** (String)
-- **ssid** (String)
-- **tunnels** (List of String)
-- **type** (String)
-- **wlan_id** (String)
+- `accuracy_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--accuracy_list))
+- `detailed_status` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--detailed_status))
+- `device_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--device_statistics))
+- `device_stats_collection` (String)
+- `device_stats_collection_failure_reason` (String)
+- `egress_physical_interface` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface))
+- `egress_virtual_interface` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface))
+- `flex_connect` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect))
+- `id` (String)
+- `ingress_physical_interface` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface))
+- `ingress_virtual_interface` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface))
+- `ip` (String)
+- `link_information_source` (String)
+- `name` (String)
+- `perf_mon_collection` (String)
+- `perf_mon_collection_failure_reason` (String)
+- `perf_mon_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--perf_mon_statistics))
+- `role` (String)
+- `ssid` (String)
+- `tunnels` (List of String)
+- `type` (String)
+- `wlan_id` (String)
 
 <a id="nestedobjatt--item--network_elements--accuracy_list"></a>
 ### Nested Schema for `item.network_elements.accuracy_list`
 
 Read-Only:
 
-- **percent** (Number)
-- **reason** (String)
+- `percent` (Number)
+- `reason` (String)
 
 
 <a id="nestedobjatt--item--network_elements--detailed_status"></a>
@@ -142,8 +142,8 @@ Read-Only:
 
 Read-Only:
 
-- **acl_trace_calculation** (String)
-- **acl_trace_calculation_failure_reason** (String)
+- `acl_trace_calculation` (String)
+- `acl_trace_calculation_failure_reason` (String)
 
 
 <a id="nestedobjatt--item--network_elements--device_statistics"></a>
@@ -151,18 +151,18 @@ Read-Only:
 
 Read-Only:
 
-- **cpu_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--device_statistics--cpu_statistics))
-- **memory_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--device_statistics--memory_statistics))
+- `cpu_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--device_statistics--cpu_statistics))
+- `memory_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--device_statistics--memory_statistics))
 
 <a id="nestedobjatt--item--network_elements--device_statistics--cpu_statistics"></a>
 ### Nested Schema for `item.network_elements.device_statistics.memory_statistics`
 
 Read-Only:
 
-- **five_min_usage_in_percentage** (Number)
-- **five_secs_usage_in_percentage** (Number)
-- **one_min_usage_in_percentage** (Number)
-- **refreshed_at** (Number)
+- `five_min_usage_in_percentage` (Number)
+- `five_secs_usage_in_percentage` (Number)
+- `one_min_usage_in_percentage` (Number)
+- `refreshed_at` (Number)
 
 
 <a id="nestedobjatt--item--network_elements--device_statistics--memory_statistics"></a>
@@ -170,9 +170,9 @@ Read-Only:
 
 Read-Only:
 
-- **memory_usage** (Number)
-- **refreshed_at** (Number)
-- **total_memory** (Number)
+- `memory_usage` (Number)
+- `refreshed_at` (Number)
+- `total_memory` (Number)
 
 
 
@@ -181,52 +181,52 @@ Read-Only:
 
 Read-Only:
 
-- **acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--acl_analysis))
-- **id** (String)
-- **interface_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--interface_statistics))
-- **interface_stats_collection** (String)
-- **interface_stats_collection_failure_reason** (String)
-- **name** (String)
-- **path_overlay_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--path_overlay_info))
-- **qos_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--qos_statistics))
-- **qos_stats_collection** (String)
-- **qos_stats_collection_failure_reason** (String)
-- **used_vlan** (String)
-- **vrf_name** (String)
+- `acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--acl_analysis))
+- `id` (String)
+- `interface_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--interface_statistics))
+- `interface_stats_collection` (String)
+- `interface_stats_collection_failure_reason` (String)
+- `name` (String)
+- `path_overlay_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--path_overlay_info))
+- `qos_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--qos_statistics))
+- `qos_stats_collection` (String)
+- `qos_stats_collection_failure_reason` (String)
+- `used_vlan` (String)
+- `vrf_name` (String)
 
 <a id="nestedobjatt--item--network_elements--egress_physical_interface--acl_analysis"></a>
 ### Nested Schema for `item.network_elements.egress_physical_interface.vrf_name`
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--matching_aces"></a>
 ### Nested Schema for `item.network_elements.egress_physical_interface.vrf_name.matching_aces`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--matching_aces--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--matching_aces--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--matching_aces--matching_ports"></a>
 ### Nested Schema for `item.network_elements.egress_physical_interface.vrf_name.matching_aces.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--matching_aces--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--matching_aces--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--matching_aces--result--ports"></a>
 ### Nested Schema for `item.network_elements.egress_physical_interface.vrf_name.matching_aces.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -237,20 +237,20 @@ Read-Only:
 
 Read-Only:
 
-- **admin_status** (String)
-- **input_packets** (Number)
-- **input_queue_count** (Number)
-- **input_queue_drops** (Number)
-- **input_queue_flushes** (Number)
-- **input_queue_max_depth** (Number)
-- **input_ratebps** (Number)
-- **operational_status** (String)
-- **output_drop** (Number)
-- **output_packets** (Number)
-- **output_queue_count** (Number)
-- **output_queue_depth** (Number)
-- **output_ratebps** (Number)
-- **refreshed_at** (Number)
+- `admin_status` (String)
+- `input_packets` (Number)
+- `input_queue_count` (Number)
+- `input_queue_drops` (Number)
+- `input_queue_flushes` (Number)
+- `input_queue_max_depth` (Number)
+- `input_ratebps` (Number)
+- `operational_status` (String)
+- `output_drop` (Number)
+- `output_packets` (Number)
+- `output_queue_count` (Number)
+- `output_queue_depth` (Number)
+- `output_ratebps` (Number)
+- `refreshed_at` (Number)
 
 
 <a id="nestedobjatt--item--network_elements--egress_physical_interface--path_overlay_info"></a>
@@ -258,22 +258,22 @@ Read-Only:
 
 Read-Only:
 
-- **control_plane** (String)
-- **data_packet_encapsulation** (String)
-- **dest_ip** (String)
-- **dest_port** (String)
-- **protocol** (String)
-- **source_ip** (String)
-- **source_port** (String)
-- **vxlan_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--vxlan_info))
+- `control_plane` (String)
+- `data_packet_encapsulation` (String)
+- `dest_ip` (String)
+- `dest_port` (String)
+- `protocol` (String)
+- `source_ip` (String)
+- `source_port` (String)
+- `vxlan_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--vxlan_info))
 
 <a id="nestedobjatt--item--network_elements--egress_physical_interface--vrf_name--vxlan_info"></a>
 ### Nested Schema for `item.network_elements.egress_physical_interface.vrf_name.vxlan_info`
 
 Read-Only:
 
-- **dscp** (String)
-- **vnid** (String)
+- `dscp` (String)
+- `vnid` (String)
 
 
 
@@ -282,16 +282,16 @@ Read-Only:
 
 Read-Only:
 
-- **class_map_name** (String)
-- **drop_rate** (Number)
-- **num_bytes** (Number)
-- **num_packets** (Number)
-- **offered_rate** (Number)
-- **queue_bandwidthbps** (String)
-- **queue_depth** (Number)
-- **queue_no_buffer_drops** (Number)
-- **queue_total_drops** (Number)
-- **refreshed_at** (Number)
+- `class_map_name` (String)
+- `drop_rate` (Number)
+- `num_bytes` (Number)
+- `num_packets` (Number)
+- `offered_rate` (Number)
+- `queue_bandwidthbps` (String)
+- `queue_depth` (Number)
+- `queue_no_buffer_drops` (Number)
+- `queue_total_drops` (Number)
+- `refreshed_at` (Number)
 
 
 
@@ -300,52 +300,52 @@ Read-Only:
 
 Read-Only:
 
-- **acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--acl_analysis))
-- **id** (String)
-- **interface_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--interface_statistics))
-- **interface_stats_collection** (String)
-- **interface_stats_collection_failure_reason** (String)
-- **name** (String)
-- **path_overlay_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--path_overlay_info))
-- **qos_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--qos_statistics))
-- **qos_stats_collection** (String)
-- **qos_stats_collection_failure_reason** (String)
-- **used_vlan** (String)
-- **vrf_name** (String)
+- `acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--acl_analysis))
+- `id` (String)
+- `interface_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--interface_statistics))
+- `interface_stats_collection` (String)
+- `interface_stats_collection_failure_reason` (String)
+- `name` (String)
+- `path_overlay_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--path_overlay_info))
+- `qos_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--qos_statistics))
+- `qos_stats_collection` (String)
+- `qos_stats_collection_failure_reason` (String)
+- `used_vlan` (String)
+- `vrf_name` (String)
 
 <a id="nestedobjatt--item--network_elements--egress_virtual_interface--acl_analysis"></a>
 ### Nested Schema for `item.network_elements.egress_virtual_interface.vrf_name`
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--matching_aces"></a>
 ### Nested Schema for `item.network_elements.egress_virtual_interface.vrf_name.matching_aces`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--matching_aces--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--matching_aces--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--matching_aces--matching_ports"></a>
 ### Nested Schema for `item.network_elements.egress_virtual_interface.vrf_name.matching_aces.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--matching_aces--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--matching_aces--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--matching_aces--result--ports"></a>
 ### Nested Schema for `item.network_elements.egress_virtual_interface.vrf_name.matching_aces.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -356,20 +356,20 @@ Read-Only:
 
 Read-Only:
 
-- **admin_status** (String)
-- **input_packets** (Number)
-- **input_queue_count** (Number)
-- **input_queue_drops** (Number)
-- **input_queue_flushes** (Number)
-- **input_queue_max_depth** (Number)
-- **input_ratebps** (Number)
-- **operational_status** (String)
-- **output_drop** (Number)
-- **output_packets** (Number)
-- **output_queue_count** (Number)
-- **output_queue_depth** (Number)
-- **output_ratebps** (Number)
-- **refreshed_at** (Number)
+- `admin_status` (String)
+- `input_packets` (Number)
+- `input_queue_count` (Number)
+- `input_queue_drops` (Number)
+- `input_queue_flushes` (Number)
+- `input_queue_max_depth` (Number)
+- `input_ratebps` (Number)
+- `operational_status` (String)
+- `output_drop` (Number)
+- `output_packets` (Number)
+- `output_queue_count` (Number)
+- `output_queue_depth` (Number)
+- `output_ratebps` (Number)
+- `refreshed_at` (Number)
 
 
 <a id="nestedobjatt--item--network_elements--egress_virtual_interface--path_overlay_info"></a>
@@ -377,22 +377,22 @@ Read-Only:
 
 Read-Only:
 
-- **control_plane** (String)
-- **data_packet_encapsulation** (String)
-- **dest_ip** (String)
-- **dest_port** (String)
-- **protocol** (String)
-- **source_ip** (String)
-- **source_port** (String)
-- **vxlan_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--vxlan_info))
+- `control_plane` (String)
+- `data_packet_encapsulation` (String)
+- `dest_ip` (String)
+- `dest_port` (String)
+- `protocol` (String)
+- `source_ip` (String)
+- `source_port` (String)
+- `vxlan_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--vxlan_info))
 
 <a id="nestedobjatt--item--network_elements--egress_virtual_interface--vrf_name--vxlan_info"></a>
 ### Nested Schema for `item.network_elements.egress_virtual_interface.vrf_name.vxlan_info`
 
 Read-Only:
 
-- **dscp** (String)
-- **vnid** (String)
+- `dscp` (String)
+- `vnid` (String)
 
 
 
@@ -401,16 +401,16 @@ Read-Only:
 
 Read-Only:
 
-- **class_map_name** (String)
-- **drop_rate** (Number)
-- **num_bytes** (Number)
-- **num_packets** (Number)
-- **offered_rate** (Number)
-- **queue_bandwidthbps** (String)
-- **queue_depth** (Number)
-- **queue_no_buffer_drops** (Number)
-- **queue_total_drops** (Number)
-- **refreshed_at** (Number)
+- `class_map_name` (String)
+- `drop_rate` (Number)
+- `num_bytes` (Number)
+- `num_packets` (Number)
+- `offered_rate` (Number)
+- `queue_bandwidthbps` (String)
+- `queue_depth` (Number)
+- `queue_no_buffer_drops` (Number)
+- `queue_total_drops` (Number)
+- `refreshed_at` (Number)
 
 
 
@@ -419,46 +419,46 @@ Read-Only:
 
 Read-Only:
 
-- **authentication** (String)
-- **data_switching** (String)
-- **egress_acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--egress_acl_analysis))
-- **ingress_acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--ingress_acl_analysis))
-- **wireless_lan_controller_id** (String)
-- **wireless_lan_controller_name** (String)
+- `authentication` (String)
+- `data_switching` (String)
+- `egress_acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--egress_acl_analysis))
+- `ingress_acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--ingress_acl_analysis))
+- `wireless_lan_controller_id` (String)
+- `wireless_lan_controller_name` (String)
 
 <a id="nestedobjatt--item--network_elements--flex_connect--egress_acl_analysis"></a>
 ### Nested Schema for `item.network_elements.flex_connect.wireless_lan_controller_name`
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces"></a>
 ### Nested Schema for `item.network_elements.flex_connect.wireless_lan_controller_name.matching_aces`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports"></a>
 ### Nested Schema for `item.network_elements.flex_connect.wireless_lan_controller_name.matching_aces.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--result--ports"></a>
 ### Nested Schema for `item.network_elements.flex_connect.wireless_lan_controller_name.matching_aces.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -469,34 +469,34 @@ Read-Only:
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces"></a>
 ### Nested Schema for `item.network_elements.flex_connect.wireless_lan_controller_name.matching_aces`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports"></a>
 ### Nested Schema for `item.network_elements.flex_connect.wireless_lan_controller_name.matching_aces.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements--flex_connect--wireless_lan_controller_name--matching_aces--result--ports"></a>
 ### Nested Schema for `item.network_elements.flex_connect.wireless_lan_controller_name.matching_aces.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -508,52 +508,52 @@ Read-Only:
 
 Read-Only:
 
-- **acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--acl_analysis))
-- **id** (String)
-- **interface_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--interface_statistics))
-- **interface_stats_collection** (String)
-- **interface_stats_collection_failure_reason** (String)
-- **name** (String)
-- **path_overlay_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--path_overlay_info))
-- **qos_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--qos_statistics))
-- **qos_stats_collection** (String)
-- **qos_stats_collection_failure_reason** (String)
-- **used_vlan** (String)
-- **vrf_name** (String)
+- `acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--acl_analysis))
+- `id` (String)
+- `interface_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--interface_statistics))
+- `interface_stats_collection` (String)
+- `interface_stats_collection_failure_reason` (String)
+- `name` (String)
+- `path_overlay_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--path_overlay_info))
+- `qos_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--qos_statistics))
+- `qos_stats_collection` (String)
+- `qos_stats_collection_failure_reason` (String)
+- `used_vlan` (String)
+- `vrf_name` (String)
 
 <a id="nestedobjatt--item--network_elements--ingress_physical_interface--acl_analysis"></a>
 ### Nested Schema for `item.network_elements.ingress_physical_interface.vrf_name`
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--matching_aces"></a>
 ### Nested Schema for `item.network_elements.ingress_physical_interface.vrf_name.matching_aces`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--matching_aces--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--matching_aces--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--matching_aces--matching_ports"></a>
 ### Nested Schema for `item.network_elements.ingress_physical_interface.vrf_name.matching_aces.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--matching_aces--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--matching_aces--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--matching_aces--result--ports"></a>
 ### Nested Schema for `item.network_elements.ingress_physical_interface.vrf_name.matching_aces.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -564,20 +564,20 @@ Read-Only:
 
 Read-Only:
 
-- **admin_status** (String)
-- **input_packets** (Number)
-- **input_queue_count** (Number)
-- **input_queue_drops** (Number)
-- **input_queue_flushes** (Number)
-- **input_queue_max_depth** (Number)
-- **input_ratebps** (Number)
-- **operational_status** (String)
-- **output_drop** (Number)
-- **output_packets** (Number)
-- **output_queue_count** (Number)
-- **output_queue_depth** (Number)
-- **output_ratebps** (Number)
-- **refreshed_at** (Number)
+- `admin_status` (String)
+- `input_packets` (Number)
+- `input_queue_count` (Number)
+- `input_queue_drops` (Number)
+- `input_queue_flushes` (Number)
+- `input_queue_max_depth` (Number)
+- `input_ratebps` (Number)
+- `operational_status` (String)
+- `output_drop` (Number)
+- `output_packets` (Number)
+- `output_queue_count` (Number)
+- `output_queue_depth` (Number)
+- `output_ratebps` (Number)
+- `refreshed_at` (Number)
 
 
 <a id="nestedobjatt--item--network_elements--ingress_physical_interface--path_overlay_info"></a>
@@ -585,22 +585,22 @@ Read-Only:
 
 Read-Only:
 
-- **control_plane** (String)
-- **data_packet_encapsulation** (String)
-- **dest_ip** (String)
-- **dest_port** (String)
-- **protocol** (String)
-- **source_ip** (String)
-- **source_port** (String)
-- **vxlan_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--vxlan_info))
+- `control_plane` (String)
+- `data_packet_encapsulation` (String)
+- `dest_ip` (String)
+- `dest_port` (String)
+- `protocol` (String)
+- `source_ip` (String)
+- `source_port` (String)
+- `vxlan_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--vxlan_info))
 
 <a id="nestedobjatt--item--network_elements--ingress_physical_interface--vrf_name--vxlan_info"></a>
 ### Nested Schema for `item.network_elements.ingress_physical_interface.vrf_name.vxlan_info`
 
 Read-Only:
 
-- **dscp** (String)
-- **vnid** (String)
+- `dscp` (String)
+- `vnid` (String)
 
 
 
@@ -609,16 +609,16 @@ Read-Only:
 
 Read-Only:
 
-- **class_map_name** (String)
-- **drop_rate** (Number)
-- **num_bytes** (Number)
-- **num_packets** (Number)
-- **offered_rate** (Number)
-- **queue_bandwidthbps** (String)
-- **queue_depth** (Number)
-- **queue_no_buffer_drops** (Number)
-- **queue_total_drops** (Number)
-- **refreshed_at** (Number)
+- `class_map_name` (String)
+- `drop_rate` (Number)
+- `num_bytes` (Number)
+- `num_packets` (Number)
+- `offered_rate` (Number)
+- `queue_bandwidthbps` (String)
+- `queue_depth` (Number)
+- `queue_no_buffer_drops` (Number)
+- `queue_total_drops` (Number)
+- `refreshed_at` (Number)
 
 
 
@@ -627,52 +627,52 @@ Read-Only:
 
 Read-Only:
 
-- **acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--acl_analysis))
-- **id** (String)
-- **interface_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--interface_statistics))
-- **interface_stats_collection** (String)
-- **interface_stats_collection_failure_reason** (String)
-- **name** (String)
-- **path_overlay_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--path_overlay_info))
-- **qos_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--qos_statistics))
-- **qos_stats_collection** (String)
-- **qos_stats_collection_failure_reason** (String)
-- **used_vlan** (String)
-- **vrf_name** (String)
+- `acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--acl_analysis))
+- `id` (String)
+- `interface_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--interface_statistics))
+- `interface_stats_collection` (String)
+- `interface_stats_collection_failure_reason` (String)
+- `name` (String)
+- `path_overlay_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--path_overlay_info))
+- `qos_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--qos_statistics))
+- `qos_stats_collection` (String)
+- `qos_stats_collection_failure_reason` (String)
+- `used_vlan` (String)
+- `vrf_name` (String)
 
 <a id="nestedobjatt--item--network_elements--ingress_virtual_interface--acl_analysis"></a>
 ### Nested Schema for `item.network_elements.ingress_virtual_interface.vrf_name`
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--matching_aces"></a>
 ### Nested Schema for `item.network_elements.ingress_virtual_interface.vrf_name.matching_aces`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--matching_aces--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--matching_aces--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--matching_aces--matching_ports"></a>
 ### Nested Schema for `item.network_elements.ingress_virtual_interface.vrf_name.matching_aces.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--matching_aces--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--matching_aces--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--matching_aces--result--ports"></a>
 ### Nested Schema for `item.network_elements.ingress_virtual_interface.vrf_name.matching_aces.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -683,20 +683,20 @@ Read-Only:
 
 Read-Only:
 
-- **admin_status** (String)
-- **input_packets** (Number)
-- **input_queue_count** (Number)
-- **input_queue_drops** (Number)
-- **input_queue_flushes** (Number)
-- **input_queue_max_depth** (Number)
-- **input_ratebps** (Number)
-- **operational_status** (String)
-- **output_drop** (Number)
-- **output_packets** (Number)
-- **output_queue_count** (Number)
-- **output_queue_depth** (Number)
-- **output_ratebps** (Number)
-- **refreshed_at** (Number)
+- `admin_status` (String)
+- `input_packets` (Number)
+- `input_queue_count` (Number)
+- `input_queue_drops` (Number)
+- `input_queue_flushes` (Number)
+- `input_queue_max_depth` (Number)
+- `input_ratebps` (Number)
+- `operational_status` (String)
+- `output_drop` (Number)
+- `output_packets` (Number)
+- `output_queue_count` (Number)
+- `output_queue_depth` (Number)
+- `output_ratebps` (Number)
+- `refreshed_at` (Number)
 
 
 <a id="nestedobjatt--item--network_elements--ingress_virtual_interface--path_overlay_info"></a>
@@ -704,22 +704,22 @@ Read-Only:
 
 Read-Only:
 
-- **control_plane** (String)
-- **data_packet_encapsulation** (String)
-- **dest_ip** (String)
-- **dest_port** (String)
-- **protocol** (String)
-- **source_ip** (String)
-- **source_port** (String)
-- **vxlan_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--vxlan_info))
+- `control_plane` (String)
+- `data_packet_encapsulation` (String)
+- `dest_ip` (String)
+- `dest_port` (String)
+- `protocol` (String)
+- `source_ip` (String)
+- `source_port` (String)
+- `vxlan_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--vxlan_info))
 
 <a id="nestedobjatt--item--network_elements--ingress_virtual_interface--vrf_name--vxlan_info"></a>
 ### Nested Schema for `item.network_elements.ingress_virtual_interface.vrf_name.vxlan_info`
 
 Read-Only:
 
-- **dscp** (String)
-- **vnid** (String)
+- `dscp` (String)
+- `vnid` (String)
 
 
 
@@ -728,16 +728,16 @@ Read-Only:
 
 Read-Only:
 
-- **class_map_name** (String)
-- **drop_rate** (Number)
-- **num_bytes** (Number)
-- **num_packets** (Number)
-- **offered_rate** (Number)
-- **queue_bandwidthbps** (String)
-- **queue_depth** (Number)
-- **queue_no_buffer_drops** (Number)
-- **queue_total_drops** (Number)
-- **refreshed_at** (Number)
+- `class_map_name` (String)
+- `drop_rate` (Number)
+- `num_bytes` (Number)
+- `num_packets` (Number)
+- `offered_rate` (Number)
+- `queue_bandwidthbps` (String)
+- `queue_depth` (Number)
+- `queue_no_buffer_drops` (Number)
+- `queue_total_drops` (Number)
+- `refreshed_at` (Number)
 
 
 
@@ -746,24 +746,24 @@ Read-Only:
 
 Read-Only:
 
-- **byte_rate** (Number)
-- **dest_ip_address** (String)
-- **dest_port** (String)
-- **input_interface** (String)
-- **ipv4_dsc_p** (String)
-- **ipv4_ttl** (Number)
-- **output_interface** (String)
-- **packet_bytes** (Number)
-- **packet_count** (Number)
-- **packet_loss** (Number)
-- **packet_loss_percentage** (Number)
-- **protocol** (String)
-- **refreshed_at** (Number)
-- **rtp_jitter_max** (Number)
-- **rtp_jitter_mean** (Number)
-- **rtp_jitter_min** (Number)
-- **source_ip_address** (String)
-- **source_port** (String)
+- `byte_rate` (Number)
+- `dest_ip_address` (String)
+- `dest_port` (String)
+- `input_interface` (String)
+- `ipv4_dsc_p` (String)
+- `ipv4_ttl` (Number)
+- `output_interface` (String)
+- `packet_bytes` (Number)
+- `packet_count` (Number)
+- `packet_loss` (Number)
+- `packet_loss_percentage` (Number)
+- `protocol` (String)
+- `refreshed_at` (Number)
+- `rtp_jitter_max` (Number)
+- `rtp_jitter_mean` (Number)
+- `rtp_jitter_min` (Number)
+- `source_ip_address` (String)
+- `source_port` (String)
 
 
 
@@ -772,34 +772,34 @@ Read-Only:
 
 Read-Only:
 
-- **accuracy_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--accuracy_list))
-- **detailed_status** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--detailed_status))
-- **device_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--device_statistics))
-- **device_stats_collection** (String)
-- **device_stats_collection_failure_reason** (String)
-- **egress_interface** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface))
-- **flex_connect** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect))
-- **id** (String)
-- **ingress_interface** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface))
-- **ip** (String)
-- **link_information_source** (String)
-- **name** (String)
-- **perf_mon_collection** (String)
-- **perf_mon_collection_failure_reason** (String)
-- **perf_monitor_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--perf_monitor_statistics))
-- **role** (String)
-- **ssid** (String)
-- **tunnels** (List of String)
-- **type** (String)
-- **wlan_id** (String)
+- `accuracy_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--accuracy_list))
+- `detailed_status` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--detailed_status))
+- `device_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--device_statistics))
+- `device_stats_collection` (String)
+- `device_stats_collection_failure_reason` (String)
+- `egress_interface` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface))
+- `flex_connect` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect))
+- `id` (String)
+- `ingress_interface` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface))
+- `ip` (String)
+- `link_information_source` (String)
+- `name` (String)
+- `perf_mon_collection` (String)
+- `perf_mon_collection_failure_reason` (String)
+- `perf_monitor_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--perf_monitor_statistics))
+- `role` (String)
+- `ssid` (String)
+- `tunnels` (List of String)
+- `type` (String)
+- `wlan_id` (String)
 
 <a id="nestedobjatt--item--network_elements_info--accuracy_list"></a>
 ### Nested Schema for `item.network_elements_info.accuracy_list`
 
 Read-Only:
 
-- **percent** (Number)
-- **reason** (String)
+- `percent` (Number)
+- `reason` (String)
 
 
 <a id="nestedobjatt--item--network_elements_info--detailed_status"></a>
@@ -807,8 +807,8 @@ Read-Only:
 
 Read-Only:
 
-- **acl_trace_calculation** (String)
-- **acl_trace_calculation_failure_reason** (String)
+- `acl_trace_calculation` (String)
+- `acl_trace_calculation_failure_reason` (String)
 
 
 <a id="nestedobjatt--item--network_elements_info--device_statistics"></a>
@@ -816,18 +816,18 @@ Read-Only:
 
 Read-Only:
 
-- **cpu_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--device_statistics--cpu_statistics))
-- **memory_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--device_statistics--memory_statistics))
+- `cpu_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--device_statistics--cpu_statistics))
+- `memory_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--device_statistics--memory_statistics))
 
 <a id="nestedobjatt--item--network_elements_info--device_statistics--cpu_statistics"></a>
 ### Nested Schema for `item.network_elements_info.device_statistics.memory_statistics`
 
 Read-Only:
 
-- **five_min_usage_in_percentage** (Number)
-- **five_secs_usage_in_percentage** (Number)
-- **one_min_usage_in_percentage** (Number)
-- **refreshed_at** (Number)
+- `five_min_usage_in_percentage` (Number)
+- `five_secs_usage_in_percentage` (Number)
+- `one_min_usage_in_percentage` (Number)
+- `refreshed_at` (Number)
 
 
 <a id="nestedobjatt--item--network_elements_info--device_statistics--memory_statistics"></a>
@@ -835,9 +835,9 @@ Read-Only:
 
 Read-Only:
 
-- **memory_usage** (Number)
-- **refreshed_at** (Number)
-- **total_memory** (Number)
+- `memory_usage` (Number)
+- `refreshed_at` (Number)
+- `total_memory` (Number)
 
 
 
@@ -846,60 +846,60 @@ Read-Only:
 
 Read-Only:
 
-- **physical_interface** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--physical_interface))
-- **virtual_interface** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface))
+- `physical_interface` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--physical_interface))
+- `virtual_interface` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface))
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--physical_interface"></a>
 ### Nested Schema for `item.network_elements_info.egress_interface.virtual_interface`
 
 Read-Only:
 
-- **acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis))
-- **id** (String)
-- **interface_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--interface_statistics))
-- **interface_stats_collection** (String)
-- **interface_stats_collection_failure_reason** (String)
-- **name** (String)
-- **path_overlay_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info))
-- **qos_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--qos_statistics))
-- **qos_stats_collection** (String)
-- **qos_stats_collection_failure_reason** (String)
-- **used_vlan** (String)
-- **vrf_name** (String)
+- `acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis))
+- `id` (String)
+- `interface_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--interface_statistics))
+- `interface_stats_collection` (String)
+- `interface_stats_collection_failure_reason` (String)
+- `name` (String)
+- `path_overlay_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info))
+- `qos_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--qos_statistics))
+- `qos_stats_collection` (String)
+- `qos_stats_collection_failure_reason` (String)
+- `used_vlan` (String)
+- `vrf_name` (String)
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis"></a>
 ### Nested Schema for `item.network_elements_info.egress_interface.virtual_interface.acl_analysis`
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--matching_aces"></a>
 ### Nested Schema for `item.network_elements_info.egress_interface.virtual_interface.acl_analysis.result`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--matching_ports"></a>
 ### Nested Schema for `item.network_elements_info.egress_interface.virtual_interface.acl_analysis.result.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--result--ports"></a>
 ### Nested Schema for `item.network_elements_info.egress_interface.virtual_interface.acl_analysis.result.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -910,20 +910,20 @@ Read-Only:
 
 Read-Only:
 
-- **admin_status** (String)
-- **input_packets** (Number)
-- **input_queue_count** (Number)
-- **input_queue_drops** (Number)
-- **input_queue_flushes** (Number)
-- **input_queue_max_depth** (Number)
-- **input_ratebps** (Number)
-- **operational_status** (String)
-- **output_drop** (Number)
-- **output_packets** (Number)
-- **output_queue_count** (Number)
-- **output_queue_depth** (Number)
-- **output_ratebps** (Number)
-- **refreshed_at** (Number)
+- `admin_status` (String)
+- `input_packets` (Number)
+- `input_queue_count` (Number)
+- `input_queue_drops` (Number)
+- `input_queue_flushes` (Number)
+- `input_queue_max_depth` (Number)
+- `input_ratebps` (Number)
+- `operational_status` (String)
+- `output_drop` (Number)
+- `output_packets` (Number)
+- `output_queue_count` (Number)
+- `output_queue_depth` (Number)
+- `output_ratebps` (Number)
+- `refreshed_at` (Number)
 
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info"></a>
@@ -931,22 +931,22 @@ Read-Only:
 
 Read-Only:
 
-- **control_plane** (String)
-- **data_packet_encapsulation** (String)
-- **dest_ip** (String)
-- **dest_port** (String)
-- **protocol** (String)
-- **source_ip** (String)
-- **source_port** (String)
-- **vxlan_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info--vxlan_info))
+- `control_plane` (String)
+- `data_packet_encapsulation` (String)
+- `dest_ip` (String)
+- `dest_port` (String)
+- `protocol` (String)
+- `source_ip` (String)
+- `source_port` (String)
+- `vxlan_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info--vxlan_info))
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info--vxlan_info"></a>
 ### Nested Schema for `item.network_elements_info.egress_interface.virtual_interface.path_overlay_info.vxlan_info`
 
 Read-Only:
 
-- **dscp** (String)
-- **vnid** (String)
+- `dscp` (String)
+- `vnid` (String)
 
 
 
@@ -955,16 +955,16 @@ Read-Only:
 
 Read-Only:
 
-- **class_map_name** (String)
-- **drop_rate** (Number)
-- **num_bytes** (Number)
-- **num_packets** (Number)
-- **offered_rate** (Number)
-- **queue_bandwidthbps** (String)
-- **queue_depth** (Number)
-- **queue_no_buffer_drops** (Number)
-- **queue_total_drops** (Number)
-- **refreshed_at** (Number)
+- `class_map_name` (String)
+- `drop_rate` (Number)
+- `num_bytes` (Number)
+- `num_packets` (Number)
+- `offered_rate` (Number)
+- `queue_bandwidthbps` (String)
+- `queue_depth` (Number)
+- `queue_no_buffer_drops` (Number)
+- `queue_total_drops` (Number)
+- `refreshed_at` (Number)
 
 
 
@@ -973,52 +973,52 @@ Read-Only:
 
 Read-Only:
 
-- **acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis))
-- **id** (String)
-- **interface_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--interface_statistics))
-- **interface_stats_collection** (String)
-- **interface_stats_collection_failure_reason** (String)
-- **name** (String)
-- **path_overlay_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info))
-- **qos_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--qos_statistics))
-- **qos_stats_collection** (String)
-- **qos_stats_collection_failure_reason** (String)
-- **used_vlan** (String)
-- **vrf_name** (String)
+- `acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis))
+- `id` (String)
+- `interface_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--interface_statistics))
+- `interface_stats_collection` (String)
+- `interface_stats_collection_failure_reason` (String)
+- `name` (String)
+- `path_overlay_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info))
+- `qos_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--qos_statistics))
+- `qos_stats_collection` (String)
+- `qos_stats_collection_failure_reason` (String)
+- `used_vlan` (String)
+- `vrf_name` (String)
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis"></a>
 ### Nested Schema for `item.network_elements_info.egress_interface.virtual_interface.acl_analysis`
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--matching_aces"></a>
 ### Nested Schema for `item.network_elements_info.egress_interface.virtual_interface.acl_analysis.result`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--matching_ports"></a>
 ### Nested Schema for `item.network_elements_info.egress_interface.virtual_interface.acl_analysis.result.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--acl_analysis--result--result--ports"></a>
 ### Nested Schema for `item.network_elements_info.egress_interface.virtual_interface.acl_analysis.result.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -1029,20 +1029,20 @@ Read-Only:
 
 Read-Only:
 
-- **admin_status** (String)
-- **input_packets** (Number)
-- **input_queue_count** (Number)
-- **input_queue_drops** (Number)
-- **input_queue_flushes** (Number)
-- **input_queue_max_depth** (Number)
-- **input_ratebps** (Number)
-- **operational_status** (String)
-- **output_drop** (Number)
-- **output_packets** (Number)
-- **output_queue_count** (Number)
-- **output_queue_depth** (Number)
-- **output_ratebps** (Number)
-- **refreshed_at** (Number)
+- `admin_status` (String)
+- `input_packets` (Number)
+- `input_queue_count` (Number)
+- `input_queue_drops` (Number)
+- `input_queue_flushes` (Number)
+- `input_queue_max_depth` (Number)
+- `input_ratebps` (Number)
+- `operational_status` (String)
+- `output_drop` (Number)
+- `output_packets` (Number)
+- `output_queue_count` (Number)
+- `output_queue_depth` (Number)
+- `output_ratebps` (Number)
+- `refreshed_at` (Number)
 
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info"></a>
@@ -1050,22 +1050,22 @@ Read-Only:
 
 Read-Only:
 
-- **control_plane** (String)
-- **data_packet_encapsulation** (String)
-- **dest_ip** (String)
-- **dest_port** (String)
-- **protocol** (String)
-- **source_ip** (String)
-- **source_port** (String)
-- **vxlan_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info--vxlan_info))
+- `control_plane` (String)
+- `data_packet_encapsulation` (String)
+- `dest_ip` (String)
+- `dest_port` (String)
+- `protocol` (String)
+- `source_ip` (String)
+- `source_port` (String)
+- `vxlan_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info--vxlan_info))
 
 <a id="nestedobjatt--item--network_elements_info--egress_interface--virtual_interface--path_overlay_info--vxlan_info"></a>
 ### Nested Schema for `item.network_elements_info.egress_interface.virtual_interface.path_overlay_info.vxlan_info`
 
 Read-Only:
 
-- **dscp** (String)
-- **vnid** (String)
+- `dscp` (String)
+- `vnid` (String)
 
 
 
@@ -1074,16 +1074,16 @@ Read-Only:
 
 Read-Only:
 
-- **class_map_name** (String)
-- **drop_rate** (Number)
-- **num_bytes** (Number)
-- **num_packets** (Number)
-- **offered_rate** (Number)
-- **queue_bandwidthbps** (String)
-- **queue_depth** (Number)
-- **queue_no_buffer_drops** (Number)
-- **queue_total_drops** (Number)
-- **refreshed_at** (Number)
+- `class_map_name` (String)
+- `drop_rate` (Number)
+- `num_bytes` (Number)
+- `num_packets` (Number)
+- `offered_rate` (Number)
+- `queue_bandwidthbps` (String)
+- `queue_depth` (Number)
+- `queue_no_buffer_drops` (Number)
+- `queue_total_drops` (Number)
+- `refreshed_at` (Number)
 
 
 
@@ -1093,46 +1093,46 @@ Read-Only:
 
 Read-Only:
 
-- **authentication** (String)
-- **data_switching** (String)
-- **egress_acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--egress_acl_analysis))
-- **ingress_acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--ingress_acl_analysis))
-- **wireless_lan_controller_id** (String)
-- **wireless_lan_controller_name** (String)
+- `authentication` (String)
+- `data_switching` (String)
+- `egress_acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--egress_acl_analysis))
+- `ingress_acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--ingress_acl_analysis))
+- `wireless_lan_controller_id` (String)
+- `wireless_lan_controller_name` (String)
 
 <a id="nestedobjatt--item--network_elements_info--flex_connect--egress_acl_analysis"></a>
 ### Nested Schema for `item.network_elements_info.flex_connect.wireless_lan_controller_name`
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces"></a>
 ### Nested Schema for `item.network_elements_info.flex_connect.wireless_lan_controller_name.matching_aces`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports"></a>
 ### Nested Schema for `item.network_elements_info.flex_connect.wireless_lan_controller_name.matching_aces.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--result--ports"></a>
 ### Nested Schema for `item.network_elements_info.flex_connect.wireless_lan_controller_name.matching_aces.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -1143,34 +1143,34 @@ Read-Only:
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces"></a>
 ### Nested Schema for `item.network_elements_info.flex_connect.wireless_lan_controller_name.matching_aces`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--matching_ports"></a>
 ### Nested Schema for `item.network_elements_info.flex_connect.wireless_lan_controller_name.matching_aces.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements_info--flex_connect--wireless_lan_controller_name--matching_aces--result--ports"></a>
 ### Nested Schema for `item.network_elements_info.flex_connect.wireless_lan_controller_name.matching_aces.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -1182,60 +1182,60 @@ Read-Only:
 
 Read-Only:
 
-- **physical_interface** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--physical_interface))
-- **virtual_interface** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface))
+- `physical_interface` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--physical_interface))
+- `virtual_interface` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface))
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--physical_interface"></a>
 ### Nested Schema for `item.network_elements_info.ingress_interface.virtual_interface`
 
 Read-Only:
 
-- **acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis))
-- **id** (String)
-- **interface_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--interface_statistics))
-- **interface_stats_collection** (String)
-- **interface_stats_collection_failure_reason** (String)
-- **name** (String)
-- **path_overlay_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info))
-- **qos_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--qos_statistics))
-- **qos_stats_collection** (String)
-- **qos_stats_collection_failure_reason** (String)
-- **used_vlan** (String)
-- **vrf_name** (String)
+- `acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis))
+- `id` (String)
+- `interface_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--interface_statistics))
+- `interface_stats_collection` (String)
+- `interface_stats_collection_failure_reason` (String)
+- `name` (String)
+- `path_overlay_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info))
+- `qos_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--qos_statistics))
+- `qos_stats_collection` (String)
+- `qos_stats_collection_failure_reason` (String)
+- `used_vlan` (String)
+- `vrf_name` (String)
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis"></a>
 ### Nested Schema for `item.network_elements_info.ingress_interface.virtual_interface.acl_analysis`
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--matching_aces"></a>
 ### Nested Schema for `item.network_elements_info.ingress_interface.virtual_interface.acl_analysis.result`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--matching_ports"></a>
 ### Nested Schema for `item.network_elements_info.ingress_interface.virtual_interface.acl_analysis.result.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--result--ports"></a>
 ### Nested Schema for `item.network_elements_info.ingress_interface.virtual_interface.acl_analysis.result.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -1246,20 +1246,20 @@ Read-Only:
 
 Read-Only:
 
-- **admin_status** (String)
-- **input_packets** (Number)
-- **input_queue_count** (Number)
-- **input_queue_drops** (Number)
-- **input_queue_flushes** (Number)
-- **input_queue_max_depth** (Number)
-- **input_ratebps** (Number)
-- **operational_status** (String)
-- **output_drop** (Number)
-- **output_packets** (Number)
-- **output_queue_count** (Number)
-- **output_queue_depth** (Number)
-- **output_ratebps** (Number)
-- **refreshed_at** (Number)
+- `admin_status` (String)
+- `input_packets` (Number)
+- `input_queue_count` (Number)
+- `input_queue_drops` (Number)
+- `input_queue_flushes` (Number)
+- `input_queue_max_depth` (Number)
+- `input_ratebps` (Number)
+- `operational_status` (String)
+- `output_drop` (Number)
+- `output_packets` (Number)
+- `output_queue_count` (Number)
+- `output_queue_depth` (Number)
+- `output_ratebps` (Number)
+- `refreshed_at` (Number)
 
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info"></a>
@@ -1267,22 +1267,22 @@ Read-Only:
 
 Read-Only:
 
-- **control_plane** (String)
-- **data_packet_encapsulation** (String)
-- **dest_ip** (String)
-- **dest_port** (String)
-- **protocol** (String)
-- **source_ip** (String)
-- **source_port** (String)
-- **vxlan_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info--vxlan_info))
+- `control_plane` (String)
+- `data_packet_encapsulation` (String)
+- `dest_ip` (String)
+- `dest_port` (String)
+- `protocol` (String)
+- `source_ip` (String)
+- `source_port` (String)
+- `vxlan_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info--vxlan_info))
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info--vxlan_info"></a>
 ### Nested Schema for `item.network_elements_info.ingress_interface.virtual_interface.path_overlay_info.vxlan_info`
 
 Read-Only:
 
-- **dscp** (String)
-- **vnid** (String)
+- `dscp` (String)
+- `vnid` (String)
 
 
 
@@ -1291,16 +1291,16 @@ Read-Only:
 
 Read-Only:
 
-- **class_map_name** (String)
-- **drop_rate** (Number)
-- **num_bytes** (Number)
-- **num_packets** (Number)
-- **offered_rate** (Number)
-- **queue_bandwidthbps** (String)
-- **queue_depth** (Number)
-- **queue_no_buffer_drops** (Number)
-- **queue_total_drops** (Number)
-- **refreshed_at** (Number)
+- `class_map_name` (String)
+- `drop_rate` (Number)
+- `num_bytes` (Number)
+- `num_packets` (Number)
+- `offered_rate` (Number)
+- `queue_bandwidthbps` (String)
+- `queue_depth` (Number)
+- `queue_no_buffer_drops` (Number)
+- `queue_total_drops` (Number)
+- `refreshed_at` (Number)
 
 
 
@@ -1309,52 +1309,52 @@ Read-Only:
 
 Read-Only:
 
-- **acl_analysis** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis))
-- **id** (String)
-- **interface_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--interface_statistics))
-- **interface_stats_collection** (String)
-- **interface_stats_collection_failure_reason** (String)
-- **name** (String)
-- **path_overlay_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info))
-- **qos_statistics** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--qos_statistics))
-- **qos_stats_collection** (String)
-- **qos_stats_collection_failure_reason** (String)
-- **used_vlan** (String)
-- **vrf_name** (String)
+- `acl_analysis` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis))
+- `id` (String)
+- `interface_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--interface_statistics))
+- `interface_stats_collection` (String)
+- `interface_stats_collection_failure_reason` (String)
+- `name` (String)
+- `path_overlay_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info))
+- `qos_statistics` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--qos_statistics))
+- `qos_stats_collection` (String)
+- `qos_stats_collection_failure_reason` (String)
+- `used_vlan` (String)
+- `vrf_name` (String)
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis"></a>
 ### Nested Schema for `item.network_elements_info.ingress_interface.virtual_interface.acl_analysis`
 
 Read-Only:
 
-- **acl_name** (String)
-- **matching_aces** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--matching_aces))
-- **result** (String)
+- `acl_name` (String)
+- `matching_aces` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--matching_aces))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--matching_aces"></a>
 ### Nested Schema for `item.network_elements_info.ingress_interface.virtual_interface.acl_analysis.result`
 
 Read-Only:
 
-- **ace** (String)
-- **matching_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--matching_ports))
-- **result** (String)
+- `ace` (String)
+- `matching_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--matching_ports))
+- `result` (String)
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--matching_ports"></a>
 ### Nested Schema for `item.network_elements_info.ingress_interface.virtual_interface.acl_analysis.result.result`
 
 Read-Only:
 
-- **ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--result--ports))
-- **protocol** (String)
+- `ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--result--ports))
+- `protocol` (String)
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--acl_analysis--result--result--ports"></a>
 ### Nested Schema for `item.network_elements_info.ingress_interface.virtual_interface.acl_analysis.result.result.protocol`
 
 Read-Only:
 
-- **dest_ports** (List of String)
-- **source_ports** (List of String)
+- `dest_ports` (List of String)
+- `source_ports` (List of String)
 
 
 
@@ -1365,20 +1365,20 @@ Read-Only:
 
 Read-Only:
 
-- **admin_status** (String)
-- **input_packets** (Number)
-- **input_queue_count** (Number)
-- **input_queue_drops** (Number)
-- **input_queue_flushes** (Number)
-- **input_queue_max_depth** (Number)
-- **input_ratebps** (Number)
-- **operational_status** (String)
-- **output_drop** (Number)
-- **output_packets** (Number)
-- **output_queue_count** (Number)
-- **output_queue_depth** (Number)
-- **output_ratebps** (Number)
-- **refreshed_at** (Number)
+- `admin_status` (String)
+- `input_packets` (Number)
+- `input_queue_count` (Number)
+- `input_queue_drops` (Number)
+- `input_queue_flushes` (Number)
+- `input_queue_max_depth` (Number)
+- `input_ratebps` (Number)
+- `operational_status` (String)
+- `output_drop` (Number)
+- `output_packets` (Number)
+- `output_queue_count` (Number)
+- `output_queue_depth` (Number)
+- `output_ratebps` (Number)
+- `refreshed_at` (Number)
 
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info"></a>
@@ -1386,22 +1386,22 @@ Read-Only:
 
 Read-Only:
 
-- **control_plane** (String)
-- **data_packet_encapsulation** (String)
-- **dest_ip** (String)
-- **dest_port** (String)
-- **protocol** (String)
-- **source_ip** (String)
-- **source_port** (String)
-- **vxlan_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info--vxlan_info))
+- `control_plane` (String)
+- `data_packet_encapsulation` (String)
+- `dest_ip` (String)
+- `dest_port` (String)
+- `protocol` (String)
+- `source_ip` (String)
+- `source_port` (String)
+- `vxlan_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info--vxlan_info))
 
 <a id="nestedobjatt--item--network_elements_info--ingress_interface--virtual_interface--path_overlay_info--vxlan_info"></a>
 ### Nested Schema for `item.network_elements_info.ingress_interface.virtual_interface.path_overlay_info.vxlan_info`
 
 Read-Only:
 
-- **dscp** (String)
-- **vnid** (String)
+- `dscp` (String)
+- `vnid` (String)
 
 
 
@@ -1410,16 +1410,16 @@ Read-Only:
 
 Read-Only:
 
-- **class_map_name** (String)
-- **drop_rate** (Number)
-- **num_bytes** (Number)
-- **num_packets** (Number)
-- **offered_rate** (Number)
-- **queue_bandwidthbps** (String)
-- **queue_depth** (Number)
-- **queue_no_buffer_drops** (Number)
-- **queue_total_drops** (Number)
-- **refreshed_at** (Number)
+- `class_map_name` (String)
+- `drop_rate` (Number)
+- `num_bytes` (Number)
+- `num_packets` (Number)
+- `offered_rate` (Number)
+- `queue_bandwidthbps` (String)
+- `queue_depth` (Number)
+- `queue_no_buffer_drops` (Number)
+- `queue_total_drops` (Number)
+- `refreshed_at` (Number)
 
 
 
@@ -1429,24 +1429,24 @@ Read-Only:
 
 Read-Only:
 
-- **byte_rate** (Number)
-- **dest_ip_address** (String)
-- **dest_port** (String)
-- **input_interface** (String)
-- **ipv4_dsc_p** (String)
-- **ipv4_ttl** (Number)
-- **output_interface** (String)
-- **packet_bytes** (Number)
-- **packet_count** (Number)
-- **packet_loss** (Number)
-- **packet_loss_percentage** (Number)
-- **protocol** (String)
-- **refreshed_at** (Number)
-- **rtp_jitter_max** (Number)
-- **rtp_jitter_mean** (Number)
-- **rtp_jitter_min** (Number)
-- **source_ip_address** (String)
-- **source_port** (String)
+- `byte_rate` (Number)
+- `dest_ip_address` (String)
+- `dest_port` (String)
+- `input_interface` (String)
+- `ipv4_dsc_p` (String)
+- `ipv4_ttl` (Number)
+- `output_interface` (String)
+- `packet_bytes` (Number)
+- `packet_count` (Number)
+- `packet_loss` (Number)
+- `packet_loss_percentage` (Number)
+- `protocol` (String)
+- `refreshed_at` (Number)
+- `rtp_jitter_max` (Number)
+- `rtp_jitter_mean` (Number)
+- `rtp_jitter_min` (Number)
+- `source_ip_address` (String)
+- `source_port` (String)
 
 
 
@@ -1455,19 +1455,19 @@ Read-Only:
 
 Read-Only:
 
-- **control_path** (String)
-- **create_time** (Number)
-- **dest_ip** (String)
-- **dest_port** (String)
-- **failure_reason** (String)
-- **id** (String)
-- **inclusions** (List of String)
-- **last_update_time** (Number)
-- **periodic_refresh** (String)
-- **protocol** (String)
-- **source_ip** (String)
-- **source_port** (String)
-- **status** (String)
+- `control_path` (String)
+- `create_time` (Number)
+- `dest_ip` (String)
+- `dest_port` (String)
+- `failure_reason` (String)
+- `id` (String)
+- `inclusions` (List of String)
+- `last_update_time` (Number)
+- `periodic_refresh` (String)
+- `protocol` (String)
+- `source_ip` (String)
+- `source_port` (String)
+- `status` (String)
 
 
 
@@ -1476,18 +1476,18 @@ Read-Only:
 
 Read-Only:
 
-- **control_path** (String)
-- **create_time** (Number)
-- **dest_ip** (String)
-- **dest_port** (String)
-- **failure_reason** (String)
-- **id** (String)
-- **inclusions** (List of String)
-- **last_update_time** (Number)
-- **periodic_refresh** (String)
-- **protocol** (String)
-- **source_ip** (String)
-- **source_port** (String)
-- **status** (String)
+- `control_path` (String)
+- `create_time` (Number)
+- `dest_ip` (String)
+- `dest_port` (String)
+- `failure_reason` (String)
+- `id` (String)
+- `inclusions` (List of String)
+- `last_update_time` (Number)
+- `periodic_refresh` (String)
+- `protocol` (String)
+- `source_ip` (String)
+- `source_port` (String)
+- `status` (String)
 
 

@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -48,7 +48,6 @@ func resourceApplicationSets() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"identity_source": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -60,7 +59,6 @@ func resourceApplicationSets() *schema.Resource {
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"type": &schema.Schema{
 										Description: `Type`,
 										Type:        schema.TypeString,
@@ -69,7 +67,6 @@ func resourceApplicationSets() *schema.Resource {
 								},
 							},
 						},
-
 						"name": &schema.Schema{
 							Description: `Name`,
 							Type:        schema.TypeString,
@@ -81,23 +78,25 @@ func resourceApplicationSets() *schema.Resource {
 			"parameters": &schema.Schema{
 				Description: `Array of RequestApplicationPolicyCreateApplicationSet`,
 				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Required:    true,
-							ForceNew:    true,
-						},
-						"id": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
+						"payload": &schema.Schema{
+							Type:     schema.TypeList,
+							Required: true,
+							MaxItems: 1,
+							MinItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Description: `Name`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Default:     "",
+									},
+								}}},
 					},
 				},
 			},
@@ -111,28 +110,22 @@ func resourceApplicationSetsCreate(ctx context.Context, d *schema.ResourceData, 
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
+	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
+	request1 := expandRequestApplicationSetsCreateApplicationSet(ctx, "parameters.0", d)
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vName := resourceItem["name"]
-
 	vvName := interfaceToString(vName)
-
-	queryParams1 := dnacentersdkgo.GetApplicationSetsQueryParams{}
-
-	queryParams1.Name = vvName
-
-	item, err := searchApplicationPolicyGetApplicationSets(m, queryParams1)
-	if err != nil || item != nil {
+	queryParamImport := dnacentersdkgo.GetApplicationSetsQueryParams{}
+	queryParamImport.Name = vvName
+	item2, err := searchApplicationPolicyGetApplicationSets(m, queryParamImport, "")
+	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["name"] = vvName
+		resourceMap["id"] = item2.ID
 		d.SetId(joinResourceID(resourceMap))
 		return resourceApplicationSetsRead(ctx, d, m)
 	}
-	request1 := expandRequestApplicationSetsCreateApplicationSet(ctx, "parameters", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
-
 	resp1, restyResp1, err := client.ApplicationPolicy.CreateApplicationSet(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -165,16 +158,26 @@ func resourceApplicationSetsCreate(ctx context.Context, d *schema.ResourceData, 
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
 				"Failure when executing CreateApplicationSet", err1))
 			return diags
 		}
 	}
+	queryParamValidate := dnacentersdkgo.GetApplicationSetsQueryParams{}
+	queryParamValidate.Name = vvName
+	item3, err := searchApplicationPolicyGetApplicationSets(m, queryParamValidate, "")
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing CreateApplicationSet", err,
+			"Failure at CreateApplicationSet, unexpected response", ""))
+		return diags
+	}
 
 	resourceMap := make(map[string]string)
 	resourceMap["name"] = vvName
+	resourceMap["id"] = item3.ID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceApplicationSetsRead(ctx, d, m)
 }
@@ -184,31 +187,25 @@ func resourceApplicationSetsRead(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vName := resourceMap["name"]
+
+	vvName := resourceMap["name"]
+	vvID := resourceMap["id"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetApplicationSets")
+		log.Printf("[DEBUG] Selected method: GetApplicationSets")
 		queryParams1 := dnacentersdkgo.GetApplicationSetsQueryParams{}
-
-		queryParams1.Name = vName
-
-		response1, err := searchApplicationPolicyGetApplicationSets(m, queryParams1)
-
-		if err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetApplicationSets search response",
-				err))
-			return diags
-		}
-		if response1 == nil {
+		queryParams1.Name = vvName
+		item1, err := searchApplicationPolicyGetApplicationSets(m, queryParams1, vvID)
+		if err != nil || item1 == nil {
 			d.SetId("")
 			return diags
 		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		vItem1 := flattenApplicationPolicyGetApplicationSetsItem(response1)
+		// Review flatten function used
+		items := []dnacentersdkgo.ResponseApplicationPolicyGetApplicationSetsResponse{
+			*item1,
+		}
+		vItem1 := flattenApplicationPolicyGetApplicationSetsItems(&items)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetApplicationSets search response",
@@ -227,32 +224,18 @@ func resourceApplicationSetsUpdate(ctx context.Context, d *schema.ResourceData, 
 func resourceApplicationSetsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	client := m.(*dnacentersdkgo.Client)
+
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vName := resourceMap["name"]
-	var vID string
-	selectedMethod := 1
-	queryParams1 := dnacentersdkgo.GetApplicationSetsQueryParams{}
 
-	queryParams1.Name = vName
+	queryParamDelete := dnacentersdkgo.DeleteApplicationSetQueryParams{}
 
-	queryParams2 := dnacentersdkgo.DeleteApplicationSetQueryParams{}
+	vvID := resourceMap["id"]
+	queryParamDelete.ID = vvID
 
-	// REVIEW: Add getAllItems and search function to get missing params
-	if selectedMethod == 1 {
-
-		item1, err := searchApplicationPolicyGetApplicationSets(m, queryParams1)
-		if err != nil || item1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		vID = item1.ID
-	}
-
-	queryParams2.ID = vID
-	response1, restyResp1, err := client.ApplicationPolicy.DeleteApplicationSet(&queryParams2)
+	response1, restyResp1, err := client.ApplicationPolicy.DeleteApplicationSet(&queryParamDelete)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -267,6 +250,35 @@ func resourceApplicationSetsDelete(ctx context.Context, d *schema.ResourceData, 
 		return diags
 	}
 
+	if response1.Response == nil {
+		diags = append(diags, diagError(
+			"Failure when executing DeleteApplicationSet", err))
+		return diags
+	}
+	taskId := response1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
+			diags = append(diags, diagError(
+				"Failure when executing DeleteApplicationSet", err1))
+			return diags
+		}
+	}
+
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")
@@ -275,13 +287,12 @@ func resourceApplicationSetsDelete(ctx context.Context, d *schema.ResourceData, 
 }
 func expandRequestApplicationSetsCreateApplicationSet(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestApplicationPolicyCreateApplicationSet {
 	request := dnacentersdkgo.RequestApplicationPolicyCreateApplicationSet{}
-	if v := expandRequestApplicationSetsCreateApplicationSetItemArray(ctx, key, d); v != nil {
+	if v := expandRequestApplicationSetsCreateApplicationSetItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -305,7 +316,6 @@ func expandRequestApplicationSetsCreateApplicationSetItemArray(ctx context.Conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -317,35 +327,48 @@ func expandRequestApplicationSetsCreateApplicationSetItem(ctx context.Context, k
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchApplicationPolicyGetApplicationSets(m interface{}, queryParams dnacentersdkgo.GetApplicationSetsQueryParams) (*dnacentersdkgo.ResponseApplicationPolicyGetApplicationSetsResponse, error) {
+func searchApplicationPolicyGetApplicationSets(m interface{}, queryParams dnacentersdkgo.GetApplicationSetsQueryParams, vID string) (*dnacentersdkgo.ResponseApplicationPolicyGetApplicationSetsResponse, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseApplicationPolicyGetApplicationSetsResponse
 	var ite *dnacentersdkgo.ResponseApplicationPolicyGetApplicationSets
-	ite, _, err = client.ApplicationPolicy.GetApplicationSets(&queryParams)
-
-	if ite == nil {
-		return foundItem, err
-	}
-
-	if ite.Response == nil {
-		return foundItem, err
-	}
-
-	items := ite.Response
-	itemsCopy := *items
-	for _, item := range itemsCopy {
-		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.Name {
-			var getItem *dnacentersdkgo.ResponseApplicationPolicyGetApplicationSetsResponse
-			getItem = &item
-			foundItem = getItem
+	if vID != "" {
+		queryParams.Offset = 1
+		queryParams.Name = ""
+		nResponse, _, err := client.ApplicationPolicy.GetApplicationSets(&queryParams)
+		maxPageSize := len(*nResponse.Response)
+		for len(*nResponse.Response) > 0 {
+			time.Sleep(15 * time.Second)
+			for _, item := range *nResponse.Response {
+				if vID == item.ID {
+					foundItem = &item
+					return foundItem, err
+				}
+			}
+			queryParams.Limit = float64(maxPageSize)
+			queryParams.Offset += float64(maxPageSize)
+			nResponse, _, err = client.ApplicationPolicy.GetApplicationSets(&queryParams)
+		}
+		return nil, err
+	} else if queryParams.Name != "" {
+		ite, _, err = client.ApplicationPolicy.GetApplicationSets(&queryParams)
+		if err != nil || ite == nil {
 			return foundItem, err
 		}
+		itemsCopy := *ite.Response
+		if itemsCopy == nil {
+			return foundItem, err
+		}
+		for _, item := range itemsCopy {
+			if item.Name == queryParams.Name {
+				foundItem = &item
+				return foundItem, err
+			}
+		}
+		return foundItem, err
 	}
 	return foundItem, err
 }

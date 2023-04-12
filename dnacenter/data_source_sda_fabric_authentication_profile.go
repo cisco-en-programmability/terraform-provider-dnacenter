@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -31,28 +31,67 @@ func dataSourceSdaFabricAuthenticationProfile() *schema.Resource {
 				Required:    true,
 			},
 
-			"item": &schema.Schema{
+			"items": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"authenticate_template_id": &schema.Schema{
-							Description: `Authenticate Template Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"authenticate_template_name": &schema.Schema{
+							Description: `Authenticate Template Name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
-						"authenticate_template_name": &schema.Schema{
-							Description: `Authenticate Template Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"authentication_order": &schema.Schema{
+							Description: `Authentication Order
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"description": &schema.Schema{
+							Description: `Authenticate Template info reterieved successfully in sda fabric site
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"dot1x_to_mab_fallback_timeout": &schema.Schema{
+							Description: `Dot1x To Mab Fallback Timeout
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"number_of_hosts": &schema.Schema{
+							Description: `Number Of Hosts
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Path of sda Fabric Site
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"status": &schema.Schema{
+							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"wake_on_lan": &schema.Schema{
+							Description: `Wake On Lan
+`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -70,7 +109,7 @@ func dataSourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDefaultAuthenticationProfileFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetDefaultAuthenticationProfileFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetDefaultAuthenticationProfileFromSdaFabricQueryParams{}
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy.(string)
@@ -93,13 +132,14 @@ func dataSourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItem(response1)
-		if err := d.Set("item", vItem1); err != nil {
+		vItems1 := flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItems(response1)
+		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDefaultAuthenticationProfileFromSdaFabric response",
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -107,15 +147,22 @@ func dataSourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema
 	return diags
 }
 
-func flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItem(item *dnacentersdkgo.ResponseSdaGetDefaultAuthenticationProfileFromSdaFabric) []map[string]interface{} {
-	if item == nil {
+func flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItems(items *dnacentersdkgo.ResponseSdaGetDefaultAuthenticationProfileFromSdaFabric) []map[string]interface{} {
+	if items == nil {
 		return nil
 	}
-	respItem := make(map[string]interface{})
-	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
-	respItem["authenticate_template_name"] = item.AuthenticateTemplateName
-	respItem["authenticate_template_id"] = item.AuthenticateTemplateID
-	return []map[string]interface{}{
-		respItem,
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+		respItem["authenticate_template_name"] = item.AuthenticateTemplateName
+		respItem["authentication_order"] = item.AuthenticationOrder
+		respItem["dot1x_to_mab_fallback_timeout"] = item.Dot1XToMabFallbackTimeout
+		respItem["wake_on_lan"] = boolPtrToString(item.WakeOnLan)
+		respItem["number_of_hosts"] = item.NumberOfHosts
+		respItem["status"] = item.Status
+		respItem["description"] = item.Description
+		respItems = append(respItems, respItem)
 	}
+	return respItems
 }

@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -46,7 +46,7 @@ func resourcePnpDeviceReset() *schema.Resource {
 						},
 						"json_response": &schema.Schema{
 							Description: `Json Response`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 						"message": &schema.Schema{
@@ -74,6 +74,7 @@ func resourcePnpDeviceReset() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -81,6 +82,7 @@ func resourcePnpDeviceReset() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -88,11 +90,13 @@ func resourcePnpDeviceReset() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"config_parameters": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -100,11 +104,13 @@ func resourcePnpDeviceReset() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"value": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -116,21 +122,25 @@ func resourcePnpDeviceReset() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"license_level": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"license_type": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"top_of_stack_serial_number": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 								},
 							},
@@ -139,11 +149,13 @@ func resourcePnpDeviceReset() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"workflow_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -168,9 +180,9 @@ func resourcePnpDeviceResetCreate(ctx context.Context, d *schema.ResourceData, m
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ResetDevice", err,
-			"Failure at ResetDevice, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -186,6 +198,7 @@ func resourcePnpDeviceResetCreate(ctx context.Context, d *schema.ResourceData, m
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

@@ -31,43 +31,57 @@ output "dnacenter_wireless_enterprise_ssid_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **ssid_name** (String) ssidName query parameter. Enter the enterprise SSID name that needs to be retrieved. If not entered, all the enterprise SSIDs will be retrieved.
+- `ssid_name` (String) ssidName query parameter. Enter the enterprise SSID name that needs to be retrieved. If not entered, all the enterprise SSIDs will be retrieved.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **group_uuid** (String)
-- **inherited_group_name** (String)
-- **inherited_group_uuid** (String)
-- **instance_uuid** (String)
-- **ssid_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--ssid_details))
-- **version** (Number)
+- `group_uuid` (String)
+- `inherited_group_name` (String)
+- `inherited_group_uuid` (String)
+- `instance_uuid` (String)
+- `ssid_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--ssid_details))
+- `version` (Number)
 
 <a id="nestedobjatt--items--ssid_details"></a>
 ### Nested Schema for `items.ssid_details`
 
 Read-Only:
 
-- **auth_server** (String)
-- **enable_broadcast_ssi_d** (String)
-- **enable_fast_lane** (String)
-- **enable_mac_filtering** (String)
-- **fast_transition** (String)
-- **is_enabled** (String)
-- **is_fabric** (String)
-- **name** (String)
-- **nas_options** (List of String)
-- **passphrase** (String)
-- **radio_policy** (String)
-- **security_level** (String)
-- **traffic_type** (String)
-- **wlan_type** (String)
+- `aaa_override` (String)
+- `auth_server` (String)
+- `client_rate_limit` (Number)
+- `coverage_hole_detection_enable` (String)
+- `enable_broadcast_ssi_d` (String)
+- `enable_fast_lane` (String)
+- `enable_mac_filtering` (String)
+- `fast_transition` (String)
+- `is_enabled` (String)
+- `is_fabric` (String)
+- `multi_psk_settings` (List of Object) (see [below for nested schema](#nestedobjatt--items--ssid_details--multi_psk_settings))
+- `name` (String)
+- `nas_options` (List of String)
+- `passphrase` (String)
+- `protected_management_frame` (String)
+- `radio_policy` (String)
+- `security_level` (String)
+- `traffic_type` (String)
+- `wlan_type` (String)
+
+<a id="nestedobjatt--items--ssid_details--multi_psk_settings"></a>
+### Nested Schema for `items.ssid_details.multi_psk_settings`
+
+Read-Only:
+
+- `passphrase` (String)
+- `passphrase_type` (String)
+- `priority` (Number)
 
 

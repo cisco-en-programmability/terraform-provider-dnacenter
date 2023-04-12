@@ -33,29 +33,26 @@ output "dnacenter_license_term_details_example" {
 
 ### Required
 
-- **device_type** (String) device_type query parameter. Type of device like router, switch, wireless or ise
-- **smart_account_id** (String) smart_account_id path parameter. Id of smart account
-- **virtual_account_name** (String) virtual_account_name path parameter. Name of virtual account. Putting "All" will give license term detail for all virtual accounts.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_type` (String) device_type query parameter. Type of device like router, switch, wireless or ise
+- `smart_account_id` (String) smart_account_id path parameter. Id of smart account
+- `virtual_account_name` (String) virtual_account_name path parameter. Name of virtual account. Putting "All" will give license term detail for all virtual accounts.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **dna_level** (String)
-- **is_license_expired** (String)
-- **license_term_end_date** (String)
-- **license_term_start_date** (String)
-- **model** (String)
-- **purchased_dna_license_count** (String)
-- **virtual_account_name** (String)
+- `dna_level` (String)
+- `is_license_expired` (String)
+- `license_term_end_date` (String)
+- `license_term_start_date` (String)
+- `model` (String)
+- `purchased_dna_license_count` (String)
+- `virtual_account_name` (String)
 
 

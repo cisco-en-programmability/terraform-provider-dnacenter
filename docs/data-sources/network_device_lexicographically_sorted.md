@@ -58,40 +58,40 @@ output "dnacenter_network_device_lexicographically_sorted_example" {
 
 ### Optional
 
-- **associated_wlc_ip** (String) associatedWlcIp query parameter.
-- **collection_interval** (String) collectionInterval query parameter.
-- **collection_status** (String) collectionStatus query parameter.
-- **error_code** (String) errorCode query parameter.
-- **family** (String) family query parameter.
-- **hostname** (String) hostname query parameter.
-- **id** (String) The ID of this resource.
-- **limit** (Number) limit query parameter.
-- **mac_address** (String) macAddress query parameter.
-- **management_ip_address** (String) managementIpAddress query parameter.
-- **offset** (Number) offset query parameter.
-- **platform_id** (String) platformId query parameter.
-- **reachability_failure_reason** (String) reachabilityFailureReason query parameter.
-- **reachability_status** (String) reachabilityStatus query parameter.
-- **role** (String) role query parameter.
-- **role_source** (String) roleSource query parameter.
-- **serial_number** (String) serialNumber query parameter.
-- **series** (String) series query parameter.
-- **software_type** (String) softwareType query parameter.
-- **software_version** (String) softwareVersion query parameter.
-- **type** (String) type query parameter.
-- **up_time** (String) upTime query parameter.
-- **vrf_name** (String) vrfName query parameter.
+- `associated_wlc_ip` (String) associatedWlcIp query parameter.
+- `collection_interval` (String) collectionInterval query parameter.
+- `collection_status` (String) collectionStatus query parameter.
+- `error_code` (String) errorCode query parameter.
+- `family` (String) family query parameter.
+- `hostname` (String) hostname query parameter.
+- `limit` (Number) limit query parameter.
+- `mac_address` (String) macAddress query parameter.
+- `management_ip_address` (String) managementIpAddress query parameter.
+- `offset` (Number) offset query parameter.
+- `platform_id` (String) platformId query parameter.
+- `reachability_failure_reason` (String) reachabilityFailureReason query parameter.
+- `reachability_status` (String) reachabilityStatus query parameter.
+- `role` (String) role query parameter.
+- `role_source` (String) roleSource query parameter.
+- `serial_number` (String) serialNumber query parameter.
+- `series` (String) series query parameter.
+- `software_type` (String) softwareType query parameter.
+- `software_version` (String) softwareVersion query parameter.
+- `type` (String) type query parameter.
+- `up_time` (String) upTime query parameter.
+- `vrf_name` (String) vrfName query parameter.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **response** (List of String)
-- **version** (String)
+- `response` (List of String)
+- `version` (String)
 
 

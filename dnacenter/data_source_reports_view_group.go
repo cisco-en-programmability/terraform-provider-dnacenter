@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -127,7 +127,7 @@ func dataSourceReportsViewGroupRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAllViewGroups")
+		log.Printf("[DEBUG] Selected method: GetAllViewGroups")
 
 		response1, restyResp1, err := client.Reports.GetAllViewGroups()
 
@@ -150,12 +150,13 @@ func dataSourceReportsViewGroupRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetViewsForAGivenViewGroup")
+		log.Printf("[DEBUG] Selected method: GetViewsForAGivenViewGroup")
 		vvViewGroupID := vViewGroupID.(string)
 
 		response2, restyResp2, err := client.Reports.GetViewsForAGivenViewGroup(vvViewGroupID)
@@ -179,6 +180,7 @@ func dataSourceReportsViewGroupRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

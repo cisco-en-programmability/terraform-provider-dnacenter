@@ -34,58 +34,58 @@ output "dnacenter_nfv_profile_example" {
 
 ### Required
 
-- **id** (String) id path parameter. ID of network profile to retrieve.
+- `id` (String) id path parameter. ID of network profile to retrieve.
 
 ### Optional
 
-- **limit** (String) limit query parameter. Number of profile to be retrieved
-- **name** (String) name query parameter. Name of network profile to be retrieved
-- **offset** (String) offset query parameter. offset/starting row
+- `limit` (Number) limit query parameter. Number of profile to be retrieved
+- `name` (String) name query parameter. Name of network profile to be retrieved
+- `offset` (Number) offset query parameter. offset/starting row
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **device** (List of Object) (see [below for nested schema](#nestedobjatt--items--device))
-- **id** (String)
-- **profile_name** (String)
+- `device` (List of Object) (see [below for nested schema](#nestedobjatt--items--device))
+- `id` (String)
+- `profile_name` (String)
 
 <a id="nestedobjatt--items--device"></a>
 ### Nested Schema for `items.device`
 
 Read-Only:
 
-- **custom_networks** (List of Object) (see [below for nested schema](#nestedobjatt--items--device--custom_networks))
-- **custom_template** (List of Object) (see [below for nested schema](#nestedobjatt--items--device--custom_template))
-- **device_tag** (String)
-- **device_type** (String)
-- **direct_internet_access_for_firewall** (String)
-- **service_provider_profile** (List of Object) (see [below for nested schema](#nestedobjatt--items--device--service_provider_profile))
-- **services** (List of Object) (see [below for nested schema](#nestedobjatt--items--device--services))
-- **vlan_for_l2** (List of Object) (see [below for nested schema](#nestedobjatt--items--device--vlan_for_l2))
+- `custom_networks` (List of Object) (see [below for nested schema](#nestedobjatt--items--device--custom_networks))
+- `custom_template` (List of Object) (see [below for nested schema](#nestedobjatt--items--device--custom_template))
+- `device_tag` (String)
+- `device_type` (String)
+- `direct_internet_access_for_firewall` (String)
+- `service_provider_profile` (List of Object) (see [below for nested schema](#nestedobjatt--items--device--service_provider_profile))
+- `services` (List of Object) (see [below for nested schema](#nestedobjatt--items--device--services))
+- `vlan_for_l2` (List of Object) (see [below for nested schema](#nestedobjatt--items--device--vlan_for_l2))
 
 <a id="nestedobjatt--items--device--custom_networks"></a>
 ### Nested Schema for `items.device.custom_networks`
 
 Read-Only:
 
-- **connection_type** (String)
-- **network_name** (String)
-- **services_to_connect** (List of Object) (see [below for nested schema](#nestedobjatt--items--device--custom_networks--services_to_connect))
-- **vlan_id** (String)
-- **vlan_mode** (String)
+- `connection_type` (String)
+- `network_name` (String)
+- `services_to_connect` (List of Object) (see [below for nested schema](#nestedobjatt--items--device--custom_networks--services_to_connect))
+- `vlan_id` (String)
+- `vlan_mode` (String)
 
 <a id="nestedobjatt--items--device--custom_networks--services_to_connect"></a>
 ### Nested Schema for `items.device.custom_networks.vlan_mode`
 
 Read-Only:
 
-- **service_name** (String)
+- `service_name` (String)
 
 
 
@@ -94,9 +94,9 @@ Read-Only:
 
 Read-Only:
 
-- **device_type** (String)
-- **template** (String)
-- **template_type** (String)
+- `device_type` (String)
+- `template` (String)
+- `template_type` (String)
 
 
 <a id="nestedobjatt--items--device--service_provider_profile"></a>
@@ -104,10 +104,10 @@ Read-Only:
 
 Read-Only:
 
-- **connect** (String)
-- **connect_default_gateway_on_wan** (String)
-- **link_type** (String)
-- **service_provider** (String)
+- `connect` (String)
+- `connect_default_gateway_on_wan` (String)
+- `link_type` (String)
+- `service_provider` (String)
 
 
 <a id="nestedobjatt--items--device--services"></a>
@@ -115,20 +115,20 @@ Read-Only:
 
 Read-Only:
 
-- **firewall_mode** (String)
-- **image_name** (String)
-- **profile_type** (String)
-- **service_name** (String)
-- **service_type** (String)
-- **v_nic_mapping** (List of Object) (see [below for nested schema](#nestedobjatt--items--device--services--v_nic_mapping))
+- `firewall_mode` (String)
+- `image_name` (String)
+- `profile_type` (String)
+- `service_name` (String)
+- `service_type` (String)
+- `v_nic_mapping` (List of Object) (see [below for nested schema](#nestedobjatt--items--device--services--v_nic_mapping))
 
 <a id="nestedobjatt--items--device--services--v_nic_mapping"></a>
 ### Nested Schema for `items.device.services.v_nic_mapping`
 
 Read-Only:
 
-- **assign_ip_address_to_network** (String)
-- **network_type** (String)
+- `assign_ip_address_to_network` (String)
+- `network_type` (String)
 
 
 
@@ -137,8 +137,8 @@ Read-Only:
 
 Read-Only:
 
-- **vlan_description** (String)
-- **vlan_id** (String)
-- **vlan_type** (String)
+- `vlan_description` (String)
+- `vlan_id` (String)
+- `vlan_type` (String)
 
 

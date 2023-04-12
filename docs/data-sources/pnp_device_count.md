@@ -44,31 +44,31 @@ output "dnacenter_pnp_device_count_example" {
 
 ### Optional
 
-- **cm_state** (List of String) cmState query parameter. Device Connection Manager State
-- **id** (String) The ID of this resource.
-- **last_contact** (Boolean) lastContact query parameter. Device Has Contacted lastContact > 0
-- **name** (List of String) name query parameter. Device Name
-- **onb_state** (List of String) onbState query parameter. Device Onboarding State
-- **pid** (List of String) pid query parameter. Device ProductId
-- **project_id** (List of String) projectId query parameter. Device Project Id
-- **project_name** (List of String) projectName query parameter. Device Project Name
-- **serial_number** (List of String) serialNumber query parameter. Device Serial Number
-- **smart_account_id** (List of String) smartAccountId query parameter. Device Smart Account
-- **source** (List of String) source query parameter. Device Source
-- **state** (List of String) state query parameter. Device State
-- **virtual_account_id** (List of String) virtualAccountId query parameter. Device Virtual Account
-- **workflow_id** (List of String) workflowId query parameter. Device Workflow Id
-- **workflow_name** (List of String) workflowName query parameter. Device Workflow Name
+- `cm_state` (List of String) cmState query parameter. Device Connection Manager State
+- `last_contact` (Boolean) lastContact query parameter. Device Has Contacted lastContact > 0
+- `name` (List of String) name query parameter. Device Name
+- `onb_state` (List of String) onbState query parameter. Device Onboarding State
+- `pid` (List of String) pid query parameter. Device ProductId
+- `project_id` (List of String) projectId query parameter. Device Project Id
+- `project_name` (List of String) projectName query parameter. Device Project Name
+- `serial_number` (List of String) serialNumber query parameter. Device Serial Number
+- `smart_account_id` (List of String) smartAccountId query parameter. Device Smart Account
+- `source` (List of String) source query parameter. Device Source
+- `state` (List of String) state query parameter. Device State
+- `virtual_account_id` (List of String) virtualAccountId query parameter. Device Virtual Account
+- `workflow_id` (List of String) workflowId query parameter. Device Workflow Id
+- `workflow_name` (List of String) workflowName query parameter. Device Workflow Name
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
+- `response` (Number)
 
 

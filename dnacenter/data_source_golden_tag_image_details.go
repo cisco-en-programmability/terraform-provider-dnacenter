@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -117,7 +117,7 @@ func dataSourceGoldenTagImageDetailsRead(ctx context.Context, d *schema.Resource
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenSoftwareImageManagementSwimGetGoldenTagStatusOfAnImageItem(response1.Response)
+		vItem1 := flattenSoftwareImageManagementSwimGetGoldenTagStatusOfAnImageDetailsItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGoldenTagStatusOfAnImage response",
@@ -131,7 +131,7 @@ func dataSourceGoldenTagImageDetailsRead(ctx context.Context, d *schema.Resource
 	return diags
 }
 
-func flattenSoftwareImageManagementSwimGetGoldenTagStatusOfAnImageItem(item *dnacentersdkgo.ResponseSoftwareImageManagementSwimGetGoldenTagStatusOfAnImageResponse) []map[string]interface{} {
+func flattenSoftwareImageManagementSwimGetGoldenTagStatusOfAnImageDetailsItem(item *dnacentersdkgo.ResponseSoftwareImageManagementSwimGetGoldenTagStatusOfAnImageResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

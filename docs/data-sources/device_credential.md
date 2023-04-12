@@ -31,39 +31,39 @@ output "dnacenter_device_credential_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **site_id** (String) siteId query parameter. Site id to retrieve the credential details associated with the site.
+- `site_id` (String) siteId query parameter. Site id to retrieve the credential details associated with the site.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **cli** (List of Object) (see [below for nested schema](#nestedobjatt--item--cli))
-- **http_read** (List of Object) (see [below for nested schema](#nestedobjatt--item--http_read))
-- **http_write** (List of Object) (see [below for nested schema](#nestedobjatt--item--http_write))
-- **snmp_v2_read** (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_v2_read))
-- **snmp_v2_write** (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_v2_write))
-- **snmp_v3** (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_v3))
+- `cli` (List of Object) (see [below for nested schema](#nestedobjatt--item--cli))
+- `http_read` (List of Object) (see [below for nested schema](#nestedobjatt--item--http_read))
+- `http_write` (List of Object) (see [below for nested schema](#nestedobjatt--item--http_write))
+- `snmp_v2_read` (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_v2_read))
+- `snmp_v2_write` (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_v2_write))
+- `snmp_v3` (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_v3))
 
 <a id="nestedobjatt--item--cli"></a>
 ### Nested Schema for `item.cli`
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **enable_password** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **password** (String)
-- **username** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `enable_password` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `password` (String)
+- `username` (String)
 
 
 <a id="nestedobjatt--item--http_read"></a>
@@ -71,16 +71,16 @@ Read-Only:
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **password** (String)
-- **port** (String)
-- **secure** (String)
-- **username** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `password` (String)
+- `port` (String)
+- `secure` (String)
+- `username` (String)
 
 
 <a id="nestedobjatt--item--http_write"></a>
@@ -88,16 +88,16 @@ Read-Only:
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **password** (String)
-- **port** (String)
-- **secure** (String)
-- **username** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `password` (String)
+- `port` (String)
+- `secure` (String)
+- `username` (String)
 
 
 <a id="nestedobjatt--item--snmp_v2_read"></a>
@@ -105,13 +105,13 @@ Read-Only:
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **read_community** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `read_community` (String)
 
 
 <a id="nestedobjatt--item--snmp_v2_write"></a>
@@ -119,13 +119,13 @@ Read-Only:
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **write_community** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `write_community` (String)
 
 
 <a id="nestedobjatt--item--snmp_v3"></a>
@@ -133,17 +133,17 @@ Read-Only:
 
 Read-Only:
 
-- **auth_password** (String)
-- **auth_type** (String)
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **privacy_password** (String)
-- **privacy_type** (String)
-- **snmp_mode** (String)
-- **username** (String)
+- `auth_password` (String)
+- `auth_type` (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `privacy_password` (String)
+- `privacy_type` (String)
+- `snmp_mode` (String)
+- `username` (String)
 
 

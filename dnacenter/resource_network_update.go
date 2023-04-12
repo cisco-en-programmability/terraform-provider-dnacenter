@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -20,7 +20,8 @@ func resourceNetworkUpdate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on Network Settings.
 
-- API to update network for DHCP and DNS center server settings.
+- API to update network settings for DHCP,  Syslog, SNMP, NTP, Network AAA, Client and EndPoint AAA, and/or DNS server
+settings.
 `,
 
 		CreateContext: resourceNetworkUpdateCreate,
@@ -74,6 +75,7 @@ func resourceNetworkUpdate() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -81,6 +83,7 @@ func resourceNetworkUpdate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -90,6 +93,7 @@ func resourceNetworkUpdate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"network": &schema.Schema{
 													Description: `IP address for AAA or ISE server (eg: 2.2.2.1)
@@ -97,6 +101,7 @@ func resourceNetworkUpdate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"protocol": &schema.Schema{
 													Description: `Protocol for AAA or ISE serve (eg: RADIUS)
@@ -104,6 +109,7 @@ func resourceNetworkUpdate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"servers": &schema.Schema{
 													Description: `Server type AAA or ISE server (eg: AAA)
@@ -111,6 +117,7 @@ func resourceNetworkUpdate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"shared_secret": &schema.Schema{
 													Description: `Shared secret for ISE server
@@ -118,16 +125,18 @@ func resourceNetworkUpdate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
 									},
 									"dhcp_server": &schema.Schema{
-										Description: `Dhcp serve Ip (eg: 1.1.1.1)
+										Description: `DHCP Server IP (eg: 1.1.1.1)
 `,
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -136,29 +145,33 @@ func resourceNetworkUpdate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"domain_name": &schema.Schema{
-													Description: `Domain name of DHCP (eg; cisco)
+													Description: `Domain Name of DHCP (eg; cisco)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"primary_ip_address": &schema.Schema{
-													Description: `Primary ip address for DHCP (eg: 2.2.2.2)
+													Description: `Primary IP Address for DHCP (eg: 2.2.2.2)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"secondary_ip_address": &schema.Schema{
-													Description: `Secondary ip address for DHCP (eg: 3.3.3.3)
+													Description: `Secondary IP Address for DHCP (eg: 3.3.3.3)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -167,22 +180,25 @@ func resourceNetworkUpdate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"banner_message": &schema.Schema{
-													Description: `Massage for banner message (eg; Good day)
+													Description: `Massage for Banner message (eg; Good day)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"retain_existing_banner": &schema.Schema{
-													Description: `Retain existing banner message (eg: "true" or "false")
+													Description: `Retain existing Banner Message (eg: "true" or "false")
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -191,22 +207,25 @@ func resourceNetworkUpdate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"ip_address": &schema.Schema{
-													Description: `IP address for netflow collector (eg: 3.3.3.1)
+													Description: `IP Address for NetFlow collector (eg: 3.3.3.1)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"port": &schema.Schema{
-													Description: `Port for netflow collector (eg; 443)
+													Description: `Port for NetFlow Collector (eg; 443)
 `,
 													Type:     schema.TypeFloat,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -215,6 +234,7 @@ func resourceNetworkUpdate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -224,13 +244,15 @@ func resourceNetworkUpdate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"network": &schema.Schema{
-													Description: `IP address for AAA or ISE server (eg: 2.2.2.2)
+													Description: `IP Address for AAA or ISE server (eg: 2.2.2.2)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"protocol": &schema.Schema{
 													Description: `Protocol for AAA or ISE serve (eg: RADIUS)
@@ -238,20 +260,23 @@ func resourceNetworkUpdate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"servers": &schema.Schema{
-													Description: `Server type for AAA network (eg: AAA)
+													Description: `Server type for AAA Network (eg: AAA)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"shared_secret": &schema.Schema{
-													Description: `Shared secret for ISE server
+													Description: `Shared secret for ISE Server
 `,
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -262,6 +287,7 @@ func resourceNetworkUpdate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -270,24 +296,27 @@ func resourceNetworkUpdate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"configure_dnac_ip": &schema.Schema{
-													Description: `Configuration dnac ip for snmp server (eg: true)
+													Description: `Configuration DNAC IP for SNMP Server (eg: true)
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"ip_addresses": &schema.Schema{
-													Description: `IP address for snmp server (eg: 4.4.4.1)
+													Description: `IP Address for SNMP Server (eg: 4.4.4.1)
 `,
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -299,24 +328,27 @@ func resourceNetworkUpdate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"configure_dnac_ip": &schema.Schema{
-													Description: `Configuration dnac ip for syslog server (eg: true)
+													Description: `Configuration DNAC IP for syslog server (eg: true)
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"ip_addresses": &schema.Schema{
-													Description: `IP address for syslog server (eg: 4.4.4.4)
+													Description: `IP Address for syslog server (eg: 4.4.4.4)
 `,
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -330,6 +362,7 @@ func resourceNetworkUpdate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 								},
 							},
@@ -346,6 +379,7 @@ func resourceNetworkUpdateCreate(ctx context.Context, d *schema.ResourceData, m 
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vSiteID := resourceItem["site_id"]
 
 	vvSiteID := vSiteID.(string)
@@ -361,9 +395,9 @@ func resourceNetworkUpdateCreate(ctx context.Context, d *schema.ResourceData, m 
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing UpdateNetwork", err,
-			"Failure at UpdateNetwork, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -412,6 +446,7 @@ func resourceNetworkUpdateCreate(ctx context.Context, d *schema.ResourceData, m 
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

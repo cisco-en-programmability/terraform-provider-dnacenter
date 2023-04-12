@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -69,6 +69,7 @@ Ids can be retrieved using the 'Get Failed ITSM Events' API in the 'instanceId' 
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -96,9 +97,9 @@ func resourceItsmIntegrationEventsRetryCreate(ctx context.Context, d *schema.Res
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing RetryIntegrationEvents", err,
-			"Failure at RetryIntegrationEvents, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -147,6 +148,7 @@ func resourceItsmIntegrationEventsRetryCreate(ctx context.Context, d *schema.Res
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

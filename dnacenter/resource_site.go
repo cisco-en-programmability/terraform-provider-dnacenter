@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -46,123 +46,38 @@ func resourceSite() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"additional_info": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"attributes": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"address": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"address_inherited_from": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"country": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"floor_index": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"height": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"latitude": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"length": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"longitude": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"offset_x": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"offset_y": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"rf_model": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"width": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-
-									"name_space": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
+							Description: `Additional Info`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
 							},
 						},
-
 						"id": &schema.Schema{
 							Description: `Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"instance_tenant_id": &schema.Schema{
 							Description: `Instance Tenant Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"name": &schema.Schema{
 							Description: `Name`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"parent_id": &schema.Schema{
 							Description: `Parent Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"site_hierarchy": &schema.Schema{
 							Description: `Site Hierarchy`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"site_name_hierarchy": &schema.Schema{
 							Description: `Site Name Hierarchy`,
 							Type:        schema.TypeString,
@@ -173,23 +88,22 @@ func resourceSite() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"site": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
-							MaxItems: 1,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"area": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -198,12 +112,14 @@ func resourceSite() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"parent_name": &schema.Schema{
 													Description: `Parent name of the area to be created
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -211,7 +127,7 @@ func resourceSite() *schema.Resource {
 									"building": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -220,30 +136,42 @@ func resourceSite() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
+												},
+												"country": &schema.Schema{
+													Description: `Country (eg:United States)
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
 												},
 												"latitude": &schema.Schema{
 													Description: `Latitude coordinate of the building (eg:37.338)
 `,
 													Type:     schema.TypeFloat,
 													Optional: true,
+													Computed: true,
 												},
 												"longitude": &schema.Schema{
 													Description: `Longitude coordinate of the building (eg:-121.832)
 `,
 													Type:     schema.TypeFloat,
 													Optional: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Description: `Name of the building (eg: building1)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"parent_name": &schema.Schema{
 													Description: `Parent name of building to be created
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -251,45 +179,58 @@ func resourceSite() *schema.Resource {
 									"floor": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"height": &schema.Schema{
-													Description: `Height of the floor (eg: 15)
+												"floor_number": &schema.Schema{
+													Description: `Floor number. (eg: 5)
 `,
 													Type:     schema.TypeFloat,
 													Optional: true,
+													Computed: true,
+												},
+												"height": &schema.Schema{
+													Description: `Height of the floor. Unit of measure is ft. (eg: 15)
+`,
+													Type:     schema.TypeFloat,
+													Optional: true,
+													Computed: true,
 												},
 												"length": &schema.Schema{
-													Description: `Length of the floor (eg: 100)
+													Description: `Length of the floor. Unit of measure is ft. (eg: 100)
 `,
 													Type:     schema.TypeFloat,
 													Optional: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Description: `Name of the floor (eg:floor-1)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"parent_name": &schema.Schema{
 													Description: `Parent name of the floor to be created
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"rf_model": &schema.Schema{
-													Description: `Type of floor. Allowed values are 'Cubes And Walled Offices', 'Drywall Office Only', 'Indoor High Ceiling', 'Outdoor Open Space'.
+													Description: `Type of floor (eg: Cubes And Walled Offices0
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"width": &schema.Schema{
-													Description: `Width of the floor (eg:100)
+													Description: `Width of the floor. Unit of measure is ft. (eg: 100)
 `,
 													Type:     schema.TypeFloat,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -300,34 +241,16 @@ func resourceSite() *schema.Resource {
 						"site_id": &schema.Schema{
 							Description: `siteId path parameter. Site id to which site details to be updated.
 `,
-							Type:             schema.TypeString,
-							DiffSuppressFunc: diffSupressOptional(),
-							Optional:         true,
+							Type:     schema.TypeString,
+							Required: true,
 						},
 						"type": &schema.Schema{
 							Description: `Type of site to create (eg: area, building, floor)
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Computed: true,
 						},
-						/*"runsync": &schema.Schema{
-													Description: `HeaderParam
-						`,
-													Type:     schema.TypeString,
-													Required: true,
-												},
-												"timeout": &schema.Schema{
-													Description: `HeaderParam
-						`,
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"persistbapioutput": &schema.Schema{
-													Description: `HeaderParam
-						`,
-													Type:     schema.TypeString,
-													Required: true,
-												},*/
 					},
 				},
 			},
@@ -489,25 +412,6 @@ func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}
 					err))
 				return diags
 			}
-		} else {
-			response1, restyResp1, err := client.Sites.GetSiteByID(vSiteID)
-			if err != nil || response1 == nil {
-				log.Printf("[DEBUG] Error => %s", err.Error())
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response3 %s", restyResp1.String())
-				}
-				d.SetId("")
-				return diags
-			}
-
-			vItem1 := flattenSitesGetSiteItem(response1.Response)
-			log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem1))
-			if err := d.Set("item", vItem1); err != nil {
-				diags = append(diags, diagError(
-					"Failure when setting GetSite search response",
-					err))
-				return diags
-			}
 		}
 
 	}
@@ -654,38 +558,23 @@ func expandRequestSiteCreateSite(ctx context.Context, key string, d *schema.Reso
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestSiteCreateSiteSite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesCreateSiteSite {
 	request := dnacentersdkgo.RequestSitesCreateSiteSite{}
-	var typeStr string
-	if typeS, ok := d.GetOkExists(fixKeyAccess("parameters.0.type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess("parameters.0.type")))) && (ok || !reflect.DeepEqual(typeS, d.Get(fixKeyAccess("parameters.0.type")))) {
-		typeStr = interfaceToString(typeS)
-	} else {
-		return nil
-	}
-
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".area")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".area")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".area")))) {
-		if typeStr == "area" {
-			request.Area = expandRequestSiteCreateSiteSiteArea(ctx, key+".area.0", d)
-		}
+		request.Area = expandRequestSiteCreateSiteSiteArea(ctx, key+".area.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".building")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".building")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".building")))) {
-		if typeStr == "building" {
-			request.Building = expandRequestSiteCreateSiteSiteBuilding(ctx, key+".building.0", d)
-		}
+		request.Building = expandRequestSiteCreateSiteSiteBuilding(ctx, key+".building.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor")))) {
-		if typeStr == "floor" {
-			request.Floor = expandRequestSiteCreateSiteSiteFloor(ctx, key+".floor.0", d)
-		}
+		request.Floor = expandRequestSiteCreateSiteSiteFloor(ctx, key+".floor.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -700,7 +589,6 @@ func expandRequestSiteCreateSiteSiteArea(ctx context.Context, key string, d *sch
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -721,10 +609,12 @@ func expandRequestSiteCreateSiteSiteBuilding(ctx context.Context, key string, d 
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".longitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".longitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".longitude")))) {
 		request.Longitude = interfaceToFloat64Ptr(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".country")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".country")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".country")))) {
+		request.Country = interfaceToString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -748,10 +638,12 @@ func expandRequestSiteCreateSiteSiteFloor(ctx context.Context, key string, d *sc
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".height")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".height")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".height")))) {
 		request.Height = interfaceToFloat64Ptr(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor_number")))) {
+		request.FloorNumber = interfaceToFloat64Ptr(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -766,37 +658,23 @@ func expandRequestSiteUpdateSite(ctx context.Context, key string, d *schema.Reso
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestSiteUpdateSiteSite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesUpdateSiteSite {
 	request := dnacentersdkgo.RequestSitesUpdateSiteSite{}
-	var typeStr string
-	if typeS, ok := d.GetOkExists(fixKeyAccess("parameters.0.type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess("parameters.0.type")))) && (ok || !reflect.DeepEqual(typeS, d.Get(fixKeyAccess("parameters.0.type")))) {
-		typeStr = interfaceToString(typeS)
-	} else {
-		return nil
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".area")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".area")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".area")))) {
-		if typeStr == "area" {
-			request.Area = expandRequestSiteUpdateSiteSiteArea(ctx, key+".area.0", d)
-		}
+		request.Area = expandRequestSiteUpdateSiteSiteArea(ctx, key+".area.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".building")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".building")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".building")))) {
-		if typeStr == "building" {
-			request.Building = expandRequestSiteUpdateSiteSiteBuilding(ctx, key+".building.0", d)
-		}
+		request.Building = expandRequestSiteUpdateSiteSiteBuilding(ctx, key+".building.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor")))) {
-		if typeStr == "floor" {
-			request.Floor = expandRequestSiteUpdateSiteSiteFloor(ctx, key+".floor.0", d)
-		}
+		request.Floor = expandRequestSiteUpdateSiteSiteFloor(ctx, key+".floor.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -811,7 +689,6 @@ func expandRequestSiteUpdateSiteSiteArea(ctx context.Context, key string, d *sch
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -835,7 +712,6 @@ func expandRequestSiteUpdateSiteSiteBuilding(ctx context.Context, key string, d 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -859,7 +735,6 @@ func expandRequestSiteUpdateSiteSiteFloor(ctx context.Context, key string, d *sc
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -891,16 +766,6 @@ func searchSitesGetSite(m interface{}, queryParams dnacentersdkgo.GetSiteQueryPa
 				return foundItem, err
 			}
 		}
-	} else {
-		foundItem, restyResp1, err := client.Sites.GetSiteByID(queryParams.SiteID)
-		if err != nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
-			}
-			log.Printf("[DEBUG] Error =>%s", err.Error())
-			return foundItem.Response, err
-		}
-		return foundItem.Response, err
 	}
 	return foundItem, err
 }

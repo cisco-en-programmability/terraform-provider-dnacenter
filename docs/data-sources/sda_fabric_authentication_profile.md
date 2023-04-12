@@ -23,7 +23,7 @@ data "dnacenter_sda_fabric_authentication_profile" "example" {
 }
 
 output "dnacenter_sda_fabric_authentication_profile_example" {
-  value = data.dnacenter_sda_fabric_authentication_profile.example.item
+  value = data.dnacenter_sda_fabric_authentication_profile.example.items
 }
 ```
 
@@ -32,24 +32,29 @@ output "dnacenter_sda_fabric_authentication_profile_example" {
 
 ### Required
 
-- **site_name_hierarchy** (String) siteNameHierarchy query parameter.
+- `site_name_hierarchy` (String) siteNameHierarchy query parameter.
 
 ### Optional
 
-- **authenticate_template_name** (String) authenticateTemplateName query parameter.
-- **id** (String) The ID of this resource.
+- `authenticate_template_name` (String) authenticateTemplateName query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
-<a id="nestedatt--item"></a>
-### Nested Schema for `item`
+<a id="nestedatt--items"></a>
+### Nested Schema for `items`
 
 Read-Only:
 
-- **authenticate_template_id** (String)
-- **authenticate_template_name** (String)
-- **site_name_hierarchy** (String)
+- `authenticate_template_name` (String)
+- `authentication_order` (String)
+- `description` (String)
+- `dot1x_to_mab_fallback_timeout` (String)
+- `number_of_hosts` (String)
+- `site_name_hierarchy` (String)
+- `status` (String)
+- `wake_on_lan` (String)
 
 

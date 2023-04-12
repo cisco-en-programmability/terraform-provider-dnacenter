@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -46,7 +47,6 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"filter": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -61,7 +61,6 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"domains_subdomains": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -73,7 +72,6 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"sub_domains": &schema.Schema{
 													Description: `Sub Domains`,
 													Type:        schema.TypeList,
@@ -85,7 +83,6 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 											},
 										},
 									},
-
 									"event_ids": &schema.Schema{
 										Description: `Event Ids`,
 										Type:        schema.TypeList,
@@ -94,7 +91,6 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"others": &schema.Schema{
 										Description: `Others`,
 										Type:        schema.TypeList,
@@ -103,7 +99,6 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"severities": &schema.Schema{
 										Description: `Severities`,
 										Type:        schema.TypeList,
@@ -112,7 +107,6 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"site_ids": &schema.Schema{
 										Description: `Site Ids`,
 										Type:        schema.TypeList,
@@ -121,7 +115,6 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"sources": &schema.Schema{
 										Description: `Sources`,
 										Type:        schema.TypeList,
@@ -130,7 +123,6 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"types": &schema.Schema{
 										Description: `Types`,
 										Type:        schema.TypeList,
@@ -142,20 +134,17 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 								},
 							},
 						},
-
 						"is_private": &schema.Schema{
 							Description: `Is Private`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"name": &schema.Schema{
 							Description: `Name`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"subscription_endpoints": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -167,13 +156,11 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"instance_id": &schema.Schema{
 										Description: `Instance Id`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"subscription_details": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -185,37 +172,31 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"description": &schema.Schema{
 													Description: `Description`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"from_email_address": &schema.Schema{
 													Description: `From Email Address`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"instance_id": &schema.Schema{
 													Description: `Instance Id`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"name": &schema.Schema{
 													Description: `Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"subject": &schema.Schema{
 													Description: `Subject`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"to_email_addresses": &schema.Schema{
 													Description: `To Email Addresses`,
 													Type:        schema.TypeList,
@@ -230,19 +211,16 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 								},
 							},
 						},
-
 						"subscription_id": &schema.Schema{
 							Description: `Subscription Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"tenant_id": &schema.Schema{
 							Description: `Tenant Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"version": &schema.Schema{
 							Description: `Version`,
 							Type:        schema.TypeString,
@@ -254,85 +232,106 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 			"parameters": &schema.Schema{
 				Description: `Array of RequestEventManagementCreateEmailEventSubscription`,
 				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
-						"description": &schema.Schema{
-							Description: `Description
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"filter": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+						"payload": &schema.Schema{
+							Description: `Array of RequestEventManagementCreateEmailEventSubscription`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-
-									"event_ids": &schema.Schema{
-										Description: `Event Ids (Comma separated event ids)
-`,
-										Type:     schema.TypeList,
-										Optional: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-								},
-							},
-						},
-						"name": &schema.Schema{
-							Description: `Name
-`,
-							Type:     schema.TypeString,
-							Required: true,
-						},
-						"subscription_endpoints": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"instance_id": &schema.Schema{
-										Description: `(From Get Email Subscription Details --> pick InstanceId)
+									"description": &schema.Schema{
+										Description: `Description
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
-									"subscription_details": &schema.Schema{
+									"filter": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"connector_type": &schema.Schema{
-													Description: `Connector Type (Must be EMAIL)
-`,
-													Type:     schema.TypeString,
-													Optional: true,
+												"categories": &schema.Schema{
+													Description: `Categories`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
-												"from_email_address": &schema.Schema{
-													Description: `Senders Email Address
-`,
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"subject": &schema.Schema{
-													Description: `Email Subject
-`,
-													Type:     schema.TypeString,
-													Optional: true,
-												},
-												"to_email_addresses": &schema.Schema{
-													Description: `Recipient's Email Addresses (Comma separated)
-`,
+												"domains_subdomains": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"domain": &schema.Schema{
+																Description: `Domain`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
+															},
+															"sub_domains": &schema.Schema{
+																Description: `Sub Domains`,
+																Type:        schema.TypeList,
+																Optional:    true,
+																Computed:    true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
+															},
+														},
+													},
+												},
+												"event_ids": &schema.Schema{
+													Description: `Event Ids`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"severities": &schema.Schema{
+													Description: `Severities`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeInt,
+													},
+												},
+												"site_ids": &schema.Schema{
+													Description: `Site Ids`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"sources": &schema.Schema{
+													Description: `Sources`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"types": &schema.Schema{
+													Description: `Types`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -340,22 +339,98 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 											},
 										},
 									},
-								},
-							},
-						},
-						"subscription_id": &schema.Schema{
-							Description: `Subscription Id (Unique UUID)
+									"name": &schema.Schema{
+										Description: `Name
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"version": &schema.Schema{
-							Description: `Version
+										Type:     schema.TypeString,
+										Optional: true,
+										Default:  "",
+									},
+									"subscription_endpoints": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"instance_id": &schema.Schema{
+													Description: `(From Get Email Subscription Details --> pick InstanceId)
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-					},
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"subscription_details": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"connector_type": &schema.Schema{
+																Description: `Connector Type (Must be EMAIL)
+`,
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+															"description": &schema.Schema{
+																Description: `Description`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
+															},
+															"from_email_address": &schema.Schema{
+																Description: `Senders Email Address
+`,
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+															"name": &schema.Schema{
+																Description: `Name`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
+															},
+															"subject": &schema.Schema{
+																Description: `Email Subject
+`,
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+															"to_email_addresses": &schema.Schema{
+																Description: `Recipient's Email Addresses (Comma separated)
+`,
+																Type:     schema.TypeList,
+																Optional: true,
+																Computed: true,
+																Elem: &schema.Schema{
+																	Type: schema.TypeString,
+																},
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"subscription_id": &schema.Schema{
+										Description: `Subscription Id (Unique UUID)
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Default:  "",
+									},
+									"version": &schema.Schema{
+										Description: `Version
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+								}}}},
 				},
 			},
 		},
@@ -367,27 +442,24 @@ func resourceEventSubscriptionEmailCreate(ctx context.Context, d *schema.Resourc
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestEventSubscriptionEmailCreateEmailEventSubscription(ctx, "parameters", d)
+	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
+	request1 := expandRequestEventSubscriptionEmailCreateEmailEventSubscription(ctx, "parameters.0", d)
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+
 	vName := resourceItem["name"]
 	vvName := interfaceToString(vName)
 	vSubscriptionID := resourceItem["subscription_id"]
 	vvSubscriptionID := interfaceToString(vSubscriptionID)
-
-	queryParams1 := dnacentersdkgo.GetEmailEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetEmailEventSubscriptions(m, queryParams1, vvName, vvSubscriptionID)
-	if err == nil && (item != nil && len(*item) > 0) {
+	queryParamImport := dnacentersdkgo.GetEmailEventSubscriptionsQueryParams{}
+	queryParamImport.Name = vvName
+	item2, err := searchEventManagementGetEmailEventSubscriptions(m, queryParamImport, vvSubscriptionID)
+	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
-		resourceMap["name"] = vvName
-		resourceMap["subscription_id"] = vvSubscriptionID
+		resourceMap["name"] = item2.Name
+		resourceMap["subscription_id"] = item2.SubscriptionID
 		d.SetId(joinResourceID(resourceMap))
 		return resourceEventSubscriptionEmailRead(ctx, d, m)
 	}
-
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
-
 	resp1, restyResp1, err := client.EventManagement.CreateEmailEventSubscription(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -399,42 +471,48 @@ func resourceEventSubscriptionEmailCreate(ctx context.Context, d *schema.Resourc
 			"Failure when executing CreateEmailEventSubscription", err))
 		return diags
 	}
+	// TODO REVIEW
+	queryParamValidate := dnacentersdkgo.GetEmailEventSubscriptionsQueryParams{}
+	queryParamValidate.Name = vvName
+	item3, err := searchEventManagementGetEmailEventSubscriptions(m, queryParamValidate, vvSubscriptionID)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing CreateEmailEventSubscription", err,
+			"Failure at CreateEmailEventSubscription, unexpected response", ""))
+		return diags
+	}
+
 	resourceMap := make(map[string]string)
 	resourceMap["name"] = vvName
-	resourceMap["subscription_id"] = vvSubscriptionID
+	resourceMap["subscription_id"] = item3.SubscriptionID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceEventSubscriptionEmailRead(ctx, d, m)
 }
 
 func resourceEventSubscriptionEmailRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vName, _ := resourceMap["name"]
-	vSubscriptionID, _ := resourceMap["subscription_id"]
+
+	vvID := resourceMap["id"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEmailEventSubscriptions")
+		log.Printf("[DEBUG] Selected method: GetEmailEventSubscriptions")
 		queryParams1 := dnacentersdkgo.GetEmailEventSubscriptionsQueryParams{}
-		item, err := searchEventManagementGetEmailEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
-		if err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetEventSubscriptions search response",
-				err))
-			return diags
-		}
-		if item == nil || len(*item) <= 0 {
+
+		item1, err := searchEventManagementGetEmailEventSubscriptions(m, queryParams1, vvID)
+		if err != nil || item1 == nil {
 			d.SetId("")
 			return diags
 		}
-
-		if item != nil {
-			log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*item))
+		items := []dnacentersdkgo.ResponseItemEventManagementGetEmailEventSubscriptions{
+			*item1,
 		}
-
-		vItem1 := flattenEventManagementGetEmailEventSubscriptionsItems(item)
+		// Review flatten function used
+		vItem1 := flattenEventManagementGetEmailEventSubscriptionsItems2(&items)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetEmailEventSubscriptions search response",
@@ -450,34 +528,22 @@ func resourceEventSubscriptionEmailUpdate(ctx context.Context, d *schema.Resourc
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vName, _ := resourceMap["name"]
-	vSubscriptionID, _ := resourceMap["subscription_id"]
 
-	queryParams1 := dnacentersdkgo.GetEmailEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetEmailEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
-	if err != nil || item == nil || len(*item) <= 0 {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetEmailEventSubscriptions", err,
-			"Failure at GetEmailEventSubscriptions, unexpected response", ""))
-		return diags
-	}
-
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	vvID := resourceMap["id"]
 	if d.HasChange("parameters") {
-		request1 := expandRequestEventSubscriptionEmailUpdateEmailEventSubscription(ctx, "parameters.0", d)
+		request1 := expandRequestEventSubscriptionEmailUpdateEmailEventSubscription(ctx, "parameters", d)
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
 		// Add SubscriptionID to update
-		if request1 != nil && len(*request1) > 0 && item != nil && len(*item) > 0 {
-			found := *item
+		if request1 != nil && len(*request1) > 0 {
 			req := *request1
-			req[0].SubscriptionID = found[0].SubscriptionID
+			req[0].SubscriptionID = vvID
 			request1 = &req
 		}
+
 		response1, restyResp1, err := client.EventManagement.UpdateEmailEventSubscription(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -492,69 +558,28 @@ func resourceEventSubscriptionEmailUpdate(ctx context.Context, d *schema.Resourc
 				"Failure at UpdateEmailEventSubscription, unexpected response", ""))
 			return diags
 		}
+
+		//TODO REVIEW
+
 	}
 
 	return resourceEventSubscriptionEmailRead(ctx, d, m)
 }
 
 func resourceEventSubscriptionEmailDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
-	resourceID := d.Id()
-	resourceMap := separateResourceID(resourceID)
-	vName, _ := resourceMap["name"]
-	vSubscriptionID, _ := resourceMap["subscription_id"]
-
-	queryParams1 := dnacentersdkgo.GetEmailEventSubscriptionsQueryParams{}
-	item, err := searchEventManagementGetEmailEventSubscriptions(m, queryParams1, vName, vSubscriptionID)
-	if err != nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetEventSubscriptions", err,
-			"Failure at GetEventSubscriptions, unexpected response", ""))
-		return diags
-	}
-	if item == nil || len(*item) == 0 {
-		return diags
-	}
-
-	// REVIEW: Add getAllItems and search function to get missing params
-	queryParams2 := dnacentersdkgo.DeleteEventSubscriptionsQueryParams{}
-	if len(*item) > 0 {
-		itemCopy := *item
-		queryParams2.Subscriptions = itemCopy[0].SubscriptionID
-	}
-	response1, restyResp1, err := client.EventManagement.DeleteEventSubscriptions(&queryParams2)
-	if err != nil || response1 == nil {
-		if restyResp1 != nil {
-			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
-			diags = append(diags, diagErrorWithAltAndResponse(
-				"Failure when executing DeleteEventSubscriptions", err, restyResp1.String(),
-				"Failure at DeleteEventSubscriptions, unexpected response", ""))
-			return diags
-		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeleteEventSubscriptions", err,
-			"Failure at DeleteEventSubscriptions, unexpected response", ""))
-		return diags
-	}
-
-	// d.SetId("") is automatically called assuming delete returns no errors, but
-	// it is added here for explicitness.
-	d.SetId("")
-
+	// NOTE: Unable to delete EventSubscriptionEmail on Dna Center
+	//       Returning empty diags to delete it on Terraform
 	return diags
 }
 func expandRequestEventSubscriptionEmailCreateEmailEventSubscription(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementCreateEmailEventSubscription {
 	request := dnacentersdkgo.RequestEventManagementCreateEmailEventSubscription{}
-	if v := expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -578,7 +603,6 @@ func expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItemArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -605,7 +629,6 @@ func expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItem(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -629,7 +652,6 @@ func expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItemSubscrip
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -644,7 +666,6 @@ func expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItemSubscrip
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -662,10 +683,15 @@ func expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItemSubscrip
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subject")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subject")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subject")))) {
 		request.Subject = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -674,22 +700,75 @@ func expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItemFilter(c
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".event_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".event_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".event_ids")))) {
 		request.EventIDs = interfaceToSliceString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domains_subdomains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domains_subdomains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domains_subdomains")))) {
+		request.DomainsSubdomains = expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItemFilterDomainsSubdomainsArray(ctx, key+".domains_subdomains", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".types")))) {
+		request.Types = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".categories")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".categories")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".categories")))) {
+		request.Categories = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".severities")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".severities")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".severities")))) {
+		request.Severities = interfaceToSliceInt(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sources")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sources")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sources")))) {
+		request.Sources = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_ids")))) {
+		request.SiteIDs = interfaceToSliceString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
 
+func expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItemFilterDomainsSubdomainsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemEventManagementCreateEmailEventSubscriptionFilterDomainsSubdomains {
+	request := []dnacentersdkgo.RequestItemEventManagementCreateEmailEventSubscriptionFilterDomainsSubdomains{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItemFilterDomainsSubdomains(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestEventSubscriptionEmailCreateEmailEventSubscriptionItemFilterDomainsSubdomains(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemEventManagementCreateEmailEventSubscriptionFilterDomainsSubdomains {
+	request := dnacentersdkgo.RequestItemEventManagementCreateEmailEventSubscriptionFilterDomainsSubdomains{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domain")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domain")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domain")))) {
+		request.Domain = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sub_domains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sub_domains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sub_domains")))) {
+		request.SubDomains = interfaceToSliceString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
 func expandRequestEventSubscriptionEmailUpdateEmailEventSubscription(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementUpdateEmailEventSubscription {
 	request := dnacentersdkgo.RequestEventManagementUpdateEmailEventSubscription{}
-	if v := expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -713,7 +792,6 @@ func expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItemArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -740,7 +818,6 @@ func expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItem(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -764,7 +841,6 @@ func expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItemSubscrip
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -779,7 +855,6 @@ func expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItemSubscrip
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -797,10 +872,15 @@ func expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItemSubscrip
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subject")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subject")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subject")))) {
 		request.Subject = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -809,33 +889,105 @@ func expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItemFilter(c
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".event_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".event_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".event_ids")))) {
 		request.EventIDs = interfaceToSliceString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domains_subdomains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domains_subdomains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domains_subdomains")))) {
+		request.DomainsSubdomains = expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItemFilterDomainsSubdomainsArray(ctx, key+".domains_subdomains", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".types")))) {
+		request.Types = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".categories")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".categories")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".categories")))) {
+		request.Categories = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".severities")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".severities")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".severities")))) {
+		request.Severities = interfaceToSliceInt(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sources")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sources")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sources")))) {
+		request.Sources = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_ids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_ids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_ids")))) {
+		request.SiteIDs = interfaceToSliceString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func searchEventManagementGetEmailEventSubscriptions(m interface{}, queryParams dnacentersdkgo.GetEmailEventSubscriptionsQueryParams, name string, subscriptionID string) (*dnacentersdkgo.ResponseEventManagementGetEmailEventSubscriptions, error) {
-	client := m.(*dnacentersdkgo.Client)
-	var err error
-	var foundItems dnacentersdkgo.ResponseEventManagementGetEmailEventSubscriptions
-	var items *dnacentersdkgo.ResponseEventManagementGetEmailEventSubscriptions
-	items, _, err = client.EventManagement.GetEmailEventSubscriptions(&queryParams)
-	if err != nil {
-		return nil, err
+func expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItemFilterDomainsSubdomainsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemEventManagementUpdateEmailEventSubscriptionFilterDomainsSubdomains {
+	request := []dnacentersdkgo.RequestItemEventManagementUpdateEmailEventSubscriptionFilterDomainsSubdomains{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
 	}
-	if items == nil {
-		return nil, err
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
 	}
-
-	itemsCopy := *items
-	for _, item := range itemsCopy {
-		// Call get by _ method and set value to foundItem and return
-		if item.SubscriptionID == subscriptionID || item.Name == name {
-			foundItems = append(foundItems, item)
-			break
+	for item_no := range objs {
+		i := expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItemFilterDomainsSubdomains(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
 		}
 	}
-	return &foundItems, err
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestEventSubscriptionEmailUpdateEmailEventSubscriptionItemFilterDomainsSubdomains(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemEventManagementUpdateEmailEventSubscriptionFilterDomainsSubdomains {
+	request := dnacentersdkgo.RequestItemEventManagementUpdateEmailEventSubscriptionFilterDomainsSubdomains{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domain")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domain")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domain")))) {
+		request.Domain = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sub_domains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sub_domains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sub_domains")))) {
+		request.SubDomains = interfaceToSliceString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func searchEventManagementGetEmailEventSubscriptions(m interface{}, queryParams dnacentersdkgo.GetEmailEventSubscriptionsQueryParams, vID string) (*dnacentersdkgo.ResponseItemEventManagementGetEmailEventSubscriptions, error) {
+	client := m.(*dnacentersdkgo.Client)
+	var err error
+	var foundItem *dnacentersdkgo.ResponseItemEventManagementGetEmailEventSubscriptions
+	var ite *dnacentersdkgo.ResponseEventManagementGetEmailEventSubscriptions
+	if vID != "" {
+		queryParams.Offset = 1
+		nResponse, _, err := client.EventManagement.GetEmailEventSubscriptions(nil)
+		maxPageSize := len(*nResponse)
+		for len(*nResponse) > 0 {
+			time.Sleep(15 * time.Second)
+			for _, item := range *nResponse {
+				if vID == item.SubscriptionID {
+					foundItem = &item
+					return foundItem, err
+				}
+			}
+			queryParams.Limit = float64(maxPageSize)
+			queryParams.Offset += float64(maxPageSize)
+			nResponse, _, err = client.EventManagement.GetEmailEventSubscriptions(&queryParams)
+		}
+		return nil, err
+	} else if queryParams.Name != "" {
+		ite, _, err = client.EventManagement.GetEmailEventSubscriptions(&queryParams)
+		if err != nil || ite == nil {
+			return foundItem, err
+		}
+		itemsCopy := *ite
+		if itemsCopy == nil {
+			return foundItem, err
+		}
+		for _, item := range itemsCopy {
+			if item.Name == queryParams.Name {
+				foundItem = &item
+				return foundItem, err
+			}
+		}
+		return foundItem, err
+	}
+	return foundItem, err
 }

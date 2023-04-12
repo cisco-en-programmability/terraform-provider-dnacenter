@@ -31,47 +31,44 @@ output "dnacenter_configuration_template_deploy_status_example" {
 
 ### Required
 
-- **deployment_id** (String) deploymentId path parameter. UUID of deployment to retrieve template deployment status
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `deployment_id` (String) deploymentId path parameter. UUID of deployment to retrieve template deployment status
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **deployment_id** (String)
-- **deployment_name** (String)
-- **devices** (List of Object) (see [below for nested schema](#nestedobjatt--item--devices))
-- **duration** (String)
-- **end_time** (String)
-- **project_name** (String)
-- **start_time** (String)
-- **status** (String)
-- **status_message** (String)
-- **template_name** (String)
-- **template_version** (String)
+- `deployment_id` (String)
+- `deployment_name` (String)
+- `devices` (List of Object) (see [below for nested schema](#nestedobjatt--item--devices))
+- `duration` (String)
+- `end_time` (String)
+- `project_name` (String)
+- `start_time` (String)
+- `status` (String)
+- `status_message` (String)
+- `template_name` (String)
+- `template_version` (String)
 
 <a id="nestedobjatt--item--devices"></a>
 ### Nested Schema for `item.devices`
 
 Read-Only:
 
-- **detailed_status_message** (String)
-- **device_id** (String)
-- **duration** (String)
-- **end_time** (String)
-- **identifier** (String)
-- **ip_address** (String)
-- **name** (String)
-- **start_time** (String)
-- **status** (String)
-- **target_type** (String)
+- `detailed_status_message` (String)
+- `device_id` (String)
+- `duration` (String)
+- `end_time` (String)
+- `identifier` (String)
+- `ip_address` (String)
+- `name` (String)
+- `start_time` (String)
+- `status` (String)
+- `target_type` (String)
 
 

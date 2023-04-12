@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -191,7 +191,7 @@ func dataSourceEventSeriesAuditLogsSummaryRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAuditLogSummary")
+		log.Printf("[DEBUG] Selected method: GetAuditLogSummary")
 		queryParams1 := dnacentersdkgo.GetAuditLogSummaryQueryParams{}
 
 		if okParentInstanceID {
@@ -273,6 +273,7 @@ func dataSourceEventSeriesAuditLogsSummaryRead(ctx context.Context, d *schema.Re
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

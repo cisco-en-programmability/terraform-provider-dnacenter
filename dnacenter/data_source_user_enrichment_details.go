@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -84,13 +84,13 @@ user and devices that the user is connected to
 
 												"error_code": &schema.Schema{
 													Description: `Error Code`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"error_description": &schema.Schema{
 													Description: `Error Description`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -156,13 +156,13 @@ user and devices that the user is connected to
 
 												"location": &schema.Schema{
 													Description: `Location`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"location_name": &schema.Schema{
 													Description: `Location Name`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -279,7 +279,7 @@ user and devices that the user is connected to
 
 												"tunnel_udp_port": &schema.Schema{
 													Description: `Tunnel Udp Port`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -297,7 +297,7 @@ user and devices that the user is connected to
 
 												"waas_device_mode": &schema.Schema{
 													Description: `Waas Device Mode`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 											},
@@ -315,31 +315,31 @@ user and devices that the user is connected to
 
 									"ap_group": &schema.Schema{
 										Description: `Ap Group`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"auth_type": &schema.Schema{
 										Description: `Auth Type`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"avg_rssi": &schema.Schema{
 										Description: `Avg Rssi`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"avg_snr": &schema.Schema{
 										Description: `Avg Snr`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"channel": &schema.Schema{
 										Description: `Channel`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -366,25 +366,25 @@ user and devices that the user is connected to
 
 									"data_rate": &schema.Schema{
 										Description: `Data Rate`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"dns_failure": &schema.Schema{
 										Description: `Dns Failure`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"dns_success": &schema.Schema{
 										Description: `Dns Success`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"frequency": &schema.Schema{
 										Description: `Frequency`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -438,13 +438,13 @@ user and devices that the user is connected to
 
 									"host_name": &schema.Schema{
 										Description: `Host Name`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"host_os": &schema.Schema{
 										Description: `Host Os`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -456,7 +456,7 @@ user and devices that the user is connected to
 
 									"host_version": &schema.Schema{
 										Description: `Host Version`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -480,7 +480,7 @@ user and devices that the user is connected to
 
 									"location": &schema.Schema{
 										Description: `Location`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -492,61 +492,61 @@ user and devices that the user is connected to
 
 												"aaa_server_ip": &schema.Schema{
 													Description: `Aaa Server Ip`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"average_assoc_duration": &schema.Schema{
 													Description: `Average Assoc Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"average_auth_duration": &schema.Schema{
 													Description: `Average Auth Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"average_dhcp_duration": &schema.Schema{
 													Description: `Average Dhcp Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"average_run_duration": &schema.Schema{
 													Description: `Average Run Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"dhcp_server_ip": &schema.Schema{
 													Description: `Dhcp Server Ip`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"max_assoc_duration": &schema.Schema{
 													Description: `Max Assoc Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"max_auth_duration": &schema.Schema{
 													Description: `Max Auth Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"max_dhcp_duration": &schema.Schema{
 													Description: `Max Dhcp Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"max_run_duration": &schema.Schema{
 													Description: `Max Run Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 											},
@@ -555,37 +555,37 @@ user and devices that the user is connected to
 
 									"onboarding_time": &schema.Schema{
 										Description: `Onboarding Time`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"port": &schema.Schema{
 										Description: `Port`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"rssi": &schema.Schema{
 										Description: `Rssi`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"rx_bytes": &schema.Schema{
 										Description: `Rx Bytes`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"snr": &schema.Schema{
 										Description: `Snr`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"ssid": &schema.Schema{
 										Description: `Ssid`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -597,13 +597,13 @@ user and devices that the user is connected to
 
 									"tx_bytes": &schema.Schema{
 										Description: `Tx Bytes`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"user_id": &schema.Schema{
 										Description: `User Id`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -631,7 +631,7 @@ func dataSourceUserEnrichmentDetailsRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetUserEnrichmentDetails")
+		log.Printf("[DEBUG] Selected method: GetUserEnrichmentDetails")
 
 		headerParams1 := dnacentersdkgo.GetUserEnrichmentDetailsHeaderParams{}
 
@@ -660,6 +660,7 @@ func dataSourceUserEnrichmentDetailsRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

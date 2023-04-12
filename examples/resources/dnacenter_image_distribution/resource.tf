@@ -2,9 +2,10 @@
 resource "dnacenter_image_distribution" "example" {
   provider = dnacenter
   parameters {
-
-    device_uuid = "string"
-    image_uuid  = "string"
+    payload {
+      device_uuid = "string"
+      image_uuid  = "string"
+    }
   }
 }
 

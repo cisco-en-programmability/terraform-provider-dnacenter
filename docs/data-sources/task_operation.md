@@ -33,41 +33,38 @@ output "dnacenter_task_operation_example" {
 
 ### Required
 
-- **limit** (Number) limit path parameter. The maximum value of {limit} supported is 500. 
+- `limit` (Number) limit path parameter. The maximum value of {limit} supported is 500. 
  Base 1 indexing for {limit}, minimum value is 1
-- **offset** (Number) offset path parameter. Index, minimum value is 0
-- **operation_id** (String) operationId path parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `offset` (Number) offset path parameter. Index, minimum value is 0
+- `operation_id` (String) operationId path parameter.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **additional_status_url** (String)
-- **data** (String)
-- **end_time** (String)
-- **error_code** (String)
-- **error_key** (String)
-- **failure_reason** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **is_error** (String)
-- **last_update** (String)
-- **operation_id_list** (String)
-- **parent_id** (String)
-- **progress** (String)
-- **root_id** (String)
-- **service_type** (String)
-- **start_time** (String)
-- **username** (String)
-- **version** (Number)
+- `additional_status_url` (String)
+- `data` (String)
+- `end_time` (String)
+- `error_code` (String)
+- `error_key` (String)
+- `failure_reason` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `is_error` (String)
+- `last_update` (String)
+- `operation_id_list` (String)
+- `parent_id` (String)
+- `progress` (String)
+- `root_id` (String)
+- `service_type` (String)
+- `start_time` (String)
+- `username` (String)
+- `version` (Number)
 
 

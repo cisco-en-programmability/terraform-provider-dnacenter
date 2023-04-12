@@ -9,13 +9,11 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
-
-//Falta el trigger /version/
 
 func resourceConfigurationTemplate() *schema.Resource {
 	return &schema.Resource{
@@ -53,15 +51,13 @@ func resourceConfigurationTemplate() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"containing_templates": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -71,18 +67,16 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"description": &schema.Schema{
 										Description: `Description of template
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"device_types": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -95,14 +89,12 @@ func resourceConfigurationTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"product_series": &schema.Schema{
 													Description: `Device series
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"product_type": &schema.Schema{
 													Description: `Device type
 `,
@@ -112,35 +104,30 @@ func resourceConfigurationTemplate() *schema.Resource {
 											},
 										},
 									},
-
 									"id": &schema.Schema{
 										Description: `UUID of template
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"language": &schema.Schema{
 										Description: `Template language (JINJA or VELOCITY)
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"name": &schema.Schema{
 										Description: `Name of template
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"project_name": &schema.Schema{
 										Description: `Project name
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"rollback_template_params": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -153,107 +140,92 @@ func resourceConfigurationTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"custom_order": &schema.Schema{
 													Description: `CustomOrder of template param
 `,
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
-
 												"data_type": &schema.Schema{
 													Description: `Datatype of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"default_value": &schema.Schema{
 													Description: `Default value of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"description": &schema.Schema{
 													Description: `Description of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"display_name": &schema.Schema{
 													Description: `Display name of param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"group": &schema.Schema{
 													Description: `group
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"id": &schema.Schema{
 													Description: `UUID of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"instruction_text": &schema.Schema{
 													Description: `Instruction text for param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"key": &schema.Schema{
 													Description: `key
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"order": &schema.Schema{
 													Description: `Order of template param
 `,
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
-
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"parameter_name": &schema.Schema{
 													Description: `Name of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"provider": &schema.Schema{
 													Description: `provider
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"range": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -266,14 +238,12 @@ func resourceConfigurationTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
-
 															"max_value": &schema.Schema{
 																Description: `Max value of range
 `,
 																Type:     schema.TypeInt,
 																Computed: true,
 															},
-
 															"min_value": &schema.Schema{
 																Description: `Min value of range
 `,
@@ -283,15 +253,13 @@ func resourceConfigurationTemplate() *schema.Resource {
 														},
 													},
 												},
-
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"selection": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -307,25 +275,22 @@ func resourceConfigurationTemplate() *schema.Resource {
 																	Type: schema.TypeString,
 																},
 															},
-
 															"id": &schema.Schema{
 																Description: `UUID of selection
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
-
 															"selection_type": &schema.Schema{
 																Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
-
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString,
+																Type:     schema.TypeString, //TEST,
 																Computed: true,
 															},
 														},
@@ -334,7 +299,6 @@ func resourceConfigurationTemplate() *schema.Resource {
 											},
 										},
 									},
-
 									"tags": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -347,7 +311,6 @@ func resourceConfigurationTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"name": &schema.Schema{
 													Description: `Name of tag
 `,
@@ -357,14 +320,12 @@ func resourceConfigurationTemplate() *schema.Resource {
 											},
 										},
 									},
-
 									"template_content": &schema.Schema{
 										Description: `Template content
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"template_params": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -377,107 +338,92 @@ func resourceConfigurationTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"custom_order": &schema.Schema{
 													Description: `CustomOrder of template param
 `,
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
-
 												"data_type": &schema.Schema{
 													Description: `Datatype of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"default_value": &schema.Schema{
 													Description: `Default value of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"description": &schema.Schema{
 													Description: `Description of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"display_name": &schema.Schema{
 													Description: `Display name of param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"group": &schema.Schema{
 													Description: `group
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"id": &schema.Schema{
 													Description: `UUID of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"instruction_text": &schema.Schema{
 													Description: `Instruction text for param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"key": &schema.Schema{
 													Description: `key
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"order": &schema.Schema{
 													Description: `Order of template param
 `,
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
-
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"parameter_name": &schema.Schema{
 													Description: `Name of template param
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"provider": &schema.Schema{
 													Description: `provider
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"range": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -490,14 +436,12 @@ func resourceConfigurationTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Computed: true,
 															},
-
 															"max_value": &schema.Schema{
 																Description: `Max value of range
 `,
 																Type:     schema.TypeInt,
 																Computed: true,
 															},
-
 															"min_value": &schema.Schema{
 																Description: `Min value of range
 `,
@@ -507,15 +451,13 @@ func resourceConfigurationTemplate() *schema.Resource {
 														},
 													},
 												},
-
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"selection": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -531,25 +473,22 @@ func resourceConfigurationTemplate() *schema.Resource {
 																	Type: schema.TypeString,
 																},
 															},
-
 															"id": &schema.Schema{
 																Description: `UUID of selection
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
-
 															"selection_type": &schema.Schema{
 																Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
-
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString,
+																Type:     schema.TypeString, //TEST,
 																Computed: true,
 															},
 														},
@@ -558,7 +497,6 @@ func resourceConfigurationTemplate() *schema.Resource {
 											},
 										},
 									},
-
 									"version": &schema.Schema{
 										Description: `Current version of template
 `,
@@ -568,29 +506,25 @@ func resourceConfigurationTemplate() *schema.Resource {
 								},
 							},
 						},
-
 						"create_time": &schema.Schema{
 							Description: `Create time of template
 `,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"custom_params_order": &schema.Schema{
 							Description: `Custom Params Order
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"description": &schema.Schema{
 							Description: `Description of template
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"device_types": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -603,14 +537,12 @@ func resourceConfigurationTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"product_series": &schema.Schema{
 										Description: `Device series
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"product_type": &schema.Schema{
 										Description: `Device type
 `,
@@ -620,77 +552,66 @@ func resourceConfigurationTemplate() *schema.Resource {
 								},
 							},
 						},
-
 						"failure_policy": &schema.Schema{
 							Description: `Define failure policy if template provisioning fails
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"id": &schema.Schema{
 							Description: `UUID of template
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"language": &schema.Schema{
 							Description: `Template language (JINJA or VELOCITY)
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"last_update_time": &schema.Schema{
 							Description: `Update time of template
 `,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"latest_version_time": &schema.Schema{
 							Description: `Latest versioned template time
 `,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"name": &schema.Schema{
 							Description: `Name of template
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"parent_template_id": &schema.Schema{
 							Description: `Parent templateID
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"project_id": &schema.Schema{
 							Description: `Project UUID
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"project_name": &schema.Schema{
 							Description: `Project name
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"rollback_template_content": &schema.Schema{
 							Description: `Rollback template content
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"rollback_template_params": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -703,107 +624,92 @@ func resourceConfigurationTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"custom_order": &schema.Schema{
 										Description: `CustomOrder of template param
 `,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-
 									"data_type": &schema.Schema{
 										Description: `Datatype of template param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"default_value": &schema.Schema{
 										Description: `Default value of template param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"description": &schema.Schema{
 										Description: `Description of template param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"display_name": &schema.Schema{
 										Description: `Display name of param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"group": &schema.Schema{
 										Description: `group
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"id": &schema.Schema{
 										Description: `UUID of template param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"instruction_text": &schema.Schema{
 										Description: `Instruction text for param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"key": &schema.Schema{
 										Description: `key
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"order": &schema.Schema{
 										Description: `Order of template param
 `,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"parameter_name": &schema.Schema{
 										Description: `Name of template param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"provider": &schema.Schema{
 										Description: `provider
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"range": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -816,14 +722,12 @@ func resourceConfigurationTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"max_value": &schema.Schema{
 													Description: `Max value of range
 `,
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
-
 												"min_value": &schema.Schema{
 													Description: `Min value of range
 `,
@@ -833,15 +737,13 @@ func resourceConfigurationTemplate() *schema.Resource {
 											},
 										},
 									},
-
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"selection": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -857,25 +759,22 @@ func resourceConfigurationTemplate() *schema.Resource {
 														Type: schema.TypeString,
 													},
 												},
-
 												"id": &schema.Schema{
 													Description: `UUID of selection
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"selection_type": &schema.Schema{
 													Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeString, //TEST,
 													Computed: true,
 												},
 											},
@@ -884,28 +783,24 @@ func resourceConfigurationTemplate() *schema.Resource {
 								},
 							},
 						},
-
 						"software_type": &schema.Schema{
 							Description: `Applicable device software type
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"software_variant": &schema.Schema{
 							Description: `Applicable device software variant
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"software_version": &schema.Schema{
 							Description: `Applicable device software version
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"tags": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -918,7 +813,6 @@ func resourceConfigurationTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"name": &schema.Schema{
 										Description: `Name of tag
 `,
@@ -928,14 +822,12 @@ func resourceConfigurationTemplate() *schema.Resource {
 								},
 							},
 						},
-
 						"template_content": &schema.Schema{
 							Description: `Template content
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"template_params": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -948,107 +840,92 @@ func resourceConfigurationTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"custom_order": &schema.Schema{
 										Description: `CustomOrder of template param
 `,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-
 									"data_type": &schema.Schema{
 										Description: `Datatype of template param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"default_value": &schema.Schema{
 										Description: `Default value of template param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"description": &schema.Schema{
 										Description: `Description of template param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"display_name": &schema.Schema{
 										Description: `Display name of param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"group": &schema.Schema{
 										Description: `group
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"id": &schema.Schema{
 										Description: `UUID of template param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"instruction_text": &schema.Schema{
 										Description: `Instruction text for param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"key": &schema.Schema{
 										Description: `key
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"order": &schema.Schema{
 										Description: `Order of template param
 `,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"parameter_name": &schema.Schema{
 										Description: `Name of template param
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"provider": &schema.Schema{
 										Description: `provider
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"range": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -1061,14 +938,12 @@ func resourceConfigurationTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"max_value": &schema.Schema{
 													Description: `Max value of range
 `,
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
-
 												"min_value": &schema.Schema{
 													Description: `Min value of range
 `,
@@ -1078,15 +953,13 @@ func resourceConfigurationTemplate() *schema.Resource {
 											},
 										},
 									},
-
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"selection": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -1102,25 +975,22 @@ func resourceConfigurationTemplate() *schema.Resource {
 														Type: schema.TypeString,
 													},
 												},
-
 												"id": &schema.Schema{
 													Description: `UUID of selection
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"selection_type": &schema.Schema{
 													Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeString, //TEST,
 													Computed: true,
 												},
 											},
@@ -1129,7 +999,6 @@ func resourceConfigurationTemplate() *schema.Resource {
 								},
 							},
 						},
-
 						"validation_errors": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -1139,30 +1008,21 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"rollback_template_errors": &schema.Schema{
 										Description: `Validation or design conflicts errors of rollback template
 `,
-										Type:     schema.TypeList,
+										Type:     schema.TypeString, //TEST,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
-
 									"template_errors": &schema.Schema{
 										Description: `Validation or design conflicts errors
 `,
-										Type:     schema.TypeList,
+										Type:     schema.TypeString, //TEST,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
-
 									"template_id": &schema.Schema{
 										Description: `UUID of template
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"template_version": &schema.Schema{
 										Description: `Current version of template
 `,
@@ -1172,7 +1032,6 @@ func resourceConfigurationTemplate() *schema.Resource {
 								},
 							},
 						},
-
 						"version": &schema.Schema{
 							Description: `Current version of template
 `,
@@ -1184,9 +1043,8 @@ func resourceConfigurationTemplate() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -1195,38 +1053,44 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"containing_templates": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
+										Computed:     true,
 									},
 									"description": &schema.Schema{
 										Description: `Description of template
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"device_types": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -1235,18 +1099,21 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"product_series": &schema.Schema{
 													Description: `Device series
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"product_type": &schema.Schema{
 													Description: `Device type
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -1256,28 +1123,33 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"language": &schema.Schema{
 										Description: `Template language (JINJA or VELOCITY)
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"name": &schema.Schema{
 										Description: `Name of template
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Default:  "",
 									},
 									"project_name": &schema.Schema{
 										Description: `Project name
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"rollback_template_params": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -1286,98 +1158,114 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"custom_order": &schema.Schema{
 													Description: `CustomOrder of template param
 `,
 													Type:     schema.TypeInt,
 													Optional: true,
+													Computed: true,
 												},
 												"data_type": &schema.Schema{
 													Description: `Datatype of template param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"default_value": &schema.Schema{
 													Description: `Default value of template param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"description": &schema.Schema{
 													Description: `Description of template param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"display_name": &schema.Schema{
 													Description: `Display name of param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"group": &schema.Schema{
 													Description: `group
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"id": &schema.Schema{
 													Description: `UUID of template param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"instruction_text": &schema.Schema{
 													Description: `Instruction text for param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"key": &schema.Schema{
 													Description: `key
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
+													Computed:     true,
 												},
 												"order": &schema.Schema{
 													Description: `Order of template param
 `,
 													Type:     schema.TypeInt,
 													Optional: true,
+													Computed: true,
 												},
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
+													Computed:     true,
 												},
 												"parameter_name": &schema.Schema{
 													Description: `Name of template param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"provider": &schema.Schema{
 													Description: `provider
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"range": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1386,18 +1274,21 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 																Type:     schema.TypeString,
 																Optional: true,
+																Computed: true,
 															},
 															"max_value": &schema.Schema{
 																Description: `Max value of range
 `,
 																Type:     schema.TypeInt,
 																Optional: true,
+																Computed: true,
 															},
 															"min_value": &schema.Schema{
 																Description: `Min value of range
 `,
 																Type:     schema.TypeInt,
 																Optional: true,
+																Computed: true,
 															},
 														},
 													},
@@ -1405,15 +1296,16 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
+													Computed:     true,
 												},
 												"selection": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
-													MaxItems: 1,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1422,6 +1314,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 																Type:     schema.TypeList,
 																Optional: true,
+																Computed: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -1431,22 +1324,21 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 																Type:     schema.TypeString,
 																Optional: true,
+																Computed: true,
 															},
 															"selection_type": &schema.Schema{
 																Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 																Type:     schema.TypeString,
 																Optional: true,
+																Computed: true,
 															},
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeList,
+																Type:     schema.TypeString, //TEST,
 																Optional: true,
-																MaxItems: 1,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
+																Computed: true,
 															},
 														},
 													},
@@ -1457,6 +1349,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"tags": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -1465,12 +1358,14 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Description: `Name of tag
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -1480,10 +1375,12 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"template_params": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -1492,98 +1389,114 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"custom_order": &schema.Schema{
 													Description: `CustomOrder of template param
 `,
 													Type:     schema.TypeInt,
 													Optional: true,
+													Computed: true,
 												},
 												"data_type": &schema.Schema{
 													Description: `Datatype of template param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"default_value": &schema.Schema{
 													Description: `Default value of template param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"description": &schema.Schema{
 													Description: `Description of template param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"display_name": &schema.Schema{
 													Description: `Display name of param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"group": &schema.Schema{
 													Description: `group
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"id": &schema.Schema{
 													Description: `UUID of template param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"instruction_text": &schema.Schema{
 													Description: `Instruction text for param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"key": &schema.Schema{
 													Description: `key
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
+													Computed:     true,
 												},
 												"order": &schema.Schema{
 													Description: `Order of template param
 `,
 													Type:     schema.TypeInt,
 													Optional: true,
+													Computed: true,
 												},
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
+													Computed:     true,
 												},
 												"parameter_name": &schema.Schema{
 													Description: `Name of template param
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"provider": &schema.Schema{
 													Description: `provider
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"range": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1592,18 +1505,21 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 																Type:     schema.TypeString,
 																Optional: true,
+																Computed: true,
 															},
 															"max_value": &schema.Schema{
 																Description: `Max value of range
 `,
 																Type:     schema.TypeInt,
 																Optional: true,
+																Computed: true,
 															},
 															"min_value": &schema.Schema{
 																Description: `Min value of range
 `,
 																Type:     schema.TypeInt,
 																Optional: true,
+																Computed: true,
 															},
 														},
 													},
@@ -1611,15 +1527,16 @@ func resourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
+													Computed:     true,
 												},
 												"selection": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
-													MaxItems: 1,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1628,6 +1545,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 																Type:     schema.TypeList,
 																Optional: true,
+																Computed: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -1637,22 +1555,21 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 																Type:     schema.TypeString,
 																Optional: true,
+																Computed: true,
 															},
 															"selection_type": &schema.Schema{
 																Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 																Type:     schema.TypeString,
 																Optional: true,
+																Computed: true,
 															},
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeList,
+																Type:     schema.TypeString, //TEST,
 																Optional: true,
-																MaxItems: 1,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
+																Computed: true,
 															},
 														},
 													},
@@ -1665,6 +1582,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -1674,24 +1592,28 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"custom_params_order": &schema.Schema{
 							Description: `Custom Params Order
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Description: `Description of template
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"device_types": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -1700,18 +1622,21 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"product_series": &schema.Schema{
 										Description: `Device series
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"product_type": &schema.Schema{
 										Description: `Device type
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -1721,64 +1646,75 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"id": &schema.Schema{
 							Description: `UUID of template
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"language": &schema.Schema{
 							Description: `Template language (JINJA or VELOCITY)
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"last_update_time": &schema.Schema{
 							Description: `Update time of template
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"latest_version_time": &schema.Schema{
 							Description: `Latest versioned template time
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"name": &schema.Schema{
 							Description: `Name of template
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Computed: true,
 						},
 						"parent_template_id": &schema.Schema{
 							Description: `Parent templateID
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"project_id": &schema.Schema{
 							Description: `Project UUID
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Default:  "",
 						},
 						"project_name": &schema.Schema{
 							Description: `Project name
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"rollback_template_content": &schema.Schema{
 							Description: `Rollback template content
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"rollback_template_params": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -1787,98 +1723,114 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"custom_order": &schema.Schema{
 										Description: `CustomOrder of template param
 `,
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"data_type": &schema.Schema{
 										Description: `Datatype of template param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"default_value": &schema.Schema{
 										Description: `Default value of template param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"description": &schema.Schema{
 										Description: `Description of template param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"display_name": &schema.Schema{
 										Description: `Display name of param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"group": &schema.Schema{
 										Description: `group
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"id": &schema.Schema{
 										Description: `UUID of template param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"instruction_text": &schema.Schema{
 										Description: `Instruction text for param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"key": &schema.Schema{
 										Description: `key
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
+										Computed:     true,
 									},
 									"order": &schema.Schema{
 										Description: `Order of template param
 `,
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
+										Computed:     true,
 									},
 									"parameter_name": &schema.Schema{
 										Description: `Name of template param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"provider": &schema.Schema{
 										Description: `provider
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"range": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -1887,18 +1839,21 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"max_value": &schema.Schema{
 													Description: `Max value of range
 `,
 													Type:     schema.TypeInt,
 													Optional: true,
+													Computed: true,
 												},
 												"min_value": &schema.Schema{
 													Description: `Min value of range
 `,
 													Type:     schema.TypeInt,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -1906,15 +1861,16 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
+										Computed:     true,
 									},
 									"selection": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -1923,6 +1879,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 													Type:     schema.TypeList,
 													Optional: true,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -1932,22 +1889,21 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"selection_type": &schema.Schema{
 													Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeList,
+													Type:     schema.TypeString, //TEST,
 													Optional: true,
-													MaxItems: 1,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
+													Computed: true,
 												},
 											},
 										},
@@ -1960,22 +1916,26 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"software_variant": &schema.Schema{
 							Description: `Applicable device software variant
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"software_version": &schema.Schema{
 							Description: `Applicable device software version
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"tags": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -1984,12 +1944,14 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"name": &schema.Schema{
 										Description: `Name of tag
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -1999,16 +1961,19 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"template_id": &schema.Schema{
 							Description: `templateId path parameter. templateId(UUID) of template to be deleted
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Default:  "",
 						},
 						"template_params": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -2017,98 +1982,114 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"custom_order": &schema.Schema{
 										Description: `CustomOrder of template param
 `,
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"data_type": &schema.Schema{
 										Description: `Datatype of template param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"default_value": &schema.Schema{
 										Description: `Default value of template param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"description": &schema.Schema{
 										Description: `Description of template param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"display_name": &schema.Schema{
 										Description: `Display name of param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"group": &schema.Schema{
 										Description: `group
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"id": &schema.Schema{
 										Description: `UUID of template param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"instruction_text": &schema.Schema{
 										Description: `Instruction text for param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"key": &schema.Schema{
 										Description: `key
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
+										Computed:     true,
 									},
 									"order": &schema.Schema{
 										Description: `Order of template param
 `,
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
+										Computed:     true,
 									},
 									"parameter_name": &schema.Schema{
 										Description: `Name of template param
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"provider": &schema.Schema{
 										Description: `provider
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"range": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -2117,18 +2098,21 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"max_value": &schema.Schema{
 													Description: `Max value of range
 `,
 													Type:     schema.TypeInt,
 													Optional: true,
+													Computed: true,
 												},
 												"min_value": &schema.Schema{
 													Description: `Min value of range
 `,
 													Type:     schema.TypeInt,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -2136,15 +2120,16 @@ func resourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
+										Computed:     true,
 									},
 									"selection": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -2153,6 +2138,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 													Type:     schema.TypeList,
 													Optional: true,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -2162,22 +2148,21 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"selection_type": &schema.Schema{
 													Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeList,
+													Type:     schema.TypeString, //TEST,
 													Optional: true,
-													MaxItems: 1,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
+													Computed: true,
 												},
 											},
 										},
@@ -2188,54 +2173,47 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"validation_errors": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
-							MaxItems: 1,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"rollback_template_errors": &schema.Schema{
 										Description: `Validation or design conflicts errors of rollback template
 `,
-										Type:     schema.TypeList,
+										Type:     schema.TypeString, //TEST,
 										Optional: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
+										Computed: true,
 									},
 									"template_errors": &schema.Schema{
 										Description: `Validation or design conflicts errors
 `,
-										Type:     schema.TypeList,
+										Type:     schema.TypeString, //TEST,
 										Optional: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
+										Computed: true,
 									},
 									"template_id": &schema.Schema{
 										Description: `UUID of template
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Default:  "",
 									},
 									"template_version": &schema.Schema{
 										Description: `Current version of template
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 								},
 							},
-						},
-						"comments": &schema.Schema{
-							Description: `Template version comments
-			`,
-							Type:     schema.TypeString,
-							Optional: true,
 						},
 						"version": &schema.Schema{
 							Description: `Current version of template
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -2253,16 +2231,32 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 	request1 := expandRequestConfigurationTemplateCreateTemplate(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	vTemplateID, okTemplateID := resourceItem["template_id"]
+	vTemplateID := resourceItem["template_id"]
 	vvTemplateID := interfaceToString(vTemplateID)
 	vProjectID := resourceItem["project_id"]
 	vvProjectID := interfaceToString(vProjectID)
-	if okTemplateID && vvTemplateID != "" {
+	vName := resourceItem["name"]
+	vvName := interfaceToString(vName)
+	if vvTemplateID != "" {
 		getResponse2, _, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID, nil)
+		// log.Printf("[DEBUG] getResponse2 sent => %v", responseInterfaceToString(*getResponse2))
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["template_id"] = vvTemplateID
 			resourceMap["project_id"] = vvProjectID
+			d.SetId(joinResourceID(resourceMap))
+			return resourceConfigurationTemplateRead(ctx, d, m)
+		}
+	} else {
+		queryParamImport := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
+		queryParamImport.ProjectID = vvProjectID
+
+		response2, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParamImport, vvName)
+		// log.Printf("[DEBUG] response2 sent => %v", responseInterfaceToString(*response2))
+		if response2 != nil && err == nil {
+			resourceMap := make(map[string]string)
+			resourceMap["template_id"] = response2.TemplateID
+			resourceMap["project_id"] = response2.ProjectID
 			d.SetId(joinResourceID(resourceMap))
 			return resourceConfigurationTemplateRead(ctx, d, m)
 		}
@@ -2274,6 +2268,11 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 				"Failure when executing CreateTemplate", err, restyResp1.String()))
 			return diags
 		}
+		diags = append(diags, diagError(
+			"Failure when executing CreateTemplate", err))
+		return diags
+	}
+	if resp1.Response == nil {
 		diags = append(diags, diagError(
 			"Failure when executing CreateTemplate", err))
 		return diags
@@ -2294,16 +2293,25 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
 				"Failure when executing CreateTemplate", err1))
 			return diags
 		}
-		vvTemplateID = response2.Response.Data
 	}
+	queryParamValidate := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
+	queryParamValidate.ProjectID = vvProjectID
+	item3, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParamValidate, vvName)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing CreateTemplate", err,
+			"Failure at CreateTemplate, unexpected response", ""))
+		return diags
+	}
+
 	resourceMap := make(map[string]string)
-	resourceMap["template_id"] = vvTemplateID
+	resourceMap["template_id"] = item3.TemplateID
 	resourceMap["project_id"] = vvProjectID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceConfigurationTemplateRead(ctx, d, m)
@@ -2317,18 +2325,18 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vTemplateID := resourceMap["template_id"]
-	//vProjectID := resourceMap["project_id"]
-	//vTemplateName := resourceMap["name"]
 
-	/*if vTemplateName != "" {
-		log.Printf("[DEBUG] Selected method 1: GetsTheTemplatesAvailable")
-		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-		queryParams1.ProjectID = vProjectID
-		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
+	selectedMethod := 1
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetsDetailsOfAGivenTemplate")
+		vvTemplateID := vTemplateID
+		queryParams1 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
+
+		response1, restyResp1, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID, &queryParams1)
 
 		if err != nil || response1 == nil {
-			if err != nil {
-				log.Printf("[DEBUG] Error when search => %s", err.Error())
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			d.SetId("")
 			return diags
@@ -2336,62 +2344,15 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
-
-		response2, restyResp2, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(response1.TemplateID, &queryParams2)
-		if err != nil {
+		// Review flatten function used
+		vItem1 := flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItem(response1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetsDetailsOfAGivenTemplate response",
+				"Failure when setting GetsTheTemplatesAvailable search response",
 				err))
 			return diags
 		}
-		if response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			d.SetId("")
-			return diags
-		}
-		vItems1 := flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItem(response2)
-		if err := d.Set("item", vItems1); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetsTheTemplatesAvailable response",
-				err))
-			return diags
-		}
-		return diags
-	} else*/
-	if vTemplateID != "" {
-		log.Printf("[DEBUG] Selected method 2: GetsDetailsOfAGivenTemplate")
-		vvTemplateID := vTemplateID
-		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
 
-		response2, restyResp2, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID, &queryParams2)
-
-		if err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetsDetailsOfAGivenTemplate response",
-				err))
-			return diags
-		}
-		if response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			d.SetId("")
-			return diags
-		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
-
-		vItem2 := flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItem(response2)
-		if err := d.Set("item", vItem2); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetsDetailsOfAGivenTemplate response",
-				err))
-			return diags
-		}
-		return diags
 	}
 	return diags
 }
@@ -2400,96 +2361,15 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTemplateID := resourceMap["template_id"]
-	//vProjectID := resourceMap["project_id"]
-	//vTemplateName := resourceMap["name"]
-	var vvTemplateID string
-	// NOTE: Consider adding getAllItems and search function to get missing params
-	if vTemplateID != "" {
-		vvTemplateID = vTemplateID
-		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
-
-		getResp, _, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID, &queryParams2)
-		if err != nil || getResp == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsDetailsOfAGivenTemplate", err,
-				"Failure at GetsDetailsOfAGivenTemplate, unexpected response", ""))
-			return diags
-		}
-	} /*else if vTemplateName != "" {
-		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-		queryParams1.ProjectID = vProjectID
-		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
-
-		if err != nil || response1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsTheTemplatesAvailable", err,
-				"Failure at GetsTheTemplatesAvailable, unexpected response", ""))
-			return diags
-		}
-		vvTemplateID = response1.TemplateID
-	}
-	*/
+	vID := resourceMap["template_id"]
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] ID used for update operation %s", vTemplateID)
 		request1 := expandRequestConfigurationTemplateUpdateTemplate(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil && request1.ID == "" {
+			request1.ID = vID
 		}
-		request1.ID = vvTemplateID
-		if d.HasChange("parameters.0.comments") {
-			request2 := expandRequestConfigurationTemplateVersionCreateVersionTemplate(ctx, "parameters.0", d)
-			if request2 != nil {
-				log.Printf("[DEBUG] request2 sent => %v", responseInterfaceToString(*request2))
-			}
-			request2.TemplateID = vTemplateID
-			response2, restyResp2, err := client.ConfigurationTemplates.VersionTemplate(request2)
-			if err != nil || response2 == nil {
-				if restyResp2 != nil {
-					log.Printf("[DEBUG] resty response for update operation => %v", restyResp2.String())
-					diags = append(diags, diagErrorWithAltAndResponse(
-						"Failure when executing VersionTemplate", err, restyResp2.String(),
-						"Failure at VersionTemplate, unexpected response", ""))
-					return diags
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing VersionTemplate", err,
-					"Failure at VersionTemplate, unexpected response", ""))
-				return diags
-			}
-			if response2.Response == nil {
-				diags = append(diags, diagError(
-					"Failure when executing VersionTemplate", err))
-				return diags
-			}
-			taskId := response2.Response.TaskID
-			log.Printf("[DEBUG] TASKID => %s", taskId)
-			if taskId != "" {
-				time.Sleep(5 * time.Second)
-				response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-				if err != nil || response2 == nil {
-					if restyResp2 != nil {
-						log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-					}
-					diags = append(diags, diagErrorWithAlt(
-						"Failure when executing GetTaskByID", err,
-						"Failure at GetTaskByID, unexpected response", ""))
-					return diags
-				}
-				if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-					log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-					errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
-					err1 := errors.New(errorMsg)
-					diags = append(diags, diagError(
-						"Failure when executing VersionTemplate", err1))
-					return diags
-				}
-			}
-		}
-
 		response1, restyResp1, err := client.ConfigurationTemplates.UpdateTemplate(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -2504,6 +2384,7 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 				"Failure at UpdateTemplate, unexpected response", ""))
 			return diags
 		}
+
 		if response1.Response == nil {
 			diags = append(diags, diagError(
 				"Failure when executing UpdateTemplate", err))
@@ -2525,13 +2406,14 @@ func resourceConfigurationTemplateUpdate(ctx context.Context, d *schema.Resource
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
 				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
 					"Failure when executing UpdateTemplate", err1))
 				return diags
 			}
 		}
+
 	}
 
 	return resourceConfigurationTemplateRead(ctx, d, m)
@@ -2545,33 +2427,8 @@ func resourceConfigurationTemplateDelete(ctx context.Context, d *schema.Resource
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTemplateID := resourceMap["template_id"]
-	//vProjectID := resourceMap["project_id"]
-	//vTemplateName := resourceMap["name"]
+	vvTemplateID := resourceMap["template_id"]
 
-	var vvTemplateID string
-	// REVIEW: Add getAllItems and search function to get missing params
-	if vTemplateID != "" {
-		vvTemplateID = vTemplateID
-		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
-
-		getResp, _, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vvTemplateID, &queryParams2)
-		if err != nil || getResp == nil {
-			return diags
-		}
-	}
-	/*
-		if vTemplateName != "" {
-			queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
-			queryParams1.ProjectID = vProjectID
-			response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
-
-			if err != nil || response1 == nil {
-				return diags
-			}
-			vvTemplateID = response1.TemplateID
-		}
-	*/
 	response1, restyResp1, err := client.ConfigurationTemplates.DeletesTheTemplate(vvTemplateID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -2585,6 +2442,35 @@ func resourceConfigurationTemplateDelete(ctx context.Context, d *schema.Resource
 			"Failure when executing DeletesTheTemplate", err,
 			"Failure at DeletesTheTemplate, unexpected response", ""))
 		return diags
+	}
+
+	if response1.Response == nil {
+		diags = append(diags, diagError(
+			"Failure when executing DeletesTheTemplate", err))
+		return diags
+	}
+	taskId := response1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
+			diags = append(diags, diagError(
+				"Failure when executing DeletesTheTemplate", err1))
+			return diags
+		}
 	}
 
 	// d.SetId("") is automatically called assuming delete returns no errors, but
@@ -2676,7 +2562,6 @@ func expandRequestConfigurationTemplateCreateTemplate(ctx context.Context, key s
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2691,7 +2576,7 @@ func expandRequestConfigurationTemplateCreateTemplateTagsArray(ctx context.Conte
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2700,7 +2585,6 @@ func expandRequestConfigurationTemplateCreateTemplateTagsArray(ctx context.Conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2715,7 +2599,6 @@ func expandRequestConfigurationTemplateCreateTemplateTags(ctx context.Context, k
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2730,7 +2613,7 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplates(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2739,7 +2622,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2784,7 +2666,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplates(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2799,7 +2680,7 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTagsArra
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2808,7 +2689,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTagsArra
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2823,7 +2703,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTags(ctx
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2838,7 +2717,7 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesDeviceTy
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2847,7 +2726,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesDeviceTy
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2865,7 +2743,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesDeviceTy
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2880,7 +2757,7 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollback
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2889,7 +2766,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2952,7 +2828,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2967,7 +2842,7 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollback
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2976,7 +2851,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -2994,7 +2868,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3015,7 +2888,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3025,7 +2897,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3040,7 +2911,7 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplate
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3049,7 +2920,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3112,7 +2982,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3127,7 +2996,7 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplate
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3136,7 +3005,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3154,7 +3022,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3175,7 +3042,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3185,7 +3051,6 @@ func expandRequestConfigurationTemplateCreateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3200,7 +3065,7 @@ func expandRequestConfigurationTemplateCreateTemplateDeviceTypesArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3209,7 +3074,6 @@ func expandRequestConfigurationTemplateCreateTemplateDeviceTypesArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3227,7 +3091,6 @@ func expandRequestConfigurationTemplateCreateTemplateDeviceTypes(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3242,7 +3105,7 @@ func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsArray
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3251,7 +3114,6 @@ func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsArray
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3314,7 +3176,6 @@ func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParams(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3329,7 +3190,7 @@ func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsRange
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3338,7 +3199,6 @@ func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsRange
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3356,7 +3216,6 @@ func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsRange
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3377,7 +3236,6 @@ func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsSelec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3387,7 +3245,6 @@ func expandRequestConfigurationTemplateCreateTemplateRollbackTemplateParamsSelec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3402,7 +3259,7 @@ func expandRequestConfigurationTemplateCreateTemplateTemplateParamsArray(ctx con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3411,7 +3268,6 @@ func expandRequestConfigurationTemplateCreateTemplateTemplateParamsArray(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3474,7 +3330,6 @@ func expandRequestConfigurationTemplateCreateTemplateTemplateParams(ctx context.
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3489,7 +3344,7 @@ func expandRequestConfigurationTemplateCreateTemplateTemplateParamsRangeArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateCreateTemplateTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3498,7 +3353,6 @@ func expandRequestConfigurationTemplateCreateTemplateTemplateParamsRangeArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3516,7 +3370,6 @@ func expandRequestConfigurationTemplateCreateTemplateTemplateParamsRange(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3537,7 +3390,6 @@ func expandRequestConfigurationTemplateCreateTemplateTemplateParamsSelection(ctx
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3547,17 +3399,16 @@ func expandRequestConfigurationTemplateCreateTemplateTemplateParamsSelectionSele
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateCreateTemplateValidationErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrors {
 	request := dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrors{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rollback_template_errors")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rollback_template_errors")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rollback_template_errors")))) {
-		request.RollbackTemplateErrors = expandRequestConfigurationTemplateCreateTemplateValidationErrorsRollbackTemplateErrorsArray(ctx, key+".rollback_template_errors", d)
+		request.RollbackTemplateErrors = expandRequestConfigurationTemplateCreateTemplateValidationErrorsRollbackTemplateErrors(ctx, key+".rollback_template_errors.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_errors")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_errors")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_errors")))) {
-		request.TemplateErrors = expandRequestConfigurationTemplateCreateTemplateValidationErrorsTemplateErrorsArray(ctx, key+".template_errors", d)
+		request.TemplateErrors = expandRequestConfigurationTemplateCreateTemplateValidationErrorsTemplateErrors(ctx, key+".template_errors.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
 		request.TemplateID = interfaceToString(v)
@@ -3568,31 +3419,6 @@ func expandRequestConfigurationTemplateCreateTemplateValidationErrors(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
-	return &request
-}
-
-func expandRequestConfigurationTemplateCreateTemplateValidationErrorsRollbackTemplateErrorsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsRollbackTemplateErrors {
-	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsRollbackTemplateErrors{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no, _ := range objs {
-		i := expandRequestConfigurationTemplateCreateTemplateValidationErrorsRollbackTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -3602,31 +3428,6 @@ func expandRequestConfigurationTemplateCreateTemplateValidationErrorsRollbackTem
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
-	return &request
-}
-
-func expandRequestConfigurationTemplateCreateTemplateValidationErrorsTemplateErrorsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsTemplateErrors {
-	request := []dnacentersdkgo.RequestConfigurationTemplatesCreateTemplateValidationErrorsTemplateErrors{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no, _ := range objs {
-		i := expandRequestConfigurationTemplateCreateTemplateValidationErrorsTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -3636,22 +3437,6 @@ func expandRequestConfigurationTemplateCreateTemplateValidationErrorsTemplateErr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
-	return &request
-}
-
-func expandRequestConfigurationTemplateVersionCreateVersionTemplate(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesVersionTemplate {
-	request := dnacentersdkgo.RequestConfigurationTemplatesVersionTemplate{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".comments")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".comments")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".comments")))) {
-		request.Comments = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
-		request.TemplateID = interfaceToString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -3738,7 +3523,6 @@ func expandRequestConfigurationTemplateUpdateTemplate(ctx context.Context, key s
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3753,7 +3537,7 @@ func expandRequestConfigurationTemplateUpdateTemplateTagsArray(ctx context.Conte
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3762,7 +3546,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTagsArray(ctx context.Conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3777,7 +3560,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTags(ctx context.Context, k
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3792,7 +3574,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplates(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3801,7 +3583,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3846,7 +3627,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplates(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3861,7 +3641,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTagsArra
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTags(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3870,7 +3650,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTagsArra
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3885,7 +3664,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTags(ctx
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3900,7 +3678,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesDeviceTy
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3909,7 +3687,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesDeviceTy
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3927,7 +3704,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesDeviceTy
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -3942,7 +3718,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -3951,7 +3727,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4014,7 +3789,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4029,7 +3803,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4038,7 +3812,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4056,7 +3829,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4077,7 +3849,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4087,7 +3858,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesRollback
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4102,7 +3872,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4111,7 +3881,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4174,7 +3943,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4189,7 +3957,7 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4198,7 +3966,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4216,7 +3983,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4237,7 +4003,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4247,7 +4012,6 @@ func expandRequestConfigurationTemplateUpdateTemplateContainingTemplatesTemplate
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4262,7 +4026,7 @@ func expandRequestConfigurationTemplateUpdateTemplateDeviceTypesArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateDeviceTypes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4271,7 +4035,6 @@ func expandRequestConfigurationTemplateUpdateTemplateDeviceTypesArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4289,7 +4052,6 @@ func expandRequestConfigurationTemplateUpdateTemplateDeviceTypes(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4304,7 +4066,7 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsArray
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4313,7 +4075,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsArray
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4376,7 +4137,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParams(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4391,7 +4151,7 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsRange
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4400,7 +4160,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsRange
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4418,7 +4177,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsRange
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4439,7 +4197,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsSelec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4449,7 +4206,6 @@ func expandRequestConfigurationTemplateUpdateTemplateRollbackTemplateParamsSelec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4464,7 +4220,7 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsArray(ctx con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateTemplateParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4473,7 +4229,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsArray(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4536,7 +4291,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParams(ctx context.
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4551,7 +4305,7 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsRangeArray(ct
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestConfigurationTemplateUpdateTemplateTemplateParamsRange(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -4560,7 +4314,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsRangeArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4578,7 +4331,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsRange(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4599,7 +4351,6 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsSelection(ctx
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -4609,17 +4360,16 @@ func expandRequestConfigurationTemplateUpdateTemplateTemplateParamsSelectionSele
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestConfigurationTemplateUpdateTemplateValidationErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesUpdateTemplateValidationErrors {
 	request := dnacentersdkgo.RequestConfigurationTemplatesUpdateTemplateValidationErrors{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rollback_template_errors")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rollback_template_errors")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rollback_template_errors")))) {
-		request.RollbackTemplateErrors = expandRequestConfigurationTemplateUpdateTemplateValidationErrorsRollbackTemplateErrorsArray(ctx, key+".rollback_template_errors", d)
+		request.RollbackTemplateErrors = expandRequestConfigurationTemplateUpdateTemplateValidationErrorsRollbackTemplateErrors(ctx, key+".rollback_template_errors.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_errors")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_errors")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_errors")))) {
-		request.TemplateErrors = expandRequestConfigurationTemplateUpdateTemplateValidationErrorsTemplateErrorsArray(ctx, key+".template_errors", d)
+		request.TemplateErrors = expandRequestConfigurationTemplateUpdateTemplateValidationErrorsTemplateErrors(ctx, key+".template_errors.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
 		request.TemplateID = interfaceToString(v)
@@ -4630,31 +4380,6 @@ func expandRequestConfigurationTemplateUpdateTemplateValidationErrors(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
-	return &request
-}
-
-func expandRequestConfigurationTemplateUpdateTemplateValidationErrorsRollbackTemplateErrorsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesUpdateTemplateValidationErrorsRollbackTemplateErrors {
-	request := []dnacentersdkgo.RequestConfigurationTemplatesUpdateTemplateValidationErrorsRollbackTemplateErrors{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no, _ := range objs {
-		i := expandRequestConfigurationTemplateUpdateTemplateValidationErrorsRollbackTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -4664,31 +4389,6 @@ func expandRequestConfigurationTemplateUpdateTemplateValidationErrorsRollbackTem
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
-	return &request
-}
-
-func expandRequestConfigurationTemplateUpdateTemplateValidationErrorsTemplateErrorsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesUpdateTemplateValidationErrorsTemplateErrors {
-	request := []dnacentersdkgo.RequestConfigurationTemplatesUpdateTemplateValidationErrorsTemplateErrors{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no, _ := range objs {
-		i := expandRequestConfigurationTemplateUpdateTemplateValidationErrorsTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -4698,7 +4398,6 @@ func expandRequestConfigurationTemplateUpdateTemplateValidationErrorsTemplateErr
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 

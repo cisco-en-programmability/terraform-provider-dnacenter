@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -45,7 +45,7 @@ func dataSourceTopologyLayer2() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"additional_info": &schema.Schema{
-										Type:     schema.TypeString,
+										Type:     schema.TypeString, //TEST,
 										Computed: true,
 									},
 
@@ -146,7 +146,7 @@ func dataSourceTopologyLayer2() *schema.Resource {
 									},
 
 									"additional_info": &schema.Schema{
-										Type:     schema.TypeString,
+										Type:     schema.TypeString, //TEST,
 										Computed: true,
 									},
 
@@ -316,7 +316,7 @@ func dataSourceTopologyLayer2Read(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTopologyDetails")
+		log.Printf("[DEBUG] Selected method: GetTopologyDetails")
 		vvVLANID := vVLANID.(string)
 
 		response1, restyResp1, err := client.Topology.GetTopologyDetails(vvVLANID)
@@ -340,6 +340,7 @@ func dataSourceTopologyLayer2Read(ctx context.Context, d *schema.ResourceData, m
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

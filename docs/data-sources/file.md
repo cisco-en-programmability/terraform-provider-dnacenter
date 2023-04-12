@@ -32,11 +32,11 @@ output "dnacenter_file_example" {
 
 ### Required
 
-- **dirpath** (String) Directory absolute path in which to save the file.
-- **file_id** (String) fileId path parameter. File Identification number
+- `dirpath` (String) Directory absolute path in which to save the file.
+- `file_id` (String) fileId path parameter. File Identification number
 
-### Optional
+### Read-Only
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 

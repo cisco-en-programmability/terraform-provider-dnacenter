@@ -3,12 +3,11 @@ package dnacenter
 import (
 	"context"
 	"reflect"
-	"strings"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -47,49 +46,41 @@ func resourceSdaPortAssignmentForAccessPoint() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"data_ip_address_pool_name": &schema.Schema{
 							Description: `Data Ip Address Pool Name`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"description": &schema.Schema{
 							Description: `Description`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"device_management_ip_address": &schema.Schema{
 							Description: `Device Management Ip Address`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"interface_name": &schema.Schema{
 							Description: `Interface Name`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"scalable_group_name": &schema.Schema{
 							Description: `Scalable Group Name`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"site_name_hierarchy": &schema.Schema{
 							Description: `Site Name Hierarchy`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"status": &schema.Schema{
 							Description: `Status`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"voice_ip_address_pool_name": &schema.Schema{
 							Description: `Voice Ip Address Pool Name`,
 							Type:        schema.TypeString,
@@ -100,47 +91,52 @@ func resourceSdaPortAssignmentForAccessPoint() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"authenticate_template_name": &schema.Schema{
-							Description: `Authenticate TemplateName associated to siteNameHierarchy.
+							Description: `Authenticate TemplateName associated to Fabric Site
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"data_ip_address_pool_name": &schema.Schema{
 							Description: `Ip Pool Name, that is assigned to INFRA_VN  
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"device_management_ip_address": &schema.Schema{
 							Description: `Management Ip Address of the edge device 
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Default:  "",
 						},
 						"interface_description": &schema.Schema{
-							Description: `Details or note of interface assignment
+							Description: `Details or note of interface port assignment
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"interface_name": &schema.Schema{
 							Description: `Interface Name of the edge device 
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Default:  "",
 						},
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy should be a valid fabric site name hierarchy. e.g Global/USA/San Jose
+							Description: `Path of sda Fabric Site
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -156,31 +152,25 @@ func resourceSdaPortAssignmentForAccessPointCreate(ctx context.Context, d *schem
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSdaPortAssignmentForAccessPointAddPortAssignmentForAccessPointInSdaFabric(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+
 	vDeviceManagementIPAddress := resourceItem["device_management_ip_address"]
-	vInterfaceName := resourceItem["interface_name"]
 	vvDeviceManagementIPAddress := interfaceToString(vDeviceManagementIPAddress)
+	vInterfaceName := resourceItem["interface_name"]
 	vvInterfaceName := interfaceToString(vInterfaceName)
-
-	queryParams1 := dnacentersdkgo.GetPortAssignmentForAccessPointInSdaFabricQueryParams{}
-
-	queryParams1.DeviceManagementIPAddress = vvDeviceManagementIPAddress
-
-	queryParams1.InterfaceName = vvInterfaceName
-
-	getResponse2, _, err := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParams1)
-	if err == nil && getResponse2 != nil && strings.ToLower(getResponse2.Status) != "failed" {
+	queryParamImport := dnacentersdkgo.GetPortAssignmentForAccessPointInSdaFabricQueryParams{}
+	queryParamImport.DeviceManagementIPAddress = vvDeviceManagementIPAddress
+	queryParamImport.InterfaceName = vvInterfaceName
+	item2, _, err := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParamImport)
+	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
-		resourceMap["device_management_ip_address"] = vvDeviceManagementIPAddress
-		resourceMap["interface_name"] = vvInterfaceName
+		resourceMap["device_management_ip_address"] = item2.DeviceManagementIPAddress
+		resourceMap["interface_name"] = item2.InterfaceName
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaPortAssignmentForAccessPointRead(ctx, d, m)
 	}
-
-	response1, restyResp1, err := client.Sda.AddPortAssignmentForAccessPointInSdaFabric(request1)
-	if err != nil || response1 == nil {
+	resp1, restyResp1, err := client.Sda.AddPortAssignmentForAccessPointInSdaFabric(request1)
+	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
 				"Failure when executing AddPortAssignmentForAccessPointInSdaFabric", err, restyResp1.String()))
@@ -190,15 +180,14 @@ func resourceSdaPortAssignmentForAccessPointCreate(ctx context.Context, d *schem
 			"Failure when executing AddPortAssignmentForAccessPointInSdaFabric", err))
 		return diags
 	}
-
-	executionId := response1.ExecutionID
+	executionId := resp1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
@@ -207,10 +196,10 @@ func resourceSdaPortAssignmentForAccessPointCreate(ctx context.Context, d *schem
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -225,9 +214,21 @@ func resourceSdaPortAssignmentForAccessPointCreate(ctx context.Context, d *schem
 			return diags
 		}
 	}
+	queryParamValidate := dnacentersdkgo.GetPortAssignmentForAccessPointInSdaFabricQueryParams{}
+	queryParamValidate.DeviceManagementIPAddress = vvDeviceManagementIPAddress
+	queryParamValidate.InterfaceName = vvInterfaceName
+	item3, _, err := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParamValidate)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing AddPortAssignmentForAccessPointInSdaFabric", err,
+			"Failure at AddPortAssignmentForAccessPointInSdaFabric, unexpected response", ""))
+		return diags
+	}
+
 	resourceMap := make(map[string]string)
-	resourceMap["device_management_ip_address"] = vvDeviceManagementIPAddress
-	resourceMap["interface_name"] = vvInterfaceName
+	resourceMap["device_management_ip_address"] = item3.DeviceManagementIPAddress
+	resourceMap["interface_name"] = item3.InterfaceName
+
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSdaPortAssignmentForAccessPointRead(ctx, d, m)
 }
@@ -239,27 +240,23 @@ func resourceSdaPortAssignmentForAccessPointRead(ctx context.Context, d *schema.
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+
 	vDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
+
 	vInterfaceName := resourceMap["interface_name"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetPortAssignmentForAccessPointInSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetPortAssignmentForAccessPointInSdaFabric")
 		queryParams1 := dnacentersdkgo.GetPortAssignmentForAccessPointInSdaFabricQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
 
 		queryParams1.InterfaceName = vInterfaceName
 
-		response1, restyResp1, _ := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParams1)
+		response1, restyResp1, err := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParams1)
 
-		/*		if err != nil {
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetPortAssignmentForAccessPointInSdaFabric", err,
-					"Failure at GetPortAssignmentForAccessPointInSdaFabric, unexpected response", ""))
-				return diags
-			}*/
-		if response1 == nil {
+		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -276,6 +273,7 @@ func resourceSdaPortAssignmentForAccessPointRead(ctx context.Context, d *schema.
 				err))
 			return diags
 		}
+
 		return diags
 
 	}
@@ -294,23 +292,17 @@ func resourceSdaPortAssignmentForAccessPointDelete(ctx context.Context, d *schem
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
-	vInterfaceName := resourceMap["interface_name"]
 
-	queryParams1 := dnacentersdkgo.GetPortAssignmentForAccessPointInSdaFabricQueryParams{}
-	queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
-	queryParams1.InterfaceName = vInterfaceName
-	item, restyResp1, err := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParams1)
-	if err != nil || item == nil {
-		d.SetId("")
-		return diags
-	}
+	queryParamDelete := dnacentersdkgo.DeletePortAssignmentForAccessPointInSdaFabricQueryParams{}
 
-	queryParams2 := dnacentersdkgo.DeletePortAssignmentForAccessPointInSdaFabricQueryParams{}
-	queryParams2.DeviceManagementIPAddress = vDeviceManagementIPAddress
-	queryParams2.InterfaceName = vInterfaceName
+	vvDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
 
-	response1, restyResp1, err := client.Sda.DeletePortAssignmentForAccessPointInSdaFabric(&queryParams2)
+	vvInterfaceName := resourceMap["interface_name"]
+	queryParamDelete.DeviceManagementIPAddress = vvDeviceManagementIPAddress
+
+	queryParamDelete.InterfaceName = vvInterfaceName
+
+	response1, restyResp1, err := client.Sda.DeletePortAssignmentForAccessPointInSdaFabric(&queryParamDelete)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -329,10 +321,10 @@ func resourceSdaPortAssignmentForAccessPointDelete(ctx context.Context, d *schem
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
@@ -341,10 +333,10 @@ func resourceSdaPortAssignmentForAccessPointDelete(ctx context.Context, d *schem
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -389,6 +381,5 @@ func expandRequestSdaPortAssignmentForAccessPointAddPortAssignmentForAccessPoint
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

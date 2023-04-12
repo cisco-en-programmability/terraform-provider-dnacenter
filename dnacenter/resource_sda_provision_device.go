@@ -3,12 +3,11 @@ package dnacenter
 import (
 	"context"
 	"reflect"
-	"strings"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -45,54 +44,36 @@ func resourceSdaProvisionDevice() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Wired Provisioned device detail retrieved successfully
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
 						"device_management_ip_address": &schema.Schema{
-							Description: `Device Management Ip Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Management Ip Address of the device to be provisioned
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
-						"execution_status_url": &schema.Schema{
-							Description: `Execution Status Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Site Name Hierarchy for device location(only building / floor level) 
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"task_id": &schema.Schema{
-							Description: `Task Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"task_status_url": &schema.Schema{
-							Description: `Task Status Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -101,12 +82,14 @@ func resourceSdaProvisionDevice() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Default:  "",
 						},
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy for device location(only building / floor level)
+							Description: `Site Name Hierarchy for device location(only building / floor level) 
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -122,25 +105,21 @@ func resourceSdaProvisionDeviceCreate(ctx context.Context, d *schema.ResourceDat
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSdaProvisionDeviceProvisionWiredDevice(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+
 	vDeviceManagementIPAddress := resourceItem["device_management_ip_address"]
 	vvDeviceManagementIPAddress := interfaceToString(vDeviceManagementIPAddress)
-	queryParams1 := dnacentersdkgo.GetProvisionedWiredDeviceQueryParams{}
-
-	queryParams1.DeviceManagementIPAddress = vvDeviceManagementIPAddress
-
-	getResponse2, _, err := client.Sda.GetProvisionedWiredDevice(&queryParams1)
-	if err == nil && getResponse2 != nil && strings.ToLower(getResponse2.Status) != "failed" {
+	queryParamImport := dnacentersdkgo.GetProvisionedWiredDeviceQueryParams{}
+	queryParamImport.DeviceManagementIPAddress = vvDeviceManagementIPAddress
+	item2, _, err := client.Sda.GetProvisionedWiredDevice(&queryParamImport)
+	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
-		resourceMap["device_management_ip_address"] = vvDeviceManagementIPAddress
+		resourceMap["device_management_ip_address"] = item2.DeviceManagementIPAddress
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaProvisionDeviceRead(ctx, d, m)
 	}
-
-	response1, restyResp1, err := client.Sda.ProvisionWiredDevice(request1)
-	if err != nil || response1 == nil {
+	resp1, restyResp1, err := client.Sda.ProvisionWiredDevice(request1)
+	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
 				"Failure when executing ProvisionWiredDevice", err, restyResp1.String()))
@@ -150,15 +129,14 @@ func resourceSdaProvisionDeviceCreate(ctx context.Context, d *schema.ResourceDat
 			"Failure when executing ProvisionWiredDevice", err))
 		return diags
 	}
-
-	executionId := response1.ExecutionID
+	executionId := resp1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
@@ -167,10 +145,10 @@ func resourceSdaProvisionDeviceCreate(ctx context.Context, d *schema.ResourceDat
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -185,8 +163,19 @@ func resourceSdaProvisionDeviceCreate(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 	}
+	queryParamValidate := dnacentersdkgo.GetProvisionedWiredDeviceQueryParams{}
+	queryParamValidate.DeviceManagementIPAddress = vvDeviceManagementIPAddress
+	item3, _, err := client.Sda.GetProvisionedWiredDevice(&queryParamValidate)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing ProvisionWiredDevice", err,
+			"Failure at ProvisionWiredDevice, unexpected response", ""))
+		return diags
+	}
+
 	resourceMap := make(map[string]string)
-	resourceMap["device_management_ip_address"] = vvDeviceManagementIPAddress
+	resourceMap["device_management_ip_address"] = item3.DeviceManagementIPAddress
+
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSdaProvisionDeviceRead(ctx, d, m)
 }
@@ -198,24 +187,19 @@ func resourceSdaProvisionDeviceRead(ctx context.Context, d *schema.ResourceData,
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+
 	vDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetProvisionedWiredDevice")
+		log.Printf("[DEBUG] Selected method: GetProvisionedWiredDevice")
 		queryParams1 := dnacentersdkgo.GetProvisionedWiredDeviceQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
 
-		response1, restyResp1, _ := client.Sda.GetProvisionedWiredDevice(&queryParams1)
+		response1, restyResp1, err := client.Sda.GetProvisionedWiredDevice(&queryParams1)
 
-		/*		if err != nil {
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetProvisionedWiredDevice", err,
-					"Failure at GetProvisionedWiredDevice, unexpected response", ""))
-				return diags
-			}*/
-		if response1 == nil {
+		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -232,6 +216,7 @@ func resourceSdaProvisionDeviceRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		return diags
 
 	}
@@ -243,28 +228,9 @@ func resourceSdaProvisionDeviceUpdate(ctx context.Context, d *schema.ResourceDat
 
 	var diags diag.Diagnostics
 
-	resourceID := d.Id()
-	resourceMap := separateResourceID(resourceID)
-	vDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
-
-	queryParams1 := dnacentersdkgo.GetProvisionedWiredDeviceQueryParams{}
-	queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
-	item, _, err := client.Sda.GetProvisionedWiredDevice(&queryParams1)
-	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetProvisionedWiredDevice", err,
-			"Failure at GetProvisionedWiredDevice, unexpected response", ""))
-		return diags
-	}
-
-	var vvName string
-	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestSdaProvisionDeviceReProvisionWiredDevice(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Sda.ReProvisionWiredDevice(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -279,14 +245,15 @@ func resourceSdaProvisionDeviceUpdate(ctx context.Context, d *schema.ResourceDat
 				"Failure at ReProvisionWiredDevice, unexpected response", ""))
 			return diags
 		}
+
 		executionId := response1.ExecutionID
 		log.Printf("[DEBUG] ExecutionID => %s", executionId)
 		if executionId != "" {
 			time.Sleep(5 * time.Second)
-			response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -295,10 +262,10 @@ func resourceSdaProvisionDeviceUpdate(ctx context.Context, d *schema.ResourceDat
 			}
 			for response2.Status == "IN_PROGRESS" {
 				time.Sleep(10 * time.Second)
-				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+				response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 				if err != nil || response2 == nil {
-					if restyResp1 != nil {
-						log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+					if restyResp2 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 					}
 					diags = append(diags, diagErrorWithAlt(
 						"Failure when executing GetExecutionByID", err,
@@ -313,6 +280,7 @@ func resourceSdaProvisionDeviceUpdate(ctx context.Context, d *schema.ResourceDat
 				return diags
 			}
 		}
+
 	}
 
 	return resourceSdaProvisionDeviceRead(ctx, d, m)
@@ -326,19 +294,13 @@ func resourceSdaProvisionDeviceDelete(ctx context.Context, d *schema.ResourceDat
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
 
-	queryParams1 := dnacentersdkgo.GetProvisionedWiredDeviceQueryParams{}
-	queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
-	item, _, err := client.Sda.GetProvisionedWiredDevice(&queryParams1)
-	if err != nil || item == nil {
-		d.SetId("")
-		return diags
-	}
+	queryParamDelete := dnacentersdkgo.DeleteProvisionedWiredDeviceQueryParams{}
 
-	queryParams2 := dnacentersdkgo.DeleteProvisionedWiredDeviceQueryParams{}
-	queryParams2.DeviceManagementIPAddress = vDeviceManagementIPAddress
-	response1, restyResp1, err := client.Sda.DeleteProvisionedWiredDevice(&queryParams2)
+	vvDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
+	queryParamDelete.DeviceManagementIPAddress = vvDeviceManagementIPAddress
+
+	response1, restyResp1, err := client.Sda.DeleteProvisionedWiredDevice(&queryParamDelete)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -352,14 +314,15 @@ func resourceSdaProvisionDeviceDelete(ctx context.Context, d *schema.ResourceDat
 			"Failure at DeleteProvisionedWiredDevice, unexpected response", ""))
 		return diags
 	}
+
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
@@ -368,10 +331,10 @@ func resourceSdaProvisionDeviceDelete(ctx context.Context, d *schema.ResourceDat
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -382,10 +345,11 @@ func resourceSdaProvisionDeviceDelete(ctx context.Context, d *schema.ResourceDat
 		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
-				"Failure when executing DeleteProvisionWiredDevice", err))
+				"Failure when executing DeleteProvisionedWiredDevice", err))
 			return diags
 		}
 	}
+
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")
@@ -403,7 +367,6 @@ func expandRequestSdaProvisionDeviceProvisionWiredDevice(ctx context.Context, ke
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -418,6 +381,5 @@ func expandRequestSdaProvisionDeviceReProvisionWiredDevice(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

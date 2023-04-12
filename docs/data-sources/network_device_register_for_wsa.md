@@ -4,14 +4,16 @@ page_title: "dnacenter_network_device_register_for_wsa Data Source - terraform-p
 subcategory: ""
 description: |-
   It performs read operation on Devices.
-  Registers a device for WSA notification
+  It fetches devices which are registered to receive WSA notifications. The device serial number and/or MAC address are
+  required to be provided as query parameters.
 ---
 
 # dnacenter_network_device_register_for_wsa (Data Source)
 
 It performs read operation on Devices.
 
-- Registers a device for WSA notification
+- It fetches devices which are registered to receive WSA notifications. The device serial number and/or MAC address are
+required to be provided as query parameters.
 
 ## Example Usage
 
@@ -32,23 +34,23 @@ output "dnacenter_network_device_register_for_wsa_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **macaddress** (String) macaddress query parameter. Mac addres of the device
-- **serial_number** (String) serialNumber query parameter. Serial number of the device
+- `macaddress` (String) macaddress query parameter. Mac addres of the device
+- `serial_number` (String) serialNumber query parameter. Serial number of the device
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **mac_address** (String)
-- **model_number** (String)
-- **name** (String)
-- **serial_number** (String)
-- **tenant_id** (String)
+- `mac_address` (String)
+- `model_number` (String)
+- `name` (String)
+- `serial_number` (String)
+- `tenant_id` (String)
 
 

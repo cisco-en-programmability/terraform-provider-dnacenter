@@ -31,12 +31,12 @@ data "dnacenter_reports_executions_download" "example" {
 
 ### Required
 
-- **dirpath** (String) Directory absolute path in which to save the file.
-- **execution_id** (String) executionId path parameter. executionId of report execution
-- **report_id** (String) reportId path parameter. reportId of report
+- `dirpath` (String) Directory absolute path in which to save the file.
+- `execution_id` (String) executionId path parameter. executionId of report execution
+- `report_id` (String) reportId path parameter. reportId of report
 
-### Optional
+### Read-Only
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 

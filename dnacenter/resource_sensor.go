@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -46,56 +46,47 @@ func resourceSensor() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"ethernet_mac_address": &schema.Schema{
 							Description: `Ethernet Mac Address`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"ip_address": &schema.Schema{
 							Description: `Ip Address`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"is_led_enabled": &schema.Schema{
 							Description: `Is L E D Enabled`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"last_seen": &schema.Schema{
 							Description: `Last Seen`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
-
 						"location": &schema.Schema{
 							Description: `Location`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"name": &schema.Schema{
 							Description: `Name`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"radio_mac_address": &schema.Schema{
 							Description: `Radio Mac Address`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"serial_number": &schema.Schema{
 							Description: `Serial Number`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"ssh_config": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -107,19 +98,16 @@ func resourceSensor() *schema.Resource {
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"ssh_password": &schema.Schema{
 										Description: `Ssh Password`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"ssh_state": &schema.Schema{
 										Description: `Ssh State`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"ssh_user_name": &schema.Schema{
 										Description: `Ssh User Name`,
 										Type:        schema.TypeString,
@@ -128,19 +116,16 @@ func resourceSensor() *schema.Resource {
 								},
 							},
 						},
-
 						"status": &schema.Schema{
 							Description: `Status`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"type": &schema.Schema{
 							Description: `Type`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"version": &schema.Schema{
 							Description: `Version`,
 							Type:        schema.TypeString,
@@ -151,14 +136,15 @@ func resourceSensor() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"ap_coverage": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -166,16 +152,19 @@ func resourceSensor() *schema.Resource {
 										Description: `Bands`,
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"number_of_aps_to_test": &schema.Schema{
 										Description: `Number Of Aps To Test`,
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"rssi_threshold": &schema.Schema{
 										Description: `Rssi Threshold`,
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 								},
 							},
@@ -184,20 +173,24 @@ func resourceSensor() *schema.Resource {
 							Description: `Connection`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"model_version": &schema.Schema{
 							Description: `Model Version`,
 							Type:        schema.TypeInt,
 							Optional:    true,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Description: `Name`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"ssids": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -205,11 +198,13 @@ func resourceSensor() *schema.Resource {
 										Description: `Auth Type`,
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"categories": &schema.Schema{
 										Description: `Categories`,
 										Type:        schema.TypeList,
 										Optional:    true,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -218,25 +213,30 @@ func resourceSensor() *schema.Resource {
 										Description: `Profile Name`,
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"psk": &schema.Schema{
 										Description: `Psk`,
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"qos_policy": &schema.Schema{
 										Description: `Qos Policy`,
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"ssid": &schema.Schema{
 										Description: `Ssid`,
 										Type:        schema.TypeString,
 										Optional:    true,
+										Computed:    true,
 									},
 									"tests": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -244,6 +244,7 @@ func resourceSensor() *schema.Resource {
 													Description: `Config`,
 													Type:        schema.TypeList,
 													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -252,6 +253,7 @@ func resourceSensor() *schema.Resource {
 													Description: `Name`,
 													Type:        schema.TypeString,
 													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
@@ -259,16 +261,17 @@ func resourceSensor() *schema.Resource {
 									"third_party": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"selected": &schema.Schema{
 													Description: `Selected`,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -346,8 +349,10 @@ func resourceSensorRead(ctx context.Context, d *schema.ResourceData, m interface
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		//TODO FOR DNAC
-
-		vItem1 := flattenSensorsSensorsItem(response1)
+		items := []dnacentersdkgo.ResponseSensorsSensorsResponse{
+			*response1,
+		}
+		vItem1 := flattenSensorsSensorsItems(&items)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting Sensors search response",
@@ -430,7 +435,6 @@ func expandRequestSensorCreateSensorTestTemplate(ctx context.Context, key string
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -445,7 +449,7 @@ func expandRequestSensorCreateSensorTestTemplateSSIDsArray(ctx context.Context, 
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSensorCreateSensorTestTemplateSSIDs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -454,7 +458,6 @@ func expandRequestSensorCreateSensorTestTemplateSSIDsArray(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -487,7 +490,6 @@ func expandRequestSensorCreateSensorTestTemplateSSIDs(ctx context.Context, key s
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -499,7 +501,6 @@ func expandRequestSensorCreateSensorTestTemplateSSIDsThirdParty(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -514,7 +515,7 @@ func expandRequestSensorCreateSensorTestTemplateSSIDsTestsArray(ctx context.Cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSensorCreateSensorTestTemplateSSIDsTests(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -523,7 +524,6 @@ func expandRequestSensorCreateSensorTestTemplateSSIDsTestsArray(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -538,7 +538,6 @@ func expandRequestSensorCreateSensorTestTemplateSSIDsTests(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -553,7 +552,7 @@ func expandRequestSensorCreateSensorTestTemplateSSIDsTestsConfigArray(ctx contex
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSensorCreateSensorTestTemplateSSIDsTestsConfig(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -562,7 +561,6 @@ func expandRequestSensorCreateSensorTestTemplateSSIDsTestsConfigArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -572,7 +570,6 @@ func expandRequestSensorCreateSensorTestTemplateSSIDsTestsConfig(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -587,7 +584,7 @@ func expandRequestSensorCreateSensorTestTemplateApCoverageArray(ctx context.Cont
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSensorCreateSensorTestTemplateApCoverage(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -596,7 +593,6 @@ func expandRequestSensorCreateSensorTestTemplateApCoverageArray(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -614,7 +610,6 @@ func expandRequestSensorCreateSensorTestTemplateApCoverage(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 

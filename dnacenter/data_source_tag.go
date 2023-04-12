@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -118,11 +118,8 @@ func dataSourceTag() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"items": &schema.Schema{
-													Type:     schema.TypeList,
+													Type:     schema.TypeString,
 													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"name": &schema.Schema{
@@ -207,11 +204,8 @@ func dataSourceTag() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"items": &schema.Schema{
-													Type:     schema.TypeList,
+													Type:     schema.TypeString,
 													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 
 												"name": &schema.Schema{
@@ -294,7 +288,7 @@ func dataSourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTag")
+		log.Printf("[DEBUG] Selected method: GetTag")
 		queryParams1 := dnacentersdkgo.GetTagQueryParams{}
 
 		if okName {
@@ -352,12 +346,13 @@ func dataSourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetTagByID")
+		log.Printf("[DEBUG] Selected method: GetTagByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.Tag.GetTagByID(vvID)
@@ -381,6 +376,7 @@ func dataSourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -426,7 +422,7 @@ func flattenTagGetTagItemsDynamicRulesRules(item *dnacentersdkgo.ResponseTagGetT
 	}
 	respItem := make(map[string]interface{})
 	respItem["values"] = item.Values
-	respItem["items"] = flattenTagGetTagItemsDynamicRulesRulesItems(item.Items)
+	respItem["items"] = item.Items
 	respItem["operation"] = item.Operation
 	respItem["name"] = item.Name
 	respItem["value"] = item.Value
@@ -435,18 +431,6 @@ func flattenTagGetTagItemsDynamicRulesRules(item *dnacentersdkgo.ResponseTagGetT
 		respItem,
 	}
 
-}
-
-func flattenTagGetTagItemsDynamicRulesRulesItems(items *[]dnacentersdkgo.ResponseTagGetTagResponseDynamicRulesRulesItems) []interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []interface{}
-	for _, item := range *items {
-		respItem := item
-		respItems = append(respItems, responseInterfaceToString(respItem))
-	}
-	return respItems
 }
 
 func flattenTagGetTagByIDItem(item *dnacentersdkgo.ResponseTagGetTagByIDResponse) []map[string]interface{} {
@@ -485,7 +469,7 @@ func flattenTagGetTagByIDItemDynamicRulesRules(item *dnacentersdkgo.ResponseTagG
 	}
 	respItem := make(map[string]interface{})
 	respItem["values"] = item.Values
-	respItem["items"] = flattenTagGetTagByIDItemDynamicRulesRulesItems(item.Items)
+	respItem["items"] = item.Items
 	respItem["operation"] = item.Operation
 	respItem["name"] = item.Name
 	respItem["value"] = item.Value
@@ -494,16 +478,4 @@ func flattenTagGetTagByIDItemDynamicRulesRules(item *dnacentersdkgo.ResponseTagG
 		respItem,
 	}
 
-}
-
-func flattenTagGetTagByIDItemDynamicRulesRulesItems(items *[]dnacentersdkgo.ResponseTagGetTagByIDResponseDynamicRulesRulesItems) []interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []interface{}
-	for _, item := range *items {
-		respItem := item
-		respItems = append(respItems, responseInterfaceToString(respItem))
-	}
-	return respItems
 }

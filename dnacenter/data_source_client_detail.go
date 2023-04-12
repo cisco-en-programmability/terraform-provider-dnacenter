@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -122,7 +122,7 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"ap_group": &schema.Schema{
 										Description: `Ap Group`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -134,13 +134,13 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"avg_rssi": &schema.Schema{
 										Description: `Avg Rssi`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"avg_snr": &schema.Schema{
 										Description: `Avg Snr`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -185,13 +185,13 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"dns_failure": &schema.Schema{
 										Description: `Dns Failure`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"dns_success": &schema.Schema{
 										Description: `Dns Success`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -257,7 +257,7 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"host_os": &schema.Schema{
 										Description: `Host Os`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -269,7 +269,7 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"host_version": &schema.Schema{
 										Description: `Host Version`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -281,7 +281,7 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"ios_capable": &schema.Schema{
 										Description: `Ios Capable`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -300,7 +300,7 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"location": &schema.Schema{
 										Description: `Location`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -327,7 +327,7 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"assoc_done_time": &schema.Schema{
 													Description: `Assoc Done Time`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -342,37 +342,37 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"auth_done_time": &schema.Schema{
 													Description: `Auth Done Time`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"average_assoc_duration": &schema.Schema{
 													Description: `Average Assoc Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"average_auth_duration": &schema.Schema{
 													Description: `Average Auth Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"average_dhcp_duration": &schema.Schema{
 													Description: `Average Dhcp Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"average_run_duration": &schema.Schema{
 													Description: `Average Run Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"dhcp_done_time": &schema.Schema{
 													Description: `Dhcp Done Time`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -387,31 +387,31 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"dhcp_server_ip": &schema.Schema{
 													Description: `Dhcp Server Ip`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"max_assoc_duration": &schema.Schema{
 													Description: `Max Assoc Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"max_auth_duration": &schema.Schema{
 													Description: `Max Auth Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"max_dhcp_duration": &schema.Schema{
 													Description: `Max Dhcp Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"max_run_duration": &schema.Schema{
 													Description: `Max Run Duration`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -429,13 +429,13 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"onboarding_time": &schema.Schema{
 										Description: `Onboarding Time`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"port": &schema.Schema{
 										Description: `Port`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -477,19 +477,19 @@ func dataSourceClientDetail() *schema.Resource {
 
 									"user_id": &schema.Schema{
 										Description: `User Id`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"vlan_id": &schema.Schema{
 										Description: `Vlan Id`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeInt,
 										Computed:    true,
 									},
 
 									"vnid": &schema.Schema{
 										Description: `Vnid`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeInt,
 										Computed:    true,
 									},
 								},
@@ -510,7 +510,7 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"id": &schema.Schema{
 													Description: `Id`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -531,7 +531,7 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"port_utilization": &schema.Schema{
 													Description: `Port Utilization`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -558,19 +558,19 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"clients": &schema.Schema{
 													Description: `Clients`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"connected_device": &schema.Schema{
 													Description: `Connected Device`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"count": &schema.Schema{
 													Description: `Count`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -588,13 +588,13 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"fabric_group": &schema.Schema{
 													Description: `Fabric Group`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"family": &schema.Schema{
 													Description: `Family`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -636,13 +636,13 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"platform_id": &schema.Schema{
 													Description: `Platform Id`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"radio_frequency": &schema.Schema{
 													Description: `Radio Frequency`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -654,13 +654,13 @@ func dataSourceClientDetail() *schema.Resource {
 
 												"software_version": &schema.Schema{
 													Description: `Software Version`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"user_id": &schema.Schema{
 													Description: `User Id`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 											},
@@ -685,7 +685,7 @@ func dataSourceClientDetailRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetClientDetail")
+		log.Printf("[DEBUG] Selected method: GetClientDetail")
 		queryParams1 := dnacentersdkgo.GetClientDetailQueryParams{}
 
 		if okTimestamp {
@@ -714,6 +714,7 @@ func dataSourceClientDetailRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

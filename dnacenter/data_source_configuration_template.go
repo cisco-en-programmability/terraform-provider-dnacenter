@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -123,7 +123,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -137,7 +137,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -286,7 +286,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -301,7 +301,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -353,7 +353,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -391,7 +391,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString,
+																Type:     schema.TypeString, //TEST,
 																Computed: true,
 															},
 														},
@@ -510,7 +510,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -525,7 +525,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -577,7 +577,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -615,7 +615,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString,
+																Type:     schema.TypeString, //TEST,
 																Computed: true,
 															},
 														},
@@ -645,7 +645,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 						"custom_params_order": &schema.Schema{
 							Description: `Custom Params Order
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -836,7 +836,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -851,7 +851,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -903,7 +903,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -941,7 +941,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeString, //TEST,
 													Computed: true,
 												},
 											},
@@ -1081,7 +1081,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1096,7 +1096,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1148,7 +1148,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1186,7 +1186,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeString, //TEST,
 													Computed: true,
 												},
 											},
@@ -1205,21 +1205,15 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 									"rollback_template_errors": &schema.Schema{
 										Description: `Validation or design conflicts errors of rollback template
 `,
-										Type:     schema.TypeList,
+										Type:     schema.TypeString, //TEST,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"template_errors": &schema.Schema{
 										Description: `Validation or design conflicts errors
 `,
-										Type:     schema.TypeList,
+										Type:     schema.TypeString, //TEST,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"template_id": &schema.Schema{
@@ -1258,7 +1252,7 @@ func dataSourceConfigurationTemplate() *schema.Resource {
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -1373,7 +1367,7 @@ func dataSourceConfigurationTemplateRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetsTheTemplatesAvailable")
+		log.Printf("[DEBUG] Selected method: GetsTheTemplatesAvailable")
 		queryParams1 := dnacentersdkgo.GetsTheTemplatesAvailableQueryParams{}
 
 		if okProjectID {
@@ -1431,12 +1425,13 @@ func dataSourceConfigurationTemplateRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetsDetailsOfAGivenTemplate")
+		log.Printf("[DEBUG] Selected method: GetsDetailsOfAGivenTemplate")
 		vvTemplateID := vTemplateID.(string)
 		queryParams2 := dnacentersdkgo.GetsDetailsOfAGivenTemplateQueryParams{}
 
@@ -1465,6 +1460,7 @@ func dataSourceConfigurationTemplateRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -1926,26 +1922,22 @@ func flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItemValidationError
 
 }
 
-func flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItemValidationErrorsRollbackTemplateErrors(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetsDetailsOfAGivenTemplateValidationErrorsRollbackTemplateErrors) []interface{} {
-	if items == nil {
+func flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItemValidationErrorsRollbackTemplateErrors(item *dnacentersdkgo.ResponseConfigurationTemplatesGetsDetailsOfAGivenTemplateValidationErrorsRollbackTemplateErrors) interface{} {
+	if item == nil {
 		return nil
 	}
-	var respItems []interface{}
-	for _, item := range *items {
-		respItem := item
-		respItems = append(respItems, responseInterfaceToString(respItem))
-	}
-	return respItems
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
 }
 
-func flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItemValidationErrorsTemplateErrors(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetsDetailsOfAGivenTemplateValidationErrorsTemplateErrors) []interface{} {
-	if items == nil {
+func flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItemValidationErrorsTemplateErrors(item *dnacentersdkgo.ResponseConfigurationTemplatesGetsDetailsOfAGivenTemplateValidationErrorsTemplateErrors) interface{} {
+	if item == nil {
 		return nil
 	}
-	var respItems []interface{}
-	for _, item := range *items {
-		respItem := item
-		respItems = append(respItems, responseInterfaceToString(respItem))
-	}
-	return respItems
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
 }

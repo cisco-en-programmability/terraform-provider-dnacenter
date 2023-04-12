@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -28,12 +28,12 @@ func dataSourceSystemHealth() *schema.Resource {
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 			"subdomain": &schema.Schema{
@@ -169,7 +169,7 @@ func dataSourceSystemHealthRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SystemHealthApI")
+		log.Printf("[DEBUG] Selected method: SystemHealthApI")
 		queryParams1 := dnacentersdkgo.SystemHealthApIQueryParams{}
 
 		if okSummary {
@@ -182,10 +182,10 @@ func dataSourceSystemHealthRead(ctx context.Context, d *schema.ResourceData, m i
 			queryParams1.Subdomain = vSubdomain.(string)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 
 		response1, restyResp1, err := client.HealthAndPerformance.SystemHealthApI(&queryParams1)
@@ -209,6 +209,7 @@ func dataSourceSystemHealthRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

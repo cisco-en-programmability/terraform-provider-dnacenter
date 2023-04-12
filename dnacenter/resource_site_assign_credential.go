@@ -2,27 +2,29 @@ package dnacenter
 
 import (
 	"context"
+	"time"
+
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceSiteAssignCredential() *schema.Resource {
 	return &schema.Resource{
-		Description: `It performs create operation on Network Settings.
-		- Assign Device Credential To Site
-	
+		Description: `It performs create operation on NetworkSettings.
+
+- Assign Device Credential to a site.
 `,
 
 		CreateContext: resourceSiteAssignCredentialCreate,
 		ReadContext:   resourceSiteAssignCredentialRead,
 		DeleteContext: resourceSiteAssignCredentialDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -60,17 +62,9 @@ func resourceSiteAssignCredential() *schema.Resource {
 				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"persistbapioutput": &schema.Schema{
-							Description: `__persistbapioutput header parameter. Persist bapi sync response
-						`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							ForceNew:     true,
-						},
 						"site_id": &schema.Schema{
 							Description: `siteId path parameter. site id to assign credential.
-			`,
+`,
 							Type:     schema.TypeString,
 							Required: true,
 							ForceNew: true,
@@ -80,36 +74,51 @@ func resourceSiteAssignCredential() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"http_read": &schema.Schema{
 							Description: `Http Read`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"http_write": &schema.Schema{
 							Description: `Http Write`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"snmp_v2_read_id": &schema.Schema{
 							Description: `Snmp V2 Read Id`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"snmp_v2_write_id": &schema.Schema{
 							Description: `Snmp V2 Write Id`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"snmp_v3_id": &schema.Schema{
 							Description: `Snmp V3 Id`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
+						},
+						"persistbapioutput": &schema.Schema{
+							Description: `Name of the profile to create site profile profile( eg: profile-1)
+`,
+							Type:         schema.TypeString,
+							Optional:     true,
+							ForceNew:     true,
+							Default:      "false",
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 						},
 					},
 				},
@@ -120,23 +129,22 @@ func resourceSiteAssignCredential() *schema.Resource {
 
 func resourceSiteAssignCredentialCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
 
-	vSiteID := d.Get("parameters.0.site_id")
+	resourceItem := *getResourceItem(d.Get("parameters"))
+
+	vSiteID := resourceItem["site_id"]
+
+	vPersistbapioutput := resourceItem["persistbapioutput"]
+
 	vvSiteID := vSiteID.(string)
-	vPersistbapioutput, okPersistbapioutput := d.GetOk("parameters.0.persistbapioutput")
+	request1 := expandRequestSiteAssignCredentialAssignDeviceCredentialToSite(ctx, "parameters.0", d)
 
-	log.Printf("[DEBUG] Selected method 1: AssignCredentialToSite")
-	request1 := expandRequestSiteAssignCredentialAssignCredentialToSite(ctx, "parameters.0", d)
+	headerParams1 := dnacentersdkgo.AssignDeviceCredentialToSiteHeaderParams{}
 
-	headerParams1 := dnacentersdkgo.AssignCredentialToSiteHeaderParams{}
+	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
-	if okPersistbapioutput {
-		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
-	}
-
-	response1, restyResp1, err := client.NetworkSettings.AssignCredentialToSite(vvSiteID, request1, &headerParams1)
+	response1, restyResp1, err := client.NetworkSettings.AssignDeviceCredentialToSite(vvSiteID, request1, &headerParams1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -146,43 +154,77 @@ func resourceSiteAssignCredentialCreate(ctx context.Context, d *schema.ResourceD
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing AssignCredentialToSite", err,
-			"Failure at AssignCredentialToSite, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-	vItem1 := flattenNetworkSettingsAssignCredentialToSiteItem(response1)
+
+	executionId := response1.ExecutionID
+	log.Printf("[DEBUG] ExecutionID => %s", executionId)
+	if executionId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetBusinessAPIExecutionDetails", err,
+				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+			return diags
+		}
+		for response2.Status == "IN_PROGRESS" {
+			time.Sleep(10 * time.Second)
+			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp1 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+		}
+		if response2.Status == "FAILURE" {
+			bapiError := response2.BapiError
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing AssignDeviceCredentialToSite", err,
+				"Failure at AssignDeviceCredentialToSite execution", bapiError))
+			return diags
+		}
+	}
+
+	vItem1 := flattenNetworkSettingsAssignDeviceCredentialToSiteItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
-			"Failure when setting AssignCredentialToSite response",
+			"Failure when setting AssignDeviceCredentialToSite response",
 			err))
 		return diags
 	}
-	log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-	d.SetId(getUnixTimeString())
-	return resourceSiteAssignCredentialRead(ctx, d, m)
-}
 
+	d.SetId(getUnixTimeString())
+	return diags
+
+}
 func resourceSiteAssignCredentialRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
 	return diags
 }
 
 func resourceSiteAssignCredentialDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	//client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 	return diags
 }
 
-func expandRequestSiteAssignCredentialAssignCredentialToSite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsAssignCredentialToSite {
-	request := dnacentersdkgo.RequestNetworkSettingsAssignCredentialToSite{}
+func expandRequestSiteAssignCredentialAssignDeviceCredentialToSite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsAssignDeviceCredentialToSite {
+	request := dnacentersdkgo.RequestNetworkSettingsAssignDeviceCredentialToSite{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cli_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cli_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cli_id")))) {
 		request.CliID = interfaceToString(v)
 	}
@@ -201,14 +243,10 @@ func expandRequestSiteAssignCredentialAssignCredentialToSite(ctx context.Context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".snmp_v3_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".snmp_v3_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".snmp_v3_id")))) {
 		request.SNMPV3ID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
-func flattenNetworkSettingsAssignCredentialToSiteItem(item *dnacentersdkgo.ResponseNetworkSettingsAssignCredentialToSite) []map[string]interface{} {
+func flattenNetworkSettingsAssignDeviceCredentialToSiteItem(item *dnacentersdkgo.ResponseNetworkSettingsAssignDeviceCredentialToSite) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

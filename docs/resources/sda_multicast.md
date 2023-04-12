@@ -18,12 +18,9 @@ It manages create, read and delete operations on SDA.
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_sda_multicast" "example" {
   provider = dnacenter
+
   parameters {
 
     multicast_method = "string"
@@ -54,42 +51,42 @@ output "dnacenter_sda_multicast_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **multicast_method** (String) Multicast Method
-- **multicast_type** (String) Multicast Type
-- **multicast_vn_info** (Block List) (see [below for nested schema](#nestedblock--parameters--multicast_vn_info))
-- **site_name_hierarchy** (String) Full path of sda Fabric Site
+- `multicast_method` (String) Multicast Method
+- `multicast_type` (String) Multicast Type
+- `multicast_vn_info` (Block List) (see [below for nested schema](#nestedblock--parameters--multicast_vn_info))
+- `site_name_hierarchy` (String) Full path of sda Fabric Site
 
 <a id="nestedblock--parameters--multicast_vn_info"></a>
 ### Nested Schema for `parameters.multicast_vn_info`
 
 Optional:
 
-- **external_rp_ip_address** (String) ExternalRpIpAddress, required if multicastType is asm_with_external_rp
-- **internal_rp_ip_address** (List of String) InternalRpIpAddress, required if multicastType is asm_with_internal_rp
-- **ip_pool_name** (String) Ip Pool Name, that is reserved to Fabric Site
-- **ssm_info** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--multicast_vn_info--ssm_info))
-- **virtual_network_name** (String) Virtual Network Name, that is associated to Fabric Site
+- `external_rp_ip_address` (String) ExternalRpIpAddress, required if multicastType is asm_with_external_rp
+- `internal_rp_ip_address` (List of String) InternalRpIpAddress, required if multicastType is asm_with_internal_rp
+- `ip_pool_name` (String) Ip Pool Name, that is reserved to Fabric Site
+- `ssm_info` (Block List) (see [below for nested schema](#nestedblock--parameters--multicast_vn_info--ssm_info))
+- `virtual_network_name` (String) Virtual Network Name, that is associated to Fabric Site
 
 <a id="nestedblock--parameters--multicast_vn_info--ssm_info"></a>
 ### Nested Schema for `parameters.multicast_vn_info.ssm_info`
 
 Optional:
 
-- **ssm_group_range** (String) Valid SSM group range ip address(e.g., 230.0.0.0)
-- **ssm_wildcard_mask** (String) Valid SSM Wildcard Mask ip address(e.g.,0.255.255.255)
+- `ssm_group_range` (String) Valid SSM group range ip address(e.g., 230.0.0.0)
+- `ssm_wildcard_mask` (String) Valid SSM Wildcard Mask ip address(e.g.,0.255.255.255)
 
 
 
@@ -99,29 +96,30 @@ Optional:
 
 Read-Only:
 
-- **multicast_method** (String)
-- **multicast_type** (String)
-- **multicast_vn_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--multicast_vn_info))
-- **site_name_hierarchy** (String)
+- `description` (String)
+- `multicast_method` (String)
+- `multicast_type` (String)
+- `multicast_vn_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--multicast_vn_info))
+- `status` (String)
 
 <a id="nestedobjatt--item--multicast_vn_info"></a>
 ### Nested Schema for `item.multicast_vn_info`
 
 Read-Only:
 
-- **external_rp_ip_address** (String)
-- **internal_rp_ip_address** (List of String)
-- **ip_pool_name** (String)
-- **ssm_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--multicast_vn_info--ssm_info))
-- **virtual_network_name** (String)
+- `external_rp_ip_address` (String)
+- `internal_rp_ip_address` (List of String)
+- `ip_pool_name` (String)
+- `ssm_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--multicast_vn_info--ssm_info))
+- `virtual_network_name` (String)
 
 <a id="nestedobjatt--item--multicast_vn_info--ssm_info"></a>
 ### Nested Schema for `item.multicast_vn_info.ssm_info`
 
 Read-Only:
 
-- **ssm_group_range** (String)
-- **ssm_wildcard_mask** (String)
+- `ssm_group_range` (String)
+- `ssm_wildcard_mask` (String)
 
 ## Import
 

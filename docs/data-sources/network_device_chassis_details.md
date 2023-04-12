@@ -31,34 +31,31 @@ output "dnacenter_network_device_chassis_details_example" {
 
 ### Required
 
-- **device_id** (String) deviceId path parameter. Device ID
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_id` (String) deviceId path parameter. Device ID
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **assembly_number** (String)
-- **assembly_revision** (String)
-- **containment_entity** (String)
-- **description** (String)
-- **entity_physical_index** (String)
-- **hardware_version** (String)
-- **instance_uuid** (String)
-- **is_field_replaceable** (String)
-- **is_reporting_alarms_allowed** (String)
-- **manufacturer** (String)
-- **name** (String)
-- **part_number** (String)
-- **serial_number** (String)
-- **vendor_equipment_type** (String)
+- `assembly_number` (String)
+- `assembly_revision` (String)
+- `containment_entity` (String)
+- `description` (String)
+- `entity_physical_index` (String)
+- `hardware_version` (String)
+- `instance_uuid` (String)
+- `is_field_replaceable` (String)
+- `is_reporting_alarms_allowed` (String)
+- `manufacturer` (String)
+- `name` (String)
+- `part_number` (String)
+- `serial_number` (String)
+- `vendor_equipment_type` (String)
 
 

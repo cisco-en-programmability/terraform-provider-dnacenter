@@ -20,10 +20,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_nfv_provision" "example" {
   provider = dnacenter
   parameters {
@@ -183,6 +179,11 @@ resource "dnacenter_nfv_provision" "example" {
       }
       site_profile_name = "string"
     }
+
+    runsync           = "false"
+    timeout           = "false"
+    persistbapioutput = "false"
+
   }
 }
 
@@ -196,128 +197,128 @@ output "dnacenter_nfv_provision_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **provisioning** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning))
-- **site_profile** (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile))
+- `persistbapioutput` (String) Name of the profile to create site profile profile( eg: profile-1)
+- `provisioning` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning))
+- `runsync` (String) Name of the profile to create site profile profile( eg: profile-1)
+- `site_profile` (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile))
+- `timeout` (String) Name of the profile to create site profile profile( eg: profile-1)
 
 <a id="nestedblock--parameters--provisioning"></a>
 ### Nested Schema for `parameters.provisioning`
 
 Optional:
 
-- **device** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device))
-- **site** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--site))
+- `device` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device))
+- `site` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--site))
 
 <a id="nestedblock--parameters--provisioning--device"></a>
 ### Nested Schema for `parameters.provisioning.device`
 
 Optional:
 
-- **custom_networks** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--custom_networks))
-- **device_serial_number** (String) Serial number of device (eg: FGL210710QY)
-- **ip** (String) IP address of the device (eg: 172.20.126.90)
-- **service_providers** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--service_providers))
-- **services** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--services))
-- **sub_pools** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--sub_pools))
-- **tag_name** (String) Name of device tag (eg: dev1)
-- **template_param** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--template_param))
-- **vlan** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--vlan))
+- `custom_networks` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--custom_networks))
+- `device_serial_number` (String) Serial number of device (eg: FGL210710QY)
+- `ip` (String) IP address of the device (eg: 172.20.126.90)
+- `service_providers` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--service_providers))
+- `services` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--services))
+- `sub_pools` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--sub_pools))
+- `tag_name` (String) Name of device tag (eg: dev1)
+- `template_param` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--template_param))
+- `vlan` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--vlan))
 
 <a id="nestedblock--parameters--provisioning--device--custom_networks"></a>
-### Nested Schema for `parameters.provisioning.device.vlan`
+### Nested Schema for `parameters.provisioning.device.custom_networks`
 
 Optional:
 
-- **ip_address_pool** (String) IP address pool of sub pool (eg: 175.175.140.1)
-- **name** (String) Name of custom network (eg: cust-1)
-- **port** (String) Port for custom network (eg: 443)
+- `ip_address_pool` (String) IP address pool of sub pool (eg: 175.175.140.1)
+- `name` (String) Name of custom network (eg: cust-1)
+- `port` (String) Port for custom network (eg: 443)
 
 
 <a id="nestedblock--parameters--provisioning--device--service_providers"></a>
-### Nested Schema for `parameters.provisioning.device.vlan`
+### Nested Schema for `parameters.provisioning.device.service_providers`
 
 Optional:
 
-- **service_provider** (String) Name of the service provider (eg: Airtel)
-- **wan_interface** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--vlan--wan_interface))
+- `service_provider` (String) Name of the service provider (eg: Airtel)
+- `wan_interface` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--service_providers--wan_interface))
 
-<a id="nestedblock--parameters--provisioning--device--vlan--wan_interface"></a>
-### Nested Schema for `parameters.provisioning.device.vlan.wan_interface`
+<a id="nestedblock--parameters--provisioning--device--service_providers--wan_interface"></a>
+### Nested Schema for `parameters.provisioning.device.service_providers.wan_interface`
 
 Optional:
 
-- **bandwidth** (String) Bandwidth limit (eg: 100)
-- **gateway** (String) Gateway (eg: 175.175.190.1)
-- **interface_name** (String) Name of the interface (eg: GE0-0)
-- **ip_address** (String) IP address (eg: 175.175.190.205)
-- **subnetmask** (String) Subnet mask (eg: 255.255.255.0)
+- `bandwidth` (String) Bandwidth limit (eg: 100)
+- `gateway` (String) Gateway (eg: 175.175.190.1)
+- `interface_name` (String) Name of the interface (eg: GE0-0)
+- `ip_address` (String) IP address (eg: 175.175.190.205)
+- `subnetmask` (String) Subnet mask (eg: 255.255.255.0)
 
 
 
 <a id="nestedblock--parameters--provisioning--device--services"></a>
-### Nested Schema for `parameters.provisioning.device.vlan`
+### Nested Schema for `parameters.provisioning.device.services`
 
 Optional:
 
-- **admin_password_hash** (String) Admin password hash
-- **central_manager_ip** (String) WAAS Package needs to be installed to populate Central Manager IP automatically.
-- **central_registration_key** (String) Central registration key
-- **common_key** (String) Common key
-- **disk** (String) Name of disk type (eg: internal)
-- **mode** (String) Mode of firewall (eg: transparent)
-- **system_ip** (String) System IP
-- **type** (String) Type of service (eg: ISR)
+- `admin_password_hash` (String) Admin password hash
+- `central_manager_ip` (String) WAAS Package needs to be installed to populate Central Manager IP automatically.
+- `central_registration_key` (String) Central registration key
+- `common_key` (String) Common key
+- `disk` (String) Name of disk type (eg: internal)
+- `mode` (String) Mode of firewall (eg: transparent)
+- `system_ip` (String) System IP
+- `type` (String) Type of service (eg: ISR)
 
 
 <a id="nestedblock--parameters--provisioning--device--sub_pools"></a>
-### Nested Schema for `parameters.provisioning.device.vlan`
+### Nested Schema for `parameters.provisioning.device.sub_pools`
 
 Optional:
 
-- **gateway** (String) IP address for gate way (eg: 175.175.140.1)
-- **ip_subnet** (String) IP pool cidir (eg: 175.175.140.0)
-- **name** (String) Name of the ip sub pool (eg; Lan-65)
-- **parent_pool_name** (String) Name of parent pool (global pool name)
-- **type** (String) Tyep of ip sub pool (eg: Lan)
+- `gateway` (String) IP address for gate way (eg: 175.175.140.1)
+- `ip_subnet` (String) IP pool cidir (eg: 175.175.140.0)
+- `name` (String) Name of the ip sub pool (eg; Lan-65)
+- `parent_pool_name` (String) Name of parent pool (global pool name)
+- `type` (String) Tyep of ip sub pool (eg: Lan)
 
 
 <a id="nestedblock--parameters--provisioning--device--template_param"></a>
-### Nested Schema for `parameters.provisioning.device.vlan`
+### Nested Schema for `parameters.provisioning.device.template_param`
 
 Optional:
 
-- **asav** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--vlan--asav))
-- **nfvis** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--vlan--nfvis))
+- `asav` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--template_param--asav))
+- `nfvis` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--device--template_param--nfvis))
 
-<a id="nestedblock--parameters--provisioning--device--vlan--asav"></a>
-### Nested Schema for `parameters.provisioning.device.vlan.asav`
-
-Optional:
-
-- **var1** (String) Variable for asav template (eg: "test":"Hello asav")
-
-
-<a id="nestedblock--parameters--provisioning--device--vlan--nfvis"></a>
-### Nested Schema for `parameters.provisioning.device.vlan.nfvis`
+<a id="nestedblock--parameters--provisioning--device--template_param--asav"></a>
+### Nested Schema for `parameters.provisioning.device.template_param.asav`
 
 Optional:
 
-- **var1** (String) Variable for nfvis template (eg: "test":"Hello nfvis")
+- `var1` (String) Variable for asav template (eg: "test":"Hello asav")
+
+
+<a id="nestedblock--parameters--provisioning--device--template_param--nfvis"></a>
+### Nested Schema for `parameters.provisioning.device.template_param.nfvis`
+
+Optional:
+
+- `var1` (String) Variable for nfvis template (eg: "test":"Hello nfvis")
 
 
 
@@ -326,10 +327,10 @@ Optional:
 
 Optional:
 
-- **id** (String) Vlan id(e: .4018)
-- **interfaces** (String) Interface (eg: GigabitEathernet1/0)
-- **network** (String) Network name to connect (eg: lan-net)
-- **type** (String) Vlan type(eg. Access or Trunk)
+- `id` (String) Vlan id(e: .4018)
+- `interfaces` (String) Interface (eg: GigabitEathernet1/0)
+- `network` (String) Network name to connect (eg: lan-net)
+- `type` (String) Vlan type(eg. Access or Trunk)
 
 
 
@@ -338,43 +339,43 @@ Optional:
 
 Optional:
 
-- **area** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--site--area))
-- **building** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--site--building))
-- **floor** (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--site--floor))
-- **site_profile_name** (String) Name of site profile to be provision with device
+- `area` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--site--area))
+- `building` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--site--building))
+- `floor` (Block List) (see [below for nested schema](#nestedblock--parameters--provisioning--site--floor))
+- `site_profile_name` (String) Name of site profile to be provision with device
 
 <a id="nestedblock--parameters--provisioning--site--area"></a>
-### Nested Schema for `parameters.provisioning.site.site_profile_name`
+### Nested Schema for `parameters.provisioning.site.area`
 
 Optional:
 
-- **name** (String) Name of the area (eg: Area1)
-- **parent_name** (String) Parent name of the area to be created
+- `name` (String) Name of the area (eg: Area1)
+- `parent_name` (String) Parent name of the area to be created
 
 
 <a id="nestedblock--parameters--provisioning--site--building"></a>
-### Nested Schema for `parameters.provisioning.site.site_profile_name`
+### Nested Schema for `parameters.provisioning.site.building`
 
 Optional:
 
-- **address** (String) Address of the building to be created
-- **latitude** (Number) Latitude coordinate of the building (eg:37.338)
-- **longitude** (Number) Longitude coordinate of the building (eg:-121.832)
-- **name** (String) Name of the building (eg: building1)
-- **parent_name** (String) Address of the building to be created
+- `address` (String) Address of the building to be created
+- `latitude` (Number) Latitude coordinate of the building (eg:37.338)
+- `longitude` (Number) Longitude coordinate of the building (eg:-121.832)
+- `name` (String) Name of the building (eg: building1)
+- `parent_name` (String) Address of the building to be created
 
 
 <a id="nestedblock--parameters--provisioning--site--floor"></a>
-### Nested Schema for `parameters.provisioning.site.site_profile_name`
+### Nested Schema for `parameters.provisioning.site.floor`
 
 Optional:
 
-- **height** (Number) Height of the floor (eg: 15)
-- **length** (Number) Length of the floor (eg: 100)
-- **name** (String) Name of the floor (eg:floor-1)
-- **parent_name** (String) Parent name of the floor to be created
-- **rf_model** (String) Type of floor (eg: Cubes And Walled Offices)
-- **width** (Number) Width of the floor (eg:100)
+- `height` (Number) Height of the floor (eg: 15)
+- `length` (Number) Length of the floor (eg: 100)
+- `name` (String) Name of the floor (eg:floor-1)
+- `parent_name` (String) Parent name of the floor to be created
+- `rf_model` (String) Type of floor (eg: Cubes And Walled Offices)
+- `width` (Number) Width of the floor (eg:100)
 
 
 
@@ -384,106 +385,106 @@ Optional:
 
 Optional:
 
-- **device** (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device))
-- **site_profile_name** (String) Name of the profile to create site profile profile( eg: profile-1)
+- `device` (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device))
+- `site_profile_name` (String) Name of the profile to create site profile profile( eg: profile-1)
 
 <a id="nestedblock--parameters--site_profile--device"></a>
 ### Nested Schema for `parameters.site_profile.device`
 
 Optional:
 
-- **custom_networks** (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--custom_networks))
-- **custom_services** (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--custom_services))
-- **custom_template** (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--custom_template))
-- **device_type** (String) Name of the device used in creating nfv profile(eg: ENCS5400)
-- **dia** (String) Direct internet access value should be boolean (eg: false)
-- **service_providers** (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--service_providers))
-- **services** (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--services))
-- **tag_name** (String) Device Tag name(eg: dev1)
-- **vlan** (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--vlan))
+- `custom_networks` (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--custom_networks))
+- `custom_services` (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--custom_services))
+- `custom_template` (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--custom_template))
+- `device_type` (String) Name of the device used in creating nfv profile(eg: ENCS5400)
+- `dia` (String) Direct internet access value should be boolean (eg: false)
+- `service_providers` (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--service_providers))
+- `services` (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--services))
+- `tag_name` (String) Device Tag name(eg: dev1)
+- `vlan` (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--vlan))
 
 <a id="nestedblock--parameters--site_profile--device--custom_networks"></a>
-### Nested Schema for `parameters.site_profile.device.vlan`
+### Nested Schema for `parameters.site_profile.device.custom_networks`
 
 Optional:
 
-- **connection_type** (String) Type of network connection from custom network (eg: lan)
-- **name** (String) Name of custom network (eg: cust-1)
-- **network_mode** (String) Network mode (eg Access or Trunk)
-- **services_to_connect** (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--vlan--services_to_connect))
-- **vlan** (String) Vlan id for the custom network(eg: 4000)
+- `connection_type` (String) Type of network connection from custom network (eg: lan)
+- `name` (String) Name of custom network (eg: cust-1)
+- `network_mode` (String) Network mode (eg Access or Trunk)
+- `services_to_connect` (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--custom_networks--services_to_connect))
+- `vlan` (String) Vlan id for the custom network(eg: 4000)
 
-<a id="nestedblock--parameters--site_profile--device--vlan--services_to_connect"></a>
-### Nested Schema for `parameters.site_profile.device.vlan.services_to_connect`
+<a id="nestedblock--parameters--site_profile--device--custom_networks--services_to_connect"></a>
+### Nested Schema for `parameters.site_profile.device.custom_networks.services_to_connect`
 
 Optional:
 
-- **service** (String) Name of service to be connected to the custom network (eg: router-1)
+- `service` (String) Name of service to be connected to the custom network (eg: router-1)
 
 
 
 <a id="nestedblock--parameters--site_profile--device--custom_services"></a>
-### Nested Schema for `parameters.site_profile.device.vlan`
+### Nested Schema for `parameters.site_profile.device.custom_services`
 
 Optional:
 
-- **application_type** (String) Application type of custom service (eg: LINUX)
-- **image_name** (String) Image name of custom service (eg: redhat7.tar.gz.tar.gz)
-- **name** (String) Name of custom service (eg: LINUX-1)
-- **profile** (String) Profile type of service (eg: rhel7-medium)
-- **topology** (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--vlan--topology))
+- `application_type` (String) Application type of custom service (eg: LINUX)
+- `image_name` (String) Image name of custom service (eg: redhat7.tar.gz.tar.gz)
+- `name` (String) Name of custom service (eg: LINUX-1)
+- `profile` (String) Profile type of service (eg: rhel7-medium)
+- `topology` (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--custom_services--topology))
 
-<a id="nestedblock--parameters--site_profile--device--vlan--topology"></a>
-### Nested Schema for `parameters.site_profile.device.vlan.topology`
+<a id="nestedblock--parameters--site_profile--device--custom_services--topology"></a>
+### Nested Schema for `parameters.site_profile.device.custom_services.topology`
 
 Optional:
 
-- **assign_ip** (String) Assign ip to network (eg: true)
-- **name** (String) Name of connection from custom service(eg: wan-net)
-- **type** (String) Type of connection from custom service (eg:  wan, lan or internal)
+- `assign_ip` (String) Assign ip to network (eg: true)
+- `name` (String) Name of connection from custom service(eg: wan-net)
+- `type` (String) Type of connection from custom service (eg:  wan, lan or internal)
 
 
 
 <a id="nestedblock--parameters--site_profile--device--custom_template"></a>
-### Nested Schema for `parameters.site_profile.device.vlan`
+### Nested Schema for `parameters.site_profile.device.custom_template`
 
 Optional:
 
-- **device_type** (String) Type of the device(eg: NFVIS)
-- **template** (String) Name of the template(eg NFVIS template)
+- `device_type` (String) Type of the device(eg: NFVIS)
+- `template` (String) Name of the template(eg NFVIS template)
 
 
 <a id="nestedblock--parameters--site_profile--device--service_providers"></a>
-### Nested Schema for `parameters.site_profile.device.vlan`
+### Nested Schema for `parameters.site_profile.device.service_providers`
 
 Optional:
 
-- **connect** (String) Connection of service provider and device value should be boolean (eg: true)
-- **default_gateway** (String) Default gateway connect value as boolean (eg: true)
-- **link_type** (String) Name of connection type(eg: GigabitEthernet)
-- **service_provider** (String) Name of the service provider(eg: Airtel)
+- `connect` (String) Connection of service provider and device value should be boolean (eg: true)
+- `default_gateway` (String) Default gateway connect value as boolean (eg: true)
+- `link_type` (String) Name of connection type(eg: GigabitEthernet)
+- `service_provider` (String) Name of the service provider(eg: Airtel)
 
 
 <a id="nestedblock--parameters--site_profile--device--services"></a>
-### Nested Schema for `parameters.site_profile.device.vlan`
+### Nested Schema for `parameters.site_profile.device.services`
 
 Optional:
 
-- **image_name** (String) Name of image (eg: isrv-universalk9.16.06.02.tar.gz)
-- **mode** (String) Mode of firewall (eg: routed, transparent)
-- **name** (String) Name of the service (eg: isrv)
-- **profile** (String) Profile type of service (eg: ISRv-mini)
-- **topology** (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--vlan--topology))
-- **type** (String) Service type (eg: ISRV)
+- `image_name` (String) Name of image (eg: isrv-universalk9.16.06.02.tar.gz)
+- `mode` (String) Mode of firewall (eg: routed, transparent)
+- `name` (String) Name of the service (eg: isrv)
+- `profile` (String) Profile type of service (eg: ISRv-mini)
+- `topology` (Block List) (see [below for nested schema](#nestedblock--parameters--site_profile--device--services--topology))
+- `type` (String) Service type (eg: ISRV)
 
-<a id="nestedblock--parameters--site_profile--device--vlan--topology"></a>
-### Nested Schema for `parameters.site_profile.device.vlan.topology`
+<a id="nestedblock--parameters--site_profile--device--services--topology"></a>
+### Nested Schema for `parameters.site_profile.device.services.topology`
 
 Optional:
 
-- **assign_ip** (String) Assign ip address to network (eg: true)
-- **name** (String) Name of connection (eg: wan-net)
-- **type** (String) Type of connection (eg:  wan, lan or internal)
+- `assign_ip` (String) Assign ip address to network (eg: true)
+- `name` (String) Name of connection (eg: wan-net)
+- `type` (String) Type of connection (eg:  wan, lan or internal)
 
 
 
@@ -492,8 +493,8 @@ Optional:
 
 Optional:
 
-- **id** (String) Vlan id(eg.4018)
-- **type** (String) Vlan type(eg. Access or Trunk)
+- `id` (String) Vlan id(eg.4018)
+- `type` (String) Vlan type(eg. Access or Trunk)
 
 
 
@@ -504,8 +505,8 @@ Optional:
 
 Read-Only:
 
-- **execution_id** (String)
-- **execution_status_url** (String)
-- **message** (String)
+- `execution_id` (String)
+- `execution_status_url` (String)
+- `message` (String)
 
 

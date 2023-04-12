@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,7 +16,7 @@ import (
 
 func resourceTransitPeerNetwork() *schema.Resource {
 	return &schema.Resource{
-		Description: `It manages create, read and delete operations.
+		Description: `It manages create, read and delete operations on SDA.
 
 - Delete Transit Peer Network from SD-Access
 
@@ -42,6 +42,12 @@ func resourceTransitPeerNetwork() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"description": &schema.Schema{
+							Description: `Transit Peer network info retrieved successfully
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"ip_transit_settings": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -49,12 +55,11 @@ func resourceTransitPeerNetwork() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"autonomous_system_number": &schema.Schema{
-										Description: `Autonomous System Number  (e.g.,1-65535)
+										Description: `Autonomous System Number  
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"routing_protocol_name": &schema.Schema{
 										Description: `Routing Protocol Name
 `,
@@ -64,7 +69,6 @@ func resourceTransitPeerNetwork() *schema.Resource {
 								},
 							},
 						},
-
 						"sda_transit_settings": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -78,14 +82,13 @@ func resourceTransitPeerNetwork() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"device_management_ip_address": &schema.Schema{
-													Description: `Device Management Ip Address of provisioned device
+													Description: `Device Management Ip Address 
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"site_name_hierarchy": &schema.Schema{
-													Description: `Site Name Hierarchy where device is provisioned
+													Description: `Site Name Hierarchy 
 `,
 													Type:     schema.TypeString,
 													Computed: true,
@@ -96,14 +99,18 @@ func resourceTransitPeerNetwork() *schema.Resource {
 								},
 							},
 						},
-
+						"status": &schema.Schema{
+							Description: `status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"transit_peer_network_name": &schema.Schema{
 							Description: `Transit Peer Network Name
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"transit_peer_network_type": &schema.Schema{
 							Description: `Transit Peer Network Type
 `,
@@ -116,13 +123,14 @@ func resourceTransitPeerNetwork() *schema.Resource {
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"ip_transit_settings": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
-							MaxItems: 1,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -131,12 +139,14 @@ func resourceTransitPeerNetwork() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"routing_protocol_name": &schema.Schema{
 										Description: `Routing Protocol Name
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -144,13 +154,14 @@ func resourceTransitPeerNetwork() *schema.Resource {
 						"sda_transit_settings": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
-							MaxItems: 1,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"transit_control_plane_settings": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -159,12 +170,14 @@ func resourceTransitPeerNetwork() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"site_name_hierarchy": &schema.Schema{
 													Description: `Site Name Hierarchy where device is provisioned
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -176,13 +189,15 @@ func resourceTransitPeerNetwork() *schema.Resource {
 							Description: `Transit Peer Network Name
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Computed: true,
 						},
 						"transit_peer_network_type": &schema.Schema{
 							Description: `Transit Peer Network Type
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -198,11 +213,19 @@ func resourceTransitPeerNetworkCreate(ctx context.Context, d *schema.ResourceDat
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestTransitPeerNetworkAddTransitPeerNetwork(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+
+	vTransitPeerNetworkName := resourceItem["transit_peer_network_name"]
+	vvTransitPeerNetworkName := interfaceToString(vTransitPeerNetworkName)
+	queryParamImport := dnacentersdkgo.GetTransitPeerNetworkInfoQueryParams{}
+	queryParamImport.TransitPeerNetworkName = vvTransitPeerNetworkName
+	item2, _, err := client.Sda.GetTransitPeerNetworkInfo(&queryParamImport)
+	if err == nil && item2 != nil {
+		resourceMap := make(map[string]string)
+		resourceMap["transit_peer_network_name"] = item2.TransitPeerNetworkName
+		d.SetId(joinResourceID(resourceMap))
+		return resourceTransitPeerNetworkRead(ctx, d, m)
 	}
-	vName := resourceItem["transit_peer_network_name"]
-	vvName := interfaceToString(vName)
 	resp1, restyResp1, err := client.Sda.AddTransitPeerNetwork(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -224,16 +247,16 @@ func resourceTransitPeerNetworkCreate(ctx context.Context, d *schema.ResourceDat
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetBusinessAPIExecutionDetails", err,
-				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+				"Failure when executing GetExecutionByID", err,
+				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -242,15 +265,25 @@ func resourceTransitPeerNetworkCreate(ctx context.Context, d *schema.ResourceDat
 			}
 		}
 		if response2.Status == "FAILURE" {
-			bapiError := response2.BapiError
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing AddTransitPeerNetwork", err,
-				"Failure at AddTransitPeerNetwork execution", bapiError))
+			log.Printf("[DEBUG] Error %s", response2.BapiError)
+			diags = append(diags, diagError(
+				"Failure when executing AddTransitPeerNetwork", err))
 			return diags
 		}
 	}
+	queryParamValidate := dnacentersdkgo.GetTransitPeerNetworkInfoQueryParams{}
+	queryParamValidate.TransitPeerNetworkName = vvTransitPeerNetworkName
+	item3, _, err := client.Sda.GetTransitPeerNetworkInfo(&queryParamValidate)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing AddTransitPeerNetwork", err,
+			"Failure at AddTransitPeerNetwork, unexpected response", ""))
+		return diags
+	}
+
 	resourceMap := make(map[string]string)
-	resourceMap["transit_peer_network_name"] = vvName
+	resourceMap["transit_peer_network_name"] = item3.TransitPeerNetworkName
+
 	d.SetId(joinResourceID(resourceMap))
 	return resourceTransitPeerNetworkRead(ctx, d, m)
 }
@@ -262,11 +295,12 @@ func resourceTransitPeerNetworkRead(ctx context.Context, d *schema.ResourceData,
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+
 	vTransitPeerNetworkName := resourceMap["transit_peer_network_name"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTransitPeerNetworkInfo")
+		log.Printf("[DEBUG] Selected method: GetTransitPeerNetworkInfo")
 		queryParams1 := dnacentersdkgo.GetTransitPeerNetworkInfoQueryParams{}
 
 		queryParams1.TransitPeerNetworkName = vTransitPeerNetworkName
@@ -277,21 +311,20 @@ func resourceTransitPeerNetworkRead(ctx context.Context, d *schema.ResourceData,
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTransitPeerNetworkInfo", err,
-				"Failure at GetTransitPeerNetworkInfo, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenGetTransitPeerNetworkInfoItem(response1)
+		vItem1 := flattenSdaGetTransitPeerNetworkInfoItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTransitPeerNetworkInfo response",
 				err))
 			return diags
 		}
+
 		return diags
 
 	}
@@ -310,13 +343,13 @@ func resourceTransitPeerNetworkDelete(ctx context.Context, d *schema.ResourceDat
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vTransitPeerNetworkName := resourceMap["transit_peer_network_name"]
 
-	queryParams1 := dnacentersdkgo.DeleteTransitPeerNetworkQueryParams{}
-	queryParams1.TransitPeerNetworkName = vTransitPeerNetworkName
+	queryParamDelete := dnacentersdkgo.DeleteTransitPeerNetworkQueryParams{}
 
-	// REVIEW: Add getAllItems and search function to get missing params
-	response1, restyResp1, err := client.Sda.DeleteTransitPeerNetwork(&queryParams1)
+	vvTransitPeerNetworkName := resourceMap["transit_peer_network_name"]
+	queryParamDelete.TransitPeerNetworkName = vvTransitPeerNetworkName
+
+	response1, restyResp1, err := client.Sda.DeleteTransitPeerNetwork(&queryParamDelete)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -330,6 +363,7 @@ func resourceTransitPeerNetworkDelete(ctx context.Context, d *schema.ResourceDat
 			"Failure at DeleteTransitPeerNetwork, unexpected response", ""))
 		return diags
 	}
+
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
@@ -340,16 +374,16 @@ func resourceTransitPeerNetworkDelete(ctx context.Context, d *schema.ResourceDat
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetBusinessAPIExecutionDetails", err,
-				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+				"Failure when executing GetExecutionByID", err,
+				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -358,13 +392,13 @@ func resourceTransitPeerNetworkDelete(ctx context.Context, d *schema.ResourceDat
 			}
 		}
 		if response2.Status == "FAILURE" {
-			bapiError := response2.BapiError
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing DeleteTransitPeerNetwork", err,
-				"Failure at DeleteTransitPeerNetwork execution", bapiError))
+			log.Printf("[DEBUG] Error %s", response2.BapiError)
+			diags = append(diags, diagError(
+				"Failure when executing DeleteTransitPeerNetwork", err))
 			return diags
 		}
 	}
+
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")

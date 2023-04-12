@@ -31,43 +31,41 @@ output "dnacenter_sda_multicast_example" {
 
 ### Required
 
-- **site_name_hierarchy** (String) siteNameHierarchy query parameter. fabric site name hierarchy
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `site_name_hierarchy` (String) siteNameHierarchy query parameter. fabric site name hierarchy
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **multicast_method** (String)
-- **multicast_type** (String)
-- **multicast_vn_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--multicast_vn_info))
-- **site_name_hierarchy** (String)
+- `description` (String)
+- `multicast_method` (String)
+- `multicast_type` (String)
+- `multicast_vn_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--multicast_vn_info))
+- `status` (String)
 
 <a id="nestedobjatt--item--multicast_vn_info"></a>
 ### Nested Schema for `item.multicast_vn_info`
 
 Read-Only:
 
-- **external_rp_ip_address** (String)
-- **internal_rp_ip_address** (List of String)
-- **ip_pool_name** (String)
-- **ssm_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--multicast_vn_info--ssm_info))
-- **virtual_network_name** (String)
+- `external_rp_ip_address` (String)
+- `internal_rp_ip_address` (List of String)
+- `ip_pool_name` (String)
+- `ssm_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--multicast_vn_info--ssm_info))
+- `virtual_network_name` (String)
 
 <a id="nestedobjatt--item--multicast_vn_info--ssm_info"></a>
 ### Nested Schema for `item.multicast_vn_info.ssm_info`
 
 Read-Only:
 
-- **ssm_group_range** (String)
-- **ssm_wildcard_mask** (String)
+- `ssm_group_range` (String)
+- `ssm_wildcard_mask` (String)
 
 

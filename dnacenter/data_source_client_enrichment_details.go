@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -72,7 +72,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 												"boot_date_time": &schema.Schema{
 													Description: `Boot Date Time`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -102,7 +102,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 												"error_description": &schema.Schema{
 													Description: `Error Description`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -132,7 +132,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 												"interface_count": &schema.Schema{
 													Description: `Interface Count`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -156,25 +156,25 @@ user, the devices that the user is connected to and the assurance issues that th
 
 												"line_card_count": &schema.Schema{
 													Description: `Line Card Count`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"line_card_id": &schema.Schema{
 													Description: `Line Card Id`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"location": &schema.Schema{
 													Description: `Location`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"location_name": &schema.Schema{
 													Description: `Location Name`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -210,7 +210,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"id": &schema.Schema{
 																			Description: `Id`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
@@ -231,7 +231,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"port_utilization": &schema.Schema{
 																			Description: `Port Utilization`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
@@ -264,7 +264,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"count": &schema.Schema{
 																			Description: `Count`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
@@ -276,25 +276,25 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"device_type": &schema.Schema{
 																			Description: `Device Type`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
 																		"fabric_group": &schema.Schema{
 																			Description: `Fabric Group`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
 																		"family": &schema.Schema{
 																			Description: `Family`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
 																		"health_score": &schema.Schema{
 																			Description: `Health Score`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
@@ -306,7 +306,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"ip": &schema.Schema{
 																			Description: `Ip`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
@@ -324,19 +324,19 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"node_type": &schema.Schema{
 																			Description: `Node Type`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
 																		"platform_id": &schema.Schema{
 																			Description: `Platform Id`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
 																		"radio_frequency": &schema.Schema{
 																			Description: `Radio Frequency`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
@@ -348,13 +348,13 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"software_version": &schema.Schema{
 																			Description: `Software Version`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
 																		"user_id": &schema.Schema{
 																			Description: `User Id`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 																	},
@@ -450,7 +450,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 												"waas_device_mode": &schema.Schema{
 													Description: `Waas Device Mode`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 											},
@@ -537,7 +537,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 																		"floor": &schema.Schema{
 																			Description: `Floor`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 
@@ -681,7 +681,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 									"auth_type": &schema.Schema{
 										Description: `Auth Type`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -708,7 +708,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 									"data_rate": &schema.Schema{
 										Description: `Data Rate`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -762,13 +762,13 @@ user, the devices that the user is connected to and the assurance issues that th
 
 									"host_name": &schema.Schema{
 										Description: `Host Name`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"host_os": &schema.Schema{
 										Description: `Host Os`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -780,7 +780,7 @@ user, the devices that the user is connected to and the assurance issues that th
 
 									"host_version": &schema.Schema{
 										Description: `Host Version`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -804,37 +804,37 @@ user, the devices that the user is connected to and the assurance issues that th
 
 									"location": &schema.Schema{
 										Description: `Location`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"port": &schema.Schema{
 										Description: `Port`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"rssi": &schema.Schema{
 										Description: `Rssi`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"snr": &schema.Schema{
 										Description: `Snr`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"ssid": &schema.Schema{
 										Description: `Ssid`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"sub_type": &schema.Schema{
 										Description: `Sub Type`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -869,7 +869,7 @@ func dataSourceClientEnrichmentDetailsRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetClientEnrichmentDetails")
+		log.Printf("[DEBUG] Selected method: GetClientEnrichmentDetails")
 
 		headerParams1 := dnacentersdkgo.GetClientEnrichmentDetailsHeaderParams{}
 
@@ -900,6 +900,7 @@ func dataSourceClientEnrichmentDetailsRead(ctx context.Context, d *schema.Resour
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

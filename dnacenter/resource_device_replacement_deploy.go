@@ -2,14 +2,16 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -60,11 +62,13 @@ func resourceDeviceReplacementDeploy() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"replacement_device_serial_number": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -89,9 +93,8 @@ func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.Resour
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeployDeviceReplacementWorkflow", err,
-			"Failure at DeployDeviceReplacementWorkflow, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing DeployDeviceReplacementWorkflow", err))
 		return diags
 	}
 
@@ -145,6 +148,7 @@ func resourceDeviceReplacementDeployCreate(ctx context.Context, d *schema.Resour
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

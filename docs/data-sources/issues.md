@@ -40,36 +40,36 @@ output "dnacenter_issues_example" {
 
 ### Optional
 
-- **ai_driven** (String) aiDriven query parameter. The issue's AI driven value (Yes or No)(Use only when macAddress and deviceId are not provided)
-- **device_id** (String) deviceId query parameter. Assurance UUID value of the device in the issue content
-- **end_time** (Number) endTime query parameter. Ending epoch time in milliseconds of query time window
-- **id** (String) The ID of this resource.
-- **issue_status** (String) issueStatus query parameter. The issue's status value (One of ACTIVE, IGNORED, RESOLVED)
-- **mac_address** (String) macAddress query parameter. Client's device MAC address of the issue (format xx:xx:xx:xx:xx:xx)
-- **priority** (String) priority query parameter. The issue's priority value (One of P1, P2, P3, or P4)(Use only when macAddress and deviceId are not provided)
-- **site_id** (String) siteId query parameter. Assurance UUID value of the site in the issue content
-- **start_time** (Number) startTime query parameter. Starting epoch time in milliseconds of query time window
+- `ai_driven` (String) aiDriven query parameter. The issue's AI driven value (Yes or No)(Use only when macAddress and deviceId are not provided)
+- `device_id` (String) deviceId query parameter. Assurance UUID value of the device in the issue content
+- `end_time` (Number) endTime query parameter. Ending epoch time in milliseconds of query time window
+- `issue_status` (String) issueStatus query parameter. The issue's status value (One of ACTIVE, IGNORED, RESOLVED)
+- `mac_address` (String) macAddress query parameter. Client's device MAC address of the issue (format xx:xx:xx:xx:xx:xx)
+- `priority` (String) priority query parameter. The issue's priority value (One of P1, P2, P3, or P4)(Use only when macAddress and deviceId are not provided)
+- `site_id` (String) siteId query parameter. Assurance UUID value of the site in the issue content
+- `start_time` (Number) startTime query parameter. Starting epoch time in milliseconds of query time window
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **ai_driven** (String)
-- **category** (String)
-- **client_mac** (String)
-- **device_id** (String)
-- **device_role** (String)
-- **issue_id** (String)
-- **issue_occurence_count** (Number)
-- **last_occurence_time** (Number)
-- **name** (String)
-- **priority** (String)
-- **site_id** (String)
-- **status** (String)
+- `ai_driven` (String)
+- `category` (String)
+- `client_mac` (String)
+- `device_id` (String)
+- `device_role` (String)
+- `issue_id` (String)
+- `issue_occurence_count` (Number)
+- `last_occurence_time` (Number)
+- `name` (String)
+- `priority` (String)
+- `site_id` (String)
+- `status` (String)
 
 

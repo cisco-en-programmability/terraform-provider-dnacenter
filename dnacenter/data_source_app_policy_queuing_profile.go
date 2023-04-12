@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -217,7 +217,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 									"is_common_between_all_interface_speeds": &schema.Schema{
 										Description: `Is common between all interface speeds
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -334,7 +334,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"deployed": &schema.Schema{
 							Description: `Deployed
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -398,7 +398,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"internal": &schema.Schema{
 							Description: `Internal
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -406,7 +406,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"is_deleted": &schema.Schema{
 							Description: `Is deleted
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -414,7 +414,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"is_seeded": &schema.Schema{
 							Description: `Is seeded
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -422,7 +422,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"is_stale": &schema.Schema{
 							Description: `Is stale
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -430,7 +430,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"ise_reserved": &schema.Schema{
 							Description: `Is reserved
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -466,7 +466,7 @@ func dataSourceAppPolicyQueuingProfile() *schema.Resource {
 						"pushed": &schema.Schema{
 							Description: `Pushed
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -516,7 +516,7 @@ func dataSourceAppPolicyQueuingProfileRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetApplicationPolicyQueuingProfile")
+		log.Printf("[DEBUG] Selected method: GetApplicationPolicyQueuingProfile")
 		queryParams1 := dnacentersdkgo.GetApplicationPolicyQueuingProfileQueryParams{}
 
 		if okName {
@@ -544,6 +544,7 @@ func dataSourceAppPolicyQueuingProfileRead(ctx context.Context, d *schema.Resour
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -589,46 +590,6 @@ func flattenApplicationPolicyGetApplicationPolicyQueuingProfileItems(items *[]dn
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenApplicationPolicyGetApplicationPolicyQueuingProfileItem(item *dnacentersdkgo.ResponseApplicationPolicyGetApplicationPolicyQueuingProfileResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-
-	respItem := make(map[string]interface{})
-	respItem["id"] = item.ID
-	respItem["instance_id"] = item.InstanceID
-	respItem["display_name"] = item.DisplayName
-	respItem["instance_created_on"] = item.InstanceCreatedOn
-	respItem["instance_updated_on"] = item.InstanceUpdatedOn
-	respItem["instance_version"] = item.InstanceVersion
-	respItem["create_time"] = item.CreateTime
-	respItem["deployed"] = boolPtrToString(item.Deployed)
-	respItem["description"] = item.Description
-	respItem["is_seeded"] = boolPtrToString(item.IsSeeded)
-	respItem["is_stale"] = boolPtrToString(item.IsStale)
-	respItem["last_update_time"] = item.LastUpdateTime
-	respItem["name"] = item.Name
-	respItem["namespace"] = item.Namespace
-	respItem["provisioning_state"] = item.ProvisioningState
-	respItem["qualifier"] = item.Qualifier
-	respItem["resource_version"] = item.ResourceVersion
-	respItem["target_id_list"] = flattenApplicationPolicyGetApplicationPolicyQueuingProfileItemsTargetIDList(item.TargetIDList)
-	respItem["type"] = item.Type
-	respItem["cfs_change_info"] = flattenApplicationPolicyGetApplicationPolicyQueuingProfileItemsCfsChangeInfo(item.CfsChangeInfo)
-	respItem["custom_provisions"] = flattenApplicationPolicyGetApplicationPolicyQueuingProfileItemsCustomProvisions(item.CustomProvisions)
-	respItem["gen_id"] = item.GenID
-	respItem["internal"] = boolPtrToString(item.Internal)
-	respItem["is_deleted"] = boolPtrToString(item.IsDeleted)
-	respItem["ise_reserved"] = boolPtrToString(item.IseReserved)
-	respItem["pushed"] = boolPtrToString(item.Pushed)
-	respItem["clause"] = flattenApplicationPolicyGetApplicationPolicyQueuingProfileItemsClause(item.Clause)
-	respItem["contract_classifier"] = flattenApplicationPolicyGetApplicationPolicyQueuingProfileItemsContractClassifier(item.ContractClassifier)
-
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenApplicationPolicyGetApplicationPolicyQueuingProfileItemsTargetIDList(items *[]dnacentersdkgo.ResponseApplicationPolicyGetApplicationPolicyQueuingProfileResponseTargetIDList) []interface{} {

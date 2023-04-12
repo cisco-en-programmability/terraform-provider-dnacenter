@@ -55,51 +55,51 @@ output "dnacenter_task_example" {
 
 ### Optional
 
-- **data** (String) data query parameter. Fetch tasks that contains this data
-- **end_time** (String) endTime query parameter. This is the epoch end time upto which audit records need to be fetched
-- **error_code** (String) errorCode query parameter. Fetch tasks that have this error code
-- **failure_reason** (String) failureReason query parameter. Fetch tasks that contains this failure reason
-- **id** (String) The ID of this resource.
-- **is_error** (String) isError query parameter. Fetch tasks ended as success or failure. Valid values: true, false
-- **limit** (String) limit query parameter.
-- **offset** (String) offset query parameter.
-- **order** (String) order query parameter. Sort order asc or dsc
-- **parent_id** (String) parentId query parameter. Fetch tasks that have this parent Id
-- **progress** (String) progress query parameter. Fetch tasks that contains this progress
-- **service_type** (String) serviceType query parameter. Fetch tasks with this service type
-- **sort_by** (String) sortBy query parameter. Sort results by this field
-- **start_time** (String) startTime query parameter. This is the epoch start time from which tasks need to be fetched
-- **task_id** (String) taskId path parameter. UUID of the Task
-- **username** (String) username query parameter. Fetch tasks with this username
+- `data` (String) data query parameter. Fetch tasks that contains this data
+- `end_time` (String) endTime query parameter. This is the epoch end time upto which audit records need to be fetched
+- `error_code` (String) errorCode query parameter. Fetch tasks that have this error code
+- `failure_reason` (String) failureReason query parameter. Fetch tasks that contains this failure reason
+- `is_error` (String) isError query parameter. Fetch tasks ended as success or failure. Valid values: true, false
+- `limit` (Number) limit query parameter.
+- `offset` (Number) offset query parameter.
+- `order` (String) order query parameter. Sort order asc or dsc
+- `parent_id` (String) parentId query parameter. Fetch tasks that have this parent Id
+- `progress` (String) progress query parameter. Fetch tasks that contains this progress
+- `service_type` (String) serviceType query parameter. Fetch tasks with this service type
+- `sort_by` (String) sortBy query parameter. Sort results by this field
+- `start_time` (String) startTime query parameter. This is the epoch start time from which tasks need to be fetched
+- `task_id` (String) taskId path parameter. UUID of the Task
+- `username` (String) username query parameter. Fetch tasks with this username
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **additional_status_url** (String)
-- **data** (String)
-- **end_time** (Number)
-- **error_code** (String)
-- **error_key** (String)
-- **failure_reason** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **is_error** (String)
-- **last_update** (Number)
-- **operation_id_list** (String)
-- **parent_id** (String)
-- **progress** (String)
-- **root_id** (String)
-- **service_type** (String)
-- **start_time** (Number)
-- **username** (String)
-- **version** (Number)
+- `additional_status_url` (String)
+- `data` (String)
+- `end_time` (Number)
+- `error_code` (String)
+- `error_key` (String)
+- `failure_reason` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `is_error` (String)
+- `last_update` (Number)
+- `operation_id_list` (String)
+- `parent_id` (String)
+- `progress` (String)
+- `root_id` (String)
+- `service_type` (String)
+- `start_time` (Number)
+- `username` (String)
+- `version` (Number)
 
 
 <a id="nestedatt--items"></a>
@@ -107,23 +107,23 @@ Read-Only:
 
 Read-Only:
 
-- **additional_status_url** (String)
-- **data** (String)
-- **end_time** (Number)
-- **error_code** (String)
-- **error_key** (String)
-- **failure_reason** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **is_error** (String)
-- **last_update** (String)
-- **operation_id_list** (String)
-- **parent_id** (String)
-- **progress** (String)
-- **root_id** (String)
-- **service_type** (String)
-- **start_time** (Number)
-- **username** (String)
-- **version** (Number)
+- `additional_status_url` (String)
+- `data` (String)
+- `end_time` (Number)
+- `error_code` (String)
+- `error_key` (String)
+- `failure_reason` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `is_error` (String)
+- `last_update` (String)
+- `operation_id_list` (String)
+- `parent_id` (String)
+- `progress` (String)
+- `root_id` (String)
+- `service_type` (String)
+- `start_time` (Number)
+- `username` (String)
+- `version` (Number)
 
 

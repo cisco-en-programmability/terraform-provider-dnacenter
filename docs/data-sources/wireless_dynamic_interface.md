@@ -31,19 +31,19 @@ output "dnacenter_wireless_dynamic_interface_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **interface_name** (String) interface-name query parameter. dynamic-interface name, if not specified all the existing dynamic interfaces will be retrieved
+- `interface_name` (String) interface-name query parameter. dynamic-interface name, if not specified all the existing dynamic interfaces will be retrieved
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **interface_name** (String)
-- **vlan_id** (Number)
+- `interface_name` (String)
+- `vlan_id` (Number)
 
 

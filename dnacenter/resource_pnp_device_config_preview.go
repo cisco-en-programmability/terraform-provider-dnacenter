@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
 
 	"time"
@@ -10,7 +11,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -95,16 +96,19 @@ func resourcePnpDeviceConfigPreview() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"site_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -129,9 +133,8 @@ func resourcePnpDeviceConfigPreviewCreate(ctx context.Context, d *schema.Resourc
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing PreviewConfig", err,
-			"Failure at PreviewConfig, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing PreviewConfig", err))
 		return diags
 	}
 
@@ -185,6 +188,7 @@ func resourcePnpDeviceConfigPreviewCreate(ctx context.Context, d *schema.Resourc
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

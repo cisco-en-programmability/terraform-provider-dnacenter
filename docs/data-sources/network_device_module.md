@@ -48,41 +48,41 @@ output "dnacenter_network_device_module_example" {
 
 ### Optional
 
-- **device_id** (String) deviceId query parameter.
-- **id** (String) id path parameter. Module id
-- **limit** (String) limit query parameter.
-- **name_list** (List of String) nameList query parameter.
-- **offset** (String) offset query parameter.
-- **operational_state_code_list** (List of String) operationalStateCodeList query parameter.
-- **part_number_list** (List of String) partNumberList query parameter.
-- **vendor_equipment_type_list** (List of String) vendorEquipmentTypeList query parameter.
+- `device_id` (String) deviceId query parameter.
+- `id` (String) id path parameter. Module id
+- `limit` (Number) limit query parameter.
+- `name_list` (List of String) nameList query parameter.
+- `offset` (Number) offset query parameter.
+- `operational_state_code_list` (List of String) operationalStateCodeList query parameter.
+- `part_number_list` (List of String) partNumberList query parameter.
+- `vendor_equipment_type_list` (List of String) vendorEquipmentTypeList query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **assembly_number** (String)
-- **assembly_revision** (String)
-- **attribute_info** (String)
-- **containment_entity** (String)
-- **description** (String)
-- **entity_physical_index** (String)
-- **id** (String)
-- **is_field_replaceable** (String)
-- **is_reporting_alarms_allowed** (String)
-- **manufacturer** (String)
-- **module_index** (Number)
-- **name** (String)
-- **operational_state_code** (String)
-- **part_number** (String)
-- **serial_number** (String)
-- **vendor_equipment_type** (String)
+- `assembly_number` (String)
+- `assembly_revision` (String)
+- `attribute_info` (String)
+- `containment_entity` (String)
+- `description` (String)
+- `entity_physical_index` (String)
+- `id` (String)
+- `is_field_replaceable` (String)
+- `is_reporting_alarms_allowed` (String)
+- `manufacturer` (String)
+- `module_index` (Number)
+- `name` (String)
+- `operational_state_code` (String)
+- `part_number` (String)
+- `serial_number` (String)
+- `vendor_equipment_type` (String)
 
 
 <a id="nestedatt--items"></a>
@@ -90,21 +90,21 @@ Read-Only:
 
 Read-Only:
 
-- **assembly_number** (String)
-- **assembly_revision** (String)
-- **attribute_info** (String)
-- **containment_entity** (String)
-- **description** (String)
-- **entity_physical_index** (String)
-- **id** (String)
-- **is_field_replaceable** (String)
-- **is_reporting_alarms_allowed** (String)
-- **manufacturer** (String)
-- **module_index** (Number)
-- **name** (String)
-- **operational_state_code** (String)
-- **part_number** (String)
-- **serial_number** (String)
-- **vendor_equipment_type** (String)
+- `assembly_number` (String)
+- `assembly_revision` (String)
+- `attribute_info` (String)
+- `containment_entity` (String)
+- `description` (String)
+- `entity_physical_index` (String)
+- `id` (String)
+- `is_field_replaceable` (String)
+- `is_reporting_alarms_allowed` (String)
+- `manufacturer` (String)
+- `module_index` (Number)
+- `name` (String)
+- `operational_state_code` (String)
+- `part_number` (String)
+- `serial_number` (String)
+- `vendor_equipment_type` (String)
 
 

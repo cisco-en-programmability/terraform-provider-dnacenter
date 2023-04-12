@@ -36,29 +36,29 @@ output "dnacenter_event_subscription_details_email_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **instance_id** (String) instanceId query parameter. Instance Id of the specific configuration
-- **limit** (Number) limit query parameter. The number of Email Subscription detail's to limit in the resultset whose default value 10
-- **name** (String) name query parameter. Name of the specific configuration
-- **offset** (Number) offset query parameter. The number of Email Subscription detail's to offset in the resultset whose default value 0
-- **order** (String) order query parameter.
-- **sort_by** (String) sortBy query parameter. SortBy field name
+- `instance_id` (String) instanceId query parameter. Instance Id of the specific configuration
+- `limit` (Number) limit query parameter. The number of Email Subscription detail's to limit in the resultset whose default value 10
+- `name` (String) name query parameter. Name of the specific configuration
+- `offset` (Number) offset query parameter. The number of Email Subscription detail's to offset in the resultset whose default value 0
+- `order` (String) order query parameter.
+- `sort_by` (String) sortBy query parameter. SortBy field name
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **connector_type** (String)
-- **description** (String)
-- **from_email_address** (String)
-- **instance_id** (String)
-- **name** (String)
-- **subject** (String)
-- **to_email_addresses** (List of String)
+- `connector_type` (String)
+- `description` (String)
+- `from_email_address` (String)
+- `instance_id` (String)
+- `name` (String)
+- `subject` (String)
+- `to_email_addresses` (List of String)
 
 

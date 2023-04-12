@@ -20,10 +20,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_configuration_template_clone" "example" {
   provider = dnacenter
   parameters {
@@ -44,28 +40,25 @@ output "dnacenter_configuration_template_clone_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **name** (String) name path parameter. Template name to clone template(Name should be different than existing template name within same project)
-- **template_id** (String) templateId path parameter. UUID of the template to clone it
+- `name` (String) name path parameter. Template name to clone template(Name should be different than existing template name within same project)
+- `template_id` (String) templateId path parameter. UUID of the template to clone it
 
 Optional:
 
-- **project_id** (String) projectId query parameter. UUID of the project in which the template needs to be created
+- `project_id` (String) projectId query parameter. UUID of the project in which the template needs to be created
 
 
 <a id="nestedatt--item"></a>
@@ -73,7 +66,7 @@ Optional:
 
 Read-Only:
 
-- **task_id** (String)
-- **url** (String)
+- `task_id` (String)
+- `url` (String)
 
 

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -28,12 +28,12 @@ func dataSourcePlannedAccessPoints() *schema.Resource {
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 			"radios": &schema.Schema{
@@ -87,7 +87,7 @@ func dataSourcePlannedAccessPoints() *schema.Resource {
 
 									"macaddress": &schema.Schema{
 										Description: `Macaddress`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -114,14 +114,14 @@ func dataSourcePlannedAccessPoints() *schema.Resource {
 
 						"is_sensor": &schema.Schema{
 							Description: `Is Sensor`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"location": &schema.Schema{
 							Description: `Location`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -217,13 +217,13 @@ func dataSourcePlannedAccessPoints() *schema.Resource {
 
 												"channel": &schema.Schema{
 													Description: `Channel`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
 												"channel_string": &schema.Schema{
 													Description: `Channel String`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -268,7 +268,7 @@ func dataSourcePlannedAccessPoints() *schema.Resource {
 
 									"is_sensor": &schema.Schema{
 										Description: `Is Sensor`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -293,15 +293,15 @@ func dataSourcePlannedAccessPointsRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetPlannedAccessPointsForFloor")
+		log.Printf("[DEBUG] Selected method: GetPlannedAccessPointsForFloor")
 		vvFloorID := vFloorID.(string)
 		queryParams1 := dnacentersdkgo.GetPlannedAccessPointsForFloorQueryParams{}
 
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okRadios {
 			queryParams1.Radios = vRadios.(bool)
@@ -328,6 +328,7 @@ func dataSourcePlannedAccessPointsRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

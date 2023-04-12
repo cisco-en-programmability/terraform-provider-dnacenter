@@ -35,55 +35,28 @@ output "dnacenter_site_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **limit** (String) limit query parameter. Number of sites to be retrieved. The default value is 500
-- **name** (String) name query parameter. siteNameHierarchy (ex: global/groupName)
-- **offset** (String) offset query parameter. offset/starting row. The default value is 1
-- **site_id** (String) siteId query parameter. Site id to which site details to retrieve.
-- **type** (String) type query parameter. type (ex: area, building, floor)
+- `limit` (Number) limit query parameter. Number of sites to be retrieved. The default value is 500
+- `name` (String) name query parameter. siteNameHierarchy (ex: global/groupName)
+- `offset` (Number) offset query parameter. offset/starting row. The default value is 1
+- `site_id` (String) siteId query parameter. Site id to which site details to retrieve.
+- `type` (String) type query parameter. type (ex: area, building, floor)
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **additional_info** (List of Object) (see [below for nested schema](#nestedobjatt--items--additional_info))
-- **id** (String)
-- **instance_tenant_id** (String)
-- **name** (String)
-- **parent_id** (String)
-- **site_hierarchy** (String)
-- **site_name_hierarchy** (String)
-
-<a id="nestedobjatt--items--additional_info"></a>
-### Nested Schema for `items.additional_info`
-
-Read-Only:
-
-- **attributes** (List of Object) (see [below for nested schema](#nestedobjatt--items--additional_info--attributes))
-- **name_space** (String)
-
-<a id="nestedobjatt--items--additional_info--attributes"></a>
-### Nested Schema for `items.additional_info.attributes`
-
-Read-Only:
-
-- **address** (String)
-- **address_inherited_from** (String)
-- **country** (String)
-- **floor_index** (String)
-- **height** (String)
-- **latitude** (String)
-- **length** (String)
-- **longitude** (String)
-- **offset_x** (String)
-- **offset_y** (String)
-- **rf_model** (String)
-- **type** (String)
-- **width** (String)
+- `additional_info` (List of String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `name` (String)
+- `parent_id` (String)
+- `site_hierarchy` (String)
+- `site_name_hierarchy` (String)
 
 

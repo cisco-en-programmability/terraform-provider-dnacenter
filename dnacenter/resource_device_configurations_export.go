@@ -2,14 +2,16 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -63,6 +65,7 @@ func resourceDeviceConfigurationsExport() *schema.Resource {
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -73,6 +76,7 @@ func resourceDeviceConfigurationsExport() *schema.Resource {
 							Optional:    true,
 							ForceNew:    true,
 							Sensitive:   true,
+							Computed:    true,
 						},
 					},
 				},
@@ -97,9 +101,8 @@ func resourceDeviceConfigurationsExportCreate(ctx context.Context, d *schema.Res
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ExportDeviceConfigurations", err,
-			"Failure at ExportDeviceConfigurations, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing ExportDeviceConfigurations", err))
 		return diags
 	}
 
@@ -153,6 +156,7 @@ func resourceDeviceConfigurationsExportCreate(ctx context.Context, d *schema.Res
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

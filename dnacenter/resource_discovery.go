@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -48,40 +48,33 @@ by range" API.
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
-
 						"cdp_level": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"device_ids": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"discovery_condition": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"discovery_status": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"discovery_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"enable_password_list": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"global_credential_id_list": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -89,7 +82,6 @@ by range" API.
 								Type: schema.TypeString,
 							},
 						},
-
 						"http_read_credential": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -100,49 +92,40 @@ by range" API.
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"credential_type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"description": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"id": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"instance_tenant_id": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"instance_uuid": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"password": &schema.Schema{
 										Type:      schema.TypeString,
 										Sensitive: true,
 										Computed:  true,
 									},
-
 									"port": &schema.Schema{
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-
 									"secure": &schema.Schema{
 										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"username": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
@@ -150,7 +133,6 @@ by range" API.
 								},
 							},
 						},
-
 						"http_write_credential": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -161,49 +143,40 @@ by range" API.
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"credential_type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"description": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"id": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"instance_tenant_id": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"instance_uuid": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"password": &schema.Schema{
 										Type:      schema.TypeString,
 										Sensitive: true,
 										Computed:  true,
 									},
-
 									"port": &schema.Schema{
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-
 									"secure": &schema.Schema{
 										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"username": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
@@ -211,135 +184,109 @@ by range" API.
 								},
 							},
 						},
-
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"ip_address_list": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"ip_filter_list": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"is_auto_cdp": &schema.Schema{
 							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"lldp_level": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"netconf_port": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"num_devices": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"parent_discovery_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"password_list": &schema.Schema{
 							Type:      schema.TypeString,
 							Sensitive: true,
 							Computed:  true,
 						},
-
 						"preferred_mgmt_ipmethod": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"protocol_order": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"retry_count": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"snmp_auth_passphrase": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"snmp_auth_protocol": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"snmp_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"snmp_priv_passphrase": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"snmp_priv_protocol": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"snmp_ro_community": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"snmp_ro_community_desc": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"snmp_rw_community": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"snmp_rw_community_desc": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"snmp_user_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"time_out": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"update_mgmt_ip": &schema.Schema{
 							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"user_name_list": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -349,39 +296,44 @@ by range" API.
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Optional: true,
+							Computed: true,
 						},
 						"cdp_level": &schema.Schema{
 							Description: `CDP level to which neighbor devices to be discovered
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"device_ids": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"discovery_condition": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"discovery_status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"discovery_type": &schema.Schema{
-							Description: `Type of Discovery. 'SINGLE', 'RANGE', 'MULTI RANGE', 'CDP', 'LLDP'
+							Description: `Type of Discovery. 'SINGLE', 'RANGE', 'MULTI RANGE', 'CDP', 'LLDP', 'CIDR'
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"enable_password_list": &schema.Schema{
 							Description: `Enable Password of the devices to be discovered
@@ -389,6 +341,7 @@ by range" API.
 ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeString`,
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -398,6 +351,7 @@ ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeS
 `,
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -405,33 +359,39 @@ ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeS
 						"http_read_credential": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
-							MaxItems: 1,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"comments": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"credential_type": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"description": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"id": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"instance_tenant_id": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"instance_uuid": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"password": &schema.Schema{
 										Description: `HTTP(S) password
@@ -439,26 +399,30 @@ ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeS
 										Type:      schema.TypeString,
 										Optional:  true,
 										Sensitive: true,
+										Computed:  true,
 									},
 									"port": &schema.Schema{
 										Description: `HTTP(S) port
 `,
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"secure": &schema.Schema{
 										Description: `Flag for HTTPS
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
+										Computed:     true,
 									},
 									"username": &schema.Schema{
 										Description: `HTTP(S) username
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -466,33 +430,39 @@ ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeS
 						"http_write_credential": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
-							MaxItems: 1,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"comments": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"credential_type": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"description": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"id": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"instance_tenant_id": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"instance_uuid": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"password": &schema.Schema{
 										Description: `HTTP(S) password
@@ -500,26 +470,30 @@ ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeS
 										Type:      schema.TypeString,
 										Optional:  true,
 										Sensitive: true,
+										Computed:  true,
 									},
 									"port": &schema.Schema{
 										Description: `HTTP(S) port
 `,
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"secure": &schema.Schema{
 										Description: `Flag for HTTPS
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
+										Computed:     true,
 									},
 									"username": &schema.Schema{
 										Description: `HTTP(S) username
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -527,12 +501,14 @@ ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeS
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Default:  "",
 						},
 						"ip_address_list": &schema.Schema{
-							Description: `IP Address of devices to be discovered. Ex: '172.30.0.1' for SINGLE, CDP and LLDP; '72.30.0.1-172.30.0.4' for RANGE; '72.30.0.1-172.30.0.4,172.31.0.1-172.31.0.4' for MULTI RANGE
+							Description: `IP Address of devices to be discovered. Ex: '172.30.0.1' for SINGLE, CDP and LLDP; '72.30.0.1-172.30.0.4' for RANGE; '72.30.0.1-172.30.0.4,172.31.0.1-172.31.0.4' for MULTI RANGE; '172.30.0.1/20' for CIDR
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"ip_filter_list": &schema.Schema{
 							Description: `IP Addresses of the devices to be filtered out during discovery
@@ -540,41 +516,48 @@ ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeS
 ERROR: Different types for param ipFilterList schema.TypeList schema.TypeString`,
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"is_auto_cdp": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"lldp_level": &schema.Schema{
 							Description: `LLDP level to which neighbor devices to be discovered
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"name": &schema.Schema{
 							Description: `Name of the discovery
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Default:  "",
 						},
 						"netconf_port": &schema.Schema{
 							Description: `Netconf Port. It will need valid SSH credentials to work
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"num_devices": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"parent_discovery_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"password_list": &schema.Schema{
 							Description: `Password of the devices to be discovered
@@ -583,6 +566,7 @@ ERROR: Different types for param passwordList schema.TypeList schema.TypeString`
 							Type:      schema.TypeList,
 							Optional:  true,
 							Sensitive: true,
+							Computed:  true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -592,104 +576,122 @@ ERROR: Different types for param passwordList schema.TypeList schema.TypeString`
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"protocol_order": &schema.Schema{
 							Description: `Order of protocol (ssh/telnet) in which device connection will be tried. Ex: 'telnet': only telnet; 'ssh,telnet': ssh with higher order than telnet
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"retry": &schema.Schema{
 							Description: `Number of times to try establishing connection to device
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"retry_count": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_auth_passphrase": &schema.Schema{
 							Description: `Auth Pass phrase for SNMP
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_auth_protocol": &schema.Schema{
 							Description: `SNMP auth protocol. SHA' or 'MD5'
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_mode": &schema.Schema{
 							Description: `Mode of SNMP. 'AUTHPRIV' or 'AUTHNOPRIV' or 'NOAUTHNOPRIV'
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_priv_passphrase": &schema.Schema{
 							Description: `Pass phrase for SNMP privacy
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_priv_protocol": &schema.Schema{
 							Description: `SNMP privacy protocol. 'DES' or 'AES128'
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_ro_community": &schema.Schema{
 							Description: `Snmp RO community of the devices to be discovered
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_ro_community_desc": &schema.Schema{
 							Description: `Description for Snmp RO community
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_rw_community": &schema.Schema{
 							Description: `Snmp RW community of the devices to be discovered
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_rw_community_desc": &schema.Schema{
 							Description: `Description for Snmp RW community
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_user_name": &schema.Schema{
 							Description: `SNMP username of the device
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_version": &schema.Schema{
 							Description: `Version of SNMP. v2 or v3
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"time_out": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"timeout": &schema.Schema{
 							Description: `Time to wait for device response in seconds
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"update_mgmt_ip": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"user_name_list": &schema.Schema{
 							Description: `Username of the devices to be discovered
@@ -697,6 +699,7 @@ ERROR: Different types for param passwordList schema.TypeList schema.TypeString`
 ERROR: Different types for param userNameList schema.TypeList schema.TypeString`,
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -727,8 +730,8 @@ func resourceDiscoveryCreate(ctx context.Context, d *schema.ResourceData, m inte
 		getResponse1, _, err := client.Discovery.GetDiscoveryByID(vvID)
 		if err == nil && getResponse1 != nil {
 			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
+			resourceMap["id"] = getResponse1.Response.ID
+			resourceMap["name"] = getResponse1.Response.Name
 			d.SetId(joinResourceID(resourceMap))
 			return resourceDiscoveryRead(ctx, d, m)
 		}
@@ -738,8 +741,8 @@ func resourceDiscoveryCreate(ctx context.Context, d *schema.ResourceData, m inte
 		getResponse1, err := searchDiscovery(m, vvName)
 		if err == nil && getResponse1 != nil {
 			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
+			resourceMap["id"] = getResponse1.ID
+			resourceMap["name"] = getResponse1.Name
 			d.SetId(joinResourceID(resourceMap))
 			return resourceDiscoveryRead(ctx, d, m)
 		}
@@ -1004,6 +1007,35 @@ func resourceDiscoveryDelete(ctx context.Context, d *schema.ResourceData, m inte
 		return diags
 	}
 
+	if response1.Response == nil {
+		diags = append(diags, diagError(
+			"Failure when executing DeleteDiscoveryByID", err))
+		return diags
+	}
+	taskId := response1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
+			diags = append(diags, diagError(
+				"Failure when executing DeleteDiscoveryByID", err1))
+			return diags
+		}
+	}
+
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")
@@ -1099,7 +1131,6 @@ func expandRequestDiscoveryStartDiscovery(ctx context.Context, key string, d *sc
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1120,7 +1151,6 @@ func expandRequestDiscoveryStartDiscoveryHTTPReadCredential(ctx context.Context,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1141,17 +1171,13 @@ func expandRequestDiscoveryStartDiscoveryHTTPWriteCredential(ctx context.Context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedID(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedID {
 	request := dnacentersdkgo.RequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedID{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_info")))) {
-		value := d.Get(fixKeyAccess(key + ".attribute_info"))
-		if len(interfaceToString(value)) > 0 {
-			request.AttributeInfo = expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedIDAttributeInfo(ctx, key+".attribute_info", d)
-		}
+		request.AttributeInfo = expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedIDAttributeInfo(ctx, key+".attribute_info.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cdp_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cdp_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cdp_level")))) {
 		request.CdpLevel = interfaceToIntPtr(v)
@@ -1261,7 +1287,6 @@ func expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedID(ctx context.C
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1271,7 +1296,6 @@ func expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedIDAttributeInfo(
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1310,7 +1334,6 @@ func expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedIDHTTPReadCreden
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1349,7 +1372,6 @@ func expandRequestDiscoveryUpdatesAnExistingDiscoveryBySpecifiedIDHTTPWriteCrede
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 

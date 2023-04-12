@@ -22,10 +22,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_interface_update" "example" {
   provider = dnacenter
   parameters {
@@ -48,31 +44,28 @@ output "dnacenter_interface_update_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **interface_uuid** (String) interfaceUuid path parameter. Interface ID
+- `interface_uuid` (String) interfaceUuid path parameter. Interface ID
 
 Optional:
 
-- **admin_status** (String) Admin Status
-- **deployment_mode** (String) deploymentMode query parameter. Preview/Deploy ['Preview' means the configuration is not pushed to the device. 'Deploy' makes the configuration pushed to the device]
-- **description** (String) Description
-- **vlan_id** (Number) Vlan Id
-- **voice_vlan_id** (Number) Voice Vlan Id
+- `admin_status` (String) Admin Status
+- `deployment_mode` (String) deploymentMode query parameter. Preview/Deploy ['Preview' means the configuration is not pushed to the device. 'Deploy' makes the configuration pushed to the device]
+- `description` (String) Description
+- `vlan_id` (Number) Vlan Id
+- `voice_vlan_id` (Number) Voice Vlan Id
 
 
 <a id="nestedatt--item"></a>
@@ -80,24 +73,24 @@ Optional:
 
 Read-Only:
 
-- **properties** (List of Object) (see [below for nested schema](#nestedobjatt--item--properties))
-- **required** (List of String)
-- **type** (String)
+- `properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties))
+- `required` (List of String)
+- `type` (String)
 
 <a id="nestedobjatt--item--properties"></a>
 ### Nested Schema for `item.properties`
 
 Read-Only:
 
-- **task_id** (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--task_id))
-- **url** (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--url))
+- `task_id` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--task_id))
+- `url` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--url))
 
 <a id="nestedobjatt--item--properties--task_id"></a>
 ### Nested Schema for `item.properties.task_id`
 
 Read-Only:
 
-- **type** (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item--properties--url"></a>
@@ -105,6 +98,6 @@ Read-Only:
 
 Read-Only:
 
-- **type** (String)
+- `type` (String)
 
 

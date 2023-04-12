@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -36,20 +36,14 @@ func resourceLanAutomationCreate() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"detail": &schema.Schema{
-							Description: `Detailed information of the error code.
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"error_code": &schema.Schema{
-							Description: `Error code value.
+						"id": &schema.Schema{
+							Description: `LAN Automation Session Id
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"message": &schema.Schema{
-							Description: `Description of the error code.
+							Description: `Status of the LAN Automation Start request
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -66,10 +60,11 @@ func resourceLanAutomationCreate() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"payload": &schema.Schema{
-							Description: `Array of RequestLanAutomationLANAutomation2`,
+							Description: `Array of RequestLanAutomationLANAutomationStart`,
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -79,6 +74,7 @@ func resourceLanAutomationCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"host_name_file_id": &schema.Schema{
 										Description: `Use /dna/intent/api/v1/file/namespace/nw_orch api to get the file id for the already uploaded file in nw_orch namespace.
@@ -86,6 +82,7 @@ func resourceLanAutomationCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"host_name_prefix": &schema.Schema{
 										Description: `Host name prefix which shall be assigned to the discovered device.
@@ -93,11 +90,13 @@ func resourceLanAutomationCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"ip_pools": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -107,6 +106,7 @@ func resourceLanAutomationCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"ip_pool_role": &schema.Schema{
 													Description: `Role of the IP pool. Supported roles are: MAIN_POOL and PHYSICAL_LINK_POOL.
@@ -114,6 +114,7 @@ func resourceLanAutomationCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -124,15 +125,17 @@ func resourceLanAutomationCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"mulitcast_enabled": &schema.Schema{
 										Description: `To enable underlay native multicast.
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"peer_device_managment_ipaddress": &schema.Schema{
 										Description: `Peer seed management IP address.
@@ -140,6 +143,7 @@ func resourceLanAutomationCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"primary_device_interface_names": &schema.Schema{
 										Description: `The list of interfaces on primary seed via which the discovered devices are connected.
@@ -147,6 +151,7 @@ func resourceLanAutomationCreate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -157,15 +162,17 @@ func resourceLanAutomationCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"redistribute_isis_to_bgp": &schema.Schema{
 										Description: `Advertise LAN Automation summary route into BGP. 
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -181,9 +188,9 @@ func resourceLanAutomationCreateCreate(ctx context.Context, d *schema.ResourceDa
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	request1 := expandRequestLanAutomationCreateLanAutomation2(ctx, "parameters.0", d)
+	request1 := expandRequestLanAutomationCreateLanAutomationStart(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.LanAutomation.LanAutomation2(request1)
+	response1, restyResp1, err := client.LanAutomation.LanAutomationStart(request1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -193,9 +200,9 @@ func resourceLanAutomationCreateCreate(ctx context.Context, d *schema.ResourceDa
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing LanAutomation2", err,
-			"Failure at LanAutomation2, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -203,13 +210,14 @@ func resourceLanAutomationCreateCreate(ctx context.Context, d *schema.ResourceDa
 
 	//Analizar verificacion.
 
-	vItem1 := flattenLanAutomationLanAutomation2Item(response1.Response)
+	vItem1 := flattenLanAutomationLanAutomationStartItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
-			"Failure when setting LanAutomation2 response",
+			"Failure when setting LanAutomationStart response",
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 
@@ -227,16 +235,16 @@ func resourceLanAutomationCreateDelete(ctx context.Context, d *schema.ResourceDa
 	return diags
 }
 
-func expandRequestLanAutomationCreateLanAutomation2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLanAutomationLanAutomation2 {
-	request := dnacentersdkgo.RequestLanAutomationLanAutomation2{}
-	if v := expandRequestLanAutomationCreateLanAutomation2ItemArray(ctx, key+".payload", d); v != nil {
+func expandRequestLanAutomationCreateLanAutomationStart(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLanAutomationLanAutomationStart {
+	request := dnacentersdkgo.RequestLanAutomationLanAutomationStart{}
+	if v := expandRequestLanAutomationCreateLanAutomationStartItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	return &request
 }
 
-func expandRequestLanAutomationCreateLanAutomation2ItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemLanAutomationLanAutomation2 {
-	request := []dnacentersdkgo.RequestItemLanAutomationLanAutomation2{}
+func expandRequestLanAutomationCreateLanAutomationStartItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemLanAutomationLanAutomationStart {
+	request := []dnacentersdkgo.RequestItemLanAutomationLanAutomationStart{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -247,7 +255,7 @@ func expandRequestLanAutomationCreateLanAutomation2ItemArray(ctx context.Context
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestLanAutomationCreateLanAutomation2Item(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestLanAutomationCreateLanAutomationStartItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
@@ -255,8 +263,8 @@ func expandRequestLanAutomationCreateLanAutomation2ItemArray(ctx context.Context
 	return &request
 }
 
-func expandRequestLanAutomationCreateLanAutomation2Item(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemLanAutomationLanAutomation2 {
-	request := dnacentersdkgo.RequestItemLanAutomationLanAutomation2{}
+func expandRequestLanAutomationCreateLanAutomationStartItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemLanAutomationLanAutomationStart {
+	request := dnacentersdkgo.RequestItemLanAutomationLanAutomationStart{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".discovered_device_site_name_hierarchy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".discovered_device_site_name_hierarchy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".discovered_device_site_name_hierarchy")))) {
 		request.DiscoveredDeviceSiteNameHierarchy = interfaceToString(v)
 	}
@@ -270,7 +278,7 @@ func expandRequestLanAutomationCreateLanAutomation2Item(ctx context.Context, key
 		request.PrimaryDeviceInterfaceNames = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_pools")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_pools")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_pools")))) {
-		request.IPPools = expandRequestLanAutomationCreateLanAutomation2ItemIPPoolsArray(ctx, key+".ip_pools", d)
+		request.IPPools = expandRequestLanAutomationCreateLanAutomationStartItemIPPoolsArray(ctx, key+".ip_pools", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mulitcast_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mulitcast_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mulitcast_enabled")))) {
 		request.MulitcastEnabled = interfaceToBoolPtr(v)
@@ -290,8 +298,8 @@ func expandRequestLanAutomationCreateLanAutomation2Item(ctx context.Context, key
 	return &request
 }
 
-func expandRequestLanAutomationCreateLanAutomation2ItemIPPoolsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemLanAutomationLanAutomation2IPPools {
-	request := []dnacentersdkgo.RequestItemLanAutomationLanAutomation2IPPools{}
+func expandRequestLanAutomationCreateLanAutomationStartItemIPPoolsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemLanAutomationLanAutomationStartIPPools {
+	request := []dnacentersdkgo.RequestItemLanAutomationLanAutomationStartIPPools{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -302,7 +310,7 @@ func expandRequestLanAutomationCreateLanAutomation2ItemIPPoolsArray(ctx context.
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestLanAutomationCreateLanAutomation2ItemIPPools(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestLanAutomationCreateLanAutomationStartItemIPPools(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
@@ -310,8 +318,8 @@ func expandRequestLanAutomationCreateLanAutomation2ItemIPPoolsArray(ctx context.
 	return &request
 }
 
-func expandRequestLanAutomationCreateLanAutomation2ItemIPPools(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemLanAutomationLanAutomation2IPPools {
-	request := dnacentersdkgo.RequestItemLanAutomationLanAutomation2IPPools{}
+func expandRequestLanAutomationCreateLanAutomationStartItemIPPools(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemLanAutomationLanAutomationStartIPPools {
+	request := dnacentersdkgo.RequestItemLanAutomationLanAutomationStartIPPools{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_pool_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_pool_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_pool_name")))) {
 		request.IPPoolName = interfaceToString(v)
 	}
@@ -321,14 +329,13 @@ func expandRequestLanAutomationCreateLanAutomation2ItemIPPools(ctx context.Conte
 	return &request
 }
 
-func flattenLanAutomationLanAutomation2Item(item *dnacentersdkgo.ResponseLanAutomationLanAutomation2Response) []map[string]interface{} {
+func flattenLanAutomationLanAutomationStartItem(item *dnacentersdkgo.ResponseLanAutomationLanAutomationStartResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["error_code"] = item.ErrorCode
 	respItem["message"] = item.Message
-	respItem["detail"] = item.Detail
+	respItem["id"] = item.ID
 	return []map[string]interface{}{
 		respItem,
 	}
