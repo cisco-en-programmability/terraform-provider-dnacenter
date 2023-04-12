@@ -2,14 +2,12 @@ package dnacenter
 
 import (
 	"context"
-	"fmt"
 	"reflect"
-	"strings"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -44,74 +42,77 @@ func resourceSdaFabricControlPlaneDevice() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Control plane device info retrieved successfully in sda fabric
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
 						"device_management_ip_address": &schema.Schema{
-							Description: `Device Management Ip Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Management Ip Address of the Device which is provisioned successfully
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
-						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"device_name": &schema.Schema{
+							Description: `Device Name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
 						"roles": &schema.Schema{
-							Description: `Roles`,
-							Type:        schema.TypeList,
-							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
+							Description: `Assigned roles
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
-						"site_hierarchy": &schema.Schema{
-							Description: `Site Hierarchy`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"route_distribution_protocol": &schema.Schema{
+							Description: `routeDistributionProtocol
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
+						"site_name_hierarchy": &schema.Schema{
+							Description: `Site Name Hierarchy
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"payload": &schema.Schema{
-							Type:     schema.TypeList,
-							Required: true,
-							MinItems: 1,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
 
-									"device_management_ip_address": &schema.Schema{
-										Description: `Management Ip Address of the Device which is provisioned successfully
+						"device_management_ip_address": &schema.Schema{
+							Description: `Management Ip Address of the Device which is provisioned successfully
 `,
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"site_name_hierarchy": &schema.Schema{
-										Description: `Site Name Hierarchy of provisioned Device(site should be fabric site)
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"route_distribution_protocol": &schema.Schema{
+							Description: `Route Distribution Protocol for Control Plane Device. Allowed values are "LISP_BGP" or "LISP_PUB_SUB". Default value is "LISP_BGP"
 `,
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-								},
-							},
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"site_name_hierarchy": &schema.Schema{
+							Description: `siteNameHierarchy of the Provisioned Device(site should be part of Fabric Site)
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -125,29 +126,23 @@ func resourceSdaFabricControlPlaneDeviceCreate(ctx context.Context, d *schema.Re
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
+	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSdaFabricControlPlaneDeviceAddControlPlaneDeviceInSdaFabric(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+
 	vDeviceManagementIPAddress := resourceItem["device_management_ip_address"]
 	vvDeviceManagementIPAddress := interfaceToString(vDeviceManagementIPAddress)
-
-	queryParams1 := dnacentersdkgo.GetControlPlaneDeviceFromSdaFabricQueryParams{}
-
-	queryParams1.DeviceManagementIPAddress = vvDeviceManagementIPAddress
-
-	getResponse2, _, err := client.Sda.GetControlPlaneDeviceFromSdaFabric(&queryParams1)
-
-	if err == nil && getResponse2 != nil && strings.ToLower(getResponse2.Status) != "failed" {
+	queryParamImport := dnacentersdkgo.GetControlPlaneDeviceFromSdaFabricQueryParams{}
+	queryParamImport.DeviceManagementIPAddress = vvDeviceManagementIPAddress
+	item2, _, err := client.Sda.GetControlPlaneDeviceFromSdaFabric(&queryParamImport)
+	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
-		resourceMap["device_management_ip_address"] = vvDeviceManagementIPAddress
+		resourceMap["device_management_ip_address"] = item2.DeviceManagementIPAddress
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaFabricControlPlaneDeviceRead(ctx, d, m)
 	}
-
-	response1, restyResp1, err := client.Sda.AddControlPlaneDeviceInSdaFabric(request1)
-	if err != nil || response1 == nil {
+	resp1, restyResp1, err := client.Sda.AddControlPlaneDeviceInSdaFabric(request1)
+	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
 				"Failure when executing AddControlPlaneDeviceInSdaFabric", err, restyResp1.String()))
@@ -157,14 +152,14 @@ func resourceSdaFabricControlPlaneDeviceCreate(ctx context.Context, d *schema.Re
 			"Failure when executing AddControlPlaneDeviceInSdaFabric", err))
 		return diags
 	}
-	executionId := response1.ExecutionID
+	executionId := resp1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
@@ -173,10 +168,10 @@ func resourceSdaFabricControlPlaneDeviceCreate(ctx context.Context, d *schema.Re
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -191,8 +186,19 @@ func resourceSdaFabricControlPlaneDeviceCreate(ctx context.Context, d *schema.Re
 			return diags
 		}
 	}
+	queryParamValidate := dnacentersdkgo.GetControlPlaneDeviceFromSdaFabricQueryParams{}
+	queryParamValidate.DeviceManagementIPAddress = vvDeviceManagementIPAddress
+	item3, _, err := client.Sda.GetControlPlaneDeviceFromSdaFabric(&queryParamValidate)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing AddControlPlaneDeviceInSdaFabric", err,
+			"Failure at AddControlPlaneDeviceInSdaFabric, unexpected response", ""))
+		return diags
+	}
+
 	resourceMap := make(map[string]string)
-	resourceMap["device_management_ip_address"] = vvDeviceManagementIPAddress
+	resourceMap["device_management_ip_address"] = item3.DeviceManagementIPAddress
+
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSdaFabricControlPlaneDeviceRead(ctx, d, m)
 }
@@ -204,24 +210,19 @@ func resourceSdaFabricControlPlaneDeviceRead(ctx context.Context, d *schema.Reso
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+
 	vDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetControlPlaneDeviceFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetControlPlaneDeviceFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetControlPlaneDeviceFromSdaFabricQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
 
-		response1, restyResp1, _ := client.Sda.GetControlPlaneDeviceFromSdaFabric(&queryParams1)
+		response1, restyResp1, err := client.Sda.GetControlPlaneDeviceFromSdaFabric(&queryParams1)
 
-		/*		if err != nil {
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetControlPlaneDeviceFromSdaFabric", err,
-					"Failure at GetControlPlaneDeviceFromSdaFabric, unexpected response", ""))
-				return diags
-			}*/
-		if response1 == nil {
+		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -238,6 +239,7 @@ func resourceSdaFabricControlPlaneDeviceRead(ctx context.Context, d *schema.Reso
 				err))
 			return diags
 		}
+
 		return diags
 
 	}
@@ -256,21 +258,13 @@ func resourceSdaFabricControlPlaneDeviceDelete(ctx context.Context, d *schema.Re
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
 
-	queryParams1 := dnacentersdkgo.GetControlPlaneDeviceFromSdaFabricQueryParams{}
-	queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
-	item, _, err := client.Sda.GetControlPlaneDeviceFromSdaFabric(&queryParams1)
-	if err != nil || item == nil {
-		d.SetId("")
-		return diags
-	}
+	queryParamDelete := dnacentersdkgo.DeleteControlPlaneDeviceInSdaFabricQueryParams{}
 
-	// REVIEW: Add getAllItems and search function to get missing params
+	vvDeviceManagementIPAddress := resourceMap["device_management_ip_address"]
+	queryParamDelete.DeviceManagementIPAddress = vvDeviceManagementIPAddress
 
-	queryParams2 := dnacentersdkgo.DeleteControlPlaneDeviceInSdaFabricQueryParams{}
-	queryParams2.DeviceManagementIPAddress = vDeviceManagementIPAddress
-	response1, restyResp1, err := client.Sda.DeleteControlPlaneDeviceInSdaFabric(&queryParams2)
+	response1, restyResp1, err := client.Sda.DeleteControlPlaneDeviceInSdaFabric(&queryParamDelete)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -284,14 +278,15 @@ func resourceSdaFabricControlPlaneDeviceDelete(ctx context.Context, d *schema.Re
 			"Failure at DeleteControlPlaneDeviceInSdaFabric, unexpected response", ""))
 		return diags
 	}
+
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
@@ -300,10 +295,10 @@ func resourceSdaFabricControlPlaneDeviceDelete(ctx context.Context, d *schema.Re
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -327,45 +322,14 @@ func resourceSdaFabricControlPlaneDeviceDelete(ctx context.Context, d *schema.Re
 }
 func expandRequestSdaFabricControlPlaneDeviceAddControlPlaneDeviceInSdaFabric(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSdaAddControlPlaneDeviceInSdaFabric {
 	request := dnacentersdkgo.RequestSdaAddControlPlaneDeviceInSdaFabric{}
-	if v := expandRequestSdaFabricControlPlaneDeviceAddControlPlaneDeviceInSdaFabricItemArray(ctx, key+".payload", d); v != nil {
-		request = *v
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestSdaFabricControlPlaneDeviceAddControlPlaneDeviceInSdaFabricItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaAddControlPlaneDeviceInSdaFabric {
-	request := []dnacentersdkgo.RequestItemSdaAddControlPlaneDeviceInSdaFabric{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestSdaFabricControlPlaneDeviceAddControlPlaneDeviceInSdaFabricItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestSdaFabricControlPlaneDeviceAddControlPlaneDeviceInSdaFabricItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaAddControlPlaneDeviceInSdaFabric {
-	request := dnacentersdkgo.RequestItemSdaAddControlPlaneDeviceInSdaFabric{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_management_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_management_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_management_ip_address")))) {
 		request.DeviceManagementIPAddress = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_name_hierarchy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_name_hierarchy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_name_hierarchy")))) {
 		request.SiteNameHierarchy = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".route_distribution_protocol")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".route_distribution_protocol")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".route_distribution_protocol")))) {
+		request.RouteDistributionProtocol = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

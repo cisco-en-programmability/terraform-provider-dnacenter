@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -53,7 +53,6 @@ func resourceBusinessSdaHostonboardingSSIDIPpool() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"scalable_group_name": &schema.Schema{
 										Description: `Scalable Group Name
 `,
@@ -63,7 +62,6 @@ func resourceBusinessSdaHostonboardingSSIDIPpool() *schema.Resource {
 								},
 							},
 						},
-
 						"vlan_name": &schema.Schema{
 							Description: `VLAN Name`,
 							Type:        schema.TypeString,
@@ -74,9 +72,8 @@ func resourceBusinessSdaHostonboardingSSIDIPpool() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -85,19 +82,21 @@ func resourceBusinessSdaHostonboardingSSIDIPpool() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"site_name_hierarchy": &schema.Schema{
 							Description: `Site Name Hierarchy
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Default:  "",
 						},
 						"ssid_names": &schema.Schema{
 							Description: `List of SSIDs
 `,
 							Type:     schema.TypeList,
-							Required: true,
-							MinItems: 1,
+							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -106,7 +105,8 @@ func resourceBusinessSdaHostonboardingSSIDIPpool() *schema.Resource {
 							Description: `VLAN Name
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Default:  "",
 						},
 					},
 				},
@@ -116,17 +116,57 @@ func resourceBusinessSdaHostonboardingSSIDIPpool() *schema.Resource {
 }
 
 func resourceBusinessSdaHostonboardingSSIDIPpoolCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	resourceItem := *getResourceItem(d.Get("parameters"))
+	client := m.(*dnacentersdkgo.Client)
 
-	vVlan_name := resourceItem["vlan_name"]
-	vSite_name_hierarchy := resourceItem["site_name_hierarchy"]
-	vvVlan_name := interfaceToString(vVlan_name)
-	vvSite_name_hierarchy := interfaceToString(vSite_name_hierarchy)
+	var diags diag.Diagnostics
+
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestBusinessSdaHostonboardingSSIDIPpoolAddSSIDToIPPoolMapping(ctx, "parameters.0", d)
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+
+	vVLANName := resourceItem["vlan_name"]
+	vvVLANName := interfaceToString(vVLANName)
+	vSiteNameHierarchy := resourceItem["site_name_hierarchy"]
+	vvSiteNameHierarchy := interfaceToString(vSiteNameHierarchy)
+	queryParamImport := dnacentersdkgo.GetSSIDToIPPoolMappingQueryParams{}
+	queryParamImport.VLANName = vvVLANName
+	queryParamImport.SiteNameHierarchy = vvSiteNameHierarchy
+	item2, _, err := client.FabricWireless.GetSSIDToIPPoolMapping(&queryParamImport)
+	if err == nil && item2 != nil {
+		resourceMap := make(map[string]string)
+		resourceMap["vlan_name"] = item2.VLANName
+		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
+		d.SetId(joinResourceID(resourceMap))
+		return resourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx, d, m)
+	}
+	resp1, restyResp1, err := client.FabricWireless.AddSSIDToIPPoolMapping(request1, nil)
+	if err != nil || resp1 == nil {
+		if restyResp1 != nil {
+			diags = append(diags, diagErrorWithResponse(
+				"Failure when executing AddSSIDToIPPoolMapping", err, restyResp1.String()))
+			return diags
+		}
+		diags = append(diags, diagError(
+			"Failure when executing AddSSIDToIPPoolMapping", err))
+		return diags
+	}
+	// TODO REVIEW
+	queryParamValidate := dnacentersdkgo.GetSSIDToIPPoolMappingQueryParams{}
+	queryParamValidate.VLANName = vvVLANName
+	queryParamValidate.SiteNameHierarchy = vvSiteNameHierarchy
+	item3, _, err := client.FabricWireless.GetSSIDToIPPoolMapping(&queryParamValidate)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing AddSSIDToIPPoolMapping", err,
+			"Failure at AddSSIDToIPPoolMapping, unexpected response", ""))
+		return diags
+	}
 
 	resourceMap := make(map[string]string)
+	resourceMap["vlan_name"] = item3.VLANName
+	resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
+
 	d.SetId(joinResourceID(resourceMap))
-	resourceMap["vlan_name"] = vvVlan_name
-	resourceMap["site_name_hierarchy"] = vvSite_name_hierarchy
 	return resourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx, d, m)
 }
 
@@ -137,35 +177,31 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx context.Context, d *sch
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+
 	vVLANName := resourceMap["vlan_name"]
+
 	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSSIDToIPPoolMapping")
+		log.Printf("[DEBUG] Selected method: GetSSIDToIPPoolMapping")
 		queryParams1 := dnacentersdkgo.GetSSIDToIPPoolMappingQueryParams{}
 
 		queryParams1.VLANName = vVLANName
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 
-		response1, restyResp1, _ := client.FabricWireless.GetSSIDToIPPoolMapping(&queryParams1)
+		response1, restyResp1, err := client.FabricWireless.GetSSIDToIPPoolMapping(&queryParams1)
 
-		/*		if err != nil {
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetSSIDToIPPoolMapping", err,
-					"Failure at GetSSIDToIPPoolMapping, unexpected response", ""))
-				return diags
-			}*/
-		if response1 == nil {
+		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			d.SetId("")
 			return diags
 		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		log.Printf("[DEBUG] Retrieved resty response %s", restyResp1.String())
+		log.Printf("[DEBUG] Retrieved response %v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenFabricWirelessGetSSIDToIPPoolMappingItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
@@ -174,6 +210,7 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx context.Context, d *sch
 				err))
 			return diags
 		}
+
 		return diags
 
 	}
@@ -185,30 +222,10 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolUpdate(ctx context.Context, d *s
 
 	var diags diag.Diagnostics
 
-	resourceID := d.Id()
-	resourceMap := separateResourceID(resourceID)
-	vVLANName := resourceMap["vlan_name"]
-	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
-
-	queryParams1 := dnacentersdkgo.GetSSIDToIPPoolMappingQueryParams{}
-	queryParams1.VLANName = vVLANName
-	queryParams1.SiteNameHierarchy = vSiteNameHierarchy
-
-	getResp, _, err := client.FabricWireless.GetSSIDToIPPoolMapping(&queryParams1)
-	if err != nil || getResp == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetSSIDToIPPoolMapping", err,
-			"Failure at GetSSIDToIPPoolMapping, unexpected response", ""))
-		return diags
-	}
-	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %v", queryParams1)
 		request1 := expandRequestBusinessSdaHostonboardingSSIDIPpoolUpdateSSIDToIPPoolMapping(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		response1, restyResp1, err := client.FabricWireless.UpdateSSIDToIPPoolMapping2(request1)
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		response1, restyResp1, err := client.FabricWireless.UpdateSSIDToIPPoolMapping(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
@@ -222,8 +239,7 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolUpdate(ctx context.Context, d *s
 				"Failure at UpdateSSIDToIPPoolMapping, unexpected response", ""))
 			return diags
 		}
-		// if len(*response1) > 0 {
-		// 	executionId := (*response1)[0].ExecutionID
+
 		executionId := response1.ExecutionID
 		log.Printf("[DEBUG] ExecutionID => %s", executionId)
 		if executionId != "" {
@@ -234,16 +250,16 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolUpdate(ctx context.Context, d *s
 					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetBusinessAPIExecutionDetails", err,
-					"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
 				return diags
 			}
 			for response2.Status == "IN_PROGRESS" {
 				time.Sleep(10 * time.Second)
-				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+				response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 				if err != nil || response2 == nil {
-					if restyResp1 != nil {
-						log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+					if restyResp2 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 					}
 					diags = append(diags, diagErrorWithAlt(
 						"Failure when executing GetExecutionByID", err,
@@ -252,14 +268,13 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolUpdate(ctx context.Context, d *s
 				}
 			}
 			if response2.Status == "FAILURE" {
-				bapiError := response2.BapiError
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing AddSSIDToIPPoolMapping", err,
-					"Failure at UpdateSSIDToIPPoolMapping execution", bapiError))
+				log.Printf("[DEBUG] Error %s", response2.BapiError)
+				diags = append(diags, diagError(
+					"Failure when executing UpdateSSIDToIPPoolMapping", err))
 				return diags
 			}
 		}
-		// }*/
+
 	}
 
 	return resourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx, d, m)
@@ -271,9 +286,8 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolDelete(ctx context.Context, d *s
 	//       Returning empty diags to delete it on Terraform
 	return diags
 }
-
-func expandRequestBusinessSdaHostonboardingSSIDIPpoolUpdateSSIDToIPPoolMapping(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestFabricWirelessUpdateSSIDToIPPoolMapping2 {
-	request := dnacentersdkgo.RequestFabricWirelessUpdateSSIDToIPPoolMapping2{}
+func expandRequestBusinessSdaHostonboardingSSIDIPpoolAddSSIDToIPPoolMapping(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestFabricWirelessAddSSIDToIPPoolMapping {
+	request := dnacentersdkgo.RequestFabricWirelessAddSSIDToIPPoolMapping{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan_name")))) {
 		request.VLANName = interfaceToString(v)
 	}
@@ -289,6 +303,25 @@ func expandRequestBusinessSdaHostonboardingSSIDIPpoolUpdateSSIDToIPPoolMapping(c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
 
+func expandRequestBusinessSdaHostonboardingSSIDIPpoolUpdateSSIDToIPPoolMapping(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestFabricWirelessUpdateSSIDToIPPoolMapping {
+	request := dnacentersdkgo.RequestFabricWirelessUpdateSSIDToIPPoolMapping{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan_name")))) {
+		request.VLANName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".scalable_group_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".scalable_group_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".scalable_group_name")))) {
+		request.ScalableGroupName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssid_names")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssid_names")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssid_names")))) {
+		request.SSIDNames = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_name_hierarchy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_name_hierarchy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_name_hierarchy")))) {
+		request.SiteNameHierarchy = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }

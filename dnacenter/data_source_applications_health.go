@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -48,7 +48,7 @@ combination of a specific application with site and/or device the API gets list 
 			"limit": &schema.Schema{
 				Description: `limit query parameter. The max number of application entries in returned data [1, 1000] (optionally used with siteId only)
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"mac_address": &schema.Schema{
@@ -60,7 +60,7 @@ combination of a specific application with site and/or device the API gets list 
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The offset of the first application in the returned data (optionally used with siteId only)
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"site_id": &schema.Schema{
@@ -92,7 +92,7 @@ combination of a specific application with site and/or device the API gets list 
 						"application_server_latency": &schema.Schema{
 							Description: `Latency of application server
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -134,7 +134,7 @@ combination of a specific application with site and/or device the API gets list 
 						"client_network_latency": &schema.Schema{
 							Description: `Latency of client network
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -197,7 +197,7 @@ combination of a specific application with site and/or device the API gets list 
 						"jitter": &schema.Schema{
 							Description: `Jitter for application
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -218,7 +218,7 @@ combination of a specific application with site and/or device the API gets list 
 						"network_latency": &schema.Schema{
 							Description: `Network latency for application
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -239,7 +239,7 @@ combination of a specific application with site and/or device the API gets list 
 						"packet_loss_percent": &schema.Schema{
 							Description: `Packet loss percentage for application
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -260,7 +260,7 @@ combination of a specific application with site and/or device the API gets list 
 						"server_network_latency": &schema.Schema{
 							Description: `Latency of server network
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -321,7 +321,7 @@ func dataSourceApplicationsHealthRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: Applications")
+		log.Printf("[DEBUG] Selected method: Applications")
 		queryParams1 := dnacentersdkgo.ApplicationsQueryParams{}
 
 		if okSiteID {
@@ -343,10 +343,10 @@ func dataSourceApplicationsHealthRead(ctx context.Context, d *schema.ResourceDat
 			queryParams1.ApplicationHealth = vApplicationHealth.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okApplicationName {
 			queryParams1.ApplicationName = vApplicationName.(string)
@@ -373,6 +373,7 @@ func dataSourceApplicationsHealthRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

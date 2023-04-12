@@ -2,7 +2,9 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"fmt"
@@ -10,7 +12,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -83,6 +85,7 @@ func resourceImageDeviceActivation() *schema.Resource {
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -92,16 +95,19 @@ func resourceImageDeviceActivation() *schema.Resource {
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"device_upgrade_mode": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"device_uuid": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"distribute_if_needed": &schema.Schema{
 										// Type:     schema.TypeBool,
@@ -109,11 +115,13 @@ func resourceImageDeviceActivation() *schema.Resource {
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"image_uuid_list": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -122,6 +130,7 @@ func resourceImageDeviceActivation() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -141,8 +150,9 @@ func resourceImageDeviceActivationCreate(ctx context.Context, d *schema.Resource
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	vScheduleValidate, okScheduleValidate := resourceItem["schedule_validate"]
+
 	vClientType := resourceItem["client_type"]
+
 	vClientURL := resourceItem["client_url"]
 
 	request1 := expandRequestImageDeviceActivationTriggerSoftwareImageActivation(ctx, "parameters.0", d)
@@ -150,9 +160,6 @@ func resourceImageDeviceActivationCreate(ctx context.Context, d *schema.Resource
 	headerParams1 := dnacentersdkgo.TriggerSoftwareImageActivationHeaderParams{}
 	queryParams1 := dnacentersdkgo.TriggerSoftwareImageActivationQueryParams{}
 
-	if okScheduleValidate {
-		queryParams1.ScheduleValidate = *stringToBooleanPtr(vScheduleValidate.(string))
-	}
 	headerParams1.ClientType = vClientType.(string)
 
 	headerParams1.ClientURL = vClientURL.(string)
@@ -167,9 +174,8 @@ func resourceImageDeviceActivationCreate(ctx context.Context, d *schema.Resource
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing TriggerSoftwareImageActivation", err,
-			"Failure at TriggerSoftwareImageActivation, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing TriggerSoftwareImageActivation", err))
 		return diags
 	}
 
@@ -223,6 +229,7 @@ func resourceImageDeviceActivationCreate(ctx context.Context, d *schema.Resource
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

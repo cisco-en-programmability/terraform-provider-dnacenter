@@ -24,6 +24,7 @@ resource "dnacenter_event_subscription" "example" {
   provider = dnacenter
   parameters {
     payload {
+
       description = "string"
       filter {
 
@@ -64,53 +65,53 @@ output "dnacenter_event_subscription_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **parameters** (Block List) Array of RequestEventManagementCreateEventSubscriptions (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestEventManagementCreateEventSubscriptions (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
-Required:
+Optional:
 
-- **payload** (Block List, Min: 1) Array of RequestEventManagementCreateEventSubscriptions (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestEventManagementCreateEventSubscriptions (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
 
 Optional:
 
-- **description** (String) Description
-- **filter** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--payload--filter))
-- **name** (String) Name
-- **subscription_endpoints** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--subscription_endpoints))
-- **subscription_id** (String) Subscription Id (Unique UUID)
-- **version** (String) Version
+- `description` (String) Description
+- `filter` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--filter))
+- `name` (String) Name
+- `subscription_endpoints` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--subscription_endpoints))
+- `subscription_id` (String) Subscription Id (Unique UUID)
+- `version` (String) Version
 
 <a id="nestedblock--parameters--payload--filter"></a>
 ### Nested Schema for `parameters.payload.filter`
 
 Optional:
 
-- **categories** (List of String) Categories
-- **domains_subdomains** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--filter--domains_subdomains))
-- **event_ids** (List of String) Event Ids (Comma separated event ids)
-- **severities** (List of String) Severities
-- **site_ids** (List of String) Site Ids
-- **sources** (List of String) Sources
-- **types** (List of String) Types
+- `categories` (List of String) Categories
+- `domains_subdomains` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--filter--domains_subdomains))
+- `event_ids` (List of String) Event Ids (Comma separated event ids)
+- `severities` (List of String) Severities
+- `site_ids` (List of String) Site Ids
+- `sources` (List of String) Sources
+- `types` (List of String) Types
 
 <a id="nestedblock--parameters--payload--filter--domains_subdomains"></a>
-### Nested Schema for `parameters.payload.filter.types`
+### Nested Schema for `parameters.payload.filter.domains_subdomains`
 
 Optional:
 
-- **domain** (String) Domain
-- **sub_domains** (List of String) Sub Domains
+- `domain` (String) Domain
+- `sub_domains` (List of String) Sub Domains
 
 
 
@@ -119,15 +120,15 @@ Optional:
 
 Optional:
 
-- **instance_id** (String) (From 	Get Rest/Webhook Subscription Details --> pick instanceId)
-- **subscription_details** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--payload--subscription_endpoints--subscription_details))
+- `instance_id` (String) (From 	Get Rest/Webhook Subscription Details --> pick instanceId)
+- `subscription_details` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--subscription_endpoints--subscription_details))
 
 <a id="nestedblock--parameters--payload--subscription_endpoints--subscription_details"></a>
 ### Nested Schema for `parameters.payload.subscription_endpoints.subscription_details`
 
 Optional:
 
-- **connector_type** (String) Connector Type (Must be REST)
+- `connector_type` (String) Connector Type (Must be REST)
 
 
 
@@ -138,36 +139,36 @@ Optional:
 
 Read-Only:
 
-- **description** (String)
-- **filter** (List of Object) (see [below for nested schema](#nestedobjatt--item--filter))
-- **is_private** (String)
-- **name** (String)
-- **subscription_endpoints** (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints))
-- **subscription_id** (String)
-- **tenant_id** (String)
-- **version** (String)
+- `description` (String)
+- `filter` (List of Object) (see [below for nested schema](#nestedobjatt--item--filter))
+- `is_private` (String)
+- `name` (String)
+- `subscription_endpoints` (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints))
+- `subscription_id` (String)
+- `tenant_id` (String)
+- `version` (String)
 
 <a id="nestedobjatt--item--filter"></a>
 ### Nested Schema for `item.filter`
 
 Read-Only:
 
-- **categories** (List of String)
-- **domains_subdomains** (List of Object) (see [below for nested schema](#nestedobjatt--item--filter--domains_subdomains))
-- **event_ids** (List of String)
-- **others** (List of String)
-- **severities** (List of String)
-- **site_ids** (List of String)
-- **sources** (List of String)
-- **types** (List of String)
+- `categories` (List of String)
+- `domains_subdomains` (List of Object) (see [below for nested schema](#nestedobjatt--item--filter--domains_subdomains))
+- `event_ids` (List of String)
+- `others` (List of String)
+- `severities` (List of String)
+- `site_ids` (List of String)
+- `sources` (List of String)
+- `types` (List of String)
 
 <a id="nestedobjatt--item--filter--domains_subdomains"></a>
 ### Nested Schema for `item.filter.domains_subdomains`
 
 Read-Only:
 
-- **domain** (String)
-- **sub_domains** (List of String)
+- `domain` (String)
+- `sub_domains` (List of String)
 
 
 
@@ -176,37 +177,37 @@ Read-Only:
 
 Read-Only:
 
-- **connector_type** (String)
-- **instance_id** (String)
-- **subscription_details** (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details))
+- `connector_type` (String)
+- `instance_id` (String)
+- `subscription_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details))
 
 <a id="nestedobjatt--item--subscription_endpoints--subscription_details"></a>
 ### Nested Schema for `item.subscription_endpoints.subscription_details`
 
 Read-Only:
 
-- **base_path** (String)
-- **body** (String)
-- **connect_timeout** (Number)
-- **connector_type** (String)
-- **description** (String)
-- **headers** (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details--headers))
-- **instance_id** (String)
-- **method** (String)
-- **name** (String)
-- **path_params** (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details--path_params))
-- **query_params** (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details--query_params))
-- **read_timeout** (Number)
-- **resource** (String)
-- **trust_cert** (String)
-- **url** (String)
+- `base_path` (String)
+- `body` (String)
+- `connect_timeout` (Number)
+- `connector_type` (String)
+- `description` (String)
+- `headers` (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details--headers))
+- `instance_id` (String)
+- `method` (String)
+- `name` (String)
+- `path_params` (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details--path_params))
+- `query_params` (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details--query_params))
+- `read_timeout` (Number)
+- `resource` (String)
+- `trust_cert` (String)
+- `url` (String)
 
 <a id="nestedobjatt--item--subscription_endpoints--subscription_details--headers"></a>
 ### Nested Schema for `item.subscription_endpoints.subscription_details.url`
 
 Read-Only:
 
-- **string** (String)
+- `string` (String)
 
 
 <a id="nestedobjatt--item--subscription_endpoints--subscription_details--path_params"></a>
@@ -214,7 +215,7 @@ Read-Only:
 
 Read-Only:
 
-- **string** (String)
+- `string` (String)
 
 
 <a id="nestedobjatt--item--subscription_endpoints--subscription_details--query_params"></a>
@@ -222,7 +223,7 @@ Read-Only:
 
 Read-Only:
 
-- **string** (String)
+- `string` (String)
 
 ## Import
 

@@ -31,26 +31,24 @@ output "dnacenter_sda_fabric_control_plane_device_example" {
 
 ### Required
 
-- **device_management_ip_address** (String) deviceManagementIpAddress query parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_management_ip_address` (String) deviceManagementIpAddress query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **description** (String)
-- **device_management_ip_address** (String)
-- **name** (String)
-- **roles** (List of String)
-- **site_hierarchy** (String)
-- **status** (String)
+- `description` (String)
+- `device_management_ip_address` (String)
+- `device_name` (String)
+- `roles` (String)
+- `route_distribution_protocol` (String)
+- `site_name_hierarchy` (String)
+- `status` (String)
 
 

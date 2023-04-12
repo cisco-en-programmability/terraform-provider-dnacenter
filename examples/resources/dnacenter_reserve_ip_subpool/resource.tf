@@ -1,6 +1,7 @@
 
 resource "dnacenter_reserve_ip_subpool" "example" {
   provider = dnacenter
+
   parameters {
 
     id                 = "string"

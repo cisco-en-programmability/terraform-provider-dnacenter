@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -84,30 +84,31 @@ func dataSourceLicenseVirtualAccountDetailsRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: VirtualAccountDetails")
+		log.Printf("[DEBUG] Selected method: VirtualAccountDetails2")
 		vvSmartAccountID := vSmartAccountID.(string)
 
-		response1, restyResp1, err := client.Licenses.VirtualAccountDetails(vvSmartAccountID)
+		response1, restyResp1, err := client.Licenses.VirtualAccountDetails2(vvSmartAccountID)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing VirtualAccountDetails", err,
-				"Failure at VirtualAccountDetails, unexpected response", ""))
+				"Failure when executing VirtualAccountDetails2", err,
+				"Failure at VirtualAccountDetails2, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenLicensesVirtualAccountDetailsItem(response1)
+		vItem1 := flattenLicensesVirtualAccountDetails2Item(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting VirtualAccountDetails response",
+				"Failure when setting VirtualAccountDetails2 response",
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -115,20 +116,20 @@ func dataSourceLicenseVirtualAccountDetailsRead(ctx context.Context, d *schema.R
 	return diags
 }
 
-func flattenLicensesVirtualAccountDetailsItem(item *dnacentersdkgo.ResponseLicensesVirtualAccountDetails) []map[string]interface{} {
+func flattenLicensesVirtualAccountDetails2Item(item *dnacentersdkgo.ResponseLicensesVirtualAccountDetails2) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["smart_account_id"] = item.SmartAccountID
 	respItem["smart_account_name"] = item.SmartAccountName
-	respItem["virtual_account_details"] = flattenLicensesVirtualAccountDetailsItemVirtualAccountDetails(item.VirtualAccountDetails)
+	respItem["virtual_account_details"] = flattenLicensesVirtualAccountDetails2ItemVirtualAccountDetails(item.VirtualAccountDetails)
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenLicensesVirtualAccountDetailsItemVirtualAccountDetails(items *[]dnacentersdkgo.ResponseLicensesVirtualAccountDetailsVirtualAccountDetails) []map[string]interface{} {
+func flattenLicensesVirtualAccountDetails2ItemVirtualAccountDetails(items *[]dnacentersdkgo.ResponseLicensesVirtualAccountDetails2VirtualAccountDetails) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

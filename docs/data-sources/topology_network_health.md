@@ -33,26 +33,26 @@ output "dnacenter_topology_network_health_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **timestamp** (String) timestamp query parameter. Epoch time(in milliseconds) when the Network health data is required
+- `timestamp` (String) timestamp query parameter. Epoch time(in milliseconds) when the Network health data is required
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **bad_count** (Number)
-- **entity** (String)
-- **fair_count** (Number)
-- **good_count** (Number)
-- **health_score** (Number)
-- **time** (String)
-- **timein_millis** (Number)
-- **total_count** (Number)
-- **unmon_count** (Number)
+- `bad_count` (Number)
+- `entity` (String)
+- `fair_count` (Number)
+- `good_count` (Number)
+- `health_score` (Number)
+- `time` (String)
+- `timein_millis` (Number)
+- `total_count` (Number)
+- `unmon_count` (Number)
 
 

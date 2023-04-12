@@ -43,32 +43,32 @@ output "dnacenter_lan_automation_log_example" {
 
 ### Optional
 
-- **id** (String) id path parameter. LAN Automation session identifier.
-- **limit** (String) limit query parameter. Number of LAN Automation sessions to be retrieved. Limit value can range between 1 to 10.
-- **offset** (String) offset query parameter. Starting index of the LAN Automation session. Minimum value is 1.
+- `id` (String) id path parameter. LAN Automation session identifier.
+- `limit` (Number) limit query parameter. Number of LAN Automation sessions to be retrieved. Limit value can range between 1 to 10.
+- `offset` (Number) offset query parameter. Starting index of the LAN Automation session. Minimum value is 1.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **entry** (List of Object) (see [below for nested schema](#nestedobjatt--item--entry))
-- **nw_orch_id** (String)
+- `entry` (List of Object) (see [below for nested schema](#nestedobjatt--item--entry))
+- `nw_orch_id` (String)
 
 <a id="nestedobjatt--item--entry"></a>
 ### Nested Schema for `item.entry`
 
 Read-Only:
 
-- **device_id** (String)
-- **log_level** (String)
-- **record** (String)
-- **time_stamp** (String)
+- `device_id` (String)
+- `log_level` (String)
+- `record` (String)
+- `time_stamp` (String)
 
 
 
@@ -77,17 +77,17 @@ Read-Only:
 
 Read-Only:
 
-- **entry** (List of Object) (see [below for nested schema](#nestedobjatt--items--entry))
-- **nw_orch_id** (String)
+- `entry` (List of Object) (see [below for nested schema](#nestedobjatt--items--entry))
+- `nw_orch_id` (String)
 
 <a id="nestedobjatt--items--entry"></a>
 ### Nested Schema for `items.entry`
 
 Read-Only:
 
-- **device_id** (String)
-- **log_level** (String)
-- **record** (String)
-- **time_stamp** (String)
+- `device_id` (String)
+- `log_level` (String)
+- `record` (String)
+- `time_stamp` (String)
 
 

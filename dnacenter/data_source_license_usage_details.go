@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -33,7 +33,7 @@ func dataSourceLicenseUsageDetails() *schema.Resource {
 				Required: true,
 			},
 			"virtual_account_name": &schema.Schema{
-				Description: `virtual_account_name path parameter. Name of virtual account. Putting "All" will give license usage detail for all virtual accounts.
+				Description: `virtual_account_name path parameter. Name of virtual account. Putting "All" will give license term detail for all virtual accounts.
 `,
 				Type:     schema.TypeString,
 				Required: true,
@@ -217,34 +217,35 @@ func dataSourceLicenseUsageDetailsRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: LicenseUsageDetails")
+		log.Printf("[DEBUG] Selected method: LicenseUsageDetails2")
 		vvSmartAccountID := vSmartAccountID.(string)
 		vvVirtualAccountName := vVirtualAccountName.(string)
-		queryParams1 := dnacentersdkgo.LicenseUsageDetailsQueryParams{}
+		queryParams1 := dnacentersdkgo.LicenseUsageDetails2QueryParams{}
 
 		queryParams1.DeviceType = vDeviceType.(string)
 
-		response1, restyResp1, err := client.Licenses.LicenseUsageDetails(vvSmartAccountID, vvVirtualAccountName, &queryParams1)
+		response1, restyResp1, err := client.Licenses.LicenseUsageDetails2(vvSmartAccountID, vvVirtualAccountName, &queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing LicenseUsageDetails", err,
-				"Failure at LicenseUsageDetails, unexpected response", ""))
+				"Failure when executing LicenseUsageDetails2", err,
+				"Failure at LicenseUsageDetails2, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenLicensesLicenseUsageDetailsItem(response1)
+		vItem1 := flattenLicensesLicenseUsageDetails2Item(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting LicenseUsageDetails response",
+				"Failure when setting LicenseUsageDetails2 response",
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -252,27 +253,27 @@ func dataSourceLicenseUsageDetailsRead(ctx context.Context, d *schema.ResourceDa
 	return diags
 }
 
-func flattenLicensesLicenseUsageDetailsItem(item *dnacentersdkgo.ResponseLicensesLicenseUsageDetails) []map[string]interface{} {
+func flattenLicensesLicenseUsageDetails2Item(item *dnacentersdkgo.ResponseLicensesLicenseUsageDetails2) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["purchased_dna_license"] = flattenLicensesLicenseUsageDetailsItemPurchasedDnaLicense(item.PurchasedDnaLicense)
-	respItem["purchased_network_license"] = flattenLicensesLicenseUsageDetailsItemPurchasedNetworkLicense(item.PurchasedNetworkLicense)
-	respItem["used_dna_license"] = flattenLicensesLicenseUsageDetailsItemUsedDnaLicense(item.UsedDnaLicense)
-	respItem["used_network_license"] = flattenLicensesLicenseUsageDetailsItemUsedNetworkLicense(item.UsedNetworkLicense)
+	respItem["purchased_dna_license"] = flattenLicensesLicenseUsageDetails2ItemPurchasedDnaLicense(item.PurchasedDnaLicense)
+	respItem["purchased_network_license"] = flattenLicensesLicenseUsageDetails2ItemPurchasedNetworkLicense(item.PurchasedNetworkLicense)
+	respItem["used_dna_license"] = flattenLicensesLicenseUsageDetails2ItemUsedDnaLicense(item.UsedDnaLicense)
+	respItem["used_network_license"] = flattenLicensesLicenseUsageDetails2ItemUsedNetworkLicense(item.UsedNetworkLicense)
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenLicensesLicenseUsageDetailsItemPurchasedDnaLicense(item *dnacentersdkgo.ResponseLicensesLicenseUsageDetailsPurchasedDnaLicense) []map[string]interface{} {
+func flattenLicensesLicenseUsageDetails2ItemPurchasedDnaLicense(item *dnacentersdkgo.ResponseLicensesLicenseUsageDetails2PurchasedDnaLicense) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["total_license_count"] = item.TotalLicenseCount
-	respItem["license_count_by_type"] = flattenLicensesLicenseUsageDetailsItemPurchasedDnaLicenseLicenseCountByType(item.LicenseCountByType)
+	respItem["license_count_by_type"] = flattenLicensesLicenseUsageDetails2ItemPurchasedDnaLicenseLicenseCountByType(item.LicenseCountByType)
 
 	return []map[string]interface{}{
 		respItem,
@@ -280,7 +281,7 @@ func flattenLicensesLicenseUsageDetailsItemPurchasedDnaLicense(item *dnacentersd
 
 }
 
-func flattenLicensesLicenseUsageDetailsItemPurchasedDnaLicenseLicenseCountByType(items *[]dnacentersdkgo.ResponseLicensesLicenseUsageDetailsPurchasedDnaLicenseLicenseCountByType) []map[string]interface{} {
+func flattenLicensesLicenseUsageDetails2ItemPurchasedDnaLicenseLicenseCountByType(items *[]dnacentersdkgo.ResponseLicensesLicenseUsageDetails2PurchasedDnaLicenseLicenseCountByType) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -294,13 +295,13 @@ func flattenLicensesLicenseUsageDetailsItemPurchasedDnaLicenseLicenseCountByType
 	return respItems
 }
 
-func flattenLicensesLicenseUsageDetailsItemPurchasedNetworkLicense(item *dnacentersdkgo.ResponseLicensesLicenseUsageDetailsPurchasedNetworkLicense) []map[string]interface{} {
+func flattenLicensesLicenseUsageDetails2ItemPurchasedNetworkLicense(item *dnacentersdkgo.ResponseLicensesLicenseUsageDetails2PurchasedNetworkLicense) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["total_license_count"] = item.TotalLicenseCount
-	respItem["license_count_by_type"] = flattenLicensesLicenseUsageDetailsItemPurchasedNetworkLicenseLicenseCountByType(item.LicenseCountByType)
+	respItem["license_count_by_type"] = flattenLicensesLicenseUsageDetails2ItemPurchasedNetworkLicenseLicenseCountByType(item.LicenseCountByType)
 
 	return []map[string]interface{}{
 		respItem,
@@ -308,7 +309,7 @@ func flattenLicensesLicenseUsageDetailsItemPurchasedNetworkLicense(item *dnacent
 
 }
 
-func flattenLicensesLicenseUsageDetailsItemPurchasedNetworkLicenseLicenseCountByType(items *[]dnacentersdkgo.ResponseLicensesLicenseUsageDetailsPurchasedNetworkLicenseLicenseCountByType) []map[string]interface{} {
+func flattenLicensesLicenseUsageDetails2ItemPurchasedNetworkLicenseLicenseCountByType(items *[]dnacentersdkgo.ResponseLicensesLicenseUsageDetails2PurchasedNetworkLicenseLicenseCountByType) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -322,13 +323,13 @@ func flattenLicensesLicenseUsageDetailsItemPurchasedNetworkLicenseLicenseCountBy
 	return respItems
 }
 
-func flattenLicensesLicenseUsageDetailsItemUsedDnaLicense(item *dnacentersdkgo.ResponseLicensesLicenseUsageDetailsUsedDnaLicense) []map[string]interface{} {
+func flattenLicensesLicenseUsageDetails2ItemUsedDnaLicense(item *dnacentersdkgo.ResponseLicensesLicenseUsageDetails2UsedDnaLicense) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["total_license_count"] = item.TotalLicenseCount
-	respItem["license_count_by_type"] = flattenLicensesLicenseUsageDetailsItemUsedDnaLicenseLicenseCountByType(item.LicenseCountByType)
+	respItem["license_count_by_type"] = flattenLicensesLicenseUsageDetails2ItemUsedDnaLicenseLicenseCountByType(item.LicenseCountByType)
 
 	return []map[string]interface{}{
 		respItem,
@@ -336,7 +337,7 @@ func flattenLicensesLicenseUsageDetailsItemUsedDnaLicense(item *dnacentersdkgo.R
 
 }
 
-func flattenLicensesLicenseUsageDetailsItemUsedDnaLicenseLicenseCountByType(items *[]dnacentersdkgo.ResponseLicensesLicenseUsageDetailsUsedDnaLicenseLicenseCountByType) []map[string]interface{} {
+func flattenLicensesLicenseUsageDetails2ItemUsedDnaLicenseLicenseCountByType(items *[]dnacentersdkgo.ResponseLicensesLicenseUsageDetails2UsedDnaLicenseLicenseCountByType) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -350,13 +351,13 @@ func flattenLicensesLicenseUsageDetailsItemUsedDnaLicenseLicenseCountByType(item
 	return respItems
 }
 
-func flattenLicensesLicenseUsageDetailsItemUsedNetworkLicense(item *dnacentersdkgo.ResponseLicensesLicenseUsageDetailsUsedNetworkLicense) []map[string]interface{} {
+func flattenLicensesLicenseUsageDetails2ItemUsedNetworkLicense(item *dnacentersdkgo.ResponseLicensesLicenseUsageDetails2UsedNetworkLicense) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["total_license_count"] = item.TotalLicenseCount
-	respItem["license_count_by_type"] = flattenLicensesLicenseUsageDetailsItemUsedNetworkLicenseLicenseCountByType(item.LicenseCountByType)
+	respItem["license_count_by_type"] = flattenLicensesLicenseUsageDetails2ItemUsedNetworkLicenseLicenseCountByType(item.LicenseCountByType)
 
 	return []map[string]interface{}{
 		respItem,
@@ -364,7 +365,7 @@ func flattenLicensesLicenseUsageDetailsItemUsedNetworkLicense(item *dnacentersdk
 
 }
 
-func flattenLicensesLicenseUsageDetailsItemUsedNetworkLicenseLicenseCountByType(items *[]dnacentersdkgo.ResponseLicensesLicenseUsageDetailsUsedNetworkLicenseLicenseCountByType) []map[string]interface{} {
+func flattenLicensesLicenseUsageDetails2ItemUsedNetworkLicenseLicenseCountByType(items *[]dnacentersdkgo.ResponseLicensesLicenseUsageDetails2UsedNetworkLicenseLicenseCountByType) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

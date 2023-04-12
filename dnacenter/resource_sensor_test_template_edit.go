@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -77,7 +77,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"frequency": &schema.Schema{
 							Description: `Frequency`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 						"last_modified_time": &schema.Schema{
@@ -87,13 +87,13 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"legacy_test_suite": &schema.Schema{
 							Description: `Legacy Test Suite`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"location": &schema.Schema{
 							Description: `Location`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 						"location_info_list": &schema.Schema{
@@ -104,7 +104,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 
 									"all_sensors": &schema.Schema{
 										Description: `All Sensors`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -156,7 +156,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"radio_as_sensor_removed": &schema.Schema{
 							Description: `Radio As Sensor Removed`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -275,13 +275,13 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"show_wlc_upgrade_banner": &schema.Schema{
 							Description: `Show Wlc Upgrade Banner`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"site_hierarchy": &schema.Schema{
 							Description: `Site Hierarchy`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 						"ssids": &schema.Schema{
@@ -292,7 +292,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 
 									"auth_protocol": &schema.Schema{
 										Description: `Auth Protocol`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"auth_type": &schema.Schema{
@@ -302,27 +302,27 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"auth_type_rcvd": &schema.Schema{
 										Description: `Auth Type Rcvd`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"bands": &schema.Schema{
 										Description: `Bands`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"certdownloadurl": &schema.Schema{
 										Description: `Certdownloadurl`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"certfilename": &schema.Schema{
 										Description: `Certfilename`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"certpassphrase": &schema.Schema{
 										Description: `Certpassphrase`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"certstatus": &schema.Schema{
@@ -337,18 +337,18 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"eap_method": &schema.Schema{
 										Description: `Eap Method`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"ext_web_auth": &schema.Schema{
 										Description: `Ext Web Auth`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"ext_web_auth_access_url": &schema.Schema{
 										Description: `Ext Web Auth Access Url`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"ext_web_auth_html_tag": &schema.Schema{
@@ -361,12 +361,12 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"ext_web_auth_portal": &schema.Schema{
 										Description: `Ext Web Auth Portal`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"ext_web_auth_virtual_ip": &schema.Schema{
 										Description: `Ext Web Auth Virtual Ip`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"id": &schema.Schema{
@@ -418,7 +418,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"password": &schema.Schema{
 										Description: `Password`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"profile_name": &schema.Schema{
@@ -438,7 +438,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"scep": &schema.Schema{
 										Description: `Scep`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -482,7 +482,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 
 												"selected": &schema.Schema{
 													Description: `Selected`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -491,7 +491,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"username": &schema.Schema{
 										Description: `Username`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"valid_from": &schema.Schema{
@@ -506,7 +506,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"white_list": &schema.Schema{
 										Description: `White List`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -517,7 +517,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 									},
 									"wlc": &schema.Schema{
 										Description: `Wlc`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 								},
@@ -550,13 +550,13 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 						},
 						"test_template": &schema.Schema{
 							Description: `Test Template`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"tests": &schema.Schema{
 							Description: `Tests`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 						"version": &schema.Schema{
@@ -587,34 +587,39 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"all_sensors": &schema.Schema{
 										Description: `All Sensors`,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"location_id": &schema.Schema{
 										Description: `Location Id`,
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 									"location_type": &schema.Schema{
 										Description: `Location Type`,
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 									"site_hierarchy": &schema.Schema{
 										Description: `Site Hierarchy`,
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 								},
 							},
@@ -623,6 +628,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -630,6 +636,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -638,12 +645,14 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 													Type:        schema.TypeString,
 													Optional:    true,
 													ForceNew:    true,
+													Computed:    true,
 												},
 												"value": &schema.Schema{
 													Description: `Value`,
 													Type:        schema.TypeInt,
 													Optional:    true,
 													ForceNew:    true,
+													Computed:    true,
 												},
 											},
 										},
@@ -652,6 +661,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -660,11 +670,13 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 													Type:        schema.TypeString,
 													Optional:    true,
 													ForceNew:    true,
+													Computed:    true,
 												},
 												"time_range": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -672,6 +684,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -680,12 +693,14 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 																			Type:        schema.TypeString,
 																			Optional:    true,
 																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"value": &schema.Schema{
 																			Description: `Value`,
 																			Type:        schema.TypeInt,
 																			Optional:    true,
 																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																	},
 																},
@@ -695,12 +710,14 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 																Type:        schema.TypeString,
 																Optional:    true,
 																ForceNew:    true,
+																Computed:    true,
 															},
 															"to": &schema.Schema{
 																Description: `To`,
 																Type:        schema.TypeString,
 																Optional:    true,
 																ForceNew:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -713,6 +730,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 								},
 							},
@@ -722,6 +740,7 @@ func resourceSensorTestTemplateEdit() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -746,9 +765,9 @@ func resourceSensorTestTemplateEditCreate(ctx context.Context, d *schema.Resourc
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing EditSensorTestTemplate", err,
-			"Failure at EditSensorTestTemplate, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -763,6 +782,7 @@ func resourceSensorTestTemplateEditCreate(ctx context.Context, d *schema.Resourc
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

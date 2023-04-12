@@ -31,69 +31,69 @@ output "dnacenter_discovery_example" {
 
 ### Required
 
-- **id** (String) id path parameter. Discovery ID
+- `id` (String) id path parameter. Discovery ID
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **attribute_info** (String)
-- **cdp_level** (Number)
-- **device_ids** (String)
-- **discovery_condition** (String)
-- **discovery_status** (String)
-- **discovery_type** (String)
-- **enable_password_list** (String)
-- **global_credential_id_list** (List of String)
-- **http_read_credential** (List of Object) (see [below for nested schema](#nestedobjatt--item--http_read_credential))
-- **http_write_credential** (List of Object) (see [below for nested schema](#nestedobjatt--item--http_write_credential))
-- **id** (String)
-- **ip_address_list** (String)
-- **ip_filter_list** (String)
-- **is_auto_cdp** (String)
-- **lldp_level** (Number)
-- **name** (String)
-- **netconf_port** (String)
-- **num_devices** (Number)
-- **parent_discovery_id** (String)
-- **password_list** (String)
-- **preferred_mgmt_ipmethod** (String)
-- **protocol_order** (String)
-- **retry_count** (Number)
-- **snmp_auth_passphrase** (String)
-- **snmp_auth_protocol** (String)
-- **snmp_mode** (String)
-- **snmp_priv_passphrase** (String)
-- **snmp_priv_protocol** (String)
-- **snmp_ro_community** (String)
-- **snmp_ro_community_desc** (String)
-- **snmp_rw_community** (String)
-- **snmp_rw_community_desc** (String)
-- **snmp_user_name** (String)
-- **time_out** (Number)
-- **update_mgmt_ip** (String)
-- **user_name_list** (String)
+- `attribute_info` (String)
+- `cdp_level` (Number)
+- `device_ids` (String)
+- `discovery_condition` (String)
+- `discovery_status` (String)
+- `discovery_type` (String)
+- `enable_password_list` (String)
+- `global_credential_id_list` (List of String)
+- `http_read_credential` (List of Object) (see [below for nested schema](#nestedobjatt--item--http_read_credential))
+- `http_write_credential` (List of Object) (see [below for nested schema](#nestedobjatt--item--http_write_credential))
+- `id` (String)
+- `ip_address_list` (String)
+- `ip_filter_list` (String)
+- `is_auto_cdp` (String)
+- `lldp_level` (Number)
+- `name` (String)
+- `netconf_port` (String)
+- `num_devices` (Number)
+- `parent_discovery_id` (String)
+- `password_list` (String)
+- `preferred_mgmt_ipmethod` (String)
+- `protocol_order` (String)
+- `retry_count` (Number)
+- `snmp_auth_passphrase` (String)
+- `snmp_auth_protocol` (String)
+- `snmp_mode` (String)
+- `snmp_priv_passphrase` (String)
+- `snmp_priv_protocol` (String)
+- `snmp_ro_community` (String)
+- `snmp_ro_community_desc` (String)
+- `snmp_rw_community` (String)
+- `snmp_rw_community_desc` (String)
+- `snmp_user_name` (String)
+- `time_out` (Number)
+- `update_mgmt_ip` (String)
+- `user_name_list` (String)
 
 <a id="nestedobjatt--item--http_read_credential"></a>
 ### Nested Schema for `item.http_read_credential`
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **password** (String)
-- **port** (Number)
-- **secure** (String)
-- **username** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `password` (String)
+- `port` (Number)
+- `secure` (String)
+- `username` (String)
 
 
 <a id="nestedobjatt--item--http_write_credential"></a>
@@ -101,15 +101,15 @@ Read-Only:
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **password** (String)
-- **port** (Number)
-- **secure** (String)
-- **username** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `password` (String)
+- `port` (Number)
+- `secure` (String)
+- `username` (String)
 
 

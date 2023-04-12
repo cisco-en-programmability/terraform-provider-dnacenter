@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -63,7 +63,7 @@ func dataSourceQosDeviceInterface() *schema.Resource {
 						"deployed": &schema.Schema{
 							Description: `Deployed
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -123,7 +123,7 @@ func dataSourceQosDeviceInterface() *schema.Resource {
 						"is_excluded": &schema.Schema{
 							Description: `Is excluded
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -131,7 +131,7 @@ func dataSourceQosDeviceInterface() *schema.Resource {
 						"is_seeded": &schema.Schema{
 							Description: `Is seeded
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -139,7 +139,7 @@ func dataSourceQosDeviceInterface() *schema.Resource {
 						"is_stale": &schema.Schema{
 							Description: `Is stale
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -327,7 +327,7 @@ func dataSourceQosDeviceInterfaceRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetQosDeviceInterfaceInfo")
+		log.Printf("[DEBUG] Selected method: GetQosDeviceInterfaceInfo")
 		queryParams1 := dnacentersdkgo.GetQosDeviceInterfaceInfoQueryParams{}
 
 		if okNetworkDeviceID {
@@ -355,6 +355,7 @@ func dataSourceQosDeviceInterfaceRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -396,41 +397,6 @@ func flattenApplicationPolicyGetQosDeviceInterfaceInfoItems(items *[]dnacentersd
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenApplicationPolicyGetQosDeviceInterfaceInfoItem(item *dnacentersdkgo.ResponseApplicationPolicyGetQosDeviceInterfaceInfoResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["id"] = item.ID
-	respItem["instance_id"] = item.InstanceID
-	respItem["display_name"] = item.DisplayName
-	respItem["instance_created_on"] = item.InstanceCreatedOn
-	respItem["instance_updated_on"] = item.InstanceUpdatedOn
-	respItem["instance_version"] = item.InstanceVersion
-	respItem["create_time"] = item.CreateTime
-	respItem["deployed"] = boolPtrToString(item.Deployed)
-	respItem["is_seeded"] = boolPtrToString(item.IsSeeded)
-	respItem["is_stale"] = boolPtrToString(item.IsStale)
-	respItem["last_update_time"] = item.LastUpdateTime
-	respItem["name"] = item.Name
-	respItem["namespace"] = item.Namespace
-	respItem["provisioning_state"] = item.ProvisioningState
-	respItem["qualifier"] = item.Qualifier
-	respItem["resource_version"] = item.ResourceVersion
-	respItem["target_id_list"] = flattenApplicationPolicyGetQosDeviceInterfaceInfoItemsTargetIDList(item.TargetIDList)
-	respItem["type"] = item.Type
-	respItem["cfs_change_info"] = flattenApplicationPolicyGetQosDeviceInterfaceInfoItemsCfsChangeInfo(item.CfsChangeInfo)
-	respItem["custom_provisions"] = flattenApplicationPolicyGetQosDeviceInterfaceInfoItemsCustomProvisions(item.CustomProvisions)
-	respItem["excluded_interfaces"] = item.ExcludedInterfaces
-	respItem["is_excluded"] = boolPtrToString(item.IsExcluded)
-	respItem["network_device_id"] = item.NetworkDeviceID
-	respItem["qos_device_interface_info"] = flattenApplicationPolicyGetQosDeviceInterfaceInfoItemsQosDeviceInterfaceInfo(item.QosDeviceInterfaceInfo)
-
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenApplicationPolicyGetQosDeviceInterfaceInfoItemsTargetIDList(items *[]dnacentersdkgo.ResponseApplicationPolicyGetQosDeviceInterfaceInfoResponseTargetIDList) []interface{} {

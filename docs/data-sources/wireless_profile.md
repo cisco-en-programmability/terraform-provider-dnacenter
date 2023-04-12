@@ -31,46 +31,46 @@ output "dnacenter_wireless_profile_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **profile_name** (String) profileName query parameter. Wireless Network Profile Name
+- `profile_name` (String) profileName query parameter. Wireless Network Profile Name
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **profile_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--profile_details))
+- `profile_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--profile_details))
 
 <a id="nestedobjatt--items--profile_details"></a>
 ### Nested Schema for `items.profile_details`
 
 Read-Only:
 
-- **name** (String)
-- **sites** (List of String)
-- **ssid_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--profile_details--ssid_details))
+- `name` (String)
+- `sites` (List of String)
+- `ssid_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--profile_details--ssid_details))
 
 <a id="nestedobjatt--items--profile_details--ssid_details"></a>
 ### Nested Schema for `items.profile_details.ssid_details`
 
 Read-Only:
 
-- **enable_fabric** (String)
-- **flex_connect** (List of Object) (see [below for nested schema](#nestedobjatt--items--profile_details--ssid_details--flex_connect))
-- **interface_name** (String)
-- **name** (String)
-- **type** (String)
+- `enable_fabric` (String)
+- `flex_connect` (List of Object) (see [below for nested schema](#nestedobjatt--items--profile_details--ssid_details--flex_connect))
+- `interface_name` (String)
+- `name` (String)
+- `type` (String)
 
 <a id="nestedobjatt--items--profile_details--ssid_details--flex_connect"></a>
 ### Nested Schema for `items.profile_details.ssid_details.type`
 
 Read-Only:
 
-- **enable_flex_connect** (String)
-- **local_to_vlan** (Number)
+- `enable_flex_connect` (String)
+- `local_to_vlan` (Number)
 
 

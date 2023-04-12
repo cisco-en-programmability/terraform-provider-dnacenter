@@ -41,56 +41,56 @@ output "dnacenter_applications_health_example" {
 
 ### Optional
 
-- **application_health** (String) applicationHealth query parameter. Application health category (POOR, FAIR, or GOOD.  Optionally use with siteId only)
-- **application_name** (String) applicationName query parameter. The name of the application to get information on
-- **device_id** (String) deviceId query parameter. Assurance device UUID value (Cannot be submitted together with siteId and clientMac)
-- **end_time** (Number) endTime query parameter. Ending epoch time in milliseconds of time window
-- **id** (String) The ID of this resource.
-- **limit** (Number) limit query parameter. The max number of application entries in returned data [1, 1000] (optionally used with siteId only)
-- **mac_address** (String) macAddress query parameter. Client device's MAC address (Cannot be submitted together with siteId and deviceId)
-- **offset** (Number) offset query parameter. The offset of the first application in the returned data (optionally used with siteId only)
-- **site_id** (String) siteId query parameter. Assurance site UUID value (Cannot be submitted together with deviceId and clientMac)
-- **start_time** (Number) startTime query parameter. Starting epoch time in milliseconds of time window
+- `application_health` (String) applicationHealth query parameter. Application health category (POOR, FAIR, or GOOD.  Optionally use with siteId only)
+- `application_name` (String) applicationName query parameter. The name of the application to get information on
+- `device_id` (String) deviceId query parameter. Assurance device UUID value (Cannot be submitted together with siteId and clientMac)
+- `end_time` (Number) endTime query parameter. Ending epoch time in milliseconds of time window
+- `limit` (Number) limit query parameter. The max number of application entries in returned data [1, 1000] (optionally used with siteId only)
+- `mac_address` (String) macAddress query parameter. Client device's MAC address (Cannot be submitted together with siteId and deviceId)
+- `offset` (Number) offset query parameter. The offset of the first application in the returned data (optionally used with siteId only)
+- `site_id` (String) siteId query parameter. Assurance site UUID value (Cannot be submitted together with deviceId and clientMac)
+- `start_time` (Number) startTime query parameter. Starting epoch time in milliseconds of time window
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **application** (String)
-- **application_server_latency** (String)
-- **average_throughput** (Number)
-- **business_relevance** (String)
-- **client_ip** (String)
-- **client_mac_address** (String)
-- **client_name** (String)
-- **client_network_latency** (String)
-- **device_type** (String)
-- **exporter_family** (String)
-- **exporter_ip_address** (String)
-- **exporter_name** (String)
-- **exporter_uui_d** (String)
-- **health** (Number)
-- **issue_id** (String)
-- **issue_name** (String)
-- **jitter** (String)
-- **location** (String)
-- **name** (String)
-- **network_latency** (String)
-- **occurrences** (Number)
-- **operating_system** (String)
-- **packet_loss_percent** (String)
-- **priority** (String)
-- **root_cause** (String)
-- **server_network_latency** (String)
-- **severity** (String)
-- **summary** (String)
-- **timestamp** (Number)
-- **traffic_class** (String)
-- **usage_bytes** (Number)
+- `application` (String)
+- `application_server_latency` (String)
+- `average_throughput` (Number)
+- `business_relevance` (String)
+- `client_ip` (String)
+- `client_mac_address` (String)
+- `client_name` (String)
+- `client_network_latency` (String)
+- `device_type` (String)
+- `exporter_family` (String)
+- `exporter_ip_address` (String)
+- `exporter_name` (String)
+- `exporter_uui_d` (String)
+- `health` (Number)
+- `issue_id` (String)
+- `issue_name` (String)
+- `jitter` (String)
+- `location` (String)
+- `name` (String)
+- `network_latency` (String)
+- `occurrences` (Number)
+- `operating_system` (String)
+- `packet_loss_percent` (String)
+- `priority` (String)
+- `root_cause` (String)
+- `server_network_latency` (String)
+- `severity` (String)
+- `summary` (String)
+- `timestamp` (Number)
+- `traffic_class` (String)
+- `usage_bytes` (Number)
 
 

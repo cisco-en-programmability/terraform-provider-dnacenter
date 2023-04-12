@@ -31,18 +31,18 @@ output "dnacenter_pnp_workflow_count_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **name** (List of String) name query parameter. Workflow Name
+- `name` (List of String) name query parameter. Workflow Name
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
+- `response` (Number)
 
 

@@ -32,74 +32,71 @@ output "dnacenter_discovery_range_example" {
 
 ### Required
 
-- **records_to_return** (Number) recordsToReturn path parameter. Number of records to return
-- **start_index** (Number) startIndex path parameter. Start index
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `records_to_return` (Number) recordsToReturn path parameter. Number of records to return
+- `start_index` (Number) startIndex path parameter. Start index
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **attribute_info** (String)
-- **cdp_level** (Number)
-- **device_ids** (String)
-- **discovery_condition** (String)
-- **discovery_status** (String)
-- **discovery_type** (String)
-- **enable_password_list** (String)
-- **global_credential_id_list** (List of String)
-- **http_read_credential** (List of Object) (see [below for nested schema](#nestedobjatt--items--http_read_credential))
-- **http_write_credential** (List of Object) (see [below for nested schema](#nestedobjatt--items--http_write_credential))
-- **id** (String)
-- **ip_address_list** (String)
-- **ip_filter_list** (String)
-- **is_auto_cdp** (String)
-- **lldp_level** (Number)
-- **name** (String)
-- **netconf_port** (String)
-- **num_devices** (Number)
-- **parent_discovery_id** (String)
-- **password_list** (String)
-- **preferred_mgmt_ipmethod** (String)
-- **protocol_order** (String)
-- **retry_count** (Number)
-- **snmp_auth_passphrase** (String)
-- **snmp_auth_protocol** (String)
-- **snmp_mode** (String)
-- **snmp_priv_passphrase** (String)
-- **snmp_priv_protocol** (String)
-- **snmp_ro_community** (String)
-- **snmp_ro_community_desc** (String)
-- **snmp_rw_community** (String)
-- **snmp_rw_community_desc** (String)
-- **snmp_user_name** (String)
-- **time_out** (Number)
-- **update_mgmt_ip** (String)
-- **user_name_list** (String)
+- `attribute_info` (String)
+- `cdp_level` (Number)
+- `device_ids` (String)
+- `discovery_condition` (String)
+- `discovery_status` (String)
+- `discovery_type` (String)
+- `enable_password_list` (String)
+- `global_credential_id_list` (List of String)
+- `http_read_credential` (List of Object) (see [below for nested schema](#nestedobjatt--items--http_read_credential))
+- `http_write_credential` (List of Object) (see [below for nested schema](#nestedobjatt--items--http_write_credential))
+- `id` (String)
+- `ip_address_list` (String)
+- `ip_filter_list` (String)
+- `is_auto_cdp` (String)
+- `lldp_level` (Number)
+- `name` (String)
+- `netconf_port` (String)
+- `num_devices` (Number)
+- `parent_discovery_id` (String)
+- `password_list` (String)
+- `preferred_mgmt_ipmethod` (String)
+- `protocol_order` (String)
+- `retry_count` (Number)
+- `snmp_auth_passphrase` (String)
+- `snmp_auth_protocol` (String)
+- `snmp_mode` (String)
+- `snmp_priv_passphrase` (String)
+- `snmp_priv_protocol` (String)
+- `snmp_ro_community` (String)
+- `snmp_ro_community_desc` (String)
+- `snmp_rw_community` (String)
+- `snmp_rw_community_desc` (String)
+- `snmp_user_name` (String)
+- `time_out` (Number)
+- `update_mgmt_ip` (String)
+- `user_name_list` (String)
 
 <a id="nestedobjatt--items--http_read_credential"></a>
 ### Nested Schema for `items.http_read_credential`
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **password** (String)
-- **port** (Number)
-- **secure** (String)
-- **username** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `password` (String)
+- `port` (Number)
+- `secure` (String)
+- `username` (String)
 
 
 <a id="nestedobjatt--items--http_write_credential"></a>
@@ -107,15 +104,15 @@ Read-Only:
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **password** (String)
-- **port** (Number)
-- **secure** (String)
-- **username** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `password` (String)
+- `port` (Number)
+- `secure` (String)
+- `username` (String)
 
 

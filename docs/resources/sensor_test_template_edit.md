@@ -13,13 +13,13 @@ It performs update operation on Sensors.
 
 - Intent API to deploy, schedule, or edit and existing SENSOR test template
 
+~>**Warning:**
+This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_sensor_test_template_edit" "example" {
   provider = dnacenter
   parameters {
@@ -68,35 +68,32 @@ output "dnacenter_sensor_test_template_edit_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **location_info_list** (Block List) (see [below for nested schema](#nestedblock--parameters--location_info_list))
-- **schedule** (Block List) (see [below for nested schema](#nestedblock--parameters--schedule))
-- **template_name** (String) Template Name
+- `location_info_list` (Block List) (see [below for nested schema](#nestedblock--parameters--location_info_list))
+- `schedule` (Block List) (see [below for nested schema](#nestedblock--parameters--schedule))
+- `template_name` (String) Template Name
 
 <a id="nestedblock--parameters--location_info_list"></a>
 ### Nested Schema for `parameters.location_info_list`
 
 Optional:
 
-- **all_sensors** (String) All Sensors
-- **location_id** (String) Location Id
-- **location_type** (String) Location Type
-- **site_hierarchy** (String) Site Hierarchy
+- `all_sensors` (String) All Sensors
+- `location_id` (String) Location Id
+- `location_type` (String) Location Type
+- `site_hierarchy` (String) Site Hierarchy
 
 
 <a id="nestedblock--parameters--schedule"></a>
@@ -104,17 +101,17 @@ Optional:
 
 Optional:
 
-- **frequency** (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--frequency))
-- **schedule_range** (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--schedule_range))
-- **test_schedule_mode** (String) Test Schedule Mode
+- `frequency` (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--frequency))
+- `schedule_range` (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--schedule_range))
+- `test_schedule_mode` (String) Test Schedule Mode
 
 <a id="nestedblock--parameters--schedule--frequency"></a>
 ### Nested Schema for `parameters.schedule.frequency`
 
 Optional:
 
-- **unit** (String) Unit
-- **value** (Number) Value
+- `unit` (String) Unit
+- `value` (Number) Value
 
 
 <a id="nestedblock--parameters--schedule--schedule_range"></a>
@@ -122,25 +119,25 @@ Optional:
 
 Optional:
 
-- **day** (String) Day
-- **time_range** (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--schedule_range--time_range))
+- `day` (String) Day
+- `time_range` (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--schedule_range--time_range))
 
 <a id="nestedblock--parameters--schedule--schedule_range--time_range"></a>
 ### Nested Schema for `parameters.schedule.schedule_range.time_range`
 
 Optional:
 
-- **frequency** (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--schedule_range--time_range--frequency))
-- **from** (String) From
-- **to** (String) To
+- `frequency` (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--schedule_range--time_range--frequency))
+- `from` (String) From
+- `to` (String) To
 
 <a id="nestedblock--parameters--schedule--schedule_range--time_range--frequency"></a>
 ### Nested Schema for `parameters.schedule.schedule_range.time_range.frequency`
 
 Optional:
 
-- **unit** (String) Unit
-- **value** (Number) Value
+- `unit` (String) Unit
+- `value` (Number) Value
 
 
 
@@ -152,46 +149,46 @@ Optional:
 
 Read-Only:
 
-- **ap_coverage** (List of Object) (see [below for nested schema](#nestedobjatt--item--ap_coverage))
-- **connection** (String)
-- **encryption_mode** (String)
-- **frequency** (String)
-- **id** (String)
-- **last_modified_time** (Number)
-- **legacy_test_suite** (String)
-- **location** (String)
-- **location_info_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--location_info_list))
-- **model_version** (Number)
-- **name** (String)
-- **num_associated_sensor** (Number)
-- **num_neighbor_apthreshold** (Number)
-- **radio_as_sensor_removed** (String)
-- **rssi_threshold** (Number)
-- **run_now** (String)
-- **schedule** (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule))
-- **schedule_in_days** (Number)
-- **sensors** (List of String)
-- **show_wlc_upgrade_banner** (String)
-- **site_hierarchy** (String)
-- **ssids** (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids))
-- **start_time** (Number)
-- **status** (String)
-- **tenant_id** (String)
-- **test_duration_estimate** (Number)
-- **test_schedule_mode** (String)
-- **test_template** (String)
-- **tests** (String)
-- **version** (Number)
-- **wlans** (List of String)
+- `ap_coverage` (List of Object) (see [below for nested schema](#nestedobjatt--item--ap_coverage))
+- `connection` (String)
+- `encryption_mode` (String)
+- `frequency` (String)
+- `id` (String)
+- `last_modified_time` (Number)
+- `legacy_test_suite` (String)
+- `location` (String)
+- `location_info_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--location_info_list))
+- `model_version` (Number)
+- `name` (String)
+- `num_associated_sensor` (Number)
+- `num_neighbor_apthreshold` (Number)
+- `radio_as_sensor_removed` (String)
+- `rssi_threshold` (Number)
+- `run_now` (String)
+- `schedule` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule))
+- `schedule_in_days` (Number)
+- `sensors` (List of String)
+- `show_wlc_upgrade_banner` (String)
+- `site_hierarchy` (String)
+- `ssids` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids))
+- `start_time` (Number)
+- `status` (String)
+- `tenant_id` (String)
+- `test_duration_estimate` (Number)
+- `test_schedule_mode` (String)
+- `test_template` (String)
+- `tests` (String)
+- `version` (Number)
+- `wlans` (List of String)
 
 <a id="nestedobjatt--item--ap_coverage"></a>
 ### Nested Schema for `item.ap_coverage`
 
 Read-Only:
 
-- **bands** (String)
-- **number_of_aps_to_test** (Number)
-- **rssi_threshold** (Number)
+- `bands` (String)
+- `number_of_aps_to_test` (Number)
+- `rssi_threshold` (Number)
 
 
 <a id="nestedobjatt--item--location_info_list"></a>
@@ -199,11 +196,11 @@ Read-Only:
 
 Read-Only:
 
-- **all_sensors** (String)
-- **location_id** (String)
-- **location_type** (String)
-- **mac_address_list** (List of String)
-- **site_hierarchy** (String)
+- `all_sensors` (String)
+- `location_id` (String)
+- `location_type` (String)
+- `mac_address_list` (List of String)
+- `site_hierarchy` (String)
 
 
 <a id="nestedobjatt--item--schedule"></a>
@@ -211,18 +208,18 @@ Read-Only:
 
 Read-Only:
 
-- **frequency** (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--frequency))
-- **schedule_range** (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range))
-- **start_time** (Number)
-- **test_schedule_mode** (String)
+- `frequency` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--frequency))
+- `schedule_range` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range))
+- `start_time` (Number)
+- `test_schedule_mode` (String)
 
 <a id="nestedobjatt--item--schedule--frequency"></a>
 ### Nested Schema for `item.schedule.frequency`
 
 Read-Only:
 
-- **unit** (String)
-- **value** (Number)
+- `unit` (String)
+- `value` (Number)
 
 
 <a id="nestedobjatt--item--schedule--schedule_range"></a>
@@ -230,25 +227,25 @@ Read-Only:
 
 Read-Only:
 
-- **day** (String)
-- **time_range** (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range--time_range))
+- `day` (String)
+- `time_range` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range--time_range))
 
 <a id="nestedobjatt--item--schedule--schedule_range--time_range"></a>
 ### Nested Schema for `item.schedule.schedule_range.time_range`
 
 Read-Only:
 
-- **frequency** (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range--time_range--frequency))
-- **from** (String)
-- **to** (String)
+- `frequency` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range--time_range--frequency))
+- `from` (String)
+- `to` (String)
 
 <a id="nestedobjatt--item--schedule--schedule_range--time_range--frequency"></a>
 ### Nested Schema for `item.schedule.schedule_range.time_range.frequency`
 
 Read-Only:
 
-- **unit** (String)
-- **value** (Number)
+- `unit` (String)
+- `value` (Number)
 
 
 
@@ -259,51 +256,51 @@ Read-Only:
 
 Read-Only:
 
-- **auth_protocol** (String)
-- **auth_type** (String)
-- **auth_type_rcvd** (String)
-- **bands** (String)
-- **certdownloadurl** (String)
-- **certfilename** (String)
-- **certpassphrase** (String)
-- **certstatus** (String)
-- **certxferprotocol** (String)
-- **eap_method** (String)
-- **ext_web_auth** (String)
-- **ext_web_auth_access_url** (String)
-- **ext_web_auth_html_tag** (List of String)
-- **ext_web_auth_portal** (String)
-- **ext_web_auth_virtual_ip** (String)
-- **id** (Number)
-- **layer3web_auth_email_address** (List of String)
-- **layer3web_authpassword** (List of String)
-- **layer3web_authsecurity** (List of String)
-- **layer3web_authuser_name** (List of String)
-- **num_aps** (Number)
-- **num_sensors** (Number)
-- **password** (String)
-- **profile_name** (String)
-- **psk** (String)
-- **qos_policy** (String)
-- **scep** (String)
-- **ssid** (String)
-- **status** (String)
-- **tests** (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids--tests))
-- **third_party** (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids--third_party))
-- **username** (String)
-- **valid_from** (Number)
-- **valid_to** (Number)
-- **white_list** (String)
-- **wlan_id** (Number)
-- **wlc** (String)
+- `auth_protocol` (String)
+- `auth_type` (String)
+- `auth_type_rcvd` (String)
+- `bands` (String)
+- `certdownloadurl` (String)
+- `certfilename` (String)
+- `certpassphrase` (String)
+- `certstatus` (String)
+- `certxferprotocol` (String)
+- `eap_method` (String)
+- `ext_web_auth` (String)
+- `ext_web_auth_access_url` (String)
+- `ext_web_auth_html_tag` (List of String)
+- `ext_web_auth_portal` (String)
+- `ext_web_auth_virtual_ip` (String)
+- `id` (Number)
+- `layer3web_auth_email_address` (List of String)
+- `layer3web_authpassword` (List of String)
+- `layer3web_authsecurity` (List of String)
+- `layer3web_authuser_name` (List of String)
+- `num_aps` (Number)
+- `num_sensors` (Number)
+- `password` (String)
+- `profile_name` (String)
+- `psk` (String)
+- `qos_policy` (String)
+- `scep` (String)
+- `ssid` (String)
+- `status` (String)
+- `tests` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids--tests))
+- `third_party` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids--third_party))
+- `username` (String)
+- `valid_from` (Number)
+- `valid_to` (Number)
+- `white_list` (String)
+- `wlan_id` (Number)
+- `wlc` (String)
 
 <a id="nestedobjatt--item--ssids--tests"></a>
 ### Nested Schema for `item.ssids.tests`
 
 Read-Only:
 
-- **config** (List of String)
-- **name** (String)
+- `config` (List of String)
+- `name` (String)
 
 
 <a id="nestedobjatt--item--ssids--third_party"></a>
@@ -311,6 +308,6 @@ Read-Only:
 
 Read-Only:
 
-- **selected** (String)
+- `selected` (String)
 
 

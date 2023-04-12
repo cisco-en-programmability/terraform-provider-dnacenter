@@ -1,6 +1,7 @@
 
 resource "dnacenter_pnp_device" "example" {
   provider = dnacenter
+
   parameters {
 
     id = "string"

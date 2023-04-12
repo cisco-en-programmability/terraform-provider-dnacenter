@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -193,7 +193,7 @@ func dataSourceDeviceReplacementRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ReturnListOfReplacementDevicesWithReplacementDetails")
+		log.Printf("[DEBUG] Selected method: ReturnListOfReplacementDevicesWithReplacementDetails")
 		queryParams1 := dnacentersdkgo.ReturnListOfReplacementDevicesWithReplacementDetailsQueryParams{}
 
 		if okFaultyDeviceName {
@@ -251,6 +251,7 @@ func dataSourceDeviceReplacementRead(ctx context.Context, d *schema.ResourceData
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -282,25 +283,4 @@ func flattenDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetail
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetailsItem(item *dnacentersdkgo.ResponseDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetailsResponse) []map[string]interface{} {
-	respItem := make(map[string]interface{})
-	respItem["creation_time"] = item.CreationTime
-	respItem["family"] = item.Family
-	respItem["faulty_device_id"] = item.FaultyDeviceID
-	respItem["faulty_device_name"] = item.FaultyDeviceName
-	respItem["faulty_device_platform"] = item.FaultyDevicePlatform
-	respItem["faulty_device_serial_number"] = item.FaultyDeviceSerialNumber
-	respItem["id"] = item.ID
-	respItem["neighbour_device_id"] = item.NeighbourDeviceID
-	respItem["network_readiness_task_id"] = item.NetworkReadinessTaskID
-	respItem["replacement_device_platform"] = item.ReplacementDevicePlatform
-	respItem["replacement_device_serial_number"] = item.ReplacementDeviceSerialNumber
-	respItem["replacement_status"] = item.ReplacementStatus
-	respItem["replacement_time"] = item.ReplacementTime
-	respItem["workflow_id"] = item.WorkflowID
-	return []map[string]interface{}{
-		respItem,
-	}
 }

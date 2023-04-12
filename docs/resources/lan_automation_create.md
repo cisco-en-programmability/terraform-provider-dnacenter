@@ -20,10 +20,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_lan_automation_create" "example" {
   provider = dnacenter
   parameters {
@@ -69,7 +65,7 @@ output "dnacenter_lan_automation_create_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestLanAutomationLANAutomation2 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestLanAutomationLANAutomationStart (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
@@ -103,8 +99,7 @@ Optional:
 
 Read-Only:
 
-- `detail` (String)
-- `error_code` (String)
+- `id` (String)
 - `message` (String)
 
 

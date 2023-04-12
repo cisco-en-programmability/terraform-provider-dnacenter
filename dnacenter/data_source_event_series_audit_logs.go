@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -83,7 +83,7 @@ func dataSourceEventSeriesAuditLogs() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of Audit Log records to be returned per page.
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"name": &schema.Schema{
@@ -95,7 +95,7 @@ func dataSourceEventSeriesAuditLogs() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Position of a particular Audit Log record in the data. 
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -161,7 +161,7 @@ func dataSourceEventSeriesAuditLogs() *schema.Resource {
 
 						"additional_details": &schema.Schema{
 							Description: `Additional Details`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -197,7 +197,7 @@ func dataSourceEventSeriesAuditLogs() *schema.Resource {
 
 						"details": &schema.Schema{
 							Description: `Details`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -371,7 +371,7 @@ func dataSourceEventSeriesAuditLogsRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAuditLogRecords")
+		log.Printf("[DEBUG] Selected method: GetAuditLogRecords")
 		queryParams1 := dnacentersdkgo.GetAuditLogRecordsQueryParams{}
 
 		if okParentInstanceID {
@@ -423,10 +423,10 @@ func dataSourceEventSeriesAuditLogsRead(ctx context.Context, d *schema.ResourceD
 			queryParams1.Description = vDescription.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okStartTime {
 			queryParams1.StartTime = vStartTime.(float64)
@@ -462,6 +462,7 @@ func dataSourceEventSeriesAuditLogsRead(ctx context.Context, d *schema.ResourceD
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

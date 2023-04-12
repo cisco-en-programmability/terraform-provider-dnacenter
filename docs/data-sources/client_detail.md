@@ -32,42 +32,42 @@ output "dnacenter_client_detail_example" {
 
 ### Required
 
-- **mac_address** (String) macAddress query parameter. MAC Address of the client
+- `mac_address` (String) macAddress query parameter. MAC Address of the client
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **timestamp** (String) timestamp query parameter. Epoch time(in milliseconds) when the Client health data is required
+- `timestamp` (String) timestamp query parameter. Epoch time(in milliseconds) when the Client health data is required
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **connection_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--connection_info))
-- **detail** (List of Object) (see [below for nested schema](#nestedobjatt--item--detail))
-- **topology** (List of Object) (see [below for nested schema](#nestedobjatt--item--topology))
+- `connection_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--connection_info))
+- `detail` (List of Object) (see [below for nested schema](#nestedobjatt--item--detail))
+- `topology` (List of Object) (see [below for nested schema](#nestedobjatt--item--topology))
 
 <a id="nestedobjatt--item--connection_info"></a>
 ### Nested Schema for `item.connection_info`
 
 Read-Only:
 
-- **band** (String)
-- **channel** (String)
-- **channel_width** (String)
-- **host_type** (String)
-- **nw_device_mac** (String)
-- **nw_device_name** (String)
-- **protocol** (String)
-- **spatial_stream** (String)
-- **timestamp** (Number)
-- **uapsd** (String)
-- **wmm** (String)
+- `band` (String)
+- `channel` (String)
+- `channel_width` (String)
+- `host_type` (String)
+- `nw_device_mac` (String)
+- `nw_device_name` (String)
+- `protocol` (String)
+- `spatial_stream` (String)
+- `timestamp` (Number)
+- `uapsd` (String)
+- `wmm` (String)
 
 
 <a id="nestedobjatt--item--detail"></a>
@@ -75,53 +75,53 @@ Read-Only:
 
 Read-Only:
 
-- **ap_group** (String)
-- **auth_type** (String)
-- **avg_rssi** (String)
-- **avg_snr** (String)
-- **channel** (String)
-- **client_connection** (String)
-- **client_type** (String)
-- **connected_device** (List of String)
-- **connection_status** (String)
-- **data_rate** (String)
-- **dns_failure** (String)
-- **dns_success** (String)
-- **frequency** (String)
-- **health_score** (List of Object) (see [below for nested schema](#nestedobjatt--item--detail--health_score))
-- **host_ip_v4** (String)
-- **host_ip_v6** (List of String)
-- **host_mac** (String)
-- **host_name** (String)
-- **host_os** (String)
-- **host_type** (String)
-- **host_version** (String)
-- **id** (String)
-- **ios_capable** (String)
-- **issue_count** (Number)
-- **last_updated** (Number)
-- **location** (String)
-- **onboarding** (List of Object) (see [below for nested schema](#nestedobjatt--item--detail--onboarding))
-- **onboarding_time** (String)
-- **port** (String)
-- **rssi** (String)
-- **rx_bytes** (String)
-- **snr** (String)
-- **ssid** (String)
-- **sub_type** (String)
-- **tx_bytes** (String)
-- **user_id** (String)
-- **vlan_id** (String)
-- **vnid** (String)
+- `ap_group` (String)
+- `auth_type` (String)
+- `avg_rssi` (String)
+- `avg_snr` (String)
+- `channel` (String)
+- `client_connection` (String)
+- `client_type` (String)
+- `connected_device` (List of String)
+- `connection_status` (String)
+- `data_rate` (String)
+- `dns_failure` (String)
+- `dns_success` (String)
+- `frequency` (String)
+- `health_score` (List of Object) (see [below for nested schema](#nestedobjatt--item--detail--health_score))
+- `host_ip_v4` (String)
+- `host_ip_v6` (List of String)
+- `host_mac` (String)
+- `host_name` (String)
+- `host_os` (String)
+- `host_type` (String)
+- `host_version` (String)
+- `id` (String)
+- `ios_capable` (String)
+- `issue_count` (Number)
+- `last_updated` (Number)
+- `location` (String)
+- `onboarding` (List of Object) (see [below for nested schema](#nestedobjatt--item--detail--onboarding))
+- `onboarding_time` (String)
+- `port` (String)
+- `rssi` (String)
+- `rx_bytes` (String)
+- `snr` (String)
+- `ssid` (String)
+- `sub_type` (String)
+- `tx_bytes` (String)
+- `user_id` (String)
+- `vlan_id` (Number)
+- `vnid` (Number)
 
 <a id="nestedobjatt--item--detail--health_score"></a>
 ### Nested Schema for `item.detail.health_score`
 
 Read-Only:
 
-- **health_type** (String)
-- **reason** (String)
-- **score** (Number)
+- `health_type` (String)
+- `reason` (String)
+- `score` (Number)
 
 
 <a id="nestedobjatt--item--detail--onboarding"></a>
@@ -129,23 +129,23 @@ Read-Only:
 
 Read-Only:
 
-- **aaa_rootcause_list** (List of String)
-- **aaa_server_ip** (String)
-- **assoc_done_time** (String)
-- **assoc_rootcause_list** (List of String)
-- **auth_done_time** (String)
-- **average_assoc_duration** (String)
-- **average_auth_duration** (String)
-- **average_dhcp_duration** (String)
-- **average_run_duration** (String)
-- **dhcp_done_time** (String)
-- **dhcp_rootcause_list** (List of String)
-- **dhcp_server_ip** (String)
-- **max_assoc_duration** (String)
-- **max_auth_duration** (String)
-- **max_dhcp_duration** (String)
-- **max_run_duration** (String)
-- **other_rootcause_list** (List of String)
+- `aaa_rootcause_list` (List of String)
+- `aaa_server_ip` (String)
+- `assoc_done_time` (String)
+- `assoc_rootcause_list` (List of String)
+- `auth_done_time` (String)
+- `average_assoc_duration` (String)
+- `average_auth_duration` (String)
+- `average_dhcp_duration` (String)
+- `average_run_duration` (String)
+- `dhcp_done_time` (String)
+- `dhcp_rootcause_list` (List of String)
+- `dhcp_server_ip` (String)
+- `max_assoc_duration` (String)
+- `max_auth_duration` (String)
+- `max_dhcp_duration` (String)
+- `max_run_duration` (String)
+- `other_rootcause_list` (List of String)
 
 
 
@@ -154,20 +154,20 @@ Read-Only:
 
 Read-Only:
 
-- **links** (List of Object) (see [below for nested schema](#nestedobjatt--item--topology--links))
-- **nodes** (List of Object) (see [below for nested schema](#nestedobjatt--item--topology--nodes))
+- `links` (List of Object) (see [below for nested schema](#nestedobjatt--item--topology--links))
+- `nodes` (List of Object) (see [below for nested schema](#nestedobjatt--item--topology--nodes))
 
 <a id="nestedobjatt--item--topology--links"></a>
 ### Nested Schema for `item.topology.links`
 
 Read-Only:
 
-- **id** (String)
-- **label** (List of String)
-- **link_status** (String)
-- **port_utilization** (String)
-- **source** (String)
-- **target** (String)
+- `id` (String)
+- `label` (List of String)
+- `link_status` (String)
+- `port_utilization` (String)
+- `source` (String)
+- `target` (String)
 
 
 <a id="nestedobjatt--item--topology--nodes"></a>
@@ -175,23 +175,23 @@ Read-Only:
 
 Read-Only:
 
-- **clients** (String)
-- **connected_device** (String)
-- **count** (String)
-- **description** (String)
-- **device_type** (String)
-- **fabric_group** (String)
-- **family** (String)
-- **health_score** (Number)
-- **id** (String)
-- **ip** (String)
-- **level** (Number)
-- **name** (String)
-- **node_type** (String)
-- **platform_id** (String)
-- **radio_frequency** (String)
-- **role** (String)
-- **software_version** (String)
-- **user_id** (String)
+- `clients` (String)
+- `connected_device` (String)
+- `count` (String)
+- `description` (String)
+- `device_type` (String)
+- `fabric_group` (String)
+- `family` (String)
+- `health_score` (Number)
+- `id` (String)
+- `ip` (String)
+- `level` (Number)
+- `name` (String)
+- `node_type` (String)
+- `platform_id` (String)
+- `radio_frequency` (String)
+- `role` (String)
+- `software_version` (String)
+- `user_id` (String)
 
 

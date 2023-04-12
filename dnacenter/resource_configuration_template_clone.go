@@ -2,12 +2,14 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -67,6 +69,7 @@ func resourceConfigurationTemplateClone() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Default:  "",
 						},
 						"template_id": &schema.Schema{
 							Description: `templateId path parameter. UUID of the template to clone it
@@ -87,19 +90,17 @@ func resourceConfigurationTemplateCloneCreate(ctx context.Context, d *schema.Res
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vName := resourceItem["name"]
+
 	vTemplateID := resourceItem["template_id"]
+
 	vProjectID := resourceItem["project_id"]
-	vProjectID, okProjectID := resourceItem["project_id"]
 
 	vvName := vName.(string)
 	vvTemplateID := vTemplateID.(string)
 	vvProjectID := vProjectID.(string)
 	queryParams1 := dnacentersdkgo.CreatesACloneOfTheGivenTemplateQueryParams{}
-
-	if okProjectID {
-		queryParams1.ProjectID = vProjectID.(string)
-	}
 
 	response1, restyResp1, err := client.ConfigurationTemplates.CreatesACloneOfTheGivenTemplate(vvName, vvTemplateID, vvProjectID, &queryParams1)
 
@@ -107,9 +108,8 @@ func resourceConfigurationTemplateCloneCreate(ctx context.Context, d *schema.Res
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing CreatesACloneOfTheGivenTemplate", err,
-			"Failure at CreatesACloneOfTheGivenTemplate, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing CreatesACloneOfTheGivenTemplate", err))
 		return diags
 	}
 
@@ -163,6 +163,7 @@ func resourceConfigurationTemplateCloneCreate(ctx context.Context, d *schema.Res
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

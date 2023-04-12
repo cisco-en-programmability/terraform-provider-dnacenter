@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -137,7 +137,7 @@ func dataSourceClientHealth() *schema.Resource {
 
 															"client_unique_count": &schema.Schema{
 																Description: `Client Unique Count`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeString, //TEST,
 																Computed:    true,
 															},
 
@@ -233,7 +233,7 @@ func dataSourceClientHealthRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetOverallClientHealth")
+		log.Printf("[DEBUG] Selected method: GetOverallClientHealth")
 		queryParams1 := dnacentersdkgo.GetOverallClientHealthQueryParams{}
 
 		if okTimestamp {
@@ -261,6 +261,7 @@ func dataSourceClientHealthRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

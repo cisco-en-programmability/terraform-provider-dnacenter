@@ -2,14 +2,16 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"fmt"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -69,6 +71,7 @@ can be seen in the child task of each device
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -84,15 +87,8 @@ func resourceNetworkDeviceSyncCreate(ctx context.Context, d *schema.ResourceData
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
-	vForceSync, okForceSync := resourceItem["force_sync"]
-
 	request1 := expandRequestNetworkDeviceSyncSyncDevices(ctx, "parameters.0", d)
 	queryParams1 := dnacentersdkgo.SyncDevicesQueryParams{}
-
-	if okForceSync {
-		queryParams1.ForceSync = *stringToBooleanPtr(vForceSync.(string))
-	}
 
 	response1, restyResp1, err := client.Devices.SyncDevices(request1, &queryParams1)
 
@@ -104,9 +100,8 @@ func resourceNetworkDeviceSyncCreate(ctx context.Context, d *schema.ResourceData
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing SyncDevices", err,
-			"Failure at SyncDevices, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing SyncDevicesUsingForcesync", err))
 		return diags
 	}
 
@@ -160,6 +155,7 @@ func resourceNetworkDeviceSyncCreate(ctx context.Context, d *schema.ResourceData
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

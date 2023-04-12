@@ -19,10 +19,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_file_import" "example" {
   provider = dnacenter
   parameters {
@@ -41,23 +37,20 @@ output "dnacenter_file_import_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of String)
+- `id` (String) The ID of this resource.
+- `item` (List of String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **file_name** (String) File name.
-- **file_path** (String) File absolute path.
-- **name_space** (String) nameSpace path parameter.
+- `file_name` (String) File name.
+- `file_path` (String) File absolute path.
+- `name_space` (String) nameSpace path parameter.
 
 

@@ -32,30 +32,27 @@ output "dnacenter_sda_port_assignment_for_user_device_example" {
 
 ### Required
 
-- **device_management_ip_address** (String) deviceManagementIpAddress query parameter.
-- **interface_name** (String) interfaceName query parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_management_ip_address` (String) deviceManagementIpAddress query parameter.
+- `interface_name` (String) interfaceName query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **authenticate_template_name** (String)
-- **data_ip_address_pool_name** (String)
-- **description** (String)
-- **device_management_ip_address** (String)
-- **interface_name** (String)
-- **scalable_group_name** (String)
-- **site_name_hierarchy** (String)
-- **status** (String)
-- **voice_ip_address_pool_name** (String)
+- `authenticate_template_name` (String)
+- `data_ip_address_pool_name` (String)
+- `description` (String)
+- `device_management_ip_address` (String)
+- `interface_name` (String)
+- `scalable_group_name` (String)
+- `site_name_hierarchy` (String)
+- `status` (String)
+- `voice_ip_address_pool_name` (String)
 
 

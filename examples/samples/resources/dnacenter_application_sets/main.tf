@@ -16,8 +16,9 @@ provider "dnacenter" {
 resource "dnacenter_application_sets" "example" {
   provider = dnacenter
   parameters {
-
-    name = "TestApp"
+    payload {
+      name = "TestAppTerraform222Update"
+    }
   }
 }
 

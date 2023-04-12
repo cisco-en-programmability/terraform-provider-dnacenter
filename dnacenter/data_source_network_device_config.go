@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -54,7 +54,7 @@ func dataSourceNetworkDeviceConfig() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -127,7 +127,7 @@ func dataSourceNetworkDeviceConfigRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceConfigForAllDevices")
+		log.Printf("[DEBUG] Selected method: GetDeviceConfigForAllDevices")
 
 		response1, restyResp1, err := client.Devices.GetDeviceConfigForAllDevices()
 
@@ -150,12 +150,13 @@ func dataSourceNetworkDeviceConfigRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceConfigByID")
+		log.Printf("[DEBUG] Selected method: GetDeviceConfigByID")
 		vvNetworkDeviceID := vNetworkDeviceID.(string)
 
 		response2, restyResp2, err := client.Devices.GetDeviceConfigByID(vvNetworkDeviceID)
@@ -179,6 +180,7 @@ func dataSourceNetworkDeviceConfigRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

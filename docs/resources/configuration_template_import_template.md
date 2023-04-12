@@ -20,30 +20,118 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_configuration_template_import_template" "example" {
   provider = dnacenter
   parameters {
+    do_version   = false
+    project_name = "string"
+    payload {
+      author    = "string"
+      composite = "false"
+      containing_templates {
 
-    author    = "string"
-    composite = "false"
-    containing_templates {
+        composite   = "false"
+        description = "string"
+        device_types {
 
-      composite   = "false"
-      description = "string"
+          product_family = "string"
+          product_series = "string"
+          product_type   = "string"
+        }
+        id           = "string"
+        language     = "string"
+        name         = "string"
+        project_name = "string"
+        rollback_template_params {
+
+          binding          = "string"
+          custom_order     = 1
+          data_type        = "string"
+          default_value    = "string"
+          description      = "string"
+          display_name     = "string"
+          group            = "string"
+          id               = "string"
+          instruction_text = "string"
+          key              = "string"
+          not_param        = "false"
+          order            = 1
+          param_array      = "false"
+          parameter_name   = "string"
+          provider         = "string"
+          range {
+
+            id        = "string"
+            max_value = 1
+            min_value = 1
+          }
+          required = "false"
+          selection {
+
+            default_selected_values = ["string"]
+            id                      = "string"
+            selection_type          = "string"
+            selection_values        = "string"
+          }
+        }
+        tags {
+
+          id   = "string"
+          name = "string"
+        }
+        template_content = "string"
+        template_params {
+
+          binding          = "string"
+          custom_order     = 1
+          data_type        = "string"
+          default_value    = "string"
+          description      = "string"
+          display_name     = "string"
+          group            = "string"
+          id               = "string"
+          instruction_text = "string"
+          key              = "string"
+          not_param        = "false"
+          order            = 1
+          param_array      = "false"
+          parameter_name   = "string"
+          provider         = "string"
+          range {
+
+            id        = "string"
+            max_value = 1
+            min_value = 1
+          }
+          required = "false"
+          selection {
+
+            default_selected_values = ["string"]
+            id                      = "string"
+            selection_type          = "string"
+            selection_values        = "string"
+          }
+        }
+        version = "string"
+      }
+      create_time         = 1
+      custom_params_order = "false"
+      description         = "string"
       device_types {
 
         product_family = "string"
         product_series = "string"
         product_type   = "string"
       }
-      id           = "string"
-      language     = "string"
-      name         = "string"
-      project_name = "string"
+      failure_policy            = "string"
+      id                        = "string"
+      language                  = "string"
+      last_update_time          = 1
+      latest_version_time       = 1
+      name                      = "string"
+      parent_template_id        = "string"
+      project_id                = "string"
+      rollback_template_content = "string"
       rollback_template_params {
 
         binding          = "string"
@@ -76,6 +164,9 @@ resource "dnacenter_configuration_template_import_template" "example" {
           selection_values        = "string"
         }
       }
+      software_type    = "string"
+      software_variant = "string"
+      software_version = "string"
       tags {
 
         id   = "string"
@@ -114,108 +205,15 @@ resource "dnacenter_configuration_template_import_template" "example" {
           selection_values        = "string"
         }
       }
+      validation_errors {
+
+        rollback_template_errors = "string"
+        template_errors          = "string"
+        template_id              = "string"
+        template_version         = "string"
+      }
       version = "string"
     }
-    create_time         = 1
-    custom_params_order = "false"
-    description         = "string"
-    device_types {
-
-      product_family = "string"
-      product_series = "string"
-      product_type   = "string"
-    }
-    failure_policy            = "string"
-    id                        = "string"
-    language                  = "string"
-    last_update_time          = 1
-    latest_version_time       = 1
-    name                      = "string"
-    parent_template_id        = "string"
-    project_id                = "string"
-    project_name              = "string"
-    rollback_template_content = "string"
-    rollback_template_params {
-
-      binding          = "string"
-      custom_order     = 1
-      data_type        = "string"
-      default_value    = "string"
-      description      = "string"
-      display_name     = "string"
-      group            = "string"
-      id               = "string"
-      instruction_text = "string"
-      key              = "string"
-      not_param        = "false"
-      order            = 1
-      param_array      = "false"
-      parameter_name   = "string"
-      provider         = "string"
-      range {
-
-        id        = "string"
-        max_value = 1
-        min_value = 1
-      }
-      required = "false"
-      selection {
-
-        default_selected_values = ["string"]
-        id                      = "string"
-        selection_type          = "string"
-        selection_values        = "string"
-      }
-    }
-    software_type    = "string"
-    software_variant = "string"
-    software_version = "string"
-    tags {
-
-      id   = "string"
-      name = "string"
-    }
-    template_content = "string"
-    template_params {
-
-      binding          = "string"
-      custom_order     = 1
-      data_type        = "string"
-      default_value    = "string"
-      description      = "string"
-      display_name     = "string"
-      group            = "string"
-      id               = "string"
-      instruction_text = "string"
-      key              = "string"
-      not_param        = "false"
-      order            = 1
-      param_array      = "false"
-      parameter_name   = "string"
-      provider         = "string"
-      range {
-
-        id        = "string"
-        max_value = 1
-        min_value = 1
-      }
-      required = "false"
-      selection {
-
-        default_selected_values = ["string"]
-        id                      = "string"
-        selection_type          = "string"
-        selection_values        = "string"
-      }
-    }
-    validation_errors {
-
-      rollback_template_errors = ["string"]
-      template_errors          = ["string"]
-      template_id              = "string"
-      template_version         = "string"
-    }
-    version = "string"
   }
 }
 
@@ -229,187 +227,184 @@ output "dnacenter_configuration_template_import_template_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **project_name** (String) projectName path parameter. Project name to create template under the project
+- `project_name` (String) projectName path parameter. Project name to create template under the project
 
 Optional:
 
-- **do_version** (Boolean) doVersion query parameter. If this flag is true then it creates a new version of the template with the imported contents in case if the templates already exists. " If this flag is false and if template already exists, then operation fails with 'Template already exists' error
-- **payload** (Block List) Array of RequestConfigurationTemplatesImportsTheTemplatesProvided (see [below for nested schema](#nestedblock--parameters--payload))
+- `do_version` (Boolean) doVersion query parameter. If this flag is true then it creates a new version of the template with the imported contents in case if the templates already exists. " If this flag is false and if template already exists, then operation fails with 'Template already exists' error
+- `payload` (Block List) Array of RequestConfigurationTemplatesImportsTheTemplatesProvided (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
 
 Optional:
 
-- **author** (String) Author of template
-- **composite** (String) Is it composite template
-- **containing_templates** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates))
-- **create_time** (Number) Create time of template
-- **custom_params_order** (String) Custom Params Order
-- **description** (String) Description of template
-- **device_types** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--device_types))
-- **failure_policy** (String) Define failure policy if template provisioning fails
-- **id** (String) UUID of template
-- **language** (String) Template language (JINJA or VELOCITY)
-- **last_update_time** (Number) Update time of template
-- **latest_version_time** (Number) Latest versioned template time
-- **name** (String) Name of template
-- **parent_template_id** (String) Parent templateID
-- **project_id** (String) Project UUID
-- **project_name** (String) Project name
-- **rollback_template_content** (String) Rollback template content
-- **rollback_template_params** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--rollback_template_params))
-- **software_type** (String) Applicable device software type
-- **software_variant** (String) Applicable device software variant
-- **software_version** (String) Applicable device software version
-- **tags** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--tags))
-- **template_content** (String) Template content
-- **template_params** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--template_params))
-- **validation_errors** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--validation_errors))
-- **version** (String) Current version of template
+- `author` (String) Author of template
+- `composite` (String) Is it composite template
+- `containing_templates` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates))
+- `create_time` (Number) Create time of template
+- `custom_params_order` (String) Custom Params Order
+- `description` (String) Description of template
+- `device_types` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--device_types))
+- `failure_policy` (String) Define failure policy if template provisioning fails
+- `id` (String) UUID of template
+- `language` (String) Template language (JINJA or VELOCITY)
+- `last_update_time` (Number) Update time of template
+- `latest_version_time` (Number) Latest versioned template time
+- `name` (String) Name of template
+- `parent_template_id` (String) Parent templateID
+- `project_id` (String) Project UUID
+- `project_name` (String) Project name
+- `rollback_template_content` (String) Rollback template content
+- `rollback_template_params` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--rollback_template_params))
+- `software_type` (String) Applicable device software type
+- `software_variant` (String) Applicable device software variant
+- `software_version` (String) Applicable device software version
+- `tags` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--tags))
+- `template_content` (String) Template content
+- `template_params` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--template_params))
+- `validation_errors` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--validation_errors))
+- `version` (String) Current version of template
 
 <a id="nestedblock--parameters--payload--containing_templates"></a>
 ### Nested Schema for `parameters.payload.containing_templates`
 
 Optional:
 
-- **composite** (String) Is it composite template
-- **description** (String) Description of template
-- **device_types** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--device_types))
-- **id** (String) UUID of template
-- **language** (String) Template language (JINJA or VELOCITY)
-- **name** (String) Name of template
-- **project_name** (String) Project name
-- **rollback_template_params** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--rollback_template_params))
-- **tags** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--tags))
-- **template_content** (String) Template content
-- **template_params** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--template_params))
-- **version** (String) Current version of template
+- `composite` (String) Is it composite template
+- `description` (String) Description of template
+- `device_types` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--device_types))
+- `id` (String) UUID of template
+- `language` (String) Template language (JINJA or VELOCITY)
+- `name` (String) Name of template
+- `project_name` (String) Project name
+- `rollback_template_params` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--rollback_template_params))
+- `tags` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--tags))
+- `template_content` (String) Template content
+- `template_params` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--template_params))
+- `version` (String) Current version of template
 
 <a id="nestedblock--parameters--payload--containing_templates--device_types"></a>
-### Nested Schema for `parameters.payload.containing_templates.version`
+### Nested Schema for `parameters.payload.containing_templates.device_types`
 
 Optional:
 
-- **product_family** (String) Device family
-- **product_series** (String) Device series
-- **product_type** (String) Device type
+- `product_family` (String) Device family
+- `product_series` (String) Device series
+- `product_type` (String) Device type
 
 
 <a id="nestedblock--parameters--payload--containing_templates--rollback_template_params"></a>
-### Nested Schema for `parameters.payload.containing_templates.version`
+### Nested Schema for `parameters.payload.containing_templates.rollback_template_params`
 
 Optional:
 
-- **binding** (String) Bind to source
-- **custom_order** (Number) CustomOrder of template param
-- **data_type** (String) Datatype of template param
-- **default_value** (String) Default value of template param
-- **description** (String) Description of template param
-- **display_name** (String) Display name of param
-- **group** (String) group
-- **id** (String) UUID of template param
-- **instruction_text** (String) Instruction text for param
-- **key** (String) key
-- **not_param** (String) Is it not a variable
-- **order** (Number) Order of template param
-- **param_array** (String) Is it an array
-- **parameter_name** (String) Name of template param
-- **provider** (String) provider
-- **range** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--version--range))
-- **required** (String) Is param required
-- **selection** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--version--selection))
+- `binding` (String) Bind to source
+- `custom_order` (Number) CustomOrder of template param
+- `data_type` (String) Datatype of template param
+- `default_value` (String) Default value of template param
+- `description` (String) Description of template param
+- `display_name` (String) Display name of param
+- `group` (String) group
+- `id` (String) UUID of template param
+- `instruction_text` (String) Instruction text for param
+- `key` (String) key
+- `not_param` (String) Is it not a variable
+- `order` (Number) Order of template param
+- `param_array` (String) Is it an array
+- `parameter_name` (String) Name of template param
+- `provider` (String) provider
+- `range` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--rollback_template_params--range))
+- `required` (String) Is param required
+- `selection` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--rollback_template_params--selection))
 
-<a id="nestedblock--parameters--payload--containing_templates--version--range"></a>
-### Nested Schema for `parameters.payload.containing_templates.version.range`
-
-Optional:
-
-- **id** (String) UUID of range
-- **max_value** (Number) Max value of range
-- **min_value** (Number) Min value of range
-
-
-<a id="nestedblock--parameters--payload--containing_templates--version--selection"></a>
-### Nested Schema for `parameters.payload.containing_templates.version.selection`
+<a id="nestedblock--parameters--payload--containing_templates--rollback_template_params--range"></a>
+### Nested Schema for `parameters.payload.containing_templates.rollback_template_params.range`
 
 Optional:
 
-- **default_selected_values** (List of String) Default selection values
-- **id** (String) UUID of selection
-- **selection_type** (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
-- **selection_values** (String) Selection values
+- `id` (String) UUID of range
+- `max_value` (Number) Max value of range
+- `min_value` (Number) Min value of range
+
+
+<a id="nestedblock--parameters--payload--containing_templates--rollback_template_params--selection"></a>
+### Nested Schema for `parameters.payload.containing_templates.rollback_template_params.selection`
+
+Optional:
+
+- `default_selected_values` (List of String) Default selection values
+- `id` (String) UUID of selection
+- `selection_type` (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
+- `selection_values` (String) Selection values
 
 
 
 <a id="nestedblock--parameters--payload--containing_templates--tags"></a>
-### Nested Schema for `parameters.payload.containing_templates.version`
+### Nested Schema for `parameters.payload.containing_templates.tags`
 
 Optional:
 
-- **id** (String) UUID of tag
-- **name** (String) Name of tag
+- `id` (String) UUID of tag
+- `name` (String) Name of tag
 
 
 <a id="nestedblock--parameters--payload--containing_templates--template_params"></a>
-### Nested Schema for `parameters.payload.containing_templates.version`
+### Nested Schema for `parameters.payload.containing_templates.template_params`
 
 Optional:
 
-- **binding** (String) Bind to source
-- **custom_order** (Number) CustomOrder of template param
-- **data_type** (String) Datatype of template param
-- **default_value** (String) Default value of template param
-- **description** (String) Description of template param
-- **display_name** (String) Display name of param
-- **group** (String) group
-- **id** (String) UUID of template param
-- **instruction_text** (String) Instruction text for param
-- **key** (String) key
-- **not_param** (String) Is it not a variable
-- **order** (Number) Order of template param
-- **param_array** (String) Is it an array
-- **parameter_name** (String) Name of template param
-- **provider** (String) provider
-- **range** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--version--range))
-- **required** (String) Is param required
-- **selection** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--version--selection))
+- `binding` (String) Bind to source
+- `custom_order` (Number) CustomOrder of template param
+- `data_type` (String) Datatype of template param
+- `default_value` (String) Default value of template param
+- `description` (String) Description of template param
+- `display_name` (String) Display name of param
+- `group` (String) group
+- `id` (String) UUID of template param
+- `instruction_text` (String) Instruction text for param
+- `key` (String) key
+- `not_param` (String) Is it not a variable
+- `order` (Number) Order of template param
+- `param_array` (String) Is it an array
+- `parameter_name` (String) Name of template param
+- `provider` (String) provider
+- `range` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--template_params--range))
+- `required` (String) Is param required
+- `selection` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--containing_templates--template_params--selection))
 
-<a id="nestedblock--parameters--payload--containing_templates--version--range"></a>
-### Nested Schema for `parameters.payload.containing_templates.version.range`
-
-Optional:
-
-- **id** (String) UUID of range
-- **max_value** (Number) Max value of range
-- **min_value** (Number) Min value of range
-
-
-<a id="nestedblock--parameters--payload--containing_templates--version--selection"></a>
-### Nested Schema for `parameters.payload.containing_templates.version.selection`
+<a id="nestedblock--parameters--payload--containing_templates--template_params--range"></a>
+### Nested Schema for `parameters.payload.containing_templates.template_params.range`
 
 Optional:
 
-- **default_selected_values** (List of String) Default selection values
-- **id** (String) UUID of selection
-- **selection_type** (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
-- **selection_values** (String) Selection values
+- `id` (String) UUID of range
+- `max_value` (Number) Max value of range
+- `min_value` (Number) Min value of range
+
+
+<a id="nestedblock--parameters--payload--containing_templates--template_params--selection"></a>
+### Nested Schema for `parameters.payload.containing_templates.template_params.selection`
+
+Optional:
+
+- `default_selected_values` (List of String) Default selection values
+- `id` (String) UUID of selection
+- `selection_type` (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
+- `selection_values` (String) Selection values
 
 
 
@@ -419,9 +414,9 @@ Optional:
 
 Optional:
 
-- **product_family** (String) Device family
-- **product_series** (String) Device series
-- **product_type** (String) Device type
+- `product_family` (String) Device family
+- `product_series` (String) Device series
+- `product_type` (String) Device type
 
 
 <a id="nestedblock--parameters--payload--rollback_template_params"></a>
@@ -429,33 +424,33 @@ Optional:
 
 Optional:
 
-- **binding** (String) Bind to source
-- **custom_order** (Number) CustomOrder of template param
-- **data_type** (String) Datatype of template param
-- **default_value** (String) Default value of template param
-- **description** (String) Description of template param
-- **display_name** (String) Display name of param
-- **group** (String) group
-- **id** (String) UUID of template param
-- **instruction_text** (String) Instruction text for param
-- **key** (String) key
-- **not_param** (String) Is it not a variable
-- **order** (Number) Order of template param
-- **param_array** (String) Is it an array
-- **parameter_name** (String) Name of template param
-- **provider** (String) provider
-- **range** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--rollback_template_params--range))
-- **required** (String) Is param required
-- **selection** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--rollback_template_params--selection))
+- `binding` (String) Bind to source
+- `custom_order` (Number) CustomOrder of template param
+- `data_type` (String) Datatype of template param
+- `default_value` (String) Default value of template param
+- `description` (String) Description of template param
+- `display_name` (String) Display name of param
+- `group` (String) group
+- `id` (String) UUID of template param
+- `instruction_text` (String) Instruction text for param
+- `key` (String) key
+- `not_param` (String) Is it not a variable
+- `order` (Number) Order of template param
+- `param_array` (String) Is it an array
+- `parameter_name` (String) Name of template param
+- `provider` (String) provider
+- `range` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--rollback_template_params--range))
+- `required` (String) Is param required
+- `selection` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--rollback_template_params--selection))
 
 <a id="nestedblock--parameters--payload--rollback_template_params--range"></a>
-### Nested Schema for `parameters.payload.rollback_template_params.selection`
+### Nested Schema for `parameters.payload.rollback_template_params.range`
 
 Optional:
 
-- **id** (String) UUID of range
-- **max_value** (Number) Max value of range
-- **min_value** (Number) Min value of range
+- `id` (String) UUID of range
+- `max_value` (Number) Max value of range
+- `min_value` (Number) Min value of range
 
 
 <a id="nestedblock--parameters--payload--rollback_template_params--selection"></a>
@@ -463,10 +458,10 @@ Optional:
 
 Optional:
 
-- **default_selected_values** (List of String) Default selection values
-- **id** (String) UUID of selection
-- **selection_type** (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
-- **selection_values** (String) Selection values
+- `default_selected_values` (List of String) Default selection values
+- `id` (String) UUID of selection
+- `selection_type` (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
+- `selection_values` (String) Selection values
 
 
 
@@ -475,8 +470,8 @@ Optional:
 
 Optional:
 
-- **id** (String) UUID of tag
-- **name** (String) Name of tag
+- `id` (String) UUID of tag
+- `name` (String) Name of tag
 
 
 <a id="nestedblock--parameters--payload--template_params"></a>
@@ -484,33 +479,33 @@ Optional:
 
 Optional:
 
-- **binding** (String) Bind to source
-- **custom_order** (Number) CustomOrder of template param
-- **data_type** (String) Datatype of template param
-- **default_value** (String) Default value of template param
-- **description** (String) Description of template param
-- **display_name** (String) Display name of param
-- **group** (String) group
-- **id** (String) UUID of template param
-- **instruction_text** (String) Instruction text for param
-- **key** (String) key
-- **not_param** (String) Is it not a variable
-- **order** (Number) Order of template param
-- **param_array** (String) Is it an array
-- **parameter_name** (String) Name of template param
-- **provider** (String) provider
-- **range** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--template_params--range))
-- **required** (String) Is param required
-- **selection** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--template_params--selection))
+- `binding` (String) Bind to source
+- `custom_order` (Number) CustomOrder of template param
+- `data_type` (String) Datatype of template param
+- `default_value` (String) Default value of template param
+- `description` (String) Description of template param
+- `display_name` (String) Display name of param
+- `group` (String) group
+- `id` (String) UUID of template param
+- `instruction_text` (String) Instruction text for param
+- `key` (String) key
+- `not_param` (String) Is it not a variable
+- `order` (Number) Order of template param
+- `param_array` (String) Is it an array
+- `parameter_name` (String) Name of template param
+- `provider` (String) provider
+- `range` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--template_params--range))
+- `required` (String) Is param required
+- `selection` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--template_params--selection))
 
 <a id="nestedblock--parameters--payload--template_params--range"></a>
-### Nested Schema for `parameters.payload.template_params.selection`
+### Nested Schema for `parameters.payload.template_params.range`
 
 Optional:
 
-- **id** (String) UUID of range
-- **max_value** (Number) Max value of range
-- **min_value** (Number) Min value of range
+- `id` (String) UUID of range
+- `max_value` (Number) Max value of range
+- `min_value` (Number) Min value of range
 
 
 <a id="nestedblock--parameters--payload--template_params--selection"></a>
@@ -518,10 +513,10 @@ Optional:
 
 Optional:
 
-- **default_selected_values** (List of String) Default selection values
-- **id** (String) UUID of selection
-- **selection_type** (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
-- **selection_values** (String) Selection values
+- `default_selected_values` (List of String) Default selection values
+- `id` (String) UUID of selection
+- `selection_type` (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
+- `selection_values` (String) Selection values
 
 
 
@@ -530,10 +525,10 @@ Optional:
 
 Optional:
 
-- **rollback_template_errors** (List of String) Validation or design conflicts errors of rollback template
-- **template_errors** (List of String) Validation or design conflicts errors
-- **template_id** (String) UUID of template
-- **template_version** (String) Current version of template
+- `rollback_template_errors` (List of String) Validation or design conflicts errors of rollback template
+- `template_errors` (List of String) Validation or design conflicts errors
+- `template_id` (String) UUID of template
+- `template_version` (String) Current version of template
 
 
 
@@ -543,7 +538,7 @@ Optional:
 
 Read-Only:
 
-- **task_id** (String)
-- **url** (String)
+- `task_id` (String)
+- `url` (String)
 
 

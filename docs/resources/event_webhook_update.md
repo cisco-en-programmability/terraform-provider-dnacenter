@@ -20,10 +20,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_event_webhook_update" "example" {
   provider = dnacenter
   parameters {
@@ -54,39 +50,36 @@ output "dnacenter_event_webhook_update_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **description** (String) Description
-- **headers** (Block List) (see [below for nested schema](#nestedblock--parameters--headers))
-- **method** (String) Method
-- **name** (String) Name
-- **trust_cert** (String) Trust Cert
-- **url** (String) Url
-- **webhook_id** (String) Required only for update webhook configuration
+- `description` (String) Description
+- `headers` (Block List) (see [below for nested schema](#nestedblock--parameters--headers))
+- `method` (String) Method
+- `name` (String) Name
+- `trust_cert` (String) Trust Cert
+- `url` (String) Url
+- `webhook_id` (String) Required only for update webhook configuration
 
 <a id="nestedblock--parameters--headers"></a>
 ### Nested Schema for `parameters.headers`
 
 Optional:
 
-- **default_value** (String) Default Value
-- **encrypt** (String) Encrypt
-- **name** (String) Name
-- **value** (String) Value
+- `default_value` (String) Default Value
+- `encrypt` (String) Encrypt
+- `name` (String) Name
+- `value` (String) Value
 
 
 
@@ -95,15 +88,15 @@ Optional:
 
 Read-Only:
 
-- **api_status** (String)
-- **error_message** (List of Object) (see [below for nested schema](#nestedobjatt--item--error_message))
-- **status_message** (String)
+- `api_status` (String)
+- `error_message` (List of Object) (see [below for nested schema](#nestedobjatt--item--error_message))
+- `status_message` (String)
 
 <a id="nestedobjatt--item--error_message"></a>
 ### Nested Schema for `item.error_message`
 
 Read-Only:
 
-- **errors** (List of String)
+- `errors` (List of String)
 
 

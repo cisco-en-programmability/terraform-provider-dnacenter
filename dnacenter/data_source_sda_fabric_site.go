@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -32,46 +32,47 @@ func dataSourceSdaFabricSite() *schema.Resource {
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"site_name_hierarchy": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
 
-						"fabric_name": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"fabric_type": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"description": &schema.Schema{
+							Description: `Fabric Site info successfully retrieved from sda fabric
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"fabric_domain_type": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Fabric Domain Type
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
-						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"fabric_name": &schema.Schema{
+							Description: `Fabric Name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
-						"execution_status_url": &schema.Schema{
-							Description: `Execution Status Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"fabric_type": &schema.Schema{
+							Description: `Fabric Type
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"site_name_hierarchy": &schema.Schema{
+							Description: `Site Name Hierarchy
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -88,7 +89,7 @@ func dataSourceSdaFabricSiteRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSiteFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetSiteFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetSiteFromSdaFabricQueryParams{}
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy.(string)
@@ -114,6 +115,7 @@ func dataSourceSdaFabricSiteRead(ctx context.Context, d *schema.ResourceData, m 
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -132,7 +134,6 @@ func flattenSdaGetSiteFromSdaFabricItem(item *dnacentersdkgo.ResponseSdaGetSiteF
 	respItem["fabric_domain_type"] = item.FabricDomainType
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
-	respItem["execution_status_url"] = item.ExecutionStatusURL
 	return []map[string]interface{}{
 		respItem,
 	}

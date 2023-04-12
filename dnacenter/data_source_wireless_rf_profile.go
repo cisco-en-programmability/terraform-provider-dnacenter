@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -77,42 +77,42 @@ func dataSourceWirelessRfProfile() *schema.Resource {
 
 						"default_rf_profile": &schema.Schema{
 							Description: `Default Rf Profile`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"enable_a_radio_type": &schema.Schema{
 							Description: `Enable ARadio Type`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"enable_b_radio_type": &schema.Schema{
 							Description: `Enable BRadio Type`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"enable_brown_field": &schema.Schema{
 							Description: `Enable Brown Field`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"enable_c_radio_type": &schema.Schema{
 							Description: `Enable CRadio Type`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"enable_custom": &schema.Schema{
 							Description: `Enable Custom`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -233,7 +233,7 @@ func dataSourceWirelessRfProfileRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RetrieveRfProfiles")
+		log.Printf("[DEBUG] Selected method: RetrieveRfProfiles")
 		queryParams1 := dnacentersdkgo.RetrieveRfProfilesQueryParams{}
 
 		if okRfProfileName {
@@ -261,6 +261,7 @@ func dataSourceWirelessRfProfileRead(ctx context.Context, d *schema.ResourceData
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

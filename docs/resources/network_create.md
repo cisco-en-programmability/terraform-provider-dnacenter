@@ -4,7 +4,7 @@ page_title: "dnacenter_network_create Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs create operation on Network Settings.
-  API to create a network for DHCP,  Syslog, SNMP, NTP, Network AAA, Client and Endpint AAA, and/or DNS center server
+  API to create a network for DHCP,  Syslog, SNMP, NTP, Network AAA, Client and EndPoint AAA, and/or DNS center server
   settings.
 ---
 
@@ -12,7 +12,7 @@ description: |-
 
 It performs create operation on Network Settings.
 
-- API to create a network for DHCP,  Syslog, SNMP, NTP, Network AAA, Client and Endpint AAA, and/or DNS center server
+- API to create a network for DHCP,  Syslog, SNMP, NTP, Network AAA, Client and EndPoint AAA, and/or DNS center server
 settings.
 
 ~>**Warning:**
@@ -22,10 +22,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_network_create" "example" {
   provider = dnacenter
   parameters {
@@ -78,7 +74,8 @@ resource "dnacenter_network_create" "example" {
       }
       timezone = "string"
     }
-    site_id = "string"
+    site_id           = "string"
+    persistbapioutput = "false"
   }
 }
 
@@ -92,54 +89,52 @@ output "dnacenter_network_create_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **site_id** (String) siteId path parameter. Site id to which site details to associate with the network settings.
+- `site_id` (String) siteId path parameter. Site id to which site details to associate with the network settings.
 
 Optional:
 
-- **settings** (Block List) (see [below for nested schema](#nestedblock--parameters--settings))
+- `persistbapioutput` (String) siteId path parameter. Site id to which site details to associate with the network settings.
+- `settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings))
 
 <a id="nestedblock--parameters--settings"></a>
 ### Nested Schema for `parameters.settings`
 
 Optional:
 
-- **client_and_endpoint_aaa** (Block List) (see [below for nested schema](#nestedblock--parameters--settings--client_and_endpoint_aaa))
-- **dhcp_server** (List of String) Dhcp serve Ip (eg: 1.1.1.1)
-- **dns_server** (Block List) (see [below for nested schema](#nestedblock--parameters--settings--dns_server))
-- **message_of_theday** (Block List) (see [below for nested schema](#nestedblock--parameters--settings--message_of_theday))
-- **netflowcollector** (Block List) (see [below for nested schema](#nestedblock--parameters--settings--netflowcollector))
-- **network_aaa** (Block List) (see [below for nested schema](#nestedblock--parameters--settings--network_aaa))
-- **ntp_server** (List of String) IP address for NTP server (eg: 1.1.1.2)
-- **snmp_server** (Block List) (see [below for nested schema](#nestedblock--parameters--settings--snmp_server))
-- **syslog_server** (Block List) (see [below for nested schema](#nestedblock--parameters--settings--syslog_server))
-- **timezone** (String) Input for time zone (eg: Africa/Abidjan)
+- `client_and_endpoint_aaa` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--client_and_endpoint_aaa))
+- `dhcp_server` (List of String) DHCP Server IP (eg: 1.1.1.1)
+- `dns_server` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--dns_server))
+- `message_of_theday` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--message_of_theday))
+- `netflowcollector` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--netflowcollector))
+- `network_aaa` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--network_aaa))
+- `ntp_server` (List of String) IP address for NTP server (eg: 1.1.1.2)
+- `snmp_server` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--snmp_server))
+- `syslog_server` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--syslog_server))
+- `timezone` (String) Input for time zone (eg: Africa/Abidjan)
 
 <a id="nestedblock--parameters--settings--client_and_endpoint_aaa"></a>
 ### Nested Schema for `parameters.settings.client_and_endpoint_aaa`
 
 Optional:
 
-- **ip_address** (String) IP address for ISE serve (eg: 1.1.1.4)
-- **network** (String) IP address for AAA or ISE server (eg: 2.2.2.1)
-- **protocol** (String) Protocol for AAA or ISE serve (eg: RADIUS)
-- **servers** (String) Server type AAA or ISE server (eg: AAA)
-- **shared_secret** (String) Shared secret for ISE server
+- `ip_address` (String) IP address for ISE serve (eg: 1.1.1.4)
+- `network` (String) IP address for AAA or ISE server (eg: 2.2.2.1)
+- `protocol` (String) Protocol for AAA or ISE serve (eg: RADIUS)
+- `servers` (String) Server type AAA or ISE server (eg: AAA)
+- `shared_secret` (String) Shared secret for ISE server
 
 
 <a id="nestedblock--parameters--settings--dns_server"></a>
@@ -147,9 +142,9 @@ Optional:
 
 Optional:
 
-- **domain_name** (String) Domain name of DHCP (eg; cisco)
-- **primary_ip_address** (String) Primary ip address for DHCP (eg: 2.2.2.2)
-- **secondary_ip_address** (String) Secondary ip address for DHCP (eg: 3.3.3.3)
+- `domain_name` (String) Domain Name of DHCP (eg; cisco)
+- `primary_ip_address` (String) Primary IP Address for DHCP (eg: 2.2.2.2)
+- `secondary_ip_address` (String) Secondary IP Address for DHCP (eg: 3.3.3.3)
 
 
 <a id="nestedblock--parameters--settings--message_of_theday"></a>
@@ -157,8 +152,8 @@ Optional:
 
 Optional:
 
-- **banner_message** (String) Massage for banner message (eg; Good day)
-- **retain_existing_banner** (String) Retain existing banner message (eg: "true" or "false")
+- `banner_message` (String) Massage for Banner message (eg; Good day)
+- `retain_existing_banner` (String) Retain existing Banner Message (eg: "true" or "false")
 
 
 <a id="nestedblock--parameters--settings--netflowcollector"></a>
@@ -166,8 +161,8 @@ Optional:
 
 Optional:
 
-- **ip_address** (String) IP address for netflow collector (eg: 3.3.3.1)
-- **port** (Number) Port for netflow collector (eg; 443)
+- `ip_address` (String) IP Address for NetFlow collector (eg: 3.3.3.1)
+- `port` (Number) Port for NetFlow Collector (eg; 443)
 
 
 <a id="nestedblock--parameters--settings--network_aaa"></a>
@@ -175,11 +170,11 @@ Optional:
 
 Optional:
 
-- **ip_address** (String) IP address for AAA and ISE server (eg: 1.1.1.1)
-- **network** (String) IP address for AAA or ISE server (eg: 2.2.2.2)
-- **protocol** (String) Protocol for AAA or ISE serve (eg: RADIUS)
-- **servers** (String) Server type for AAA network (eg: AAA)
-- **shared_secret** (String) Shared secret for ISE server
+- `ip_address` (String) IP address for AAA and ISE server (eg: 1.1.1.1)
+- `network` (String) IP Address for AAA or ISE server (eg: 2.2.2.2)
+- `protocol` (String) Protocol for AAA or ISE serve (eg: RADIUS)
+- `servers` (String) Server type for AAA Network (eg: AAA)
+- `shared_secret` (String) Shared secret for ISE Server
 
 
 <a id="nestedblock--parameters--settings--snmp_server"></a>
@@ -187,8 +182,8 @@ Optional:
 
 Optional:
 
-- **configure_dnac_ip** (String) Configuration dnac ip for snmp server (eg: true)
-- **ip_addresses** (List of String) IP address for snmp server (eg: 4.4.4.1)
+- `configure_dnac_ip` (String) Configuration DNAC IP for SNMP Server (eg: true)
+- `ip_addresses` (List of String) IP Address for SNMP Server (eg: 4.4.4.1)
 
 
 <a id="nestedblock--parameters--settings--syslog_server"></a>
@@ -196,8 +191,8 @@ Optional:
 
 Optional:
 
-- **configure_dnac_ip** (String) Configuration dnac ip for syslog server (eg: true)
-- **ip_addresses** (List of String) IP address for syslog server (eg: 4.4.4.4)
+- `configure_dnac_ip` (String) Configuration DNAC IP for syslog server (eg: true)
+- `ip_addresses` (List of String) IP Address for syslog server (eg: 4.4.4.4)
 
 
 
@@ -207,8 +202,8 @@ Optional:
 
 Read-Only:
 
-- **execution_id** (String)
-- **execution_status_url** (String)
-- **message** (String)
+- `execution_id` (String)
+- `execution_status_url` (String)
+- `message` (String)
 
 

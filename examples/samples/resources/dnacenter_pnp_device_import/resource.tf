@@ -22,11 +22,11 @@ resource "dnacenter_pnp_device_import" "example" {
         serial_number = "FOCTEST5AB"
       }
     }
-  #   payload {
-  #     device_info {
-  #       serial_number = "FOCTEST511"
-  #     }
-  #   }
+    #   payload {
+    #     device_info {
+    #       serial_number = "FOCTEST511"
+    #     }
+    #   }
   }
 }
 

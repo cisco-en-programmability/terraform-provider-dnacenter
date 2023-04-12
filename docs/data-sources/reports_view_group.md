@@ -43,30 +43,30 @@ output "dnacenter_reports_view_group_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **view_group_id** (String) viewGroupId path parameter. viewGroupId of viewgroup.
+- `view_group_id` (String) viewGroupId path parameter. viewGroupId of viewgroup.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **view_group_id** (String)
-- **views** (List of Object) (see [below for nested schema](#nestedobjatt--item--views))
+- `view_group_id` (String)
+- `views` (List of Object) (see [below for nested schema](#nestedobjatt--item--views))
 
 <a id="nestedobjatt--item--views"></a>
 ### Nested Schema for `item.views`
 
 Read-Only:
 
-- **description** (String)
-- **view_id** (String)
-- **view_name** (String)
+- `description` (String)
+- `view_id` (String)
+- `view_name` (String)
 
 
 
@@ -75,9 +75,9 @@ Read-Only:
 
 Read-Only:
 
-- **category** (String)
-- **description** (String)
-- **name** (String)
-- **view_group_id** (String)
+- `category` (String)
+- `description` (String)
+- `name` (String)
+- `view_group_id` (String)
 
 

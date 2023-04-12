@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -42,13 +42,13 @@ additional value added services.
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Max number of device entries in the response (default to 50.  Max at 1000)
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The offset of the first device in the returned data
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"site_id": &schema.Schema{
@@ -345,7 +345,7 @@ func dataSourceDeviceHealthRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: Devices")
+		log.Printf("[DEBUG] Selected method: Devices")
 		queryParams1 := dnacentersdkgo.DevicesQueryParams{}
 
 		if okDeviceRole {
@@ -364,10 +364,10 @@ func dataSourceDeviceHealthRead(ctx context.Context, d *schema.ResourceData, m i
 			queryParams1.EndTime = vEndTime.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 
 		response1, restyResp1, err := client.Devices.Devices(&queryParams1)
@@ -391,6 +391,7 @@ func dataSourceDeviceHealthRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

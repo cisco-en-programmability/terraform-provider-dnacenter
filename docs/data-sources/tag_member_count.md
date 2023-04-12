@@ -34,24 +34,24 @@ output "dnacenter_tag_member_count_example" {
 
 ### Required
 
-- **id** (String) id path parameter. Tag ID
-- **member_type** (String) memberType query parameter.
+- `id` (String) id path parameter. Tag ID
+- `member_type` (String) memberType query parameter.
 
 ### Optional
 
-- **level** (String) level query parameter.
-- **member_association_type** (String) memberAssociationType query parameter.
+- `level` (String) level query parameter.
+- `member_association_type` (String) memberAssociationType query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
-- **version** (String)
+- `response` (Number)
+- `version` (String)
 
 

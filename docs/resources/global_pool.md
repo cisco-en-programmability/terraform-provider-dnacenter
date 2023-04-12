@@ -20,10 +20,6 @@ It manages create, read, update and delete operations on Network Settings.
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_global_pool" "example" {
   provider = dnacenter
   parameters {
@@ -56,51 +52,48 @@ output "dnacenter_global_pool_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **settings** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings))
+- `settings` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings))
 
 Optional:
 
-- **id** (String) id path parameter. global pool id
+- `id` (String) id path parameter. global pool id
 
 <a id="nestedblock--parameters--settings"></a>
 ### Nested Schema for `parameters.settings`
 
 Required:
 
-- **ippool** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--ippool))
+- `ippool` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--ippool))
 
 <a id="nestedblock--parameters--settings--ippool"></a>
 ### Nested Schema for `parameters.settings.ippool`
 
 Required:
 
-- **ip_pool_name** (String) Ip Pool Name
+- `ip_pool_name` (String) Ip Pool Name
 
 Optional:
 
-- **dhcp_server_ips** (List of String) Dhcp Server Ips
-- **dns_server_ips** (List of String) Dns Server Ips
-- **gateway** (String) Gateway
-- **id** (String) Id
-- **ip_address_space** (String) Ip Address Space. Allowed values are IPv6 or IPv4.
-- **ip_pool_cidr** (String) Ip Pool Cidr
-- **type** (String) Type
+- `dhcp_server_ips` (List of String) Dhcp Server Ips
+- `dns_server_ips` (List of String) Dns Server Ips
+- `gateway` (String) Gateway
+- `id` (String) Id
+- `ip_address_space` (String) Ip Address Space. Allowed values are IPv6 or IPv4.
+- `ip_pool_cidr` (String) Ip Pool Cidr
+- `type` (String) Type
 
 
 
@@ -110,34 +103,34 @@ Optional:
 
 Read-Only:
 
-- **client_options** (String)
-- **configure_external_dhcp** (String)
-- **context** (List of Object) (see [below for nested schema](#nestedobjatt--item--context))
-- **create_time** (Number)
-- **dhcp_server_ips** (List of String)
-- **dns_server_ips** (List of String)
-- **gateways** (List of String)
-- **id** (String)
-- **ip_pool_cidr** (String)
-- **ip_pool_name** (String)
-- **ipv6** (String)
-- **last_update_time** (Number)
-- **overlapping** (String)
-- **owner** (String)
-- **parent_uuid** (String)
-- **shared** (String)
-- **total_ip_address_count** (Number)
-- **used_ip_address_count** (Number)
-- **used_percentage** (String)
+- `client_options` (String)
+- `configure_external_dhcp` (String)
+- `context` (List of Object) (see [below for nested schema](#nestedobjatt--item--context))
+- `create_time` (Number)
+- `dhcp_server_ips` (List of String)
+- `dns_server_ips` (List of String)
+- `gateways` (List of String)
+- `id` (String)
+- `ip_pool_cidr` (String)
+- `ip_pool_name` (String)
+- `ipv6` (String)
+- `last_update_time` (Number)
+- `overlapping` (String)
+- `owner` (String)
+- `parent_uuid` (String)
+- `shared` (String)
+- `total_ip_address_count` (Number)
+- `used_ip_address_count` (Number)
+- `used_percentage` (String)
 
 <a id="nestedobjatt--item--context"></a>
 ### Nested Schema for `item.context`
 
 Read-Only:
 
-- **context_key** (String)
-- **context_value** (String)
-- **owner** (String)
+- `context_key` (String)
+- `context_value` (String)
+- `owner` (String)
 
 ## Import
 

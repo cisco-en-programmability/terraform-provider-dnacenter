@@ -1,8 +1,10 @@
 
 resource "dnacenter_sda_fabric_border_device" "example" {
   provider = dnacenter
+
   parameters {
     payload {
+      border_priority                    = "string"
       border_session_type                = "string"
       border_with_external_connectivity  = "false"
       connected_to_internet              = "false"
@@ -30,6 +32,7 @@ resource "dnacenter_sda_fabric_border_device" "example" {
       }
       external_domain_routing_protocol_name = "string"
       internal_autonomou_system_number      = "string"
+      route_distribution_protocol           = "string"
       sda_transit_network_name              = "string"
       site_name_hierarchy                   = "string"
     }

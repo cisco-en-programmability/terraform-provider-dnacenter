@@ -16,13 +16,10 @@ It performs create operation on Fabric Wireless.
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_business_sda_wireless_controller_create" "example" {
   provider = dnacenter
   parameters {
@@ -42,24 +39,21 @@ output "dnacenter_business_sda_wireless_controller_create_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **device_name** (String) EWLC Device Name
-- **site_name_hierarchy** (String) Site Name Hierarchy
+- `device_name` (String) EWLC Device Name
+- `site_name_hierarchy` (String) Site Name Hierarchy
 
 
 <a id="nestedatt--item"></a>
@@ -67,8 +61,8 @@ Optional:
 
 Read-Only:
 
-- **execution_id** (String)
-- **execution_status_url** (String)
-- **message** (String)
+- `execution_id` (String)
+- `execution_status_url` (String)
+- `message` (String)
 
 

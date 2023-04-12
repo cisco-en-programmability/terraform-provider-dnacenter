@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -194,7 +194,7 @@ func dataSourceLicenseDeviceLicenseDetails() *schema.Resource {
 						"has_sup_cards": &schema.Schema{
 							Description: `Whether device has supervisor cards
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -209,7 +209,7 @@ func dataSourceLicenseDeviceLicenseDetails() *schema.Resource {
 						"is_license_expired": &schema.Schema{
 							Description: `Is device license expired
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -217,7 +217,7 @@ func dataSourceLicenseDeviceLicenseDetails() *schema.Resource {
 						"is_stacked_device": &schema.Schema{
 							Description: `Is Stacked Device
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -336,30 +336,31 @@ func dataSourceLicenseDeviceLicenseDetailsRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeviceLicenseDetails")
+		log.Printf("[DEBUG] Selected method: DeviceLicenseDetails2")
 		vvDeviceUUID := vDeviceUUID.(string)
 
-		response1, restyResp1, err := client.Licenses.DeviceLicenseDetails(vvDeviceUUID)
+		response1, restyResp1, err := client.Licenses.DeviceLicenseDetails2(vvDeviceUUID)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing DeviceLicenseDetails", err,
-				"Failure at DeviceLicenseDetails, unexpected response", ""))
+				"Failure when executing DeviceLicenseDetails2", err,
+				"Failure at DeviceLicenseDetails2, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenLicensesDeviceLicenseDetailsItems(response1.Response)
+		vItems1 := flattenLicensesDeviceLicenseDetails2Items(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting DeviceLicenseDetails response",
+				"Failure when setting DeviceLicenseDetails2 response",
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -367,7 +368,7 @@ func dataSourceLicenseDeviceLicenseDetailsRead(ctx context.Context, d *schema.Re
 	return diags
 }
 
-func flattenLicensesDeviceLicenseDetailsItems(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseDetailsResponse) []map[string]interface{} {
+func flattenLicensesDeviceLicenseDetails2Items(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseDetails2Response) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -392,16 +393,16 @@ func flattenLicensesDeviceLicenseDetailsItems(items *[]dnacentersdkgo.ResponseLi
 		respItem["feature_license"] = item.FeatureLicense
 		respItem["has_sup_cards"] = boolPtrToString(item.HasSupCards)
 		respItem["udi"] = item.Udi
-		respItem["stacked_devices"] = flattenLicensesDeviceLicenseDetailsItemsStackedDevices(item.StackedDevices)
+		respItem["stacked_devices"] = flattenLicensesDeviceLicenseDetails2ItemsStackedDevices(item.StackedDevices)
 		respItem["is_stacked_device"] = boolPtrToString(item.IsStackedDevice)
-		respItem["access_points"] = flattenLicensesDeviceLicenseDetailsItemsAccessPoints(item.AccessPoints)
-		respItem["chassis_details"] = flattenLicensesDeviceLicenseDetailsItemsChassisDetails(item.ChassisDetails)
+		respItem["access_points"] = flattenLicensesDeviceLicenseDetails2ItemsAccessPoints(item.AccessPoints)
+		respItem["chassis_details"] = flattenLicensesDeviceLicenseDetails2ItemsChassisDetails(item.ChassisDetails)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenLicensesDeviceLicenseDetailsItemsStackedDevices(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseDetailsResponseStackedDevices) []map[string]interface{} {
+func flattenLicensesDeviceLicenseDetails2ItemsStackedDevices(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseDetails2ResponseStackedDevices) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -417,7 +418,7 @@ func flattenLicensesDeviceLicenseDetailsItemsStackedDevices(items *[]dnacentersd
 	return respItems
 }
 
-func flattenLicensesDeviceLicenseDetailsItemsAccessPoints(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseDetailsResponseAccessPoints) []map[string]interface{} {
+func flattenLicensesDeviceLicenseDetails2ItemsAccessPoints(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseDetails2ResponseAccessPoints) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -431,14 +432,14 @@ func flattenLicensesDeviceLicenseDetailsItemsAccessPoints(items *[]dnacentersdkg
 	return respItems
 }
 
-func flattenLicensesDeviceLicenseDetailsItemsChassisDetails(item *dnacentersdkgo.ResponseLicensesDeviceLicenseDetailsResponseChassisDetails) []map[string]interface{} {
+func flattenLicensesDeviceLicenseDetails2ItemsChassisDetails(item *dnacentersdkgo.ResponseLicensesDeviceLicenseDetails2ResponseChassisDetails) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["board_serial_number"] = item.BoardSerialNumber
-	respItem["modules"] = flattenLicensesDeviceLicenseDetailsItemsChassisDetailsModules(item.Modules)
-	respItem["supervisor_cards"] = flattenLicensesDeviceLicenseDetailsItemsChassisDetailsSupervisorCards(item.SupervisorCards)
+	respItem["modules"] = flattenLicensesDeviceLicenseDetails2ItemsChassisDetailsModules(item.Modules)
+	respItem["supervisor_cards"] = flattenLicensesDeviceLicenseDetails2ItemsChassisDetailsSupervisorCards(item.SupervisorCards)
 	respItem["port"] = item.Port
 
 	return []map[string]interface{}{
@@ -447,7 +448,7 @@ func flattenLicensesDeviceLicenseDetailsItemsChassisDetails(item *dnacentersdkgo
 
 }
 
-func flattenLicensesDeviceLicenseDetailsItemsChassisDetailsModules(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseDetailsResponseChassisDetailsModules) []map[string]interface{} {
+func flattenLicensesDeviceLicenseDetails2ItemsChassisDetailsModules(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseDetails2ResponseChassisDetailsModules) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -463,7 +464,7 @@ func flattenLicensesDeviceLicenseDetailsItemsChassisDetailsModules(items *[]dnac
 	return respItems
 }
 
-func flattenLicensesDeviceLicenseDetailsItemsChassisDetailsSupervisorCards(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseDetailsResponseChassisDetailsSupervisorCards) []map[string]interface{} {
+func flattenLicensesDeviceLicenseDetails2ItemsChassisDetailsSupervisorCards(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseDetails2ResponseChassisDetailsSupervisorCards) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

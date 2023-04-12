@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -52,7 +52,7 @@ func dataSourceSensor() *schema.Resource {
 
 						"is_led_enabled": &schema.Schema{
 							Description: `Is L E D Enabled`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -152,7 +152,7 @@ func dataSourceSensorRead(ctx context.Context, d *schema.ResourceData, m interfa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: Sensors")
+		log.Printf("[DEBUG] Selected method: Sensors")
 		queryParams1 := dnacentersdkgo.SensorsQueryParams{}
 
 		if okSiteID {
@@ -180,6 +180,7 @@ func dataSourceSensorRead(ctx context.Context, d *schema.ResourceData, m interfa
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -210,30 +211,6 @@ func flattenSensorsSensorsItems(items *[]dnacentersdkgo.ResponseSensorsSensorsRe
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenSensorsSensorsItem(item *dnacentersdkgo.ResponseSensorsSensorsResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-
-	respItem := make(map[string]interface{})
-	respItem["name"] = item.Name
-	respItem["status"] = item.Status
-	respItem["radio_mac_address"] = item.RadioMacAddress
-	respItem["ethernet_mac_address"] = item.EthernetMacAddress
-	respItem["location"] = item.Location
-	respItem["backhaul_type"] = item.BackhaulType
-	respItem["serial_number"] = item.SerialNumber
-	respItem["ip_address"] = item.IPAddress
-	respItem["version"] = item.Version
-	respItem["last_seen"] = item.LastSeen
-	respItem["type"] = item.Type
-	respItem["ssh_config"] = flattenSensorsSensorsItemsSSHConfig(item.SSHConfig)
-	respItem["is_led_enabled"] = boolPtrToString(item.IsLEDEnabled)
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenSensorsSensorsItemsSSHConfig(item *dnacentersdkgo.ResponseSensorsSensorsResponseSSHConfig) []map[string]interface{} {

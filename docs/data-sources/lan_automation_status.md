@@ -43,42 +43,42 @@ output "dnacenter_lan_automation_status_example" {
 
 ### Optional
 
-- **id** (String) id path parameter. LAN Automation session identifier.
-- **limit** (String) limit query parameter. Number of LAN Automation sessions to be retrieved. Limit value can range between 1 to 10.
-- **offset** (String) offset query parameter. Starting index of the LAN Automation session. Minimum value is 1.
+- `id` (String) id path parameter. LAN Automation session identifier.
+- `limit` (Number) limit query parameter. Number of LAN Automation sessions to be retrieved. Limit value can range between 1 to 10.
+- `offset` (Number) offset query parameter. Starting index of the LAN Automation session. Minimum value is 1.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **action** (String)
-- **creation_time** (String)
-- **discovered_device_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--discovered_device_list))
-- **discovered_device_site_name_hierarchy** (String)
-- **id** (String)
-- **ip_pool_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--ip_pool_list))
-- **multicast_enabled** (String)
-- **peer_device_managment_ipaddress** (String)
-- **primary_device_interface_names** (List of String)
-- **primary_device_managment_ipaddress** (String)
-- **redistribute_isis_to_bgp** (String)
-- **status** (String)
+- `action` (String)
+- `creation_time` (String)
+- `discovered_device_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--discovered_device_list))
+- `discovered_device_site_name_hierarchy` (String)
+- `id` (String)
+- `ip_pool_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--ip_pool_list))
+- `multicast_enabled` (String)
+- `peer_device_managment_ipaddress` (String)
+- `primary_device_interface_names` (List of String)
+- `primary_device_managment_ipaddress` (String)
+- `redistribute_isis_to_bgp` (String)
+- `status` (String)
 
 <a id="nestedobjatt--item--discovered_device_list"></a>
 ### Nested Schema for `item.discovered_device_list`
 
 Read-Only:
 
-- **ip_address_in_use_list** (List of String)
-- **name** (String)
-- **serial_number** (String)
-- **state** (String)
+- `ip_address_in_use_list` (List of String)
+- `name` (String)
+- `serial_number` (String)
+- `state` (String)
 
 
 <a id="nestedobjatt--item--ip_pool_list"></a>
@@ -86,8 +86,8 @@ Read-Only:
 
 Read-Only:
 
-- **ip_pool_name** (String)
-- **ip_pool_role** (String)
+- `ip_pool_name` (String)
+- `ip_pool_role` (String)
 
 
 
@@ -96,28 +96,28 @@ Read-Only:
 
 Read-Only:
 
-- **action** (String)
-- **creation_time** (String)
-- **discovered_device_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--discovered_device_list))
-- **discovered_device_site_name_hierarchy** (String)
-- **id** (String)
-- **ip_pool_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--ip_pool_list))
-- **multicast_enabled** (String)
-- **peer_device_managment_ipaddress** (String)
-- **primary_device_interface_names** (List of String)
-- **primary_device_managment_ipaddress** (String)
-- **redistribute_isis_to_bgp** (String)
-- **status** (String)
+- `action` (String)
+- `creation_time` (String)
+- `discovered_device_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--discovered_device_list))
+- `discovered_device_site_name_hierarchy` (String)
+- `id` (String)
+- `ip_pool_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--ip_pool_list))
+- `multicast_enabled` (String)
+- `peer_device_managment_ipaddress` (String)
+- `primary_device_interface_names` (List of String)
+- `primary_device_managment_ipaddress` (String)
+- `redistribute_isis_to_bgp` (String)
+- `status` (String)
 
 <a id="nestedobjatt--items--discovered_device_list"></a>
 ### Nested Schema for `items.discovered_device_list`
 
 Read-Only:
 
-- **ip_address_in_use_list** (List of String)
-- **name** (String)
-- **serial_number** (String)
-- **state** (String)
+- `ip_address_in_use_list` (List of String)
+- `name` (String)
+- `serial_number` (String)
+- `state` (String)
 
 
 <a id="nestedobjatt--items--ip_pool_list"></a>
@@ -125,7 +125,7 @@ Read-Only:
 
 Read-Only:
 
-- **ip_pool_name** (String)
-- **ip_pool_role** (String)
+- `ip_pool_name` (String)
+- `ip_pool_role` (String)
 
 

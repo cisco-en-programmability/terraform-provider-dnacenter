@@ -40,64 +40,64 @@ output "dnacenter_license_device_license_summary_example" {
 
 ### Required
 
-- **limit** (Number) limit query parameter.
-- **order** (String) order query parameter. Sorting order
-- **page_number** (Number) page_number query parameter. Page number of response
+- `limit` (Number) limit query parameter.
+- `order` (String) order query parameter. Sorting order
+- `page_number` (Number) page_number query parameter. Page number of response
 
 ### Optional
 
-- **device_type** (String) device_type query parameter. Type of device
-- **device_uuid** (String) device_uuid query parameter. Id of device
-- **dna_level** (String) dna_level query parameter. Device Cisco DNA license level
-- **id** (String) The ID of this resource.
-- **registration_status** (String) registration_status query parameter. Smart license registration status of device
-- **smart_account_id** (Number) smart_account_id query parameter. Id of smart account
-- **sort_by** (String) sort_by query parameter. Sort result by field
-- **virtual_account_name** (String) virtual_account_name query parameter. Name of virtual account
+- `device_type` (String) device_type query parameter. Type of device
+- `device_uuid` (String) device_uuid query parameter. Id of device
+- `dna_level` (String) dna_level query parameter. Device Cisco DNA license level
+- `registration_status` (String) registration_status query parameter. Smart license registration status of device
+- `smart_account_id` (Number) smart_account_id query parameter. Id of smart account
+- `sort_by` (String) sort_by query parameter. Sort result by field
+- `virtual_account_name` (String) virtual_account_name query parameter. Name of virtual account
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **authorization_status** (String)
-- **customer_tag1** (String)
-- **customer_tag2** (String)
-- **customer_tag3** (String)
-- **customer_tag4** (String)
-- **device_name** (String)
-- **device_type** (String)
-- **device_uuid** (String)
-- **dna_level** (String)
-- **evaluation_license_expiry** (String)
-- **hsec_status** (String)
-- **ip_address** (String)
-- **is_license_expired** (String)
-- **is_performance_allowed** (String)
-- **is_wireless** (String)
-- **is_wireless_capable** (String)
-- **last_successful_rum_usage_upload_time** (String)
-- **last_updated_time** (String)
-- **license_mode** (String)
-- **mac_address** (String)
-- **model** (String)
-- **network_license** (String)
-- **performance_license** (String)
-- **registration_status** (String)
-- **reservation_status** (String)
-- **site** (String)
-- **sle_auth_code** (String)
-- **sle_state** (String)
-- **smart_account_name** (String)
-- **software_version** (String)
-- **throughput_level** (String)
-- **total_access_point_count** (Number)
-- **virtual_account_name** (String)
-- **wireless_capable_dna_license** (String)
-- **wireless_capable_network_license** (String)
+- `authorization_status` (String)
+- `customer_tag1` (String)
+- `customer_tag2` (String)
+- `customer_tag3` (String)
+- `customer_tag4` (String)
+- `device_name` (String)
+- `device_type` (String)
+- `device_uuid` (String)
+- `dna_level` (String)
+- `evaluation_license_expiry` (String)
+- `hsec_status` (String)
+- `ip_address` (String)
+- `is_license_expired` (String)
+- `is_performance_allowed` (String)
+- `is_wireless` (String)
+- `is_wireless_capable` (String)
+- `last_successful_rum_usage_upload_time` (String)
+- `last_updated_time` (String)
+- `license_mode` (String)
+- `mac_address` (String)
+- `model` (String)
+- `network_license` (String)
+- `performance_license` (String)
+- `registration_status` (String)
+- `reservation_status` (String)
+- `site` (String)
+- `sle_auth_code` (String)
+- `sle_state` (String)
+- `smart_account_name` (String)
+- `software_version` (String)
+- `throughput_level` (String)
+- `total_access_point_count` (Number)
+- `virtual_account_name` (String)
+- `wireless_capable_dna_license` (String)
+- `wireless_capable_network_license` (String)
 
 

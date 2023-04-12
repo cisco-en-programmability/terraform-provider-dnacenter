@@ -31,60 +31,60 @@ output "dnacenter_qos_device_interface_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **network_device_id** (String) networkDeviceId query parameter. network device id
+- `network_device_id` (String) networkDeviceId query parameter. network device id
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **cfs_change_info** (List of String)
-- **create_time** (Number)
-- **custom_provisions** (List of String)
-- **deployed** (String)
-- **display_name** (String)
-- **excluded_interfaces** (List of String)
-- **id** (String)
-- **instance_created_on** (Number)
-- **instance_id** (Number)
-- **instance_updated_on** (Number)
-- **instance_version** (Number)
-- **is_excluded** (String)
-- **is_seeded** (String)
-- **is_stale** (String)
-- **last_update_time** (Number)
-- **name** (String)
-- **namespace** (String)
-- **network_device_id** (String)
-- **provisioning_state** (String)
-- **qos_device_interface_info** (List of Object) (see [below for nested schema](#nestedobjatt--items--qos_device_interface_info))
-- **qualifier** (String)
-- **resource_version** (Number)
-- **target_id_list** (List of String)
-- **type** (String)
+- `cfs_change_info` (List of String)
+- `create_time` (Number)
+- `custom_provisions` (List of String)
+- `deployed` (String)
+- `display_name` (String)
+- `excluded_interfaces` (List of String)
+- `id` (String)
+- `instance_created_on` (Number)
+- `instance_id` (Number)
+- `instance_updated_on` (Number)
+- `instance_version` (Number)
+- `is_excluded` (String)
+- `is_seeded` (String)
+- `is_stale` (String)
+- `last_update_time` (Number)
+- `name` (String)
+- `namespace` (String)
+- `network_device_id` (String)
+- `provisioning_state` (String)
+- `qos_device_interface_info` (List of Object) (see [below for nested schema](#nestedobjatt--items--qos_device_interface_info))
+- `qualifier` (String)
+- `resource_version` (Number)
+- `target_id_list` (List of String)
+- `type` (String)
 
 <a id="nestedobjatt--items--qos_device_interface_info"></a>
 ### Nested Schema for `items.qos_device_interface_info`
 
 Read-Only:
 
-- **display_name** (String)
-- **dmvpn_remote_sites_bw** (List of Number)
-- **download_bw** (Number)
-- **id** (String)
-- **instance_created_on** (Number)
-- **instance_id** (Number)
-- **instance_updated_on** (Number)
-- **instance_version** (Number)
-- **interface_id** (String)
-- **interface_name** (String)
-- **label** (String)
-- **role** (String)
-- **upload_bw** (Number)
+- `display_name` (String)
+- `dmvpn_remote_sites_bw` (List of Number)
+- `download_bw` (Number)
+- `id` (String)
+- `instance_created_on` (Number)
+- `instance_id` (Number)
+- `instance_updated_on` (Number)
+- `instance_version` (Number)
+- `interface_id` (String)
+- `interface_name` (String)
+- `label` (String)
+- `role` (String)
+- `upload_bw` (Number)
 
 

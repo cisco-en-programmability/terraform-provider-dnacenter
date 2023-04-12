@@ -33,61 +33,61 @@ output "dnacenter_reserve_ip_subpool_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **limit** (String) limit query parameter. No of Global Pools to be retrieved
-- **offset** (String) offset query parameter. offset/starting row
-- **site_id** (String) siteId query parameter. site id to get the reserve ip associated with the site
+- `limit` (Number) limit query parameter. No of Global Pools to be retrieved
+- `offset` (Number) offset query parameter. offset/starting row
+- `site_id` (String) siteId query parameter. site id to get the reserve ip associated with the site
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **group_name** (String)
-- **group_owner** (String)
-- **id** (String)
-- **ip_pools** (List of Object) (see [below for nested schema](#nestedobjatt--items--ip_pools))
-- **site_hierarchy** (String)
-- **site_id** (String)
-- **type** (String)
+- `group_name` (String)
+- `group_owner` (String)
+- `id` (String)
+- `ip_pools` (List of Object) (see [below for nested schema](#nestedobjatt--items--ip_pools))
+- `site_hierarchy` (String)
+- `site_id` (String)
+- `type` (String)
 
 <a id="nestedobjatt--items--ip_pools"></a>
 ### Nested Schema for `items.ip_pools`
 
 Read-Only:
 
-- **client_options** (String)
-- **configure_external_dhcp** (String)
-- **context** (List of Object) (see [below for nested schema](#nestedobjatt--items--ip_pools--context))
-- **create_time** (Number)
-- **dhcp_server_ips** (List of String)
-- **dns_server_ips** (List of String)
-- **gateways** (List of String)
-- **group_uuid** (String)
-- **id** (String)
-- **ip_pool_cidr** (String)
-- **ip_pool_name** (String)
-- **ipv6** (String)
-- **last_update_time** (Number)
-- **overlapping** (String)
-- **owner** (String)
-- **parent_uuid** (String)
-- **shared** (String)
-- **total_ip_address_count** (Number)
-- **used_ip_address_count** (Number)
-- **used_percentage** (String)
+- `client_options` (String)
+- `configure_external_dhcp` (String)
+- `context` (List of Object) (see [below for nested schema](#nestedobjatt--items--ip_pools--context))
+- `create_time` (Number)
+- `dhcp_server_ips` (List of String)
+- `dns_server_ips` (List of String)
+- `gateways` (List of String)
+- `group_uuid` (String)
+- `id` (String)
+- `ip_pool_cidr` (String)
+- `ip_pool_name` (String)
+- `ipv6` (String)
+- `last_update_time` (Number)
+- `overlapping` (String)
+- `owner` (String)
+- `parent_uuid` (String)
+- `shared` (String)
+- `total_ip_address_count` (Number)
+- `used_ip_address_count` (Number)
+- `used_percentage` (String)
 
 <a id="nestedobjatt--items--ip_pools--context"></a>
 ### Nested Schema for `items.ip_pools.context`
 
 Read-Only:
 
-- **context_key** (String)
-- **context_value** (String)
-- **owner** (String)
+- `context_key` (String)
+- `context_value` (String)
+- `owner` (String)
 
 

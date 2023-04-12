@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -88,6 +88,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -97,11 +98,13 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"dynamic_interfaces": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -111,6 +114,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"interface_ipaddress": &schema.Schema{
 													Description: `Interface IP Address
@@ -118,6 +122,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"interface_name": &schema.Schema{
 													Description: `Interface Name
@@ -125,6 +130,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"interface_netmask_in_cid_r": &schema.Schema{
 													Description: `Interface Netmask In CIDR
@@ -132,6 +138,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"lag_or_port_number": &schema.Schema{
 													Description: `Lag Or Port Number
@@ -139,6 +146,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"vlan_id": &schema.Schema{
 													Description: `VLAN ID
@@ -146,6 +154,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -156,6 +165,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -166,6 +176,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 								},
 							},
@@ -193,9 +204,9 @@ func resourceWirelessProvisionDeviceCreateCreate(ctx context.Context, d *schema.
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing Provision", err,
-			"Failure at Provision, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -244,6 +255,7 @@ func resourceWirelessProvisionDeviceCreateCreate(ctx context.Context, d *schema.
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

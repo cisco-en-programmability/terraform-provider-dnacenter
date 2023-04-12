@@ -23,7 +23,7 @@ resource "dnacenter_lan_automation_create" "example" {
         ip_pool_role = "string"
       }
       isis_domain_pwd                    = "string"
-      mulitcast_enabled                  = "false"
+      multicast_enabled                  = "false"
       peer_device_managment_ipaddress    = "string"
       primary_device_interface_names     = ["string"]
       primary_device_managment_ipaddress = "string"

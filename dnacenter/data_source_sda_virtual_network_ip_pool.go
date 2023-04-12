@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -62,14 +62,14 @@ func dataSourceSdaVirtualNetworkIPPool() *schema.Resource {
 
 						"is_l2_flooding_enabled": &schema.Schema{
 							Description: `Is L2 Flooding Enabled`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"is_this_critical_pool": &schema.Schema{
 							Description: `Is This Critical Pool`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -114,7 +114,7 @@ func dataSourceSdaVirtualNetworkIPPoolRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetIPPoolFromSdaVirtualNetwork")
+		log.Printf("[DEBUG] Selected method: GetIPPoolFromSdaVirtualNetwork")
 		queryParams1 := dnacentersdkgo.GetIPPoolFromSdaVirtualNetworkQueryParams{}
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy.(string)
@@ -144,6 +144,7 @@ func dataSourceSdaVirtualNetworkIPPoolRead(ctx context.Context, d *schema.Resour
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

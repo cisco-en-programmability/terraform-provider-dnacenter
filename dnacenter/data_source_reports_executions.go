@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -134,13 +134,13 @@ func dataSourceReportsExecutions() *schema.Resource {
 						"report_was_executed": &schema.Schema{
 							Description: `true if atleast one execution has started
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"schedule": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -184,7 +184,7 @@ func dataSourceReportsExecutions() *schema.Resource {
 									},
 
 									"format": &schema.Schema{
-										Type:     schema.TypeString,
+										Type:     schema.TypeString, //TEST,
 										Computed: true,
 									},
 
@@ -240,7 +240,7 @@ func dataSourceReportsExecutionsRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAllExecutionDetailsForAGivenReport")
+		log.Printf("[DEBUG] Selected method: GetAllExecutionDetailsForAGivenReport")
 		vvReportID := vReportID.(string)
 
 		response1, restyResp1, err := client.Reports.GetAllExecutionDetailsForAGivenReport(vvReportID)
@@ -264,6 +264,7 @@ func dataSourceReportsExecutionsRead(ctx context.Context, d *schema.ResourceData
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

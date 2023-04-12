@@ -33,33 +33,33 @@ output "dnacenter_applications_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **limit** (Number) limit query parameter. The maximum number of applications to be returned
-- **name** (String) name query parameter. Application's name
-- **offset** (Number) offset query parameter. The offset of the first application to be returned
+- `limit` (Number) limit query parameter. The maximum number of applications to be returned
+- `name` (String) name query parameter. Application's name
+- `offset` (Number) offset query parameter. The offset of the first application to be returned
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **application_set** (List of Object) (see [below for nested schema](#nestedobjatt--items--application_set))
-- **id** (String)
-- **indicative_network_identity** (List of Object) (see [below for nested schema](#nestedobjatt--items--indicative_network_identity))
-- **name** (String)
-- **network_applications** (List of Object) (see [below for nested schema](#nestedobjatt--items--network_applications))
-- **network_identity** (List of Object) (see [below for nested schema](#nestedobjatt--items--network_identity))
+- `application_set` (List of Object) (see [below for nested schema](#nestedobjatt--items--application_set))
+- `id` (String)
+- `indicative_network_identity` (List of Object) (see [below for nested schema](#nestedobjatt--items--indicative_network_identity))
+- `name` (String)
+- `network_applications` (List of Object) (see [below for nested schema](#nestedobjatt--items--network_applications))
+- `network_identity` (List of Object) (see [below for nested schema](#nestedobjatt--items--network_identity))
 
 <a id="nestedobjatt--items--application_set"></a>
 ### Nested Schema for `items.application_set`
 
 Read-Only:
 
-- **id_ref** (String)
+- `id_ref` (String)
 
 
 <a id="nestedobjatt--items--indicative_network_identity"></a>
@@ -67,12 +67,12 @@ Read-Only:
 
 Read-Only:
 
-- **display_name** (String)
-- **id** (String)
-- **lower_port** (Number)
-- **ports** (String)
-- **protocol** (String)
-- **upper_port** (Number)
+- `display_name` (String)
+- `id` (String)
+- `lower_port` (Number)
+- `ports` (String)
+- `protocol` (String)
+- `upper_port` (Number)
 
 
 <a id="nestedobjatt--items--network_applications"></a>
@@ -80,23 +80,23 @@ Read-Only:
 
 Read-Only:
 
-- **app_protocol** (String)
-- **application_sub_type** (String)
-- **application_type** (String)
-- **category_id** (String)
-- **display_name** (String)
-- **dscp** (String)
-- **engine_id** (String)
-- **help_string** (String)
-- **id** (String)
-- **ignore_conflict** (String)
-- **long_description** (String)
-- **name** (String)
-- **popularity** (Number)
-- **rank** (Number)
-- **server_name** (String)
-- **traffic_class** (String)
-- **url** (String)
+- `app_protocol` (String)
+- `application_sub_type` (String)
+- `application_type` (String)
+- `category_id` (String)
+- `display_name` (String)
+- `dscp` (String)
+- `engine_id` (String)
+- `help_string` (String)
+- `id` (String)
+- `ignore_conflict` (String)
+- `long_description` (String)
+- `name` (String)
+- `popularity` (Number)
+- `rank` (Number)
+- `server_name` (String)
+- `traffic_class` (String)
+- `url` (String)
 
 
 <a id="nestedobjatt--items--network_identity"></a>
@@ -104,11 +104,11 @@ Read-Only:
 
 Read-Only:
 
-- **display_name** (String)
-- **id** (String)
-- **lower_port** (Number)
-- **ports** (String)
-- **protocol** (String)
-- **upper_port** (Number)
+- `display_name` (String)
+- `id` (String)
+- `lower_port` (Number)
+- `ports` (String)
+- `protocol` (String)
+- `upper_port` (Number)
 
 
