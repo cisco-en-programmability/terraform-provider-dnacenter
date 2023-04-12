@@ -34,49 +34,46 @@ output "dnacenter_issues_enrichment_details_example" {
 
 ### Required
 
-- **entity_type** (String) entity_type header parameter. Issue enrichment details can be fetched based on either Issue ID or Client MAC address. This parameter value must either be issue_id/mac_address
-- **entity_value** (String) entity_value header parameter. Contains the actual value for the entity type that has been defined
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `entity_type` (String) entity_type header parameter. Issue enrichment details can be fetched based on either Issue ID or Client MAC address. This parameter value must either be issue_id/mac_address
+- `entity_value` (String) entity_value header parameter. Contains the actual value for the entity type that has been defined
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **issue** (List of Object) (see [below for nested schema](#nestedobjatt--item--issue))
+- `issue` (List of Object) (see [below for nested schema](#nestedobjatt--item--issue))
 
 <a id="nestedobjatt--item--issue"></a>
 ### Nested Schema for `item.issue`
 
 Read-Only:
 
-- **impacted_hosts** (List of String)
-- **issue_category** (String)
-- **issue_description** (String)
-- **issue_entity** (String)
-- **issue_entity_value** (String)
-- **issue_id** (String)
-- **issue_name** (String)
-- **issue_priority** (String)
-- **issue_severity** (String)
-- **issue_source** (String)
-- **issue_summary** (String)
-- **issue_timestamp** (Number)
-- **suggested_actions** (List of Object) (see [below for nested schema](#nestedobjatt--item--issue--suggested_actions))
+- `impacted_hosts` (List of String)
+- `issue_category` (String)
+- `issue_description` (String)
+- `issue_entity` (String)
+- `issue_entity_value` (String)
+- `issue_id` (String)
+- `issue_name` (String)
+- `issue_priority` (String)
+- `issue_severity` (String)
+- `issue_source` (String)
+- `issue_summary` (String)
+- `issue_timestamp` (Number)
+- `suggested_actions` (List of Object) (see [below for nested schema](#nestedobjatt--item--issue--suggested_actions))
 
 <a id="nestedobjatt--item--issue--suggested_actions"></a>
 ### Nested Schema for `item.issue.suggested_actions`
 
 Read-Only:
 
-- **message** (String)
-- **steps** (List of String)
+- `message` (String)
+- `steps` (List of String)
 
 

@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
 
 	"time"
@@ -10,7 +11,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -61,6 +62,7 @@ func resourceCommandRunnerRunCommand() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -69,11 +71,13 @@ func resourceCommandRunnerRunCommand() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"device_uuids": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -82,11 +86,13 @@ func resourceCommandRunnerRunCommand() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"timeout": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -111,9 +117,8 @@ func resourceCommandRunnerRunCommandCreate(ctx context.Context, d *schema.Resour
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration", err,
-			"Failure at RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing RunReadOnlyCommandsOnDevices", err))
 		return diags
 	}
 
@@ -167,6 +172,7 @@ func resourceCommandRunnerRunCommandCreate(ctx context.Context, d *schema.Resour
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

@@ -31,23 +31,20 @@ output "dnacenter_network_device_poe_example" {
 
 ### Required
 
-- **device_uuid** (String) deviceUuid path parameter. uuid of the device
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_uuid` (String) deviceUuid path parameter. uuid of the device
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **power_allocated** (String)
-- **power_consumed** (String)
-- **power_remaining** (String)
+- `power_allocated` (String)
+- `power_consumed` (String)
+- `power_remaining` (String)
 
 

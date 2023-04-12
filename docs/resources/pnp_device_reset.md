@@ -20,10 +20,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_pnp_device_reset" "example" {
   provider = dnacenter
   parameters {
@@ -59,52 +55,49 @@ output "dnacenter_pnp_device_reset_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **device_reset_list** (Block List) (see [below for nested schema](#nestedblock--parameters--device_reset_list))
-- **project_id** (String)
-- **workflow_id** (String)
+- `device_reset_list` (Block List) (see [below for nested schema](#nestedblock--parameters--device_reset_list))
+- `project_id` (String)
+- `workflow_id` (String)
 
 <a id="nestedblock--parameters--device_reset_list"></a>
 ### Nested Schema for `parameters.device_reset_list`
 
 Optional:
 
-- **config_list** (Block List) (see [below for nested schema](#nestedblock--parameters--device_reset_list--config_list))
-- **device_id** (String)
-- **license_level** (String)
-- **license_type** (String)
-- **top_of_stack_serial_number** (String)
+- `config_list` (Block List) (see [below for nested schema](#nestedblock--parameters--device_reset_list--config_list))
+- `device_id` (String)
+- `license_level` (String)
+- `license_type` (String)
+- `top_of_stack_serial_number` (String)
 
 <a id="nestedblock--parameters--device_reset_list--config_list"></a>
 ### Nested Schema for `parameters.device_reset_list.config_list`
 
 Optional:
 
-- **config_id** (String)
-- **config_parameters** (Block List) (see [below for nested schema](#nestedblock--parameters--device_reset_list--config_list--config_parameters))
+- `config_id` (String)
+- `config_parameters` (Block List) (see [below for nested schema](#nestedblock--parameters--device_reset_list--config_list--config_parameters))
 
 <a id="nestedblock--parameters--device_reset_list--config_list--config_parameters"></a>
 ### Nested Schema for `parameters.device_reset_list.config_list.config_parameters`
 
 Optional:
 
-- **key** (String)
-- **value** (String)
+- `key` (String)
+- `value` (String)
 
 
 
@@ -115,9 +108,9 @@ Optional:
 
 Read-Only:
 
-- **json_array_response** (List of String)
-- **json_response** (String)
-- **message** (String)
-- **status_code** (Number)
+- `json_array_response` (List of String)
+- `json_response` (String)
+- `message` (String)
+- `status_code` (Number)
 
 

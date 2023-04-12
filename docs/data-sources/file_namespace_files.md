@@ -31,32 +31,29 @@ output "dnacenter_file_namespace_files_example" {
 
 ### Required
 
-- **name_space** (String) nameSpace path parameter. A listing of fileId's
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `name_space` (String) nameSpace path parameter. A listing of fileId's
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **attribute_info** (String)
-- **download_path** (String)
-- **encrypted** (String)
-- **file_format** (String)
-- **file_size** (String)
-- **id** (String)
-- **md5_checksum** (String)
-- **name** (String)
-- **name_space** (String)
-- **sftp_server_list** (List of String)
-- **sha1_checksum** (String)
-- **task_id** (String)
+- `attribute_info` (String)
+- `download_path` (String)
+- `encrypted` (String)
+- `file_format` (String)
+- `file_size` (String)
+- `id` (String)
+- `md5_checksum` (String)
+- `name` (String)
+- `name_space` (String)
+- `sftp_server_list` (List of String)
+- `sha1_checksum` (String)
+- `task_id` (String)
 
 

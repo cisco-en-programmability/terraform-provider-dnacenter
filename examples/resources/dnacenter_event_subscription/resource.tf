@@ -3,6 +3,7 @@ resource "dnacenter_event_subscription" "example" {
   provider = dnacenter
   parameters {
     payload {
+
       description = "string"
       filter {
 

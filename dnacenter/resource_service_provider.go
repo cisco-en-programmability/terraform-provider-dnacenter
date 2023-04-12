@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,11 +18,11 @@ func resourceServiceProvider() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Settings.
 
-- API to create service provider profile(QOS).
+- API to create Service Provider Profile(QOS).
 
-- API to update SP profile.
+- API to update Service Provider Profile (QoS).
 
-- API to delete Service Provider profile (QoS).
+- API to delete Service Provider Profile (QoS).
 `,
 
 		CreateContext: resourceServiceProviderCreate,
@@ -49,49 +49,41 @@ func resourceServiceProvider() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"inherited_group_name": &schema.Schema{
 							Description: `Inherited Group Name`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"inherited_group_uuid": &schema.Schema{
 							Description: `Inherited Group Uuid`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"instance_type": &schema.Schema{
 							Description: `Instance Type`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"instance_uuid": &schema.Schema{
 							Description: `Instance Uuid`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"key": &schema.Schema{
 							Description: `Key`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"namespace": &schema.Schema{
 							Description: `Namespace`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"type": &schema.Schema{
 							Description: `Type`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"value": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -103,13 +95,11 @@ func resourceServiceProvider() *schema.Resource {
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"sp_profile_name": &schema.Schema{
 										Description: `Sp Profile Name`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"wan_provider": &schema.Schema{
 										Description: `Wan Provider`,
 										Type:        schema.TypeString,
@@ -118,10 +108,9 @@ func resourceServiceProvider() *schema.Resource {
 								},
 							},
 						},
-
 						"version": &schema.Schema{
 							Description: `Version`,
-							Type:        schema.TypeInt,
+							Type:        schema.TypeString,
 							Computed:    true,
 						},
 					},
@@ -129,21 +118,22 @@ func resourceServiceProvider() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"settings": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"qos": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -151,22 +141,37 @@ func resourceServiceProvider() *schema.Resource {
 													Description: `Model`,
 													Type:        schema.TypeString,
 													Optional:    true,
+													Computed:    true,
+												},
+												"old_profile_name": &schema.Schema{
+													Description: `Old Profile Name`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"profile_name": &schema.Schema{
 													Description: `Profile Name`,
 													Type:        schema.TypeString,
 													Optional:    true,
+													Computed:    true,
 												},
 												"wan_provider": &schema.Schema{
 													Description: `Wan Provider`,
 													Type:        schema.TypeString,
 													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
 									},
 								},
 							},
+						},
+						"sp_profile_name": &schema.Schema{
+							Description: `spProfileName path parameter. sp profile name
+`,
+							Type:     schema.TypeString,
+							Required: true,
 						},
 					},
 				},
@@ -283,8 +288,10 @@ func resourceServiceProviderRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		//TODO FOR DNAC
-
-		vItem1 := flattenNetworkSettingsGetServiceProviderDetailsItem(response1)
+		items := []dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetailsResponse{
+			*response1,
+		}
+		vItem1 := flattenNetworkSettingsGetServiceProviderDetailsItems(&items)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetServiceProviderDetails search response",
@@ -458,8 +465,10 @@ func resourceServiceProviderDelete(ctx context.Context, d *schema.ResourceData, 
 }
 func expandRequestServiceProviderCreateSpProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateSpProfile {
 	request := dnacentersdkgo.RequestNetworkSettingsCreateSpProfile{}
-	request.Settings = expandRequestServiceProviderCreateSpProfileSettings(ctx, key+".settings.0", d)
-
+	request.Settings = expandRequestServiceProviderCreateSpProfileSettings(ctx, key, d)
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
@@ -468,7 +477,9 @@ func expandRequestServiceProviderCreateSpProfileSettings(ctx context.Context, ke
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".qos")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".qos")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".qos")))) {
 		request.Qos = expandRequestServiceProviderCreateSpProfileSettingsQosArray(ctx, key+".qos", d)
 	}
-
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
@@ -483,13 +494,15 @@ func expandRequestServiceProviderCreateSpProfileSettingsQosArray(ctx context.Con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestServiceProviderCreateSpProfileSettingsQos(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
 	}
-
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
@@ -504,14 +517,18 @@ func expandRequestServiceProviderCreateSpProfileSettingsQos(ctx context.Context,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".wan_provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".wan_provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".wan_provider")))) {
 		request.WanProvider = interfaceToString(v)
 	}
-
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
 func expandRequestServiceProviderUpdateSpProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsUpdateSpProfile {
 	request := dnacentersdkgo.RequestNetworkSettingsUpdateSpProfile{}
-	request.Settings = expandRequestServiceProviderUpdateSpProfileSettings(ctx, key+".settings.0", d)
-
+	request.Settings = expandRequestServiceProviderUpdateSpProfileSettings(ctx, key, d)
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
@@ -520,7 +537,9 @@ func expandRequestServiceProviderUpdateSpProfileSettings(ctx context.Context, ke
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".qos")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".qos")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".qos")))) {
 		request.Qos = expandRequestServiceProviderUpdateSpProfileSettingsQosArray(ctx, key+".qos", d)
 	}
-
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
@@ -535,13 +554,15 @@ func expandRequestServiceProviderUpdateSpProfileSettingsQosArray(ctx context.Con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestServiceProviderUpdateSpProfileSettingsQos(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
 	}
-
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 
@@ -556,7 +577,12 @@ func expandRequestServiceProviderUpdateSpProfileSettingsQos(ctx context.Context,
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".wan_provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".wan_provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".wan_provider")))) {
 		request.WanProvider = interfaceToString(v)
 	}
-
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".old_profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".old_profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".old_profile_name")))) {
+		request.OldProfileName = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
 	return &request
 }
 

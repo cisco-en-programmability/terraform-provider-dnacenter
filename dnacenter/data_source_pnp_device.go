@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -226,7 +226,7 @@ Pagination and sorting are also supported by this endpoint
 
 						"day_zero_config_preview": &schema.Schema{
 							Description: `Day Zero Config Preview`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -362,7 +362,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"readable": &schema.Schema{
 													Description: `Readable`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -381,7 +381,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"writeable": &schema.Schema{
 													Description: `Writeable`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -442,7 +442,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"ipv4_address": &schema.Schema{
 													Description: `Ipv4 Address`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -640,7 +640,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"discovery_created": &schema.Schema{
 													Description: `Discovery Created`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -665,13 +665,13 @@ Pagination and sorting are also supported by this endpoint
 
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeString, //TEST,
 																Computed:    true,
 															},
 
 															"ipv6_address": &schema.Schema{
 																Description: `Ipv6 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeString, //TEST,
 																Computed:    true,
 															},
 
@@ -716,13 +716,13 @@ Pagination and sorting are also supported by this endpoint
 
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeString, //TEST,
 																Computed:    true,
 															},
 
 															"ipv6_address": &schema.Schema{
 																Description: `Ipv6 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeString, //TEST,
 																Computed:    true,
 															},
 
@@ -746,7 +746,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"populate_inventory": &schema.Schema{
 										Description: `Populate Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -786,7 +786,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"reload_requested": &schema.Schema{
 										Description: `Reload Requested`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -823,7 +823,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"stack": &schema.Schema{
 										Description: `Stack`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -836,7 +836,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"is_full_ring": &schema.Schema{
 													Description: `Is Full Ring`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -930,7 +930,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"supports_stack_workflows": &schema.Schema{
 													Description: `Supports Stack Workflows`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -961,14 +961,14 @@ Pagination and sorting are also supported by this endpoint
 
 									"sudi_required": &schema.Schema{
 										Description: `Sudi Required`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"tags": &schema.Schema{
 										Description: `Tags`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -1025,7 +1025,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"error_flag": &schema.Schema{
 										Description: `Error Flag`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1146,7 +1146,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1366,7 +1366,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1598,7 +1598,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1893,7 +1893,7 @@ Pagination and sorting are also supported by this endpoint
 
 						"day_zero_config_preview": &schema.Schema{
 							Description: `Day Zero Config Preview`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -2029,7 +2029,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"readable": &schema.Schema{
 													Description: `Readable`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2048,7 +2048,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"writeable": &schema.Schema{
 													Description: `Writeable`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2109,7 +2109,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"ipv4_address": &schema.Schema{
 													Description: `Ipv4 Address`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 
@@ -2307,7 +2307,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"discovery_created": &schema.Schema{
 													Description: `Discovery Created`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2332,13 +2332,13 @@ Pagination and sorting are also supported by this endpoint
 
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeString, //TEST,
 																Computed:    true,
 															},
 
 															"ipv6_address": &schema.Schema{
 																Description: `Ipv6 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeString, //TEST,
 																Computed:    true,
 															},
 
@@ -2383,13 +2383,13 @@ Pagination and sorting are also supported by this endpoint
 
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeString, //TEST,
 																Computed:    true,
 															},
 
 															"ipv6_address": &schema.Schema{
 																Description: `Ipv6 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeString, //TEST,
 																Computed:    true,
 															},
 
@@ -2413,7 +2413,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"populate_inventory": &schema.Schema{
 										Description: `Populate Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2453,7 +2453,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"reload_requested": &schema.Schema{
 										Description: `Reload Requested`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2490,7 +2490,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"stack": &schema.Schema{
 										Description: `Stack`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2503,7 +2503,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"is_full_ring": &schema.Schema{
 													Description: `Is Full Ring`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2597,7 +2597,7 @@ Pagination and sorting are also supported by this endpoint
 
 												"supports_stack_workflows": &schema.Schema{
 													Description: `Supports Stack Workflows`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -2628,14 +2628,14 @@ Pagination and sorting are also supported by this endpoint
 
 									"sudi_required": &schema.Schema{
 										Description: `Sudi Required`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"tags": &schema.Schema{
 										Description: `Tags`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -2698,7 +2698,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"error_flag": &schema.Schema{
 										Description: `Error Flag`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -2819,7 +2819,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -3039,7 +3039,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -3271,7 +3271,7 @@ Pagination and sorting are also supported by this endpoint
 
 									"add_to_inventory": &schema.Schema{
 										Description: `Add To Inventory`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -3580,7 +3580,7 @@ func dataSourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceList2")
+		log.Printf("[DEBUG] Selected method: GetDeviceList2")
 		queryParams1 := dnacentersdkgo.GetDeviceList2QueryParams{}
 
 		if okLimit {
@@ -3668,12 +3668,13 @@ func dataSourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m inte
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceByID")
+		log.Printf("[DEBUG] Selected method: GetDeviceByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.DeviceOnboardingPnp.GetDeviceByID(vvID)
@@ -3697,6 +3698,7 @@ func dataSourcePnpDeviceRead(ctx context.Context, d *schema.ResourceData, m inte
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -3726,23 +3728,7 @@ func flattenDeviceOnboardingPnpGetDeviceList2Items(items *dnacentersdkgo.Respons
 	}
 	return respItems
 }
-func flattenDeviceOnboardingPnpGetDeviceList2Items2(item *dnacentersdkgo.ResponseItemDeviceOnboardingPnpGetDeviceList2) []map[string]interface{} {
-	respItem := make(map[string]interface{})
-	respItem["device_info"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsDeviceInfo(item.DeviceInfo)
-	respItem["system_reset_workflow"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsSystemResetWorkflow(item.SystemResetWorkflow)
-	respItem["system_workflow"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsSystemWorkflow(item.SystemWorkflow)
-	respItem["workflow"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsWorkflow(item.Workflow)
-	respItem["run_summary_list"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsRunSummaryList(item.RunSummaryList)
-	respItem["workflow_parameters"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsWorkflowParameters(item.WorkflowParameters)
-	respItem["day_zero_config"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsDayZeroConfig(item.DayZeroConfig)
-	respItem["day_zero_config_preview"] = flattenDeviceOnboardingPnpGetDeviceList2ItemsDayZeroConfigPreview(item.DayZeroConfigPreview)
-	respItem["version"] = item.Version
-	respItem["tenant_id"] = item.TenantID
-	respItem["id"] = item.ID
-	return []map[string]interface{}{
-		respItem,
-	}
-}
+
 func flattenDeviceOnboardingPnpGetDeviceList2ItemsDeviceInfo(item *dnacentersdkgo.ResponseItemDeviceOnboardingPnpGetDeviceList2DeviceInfo) []map[string]interface{} {
 	if item == nil {
 		return nil

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -81,7 +81,7 @@ func dataSourceLicenseTermDetails() *schema.Resource {
 						},
 
 						"purchased_dna_license_count": &schema.Schema{
-							Description: `Number of purchased Cisco DNA licenses
+							Description: `Number of purchased DNA licenses
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -110,34 +110,35 @@ func dataSourceLicenseTermDetailsRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: LicenseTermDetails")
+		log.Printf("[DEBUG] Selected method: LicenseTermDetails2")
 		vvSmartAccountID := vSmartAccountID.(string)
 		vvVirtualAccountName := vVirtualAccountName.(string)
-		queryParams1 := dnacentersdkgo.LicenseTermDetailsQueryParams{}
+		queryParams1 := dnacentersdkgo.LicenseTermDetails2QueryParams{}
 
 		queryParams1.DeviceType = vDeviceType.(string)
 
-		response1, restyResp1, err := client.Licenses.LicenseTermDetails(vvSmartAccountID, vvVirtualAccountName, &queryParams1)
+		response1, restyResp1, err := client.Licenses.LicenseTermDetails2(vvSmartAccountID, vvVirtualAccountName, &queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing LicenseTermDetails", err,
-				"Failure at LicenseTermDetails, unexpected response", ""))
+				"Failure when executing LicenseTermDetails2", err,
+				"Failure at LicenseTermDetails2, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenLicensesLicenseTermDetailsItems(response1.LicenseDetails)
+		vItems1 := flattenLicensesLicenseTermDetails2Items(response1.LicenseDetails)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting LicenseTermDetails response",
+				"Failure when setting LicenseTermDetails2 response",
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -145,7 +146,7 @@ func dataSourceLicenseTermDetailsRead(ctx context.Context, d *schema.ResourceDat
 	return diags
 }
 
-func flattenLicensesLicenseTermDetailsItems(items *[]dnacentersdkgo.ResponseLicensesLicenseTermDetailsLicenseDetails) []map[string]interface{} {
+func flattenLicensesLicenseTermDetails2Items(items *[]dnacentersdkgo.ResponseLicensesLicenseTermDetails2LicenseDetails) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

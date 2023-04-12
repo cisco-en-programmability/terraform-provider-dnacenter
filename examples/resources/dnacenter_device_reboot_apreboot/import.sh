@@ -1,0 +1,1 @@
+terraform import dnacenter_device_reboot_apreboot.example "id:=string"

@@ -49,70 +49,70 @@ output "dnacenter_pnp_workflow_example" {
 
 ### Optional
 
-- **id** (String) id path parameter.
-- **limit** (Number) limit query parameter. Limits number of results
-- **name** (List of String) name query parameter. Workflow Name
-- **offset** (Number) offset query parameter. Index of first result
-- **sort** (List of String) sort query parameter. Comma seperated lost of fields to sort on
-- **sort_order** (String) sortOrder query parameter. Sort Order Ascending (asc) or Descending (des)
-- **type** (List of String) type query parameter. Workflow Type
+- `id` (String) id path parameter.
+- `limit` (Number) limit query parameter. Limits number of results
+- `name` (List of String) name query parameter. Workflow Name
+- `offset` (Number) offset query parameter. Index of first result
+- `sort` (List of String) sort query parameter. Comma seperated lost of fields to sort on
+- `sort_order` (String) sortOrder query parameter. Sort Order Ascending (asc) or Descending (des)
+- `type` (List of String) type query parameter. Workflow Type
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **add_to_inventory** (String)
-- **added_on** (Number)
-- **config_id** (String)
-- **curr_task_idx** (Number)
-- **description** (String)
-- **end_time** (Number)
-- **exec_time** (Number)
-- **image_id** (String)
-- **instance_type** (String)
-- **lastupdate_on** (Number)
-- **name** (String)
-- **start_time** (Number)
-- **state** (String)
-- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--item--tasks))
-- **tenant_id** (String)
-- **type** (String)
-- **type_id** (String)
-- **use_state** (String)
-- **version** (Number)
+- `add_to_inventory` (String)
+- `added_on` (Number)
+- `config_id` (String)
+- `curr_task_idx` (Number)
+- `description` (String)
+- `end_time` (Number)
+- `exec_time` (Number)
+- `image_id` (String)
+- `instance_type` (String)
+- `lastupdate_on` (Number)
+- `name` (String)
+- `start_time` (Number)
+- `state` (String)
+- `tasks` (List of Object) (see [below for nested schema](#nestedobjatt--item--tasks))
+- `tenant_id` (String)
+- `type` (String)
+- `type_id` (String)
+- `use_state` (String)
+- `version` (Number)
 
 <a id="nestedobjatt--item--tasks"></a>
 ### Nested Schema for `item.tasks`
 
 Read-Only:
 
-- **curr_work_item_idx** (Number)
-- **end_time** (Number)
-- **name** (String)
-- **start_time** (Number)
-- **state** (String)
-- **task_seq_no** (Number)
-- **time_taken** (Number)
-- **type** (String)
-- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--tasks--work_item_list))
+- `curr_work_item_idx` (Number)
+- `end_time` (Number)
+- `name` (String)
+- `start_time` (Number)
+- `state` (String)
+- `task_seq_no` (Number)
+- `time_taken` (Number)
+- `type` (String)
+- `work_item_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--tasks--work_item_list))
 
 <a id="nestedobjatt--item--tasks--work_item_list"></a>
 ### Nested Schema for `item.tasks.work_item_list`
 
 Read-Only:
 
-- **command** (String)
-- **end_time** (Number)
-- **output_str** (String)
-- **start_time** (Number)
-- **state** (String)
-- **time_taken** (Number)
+- `command` (String)
+- `end_time` (Number)
+- `output_str` (String)
+- `start_time` (Number)
+- `state` (String)
+- `time_taken` (Number)
 
 
 
@@ -122,51 +122,51 @@ Read-Only:
 
 Read-Only:
 
-- **add_to_inventory** (String)
-- **added_on** (Number)
-- **config_id** (String)
-- **curr_task_idx** (Number)
-- **description** (String)
-- **end_time** (Number)
-- **exec_time** (Number)
-- **image_id** (String)
-- **instance_type** (String)
-- **lastupdate_on** (Number)
-- **name** (String)
-- **start_time** (Number)
-- **state** (String)
-- **tasks** (List of Object) (see [below for nested schema](#nestedobjatt--items--tasks))
-- **tenant_id** (String)
-- **type** (String)
-- **type_id** (String)
-- **use_state** (String)
-- **version** (Number)
+- `add_to_inventory` (String)
+- `added_on` (Number)
+- `config_id` (String)
+- `curr_task_idx` (Number)
+- `description` (String)
+- `end_time` (Number)
+- `exec_time` (Number)
+- `image_id` (String)
+- `instance_type` (String)
+- `lastupdate_on` (Number)
+- `name` (String)
+- `start_time` (Number)
+- `state` (String)
+- `tasks` (List of Object) (see [below for nested schema](#nestedobjatt--items--tasks))
+- `tenant_id` (String)
+- `type` (String)
+- `type_id` (String)
+- `use_state` (String)
+- `version` (Number)
 
 <a id="nestedobjatt--items--tasks"></a>
 ### Nested Schema for `items.tasks`
 
 Read-Only:
 
-- **curr_work_item_idx** (Number)
-- **end_time** (Number)
-- **name** (String)
-- **start_time** (Number)
-- **state** (String)
-- **task_seq_no** (Number)
-- **time_taken** (Number)
-- **type** (String)
-- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--tasks--work_item_list))
+- `curr_work_item_idx` (Number)
+- `end_time` (Number)
+- `name` (String)
+- `start_time` (Number)
+- `state` (String)
+- `task_seq_no` (Number)
+- `time_taken` (Number)
+- `type` (String)
+- `work_item_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--tasks--work_item_list))
 
 <a id="nestedobjatt--items--tasks--work_item_list"></a>
 ### Nested Schema for `items.tasks.work_item_list`
 
 Read-Only:
 
-- **command** (String)
-- **end_time** (Number)
-- **output_str** (String)
-- **start_time** (Number)
-- **state** (String)
-- **time_taken** (Number)
+- `command` (String)
+- `end_time` (Number)
+- `output_str` (String)
+- `start_time` (Number)
+- `state` (String)
+- `time_taken` (Number)
 
 

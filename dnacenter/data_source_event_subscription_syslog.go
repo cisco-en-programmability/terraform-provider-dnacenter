@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -41,7 +41,7 @@ func dataSourceEventSubscriptionSyslog() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. The number of Subscriptions's to limit in the resultset whose default value 10
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"name": &schema.Schema{
@@ -53,7 +53,7 @@ func dataSourceEventSubscriptionSyslog() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The number of Subscriptions's to offset in the resultset whose default value 0
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -190,7 +190,7 @@ func dataSourceEventSubscriptionSyslog() *schema.Resource {
 
 						"is_private": &schema.Schema{
 							Description: `Is Private`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -347,17 +347,17 @@ func dataSourceEventSubscriptionSyslogRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSyslogEventSubscriptions")
+		log.Printf("[DEBUG] Selected method: GetSyslogEventSubscriptions")
 		queryParams1 := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
 
 		if okEventIDs {
 			queryParams1.EventIDs = vEventIDs.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okSortBy {
 			queryParams1.SortBy = vSortBy.(string)
@@ -402,6 +402,7 @@ func dataSourceEventSubscriptionSyslogRead(ctx context.Context, d *schema.Resour
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -416,8 +417,8 @@ func flattenEventManagementGetSyslogEventSubscriptionsItems(items *dnacentersdkg
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["version"] = responseInterfaceToString(item.Version)
-		respItem["subscription_id"] = responseInterfaceToString(item.SubscriptionID)
+		respItem["version"] = item.Version
+		respItem["subscription_id"] = item.SubscriptionID
 		respItem["name"] = item.Name
 		respItem["description"] = item.Description
 		respItem["subscription_endpoints"] = flattenEventManagementGetSyslogEventSubscriptionsItemsSubscriptionEndpoints(item.SubscriptionEndpoints)

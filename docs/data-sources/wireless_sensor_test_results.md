@@ -34,33 +34,33 @@ output "dnacenter_wireless_sensor_test_results_example" {
 
 ### Optional
 
-- **end_time** (Number) endTime query parameter. The epoch time in milliseconds
-- **id** (String) The ID of this resource.
-- **site_id** (String) siteId query parameter. Assurance site UUID
-- **start_time** (Number) startTime query parameter. The epoch time in milliseconds
-- **test_failure_by** (String) testFailureBy query parameter. Obtain failure statistics group by "area", "building", or "floor"
+- `end_time` (Number) endTime query parameter. The epoch time in milliseconds
+- `site_id` (String) siteId query parameter. Assurance site UUID
+- `start_time` (Number) startTime query parameter. The epoch time in milliseconds
+- `test_failure_by` (String) testFailureBy query parameter. Obtain failure statistics group by "area", "building", or "floor"
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **failure_stats** (List of Object) (see [below for nested schema](#nestedobjatt--item--failure_stats))
-- **summary** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary))
+- `failure_stats` (List of Object) (see [below for nested schema](#nestedobjatt--item--failure_stats))
+- `summary` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary))
 
 <a id="nestedobjatt--item--failure_stats"></a>
 ### Nested Schema for `item.failure_stats`
 
 Read-Only:
 
-- **error_code** (Number)
-- **error_title** (String)
-- **test_category** (String)
-- **test_type** (String)
+- `error_code` (Number)
+- `error_title` (String)
+- `test_category` (String)
+- `test_type` (String)
 
 
 <a id="nestedobjatt--item--summary"></a>
@@ -68,30 +68,30 @@ Read-Only:
 
 Read-Only:
 
-- **app_con_nec_tiv_ity** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--app_con_nec_tiv_ity))
-- **ema_il** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--ema_il))
-- **net_wor_kse_rvi_ces** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--net_wor_kse_rvi_ces))
-- **onb_oar_din_g** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--onb_oar_din_g))
-- **per_for_man_ce** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--per_for_man_ce))
-- **rfa_sse_ssm_ent** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--rfa_sse_ssm_ent))
-- **total_test_count** (Number)
+- `app_con_nec_tiv_ity` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--app_con_nec_tiv_ity))
+- `ema_il` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--ema_il))
+- `net_wor_kse_rvi_ces` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--net_wor_kse_rvi_ces))
+- `onb_oar_din_g` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--onb_oar_din_g))
+- `per_for_man_ce` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--per_for_man_ce))
+- `rfa_sse_ssm_ent` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--rfa_sse_ssm_ent))
+- `total_test_count` (Number)
 
 <a id="nestedobjatt--item--summary--app_con_nec_tiv_ity"></a>
 ### Nested Schema for `item.summary.app_con_nec_tiv_ity`
 
 Read-Only:
 
-- **fil_etr_ans_fer** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--app_con_nec_tiv_ity--fil_etr_ans_fer))
-- **hos_tre_ach_abi_lit_y** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--app_con_nec_tiv_ity--hos_tre_ach_abi_lit_y))
-- **web_ser_ver** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--app_con_nec_tiv_ity--web_ser_ver))
+- `fil_etr_ans_fer` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--app_con_nec_tiv_ity--fil_etr_ans_fer))
+- `hos_tre_ach_abi_lit_y` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--app_con_nec_tiv_ity--hos_tre_ach_abi_lit_y))
+- `web_ser_ver` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--app_con_nec_tiv_ity--web_ser_ver))
 
 <a id="nestedobjatt--item--summary--app_con_nec_tiv_ity--fil_etr_ans_fer"></a>
 ### Nested Schema for `item.summary.app_con_nec_tiv_ity.web_ser_ver`
 
 Read-Only:
 
-- **fail_count** (Number)
-- **pass_count** (Number)
+- `fail_count` (Number)
+- `pass_count` (Number)
 
 
 <a id="nestedobjatt--item--summary--app_con_nec_tiv_ity--hos_tre_ach_abi_lit_y"></a>
@@ -99,8 +99,8 @@ Read-Only:
 
 Read-Only:
 
-- **fail_count** (Number)
-- **pass_count** (Number)
+- `fail_count` (Number)
+- `pass_count` (Number)
 
 
 <a id="nestedobjatt--item--summary--app_con_nec_tiv_ity--web_ser_ver"></a>
@@ -108,8 +108,8 @@ Read-Only:
 
 Read-Only:
 
-- **fail_count** (Number)
-- **pass_count** (Number)
+- `fail_count` (Number)
+- `pass_count` (Number)
 
 
 
@@ -118,15 +118,15 @@ Read-Only:
 
 Read-Only:
 
-- **mai_lse_rve_r** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--ema_il--mai_lse_rve_r))
+- `mai_lse_rve_r` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--ema_il--mai_lse_rve_r))
 
 <a id="nestedobjatt--item--summary--ema_il--mai_lse_rve_r"></a>
 ### Nested Schema for `item.summary.ema_il.mai_lse_rve_r`
 
 Read-Only:
 
-- **fail_count** (Number)
-- **pass_count** (Number)
+- `fail_count` (Number)
+- `pass_count` (Number)
 
 
 
@@ -135,15 +135,15 @@ Read-Only:
 
 Read-Only:
 
-- **dns** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--net_wor_kse_rvi_ces--dns))
+- `dns` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--net_wor_kse_rvi_ces--dns))
 
 <a id="nestedobjatt--item--summary--net_wor_kse_rvi_ces--dns"></a>
 ### Nested Schema for `item.summary.net_wor_kse_rvi_ces.dns`
 
 Read-Only:
 
-- **fail_count** (Number)
-- **pass_count** (Number)
+- `fail_count` (Number)
+- `pass_count` (Number)
 
 
 
@@ -152,17 +152,17 @@ Read-Only:
 
 Read-Only:
 
-- **ass_oc** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--onb_oar_din_g--ass_oc))
-- **aut_h** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--onb_oar_din_g--aut_h))
-- **dhc_p** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--onb_oar_din_g--dhc_p))
+- `ass_oc` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--onb_oar_din_g--ass_oc))
+- `aut_h` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--onb_oar_din_g--aut_h))
+- `dhc_p` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--onb_oar_din_g--dhc_p))
 
 <a id="nestedobjatt--item--summary--onb_oar_din_g--ass_oc"></a>
 ### Nested Schema for `item.summary.onb_oar_din_g.dhc_p`
 
 Read-Only:
 
-- **fail_count** (Number)
-- **pass_count** (Number)
+- `fail_count` (Number)
+- `pass_count` (Number)
 
 
 <a id="nestedobjatt--item--summary--onb_oar_din_g--aut_h"></a>
@@ -170,8 +170,8 @@ Read-Only:
 
 Read-Only:
 
-- **fail_count** (Number)
-- **pass_count** (Number)
+- `fail_count` (Number)
+- `pass_count` (Number)
 
 
 <a id="nestedobjatt--item--summary--onb_oar_din_g--dhc_p"></a>
@@ -179,8 +179,8 @@ Read-Only:
 
 Read-Only:
 
-- **fail_count** (Number)
-- **pass_count** (Number)
+- `fail_count` (Number)
+- `pass_count` (Number)
 
 
 
@@ -189,15 +189,15 @@ Read-Only:
 
 Read-Only:
 
-- **ips_las_end_er** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--per_for_man_ce--ips_las_end_er))
+- `ips_las_end_er` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--per_for_man_ce--ips_las_end_er))
 
 <a id="nestedobjatt--item--summary--per_for_man_ce--ips_las_end_er"></a>
 ### Nested Schema for `item.summary.per_for_man_ce.ips_las_end_er`
 
 Read-Only:
 
-- **fail_count** (Number)
-- **pass_count** (Number)
+- `fail_count` (Number)
+- `pass_count` (Number)
 
 
 
@@ -206,16 +206,16 @@ Read-Only:
 
 Read-Only:
 
-- **dat_ara_te** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--rfa_sse_ssm_ent--dat_ara_te))
-- **snr** (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--rfa_sse_ssm_ent--snr))
+- `dat_ara_te` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--rfa_sse_ssm_ent--dat_ara_te))
+- `snr` (List of Object) (see [below for nested schema](#nestedobjatt--item--summary--rfa_sse_ssm_ent--snr))
 
 <a id="nestedobjatt--item--summary--rfa_sse_ssm_ent--dat_ara_te"></a>
 ### Nested Schema for `item.summary.rfa_sse_ssm_ent.snr`
 
 Read-Only:
 
-- **fail_count** (Number)
-- **pass_count** (Number)
+- `fail_count` (Number)
+- `pass_count` (Number)
 
 
 <a id="nestedobjatt--item--summary--rfa_sse_ssm_ent--snr"></a>
@@ -223,7 +223,7 @@ Read-Only:
 
 Read-Only:
 
-- **fail_count** (Number)
-- **pass_count** (Number)
+- `fail_count` (Number)
+- `pass_count` (Number)
 
 

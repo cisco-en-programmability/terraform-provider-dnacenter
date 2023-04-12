@@ -32,31 +32,28 @@ output "dnacenter_business_sda_hostonboarding_ssid_ippool_example" {
 
 ### Required
 
-- **site_name_hierarchy** (String) siteNameHierarchy query parameter. Site Name Heirarchy
-- **vlan_name** (String) vlanName query parameter. VLAN Name
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `site_name_hierarchy` (String) siteNameHierarchy query parameter. Site Name Heirarchy
+- `vlan_name` (String) vlanName query parameter. VLAN Name
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **ssid_details** (List of Object) (see [below for nested schema](#nestedobjatt--item--ssid_details))
-- **vlan_name** (String)
+- `ssid_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssid_details))
+- `vlan_name` (String)
 
 <a id="nestedobjatt--item--ssid_details"></a>
 ### Nested Schema for `item.ssid_details`
 
 Read-Only:
 
-- **name** (String)
-- **scalable_group_name** (String)
+- `name` (String)
+- `scalable_group_name` (String)
 
 

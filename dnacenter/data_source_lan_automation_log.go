@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -61,7 +61,7 @@ func dataSourceLanAutomationLog() *schema.Resource {
 									},
 
 									"log_level": &schema.Schema{
-										Description: `Supported levels are ERROR, INFO and WARNING.
+										Description: `Supported levels are ERROR, INFO, WARNING, TRACE and CONFIG. 
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -114,7 +114,7 @@ func dataSourceLanAutomationLog() *schema.Resource {
 									},
 
 									"log_level": &schema.Schema{
-										Description: `Supported levels are ERROR, INFO and WARNING.
+										Description: `Supported levels are ERROR, INFO, WARNING, TRACE and CONFIG. 
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -165,7 +165,7 @@ func dataSourceLanAutomationLogRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: LanAutomationLog")
+		log.Printf("[DEBUG] Selected method: LanAutomationLog")
 		queryParams1 := dnacentersdkgo.LanAutomationLogQueryParams{}
 
 		if okOffset {
@@ -196,12 +196,13 @@ func dataSourceLanAutomationLogRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: LanAutomationLogByID")
+		log.Printf("[DEBUG] Selected method: LanAutomationLogByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.LanAutomation.LanAutomationLogByID(vvID)
@@ -225,6 +226,7 @@ func dataSourceLanAutomationLogRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

@@ -1,69 +1,6 @@
 
 resource "dnacenter_discovery" "example" {
   provider = dnacenter
-  item {
-
-
-
-
-
-
-
-
-
-    http_read_credential {
-
-
-
-
-
-
-
-
-
-
-
-    }
-    http_write_credential {
-
-
-
-
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  }
   parameters {
 
     attribute_info            = "string"

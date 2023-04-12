@@ -4,16 +4,24 @@ page_title: "dnacenter_pnp_device_site_claim Resource - terraform-provider-dnace
 subcategory: ""
 description: |-
   It performs create operation on Device Onboarding (PnP).
-  Claim a device based on DNA-C Site based design process. Different parameters are required for different device
-  platforms.
+  Claim a device based on DNA-C Site-based design process. Some required parameters differ based on device platform:
+  Default/StackSwitch: imageInfo, configInfo.
+  AccessPoints: rfProfile.
+  Sensors: sensorProfile.
+  CatalystWLC/MobilityExpress/EWC: staticIP, subnetMask, gateway. vlanID and ipInterfaceName are also allowed for Catalyst
+  9800 WLCs.
 ---
 
 # dnacenter_pnp_device_site_claim (Resource)
 
 It performs create operation on Device Onboarding (PnP).
 
-- Claim a device based on DNA-C Site based design process. Different parameters are required for different device
-platforms.
+- Claim a device based on DNA-C Site-based design process. Some required parameters differ based on device platform:
+Default/StackSwitch: imageInfo, configInfo.
+AccessPoints: rfProfile.
+Sensors: sensorProfile.
+CatalystWLC/MobilityExpress/EWC: staticIP, subnetMask, gateway. vlanID and ipInterfaceName are also allowed for Catalyst
+9800 WLCs.
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
@@ -22,10 +30,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_pnp_device_site_claim" "example" {
   provider = dnacenter
   parameters {
@@ -41,21 +45,19 @@ resource "dnacenter_pnp_device_site_claim" "example" {
     }
     device_id = "string"
     gateway   = "string"
-    hostname  = "string"
-    image_id  = "string"
     image_info {
 
       image_id = "string"
       skip     = "false"
     }
-    ip_interface_name = "string"
-    remove_inactive   = "false"
-    rf_profile        = "string"
-    site_id           = "string"
-    static_ip         = "string"
-    subnet_mask       = "string"
-    type              = "string"
-    vlan_id           = "string"
+    interface_name = "string"
+    rf_profile     = "string"
+    sensor_profile = "string"
+    site_id        = "string"
+    static_ip      = "string"
+    subnet_mask    = "string"
+    type           = "string"
+    vlan_id        = "string"
   }
 }
 
@@ -69,52 +71,47 @@ output "dnacenter_pnp_device_site_claim_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **config_info** (Block List) (see [below for nested schema](#nestedblock--parameters--config_info))
-- **device_id** (String)
-- **gateway** (String)
-- **hostname** (String)
-- **image_id** (String)
-- **image_info** (Block List) (see [below for nested schema](#nestedblock--parameters--image_info))
-- **ip_interface_name** (String)
-- **remove_inactive** (String)
-- **rf_profile** (String)
-- **site_id** (String)
-- **static_ip** (String)
-- **subnet_mask** (String)
-- **type** (String)
-- **vlan_id** (String)
+- `config_info` (Block List) (see [below for nested schema](#nestedblock--parameters--config_info))
+- `device_id` (String) Device Id
+- `gateway` (String) for CatalystWLC/MobilityExpress
+- `image_info` (Block List) (see [below for nested schema](#nestedblock--parameters--image_info))
+- `interface_name` (String) for Catalyst 9800 WLC
+- `rf_profile` (String) for Access Points
+- `sensor_profile` (String) for Sensors
+- `site_id` (String) Site Id
+- `static_ip` (String) for CatalystWLC/MobilityExpress
+- `subnet_mask` (String) for CatalystWLC/MobilityExpress
+- `type` (String) Type
+- `vlan_id` (String) for Catalyst 9800 WLC
 
 <a id="nestedblock--parameters--config_info"></a>
 ### Nested Schema for `parameters.config_info`
 
 Optional:
 
-- **config_id** (String)
-- **config_parameters** (Block List) (see [below for nested schema](#nestedblock--parameters--config_info--config_parameters))
+- `config_id` (String) Config Id
+- `config_parameters` (Block List) (see [below for nested schema](#nestedblock--parameters--config_info--config_parameters))
 
 <a id="nestedblock--parameters--config_info--config_parameters"></a>
 ### Nested Schema for `parameters.config_info.config_parameters`
 
 Optional:
 
-- **key** (String)
-- **value** (String)
+- `key` (String) Key
+- `value` (String) Value
 
 
 
@@ -123,8 +120,8 @@ Optional:
 
 Optional:
 
-- **image_id** (String)
-- **skip** (String)
+- `image_id` (String) Image Id
+- `skip` (String) Skip
 
 
 
@@ -133,7 +130,7 @@ Optional:
 
 Read-Only:
 
-- **response** (String)
-- **version** (String)
+- `response` (String)
+- `version` (String)
 
 

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -33,45 +33,31 @@ func dataSourceSdaProvisionDevice() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Wired Provisioned device detail retrieved successfully
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"device_management_ip_address": &schema.Schema{
-							Description: `Device Management Ip Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"execution_status_url": &schema.Schema{
-							Description: `Execution Status Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Management Ip Address of the device to be provisioned
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Site Name Hierarchy for device location(only building / floor level) 
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"task_id": &schema.Schema{
-							Description: `Task Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"task_status_url": &schema.Schema{
-							Description: `Task Status Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -88,7 +74,7 @@ func dataSourceSdaProvisionDeviceRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetProvisionedWiredDevice")
+		log.Printf("[DEBUG] Selected method: GetProvisionedWiredDevice")
 		queryParams1 := dnacentersdkgo.GetProvisionedWiredDeviceQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress.(string)
@@ -114,6 +100,7 @@ func dataSourceSdaProvisionDeviceRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -130,9 +117,6 @@ func flattenSdaGetProvisionedWiredDeviceItem(item *dnacentersdkgo.ResponseSdaGet
 	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
-	respItem["task_id"] = item.TaskID
-	respItem["task_status_url"] = item.TaskStatusURL
-	respItem["execution_status_url"] = item.ExecutionStatusURL
 	return []map[string]interface{}{
 		respItem,
 	}

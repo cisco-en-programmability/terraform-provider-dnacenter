@@ -4,13 +4,14 @@ page_title: "dnacenter_deploy_template Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs create operation on Configuration Templates.
-      •   V2 API to deploy a template.
+  V2 API to deploy a template.
 ---
 
 # dnacenter_deploy_template (Resource)
 
 It performs create operation on Configuration Templates.
-	•	V2 API to deploy a template.
+
+- V2 API to deploy a template.
 
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
@@ -19,51 +20,20 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_deploy_template" "example" {
   provider = dnacenter
-  item {
-
-
-
-    devices {
-
-
-
-
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-  }
   parameters {
 
-    deployment_id                   = "string"
     force_push_template             = "false"
     is_composite                    = "false"
     main_template_id                = "string"
-    member_template_deployment_info = ["string"]
+    member_template_deployment_info = "string"
     target_info {
 
       host_name             = "string"
       id                    = "string"
       params                = "string"
-      resource_params       = ["string"]
+      resource_params       = "string"
       type                  = "string"
       versioned_template_id = "string"
     }
@@ -81,40 +51,37 @@ output "dnacenter_deploy_template_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **force_push_template** (String)
-- **is_composite** (String) Composite template flag
-- **main_template_id** (String) Main template UUID of versioned template
-- **member_template_deployment_info** (List of String) memberTemplateDeploymentInfo
-- **target_info** (Block List) (see [below for nested schema](#nestedblock--parameters--target_info))
-- **template_id** (String) UUID of template to be provisioned
+- `force_push_template` (String)
+- `is_composite` (String) Composite template flag
+- `main_template_id` (String) Main template UUID of versioned template
+- `member_template_deployment_info` (String) memberTemplateDeploymentInfo
+- `target_info` (Block List) (see [below for nested schema](#nestedblock--parameters--target_info))
+- `template_id` (String) UUID of template to be provisioned
 
 <a id="nestedblock--parameters--target_info"></a>
 ### Nested Schema for `parameters.target_info`
 
 Optional:
 
-- **host_name** (String) Hostname of device is required if targetType is MANAGED_DEVICE_HOSTNAME
-- **id** (String) UUID of target is required if targetType is MANAGED_DEVICE_UUID
-- **params** (Map of String) Template params/values to be provisioned
-- **resource_params** (List of String) Resource params to be provisioned
-- **type** (String) Target type of device
-- **versioned_template_id** (String) Versioned templateUUID to be provisioned
+- `host_name` (String) Hostname of device is required if targetType is MANAGED_DEVICE_HOSTNAME
+- `id` (String) UUID of target is required if targetType is MANAGED_DEVICE_UUID
+- `params` (String) Template params/values to be provisioned
+- `resource_params` (String) Resource params to be provisioned
+- `type` (String) Target type of device
+- `versioned_template_id` (String) Versioned templateUUID to be provisioned
 
 
 
@@ -123,33 +90,8 @@ Optional:
 
 Read-Only:
 
-- **deployment_id** (String)
-- **deployment_name** (String)
-- **devices** (List of Object) (see [below for nested schema](#nestedobjatt--item--devices))
-- **duration** (String)
-- **end_time** (String)
-- **project_name** (String)
-- **start_time** (String)
-- **status** (String)
-- **status_message** (String)
-- **template_name** (String)
-- **template_version** (String)
-
-<a id="nestedobjatt--item--devices"></a>
-### Nested Schema for `item.devices`
-
-Read-Only:
-
-- **detailed_status_message** (String)
-- **device_id** (String)
-- **duration** (String)
-- **end_time** (String)
-- **identifier** (String)
-- **ip_address** (String)
-- **name** (String)
-- **start_time** (String)
-- **status** (String)
-- **target_type** (String)
+- `task_id` (String)
+- `url` (String)
 
 ## Import
 

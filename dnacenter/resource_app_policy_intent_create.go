@@ -2,7 +2,9 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"fmt"
@@ -10,7 +12,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -65,6 +67,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -72,6 +75,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -79,6 +83,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -88,6 +93,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -98,6 +104,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -111,6 +118,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -119,6 +127,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -126,6 +135,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -135,6 +145,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -146,6 +157,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -155,6 +167,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -165,11 +178,13 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"exclusive_contract": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -177,6 +192,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -186,15 +202,17 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"host_tracking_enabled": &schema.Schema{
 																Description: `Is host tracking enabled
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"relevance_level": &schema.Schema{
 																Description: `Relevance level
@@ -202,6 +220,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"type": &schema.Schema{
 																Description: `Type
@@ -209,6 +228,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -222,6 +242,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"policy_scope": &schema.Schema{
 										Description: `Policy name
@@ -229,6 +250,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"priority": &schema.Schema{
 										Description: `Set to 4095 while producer refer to application Scalable group otherwise 100
@@ -236,11 +258,13 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"producer": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -248,6 +272,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -257,6 +282,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -273,6 +299,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -281,6 +308,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -288,6 +316,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -295,6 +324,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -304,6 +334,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -314,6 +345,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"ssid": &schema.Schema{
 																Description: `Ssid
@@ -321,6 +353,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -334,6 +367,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Description: `Policy name
@@ -341,6 +375,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -349,6 +384,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -358,11 +394,13 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"scalable_group": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -372,6 +410,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -383,6 +422,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -392,6 +432,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -402,11 +443,13 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"exclusive_contract": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -414,6 +457,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -423,15 +467,17 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"host_tracking_enabled": &schema.Schema{
 																Description: `Host tracking enabled
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"id": &schema.Schema{
 																Description: `Id of Business relevance or Application policy knobs clause
@@ -439,6 +485,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"relevance_level": &schema.Schema{
 																Description: `Relevance level
@@ -446,6 +493,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"type": &schema.Schema{
 																Description: `Type
@@ -453,6 +501,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -463,6 +512,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -473,6 +523,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"name": &schema.Schema{
 										Description: `Concatination of <polcy name>_<application-set-name> or <polcy name>_global_policy_configuration or <polcy name>_queuing_customization
@@ -480,6 +531,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"policy_scope": &schema.Schema{
 										Description: `Policy name
@@ -487,6 +539,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"priority": &schema.Schema{
 										Description: `Set to 4095 while producer refer to application Scalable group otherwise 100
@@ -494,11 +547,13 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"producer": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -508,11 +563,13 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"scalable_group": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -522,6 +579,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -555,9 +613,8 @@ func resourceAppPolicyIntentCreateCreate(ctx context.Context, d *schema.Resource
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ApplicationPolicyIntent", err,
-			"Failure at ApplicationPolicyIntent, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing ApplicationPolicyIntent", err))
 		return diags
 	}
 
@@ -611,6 +668,7 @@ func resourceAppPolicyIntentCreateCreate(ctx context.Context, d *schema.Resource
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

@@ -35,23 +35,23 @@ output "dnacenter_license_device_count_example" {
 
 ### Optional
 
-- **device_type** (String) device_type query parameter. Type of device
-- **dna_level** (String) dna_level query parameter. Device Cisco DNA license level
-- **id** (String) The ID of this resource.
-- **registration_status** (String) registration_status query parameter. Smart license registration status of device
-- **smart_account_id** (String) smart_account_id query parameter. Id of smart account
-- **virtual_account_name** (String) virtual_account_name query parameter. Name of virtual account
+- `device_type` (String) device_type query parameter. Type of device
+- `dna_level` (String) dna_level query parameter. Device Cisco DNA License Level
+- `registration_status` (String) registration_status query parameter. Smart license registration status of device
+- `smart_account_id` (String) smart_account_id query parameter. Smart account id
+- `virtual_account_name` (String) virtual_account_name query parameter. Virtual account name
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
-- **version** (String)
+- `response` (Number)
+- `version` (String)
 
 

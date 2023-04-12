@@ -2,7 +2,9 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"fmt"
@@ -10,7 +12,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -84,6 +86,7 @@ files extensions are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -91,16 +94,19 @@ files extensions are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"image_family": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"source_url": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"third_party": &schema.Schema{
 										// Type:     schema.TypeBool,
@@ -108,11 +114,13 @@ files extensions are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"vendor": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 								},
 							},
@@ -128,23 +136,8 @@ func resourceSwimImageURLCreate(ctx context.Context, d *schema.ResourceData, m i
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters"))
-	vScheduleAt, okScheduleAt := resourceItem["schedule_at"]
-	vScheduleDesc, okScheduleDesc := resourceItem["schedule_desc"]
-	vScheduleOrigin, okScheduleOrigin := resourceItem["schedule_origin"]
-
 	request1 := expandRequestSwimImageURLImportSoftwareImageViaURL(ctx, "parameters.0", d)
 	queryParams1 := dnacentersdkgo.ImportSoftwareImageViaURLQueryParams{}
-
-	if okScheduleAt {
-		queryParams1.ScheduleAt = vScheduleAt.(string)
-	}
-	if okScheduleDesc {
-		queryParams1.ScheduleDesc = vScheduleDesc.(string)
-	}
-	if okScheduleOrigin {
-		queryParams1.ScheduleOrigin = vScheduleOrigin.(string)
-	}
 
 	response1, restyResp1, err := client.SoftwareImageManagementSwim.ImportSoftwareImageViaURL(request1, &queryParams1)
 
@@ -156,9 +149,8 @@ func resourceSwimImageURLCreate(ctx context.Context, d *schema.ResourceData, m i
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ImportSoftwareImageViaURL", err,
-			"Failure at ImportSoftwareImageViaURL, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing ImportSoftwareImageViaURL", err))
 		return diags
 	}
 
@@ -212,6 +204,7 @@ func resourceSwimImageURLCreate(ctx context.Context, d *schema.ResourceData, m i
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

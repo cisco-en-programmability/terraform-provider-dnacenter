@@ -2,12 +2,14 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -82,7 +84,9 @@ func resourceDisassociateSiteToNetworkProfileCreate(ctx context.Context, d *sche
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vNetworkProfileID := resourceItem["network_profile_id"]
+
 	vSiteID := resourceItem["site_id"]
 
 	vvNetworkProfileID := vNetworkProfileID.(string)
@@ -94,9 +98,8 @@ func resourceDisassociateSiteToNetworkProfileCreate(ctx context.Context, d *sche
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing Disassociate", err,
-			"Failure at Disassociate, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing Disassociate", err))
 		return diags
 	}
 
@@ -150,6 +153,7 @@ func resourceDisassociateSiteToNetworkProfileCreate(ctx context.Context, d *sche
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

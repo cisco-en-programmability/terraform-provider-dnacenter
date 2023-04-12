@@ -36,40 +36,40 @@ output "dnacenter_event_subscription_details_rest_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **instance_id** (String) instanceId query parameter. Instance Id of the specific configuration
-- **limit** (Number) limit query parameter. The number of Rest/Webhook Subscription detail's to limit in the resultset whose default value 10
-- **name** (String) name query parameter. Name of the specific configuration
-- **offset** (Number) offset query parameter. The number of Rest/Webhook Subscription detail's to offset in the resultset whose default value 0
-- **order** (String) order query parameter.
-- **sort_by** (String) sortBy query parameter. SortBy field name
+- `instance_id` (String) instanceId query parameter. Instance Id of the specific configuration
+- `limit` (Number) limit query parameter. The number of Rest/Webhook Subscription detail's to limit in the resultset whose default value 10
+- `name` (String) name query parameter. Name of the specific configuration
+- `offset` (Number) offset query parameter. The number of Rest/Webhook Subscription detail's to offset in the resultset whose default value 0
+- `order` (String) order query parameter.
+- `sort_by` (String) sortBy query parameter. SortBy field name
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **connector_type** (String)
-- **description** (String)
-- **headers** (List of Object) (see [below for nested schema](#nestedobjatt--items--headers))
-- **instance_id** (String)
-- **method** (String)
-- **name** (String)
-- **path_params** (List of String)
-- **query_params** (List of String)
-- **trust_cert** (String)
-- **url** (String)
+- `connector_type` (String)
+- `description` (String)
+- `headers` (List of Object) (see [below for nested schema](#nestedobjatt--items--headers))
+- `instance_id` (String)
+- `method` (String)
+- `name` (String)
+- `path_params` (List of String)
+- `query_params` (List of String)
+- `trust_cert` (String)
+- `url` (String)
 
 <a id="nestedobjatt--items--headers"></a>
 ### Nested Schema for `items.headers`
 
 Read-Only:
 
-- **name** (String)
-- **value** (String)
+- `name` (String)
+- `value` (String)
 
 

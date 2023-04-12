@@ -9,5 +9,5 @@ data "dnacenter_projects_details" "example" {
 }
 
 output "dnacenter_projects_details_example" {
-  value = data.dnacenter_projects_details.example.items
+  value = data.dnacenter_projects_details.example.item
 }

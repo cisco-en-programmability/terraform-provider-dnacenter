@@ -31,27 +31,23 @@ output "dnacenter_sda_fabric_site_example" {
 
 ### Required
 
-- **site_name_hierarchy** (String) siteNameHierarchy query parameter. Site Name Hierarchy
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `site_name_hierarchy` (String) siteNameHierarchy query parameter. Site Name Hierarchy
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **description** (String)
-- **execution_status_url** (String)
-- **fabric_domain_type** (String)
-- **fabric_name** (String)
-- **fabric_type** (String)
-- **site_name_hierarchy** (String)
-- **status** (String)
+- `description` (String)
+- `fabric_domain_type` (String)
+- `fabric_name` (String)
+- `fabric_type` (String)
+- `site_name_hierarchy` (String)
+- `status` (String)
 
 

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -58,90 +58,11 @@ func dataSourceSite() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"additional_info": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"attributes": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"address": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"address_inherited_from": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"country": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"floor_index": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"height": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"latitude": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"length": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"longitude": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"offset_x": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"offset_y": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"rf_model": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-
-												"width": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-
-									"name_space": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
+							Description: `Additional Info`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
 							},
 						},
 
@@ -198,72 +119,48 @@ func dataSourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface
 	vLimit, okLimit := d.GetOk("limit")
 
 	selectedMethod := 1
-
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSite")
-		if vSiteID == "" {
-			queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
+		log.Printf("[DEBUG] Selected method: GetSite")
+		queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
 
-			if okName {
-				queryParams1.Name = vName.(string)
-			}
-			if okSiteID {
-				queryParams1.SiteID = vSiteID.(string)
-			}
-			if okType {
-				queryParams1.Type = vType.(string)
-			}
-			if okOffset {
-				queryParams1.Offset = vOffset.(int)
-			}
-			if okLimit {
-				queryParams1.Limit = vLimit.(int)
-			}
-
-			response1, restyResp1, err := client.Sites.GetSite(&queryParams1)
-
-			if err != nil || response1 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetSite", err,
-					"Failure at GetSite, unexpected response", ""))
-				return diags
-			}
-
-			log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-			vItems1 := flattenSitesGetSiteItems(response1.Response)
-			if err := d.Set("items", vItems1); err != nil {
-				diags = append(diags, diagError(
-					"Failure when setting GetSite response",
-					err))
-				return diags
-			}
-		} else {
-			response1, restyResp1, err := client.Sites.GetSiteByID(vSiteID.(string))
-
-			if err != nil || response1 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetSite", err,
-					"Failure at GetSite, unexpected response", ""))
-				return diags
-			}
-
-			log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-			vItems1 := flattenSitesGetSiteItem(response1.Response)
-			if err := d.Set("items", vItems1); err != nil {
-				diags = append(diags, diagError(
-					"Failure when setting GetSite2 response",
-					err))
-				return diags
-			}
+		if okName {
+			queryParams1.Name = vName.(string)
 		}
+		if okSiteID {
+			queryParams1.SiteID = vSiteID.(string)
+		}
+		if okType {
+			queryParams1.Type = vType.(string)
+		}
+		if okOffset {
+			queryParams1.Offset = vOffset.(int)
+		}
+		if okLimit {
+			queryParams1.Limit = vLimit.(int)
+		}
+
+		response1, restyResp1, err := client.Sites.GetSite(&queryParams1)
+
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetSite", err,
+				"Failure at GetSite, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+		vItems1 := flattenSitesGetSiteItems(response1.Response)
+		if err := d.Set("items", vItems1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSite response",
+				err))
+			return diags
+		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -280,7 +177,7 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItem := make(map[string]interface{})
 		respItem["parent_id"] = item.ParentID
 		respItem["name"] = item.Name
-		respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo)
+		respItem["additional_info"] = item.AdditionalInfo
 		respItem["site_hierarchy"] = item.SiteHierarchy
 		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 		respItem["instance_tenant_id"] = item.InstanceTenantID
@@ -288,56 +185,4 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenSitesGetSiteItem(item *dnacentersdkgo.ResponseSitesGetSiteResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-
-	respItem := make(map[string]interface{})
-	respItem["parent_id"] = item.ParentID
-	respItem["name"] = item.Name
-	respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo)
-	respItem["site_hierarchy"] = item.SiteHierarchy
-	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
-	respItem["instance_tenant_id"] = item.InstanceTenantID
-	respItem["id"] = item.ID
-	respItems = append(respItems, respItem)
-
-	return respItems
-}
-
-func flattenSitesGetSiteItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfo) []map[string]interface{} {
-	var respItems []map[string]interface{}
-	for _, item := range items {
-		respItem := make(map[string]interface{})
-		respItem["name_space"] = item.Namespace
-		respItem["attributes"] = flattenSitesGetSiteItemsAdditionalInfoAttributes(item.Attributes)
-		respItems = append(respItems, respItem)
-	}
-	return respItems
-}
-
-func flattenSitesGetSiteItemsAdditionalInfoAttributes(item dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfoAttributes) []map[string]interface{} {
-	respItem := make(map[string]interface{})
-	respItem["country"] = item.Country
-	respItem["address"] = item.Address
-	respItem["latitude"] = item.Latitude
-	respItem["address_inherited_from"] = item.AddressInheritedFrom
-	respItem["type"] = item.Type
-	respItem["longitude"] = item.Longitude
-	respItem["offset_x"] = item.OffsetX
-	respItem["offset_y"] = item.OffsetY
-	respItem["length"] = item.Length
-	respItem["width"] = item.Width
-	respItem["height"] = item.Height
-	respItem["rf_model"] = item.RfModel
-	respItem["floor_index"] = item.FloorIndex
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
 }

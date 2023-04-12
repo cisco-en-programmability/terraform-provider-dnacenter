@@ -40,57 +40,57 @@ output "dnacenter_event_subscription_email_example" {
 
 ### Optional
 
-- **category** (String) category query parameter. List of email subscriptions related to the respective category
-- **domain** (String) domain query parameter. List of email subscriptions related to the respective domain
-- **event_ids** (String) eventIds query parameter. List of email subscriptions related to the respective eventIds (Comma separated event ids)
-- **id** (String) The ID of this resource.
-- **limit** (Number) limit query parameter. The number of Subscriptions's to limit in the resultset whose default value 10
-- **name** (String) name query parameter. List of email subscriptions related to the respective name
-- **offset** (Number) offset query parameter. The number of Subscriptions's to offset in the resultset whose default value 0
-- **order** (String) order query parameter.
-- **sort_by** (String) sortBy query parameter. SortBy field name
-- **sub_domain** (String) subDomain query parameter. List of email subscriptions related to the respective sub-domain
-- **type** (String) type query parameter. List of email subscriptions related to the respective type
+- `category` (String) category query parameter. List of email subscriptions related to the respective category
+- `domain` (String) domain query parameter. List of email subscriptions related to the respective domain
+- `event_ids` (String) eventIds query parameter. List of email subscriptions related to the respective eventIds (Comma separated event ids)
+- `limit` (Number) limit query parameter. The number of Subscriptions's to limit in the resultset whose default value 10
+- `name` (String) name query parameter. List of email subscriptions related to the respective name
+- `offset` (Number) offset query parameter. The number of Subscriptions's to offset in the resultset whose default value 0
+- `order` (String) order query parameter.
+- `sort_by` (String) sortBy query parameter. SortBy field name
+- `sub_domain` (String) subDomain query parameter. List of email subscriptions related to the respective sub-domain
+- `type` (String) type query parameter. List of email subscriptions related to the respective type
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **description** (String)
-- **filter** (List of Object) (see [below for nested schema](#nestedobjatt--items--filter))
-- **is_private** (String)
-- **name** (String)
-- **subscription_endpoints** (List of Object) (see [below for nested schema](#nestedobjatt--items--subscription_endpoints))
-- **subscription_id** (String)
-- **tenant_id** (String)
-- **version** (String)
+- `description` (String)
+- `filter` (List of Object) (see [below for nested schema](#nestedobjatt--items--filter))
+- `is_private` (String)
+- `name` (String)
+- `subscription_endpoints` (List of Object) (see [below for nested schema](#nestedobjatt--items--subscription_endpoints))
+- `subscription_id` (String)
+- `tenant_id` (String)
+- `version` (String)
 
 <a id="nestedobjatt--items--filter"></a>
 ### Nested Schema for `items.filter`
 
 Read-Only:
 
-- **categories** (List of String)
-- **domains_subdomains** (List of Object) (see [below for nested schema](#nestedobjatt--items--filter--domains_subdomains))
-- **event_ids** (List of String)
-- **others** (List of String)
-- **severities** (List of String)
-- **site_ids** (List of String)
-- **sources** (List of String)
-- **types** (List of String)
+- `categories` (List of String)
+- `domains_subdomains` (List of Object) (see [below for nested schema](#nestedobjatt--items--filter--domains_subdomains))
+- `event_ids` (List of String)
+- `others` (List of String)
+- `severities` (List of String)
+- `site_ids` (List of String)
+- `sources` (List of String)
+- `types` (List of String)
 
 <a id="nestedobjatt--items--filter--domains_subdomains"></a>
 ### Nested Schema for `items.filter.domains_subdomains`
 
 Read-Only:
 
-- **domain** (String)
-- **sub_domains** (List of String)
+- `domain` (String)
+- `sub_domains` (List of String)
 
 
 
@@ -99,21 +99,21 @@ Read-Only:
 
 Read-Only:
 
-- **connector_type** (String)
-- **instance_id** (String)
-- **subscription_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--subscription_endpoints--subscription_details))
+- `connector_type` (String)
+- `instance_id` (String)
+- `subscription_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--subscription_endpoints--subscription_details))
 
 <a id="nestedobjatt--items--subscription_endpoints--subscription_details"></a>
 ### Nested Schema for `items.subscription_endpoints.subscription_details`
 
 Read-Only:
 
-- **connector_type** (String)
-- **description** (String)
-- **from_email_address** (String)
-- **instance_id** (String)
-- **name** (String)
-- **subject** (String)
-- **to_email_addresses** (List of String)
+- `connector_type` (String)
+- `description` (String)
+- `from_email_address` (String)
+- `instance_id` (String)
+- `name` (String)
+- `subject` (String)
+- `to_email_addresses` (List of String)
 
 

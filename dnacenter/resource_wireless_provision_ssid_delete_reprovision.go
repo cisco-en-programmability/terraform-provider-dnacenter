@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -72,6 +72,14 @@ func resourceWirelessProvisionSSIDDeleteReprovision() *schema.Resource {
 							Required:    true,
 							ForceNew:    true,
 						},
+						"persistbapioutput": &schema.Schema{
+							Description:  `Device Name`,
+							Type:         schema.TypeString,
+							Optional:     true,
+							ForceNew:     true,
+							Default:      "false",
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+						},
 					},
 				},
 			},
@@ -84,8 +92,11 @@ func resourceWirelessProvisionSSIDDeleteReprovisionCreate(ctx context.Context, d
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vSSIDName := resourceItem["ssid_name"]
+
 	vManagedApLocations := resourceItem["managed_aplocations"]
+
 	vPersistbapioutput := resourceItem["persistbapioutput"]
 
 	vvSSIDName := vSSIDName.(string)
@@ -101,9 +112,8 @@ func resourceWirelessProvisionSSIDDeleteReprovisionCreate(ctx context.Context, d
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeleteSSIDAndProvisionItToDevices", err,
-			"Failure at DeleteSSIDAndProvisionItToDevices, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing DeleteSSIDAndProvisionItToDevices", err))
 		return diags
 	}
 
@@ -152,6 +162,7 @@ func resourceWirelessProvisionSSIDDeleteReprovisionCreate(ctx context.Context, d
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

@@ -31,29 +31,26 @@ output "dnacenter_security_advisories_per_device_example" {
 
 ### Required
 
-- **device_id** (String) deviceId path parameter. Device instance UUID
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_id` (String) deviceId path parameter. Device instance UUID
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **advisory_id** (String)
-- **cves** (List of String)
-- **default_config_match_pattern** (String)
-- **default_detection_type** (String)
-- **detection_type** (String)
-- **device_count** (Number)
-- **hidden_device_count** (Number)
-- **publication_url** (String)
-- **sir** (String)
+- `advisory_id` (String)
+- `cves` (List of String)
+- `default_config_match_pattern` (String)
+- `default_detection_type` (String)
+- `detection_type` (String)
+- `device_count` (Number)
+- `hidden_device_count` (Number)
+- `publication_url` (String)
+- `sir` (String)
 
 

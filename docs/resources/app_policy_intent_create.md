@@ -20,10 +20,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_app_policy_intent_create" "example" {
   provider = dnacenter
   parameters {
@@ -137,56 +133,53 @@ output "dnacenter_app_policy_intent_create_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **create_list** (Block List) (see [below for nested schema](#nestedblock--parameters--create_list))
-- **delete_list** (List of String) Delete list of Group Based Policy ids
-- **update_list** (Block List) (see [below for nested schema](#nestedblock--parameters--update_list))
+- `create_list` (Block List) (see [below for nested schema](#nestedblock--parameters--create_list))
+- `delete_list` (List of String) Delete list of Group Based Policy ids
+- `update_list` (Block List) (see [below for nested schema](#nestedblock--parameters--update_list))
 
 <a id="nestedblock--parameters--create_list"></a>
 ### Nested Schema for `parameters.create_list`
 
 Optional:
 
-- **advanced_policy_scope** (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--advanced_policy_scope))
-- **consumer** (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--consumer))
-- **contract** (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--contract))
-- **delete_policy_status** (String) NONE: deployed policy to devices, DELETED: delete policy from devices, RESTORED: restored to original configuration
-- **exclusive_contract** (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--exclusive_contract))
-- **name** (String) Concatination of <polcy name>_<application-set-name> or <polcy name>_global_policy_configuration or <polcy name>_queuing_customization
-- **policy_scope** (String) Policy name
-- **priority** (String) Set to 4095 while producer refer to application Scalable group otherwise 100
-- **producer** (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--producer))
+- `advanced_policy_scope` (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--advanced_policy_scope))
+- `consumer` (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--consumer))
+- `contract` (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--contract))
+- `delete_policy_status` (String) NONE: deployed policy to devices, DELETED: delete policy from devices, RESTORED: restored to original configuration
+- `exclusive_contract` (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--exclusive_contract))
+- `name` (String) Concatination of <polcy name>_<application-set-name> or <polcy name>_global_policy_configuration or <polcy name>_queuing_customization
+- `policy_scope` (String) Policy name
+- `priority` (String) Set to 4095 while producer refer to application Scalable group otherwise 100
+- `producer` (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--producer))
 
 <a id="nestedblock--parameters--create_list--advanced_policy_scope"></a>
 ### Nested Schema for `parameters.create_list.advanced_policy_scope`
 
 Optional:
 
-- **advanced_policy_scope_element** (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--advanced_policy_scope--advanced_policy_scope_element))
-- **name** (String) Policy name
+- `advanced_policy_scope_element` (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--advanced_policy_scope--advanced_policy_scope_element))
+- `name` (String) Policy name
 
 <a id="nestedblock--parameters--create_list--advanced_policy_scope--advanced_policy_scope_element"></a>
-### Nested Schema for `parameters.create_list.advanced_policy_scope.name`
+### Nested Schema for `parameters.create_list.advanced_policy_scope.advanced_policy_scope_element`
 
 Optional:
 
-- **group_id** (List of String) Group id
-- **ssid** (List of String) Ssid
+- `group_id` (List of String) Group id
+- `ssid` (List of String) Ssid
 
 
 
@@ -195,14 +188,14 @@ Optional:
 
 Optional:
 
-- **scalable_group** (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--consumer--scalable_group))
+- `scalable_group` (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--consumer--scalable_group))
 
 <a id="nestedblock--parameters--create_list--consumer--scalable_group"></a>
 ### Nested Schema for `parameters.create_list.consumer.scalable_group`
 
 Optional:
 
-- **id_ref** (String) Id ref to application Scalable group
+- `id_ref` (String) Id ref to application Scalable group
 
 
 
@@ -211,7 +204,7 @@ Optional:
 
 Optional:
 
-- **id_ref** (String) Id ref to Queueing profile
+- `id_ref` (String) Id ref to Queueing profile
 
 
 <a id="nestedblock--parameters--create_list--exclusive_contract"></a>
@@ -219,17 +212,17 @@ Optional:
 
 Optional:
 
-- **clause** (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--exclusive_contract--clause))
+- `clause` (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--exclusive_contract--clause))
 
 <a id="nestedblock--parameters--create_list--exclusive_contract--clause"></a>
 ### Nested Schema for `parameters.create_list.exclusive_contract.clause`
 
 Optional:
 
-- **device_removal_behavior** (String) Device eemoval behavior
-- **host_tracking_enabled** (String) Is host tracking enabled
-- **relevance_level** (String) Relevance level
-- **type** (String) Type
+- `device_removal_behavior` (String) Device eemoval behavior
+- `host_tracking_enabled` (String) Is host tracking enabled
+- `relevance_level` (String) Relevance level
+- `type` (String) Type
 
 
 
@@ -238,14 +231,14 @@ Optional:
 
 Optional:
 
-- **scalable_group** (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--producer--scalable_group))
+- `scalable_group` (Block List) (see [below for nested schema](#nestedblock--parameters--create_list--producer--scalable_group))
 
 <a id="nestedblock--parameters--create_list--producer--scalable_group"></a>
 ### Nested Schema for `parameters.create_list.producer.scalable_group`
 
 Optional:
 
-- **id_ref** (String) Id ref to application-set or application Scalable group
+- `id_ref` (String) Id ref to application-set or application Scalable group
 
 
 
@@ -255,34 +248,34 @@ Optional:
 
 Optional:
 
-- **advanced_policy_scope** (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--advanced_policy_scope))
-- **consumer** (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--consumer))
-- **contract** (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--contract))
-- **delete_policy_status** (String) NONE: deployed policy to devices, DELETED: delete policy from devices, RESTORED: restored to original configuration
-- **exclusive_contract** (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--exclusive_contract))
-- **id** (String) Id of Group based policy
-- **name** (String) Concatination of <polcy name>_<application-set-name> or <polcy name>_global_policy_configuration or <polcy name>_queuing_customization
-- **policy_scope** (String) Policy name
-- **priority** (String) Set to 4095 while producer refer to application Scalable group otherwise 100
-- **producer** (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--producer))
+- `advanced_policy_scope` (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--advanced_policy_scope))
+- `consumer` (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--consumer))
+- `contract` (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--contract))
+- `delete_policy_status` (String) NONE: deployed policy to devices, DELETED: delete policy from devices, RESTORED: restored to original configuration
+- `exclusive_contract` (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--exclusive_contract))
+- `id` (String) Id of Group based policy
+- `name` (String) Concatination of <polcy name>_<application-set-name> or <polcy name>_global_policy_configuration or <polcy name>_queuing_customization
+- `policy_scope` (String) Policy name
+- `priority` (String) Set to 4095 while producer refer to application Scalable group otherwise 100
+- `producer` (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--producer))
 
 <a id="nestedblock--parameters--update_list--advanced_policy_scope"></a>
 ### Nested Schema for `parameters.update_list.advanced_policy_scope`
 
 Optional:
 
-- **advanced_policy_scope_element** (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--advanced_policy_scope--advanced_policy_scope_element))
-- **id** (String) Id of Advance policy scope
-- **name** (String) Policy name
+- `advanced_policy_scope_element` (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--advanced_policy_scope--advanced_policy_scope_element))
+- `id` (String) Id of Advance policy scope
+- `name` (String) Policy name
 
 <a id="nestedblock--parameters--update_list--advanced_policy_scope--advanced_policy_scope_element"></a>
-### Nested Schema for `parameters.update_list.advanced_policy_scope.name`
+### Nested Schema for `parameters.update_list.advanced_policy_scope.advanced_policy_scope_element`
 
 Optional:
 
-- **group_id** (List of String) Group id
-- **id** (String) Id of Advance policy scope element
-- **ssid** (List of String) Ssid
+- `group_id` (List of String) Group id
+- `id` (String) Id of Advance policy scope element
+- `ssid` (List of String) Ssid
 
 
 
@@ -291,15 +284,15 @@ Optional:
 
 Optional:
 
-- **id** (String) Id of Consumer
-- **scalable_group** (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--consumer--scalable_group))
+- `id` (String) Id of Consumer
+- `scalable_group` (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--consumer--scalable_group))
 
 <a id="nestedblock--parameters--update_list--consumer--scalable_group"></a>
 ### Nested Schema for `parameters.update_list.consumer.scalable_group`
 
 Optional:
 
-- **id_ref** (String) Id ref to application Scalable group
+- `id_ref` (String) Id ref to application Scalable group
 
 
 
@@ -308,7 +301,7 @@ Optional:
 
 Optional:
 
-- **id_ref** (String) Id ref to Queueing profile
+- `id_ref` (String) Id ref to Queueing profile
 
 
 <a id="nestedblock--parameters--update_list--exclusive_contract"></a>
@@ -316,19 +309,19 @@ Optional:
 
 Optional:
 
-- **clause** (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--exclusive_contract--clause))
-- **id** (String) Id of Exclusive contract
+- `clause` (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--exclusive_contract--clause))
+- `id` (String) Id of Exclusive contract
 
 <a id="nestedblock--parameters--update_list--exclusive_contract--clause"></a>
-### Nested Schema for `parameters.update_list.exclusive_contract.id`
+### Nested Schema for `parameters.update_list.exclusive_contract.clause`
 
 Optional:
 
-- **device_removal_behavior** (String) Device removal behavior
-- **host_tracking_enabled** (String) Host tracking enabled
-- **id** (String) Id of Business relevance or Application policy knobs clause
-- **relevance_level** (String) Relevance level
-- **type** (String) Type
+- `device_removal_behavior` (String) Device removal behavior
+- `host_tracking_enabled` (String) Host tracking enabled
+- `id` (String) Id of Business relevance or Application policy knobs clause
+- `relevance_level` (String) Relevance level
+- `type` (String) Type
 
 
 
@@ -337,15 +330,15 @@ Optional:
 
 Optional:
 
-- **id** (String) Id of Producer
-- **scalable_group** (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--producer--scalable_group))
+- `id` (String) Id of Producer
+- `scalable_group` (Block List) (see [below for nested schema](#nestedblock--parameters--update_list--producer--scalable_group))
 
 <a id="nestedblock--parameters--update_list--producer--scalable_group"></a>
 ### Nested Schema for `parameters.update_list.producer.scalable_group`
 
 Optional:
 
-- **id_ref** (String) Id ref to application-set or application Scalable group
+- `id_ref` (String) Id ref to application-set or application Scalable group
 
 
 
@@ -356,7 +349,7 @@ Optional:
 
 Read-Only:
 
-- **task_id** (String)
-- **url** (String)
+- `task_id` (String)
+- `url` (String)
 
 

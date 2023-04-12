@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -88,6 +88,7 @@ func resourceWirelessProvisionDeviceUpdate() *schema.Resource {
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -96,11 +97,13 @@ func resourceWirelessProvisionDeviceUpdate() *schema.Resource {
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 									"dynamic_interfaces": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -109,36 +112,42 @@ func resourceWirelessProvisionDeviceUpdate() *schema.Resource {
 													Type:        schema.TypeString,
 													Optional:    true,
 													ForceNew:    true,
+													Computed:    true,
 												},
 												"interface_ipaddress": &schema.Schema{
 													Description: `Interface IPAddress`,
 													Type:        schema.TypeString,
 													Optional:    true,
 													ForceNew:    true,
+													Computed:    true,
 												},
 												"interface_name": &schema.Schema{
 													Description: `Interface Name`,
 													Type:        schema.TypeString,
 													Optional:    true,
 													ForceNew:    true,
+													Computed:    true,
 												},
 												"interface_netmask_in_cid_r": &schema.Schema{
 													Description: `Interface Netmask In CIDR`,
 													Type:        schema.TypeInt,
 													Optional:    true,
 													ForceNew:    true,
+													Computed:    true,
 												},
 												"lag_or_port_number": &schema.Schema{
 													Description: `Lag Or Port Number`,
 													Type:        schema.TypeInt,
 													Optional:    true,
 													ForceNew:    true,
+													Computed:    true,
 												},
 												"vlan_id": &schema.Schema{
 													Description: `Vlan Id`,
 													Type:        schema.TypeInt,
 													Optional:    true,
 													ForceNew:    true,
+													Computed:    true,
 												},
 											},
 										},
@@ -148,9 +157,18 @@ func resourceWirelessProvisionDeviceUpdate() *schema.Resource {
 										Type:        schema.TypeList,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
+									},
+									"persistbapioutput": &schema.Schema{
+										Description:  `Device Name`,
+										Type:         schema.TypeString,
+										Optional:     true,
+										ForceNew:     true,
+										Default:      "false",
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 									},
 								},
 							},
@@ -166,16 +184,17 @@ func resourceWirelessProvisionDeviceUpdateCreate(ctx context.Context, d *schema.
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	// resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
-	// vPersistbapioutput := resourceItem["persistbapioutput"]
+	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
+
+	vPersistbapioutput := resourceItem["persistbapioutput"]
 
 	request1 := expandRequestWirelessProvisionDeviceUpdateProvisionUpdate(ctx, "parameters.0", d)
 
-	// headerParams1 := dnacentersdkgo.ProvisionUpdateHeaderParams{}
+	headerParams1 := dnacentersdkgo.ProvisionUpdateHeaderParams{}
 
-	// headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
-	response1, restyResp1, err := client.Wireless.ProvisionUpdate(request1, nil)
+	response1, restyResp1, err := client.Wireless.ProvisionUpdate(request1, &headerParams1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -185,9 +204,9 @@ func resourceWirelessProvisionDeviceUpdateCreate(ctx context.Context, d *schema.
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ProvisionUpdate", err,
-			"Failure at ProvisionUpdate, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -236,6 +255,7 @@ func resourceWirelessProvisionDeviceUpdateCreate(ctx context.Context, d *schema.
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

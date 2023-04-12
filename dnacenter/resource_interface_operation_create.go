@@ -2,14 +2,16 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -78,12 +80,14 @@ future more possible operations will be added to this API
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"payload": &schema.Schema{
 							Description: `Payload`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -97,16 +101,12 @@ func resourceInterfaceOperationCreateCreate(ctx context.Context, d *schema.Resou
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vInterfaceUUID := resourceItem["interface_uuid"]
-	vDeploymentMode, okDeploymentMode := resourceItem["deployment_mode"]
 
 	vvInterfaceUUID := vInterfaceUUID.(string)
 	request1 := expandRequestInterfaceOperationCreateClearMacAddressTable(ctx, "parameters.0", d)
 	queryParams1 := dnacentersdkgo.ClearMacAddressTableQueryParams{}
-
-	if okDeploymentMode {
-		queryParams1.DeploymentMode = vDeploymentMode.(string)
-	}
 
 	response1, restyResp1, err := client.Devices.ClearMacAddressTable(vvInterfaceUUID, request1, &queryParams1)
 
@@ -118,9 +118,8 @@ func resourceInterfaceOperationCreateCreate(ctx context.Context, d *schema.Resou
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ClearMacAddressTable", err,
-			"Failure at ClearMacAddressTable, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing ClearMacAddressTable", err))
 		return diags
 	}
 
@@ -174,6 +173,7 @@ func resourceInterfaceOperationCreateCreate(ctx context.Context, d *schema.Resou
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

@@ -2,14 +2,16 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -60,16 +62,19 @@ func resourceNetworkDeviceUpdateRole() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"role": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"role_source": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -94,9 +99,8 @@ func resourceNetworkDeviceUpdateRoleCreate(ctx context.Context, d *schema.Resour
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing UpdateDeviceRole", err,
-			"Failure at UpdateDeviceRole, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing UpdateDeviceRole", err))
 		return diags
 	}
 
@@ -150,6 +154,7 @@ func resourceNetworkDeviceUpdateRoleCreate(ctx context.Context, d *schema.Resour
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

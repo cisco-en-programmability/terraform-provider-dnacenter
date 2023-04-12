@@ -5,6 +5,7 @@ resource "dnacenter_wireless_provision_ssid_delete_reprovision" "example" {
 
     managed_aplocations = "string"
     ssid_name           = "string"
+    persistbapioutput   = "false"
   }
 }
 

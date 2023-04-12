@@ -3,13 +3,13 @@
 page_title: "dnacenter_assign_device_to_site Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
-  It performs create operation.
+  It performs create operation on Site Design.
   Assigns unassigned devices to a site. This data source action does not move assigned devices to other sites.
 ---
 
 # dnacenter_assign_device_to_site (Resource)
 
-It performs create operation.
+It performs create operation on Site Design.
 
 - Assigns unassigned devices to a site. This data source action does not move assigned devices to other sites.
 
@@ -20,10 +20,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_assign_device_to_site" "example" {
   provider = dnacenter
   parameters {
@@ -46,33 +42,31 @@ output "dnacenter_assign_device_to_site_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **site_id** (String) siteId path parameter. Site id to which site the device to assign
+- `site_id` (String) siteId path parameter. Site id to which site the device to assign
 
 Optional:
 
-- **device** (Block List) (see [below for nested schema](#nestedblock--parameters--device))
+- `device` (Block List) (see [below for nested schema](#nestedblock--parameters--device))
 
 <a id="nestedblock--parameters--device"></a>
 ### Nested Schema for `parameters.device`
 
 Optional:
 
-- **ip** (String) Device ip (eg: 10.104.240.64)
+- `ip` (String) Device ip (eg: 10.104.240.64)
 
 
 
@@ -81,8 +75,8 @@ Optional:
 
 Read-Only:
 
-- **execution_id** (String)
-- **execution_status_url** (String)
-- **message** (String)
+- `execution_id` (String)
+- `execution_status_url` (String)
+- `message` (String)
 
 

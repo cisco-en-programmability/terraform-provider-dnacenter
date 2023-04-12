@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -23,13 +23,13 @@ func dataSourceSiteHealth() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. The max number of sites in the returned data set.  Default is 25, and max at 50
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The offset value, starting from 1, of the first returned site entry.  Default is 1.
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"site_type": &schema.Schema{
@@ -53,31 +53,31 @@ func dataSourceSiteHealth() *schema.Resource {
 
 						"access_good_count": &schema.Schema{
 							Description: `Access Good Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"access_total_count": &schema.Schema{
 							Description: `Access Total Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"application_bytes_total_count": &schema.Schema{
 							Description: `Application Bytes Total Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"application_good_count": &schema.Schema{
 							Description: `Application Good Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"application_health": &schema.Schema{
 							Description: `Application Health`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -179,61 +179,61 @@ func dataSourceSiteHealth() *schema.Resource {
 
 						"application_total_count": &schema.Schema{
 							Description: `Application Total Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"client_health_wired": &schema.Schema{
 							Description: `Client Health Wired`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"client_health_wireless": &schema.Schema{
 							Description: `Client Health Wireless`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"core_good_count": &schema.Schema{
 							Description: `Core Good Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"core_total_count": &schema.Schema{
 							Description: `Core Total Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"distribution_good_count": &schema.Schema{
 							Description: `Distribution Good Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"distribution_total_count": &schema.Schema{
 							Description: `Distribution Total Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"dnac_info": &schema.Schema{
 							Description: `Dnac Info`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"healthy_clients_percentage": &schema.Schema{
 							Description: `Healthy Clients Percentage`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"healthy_network_device_percentage": &schema.Schema{
 							Description: `Healthy Network Device Percentage`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -251,73 +251,73 @@ func dataSourceSiteHealth() *schema.Resource {
 
 						"network_health_access": &schema.Schema{
 							Description: `Network Health Access`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"network_health_average": &schema.Schema{
 							Description: `Network Health Average`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"network_health_core": &schema.Schema{
 							Description: `Network Health Core`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"network_health_distribution": &schema.Schema{
 							Description: `Network Health Distribution`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"network_health_others": &schema.Schema{
 							Description: `Network Health Others`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"network_health_router": &schema.Schema{
 							Description: `Network Health Router`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"network_health_wireless": &schema.Schema{
 							Description: `Network Health Wireless`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"number_of_clients": &schema.Schema{
 							Description: `Number Of Clients`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"number_of_network_device": &schema.Schema{
 							Description: `Number Of Network Device`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"number_of_wired_clients": &schema.Schema{
 							Description: `Number Of Wired Clients`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"number_of_wireless_clients": &schema.Schema{
 							Description: `Number Of Wireless Clients`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"overall_good_devices": &schema.Schema{
 							Description: `Overall Good Devices`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -335,13 +335,13 @@ func dataSourceSiteHealth() *schema.Resource {
 
 						"router_good_count": &schema.Schema{
 							Description: `Router Good Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"router_total_count": &schema.Schema{
 							Description: `Router Total Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -365,37 +365,37 @@ func dataSourceSiteHealth() *schema.Resource {
 
 						"total_number_of_active_wireless_clients": &schema.Schema{
 							Description: `Total Number Of Active Wireless Clients`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"total_number_of_connected_wired_clients": &schema.Schema{
 							Description: `Total Number Of Connected Wired Clients`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"wired_good_clients": &schema.Schema{
 							Description: `Wired Good Clients`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"wireless_device_good_count": &schema.Schema{
 							Description: `Wireless Device Good Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"wireless_device_total_count": &schema.Schema{
 							Description: `Wireless Device Total Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"wireless_good_clients": &schema.Schema{
 							Description: `Wireless Good Clients`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 					},
@@ -416,7 +416,7 @@ func dataSourceSiteHealthRead(ctx context.Context, d *schema.ResourceData, m int
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSiteHealth")
+		log.Printf("[DEBUG] Selected method: GetSiteHealth")
 		queryParams1 := dnacentersdkgo.GetSiteHealthQueryParams{}
 
 		if okTimestamp {
@@ -426,10 +426,10 @@ func dataSourceSiteHealthRead(ctx context.Context, d *schema.ResourceData, m int
 			queryParams1.SiteType = vSiteType.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 
 		response1, restyResp1, err := client.Sites.GetSiteHealth(&queryParams1)
@@ -453,6 +453,7 @@ func dataSourceSiteHealthRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

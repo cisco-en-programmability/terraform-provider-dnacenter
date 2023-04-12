@@ -34,25 +34,25 @@ output "dnacenter_compliance_device_example" {
 
 ### Optional
 
-- **compliance_status** (String) complianceStatus query parameter. Compliance status can be have value among 'COMPLIANT','NON_COMPLIANT','IN_PROGRESS', 'ERROR'
-- **device_uuid** (String) deviceUuid query parameter. Comma separated deviceUuids
-- **id** (String) The ID of this resource.
-- **limit** (Number) limit query parameter. Number of records to be retrieved
-- **offset** (Number) offset query parameter. offset/starting row
+- `compliance_status` (String) complianceStatus query parameter. Compliance status can be have value among 'COMPLIANT','NON_COMPLIANT','IN_PROGRESS', 'ERROR'
+- `device_uuid` (String) deviceUuid query parameter. Comma separated deviceUuids
+- `limit` (Number) limit query parameter. Number of records to be retrieved
+- `offset` (Number) offset query parameter. offset/starting row
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **compliance_status** (String)
-- **device_uuid** (String)
-- **last_update_time** (Number)
-- **message** (String)
-- **schedule_time** (Number)
+- `compliance_status` (String)
+- `device_uuid` (String)
+- `last_update_time` (Number)
+- `message` (String)
+- `schedule_time` (Number)
 
 

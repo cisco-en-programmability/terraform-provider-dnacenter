@@ -2,14 +2,16 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -60,6 +62,7 @@ func resourceNetworkDeviceExport() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -68,16 +71,19 @@ func resourceNetworkDeviceExport() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"operation_enum": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"parameters": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -87,6 +93,7 @@ func resourceNetworkDeviceExport() *schema.Resource {
 							Optional:  true,
 							ForceNew:  true,
 							Sensitive: true,
+							Computed:  true,
 						},
 					},
 				},
@@ -111,9 +118,8 @@ func resourceNetworkDeviceExportCreate(ctx context.Context, d *schema.ResourceDa
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ExportDeviceList", err,
-			"Failure at ExportDeviceList, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing ExportDeviceList", err))
 		return diags
 	}
 
@@ -167,6 +173,7 @@ func resourceNetworkDeviceExportCreate(ctx context.Context, d *schema.ResourceDa
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

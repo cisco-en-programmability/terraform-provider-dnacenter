@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -45,7 +45,7 @@ func dataSourceEventSeries() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. # of records
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"namespace": &schema.Schema{
@@ -56,7 +56,7 @@ func dataSourceEventSeries() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Start Offset
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -256,7 +256,7 @@ func dataSourceEventSeriesRead(ctx context.Context, d *schema.ResourceData, m in
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNotifications")
+		log.Printf("[DEBUG] Selected method: GetNotifications")
 		queryParams1 := dnacentersdkgo.GetNotificationsQueryParams{}
 
 		if okEventIDs {
@@ -287,10 +287,10 @@ func dataSourceEventSeriesRead(ctx context.Context, d *schema.ResourceData, m in
 			queryParams1.Source = vSource.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okSortBy {
 			queryParams1.SortBy = vSortBy.(string)
@@ -329,6 +329,7 @@ func dataSourceEventSeriesRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

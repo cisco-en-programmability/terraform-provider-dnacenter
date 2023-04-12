@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -112,7 +112,7 @@ func resourceLicenseDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 	vvSmartAccountID := interfaceToString(vSmartAccountID)
 	vVirtualAccountName := resourceItem["virtual_account_name"]
 	vvVirtualAccountName := interfaceToString(vVirtualAccountName)
-	request1 := expandRequestLicenseVirtualAccountChangeChangeVirtualAccount(ctx, "parameters.0", d)
+	request1 := expandRequestLicenseVirtualAccountChangeChangeVirtualAccount2(ctx, "parameters.0", d)
 	response1, err := searchLicensesSmartAccountDetails(m, vvVirtualAccountName, vvSmartAccountID)
 
 	if err != nil || response1 != nil {
@@ -123,7 +123,7 @@ func resourceLicenseDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 		return resourceLicenseDeviceRead(ctx, d, m)
 	}
 
-	response2, restyResp1, err := client.Licenses.ChangeVirtualAccount(vvSmartAccountID, vvVirtualAccountName, request1)
+	response2, restyResp1, err := client.Licenses.ChangeVirtualAccount2(vvSmartAccountID, vvVirtualAccountName, request1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -134,8 +134,8 @@ func resourceLicenseDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ChangeVirtualAccount", err,
-			"Failure at ChangeVirtualAccount, unexpected response", ""))
+			"Failure when executing ChangeVirtualAccount2", err,
+			"Failure at ChangeVirtualAccount2, unexpected response", ""))
 		return diags
 	}
 
@@ -158,7 +158,7 @@ func resourceLicenseDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 			errorMsg := response3.Response.Progress + "\nFailure Reason: " + response3.Response.FailureReason
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing ChangeVirtualAccount", err1))
+				"Failure when executing ChangeVirtualAccount2", err1))
 			return diags
 		}
 	}
@@ -231,9 +231,9 @@ func resourceLicenseDeviceUpdate(ctx context.Context, d *schema.ResourceData, m 
 	}
 
 	if d.HasChange("parameters") {
-		request1 := expandRequestLicenseDeviceRegistrationDeviceRegistration(ctx, "parameters.0", d)
+		request1 := expandRequestLicenseDeviceRegistration2DeviceRegistration2(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		response1, restyResp1, err := client.Licenses.DeviceRegistration(vVirtualAccountName, request1)
+		response1, restyResp1, err := client.Licenses.DeviceRegistration2(vVirtualAccountName, request1)
 
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -244,8 +244,8 @@ func resourceLicenseDeviceUpdate(ctx context.Context, d *schema.ResourceData, m 
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing DeviceRegistration", err,
-				"Failure at DeviceRegistration, unexpected response", ""))
+				"Failure when executing DeviceRegistration2", err,
+				"Failure at DeviceRegistration2, unexpected response", ""))
 			return diags
 		}
 		taskId := response1.Response.TaskID
@@ -267,7 +267,7 @@ func resourceLicenseDeviceUpdate(ctx context.Context, d *schema.ResourceData, m 
 				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
 				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing DeviceRegistration", err1))
+					"Failure when executing DeviceRegistration2", err1))
 				return diags
 			}
 		}
@@ -281,10 +281,10 @@ func resourceLicenseDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 	client := m.(*dnacentersdkgo.Client)
 	// NOTE: Unable to delete LicenseDevice on Dna Center
 	//       Returning empty diags to delete it on Terraform
-	log.Printf("[DEBUG] Selected method 1: DeviceDeregistration")
-	request1 := expandRequestLicenseDeviceDeregistrationDeviceDeregistration(ctx, "parameters.0", d)
+	log.Printf("[DEBUG] Selected method 1: DeviceDeregistration2")
+	request1 := expandRequestLicenseDeviceDeregistration2DeviceDeregistration2(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.Licenses.DeviceDeregistration(request1)
+	response1, restyResp1, err := client.Licenses.DeviceDeregistration2(request1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -295,8 +295,8 @@ func resourceLicenseDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeviceDeregistration", err,
-			"Failure at DeviceDeregistration, unexpected response", ""))
+			"Failure when executing DeviceDeregistration2", err,
+			"Failure at DeviceDeregistration2, unexpected response", ""))
 		return diags
 	}
 
@@ -320,7 +320,7 @@ func resourceLicenseDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing DeviceDeregistration", err1))
+				"Failure when executing DeviceDeregistration2", err1))
 			return diags
 		}
 	}
@@ -328,8 +328,8 @@ func resourceLicenseDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 	return diags
 }
 
-func expandRequestLicenseVirtualAccountChangeChangeVirtualAccount(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesChangeVirtualAccount {
-	request := dnacentersdkgo.RequestLicensesChangeVirtualAccount{}
+func expandRequestLicenseVirtualAccountChangeChangeVirtualAccount2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesChangeVirtualAccount2 {
+	request := dnacentersdkgo.RequestLicensesChangeVirtualAccount2{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_uuids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_uuids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_uuids")))) {
 		request.DeviceUUIDs = interfaceToSliceString(v)
 	}
@@ -340,8 +340,8 @@ func expandRequestLicenseVirtualAccountChangeChangeVirtualAccount(ctx context.Co
 	return &request
 }
 
-func expandRequestLicenseDeviceRegistrationDeviceRegistration(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesDeviceRegistration {
-	request := dnacentersdkgo.RequestLicensesDeviceRegistration{}
+func expandRequestLicenseDeviceRegistration2DeviceRegistration2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesDeviceRegistration2 {
+	request := dnacentersdkgo.RequestLicensesDeviceRegistration2{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_uuids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_uuids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_uuids")))) {
 		request.DeviceUUIDs = interfaceToSliceString(v)
 	}
@@ -351,8 +351,8 @@ func expandRequestLicenseDeviceRegistrationDeviceRegistration(ctx context.Contex
 
 	return &request
 }
-func expandRequestLicenseDeviceDeregistrationDeviceDeregistration(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesDeviceDeregistration {
-	request := dnacentersdkgo.RequestLicensesDeviceDeregistration{}
+func expandRequestLicenseDeviceDeregistration2DeviceDeregistration2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesDeviceDeregistration2 {
+	request := dnacentersdkgo.RequestLicensesDeviceDeregistration2{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_uuids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_uuids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_uuids")))) {
 		request.DeviceUUIDs = interfaceToSliceString(v)
 	}

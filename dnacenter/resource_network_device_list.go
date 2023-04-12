@@ -10,7 +10,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -46,288 +46,229 @@ func resourceNetworkDeviceList() *schema.Resource {
 
 						"ap_ethernet_mac_address": &schema.Schema{
 							Description: `Ap Ethernet Mac Address`,
-							Type:        schema.TypeList,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
-
 						"ap_manager_interface_ip": &schema.Schema{
 							Description: `Ap Manager Interface Ip`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"associated_wlc_ip": &schema.Schema{
 							Description: `Associated Wlc Ip`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"boot_date_time": &schema.Schema{
 							Description: `Boot Date Time`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"collection_interval": &schema.Schema{
 							Description: `Collection Interval`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"collection_status": &schema.Schema{
 							Description: `Collection Status`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"description": &schema.Schema{
 							Description: `Description`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"device_support_level": &schema.Schema{
 							Description: `Device Support Level`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"error_code": &schema.Schema{
 							Description: `Error Code`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"error_description": &schema.Schema{
 							Description: `Error Description`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"family": &schema.Schema{
 							Description: `Family`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"hostname": &schema.Schema{
 							Description: `Hostname`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"id": &schema.Schema{
 							Description: `Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"instance_tenant_id": &schema.Schema{
 							Description: `Instance Tenant Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"instance_uuid": &schema.Schema{
 							Description: `Instance Uuid`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"interface_count": &schema.Schema{
 							Description: `Interface Count`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"inventory_status_detail": &schema.Schema{
 							Description: `Inventory Status Detail`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"last_update_time": &schema.Schema{
 							Description: `Last Update Time`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
-
 						"last_updated": &schema.Schema{
 							Description: `Last Updated`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"line_card_count": &schema.Schema{
 							Description: `Line Card Count`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"line_card_id": &schema.Schema{
 							Description: `Line Card Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"location": &schema.Schema{
 							Description: `Location`,
-							Type:        schema.TypeList,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
-
 						"location_name": &schema.Schema{
 							Description: `Location Name`,
-							Type:        schema.TypeList,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
-
 						"mac_address": &schema.Schema{
 							Description: `Mac Address`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"managed_atleast_once": &schema.Schema{
 							Description: `Managed Atleast Once`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"management_ip_address": &schema.Schema{
 							Description: `Management Ip Address`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"management_state": &schema.Schema{
 							Description: `Management State`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"memory_size": &schema.Schema{
 							Description: `Memory Size`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"platform_id": &schema.Schema{
 							Description: `Platform Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"reachability_failure_reason": &schema.Schema{
 							Description: `Reachability Failure Reason`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"reachability_status": &schema.Schema{
 							Description: `Reachability Status`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"role": &schema.Schema{
 							Description: `Role`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"role_source": &schema.Schema{
 							Description: `Role Source`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"serial_number": &schema.Schema{
 							Description: `Serial Number`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"series": &schema.Schema{
 							Description: `Series`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"snmp_contact": &schema.Schema{
 							Description: `Snmp Contact`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"snmp_location": &schema.Schema{
 							Description: `Snmp Location`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"software_type": &schema.Schema{
 							Description: `Software Type`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"software_version": &schema.Schema{
 							Description: `Software Version`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"tag_count": &schema.Schema{
 							Description: `Tag Count`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"tunnel_udp_port": &schema.Schema{
 							Description: `Tunnel Udp Port`,
-							Type:        schema.TypeList,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
-
 						"type": &schema.Schema{
 							Description: `Type`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"up_time": &schema.Schema{
 							Description: `Up Time`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"uptime_seconds": &schema.Schema{
 							Description: `Uptime Seconds`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
-
 						"waas_device_mode": &schema.Schema{
 							Description: `Waas Device Mode`,
-							Type:        schema.TypeList,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 					},
 				},
@@ -335,49 +276,58 @@ func resourceNetworkDeviceList() *schema.Resource {
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"cli_transport": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"compute_device": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"enable_password": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"extended_discovery_info": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"http_password": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"http_port": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"http_secure": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"http_user_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"ip_address": &schema.Schema{
 							Type:     schema.TypeList,
-							Required: true,
-							MinItems: 1,
+							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -385,6 +335,7 @@ func resourceNetworkDeviceList() *schema.Resource {
 						"meraki_org_id": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -392,77 +343,95 @@ func resourceNetworkDeviceList() *schema.Resource {
 						"netconf_port": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"password": &schema.Schema{
 							Type:      schema.TypeString,
 							Optional:  true,
 							Sensitive: true,
+							Computed:  true,
 						},
 						"serial_number": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Default:  "",
 						},
 						"snmp_auth_passphrase": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_auth_protocol": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_priv_passphrase": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_priv_protocol": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_ro_community": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_rw_community": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_retry": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_timeout": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_user_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"snmp_version": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"update_mgmt_ipaddress_list": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"exist_mgmt_ip_address": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"new_mgmt_ip_address": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -470,6 +439,7 @@ func resourceNetworkDeviceList() *schema.Resource {
 						"user_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -952,7 +922,6 @@ func expandRequestNetworkDeviceListSyncDevices2UpdateMgmtIPaddressList(ctx conte
 	}
 	return &request
 }
-
 func searchDevicesGetDeviceList(m interface{}, queryParams dnacentersdkgo.GetDeviceListQueryParams) (*dnacentersdkgo.ResponseDevicesGetDeviceListResponse, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error

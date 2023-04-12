@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -50,7 +50,7 @@ Discovery ID can be obtained using the "Get Discoveries by range" API.
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -146,7 +146,7 @@ func dataSourceDiscoveryJobByIDRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetListOfDiscoveriesByDiscoveryID")
+		log.Printf("[DEBUG] Selected method: GetListOfDiscoveriesByDiscoveryID")
 		vvID := vID.(string)
 		queryParams1 := dnacentersdkgo.GetListOfDiscoveriesByDiscoveryIDQueryParams{}
 
@@ -181,6 +181,7 @@ func dataSourceDiscoveryJobByIDRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -126,7 +126,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 				Optional: true,
 			},
 
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -142,7 +142,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 						"composite": &schema.Schema{
 							Description: `Is it composite template
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -156,7 +156,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -305,7 +305,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -320,7 +320,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -372,7 +372,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -410,7 +410,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString,
+																Type:     schema.TypeString, //TEST,
 																Computed: true,
 															},
 														},
@@ -529,7 +529,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -544,7 +544,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -596,7 +596,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -634,7 +634,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString,
+																Type:     schema.TypeString, //TEST,
 																Computed: true,
 															},
 														},
@@ -664,7 +664,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 						"custom_params_order": &schema.Schema{
 							Description: `Custom Params Order
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -704,14 +704,6 @@ func dataSourceTemplatesDetails() *schema.Resource {
 									},
 								},
 							},
-						},
-
-						"document_database": &schema.Schema{
-							Description: `Document Database
-`,
-
-							Type:     schema.TypeString,
-							Computed: true,
 						},
 
 						"failure_policy": &schema.Schema{
@@ -869,7 +861,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -884,7 +876,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -936,7 +928,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -974,7 +966,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeString, //TEST,
 													Computed: true,
 												},
 											},
@@ -1114,7 +1106,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 									"not_param": &schema.Schema{
 										Description: `Is it not a variable
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1129,7 +1121,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 									"param_array": &schema.Schema{
 										Description: `Is it an array
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1181,7 +1173,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 									"required": &schema.Schema{
 										Description: `Is param required
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -1219,7 +1211,7 @@ func dataSourceTemplatesDetails() *schema.Resource {
 												"selection_values": &schema.Schema{
 													Description: `Selection values
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeString, //TEST,
 													Computed: true,
 												},
 											},
@@ -1238,21 +1230,15 @@ func dataSourceTemplatesDetails() *schema.Resource {
 									"rollback_template_errors": &schema.Schema{
 										Description: `Validation or design conflicts errors of rollback template
 `,
-										Type:     schema.TypeList,
+										Type:     schema.TypeString, //TEST,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"template_errors": &schema.Schema{
 										Description: `Validation or design conflicts errors
 `,
-										Type:     schema.TypeList,
+										Type:     schema.TypeString, //TEST,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 
 									"template_id": &schema.Schema{
@@ -1348,7 +1334,7 @@ func dataSourceTemplatesDetailsRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTemplatesDetails")
+		log.Printf("[DEBUG] Selected method: GetTemplatesDetails")
 		queryParams1 := dnacentersdkgo.GetTemplatesDetailsQueryParams{}
 
 		if okID {
@@ -1417,13 +1403,14 @@ func dataSourceTemplatesDetailsRead(ctx context.Context, d *schema.ResourceData,
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenConfigurationTemplatesGetTemplatesDetailsItems(response1.Response)
-		if err := d.Set("items", vItems1); err != nil {
+		vItem1 := flattenConfigurationTemplatesGetTemplatesDetailsItem(response1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTemplatesDetails response",
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -1431,48 +1418,45 @@ func dataSourceTemplatesDetailsRead(ctx context.Context, d *schema.ResourceData,
 	return diags
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItems(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponse) []map[string]interface{} {
-	if items == nil {
+func flattenConfigurationTemplatesGetTemplatesDetailsItem(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetails) []map[string]interface{} {
+	if item == nil {
 		return nil
 	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["author"] = item.Author
-		respItem["composite"] = boolPtrToString(item.Composite)
-		respItem["containing_templates"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplates(item.ContainingTemplates)
-		respItem["create_time"] = item.CreateTime
-		respItem["custom_params_order"] = boolPtrToString(item.CustomParamsOrder)
-		respItem["description"] = item.Description
-		respItem["device_types"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsDeviceTypes(item.DeviceTypes)
-		respItem["document_database"] = boolPtrToString(item.DocumentDatabase)
-		respItem["failure_policy"] = item.FailurePolicy
-		respItem["id"] = item.ID
-		respItem["language"] = item.Language
-		respItem["last_update_time"] = item.LastUpdateTime
-		respItem["latest_version_time"] = item.LatestVersionTime
-		respItem["name"] = item.Name
-		respItem["parent_template_id"] = item.ParentTemplateID
-		respItem["project_associated"] = boolPtrToString(item.ProjectAssociated)
-		respItem["project_id"] = item.ProjectID
-		respItem["project_name"] = item.ProjectName
-		respItem["rollback_template_content"] = item.RollbackTemplateContent
-		respItem["rollback_template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParams(item.RollbackTemplateParams)
-		respItem["software_type"] = item.SoftwareType
-		respItem["software_variant"] = item.SoftwareVariant
-		respItem["software_version"] = item.SoftwareVersion
-		respItem["tags"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsTags(item.Tags)
-		respItem["template_content"] = item.TemplateContent
-		respItem["template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParams(item.TemplateParams)
-		respItem["validation_errors"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsValidationErrors(item.ValidationErrors)
-		respItem["version"] = item.Version
-		respItem["versions_info"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsVersionsInfo(item.VersionsInfo)
-		respItems = append(respItems, respItem)
+	respItem := make(map[string]interface{})
+	respItem["author"] = item.Author
+	respItem["composite"] = boolPtrToString(item.Composite)
+	respItem["containing_templates"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplates(item.ContainingTemplates)
+	respItem["create_time"] = item.CreateTime
+	respItem["custom_params_order"] = boolPtrToString(item.CustomParamsOrder)
+	respItem["description"] = item.Description
+	respItem["device_types"] = flattenConfigurationTemplatesGetTemplatesDetailsItemDeviceTypes(item.DeviceTypes)
+	respItem["failure_policy"] = item.FailurePolicy
+	respItem["id"] = item.ID
+	respItem["language"] = item.Language
+	respItem["last_update_time"] = item.LastUpdateTime
+	respItem["latest_version_time"] = item.LatestVersionTime
+	respItem["name"] = item.Name
+	respItem["parent_template_id"] = item.ParentTemplateID
+	respItem["project_associated"] = boolPtrToString(item.ProjectAssociated)
+	respItem["project_id"] = item.ProjectID
+	respItem["project_name"] = item.ProjectName
+	respItem["rollback_template_content"] = item.RollbackTemplateContent
+	respItem["rollback_template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemRollbackTemplateParams(item.RollbackTemplateParams)
+	respItem["software_type"] = item.SoftwareType
+	respItem["software_variant"] = item.SoftwareVariant
+	respItem["software_version"] = item.SoftwareVersion
+	respItem["tags"] = flattenConfigurationTemplatesGetTemplatesDetailsItemTags(item.Tags)
+	respItem["template_content"] = item.TemplateContent
+	respItem["template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemTemplateParams(item.TemplateParams)
+	respItem["validation_errors"] = flattenConfigurationTemplatesGetTemplatesDetailsItemValidationErrors(item.ValidationErrors)
+	respItem["version"] = item.Version
+	respItem["versions_info"] = flattenConfigurationTemplatesGetTemplatesDetailsItemVersionsInfo(item.VersionsInfo)
+	return []map[string]interface{}{
+		respItem,
 	}
-	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplates(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseContainingTemplates) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplates(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplates) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1481,22 +1465,22 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplates(it
 		respItem := make(map[string]interface{})
 		respItem["composite"] = boolPtrToString(item.Composite)
 		respItem["description"] = item.Description
-		respItem["device_types"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesDeviceTypes(item.DeviceTypes)
+		respItem["device_types"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesDeviceTypes(item.DeviceTypes)
 		respItem["id"] = item.ID
 		respItem["language"] = item.Language
 		respItem["name"] = item.Name
 		respItem["project_name"] = item.ProjectName
-		respItem["rollback_template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRollbackTemplateParams(item.RollbackTemplateParams)
-		respItem["tags"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTags(item.Tags)
+		respItem["rollback_template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesRollbackTemplateParams(item.RollbackTemplateParams)
+		respItem["tags"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesTags(item.Tags)
 		respItem["template_content"] = item.TemplateContent
-		respItem["template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTemplateParams(item.TemplateParams)
+		respItem["template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesTemplateParams(item.TemplateParams)
 		respItem["version"] = item.Version
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesDeviceTypes(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseContainingTemplatesDeviceTypes) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesDeviceTypes(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplatesDeviceTypes) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1511,7 +1495,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesDev
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRollbackTemplateParams(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseContainingTemplatesRollbackTemplateParams) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesRollbackTemplateParams(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplatesRollbackTemplateParams) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1533,15 +1517,15 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRol
 		respItem["param_array"] = boolPtrToString(item.ParamArray)
 		respItem["parameter_name"] = item.ParameterName
 		respItem["provider"] = item.Provider
-		respItem["range"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRollbackTemplateParamsRange(item.Range)
+		respItem["range"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesRollbackTemplateParamsRange(item.Range)
 		respItem["required"] = boolPtrToString(item.Required)
-		respItem["selection"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRollbackTemplateParamsSelection(item.Selection)
+		respItem["selection"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesRollbackTemplateParamsSelection(item.Selection)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRollbackTemplateParamsRange(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseContainingTemplatesRollbackTemplateParamsRange) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesRollbackTemplateParamsRange(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplatesRollbackTemplateParamsRange) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1556,7 +1540,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRol
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRollbackTemplateParamsSelection(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseContainingTemplatesRollbackTemplateParamsSelection) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesRollbackTemplateParamsSelection(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplatesRollbackTemplateParamsSelection) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -1564,7 +1548,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRol
 	respItem["default_selected_values"] = item.DefaultSelectedValues
 	respItem["id"] = item.ID
 	respItem["selection_type"] = item.SelectionType
-	respItem["selection_values"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(item.SelectionValues)
+	respItem["selection_values"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(item.SelectionValues)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1572,7 +1556,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRol
 
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseContainingTemplatesRollbackTemplateParamsSelectionSelectionValues) interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesRollbackTemplateParamsSelectionSelectionValues(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplatesRollbackTemplateParamsSelectionSelectionValues) interface{} {
 	if item == nil {
 		return nil
 	}
@@ -1582,7 +1566,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesRol
 
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTags(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseContainingTemplatesTags) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesTags(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplatesTags) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1596,7 +1580,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTag
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTemplateParams(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseContainingTemplatesTemplateParams) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesTemplateParams(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplatesTemplateParams) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1618,15 +1602,15 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTem
 		respItem["param_array"] = boolPtrToString(item.ParamArray)
 		respItem["parameter_name"] = item.ParameterName
 		respItem["provider"] = item.Provider
-		respItem["range"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTemplateParamsRange(item.Range)
+		respItem["range"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesTemplateParamsRange(item.Range)
 		respItem["required"] = boolPtrToString(item.Required)
-		respItem["selection"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTemplateParamsSelection(item.Selection)
+		respItem["selection"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesTemplateParamsSelection(item.Selection)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTemplateParamsRange(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseContainingTemplatesTemplateParamsRange) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesTemplateParamsRange(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplatesTemplateParamsRange) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1641,7 +1625,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTem
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTemplateParamsSelection(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseContainingTemplatesTemplateParamsSelection) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesTemplateParamsSelection(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplatesTemplateParamsSelection) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -1649,7 +1633,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTem
 	respItem["default_selected_values"] = item.DefaultSelectedValues
 	respItem["id"] = item.ID
 	respItem["selection_type"] = item.SelectionType
-	respItem["selection_values"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTemplateParamsSelectionSelectionValues(item.SelectionValues)
+	respItem["selection_values"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesTemplateParamsSelectionSelectionValues(item.SelectionValues)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1657,7 +1641,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTem
 
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTemplateParamsSelectionSelectionValues(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseContainingTemplatesTemplateParamsSelectionSelectionValues) interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplatesTemplateParamsSelectionSelectionValues(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplatesTemplateParamsSelectionSelectionValues) interface{} {
 	if item == nil {
 		return nil
 	}
@@ -1667,7 +1651,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsContainingTemplatesTem
 
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsDeviceTypes(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseDeviceTypes) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemDeviceTypes(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsDeviceTypes) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1682,7 +1666,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsDeviceTypes(items *[]d
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParams(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseRollbackTemplateParams) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemRollbackTemplateParams(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsRollbackTemplateParams) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1704,15 +1688,15 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParams
 		respItem["param_array"] = boolPtrToString(item.ParamArray)
 		respItem["parameter_name"] = item.ParameterName
 		respItem["provider"] = item.Provider
-		respItem["range"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParamsRange(item.Range)
+		respItem["range"] = flattenConfigurationTemplatesGetTemplatesDetailsItemRollbackTemplateParamsRange(item.Range)
 		respItem["required"] = boolPtrToString(item.Required)
-		respItem["selection"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParamsSelection(item.Selection)
+		respItem["selection"] = flattenConfigurationTemplatesGetTemplatesDetailsItemRollbackTemplateParamsSelection(item.Selection)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParamsRange(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseRollbackTemplateParamsRange) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemRollbackTemplateParamsRange(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsRollbackTemplateParamsRange) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1727,7 +1711,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParams
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParamsSelection(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseRollbackTemplateParamsSelection) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemRollbackTemplateParamsSelection(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsRollbackTemplateParamsSelection) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -1735,7 +1719,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParams
 	respItem["default_selected_values"] = item.DefaultSelectedValues
 	respItem["id"] = item.ID
 	respItem["selection_type"] = item.SelectionType
-	respItem["selection_values"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParamsSelectionSelectionValues(item.SelectionValues)
+	respItem["selection_values"] = flattenConfigurationTemplatesGetTemplatesDetailsItemRollbackTemplateParamsSelectionSelectionValues(item.SelectionValues)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1743,7 +1727,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParams
 
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParamsSelectionSelectionValues(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseRollbackTemplateParamsSelectionSelectionValues) interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemRollbackTemplateParamsSelectionSelectionValues(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsRollbackTemplateParamsSelectionSelectionValues) interface{} {
 	if item == nil {
 		return nil
 	}
@@ -1753,7 +1737,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsRollbackTemplateParams
 
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsTags(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseTags) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemTags(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsTags) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1767,7 +1751,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsTags(items *[]dnacente
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParams(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseTemplateParams) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemTemplateParams(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsTemplateParams) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1789,15 +1773,15 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParams(items *
 		respItem["param_array"] = boolPtrToString(item.ParamArray)
 		respItem["parameter_name"] = item.ParameterName
 		respItem["provider"] = item.Provider
-		respItem["range"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParamsRange(item.Range)
+		respItem["range"] = flattenConfigurationTemplatesGetTemplatesDetailsItemTemplateParamsRange(item.Range)
 		respItem["required"] = boolPtrToString(item.Required)
-		respItem["selection"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParamsSelection(item.Selection)
+		respItem["selection"] = flattenConfigurationTemplatesGetTemplatesDetailsItemTemplateParamsSelection(item.Selection)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParamsRange(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseTemplateParamsRange) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemTemplateParamsRange(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsTemplateParamsRange) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1812,7 +1796,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParamsRange(it
 	return respItems
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParamsSelection(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseTemplateParamsSelection) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemTemplateParamsSelection(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsTemplateParamsSelection) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -1820,7 +1804,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParamsSelectio
 	respItem["default_selected_values"] = item.DefaultSelectedValues
 	respItem["id"] = item.ID
 	respItem["selection_type"] = item.SelectionType
-	respItem["selection_values"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParamsSelectionSelectionValues(item.SelectionValues)
+	respItem["selection_values"] = flattenConfigurationTemplatesGetTemplatesDetailsItemTemplateParamsSelectionSelectionValues(item.SelectionValues)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1828,7 +1812,7 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParamsSelectio
 
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParamsSelectionSelectionValues(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseTemplateParamsSelectionSelectionValues) interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemTemplateParamsSelectionSelectionValues(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsTemplateParamsSelectionSelectionValues) interface{} {
 	if item == nil {
 		return nil
 	}
@@ -1838,13 +1822,13 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsTemplateParamsSelectio
 
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsValidationErrors(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseValidationErrors) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemValidationErrors(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsValidationErrors) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["rollback_template_errors"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsValidationErrorsRollbackTemplateErrors(item.RollbackTemplateErrors)
-	respItem["template_errors"] = flattenConfigurationTemplatesGetTemplatesDetailsItemsValidationErrorsTemplateErrors(item.TemplateErrors)
+	respItem["rollback_template_errors"] = flattenConfigurationTemplatesGetTemplatesDetailsItemValidationErrorsRollbackTemplateErrors(item.RollbackTemplateErrors)
+	respItem["template_errors"] = flattenConfigurationTemplatesGetTemplatesDetailsItemValidationErrorsTemplateErrors(item.TemplateErrors)
 	respItem["template_id"] = item.TemplateID
 	respItem["template_version"] = item.TemplateVersion
 
@@ -1854,31 +1838,27 @@ func flattenConfigurationTemplatesGetTemplatesDetailsItemsValidationErrors(item 
 
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsValidationErrorsRollbackTemplateErrors(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseValidationErrorsRollbackTemplateErrors) []interface{} {
-	if items == nil {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemValidationErrorsRollbackTemplateErrors(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsValidationErrorsRollbackTemplateErrors) interface{} {
+	if item == nil {
 		return nil
 	}
-	var respItems []interface{}
-	for _, item := range *items {
-		respItem := item
-		respItems = append(respItems, responseInterfaceToString(respItem))
-	}
-	return respItems
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsValidationErrorsTemplateErrors(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseValidationErrorsTemplateErrors) []interface{} {
-	if items == nil {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemValidationErrorsTemplateErrors(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsValidationErrorsTemplateErrors) interface{} {
+	if item == nil {
 		return nil
 	}
-	var respItems []interface{}
-	for _, item := range *items {
-		respItem := item
-		respItems = append(respItems, responseInterfaceToString(respItem))
-	}
-	return respItems
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItemsVersionsInfo(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponseVersionsInfo) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItemVersionsInfo(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsVersionsInfo) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

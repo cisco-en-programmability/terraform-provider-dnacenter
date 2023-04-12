@@ -22,19 +22,20 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_swim_image_url" "example" {
   provider = dnacenter
   parameters {
+    schedule_at     = "string"
+    schedule_desc   = "string"
+    schedule_origin = "string"
+    payload {
 
-    application_type = "string"
-    image_family     = "string"
-    source_url       = "string"
-    third_party      = "false"
-    vendor           = "string"
+      application_type = "string"
+      image_family     = "string"
+      source_url       = "string"
+      third_party      = "false"
+      vendor           = "string"
+    }
   }
 }
 
@@ -48,37 +49,34 @@ output "dnacenter_swim_image_url_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **payload** (Block List) Array of RequestSoftwareImageManagementSwimImportSoftwareImageViaURL (see [below for nested schema](#nestedblock--parameters--payload))
-- **schedule_at** (String) scheduleAt query parameter. Epoch Time (The number of milli-seconds since January 1 1970 UTC) at which the distribution should be scheduled (Optional)
-- **schedule_desc** (String) scheduleDesc query parameter. Custom Description (Optional)
-- **schedule_origin** (String) scheduleOrigin query parameter. Originator of this call (Optional)
+- `payload` (Block List) Array of RequestSoftwareImageManagementSwimImportSoftwareImageViaURL (see [below for nested schema](#nestedblock--parameters--payload))
+- `schedule_at` (String) scheduleAt query parameter. Epoch Time (The number of milli-seconds since January 1 1970 UTC) at which the distribution should be scheduled (Optional)
+- `schedule_desc` (String) scheduleDesc query parameter. Custom Description (Optional)
+- `schedule_origin` (String) scheduleOrigin query parameter. Originator of this call (Optional)
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
 
 Optional:
 
-- **application_type** (String)
-- **image_family** (String)
-- **source_url** (String)
-- **third_party** (String)
-- **vendor** (String)
+- `application_type` (String)
+- `image_family` (String)
+- `source_url` (String)
+- `third_party` (String)
+- `vendor` (String)
 
 
 
@@ -87,7 +85,7 @@ Optional:
 
 Read-Only:
 
-- **task_id** (String)
-- **url** (String)
+- `task_id` (String)
+- `url` (String)
 
 

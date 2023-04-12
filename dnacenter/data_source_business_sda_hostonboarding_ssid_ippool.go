@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -83,7 +83,7 @@ func dataSourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx context.Context, d *s
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSSIDToIPPoolMapping")
+		log.Printf("[DEBUG] Selected method: GetSSIDToIPPoolMapping")
 		queryParams1 := dnacentersdkgo.GetSSIDToIPPoolMappingQueryParams{}
 
 		queryParams1.VLANName = vVLANName.(string)
@@ -111,6 +111,7 @@ func dataSourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx context.Context, d *s
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

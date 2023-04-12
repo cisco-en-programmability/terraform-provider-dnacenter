@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -40,7 +40,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Required:    true,
 			},
 			"order": &schema.Schema{
@@ -173,7 +173,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_license_expired": &schema.Schema{
 							Description: `Is device license expired
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -181,7 +181,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_performance_allowed": &schema.Schema{
 							Description: `Is performance license available
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -189,7 +189,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_wireless": &schema.Schema{
 							Description: `Is device wireless controller
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -197,7 +197,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 						"is_wireless_capable": &schema.Schema{
 							Description: `Is device wireless capable
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -358,8 +358,8 @@ func dataSourceLicenseDeviceLicenseSummaryRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeviceLicenseSummary")
-		queryParams1 := dnacentersdkgo.DeviceLicenseSummaryQueryParams{}
+		log.Printf("[DEBUG] Selected method: DeviceLicenseSummary2")
+		queryParams1 := dnacentersdkgo.DeviceLicenseSummary2QueryParams{}
 
 		queryParams1.PageNumber = vPageNumber.(float64)
 
@@ -389,27 +389,28 @@ func dataSourceLicenseDeviceLicenseSummaryRead(ctx context.Context, d *schema.Re
 			queryParams1.DeviceUUID = vDeviceUUID.(string)
 		}
 
-		response1, restyResp1, err := client.Licenses.DeviceLicenseSummary(&queryParams1)
+		response1, restyResp1, err := client.Licenses.DeviceLicenseSummary2(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing DeviceLicenseSummary", err,
-				"Failure at DeviceLicenseSummary, unexpected response", ""))
+				"Failure when executing DeviceLicenseSummary2", err,
+				"Failure at DeviceLicenseSummary2, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenLicensesDeviceLicenseSummaryItems(response1.Response)
+		vItems1 := flattenLicensesDeviceLicenseSummary2Items(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting DeviceLicenseSummary response",
+				"Failure when setting DeviceLicenseSummary2 response",
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -417,7 +418,7 @@ func dataSourceLicenseDeviceLicenseSummaryRead(ctx context.Context, d *schema.Re
 	return diags
 }
 
-func flattenLicensesDeviceLicenseSummaryItems(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseSummaryResponse) []map[string]interface{} {
+func flattenLicensesDeviceLicenseSummary2Items(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseSummary2Response) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

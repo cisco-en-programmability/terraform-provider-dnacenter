@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -33,6 +33,13 @@ func dataSourceSdaMulticast() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"description": &schema.Schema{
+							Description: `multicast configuration info retrieved successfully from sda fabric
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"multicast_method": &schema.Schema{
 							Description: `Multicast Method
 `,
@@ -54,14 +61,14 @@ func dataSourceSdaMulticast() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"external_rp_ip_address": &schema.Schema{
-										Description: `ExternalRpIpAddress, required if multicastType is asm_with_external_rp
+										Description: `ExternalRpIpAddress
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"internal_rp_ip_address": &schema.Schema{
-										Description: `InternalRpIpAddress, required if multicastType is asm_with_internal_rp
+										Description: `InternalRpIpAddress
 `,
 										Type:     schema.TypeList,
 										Computed: true,
@@ -84,14 +91,14 @@ func dataSourceSdaMulticast() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"ssm_group_range": &schema.Schema{
-													Description: `Valid SSM group range ip address(e.g., 230.0.0.0)
+													Description: `SSM group range
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 
 												"ssm_wildcard_mask": &schema.Schema{
-													Description: `Valid SSM Wildcard Mask ip address(e.g.,0.255.255.255)
+													Description: `SSM Wildcard Mask 
 `,
 													Type:     schema.TypeString,
 													Computed: true,
@@ -110,8 +117,8 @@ func dataSourceSdaMulticast() *schema.Resource {
 							},
 						},
 
-						"site_name_hierarchy": &schema.Schema{
-							Description: `Full path of sda Fabric Site
+						"status": &schema.Schema{
+							Description: `Status
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -131,7 +138,7 @@ func dataSourceSdaMulticastRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetMulticastDetailsFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetMulticastDetailsFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetMulticastDetailsFromSdaFabricQueryParams{}
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy.(string)
@@ -157,6 +164,7 @@ func dataSourceSdaMulticastRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -169,10 +177,11 @@ func flattenSdaGetMulticastDetailsFromSdaFabricItem(item *dnacentersdkgo.Respons
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 	respItem["multicast_method"] = item.MulticastMethod
 	respItem["multicast_type"] = item.MulticastType
 	respItem["multicast_vn_info"] = flattenSdaGetMulticastDetailsFromSdaFabricItemMulticastVnInfo(item.MulticastVnInfo)
+	respItem["status"] = item.Status
+	respItem["description"] = item.Description
 	return []map[string]interface{}{
 		respItem,
 	}
@@ -195,16 +204,16 @@ func flattenSdaGetMulticastDetailsFromSdaFabricItemMulticastVnInfo(items *[]dnac
 	return respItems
 }
 
-func flattenSdaGetMulticastDetailsFromSdaFabricItemMulticastVnInfoSsmInfo(item *dnacentersdkgo.ResponseSdaGetMulticastDetailsFromSdaFabricMulticastVnInfoSsmInfo) []map[string]interface{} {
-	if item == nil {
+func flattenSdaGetMulticastDetailsFromSdaFabricItemMulticastVnInfoSsmInfo(items *[]dnacentersdkgo.ResponseSdaGetMulticastDetailsFromSdaFabricMulticastVnInfoSsmInfo) []map[string]interface{} {
+	if items == nil {
 		return nil
 	}
-	respItem := make(map[string]interface{})
-	respItem["ssm_group_range"] = item.SsmGroupRange
-	respItem["ssm_wildcard_mask"] = item.SsmWildcardMask
-
-	return []map[string]interface{}{
-		respItem,
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["ssm_group_range"] = item.SsmGroupRange
+		respItem["ssm_wildcard_mask"] = item.SsmWildcardMask
+		respItems = append(respItems, respItem)
 	}
-
+	return respItems
 }

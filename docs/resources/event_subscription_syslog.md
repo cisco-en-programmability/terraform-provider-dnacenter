@@ -18,40 +18,40 @@ It manages create, read and update operations on Event Management.
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_event_subscription_syslog" "example" {
   provider = dnacenter
+
   parameters {
+    payload {
 
-    description = "string"
-    filter {
 
-      categories = ["string"]
-      domains_subdomains {
+      description = "string"
+      filter {
 
-        domain      = "string"
-        sub_domains = ["string"]
+        categories = ["string"]
+        domains_subdomains {
+
+          domain      = "string"
+          sub_domains = ["string"]
+        }
+        event_ids  = ["string"]
+        severities = ["string"]
+        site_ids   = ["string"]
+        sources    = ["string"]
+        types      = ["string"]
       }
-      event_ids  = ["string"]
-      severities = ["string"]
-      site_ids   = ["string"]
-      sources    = ["string"]
-      types      = ["string"]
-    }
-    name = "string"
-    subscription_endpoints {
+      name = "string"
+      subscription_endpoints {
 
-      instance_id = "string"
-      subscription_details {
+        instance_id = "string"
+        subscription_details {
 
-        connector_type = "string"
+          connector_type = "string"
+        }
       }
+      subscription_id = "string"
+      version         = "string"
     }
-    subscription_id = "string"
-    version         = "string"
   }
 }
 
@@ -65,63 +65,71 @@ output "dnacenter_event_subscription_syslog_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **parameters** (Block List) Array of RequestEventManagementCreateSyslogEventSubscription (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestEventManagementCreateSyslogEventSubscription (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **description** (String) Description
-- **filter** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--filter))
-- **name** (String) Name
-- **subscription_endpoints** (Block List) (see [below for nested schema](#nestedblock--parameters--subscription_endpoints))
-- **subscription_id** (String) Subscription Id (Unique UUID)
-- **version** (String) Version
+- `payload` (Block List) Array of RequestEventManagementCreateSyslogEventSubscription (see [below for nested schema](#nestedblock--parameters--payload))
 
-<a id="nestedblock--parameters--filter"></a>
-### Nested Schema for `parameters.filter`
+<a id="nestedblock--parameters--payload"></a>
+### Nested Schema for `parameters.payload`
 
 Optional:
 
-- **categories** (List of String) Categories
-- **domains_subdomains** (Block List) (see [below for nested schema](#nestedblock--parameters--filter--domains_subdomains))
-- **event_ids** (List of String) Event Ids (Comma separated event ids)
-- **severities** (List of String) Severities
-- **site_ids** (List of String) Site Ids
-- **sources** (List of String) Sources
-- **types** (List of String) Types
+- `description` (String) Description
+- `filter` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--filter))
+- `name` (String) Name
+- `subscription_endpoints` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--subscription_endpoints))
+- `subscription_id` (String) Subscription Id (Unique UUID)
+- `version` (String) Version
 
-<a id="nestedblock--parameters--filter--domains_subdomains"></a>
-### Nested Schema for `parameters.filter.domains_subdomains`
-
-Optional:
-
-- **domain** (String) Domain
-- **sub_domains** (List of String) Sub Domains
-
-
-
-<a id="nestedblock--parameters--subscription_endpoints"></a>
-### Nested Schema for `parameters.subscription_endpoints`
+<a id="nestedblock--parameters--payload--filter"></a>
+### Nested Schema for `parameters.payload.filter`
 
 Optional:
 
-- **instance_id** (String) (From Get Syslog Subscription Details --> pick instanceId)
-- **subscription_details** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--subscription_endpoints--subscription_details))
+- `categories` (List of String) Categories
+- `domains_subdomains` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--filter--domains_subdomains))
+- `event_ids` (List of String) Event Ids (Comma separated event ids)
+- `severities` (List of String) Severities
+- `site_ids` (List of String) Site Ids
+- `sources` (List of String) Sources
+- `types` (List of String) Types
 
-<a id="nestedblock--parameters--subscription_endpoints--subscription_details"></a>
-### Nested Schema for `parameters.subscription_endpoints.subscription_details`
+<a id="nestedblock--parameters--payload--filter--domains_subdomains"></a>
+### Nested Schema for `parameters.payload.filter.domains_subdomains`
 
 Optional:
 
-- **connector_type** (String) Connector Type (Must be SYSLOG)
+- `domain` (String) Domain
+- `sub_domains` (List of String) Sub Domains
+
+
+
+<a id="nestedblock--parameters--payload--subscription_endpoints"></a>
+### Nested Schema for `parameters.payload.subscription_endpoints`
+
+Optional:
+
+- `instance_id` (String) (From Get Syslog Subscription Details --> pick instanceId)
+- `subscription_details` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--subscription_endpoints--subscription_details))
+
+<a id="nestedblock--parameters--payload--subscription_endpoints--subscription_details"></a>
+### Nested Schema for `parameters.payload.subscription_endpoints.subscription_details`
+
+Optional:
+
+- `connector_type` (String) Connector Type (Must be SYSLOG)
+
 
 
 
@@ -131,36 +139,36 @@ Optional:
 
 Read-Only:
 
-- **description** (String)
-- **filter** (List of Object) (see [below for nested schema](#nestedobjatt--item--filter))
-- **is_private** (String)
-- **name** (String)
-- **subscription_endpoints** (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints))
-- **subscription_id** (String)
-- **tenant_id** (String)
-- **version** (String)
+- `description` (String)
+- `filter` (List of Object) (see [below for nested schema](#nestedobjatt--item--filter))
+- `is_private` (String)
+- `name` (String)
+- `subscription_endpoints` (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints))
+- `subscription_id` (String)
+- `tenant_id` (String)
+- `version` (String)
 
 <a id="nestedobjatt--item--filter"></a>
 ### Nested Schema for `item.filter`
 
 Read-Only:
 
-- **categories** (List of String)
-- **domains_subdomains** (List of Object) (see [below for nested schema](#nestedobjatt--item--filter--domains_subdomains))
-- **event_ids** (List of String)
-- **others** (List of String)
-- **severities** (List of String)
-- **site_ids** (List of String)
-- **sources** (List of String)
-- **types** (List of String)
+- `categories` (List of String)
+- `domains_subdomains` (List of Object) (see [below for nested schema](#nestedobjatt--item--filter--domains_subdomains))
+- `event_ids` (List of String)
+- `others` (List of String)
+- `severities` (List of String)
+- `site_ids` (List of String)
+- `sources` (List of String)
+- `types` (List of String)
 
 <a id="nestedobjatt--item--filter--domains_subdomains"></a>
 ### Nested Schema for `item.filter.domains_subdomains`
 
 Read-Only:
 
-- **domain** (String)
-- **sub_domains** (List of String)
+- `domain` (String)
+- `sub_domains` (List of String)
 
 
 
@@ -169,53 +177,33 @@ Read-Only:
 
 Read-Only:
 
-- **connector_type** (String)
-- **instance_id** (String)
-- **subscription_details** (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details))
+- `connector_type` (String)
+- `instance_id` (String)
+- `subscription_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details))
 
 <a id="nestedobjatt--item--subscription_endpoints--subscription_details"></a>
 ### Nested Schema for `item.subscription_endpoints.subscription_details`
 
 Read-Only:
 
-- **base_path** (String)
-- **body** (String)
-- **connect_timeout** (String)
-- **connector_type** (String)
-- **description** (String)
-- **headers** (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details--headers))
-- **instance_id** (String)
-- **method** (String)
-- **name** (String)
-- **path_params** (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details--path_params))
-- **query_params** (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details--query_params))
-- **read_timeout** (String)
-- **resource** (String)
-- **trust_cert** (String)
-- **url** (String)
+- `connector_type` (String)
+- `description` (String)
+- `instance_id` (String)
+- `name` (String)
+- `syslog_config` (List of Object) (see [below for nested schema](#nestedobjatt--item--subscription_endpoints--subscription_details--syslog_config))
 
-<a id="nestedobjatt--item--subscription_endpoints--subscription_details--headers"></a>
-### Nested Schema for `item.subscription_endpoints.subscription_details.url`
+<a id="nestedobjatt--item--subscription_endpoints--subscription_details--syslog_config"></a>
+### Nested Schema for `item.subscription_endpoints.subscription_details.syslog_config`
 
 Read-Only:
 
-- **string** (String)
-
-
-<a id="nestedobjatt--item--subscription_endpoints--subscription_details--path_params"></a>
-### Nested Schema for `item.subscription_endpoints.subscription_details.url`
-
-Read-Only:
-
-- **string** (String)
-
-
-<a id="nestedobjatt--item--subscription_endpoints--subscription_details--query_params"></a>
-### Nested Schema for `item.subscription_endpoints.subscription_details.url`
-
-Read-Only:
-
-- **string** (String)
+- `config_id` (String)
+- `description` (String)
+- `host` (String)
+- `name` (String)
+- `port` (Number)
+- `tenant_id` (String)
+- `version` (String)
 
 ## Import
 

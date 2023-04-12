@@ -10,7 +10,7 @@ terraform {
 
 resource "dnacenter_network_create" "global" {
   provider = dnacenter
-    
+
   parameters {
 
     settings {

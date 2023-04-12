@@ -31,21 +31,18 @@ output "dnacenter_event_subscription_count_example" {
 
 ### Required
 
-- **event_ids** (String) eventIds query parameter. List of subscriptions related to the respective eventIds
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `event_ids` (String) eventIds query parameter. List of subscriptions related to the respective eventIds
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
+- `response` (Number)
 
 

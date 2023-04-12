@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -45,22 +45,18 @@ func resourceSNMPProperties() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"instance_tenant_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"instance_uuid": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"int_value": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"system_property_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -71,31 +67,35 @@ func resourceSNMPProperties() *schema.Resource {
 			"parameters": &schema.Schema{
 				Description: `Array of RequestDiscoveryCreateUpdateSNMPProperties`,
 				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"instance_tenant_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"instance_uuid": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"int_value": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"system_property_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -200,8 +200,10 @@ func resourceSNMPPropertiesRead(ctx context.Context, d *schema.ResourceData, m i
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		vItem1 := flattenDiscoveryGetSNMPPropertiesItem(response1)
+		items := []dnacentersdkgo.ResponseDiscoveryGetSNMPPropertiesResponse{
+			*response1,
+		}
+		vItem1 := flattenDiscoveryGetSNMPPropertiesItems(&items)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSNMPProperties search response",
@@ -255,7 +257,6 @@ func expandRequestSNMPPropertiesCreateUpdateSNMPPropertiesItemArray(ctx context.
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -279,7 +280,6 @@ func expandRequestSNMPPropertiesCreateUpdateSNMPPropertiesItem(ctx context.Conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 

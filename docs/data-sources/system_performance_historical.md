@@ -33,48 +33,56 @@ output "dnacenter_system_performance_historical_example" {
 
 ### Optional
 
-- **end_time** (Number) endTime query parameter. This is the epoch end time in milliseconds upto which performance indicator need to be fetched
-- **id** (String) The ID of this resource.
-- **kpi** (String) kpi query parameter. Fetch historical data for this kpi. Valid values: cpu,memory,network
-- **start_time** (Number) startTime query parameter. This is the epoch start time in milliseconds from which performance indicator need to be fetched
+- `end_time` (Number) endTime query parameter. This is the epoch end time in milliseconds upto which performance indicator need to be fetched
+- `kpi` (String) kpi query parameter. Fetch historical data for this kpi. Valid values: cpu,memory,network
+- `start_time` (Number) startTime query parameter. This is the epoch start time in milliseconds from which performance indicator need to be fetched
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **host_name** (String)
-- **kpis** (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis))
-- **version** (String)
+- `host_name` (String)
+- `kpis` (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis))
+- `version` (String)
 
 <a id="nestedobjatt--item--kpis"></a>
 ### Nested Schema for `item.kpis`
 
 Read-Only:
 
-- **data** (Map of String)
-- **legends** (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends))
+- `data` (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--data))
+- `legends` (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends))
+
+<a id="nestedobjatt--item--kpis--data"></a>
+### Nested Schema for `item.kpis.data`
+
+Read-Only:
+
+- `t1` (List of String)
+
 
 <a id="nestedobjatt--item--kpis--legends"></a>
 ### Nested Schema for `item.kpis.legends`
 
 Read-Only:
 
-- **cpu** (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends--cpu))
-- **memory** (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends--memory))
-- **network_rx_rate** (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends--network_rx_rate))
-- **network_tx_rate** (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends--network_tx_rate))
+- `cpu` (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends--cpu))
+- `memory` (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends--memory))
+- `network_rx_rate` (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends--network_rx_rate))
+- `network_tx_rate` (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends--network_tx_rate))
 
 <a id="nestedobjatt--item--kpis--legends--cpu"></a>
 ### Nested Schema for `item.kpis.legends.network_tx_rate`
 
 Read-Only:
 
-- **units** (String)
+- `units` (String)
 
 
 <a id="nestedobjatt--item--kpis--legends--memory"></a>
@@ -82,7 +90,7 @@ Read-Only:
 
 Read-Only:
 
-- **units** (String)
+- `units` (String)
 
 
 <a id="nestedobjatt--item--kpis--legends--network_rx_rate"></a>
@@ -90,7 +98,7 @@ Read-Only:
 
 Read-Only:
 
-- **units** (String)
+- `units` (String)
 
 
 <a id="nestedobjatt--item--kpis--legends--network_tx_rate"></a>
@@ -98,6 +106,6 @@ Read-Only:
 
 Read-Only:
 
-- **units** (String)
+- `units` (String)
 
 

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -88,7 +88,7 @@ workflows. Pagination and sorting are also supported by this endpoint
 
 						"add_to_inventory": &schema.Schema{
 							Description: `Add To Inventory`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -308,7 +308,7 @@ workflows. Pagination and sorting are also supported by this endpoint
 
 						"add_to_inventory": &schema.Schema{
 							Description: `Add To Inventory`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -536,7 +536,7 @@ func dataSourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m in
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetWorkflows")
+		log.Printf("[DEBUG] Selected method: GetWorkflows")
 		queryParams1 := dnacentersdkgo.GetWorkflowsQueryParams{}
 
 		if okLimit {
@@ -579,12 +579,13 @@ func dataSourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetWorkflowByID")
+		log.Printf("[DEBUG] Selected method: GetWorkflowByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.DeviceOnboardingPnp.GetWorkflowByID(vvID)
@@ -608,6 +609,7 @@ func dataSourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

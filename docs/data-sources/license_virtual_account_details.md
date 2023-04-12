@@ -31,31 +31,28 @@ output "dnacenter_license_virtual_account_details_example" {
 
 ### Required
 
-- **smart_account_id** (String) smart_account_id path parameter. Id of smart account
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `smart_account_id` (String) smart_account_id path parameter. Id of smart account
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **smart_account_id** (String)
-- **smart_account_name** (String)
-- **virtual_account_details** (List of Object) (see [below for nested schema](#nestedobjatt--item--virtual_account_details))
+- `smart_account_id` (String)
+- `smart_account_name` (String)
+- `virtual_account_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--virtual_account_details))
 
 <a id="nestedobjatt--item--virtual_account_details"></a>
 ### Nested Schema for `item.virtual_account_details`
 
 Read-Only:
 
-- **virtual_account_id** (String)
-- **virtual_account_name** (String)
+- `virtual_account_id` (String)
+- `virtual_account_name` (String)
 
 

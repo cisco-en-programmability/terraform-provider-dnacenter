@@ -1,6 +1,7 @@
 
 resource "dnacenter_wireless_profile" "example" {
   provider = dnacenter
+
   parameters {
 
     profile_details {
@@ -15,9 +16,11 @@ resource "dnacenter_wireless_profile" "example" {
           enable_flex_connect = "false"
           local_to_vlan       = 1
         }
-        interface_name = "string"
-        name           = "string"
-        type           = "string"
+        interface_name      = "string"
+        name                = "string"
+        policy_profile_name = "string"
+        type                = "string"
+        wlan_profile_name   = "string"
       }
     }
     wireless_profile_name = "string"

@@ -38,32 +38,32 @@ output "dnacenter_itsm_cmdb_sync_status_example" {
 
 ### Optional
 
-- **date** (String) date query parameter. Provide date in "YYYY-MM-DD" format
-- **id** (String) The ID of this resource.
-- **status** (String) status query parameter. Supported values are "Success","Failed" and "Unknown". Providing other values will result in all the available sync job status.
+- `date` (String) date query parameter. Provide date in "YYYY-MM-DD" format
+- `status` (String) status query parameter. Supported values are "Success","Failed" and "Unknown". Providing other values will result in all the available sync job status.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **devices** (List of Object) (see [below for nested schema](#nestedobjatt--items--devices))
-- **failure_count** (String)
-- **message** (String)
-- **success_count** (String)
-- **sync_time** (String)
-- **unknown_error_count** (String)
+- `devices` (List of Object) (see [below for nested schema](#nestedobjatt--items--devices))
+- `failure_count` (String)
+- `message` (String)
+- `success_count` (String)
+- `sync_time` (String)
+- `unknown_error_count` (String)
 
 <a id="nestedobjatt--items--devices"></a>
 ### Nested Schema for `items.devices`
 
 Read-Only:
 
-- **device_id** (String)
-- **status** (String)
+- `device_id` (String)
+- `status` (String)
 
 

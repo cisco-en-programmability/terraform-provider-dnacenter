@@ -17,7 +17,7 @@ resource "dnacenter_reserve_ip_subpool" "example" {
   parameters {
     ipv4_prefix      = "false"
     ipv4_global_pool = "10.43.192.0"
-    
+
     //id                 = "string"
     # ipv4_dhcp_servers  = []
     # ipv4_dns_servers   = []

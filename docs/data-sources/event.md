@@ -36,38 +36,38 @@ output "dnacenter_event_example" {
 
 ### Required
 
-- **tags** (String) tags query parameter. The registered Tags should be provided
+- `tags` (String) tags query parameter. The registered Tags should be provided
 
 ### Optional
 
-- **event_id** (String) eventId query parameter. The registered EventId should be provided
-- **id** (String) The ID of this resource.
-- **limit** (Number) limit query parameter. The number of Registries to limit in the resultset whose default value 10
-- **offset** (Number) offset query parameter. The number of Registries to offset in the resultset whose default value 0
-- **order** (String) order query parameter.
-- **sort_by** (String) sortBy query parameter. SortBy field name
+- `event_id` (String) eventId query parameter. The registered EventId should be provided
+- `limit` (Number) limit query parameter. The number of Registries to limit in the resultset whose default value 10
+- `offset` (Number) offset query parameter. The number of Registries to offset in the resultset whose default value 0
+- `order` (String) order query parameter.
+- `sort_by` (String) sortBy query parameter. SortBy field name
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **category** (String)
-- **description** (String)
-- **details** (String)
-- **domain** (String)
-- **event_id** (String)
-- **name** (String)
-- **name_space** (String)
-- **severity** (Number)
-- **sub_domain** (String)
-- **subscription_types** (List of String)
-- **tags** (List of String)
-- **type** (String)
-- **version** (String)
+- `category` (String)
+- `description` (String)
+- `details` (String)
+- `domain` (String)
+- `event_id` (String)
+- `name` (String)
+- `name_space` (String)
+- `severity` (Number)
+- `sub_domain` (String)
+- `subscription_types` (List of String)
+- `tags` (List of String)
+- `type` (String)
+- `version` (String)
 
 

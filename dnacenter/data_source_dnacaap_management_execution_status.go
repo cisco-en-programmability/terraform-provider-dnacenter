@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -124,7 +124,7 @@ func dataSourceDnacaapManagementExecutionStatusRead(ctx context.Context, d *sche
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetBusinessAPIExecutionDetails")
+		log.Printf("[DEBUG] Selected method: GetBusinessAPIExecutionDetails")
 		vvExecutionID := vExecutionID.(string)
 
 		response1, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(vvExecutionID)
@@ -148,6 +148,7 @@ func dataSourceDnacaapManagementExecutionStatusRead(ctx context.Context, d *sche
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

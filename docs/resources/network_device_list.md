@@ -18,10 +18,6 @@ It manages create, read and update operations on Devices.
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_network_device_list" "example" {
   provider = dnacenter
   parameters {
@@ -70,57 +66,54 @@ output "dnacenter_network_device_list_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
-Required:
-
-- **ip_address** (List of String)
-
 Optional:
 
-- **cli_transport** (String)
-- **compute_device** (String)
-- **enable_password** (String)
-- **extended_discovery_info** (String)
-- **http_password** (String)
-- **http_port** (String)
-- **http_secure** (String)
-- **http_user_name** (String)
-- **meraki_org_id** (List of String)
-- **netconf_port** (String)
-- **password** (String, Sensitive)
-- **serial_number** (String)
-- **snmp_auth_passphrase** (String)
-- **snmp_auth_protocol** (String)
-- **snmp_mode** (String)
-- **snmp_priv_passphrase** (String)
-- **snmp_priv_protocol** (String)
-- **snmp_retry** (Number)
-- **snmp_ro_community** (String)
-- **snmp_rw_community** (String)
-- **snmp_timeout** (Number)
-- **snmp_user_name** (String)
-- **snmp_version** (String)
-- **type** (String)
-- **update_mgmt_ipaddress_list** (Block List) (see [below for nested schema](#nestedblock--parameters--update_mgmt_ipaddress_list))
-- **user_name** (String)
+- `cli_transport` (String)
+- `compute_device` (String)
+- `enable_password` (String)
+- `extended_discovery_info` (String)
+- `http_password` (String)
+- `http_port` (String)
+- `http_secure` (String)
+- `http_user_name` (String)
+- `ip_address` (List of String)
+- `meraki_org_id` (List of String)
+- `netconf_port` (String)
+- `password` (String, Sensitive)
+- `serial_number` (String)
+- `snmp_auth_passphrase` (String)
+- `snmp_auth_protocol` (String)
+- `snmp_mode` (String)
+- `snmp_priv_passphrase` (String)
+- `snmp_priv_protocol` (String)
+- `snmp_retry` (Number)
+- `snmp_ro_community` (String)
+- `snmp_rw_community` (String)
+- `snmp_timeout` (Number)
+- `snmp_user_name` (String)
+- `snmp_version` (String)
+- `type` (String)
+- `update_mgmt_ipaddress_list` (Block List) (see [below for nested schema](#nestedblock--parameters--update_mgmt_ipaddress_list))
+- `user_name` (String)
 
 <a id="nestedblock--parameters--update_mgmt_ipaddress_list"></a>
 ### Nested Schema for `parameters.update_mgmt_ipaddress_list`
 
 Optional:
 
-- **exist_mgmt_ip_address** (String)
-- **new_mgmt_ip_address** (String)
+- `exist_mgmt_ip_address` (String)
+- `new_mgmt_ip_address` (String)
 
 
 
@@ -129,51 +122,51 @@ Optional:
 
 Read-Only:
 
-- **ap_ethernet_mac_address** (List of String)
-- **ap_manager_interface_ip** (String)
-- **associated_wlc_ip** (String)
-- **boot_date_time** (String)
-- **collection_interval** (String)
-- **collection_status** (String)
-- **description** (String)
-- **device_support_level** (String)
-- **error_code** (String)
-- **error_description** (String)
-- **family** (String)
-- **hostname** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **interface_count** (String)
-- **inventory_status_detail** (String)
-- **last_update_time** (Number)
-- **last_updated** (String)
-- **line_card_count** (String)
-- **line_card_id** (String)
-- **location** (List of String)
-- **location_name** (List of String)
-- **mac_address** (String)
-- **managed_atleast_once** (String)
-- **management_ip_address** (String)
-- **management_state** (String)
-- **memory_size** (String)
-- **platform_id** (String)
-- **reachability_failure_reason** (String)
-- **reachability_status** (String)
-- **role** (String)
-- **role_source** (String)
-- **serial_number** (String)
-- **series** (String)
-- **snmp_contact** (String)
-- **snmp_location** (String)
-- **software_type** (String)
-- **software_version** (String)
-- **tag_count** (String)
-- **tunnel_udp_port** (List of String)
-- **type** (String)
-- **up_time** (String)
-- **uptime_seconds** (Number)
-- **waas_device_mode** (List of String)
+- `ap_ethernet_mac_address` (String)
+- `ap_manager_interface_ip` (String)
+- `associated_wlc_ip` (String)
+- `boot_date_time` (String)
+- `collection_interval` (String)
+- `collection_status` (String)
+- `description` (String)
+- `device_support_level` (String)
+- `error_code` (String)
+- `error_description` (String)
+- `family` (String)
+- `hostname` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `interface_count` (String)
+- `inventory_status_detail` (String)
+- `last_update_time` (Number)
+- `last_updated` (String)
+- `line_card_count` (String)
+- `line_card_id` (String)
+- `location` (String)
+- `location_name` (String)
+- `mac_address` (String)
+- `managed_atleast_once` (String)
+- `management_ip_address` (String)
+- `management_state` (String)
+- `memory_size` (String)
+- `platform_id` (String)
+- `reachability_failure_reason` (String)
+- `reachability_status` (String)
+- `role` (String)
+- `role_source` (String)
+- `serial_number` (String)
+- `series` (String)
+- `snmp_contact` (String)
+- `snmp_location` (String)
+- `software_type` (String)
+- `software_version` (String)
+- `tag_count` (String)
+- `tunnel_udp_port` (String)
+- `type` (String)
+- `up_time` (String)
+- `uptime_seconds` (Number)
+- `waas_device_mode` (String)
 
 ## Import
 

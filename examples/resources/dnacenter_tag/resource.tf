@@ -1,26 +1,7 @@
 
 resource "dnacenter_tag" "example" {
   provider = dnacenter
-  item {
 
-
-    dynamic_rules {
-
-
-      rules {
-
-
-
-
-
-
-      }
-    }
-
-
-
-
-  }
   parameters {
 
     description = "string"
@@ -29,7 +10,6 @@ resource "dnacenter_tag" "example" {
       member_type = "string"
       rules {
 
-        items     = ["string"]
         name      = "string"
         operation = "string"
         value     = "string"

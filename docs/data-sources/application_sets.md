@@ -33,30 +33,30 @@ output "dnacenter_application_sets_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **limit** (Number) limit query parameter.
-- **name** (String) name query parameter.
-- **offset** (Number) offset query parameter.
+- `limit` (Number) limit query parameter.
+- `name` (String) name query parameter.
+- `offset` (Number) offset query parameter.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **id** (String)
-- **identity_source** (List of Object) (see [below for nested schema](#nestedobjatt--items--identity_source))
-- **name** (String)
+- `id` (String)
+- `identity_source` (List of Object) (see [below for nested schema](#nestedobjatt--items--identity_source))
+- `name` (String)
 
 <a id="nestedobjatt--items--identity_source"></a>
 ### Nested Schema for `items.identity_source`
 
 Read-Only:
 
-- **id** (String)
-- **type** (String)
+- `id` (String)
+- `type` (String)
 
 

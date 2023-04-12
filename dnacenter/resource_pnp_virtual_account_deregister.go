@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -78,7 +78,7 @@ well. The response payload contains the deregistered smart & virtual account inf
 									},
 									"make_default": &schema.Schema{
 										Description: `Make Default`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -99,7 +99,7 @@ well. The response payload contains the deregistered smart & virtual account inf
 									},
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -214,7 +214,9 @@ func resourcePnpVirtualAccountDeregisterCreate(ctx context.Context, d *schema.Re
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vDomain := resourceItem["domain"]
+
 	vName := resourceItem["name"]
 
 	queryParams1 := dnacentersdkgo.DeregisterVirtualAccountQueryParams{}
@@ -229,9 +231,8 @@ func resourcePnpVirtualAccountDeregisterCreate(ctx context.Context, d *schema.Re
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeregisterVirtualAccount", err,
-			"Failure at DeregisterVirtualAccount, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing DeregisterVirtualAccount", err))
 		return diags
 	}
 
@@ -246,6 +247,7 @@ func resourcePnpVirtualAccountDeregisterCreate(ctx context.Context, d *schema.Re
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

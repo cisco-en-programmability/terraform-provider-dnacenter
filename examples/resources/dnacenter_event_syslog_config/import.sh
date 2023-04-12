@@ -1,0 +1,1 @@
+terraform import dnacenter_event_syslog_config.example "id:=string"

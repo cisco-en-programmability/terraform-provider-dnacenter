@@ -20,12 +20,9 @@ It manages create, read, update and delete operations on Configuration Templates
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_configuration_template_project" "example" {
   provider = dnacenter
+
   parameters {
 
     create_time      = 1
@@ -39,197 +36,7 @@ resource "dnacenter_configuration_template_project" "example" {
       id   = "string"
       name = "string"
     }
-    templates {
-
-      author    = "string"
-      composite = "false"
-      containing_templates {
-
-        composite   = "false"
-        description = "string"
-        device_types {
-
-          product_family = "string"
-          product_series = "string"
-          product_type   = "string"
-        }
-        id           = "string"
-        language     = "string"
-        name         = "string"
-        project_name = "string"
-        rollback_template_params {
-
-          binding          = "string"
-          custom_order     = 1
-          data_type        = "string"
-          default_value    = "string"
-          description      = "string"
-          display_name     = "string"
-          group            = "string"
-          id               = "string"
-          instruction_text = "string"
-          key              = "string"
-          not_param        = "false"
-          order            = 1
-          param_array      = "false"
-          parameter_name   = "string"
-          provider         = "string"
-          range {
-
-            id        = "string"
-            max_value = 1
-            min_value = 1
-          }
-          required = "false"
-          selection {
-
-            default_selected_values = ["string"]
-            id                      = "string"
-            selection_type          = "string"
-            selection_values        = "string"
-          }
-        }
-        tags {
-
-          id   = "string"
-          name = "string"
-        }
-        template_content = "string"
-        template_params {
-
-          binding          = "string"
-          custom_order     = 1
-          data_type        = "string"
-          default_value    = "string"
-          description      = "string"
-          display_name     = "string"
-          group            = "string"
-          id               = "string"
-          instruction_text = "string"
-          key              = "string"
-          not_param        = "false"
-          order            = 1
-          param_array      = "false"
-          parameter_name   = "string"
-          provider         = "string"
-          range {
-
-            id        = "string"
-            max_value = 1
-            min_value = 1
-          }
-          required = "false"
-          selection {
-
-            default_selected_values = ["string"]
-            id                      = "string"
-            selection_type          = "string"
-            selection_values        = "string"
-          }
-        }
-        version = "string"
-      }
-      create_time         = 1
-      custom_params_order = "false"
-      description         = "string"
-      device_types {
-
-        product_family = "string"
-        product_series = "string"
-        product_type   = "string"
-      }
-      failure_policy            = "string"
-      id                        = "string"
-      language                  = "string"
-      last_update_time          = 1
-      latest_version_time       = 1
-      name                      = "string"
-      parent_template_id        = "string"
-      project_id                = "string"
-      project_name              = "string"
-      rollback_template_content = "string"
-      rollback_template_params {
-
-        binding          = "string"
-        custom_order     = 1
-        data_type        = "string"
-        default_value    = "string"
-        description      = "string"
-        display_name     = "string"
-        group            = "string"
-        id               = "string"
-        instruction_text = "string"
-        key              = "string"
-        not_param        = "false"
-        order            = 1
-        param_array      = "false"
-        parameter_name   = "string"
-        provider         = "string"
-        range {
-
-          id        = "string"
-          max_value = 1
-          min_value = 1
-        }
-        required = "false"
-        selection {
-
-          default_selected_values = ["string"]
-          id                      = "string"
-          selection_type          = "string"
-          selection_values        = "string"
-        }
-      }
-      software_type    = "string"
-      software_variant = "string"
-      software_version = "string"
-      tags {
-
-        id   = "string"
-        name = "string"
-      }
-      template_content = "string"
-      template_params {
-
-        binding          = "string"
-        custom_order     = 1
-        data_type        = "string"
-        default_value    = "string"
-        description      = "string"
-        display_name     = "string"
-        group            = "string"
-        id               = "string"
-        instruction_text = "string"
-        key              = "string"
-        not_param        = "false"
-        order            = 1
-        param_array      = "false"
-        parameter_name   = "string"
-        provider         = "string"
-        range {
-
-          id        = "string"
-          max_value = 1
-          min_value = 1
-        }
-        required = "false"
-        selection {
-
-          default_selected_values = ["string"]
-          id                      = "string"
-          selection_type          = "string"
-          selection_values        = "string"
-        }
-      }
-      validation_errors {
-
-        rollback_template_errors = ["string"]
-        template_errors          = ["string"]
-        template_id              = "string"
-        template_version         = "string"
-      }
-      version = "string"
-    }
+    templates = "string"
   }
 }
 
@@ -243,41 +50,38 @@ output "dnacenter_configuration_template_project_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **name** (String) Name of project
+- `name` (String) Name of project
 
 Optional:
 
-- **create_time** (Number) Create time of project
-- **description** (String) Description of project
-- **id** (String) UUID of project
-- **last_update_time** (Number) Update time of project
-- **project_id** (String) projectId path parameter. projectId(UUID) of project to be deleted
-- **tags** (Block List) (see [below for nested schema](#nestedblock--parameters--tags))
-- **templates** (Block List) List of templates within the project (see [below for nested schema](#nestedblock--parameters--templates))
+- `create_time` (Number) Create time of project
+- `description` (String) Description of project
+- `id` (String) UUID of project
+- `last_update_time` (Number) Update time of project
+- `project_id` (String) projectId path parameter. projectId(UUID) of project to be deleted
+- `tags` (Block List) (see [below for nested schema](#nestedblock--parameters--tags))
+- `templates` (Block List) List of templates within the project (see [below for nested schema](#nestedblock--parameters--templates))
 
 <a id="nestedblock--parameters--tags"></a>
 ### Nested Schema for `parameters.tags`
 
 Optional:
 
-- **id** (String) UUID of tag
-- **name** (String) Name of tag
+- `id` (String) UUID of tag
+- `name` (String) Name of tag
 
 
 <a id="nestedblock--parameters--templates"></a>
@@ -285,159 +89,159 @@ Optional:
 
 Optional:
 
-- **author** (String) Author of template
-- **composite** (String) Is it composite template
-- **containing_templates** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates))
-- **create_time** (Number) Create time of template
-- **custom_params_order** (String) Custom Params Order
-- **description** (String) Description of template
-- **device_types** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--device_types))
-- **failure_policy** (String) Define failure policy if template provisioning fails
-- **id** (String) UUID of template
-- **language** (String) Template language (JINJA or VELOCITY)
-- **last_update_time** (Number) Update time of template
-- **latest_version_time** (Number) Latest versioned template time
-- **name** (String) Name of template
-- **parent_template_id** (String) Parent templateID
-- **project_id** (String) Project UUID
-- **project_name** (String) Project name
-- **rollback_template_content** (String) Rollback template content
-- **rollback_template_params** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--rollback_template_params))
-- **software_type** (String) Applicable device software type
-- **software_variant** (String) Applicable device software variant
-- **software_version** (String) Applicable device software version
-- **tags** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--tags))
-- **template_content** (String) Template content
-- **template_params** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--template_params))
-- **validation_errors** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--templates--validation_errors))
-- **version** (String) Current version of template
+- `author` (String) Author of template
+- `composite` (String) Is it composite template
+- `containing_templates` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates))
+- `create_time` (Number) Create time of template
+- `custom_params_order` (String) Custom Params Order
+- `description` (String) Description of template
+- `device_types` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--device_types))
+- `failure_policy` (String) Define failure policy if template provisioning fails
+- `id` (String) UUID of template
+- `language` (String) Template language (JINJA or VELOCITY)
+- `last_update_time` (Number) Update time of template
+- `latest_version_time` (Number) Latest versioned template time
+- `name` (String) Name of template
+- `parent_template_id` (String) Parent templateID
+- `project_id` (String) Project UUID
+- `project_name` (String) Project name
+- `rollback_template_content` (String) Rollback template content
+- `rollback_template_params` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--rollback_template_params))
+- `software_type` (String) Applicable device software type
+- `software_variant` (String) Applicable device software variant
+- `software_version` (String) Applicable device software version
+- `tags` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--tags))
+- `template_content` (String) Template content
+- `template_params` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--template_params))
+- `validation_errors` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--templates--validation_errors))
+- `version` (String) Current version of template
 
 <a id="nestedblock--parameters--templates--containing_templates"></a>
 ### Nested Schema for `parameters.templates.containing_templates`
 
 Optional:
 
-- **composite** (String) Is it composite template
-- **description** (String) Description of template
-- **device_types** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--device_types))
-- **id** (String) UUID of template
-- **language** (String) Template language (JINJA or VELOCITY)
-- **name** (String) Name of template
-- **project_name** (String) Project name
-- **rollback_template_params** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--rollback_template_params))
-- **tags** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--tags))
-- **template_content** (String) Template content
-- **template_params** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--template_params))
-- **version** (String) Current version of template
+- `composite` (String) Is it composite template
+- `description` (String) Description of template
+- `device_types` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--device_types))
+- `id` (String) UUID of template
+- `language` (String) Template language (JINJA or VELOCITY)
+- `name` (String) Name of template
+- `project_name` (String) Project name
+- `rollback_template_params` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--rollback_template_params))
+- `tags` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--tags))
+- `template_content` (String) Template content
+- `template_params` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--template_params))
+- `version` (String) Current version of template
 
 <a id="nestedblock--parameters--templates--containing_templates--device_types"></a>
-### Nested Schema for `parameters.templates.containing_templates.version`
+### Nested Schema for `parameters.templates.containing_templates.device_types`
 
 Optional:
 
-- **product_family** (String) Device family
-- **product_series** (String) Device series
-- **product_type** (String) Device type
+- `product_family` (String) Device family
+- `product_series` (String) Device series
+- `product_type` (String) Device type
 
 
 <a id="nestedblock--parameters--templates--containing_templates--rollback_template_params"></a>
-### Nested Schema for `parameters.templates.containing_templates.version`
+### Nested Schema for `parameters.templates.containing_templates.rollback_template_params`
 
 Optional:
 
-- **binding** (String) Bind to source
-- **custom_order** (Number) CustomOrder of template param
-- **data_type** (String) Datatype of template param
-- **default_value** (String) Default value of template param
-- **description** (String) Description of template param
-- **display_name** (String) Display name of param
-- **group** (String) group
-- **id** (String) UUID of template param
-- **instruction_text** (String) Instruction text for param
-- **key** (String) key
-- **not_param** (String) Is it not a variable
-- **order** (Number) Order of template param
-- **param_array** (String) Is it an array
-- **parameter_name** (String) Name of template param
-- **provider** (String) provider
-- **range** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--version--range))
-- **required** (String) Is param required
-- **selection** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--version--selection))
+- `binding` (String) Bind to source
+- `custom_order` (Number) CustomOrder of template param
+- `data_type` (String) Datatype of template param
+- `default_value` (String) Default value of template param
+- `description` (String) Description of template param
+- `display_name` (String) Display name of param
+- `group` (String) group
+- `id` (String) UUID of template param
+- `instruction_text` (String) Instruction text for param
+- `key` (String) key
+- `not_param` (String) Is it not a variable
+- `order` (Number) Order of template param
+- `param_array` (String) Is it an array
+- `parameter_name` (String) Name of template param
+- `provider` (String) provider
+- `range` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--rollback_template_params--range))
+- `required` (String) Is param required
+- `selection` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--rollback_template_params--selection))
 
-<a id="nestedblock--parameters--templates--containing_templates--version--range"></a>
-### Nested Schema for `parameters.templates.containing_templates.version.range`
-
-Optional:
-
-- **id** (String) UUID of range
-- **max_value** (Number) Max value of range
-- **min_value** (Number) Min value of range
-
-
-<a id="nestedblock--parameters--templates--containing_templates--version--selection"></a>
-### Nested Schema for `parameters.templates.containing_templates.version.selection`
+<a id="nestedblock--parameters--templates--containing_templates--rollback_template_params--range"></a>
+### Nested Schema for `parameters.templates.containing_templates.rollback_template_params.range`
 
 Optional:
 
-- **default_selected_values** (List of String) Default selection values
-- **id** (String) UUID of selection
-- **selection_type** (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
-- **selection_values** (List of String) Selection values
+- `id` (String) UUID of range
+- `max_value` (Number) Max value of range
+- `min_value` (Number) Min value of range
+
+
+<a id="nestedblock--parameters--templates--containing_templates--rollback_template_params--selection"></a>
+### Nested Schema for `parameters.templates.containing_templates.rollback_template_params.selection`
+
+Optional:
+
+- `default_selected_values` (List of String) Default selection values
+- `id` (String) UUID of selection
+- `selection_type` (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
+- `selection_values` (List of String) Selection values
 
 
 
 <a id="nestedblock--parameters--templates--containing_templates--tags"></a>
-### Nested Schema for `parameters.templates.containing_templates.version`
+### Nested Schema for `parameters.templates.containing_templates.tags`
 
 Optional:
 
-- **id** (String) UUID of tag
-- **name** (String) Name of tag
+- `id` (String) UUID of tag
+- `name` (String) Name of tag
 
 
 <a id="nestedblock--parameters--templates--containing_templates--template_params"></a>
-### Nested Schema for `parameters.templates.containing_templates.version`
+### Nested Schema for `parameters.templates.containing_templates.template_params`
 
 Optional:
 
-- **binding** (String) Bind to source
-- **custom_order** (Number) CustomOrder of template param
-- **data_type** (String) Datatype of template param
-- **default_value** (String) Default value of template param
-- **description** (String) Description of template param
-- **display_name** (String) Display name of param
-- **group** (String) group
-- **id** (String) UUID of template param
-- **instruction_text** (String) Instruction text for param
-- **key** (String) key
-- **not_param** (String) Is it not a variable
-- **order** (Number) Order of template param
-- **param_array** (String) Is it an array
-- **parameter_name** (String) Name of template param
-- **provider** (String) provider
-- **range** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--version--range))
-- **required** (String) Is param required
-- **selection** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--version--selection))
+- `binding` (String) Bind to source
+- `custom_order` (Number) CustomOrder of template param
+- `data_type` (String) Datatype of template param
+- `default_value` (String) Default value of template param
+- `description` (String) Description of template param
+- `display_name` (String) Display name of param
+- `group` (String) group
+- `id` (String) UUID of template param
+- `instruction_text` (String) Instruction text for param
+- `key` (String) key
+- `not_param` (String) Is it not a variable
+- `order` (Number) Order of template param
+- `param_array` (String) Is it an array
+- `parameter_name` (String) Name of template param
+- `provider` (String) provider
+- `range` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--template_params--range))
+- `required` (String) Is param required
+- `selection` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--templates--containing_templates--template_params--selection))
 
-<a id="nestedblock--parameters--templates--containing_templates--version--range"></a>
-### Nested Schema for `parameters.templates.containing_templates.version.range`
-
-Optional:
-
-- **id** (String) UUID of range
-- **max_value** (Number) Max value of range
-- **min_value** (Number) Min value of range
-
-
-<a id="nestedblock--parameters--templates--containing_templates--version--selection"></a>
-### Nested Schema for `parameters.templates.containing_templates.version.selection`
+<a id="nestedblock--parameters--templates--containing_templates--template_params--range"></a>
+### Nested Schema for `parameters.templates.containing_templates.template_params.range`
 
 Optional:
 
-- **default_selected_values** (List of String) Default selection values
-- **id** (String) UUID of selection
-- **selection_type** (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
-- **selection_values** (List of String) Selection values
+- `id` (String) UUID of range
+- `max_value` (Number) Max value of range
+- `min_value` (Number) Min value of range
+
+
+<a id="nestedblock--parameters--templates--containing_templates--template_params--selection"></a>
+### Nested Schema for `parameters.templates.containing_templates.template_params.selection`
+
+Optional:
+
+- `default_selected_values` (List of String) Default selection values
+- `id` (String) UUID of selection
+- `selection_type` (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
+- `selection_values` (List of String) Selection values
 
 
 
@@ -447,9 +251,9 @@ Optional:
 
 Optional:
 
-- **product_family** (String) Device family
-- **product_series** (String) Device series
-- **product_type** (String) Device type
+- `product_family` (String) Device family
+- `product_series` (String) Device series
+- `product_type` (String) Device type
 
 
 <a id="nestedblock--parameters--templates--rollback_template_params"></a>
@@ -457,33 +261,33 @@ Optional:
 
 Optional:
 
-- **binding** (String) Bind to source
-- **custom_order** (Number) CustomOrder of template param
-- **data_type** (String) Datatype of template param
-- **default_value** (String) Default value of template param
-- **description** (String) Description of template param
-- **display_name** (String) Display name of param
-- **group** (String) group
-- **id** (String) UUID of template param
-- **instruction_text** (String) Instruction text for param
-- **key** (String) key
-- **not_param** (String) Is it not a variable
-- **order** (Number) Order of template param
-- **param_array** (String) Is it an array
-- **parameter_name** (String) Name of template param
-- **provider** (String) provider
-- **range** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--rollback_template_params--range))
-- **required** (String) Is param required
-- **selection** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--templates--rollback_template_params--selection))
+- `binding` (String) Bind to source
+- `custom_order` (Number) CustomOrder of template param
+- `data_type` (String) Datatype of template param
+- `default_value` (String) Default value of template param
+- `description` (String) Description of template param
+- `display_name` (String) Display name of param
+- `group` (String) group
+- `id` (String) UUID of template param
+- `instruction_text` (String) Instruction text for param
+- `key` (String) key
+- `not_param` (String) Is it not a variable
+- `order` (Number) Order of template param
+- `param_array` (String) Is it an array
+- `parameter_name` (String) Name of template param
+- `provider` (String) provider
+- `range` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--rollback_template_params--range))
+- `required` (String) Is param required
+- `selection` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--templates--rollback_template_params--selection))
 
 <a id="nestedblock--parameters--templates--rollback_template_params--range"></a>
-### Nested Schema for `parameters.templates.rollback_template_params.selection`
+### Nested Schema for `parameters.templates.rollback_template_params.range`
 
 Optional:
 
-- **id** (String) UUID of range
-- **max_value** (Number) Max value of range
-- **min_value** (Number) Min value of range
+- `id` (String) UUID of range
+- `max_value` (Number) Max value of range
+- `min_value` (Number) Min value of range
 
 
 <a id="nestedblock--parameters--templates--rollback_template_params--selection"></a>
@@ -491,10 +295,10 @@ Optional:
 
 Optional:
 
-- **default_selected_values** (List of String) Default selection values
-- **id** (String) UUID of selection
-- **selection_type** (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
-- **selection_values** (List of String) Selection values
+- `default_selected_values` (List of String) Default selection values
+- `id` (String) UUID of selection
+- `selection_type` (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
+- `selection_values` (List of String) Selection values
 
 
 
@@ -503,8 +307,8 @@ Optional:
 
 Optional:
 
-- **id** (String) UUID of tag
-- **name** (String) Name of tag
+- `id` (String) UUID of tag
+- `name` (String) Name of tag
 
 
 <a id="nestedblock--parameters--templates--template_params"></a>
@@ -512,33 +316,33 @@ Optional:
 
 Optional:
 
-- **binding** (String) Bind to source
-- **custom_order** (Number) CustomOrder of template param
-- **data_type** (String) Datatype of template param
-- **default_value** (String) Default value of template param
-- **description** (String) Description of template param
-- **display_name** (String) Display name of param
-- **group** (String) group
-- **id** (String) UUID of template param
-- **instruction_text** (String) Instruction text for param
-- **key** (String) key
-- **not_param** (String) Is it not a variable
-- **order** (Number) Order of template param
-- **param_array** (String) Is it an array
-- **parameter_name** (String) Name of template param
-- **provider** (String) provider
-- **range** (Block List) (see [below for nested schema](#nestedblock--parameters--templates--template_params--range))
-- **required** (String) Is param required
-- **selection** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--templates--template_params--selection))
+- `binding` (String) Bind to source
+- `custom_order` (Number) CustomOrder of template param
+- `data_type` (String) Datatype of template param
+- `default_value` (String) Default value of template param
+- `description` (String) Description of template param
+- `display_name` (String) Display name of param
+- `group` (String) group
+- `id` (String) UUID of template param
+- `instruction_text` (String) Instruction text for param
+- `key` (String) key
+- `not_param` (String) Is it not a variable
+- `order` (Number) Order of template param
+- `param_array` (String) Is it an array
+- `parameter_name` (String) Name of template param
+- `provider` (String) provider
+- `range` (Block List) (see [below for nested schema](#nestedblock--parameters--templates--template_params--range))
+- `required` (String) Is param required
+- `selection` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--templates--template_params--selection))
 
 <a id="nestedblock--parameters--templates--template_params--range"></a>
-### Nested Schema for `parameters.templates.template_params.selection`
+### Nested Schema for `parameters.templates.template_params.range`
 
 Optional:
 
-- **id** (String) UUID of range
-- **max_value** (Number) Max value of range
-- **min_value** (Number) Min value of range
+- `id` (String) UUID of range
+- `max_value` (Number) Max value of range
+- `min_value` (Number) Min value of range
 
 
 <a id="nestedblock--parameters--templates--template_params--selection"></a>
@@ -546,10 +350,10 @@ Optional:
 
 Optional:
 
-- **default_selected_values** (List of String) Default selection values
-- **id** (String) UUID of selection
-- **selection_type** (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
-- **selection_values** (List of String) Selection values
+- `default_selected_values` (List of String) Default selection values
+- `id` (String) UUID of selection
+- `selection_type` (String) Type of selection(SINGLE_SELECT or MULTI_SELECT)
+- `selection_values` (List of String) Selection values
 
 
 
@@ -558,10 +362,10 @@ Optional:
 
 Optional:
 
-- **rollback_template_errors** (List of String) Validation or design conflicts errors of rollback template
-- **template_errors** (List of String) Validation or design conflicts errors
-- **template_id** (String) UUID of template
-- **template_version** (String) Current version of template
+- `rollback_template_errors` (List of String) Validation or design conflicts errors of rollback template
+- `template_errors` (List of String) Validation or design conflicts errors
+- `template_id` (String) UUID of template
+- `template_version` (String) Current version of template
 
 
 
@@ -571,21 +375,22 @@ Optional:
 
 Read-Only:
 
-- **create_time** (Number)
-- **description** (String)
-- **id** (String)
-- **last_update_time** (Number)
-- **name** (String)
-- **tags** (List of Object) (see [below for nested schema](#nestedobjatt--item--tags))
-- **templates** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates))
+- `create_time` (Number)
+- `description` (String)
+- `id` (String)
+- `is_deletable` (String)
+- `last_update_time` (Number)
+- `name` (String)
+- `tags` (List of Object) (see [below for nested schema](#nestedobjatt--item--tags))
+- `templates` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates))
 
 <a id="nestedobjatt--item--tags"></a>
 ### Nested Schema for `item.tags`
 
 Read-Only:
 
-- **id** (String)
-- **name** (String)
+- `id` (String)
+- `name` (String)
 
 
 <a id="nestedobjatt--item--templates"></a>
@@ -593,59 +398,59 @@ Read-Only:
 
 Read-Only:
 
-- **author** (String)
-- **composite** (String)
-- **containing_templates** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates))
-- **create_time** (Number)
-- **custom_params_order** (String)
-- **description** (String)
-- **device_types** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--device_types))
-- **failure_policy** (String)
-- **id** (String)
-- **language** (String)
-- **last_update_time** (Number)
-- **latest_version_time** (Number)
-- **name** (String)
-- **parent_template_id** (String)
-- **project_id** (String)
-- **project_name** (String)
-- **rollback_template_content** (String)
-- **rollback_template_params** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--rollback_template_params))
-- **software_type** (String)
-- **software_variant** (String)
-- **software_version** (String)
-- **tags** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--tags))
-- **template_content** (String)
-- **template_params** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--template_params))
-- **validation_errors** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--validation_errors))
-- **version** (String)
+- `author` (String)
+- `composite` (String)
+- `containing_templates` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates))
+- `create_time` (Number)
+- `custom_params_order` (String)
+- `description` (String)
+- `device_types` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--device_types))
+- `failure_policy` (String)
+- `id` (String)
+- `language` (String)
+- `last_update_time` (Number)
+- `latest_version_time` (Number)
+- `name` (String)
+- `parent_template_id` (String)
+- `project_id` (String)
+- `project_name` (String)
+- `rollback_template_content` (String)
+- `rollback_template_params` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--rollback_template_params))
+- `software_type` (String)
+- `software_variant` (String)
+- `software_version` (String)
+- `tags` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--tags))
+- `template_content` (String)
+- `template_params` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--template_params))
+- `validation_errors` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--validation_errors))
+- `version` (String)
 
 <a id="nestedobjatt--item--templates--containing_templates"></a>
 ### Nested Schema for `item.templates.containing_templates`
 
 Read-Only:
 
-- **composite** (String)
-- **description** (String)
-- **device_types** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--device_types))
-- **id** (String)
-- **language** (String)
-- **name** (String)
-- **project_name** (String)
-- **rollback_template_params** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--rollback_template_params))
-- **tags** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--tags))
-- **template_content** (String)
-- **template_params** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--template_params))
-- **version** (String)
+- `composite` (String)
+- `description` (String)
+- `device_types` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--device_types))
+- `id` (String)
+- `language` (String)
+- `name` (String)
+- `project_name` (String)
+- `rollback_template_params` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--rollback_template_params))
+- `tags` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--tags))
+- `template_content` (String)
+- `template_params` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--template_params))
+- `version` (String)
 
 <a id="nestedobjatt--item--templates--containing_templates--device_types"></a>
 ### Nested Schema for `item.templates.containing_templates.version`
 
 Read-Only:
 
-- **product_family** (String)
-- **product_series** (String)
-- **product_type** (String)
+- `product_family` (String)
+- `product_series` (String)
+- `product_type` (String)
 
 
 <a id="nestedobjatt--item--templates--containing_templates--rollback_template_params"></a>
@@ -653,33 +458,33 @@ Read-Only:
 
 Read-Only:
 
-- **binding** (String)
-- **custom_order** (Number)
-- **data_type** (String)
-- **default_value** (String)
-- **description** (String)
-- **display_name** (String)
-- **group** (String)
-- **id** (String)
-- **instruction_text** (String)
-- **key** (String)
-- **not_param** (String)
-- **order** (Number)
-- **param_array** (String)
-- **parameter_name** (String)
-- **provider** (String)
-- **range** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--version--range))
-- **required** (String)
-- **selection** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--version--selection))
+- `binding` (String)
+- `custom_order` (Number)
+- `data_type` (String)
+- `default_value` (String)
+- `description` (String)
+- `display_name` (String)
+- `group` (String)
+- `id` (String)
+- `instruction_text` (String)
+- `key` (String)
+- `not_param` (String)
+- `order` (Number)
+- `param_array` (String)
+- `parameter_name` (String)
+- `provider` (String)
+- `range` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--version--range))
+- `required` (String)
+- `selection` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--version--selection))
 
 <a id="nestedobjatt--item--templates--containing_templates--version--range"></a>
 ### Nested Schema for `item.templates.containing_templates.version.range`
 
 Read-Only:
 
-- **id** (String)
-- **max_value** (Number)
-- **min_value** (Number)
+- `id` (String)
+- `max_value` (Number)
+- `min_value` (Number)
 
 
 <a id="nestedobjatt--item--templates--containing_templates--version--selection"></a>
@@ -687,10 +492,10 @@ Read-Only:
 
 Read-Only:
 
-- **default_selected_values** (List of String)
-- **id** (String)
-- **selection_type** (String)
-- **selection_values** (List of String)
+- `default_selected_values` (List of String)
+- `id` (String)
+- `selection_type` (String)
+- `selection_values` (String)
 
 
 
@@ -699,8 +504,8 @@ Read-Only:
 
 Read-Only:
 
-- **id** (String)
-- **name** (String)
+- `id` (String)
+- `name` (String)
 
 
 <a id="nestedobjatt--item--templates--containing_templates--template_params"></a>
@@ -708,33 +513,33 @@ Read-Only:
 
 Read-Only:
 
-- **binding** (String)
-- **custom_order** (Number)
-- **data_type** (String)
-- **default_value** (String)
-- **description** (String)
-- **display_name** (String)
-- **group** (String)
-- **id** (String)
-- **instruction_text** (String)
-- **key** (String)
-- **not_param** (String)
-- **order** (Number)
-- **param_array** (String)
-- **parameter_name** (String)
-- **provider** (String)
-- **range** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--version--range))
-- **required** (String)
-- **selection** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--version--selection))
+- `binding` (String)
+- `custom_order` (Number)
+- `data_type` (String)
+- `default_value` (String)
+- `description` (String)
+- `display_name` (String)
+- `group` (String)
+- `id` (String)
+- `instruction_text` (String)
+- `key` (String)
+- `not_param` (String)
+- `order` (Number)
+- `param_array` (String)
+- `parameter_name` (String)
+- `provider` (String)
+- `range` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--version--range))
+- `required` (String)
+- `selection` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--containing_templates--version--selection))
 
 <a id="nestedobjatt--item--templates--containing_templates--version--range"></a>
 ### Nested Schema for `item.templates.containing_templates.version.range`
 
 Read-Only:
 
-- **id** (String)
-- **max_value** (Number)
-- **min_value** (Number)
+- `id` (String)
+- `max_value` (Number)
+- `min_value` (Number)
 
 
 <a id="nestedobjatt--item--templates--containing_templates--version--selection"></a>
@@ -742,10 +547,10 @@ Read-Only:
 
 Read-Only:
 
-- **default_selected_values** (List of String)
-- **id** (String)
-- **selection_type** (String)
-- **selection_values** (List of String)
+- `default_selected_values` (List of String)
+- `id` (String)
+- `selection_type` (String)
+- `selection_values` (String)
 
 
 
@@ -755,9 +560,9 @@ Read-Only:
 
 Read-Only:
 
-- **product_family** (String)
-- **product_series** (String)
-- **product_type** (String)
+- `product_family` (String)
+- `product_series` (String)
+- `product_type` (String)
 
 
 <a id="nestedobjatt--item--templates--rollback_template_params"></a>
@@ -765,33 +570,33 @@ Read-Only:
 
 Read-Only:
 
-- **binding** (String)
-- **custom_order** (Number)
-- **data_type** (String)
-- **default_value** (String)
-- **description** (String)
-- **display_name** (String)
-- **group** (String)
-- **id** (String)
-- **instruction_text** (String)
-- **key** (String)
-- **not_param** (String)
-- **order** (Number)
-- **param_array** (String)
-- **parameter_name** (String)
-- **provider** (String)
-- **range** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--rollback_template_params--range))
-- **required** (String)
-- **selection** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--rollback_template_params--selection))
+- `binding` (String)
+- `custom_order` (Number)
+- `data_type` (String)
+- `default_value` (String)
+- `description` (String)
+- `display_name` (String)
+- `group` (String)
+- `id` (String)
+- `instruction_text` (String)
+- `key` (String)
+- `not_param` (String)
+- `order` (Number)
+- `param_array` (String)
+- `parameter_name` (String)
+- `provider` (String)
+- `range` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--rollback_template_params--range))
+- `required` (String)
+- `selection` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--rollback_template_params--selection))
 
 <a id="nestedobjatt--item--templates--rollback_template_params--range"></a>
 ### Nested Schema for `item.templates.rollback_template_params.selection`
 
 Read-Only:
 
-- **id** (String)
-- **max_value** (Number)
-- **min_value** (Number)
+- `id` (String)
+- `max_value` (Number)
+- `min_value` (Number)
 
 
 <a id="nestedobjatt--item--templates--rollback_template_params--selection"></a>
@@ -799,10 +604,10 @@ Read-Only:
 
 Read-Only:
 
-- **default_selected_values** (List of String)
-- **id** (String)
-- **selection_type** (String)
-- **selection_values** (List of String)
+- `default_selected_values` (List of String)
+- `id` (String)
+- `selection_type` (String)
+- `selection_values` (String)
 
 
 
@@ -811,8 +616,8 @@ Read-Only:
 
 Read-Only:
 
-- **id** (String)
-- **name** (String)
+- `id` (String)
+- `name` (String)
 
 
 <a id="nestedobjatt--item--templates--template_params"></a>
@@ -820,33 +625,33 @@ Read-Only:
 
 Read-Only:
 
-- **binding** (String)
-- **custom_order** (Number)
-- **data_type** (String)
-- **default_value** (String)
-- **description** (String)
-- **display_name** (String)
-- **group** (String)
-- **id** (String)
-- **instruction_text** (String)
-- **key** (String)
-- **not_param** (String)
-- **order** (Number)
-- **param_array** (String)
-- **parameter_name** (String)
-- **provider** (String)
-- **range** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--template_params--range))
-- **required** (String)
-- **selection** (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--template_params--selection))
+- `binding` (String)
+- `custom_order` (Number)
+- `data_type` (String)
+- `default_value` (String)
+- `description` (String)
+- `display_name` (String)
+- `group` (String)
+- `id` (String)
+- `instruction_text` (String)
+- `key` (String)
+- `not_param` (String)
+- `order` (Number)
+- `param_array` (String)
+- `parameter_name` (String)
+- `provider` (String)
+- `range` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--template_params--range))
+- `required` (String)
+- `selection` (List of Object) (see [below for nested schema](#nestedobjatt--item--templates--template_params--selection))
 
 <a id="nestedobjatt--item--templates--template_params--range"></a>
 ### Nested Schema for `item.templates.template_params.selection`
 
 Read-Only:
 
-- **id** (String)
-- **max_value** (Number)
-- **min_value** (Number)
+- `id` (String)
+- `max_value` (Number)
+- `min_value` (Number)
 
 
 <a id="nestedobjatt--item--templates--template_params--selection"></a>
@@ -854,10 +659,10 @@ Read-Only:
 
 Read-Only:
 
-- **default_selected_values** (List of String)
-- **id** (String)
-- **selection_type** (String)
-- **selection_values** (List of String)
+- `default_selected_values` (List of String)
+- `id` (String)
+- `selection_type` (String)
+- `selection_values` (String)
 
 
 
@@ -866,10 +671,10 @@ Read-Only:
 
 Read-Only:
 
-- **rollback_template_errors** (List of String)
-- **template_errors** (List of String)
-- **template_id** (String)
-- **template_version** (String)
+- `rollback_template_errors` (List of String)
+- `template_errors` (List of String)
+- `template_id` (String)
+- `template_version` (String)
 
 ## Import
 

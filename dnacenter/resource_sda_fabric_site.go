@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -41,69 +41,72 @@ func resourceSdaFabricSite() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"site_name_hierarchy": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"fabric_name": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"fabric_type": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"fabric_domain_type": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Fabric Site info successfully retrieved from sda fabric
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
-						"execution_status_url": &schema.Schema{
-							Description: `Execution Status Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"fabric_domain_type": &schema.Schema{
+							Description: `Fabric Domain Type
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
+						"fabric_name": &schema.Schema{
+							Description: `Fabric Name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"fabric_type": &schema.Schema{
+							Description: `Fabric Type
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"site_name_hierarchy": &schema.Schema{
+							Description: `Site Name Hierarchy
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"fabric_name": &schema.Schema{
-							Description: `Fabric Name (should be existing fabric name)
+							Description: `Warning - Starting DNA Center 2.2.3.5 release, this field has been deprecated. SD-Access Fabric does not need it anymore.  It will be removed in future DNA Center releases.
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
+						},
+						"fabric_type": &schema.Schema{
+							Description: `Type of SD-Access Fabric. Allowed values are "FABRIC_SITE" or "FABRIC_ZONE".  Default value is "FABRIC_SITE".
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy for provision device location.
+							Description: `Existing site name hierarchy available at global level. For Example "Global/Chicago/Building21/Floor1"
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -119,26 +122,21 @@ func resourceSdaFabricSiteCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSdaFabricSiteAddSiteInSdaFabric(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+
 	vSiteNameHierarchy := resourceItem["site_name_hierarchy"]
 	vvSiteNameHierarchy := interfaceToString(vSiteNameHierarchy)
-
-	queryParams1 := dnacentersdkgo.GetSiteFromSdaFabricQueryParams{}
-
-	queryParams1.SiteNameHierarchy = vvSiteNameHierarchy
-
-	getResponse2, _, err := client.Sda.GetSiteFromSdaFabric(&queryParams1)
-	if err == nil && getResponse2 != nil && getResponse2.Status != "failed" {
+	queryParamImport := dnacentersdkgo.GetSiteFromSdaFabricQueryParams{}
+	queryParamImport.SiteNameHierarchy = vvSiteNameHierarchy
+	item2, _, err := client.Sda.GetSiteFromSdaFabric(&queryParamImport)
+	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
-		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
+		resourceMap["site_name_hierarchy"] = item2.SiteNameHierarchy
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaFabricSiteRead(ctx, d, m)
 	}
-
-	response1, restyResp1, err := client.Sda.AddSiteInSdaFabric(request1)
-	if err != nil || response1 == nil {
+	resp1, restyResp1, err := client.Sda.AddSiteInSdaFabric(request1)
+	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
 				"Failure when executing AddSiteInSdaFabric", err, restyResp1.String()))
@@ -148,14 +146,14 @@ func resourceSdaFabricSiteCreate(ctx context.Context, d *schema.ResourceData, m 
 			"Failure when executing AddSiteInSdaFabric", err))
 		return diags
 	}
-	executionId := response1.ExecutionID
+	executionId := resp1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
@@ -164,10 +162,10 @@ func resourceSdaFabricSiteCreate(ctx context.Context, d *schema.ResourceData, m 
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -182,8 +180,19 @@ func resourceSdaFabricSiteCreate(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 	}
+	queryParamValidate := dnacentersdkgo.GetSiteFromSdaFabricQueryParams{}
+	queryParamValidate.SiteNameHierarchy = vvSiteNameHierarchy
+	item3, _, err := client.Sda.GetSiteFromSdaFabric(&queryParamValidate)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing AddSiteInSdaFabric", err,
+			"Failure at AddSiteInSdaFabric, unexpected response", ""))
+		return diags
+	}
+
 	resourceMap := make(map[string]string)
-	resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
+	resourceMap["site_name_hierarchy"] = item3.SiteNameHierarchy
+
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSdaFabricSiteRead(ctx, d, m)
 }
@@ -195,24 +204,19 @@ func resourceSdaFabricSiteRead(ctx context.Context, d *schema.ResourceData, m in
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+
 	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSiteFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetSiteFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetSiteFromSdaFabricQueryParams{}
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 
-		response1, restyResp1, _ := client.Sda.GetSiteFromSdaFabric(&queryParams1)
+		response1, restyResp1, err := client.Sda.GetSiteFromSdaFabric(&queryParams1)
 
-		/*		if err != nil {
-				diags = append(diags, diagError(
-					"Failure when setting GetPnpGlobalSettings response",
-					err))
-				return diags
-			}*/
-		if response1 == nil {
+		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -229,6 +233,7 @@ func resourceSdaFabricSiteRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+
 		return diags
 
 	}
@@ -247,21 +252,20 @@ func resourceSdaFabricSiteDelete(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
 
-	queryParams1 := dnacentersdkgo.GetSiteFromSdaFabricQueryParams{}
-	queryParams1.SiteNameHierarchy = vSiteNameHierarchy
-	item, restyResp1, err := client.Sda.GetSiteFromSdaFabric(&queryParams1)
-	if err != nil || item == nil {
-		d.SetId("")
-		return diags
-	}
-	queryParams2 := dnacentersdkgo.DeleteSiteFromSdaFabricQueryParams{}
-	queryParams2.SiteNameHierarchy = vSiteNameHierarchy
-	response1, restyResp1, err := client.Sda.DeleteSiteFromSdaFabric(&queryParams2)
+	queryParamDelete := dnacentersdkgo.DeleteSiteFromSdaFabricQueryParams{}
+
+	vvSiteNameHierarchy := resourceMap["site_name_hierarchy"]
+	queryParamDelete.SiteNameHierarchy = vvSiteNameHierarchy
+
+	response1, restyResp1, err := client.Sda.DeleteSiteFromSdaFabric(&queryParamDelete)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
+			diags = append(diags, diagErrorWithAltAndResponse(
+				"Failure when executing DeleteSiteFromSdaFabric", err, restyResp1.String(),
+				"Failure at DeleteSiteFromSdaFabric, unexpected response", ""))
+			return diags
 		}
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing DeleteSiteFromSdaFabric", err,
@@ -273,10 +277,10 @@ func resourceSdaFabricSiteDelete(ctx context.Context, d *schema.ResourceData, m 
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
@@ -285,10 +289,10 @@ func resourceSdaFabricSiteDelete(ctx context.Context, d *schema.ResourceData, m 
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -303,6 +307,7 @@ func resourceSdaFabricSiteDelete(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 	}
+
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")
@@ -317,9 +322,11 @@ func expandRequestSdaFabricSiteAddSiteInSdaFabric(ctx context.Context, key strin
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_name_hierarchy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_name_hierarchy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_name_hierarchy")))) {
 		request.SiteNameHierarchy = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fabric_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fabric_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fabric_type")))) {
+		request.FabricType = interfaceToString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

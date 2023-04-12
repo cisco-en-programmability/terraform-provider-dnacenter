@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -29,13 +29,13 @@ func dataSourceEventArtifact() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. # of records to return in result set
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Record start offset
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -101,7 +101,7 @@ func dataSourceEventArtifact() *schema.Resource {
 
 									"additional_details": &schema.Schema{
 										Description: `Additional Details`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -176,21 +176,21 @@ func dataSourceEventArtifact() *schema.Resource {
 
 						"is_private": &schema.Schema{
 							Description: `Is Private`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"is_template_enabled": &schema.Schema{
 							Description: `Is Template Enabled`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"is_tenant_aware": &schema.Schema{
 							Description: `Is Tenant Aware`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -269,7 +269,7 @@ func dataSourceEventArtifactRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEventArtifacts")
+		log.Printf("[DEBUG] Selected method: GetEventArtifacts")
 		queryParams1 := dnacentersdkgo.GetEventArtifactsQueryParams{}
 
 		if okEventIDs {
@@ -279,10 +279,10 @@ func dataSourceEventArtifactRead(ctx context.Context, d *schema.ResourceData, m 
 			queryParams1.Tags = vTags.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okSortBy {
 			queryParams1.SortBy = vSortBy.(string)
@@ -315,6 +315,7 @@ func dataSourceEventArtifactRead(ctx context.Context, d *schema.ResourceData, m 
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

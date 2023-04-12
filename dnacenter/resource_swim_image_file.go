@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -429,8 +429,10 @@ func resourceSwimImageFileRead(ctx context.Context, d *schema.ResourceData, m in
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		vItem1 := flattenSoftwareImageManagementSwimGetSoftwareImageDetailsItem(response1)
+		items := []dnacentersdkgo.ResponseSoftwareImageManagementSwimGetSoftwareImageDetailsResponse{
+			*response1,
+		}
+		vItem1 := flattenSoftwareImageManagementSwimGetSoftwareImageDetailsItems(&items)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSoftwareImageDetails search response",

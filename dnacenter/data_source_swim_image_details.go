@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -167,7 +167,7 @@ func dataSourceSwimImageDetails() *schema.Resource {
 						},
 
 						"extended_attributes": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -257,7 +257,7 @@ func dataSourceSwimImageDetails() *schema.Resource {
 									},
 
 									"extended_attributes": &schema.Schema{
-										Type:     schema.TypeString,
+										Type:     schema.TypeString, //TEST,
 										Computed: true,
 									},
 
@@ -335,7 +335,7 @@ func dataSourceSwimImageDetailsRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSoftwareImageDetails")
+		log.Printf("[DEBUG] Selected method: GetSoftwareImageDetails")
 		queryParams1 := dnacentersdkgo.GetSoftwareImageDetailsQueryParams{}
 
 		if okImageUUID {
@@ -414,6 +414,7 @@ func dataSourceSwimImageDetailsRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -454,39 +455,7 @@ func flattenSoftwareImageManagementSwimGetSoftwareImageDetailsItems(items *[]dna
 	}
 	return respItems
 }
-func flattenSoftwareImageManagementSwimGetSoftwareImageDetailsItem(item *dnacentersdkgo.ResponseSoftwareImageManagementSwimGetSoftwareImageDetailsResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
 
-	respItem := make(map[string]interface{})
-	respItem["applicable_devices_for_image"] = flattenSoftwareImageManagementSwimGetSoftwareImageDetailsItemsApplicableDevicesForImage(item.ApplicableDevicesForImage)
-	respItem["application_type"] = item.ApplicationType
-	respItem["created_time"] = item.CreatedTime
-	respItem["extended_attributes"] = flattenSoftwareImageManagementSwimGetSoftwareImageDetailsItemsExtendedAttributes(item.ExtendedAttributes)
-	respItem["family"] = item.Family
-	respItem["feature"] = item.Feature
-	respItem["file_service_id"] = item.FileServiceID
-	respItem["file_size"] = item.FileSize
-	respItem["image_integrity_status"] = item.ImageIntegrityStatus
-	respItem["image_name"] = item.ImageName
-	respItem["image_series"] = item.ImageSeries
-	respItem["image_source"] = item.ImageSource
-	respItem["image_type"] = item.ImageType
-	respItem["image_uuid"] = item.ImageUUID
-	respItem["import_source_type"] = item.ImportSourceType
-	respItem["is_tagged_golden"] = boolPtrToString(item.IsTaggedGolden)
-	respItem["md5_checksum"] = item.Md5Checksum
-	respItem["name"] = item.Name
-	respItem["profile_info"] = flattenSoftwareImageManagementSwimGetSoftwareImageDetailsItemsProfileInfo(item.ProfileInfo)
-	respItem["sha_check_sum"] = item.ShaCheckSum
-	respItem["vendor"] = item.Vendor
-	respItem["version"] = item.Version
-
-	return []map[string]interface{}{
-		respItem,
-	}
-}
 func flattenSoftwareImageManagementSwimGetSoftwareImageDetailsItemsApplicableDevicesForImage(items *[]dnacentersdkgo.ResponseSoftwareImageManagementSwimGetSoftwareImageDetailsResponseApplicableDevicesForImage) []map[string]interface{} {
 	if items == nil {
 		return nil

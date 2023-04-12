@@ -2,7 +2,9 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"fmt"
@@ -10,7 +12,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -63,6 +65,7 @@ can be distributed
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -70,11 +73,13 @@ can be distributed
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"image_uuid": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 								},
 							},
@@ -102,9 +107,8 @@ func resourceImageDistributionCreate(ctx context.Context, d *schema.ResourceData
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing TriggerSoftwareImageDistribution", err,
-			"Failure at TriggerSoftwareImageDistribution, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing TriggerSoftwareImageDistribution", err))
 		return diags
 	}
 
@@ -158,6 +162,7 @@ func resourceImageDistributionCreate(ctx context.Context, d *schema.ResourceData
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

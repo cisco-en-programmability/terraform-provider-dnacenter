@@ -20,65 +20,8 @@ required to configure a report.
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_reports" "example" {
   provider = dnacenter
-  item {
-
-
-
-
-    executions {
-
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-    view {
-
-
-      field_groups {
-
-
-
-        fields {
-
-
-
-        }
-      }
-      filters {
-
-
-
-
-
-      }
-      format {
-
-
-
-
-      }
-
-
-
-    }
-
-
-  }
   parameters {
 
     deliveries = ["string"]
@@ -128,61 +71,58 @@ output "dnacenter_reports_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **report_id** (String) reportId path parameter. reportId of report
+- `report_id` (String) reportId path parameter. reportId of report
 
 Optional:
 
-- **deliveries** (List of String) Array of available delivery channels
-- **name** (String) report name
-- **schedule** (List of String)
-- **tags** (List of String) array of tags for report
-- **view** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--view))
-- **view_group_id** (String) viewGroupId of the viewgroup for the report
-- **view_group_version** (String) version of viewgroup for the report
+- `deliveries` (List of String) Array of available delivery channels
+- `name` (String) report name
+- `schedule` (List of String)
+- `tags` (List of String) array of tags for report
+- `view` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--view))
+- `view_group_id` (String) viewGroupId of the viewgroup for the report
+- `view_group_version` (String) version of viewgroup for the report
 
 <a id="nestedblock--parameters--view"></a>
 ### Nested Schema for `parameters.view`
 
 Optional:
 
-- **field_groups** (Block List) (see [below for nested schema](#nestedblock--parameters--view--field_groups))
-- **filters** (Block List) (see [below for nested schema](#nestedblock--parameters--view--filters))
-- **format** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--view--format))
-- **name** (String) view name
-- **view_id** (String) view Id
+- `field_groups` (Block List) (see [below for nested schema](#nestedblock--parameters--view--field_groups))
+- `filters` (Block List) (see [below for nested schema](#nestedblock--parameters--view--filters))
+- `format` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--view--format))
+- `name` (String) view name
+- `view_id` (String) view Id
 
 <a id="nestedblock--parameters--view--field_groups"></a>
 ### Nested Schema for `parameters.view.field_groups`
 
 Optional:
 
-- **field_group_display_name** (String) Field group label/displayname for user
-- **field_group_name** (String) Field group name
-- **fields** (Block List) (see [below for nested schema](#nestedblock--parameters--view--field_groups--fields))
+- `field_group_display_name` (String) Field group label/displayname for user
+- `field_group_name` (String) Field group name
+- `fields` (Block List) (see [below for nested schema](#nestedblock--parameters--view--field_groups--fields))
 
 <a id="nestedblock--parameters--view--field_groups--fields"></a>
 ### Nested Schema for `parameters.view.field_groups.fields`
 
 Optional:
 
-- **display_name** (String) field label/displayname
-- **name** (String) field name
+- `display_name` (String) field label/displayname
+- `name` (String) field name
 
 
 
@@ -191,10 +131,10 @@ Optional:
 
 Optional:
 
-- **display_name** (String) filter label/displayname
-- **name** (String) filter name
-- **type** (String) filter type
-- **value** (List of String) value of filter. data type is based on the filter type. Use the filter definitions from the view to fetch the options for a filter.
+- `display_name` (String) filter label/displayname
+- `name` (String) filter name
+- `type` (String) filter type
+- `value` (List of String) value of filter. data type is based on the filter type. Use the filter definitions from the view to fetch the options for a filter.
 
 
 <a id="nestedblock--parameters--view--format"></a>
@@ -202,8 +142,8 @@ Optional:
 
 Optional:
 
-- **format_type** (String) format type of report
-- **name** (String) format name of report
+- `format_type` (String) format type of report
+- `name` (String) format name of report
 
 
 
@@ -213,31 +153,31 @@ Optional:
 
 Read-Only:
 
-- **data_category** (String)
-- **deliveries** (List of String)
-- **execution_count** (Number)
-- **executions** (List of Object) (see [below for nested schema](#nestedobjatt--item--executions))
-- **name** (String)
-- **report_id** (String)
-- **report_was_executed** (String)
-- **schedule** (List of String)
-- **tags** (List of String)
-- **view** (List of Object) (see [below for nested schema](#nestedobjatt--item--view))
-- **view_group_id** (String)
-- **view_group_version** (String)
+- `data_category` (String)
+- `deliveries` (List of String)
+- `execution_count` (Number)
+- `executions` (List of Object) (see [below for nested schema](#nestedobjatt--item--executions))
+- `name` (String)
+- `report_id` (String)
+- `report_was_executed` (String)
+- `schedule` (List of String)
+- `tags` (List of String)
+- `view` (List of Object) (see [below for nested schema](#nestedobjatt--item--view))
+- `view_group_id` (String)
+- `view_group_version` (String)
 
 <a id="nestedobjatt--item--executions"></a>
 ### Nested Schema for `item.executions`
 
 Read-Only:
 
-- **end_time** (Number)
-- **errors** (List of String)
-- **execution_id** (String)
-- **process_status** (String)
-- **request_status** (String)
-- **start_time** (Number)
-- **warnings** (List of String)
+- `end_time` (Number)
+- `errors` (List of String)
+- `execution_id` (String)
+- `process_status` (String)
+- `request_status` (String)
+- `start_time` (Number)
+- `warnings` (List of String)
 
 
 <a id="nestedobjatt--item--view"></a>
@@ -245,30 +185,30 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **field_groups** (List of Object) (see [below for nested schema](#nestedobjatt--item--view--field_groups))
-- **filters** (List of Object) (see [below for nested schema](#nestedobjatt--item--view--filters))
-- **format** (List of Object) (see [below for nested schema](#nestedobjatt--item--view--format))
-- **name** (String)
-- **view_id** (String)
-- **view_info** (String)
+- `description` (String)
+- `field_groups` (List of Object) (see [below for nested schema](#nestedobjatt--item--view--field_groups))
+- `filters` (List of Object) (see [below for nested schema](#nestedobjatt--item--view--filters))
+- `format` (List of Object) (see [below for nested schema](#nestedobjatt--item--view--format))
+- `name` (String)
+- `view_id` (String)
+- `view_info` (String)
 
 <a id="nestedobjatt--item--view--field_groups"></a>
 ### Nested Schema for `item.view.field_groups`
 
 Read-Only:
 
-- **field_group_display_name** (String)
-- **field_group_name** (String)
-- **fields** (List of Object) (see [below for nested schema](#nestedobjatt--item--view--field_groups--fields))
+- `field_group_display_name` (String)
+- `field_group_name` (String)
+- `fields` (List of Object) (see [below for nested schema](#nestedobjatt--item--view--field_groups--fields))
 
 <a id="nestedobjatt--item--view--field_groups--fields"></a>
 ### Nested Schema for `item.view.field_groups.fields`
 
 Read-Only:
 
-- **display_name** (String)
-- **name** (String)
+- `display_name` (String)
+- `name` (String)
 
 
 
@@ -277,10 +217,10 @@ Read-Only:
 
 Read-Only:
 
-- **display_name** (String)
-- **name** (String)
-- **type** (String)
-- **value** (List of String)
+- `display_name` (String)
+- `name` (String)
+- `type` (String)
+- `value` (List of String)
 
 
 <a id="nestedobjatt--item--view--format"></a>
@@ -288,9 +228,9 @@ Read-Only:
 
 Read-Only:
 
-- **default** (String)
-- **format_type** (String)
-- **name** (String)
+- `default` (String)
+- `format_type` (String)
+- `name` (String)
 
 ## Import
 

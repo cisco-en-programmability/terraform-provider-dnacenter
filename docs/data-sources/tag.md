@@ -52,54 +52,54 @@ output "dnacenter_tag_example" {
 
 ### Optional
 
-- **additional_info_attributes** (String) additionalInfo.attributes query parameter.
-- **additional_info_name_space** (String) additionalInfo.nameSpace query parameter.
-- **field** (String) field query parameter. Available field names are :'name,id,parentId,type,additionalInfo.nameSpace,additionalInfo.attributes'
-- **id** (String) id path parameter. Tag ID
-- **level** (String) level query parameter.
-- **limit** (String) limit query parameter.
-- **name** (String) name query parameter. Tag name is mandatory when filter operation is used.
-- **offset** (String) offset query parameter.
-- **order** (String) order query parameter. Available values are asc and des
-- **size** (String) size query parameter. size in kilobytes(KB)
-- **sort_by** (String) sortBy query parameter. Only supported attribute is name. SortyBy is mandatory when order is used.
-- **system_tag** (String) systemTag query parameter.
+- `additional_info_attributes` (String) additionalInfo.attributes query parameter.
+- `additional_info_name_space` (String) additionalInfo.nameSpace query parameter.
+- `field` (String) field query parameter. Available field names are :'name,id,parentId,type,additionalInfo.nameSpace,additionalInfo.attributes'
+- `id` (String) id path parameter. Tag ID
+- `level` (String) level query parameter.
+- `limit` (Number) limit query parameter.
+- `name` (String) name query parameter. Tag name is mandatory when filter operation is used.
+- `offset` (Number) offset query parameter.
+- `order` (String) order query parameter. Available values are asc and des
+- `size` (String) size query parameter. size in kilobytes(KB)
+- `sort_by` (String) sortBy query parameter. Only supported attribute is name. SortyBy is mandatory when order is used.
+- `system_tag` (String) systemTag query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **description** (String)
-- **dynamic_rules** (List of Object) (see [below for nested schema](#nestedobjatt--item--dynamic_rules))
-- **id** (String)
-- **instance_tenant_id** (String)
-- **name** (String)
-- **system_tag** (String)
+- `description` (String)
+- `dynamic_rules` (List of Object) (see [below for nested schema](#nestedobjatt--item--dynamic_rules))
+- `id` (String)
+- `instance_tenant_id` (String)
+- `name` (String)
+- `system_tag` (String)
 
 <a id="nestedobjatt--item--dynamic_rules"></a>
 ### Nested Schema for `item.dynamic_rules`
 
 Read-Only:
 
-- **member_type** (String)
-- **rules** (List of Object) (see [below for nested schema](#nestedobjatt--item--dynamic_rules--rules))
+- `member_type` (String)
+- `rules` (List of Object) (see [below for nested schema](#nestedobjatt--item--dynamic_rules--rules))
 
 <a id="nestedobjatt--item--dynamic_rules--rules"></a>
 ### Nested Schema for `item.dynamic_rules.rules`
 
 Read-Only:
 
-- **items** (List of String)
-- **name** (String)
-- **operation** (String)
-- **value** (String)
-- **values** (List of String)
+- `items` (String)
+- `name` (String)
+- `operation` (String)
+- `value` (String)
+- `values` (List of String)
 
 
 
@@ -109,30 +109,30 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **dynamic_rules** (List of Object) (see [below for nested schema](#nestedobjatt--items--dynamic_rules))
-- **id** (String)
-- **instance_tenant_id** (String)
-- **name** (String)
-- **system_tag** (String)
+- `description` (String)
+- `dynamic_rules` (List of Object) (see [below for nested schema](#nestedobjatt--items--dynamic_rules))
+- `id` (String)
+- `instance_tenant_id` (String)
+- `name` (String)
+- `system_tag` (String)
 
 <a id="nestedobjatt--items--dynamic_rules"></a>
 ### Nested Schema for `items.dynamic_rules`
 
 Read-Only:
 
-- **member_type** (String)
-- **rules** (List of Object) (see [below for nested schema](#nestedobjatt--items--dynamic_rules--rules))
+- `member_type` (String)
+- `rules` (List of Object) (see [below for nested schema](#nestedobjatt--items--dynamic_rules--rules))
 
 <a id="nestedobjatt--items--dynamic_rules--rules"></a>
 ### Nested Schema for `items.dynamic_rules.rules`
 
 Read-Only:
 
-- **items** (List of String)
-- **name** (String)
-- **operation** (String)
-- **value** (String)
-- **values** (List of String)
+- `items` (String)
+- `name` (String)
+- `operation` (String)
+- `value` (String)
+- `values` (List of String)
 
 

@@ -2,14 +2,16 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -62,6 +64,7 @@ func resourceCompliance() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -70,6 +73,7 @@ func resourceCompliance() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -80,6 +84,7 @@ func resourceCompliance() *schema.Resource {
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							ForceNew:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -104,9 +109,8 @@ func resourceComplianceCreate(ctx context.Context, d *schema.ResourceData, m int
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing RunCompliance", err,
-			"Failure at RunCompliance, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing RunCompliance", err))
 		return diags
 	}
 
@@ -160,6 +164,7 @@ func resourceComplianceCreate(ctx context.Context, d *schema.ResourceData, m int
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

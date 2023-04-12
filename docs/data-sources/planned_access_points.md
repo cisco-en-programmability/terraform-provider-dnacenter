@@ -34,45 +34,45 @@ output "dnacenter_planned_access_points_example" {
 
 ### Required
 
-- **floor_id** (String) floorId path parameter. Floor Id
+- `floor_id` (String) floorId path parameter. Floor Id
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **limit** (Number) limit query parameter.
-- **offset** (Number) offset query parameter.
-- **radios** (Boolean) radios query parameter. inlcude planned radio details
+- `limit` (Number) limit query parameter.
+- `offset` (Number) offset query parameter.
+- `radios` (Boolean) radios query parameter. inlcude planned radio details
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **attributes** (List of Object) (see [below for nested schema](#nestedobjatt--items--attributes))
-- **is_sensor** (String)
-- **location** (String)
-- **position** (List of Object) (see [below for nested schema](#nestedobjatt--items--position))
-- **radio_count** (Number)
-- **radios** (List of Object) (see [below for nested schema](#nestedobjatt--items--radios))
+- `attributes` (List of Object) (see [below for nested schema](#nestedobjatt--items--attributes))
+- `is_sensor` (String)
+- `location` (String)
+- `position` (List of Object) (see [below for nested schema](#nestedobjatt--items--position))
+- `radio_count` (Number)
+- `radios` (List of Object) (see [below for nested schema](#nestedobjatt--items--radios))
 
 <a id="nestedobjatt--items--attributes"></a>
 ### Nested Schema for `items.attributes`
 
 Read-Only:
 
-- **create_date** (Number)
-- **domain** (String)
-- **heirarchy_name** (String)
-- **id** (Number)
-- **instance_uuid** (String)
-- **macaddress** (String)
-- **name** (String)
-- **source** (String)
-- **type_string** (String)
+- `create_date` (Number)
+- `domain` (String)
+- `heirarchy_name` (String)
+- `id` (Number)
+- `instance_uuid` (String)
+- `macaddress` (String)
+- `name` (String)
+- `source` (String)
+- `type_string` (String)
 
 
 <a id="nestedobjatt--items--position"></a>
@@ -80,9 +80,9 @@ Read-Only:
 
 Read-Only:
 
-- **x** (Number)
-- **y** (Number)
-- **z** (Number)
+- `x` (Number)
+- `y` (Number)
+- `z` (Number)
 
 
 <a id="nestedobjatt--items--radios"></a>
@@ -90,21 +90,21 @@ Read-Only:
 
 Read-Only:
 
-- **antenna** (List of Object) (see [below for nested schema](#nestedobjatt--items--radios--antenna))
-- **attributes** (List of Object) (see [below for nested schema](#nestedobjatt--items--radios--attributes))
-- **is_sensor** (String)
+- `antenna` (List of Object) (see [below for nested schema](#nestedobjatt--items--radios--antenna))
+- `attributes` (List of Object) (see [below for nested schema](#nestedobjatt--items--radios--attributes))
+- `is_sensor` (String)
 
 <a id="nestedobjatt--items--radios--antenna"></a>
 ### Nested Schema for `items.radios.antenna`
 
 Read-Only:
 
-- **azimuth_angle** (Number)
-- **elevation_angle** (Number)
-- **gain** (Number)
-- **mode** (String)
-- **name** (String)
-- **type** (String)
+- `azimuth_angle` (Number)
+- `elevation_angle` (Number)
+- `gain` (Number)
+- `mode` (String)
+- `name` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--items--radios--attributes"></a>
@@ -112,13 +112,13 @@ Read-Only:
 
 Read-Only:
 
-- **channel** (String)
-- **channel_string** (String)
-- **id** (Number)
-- **if_mode** (String)
-- **if_type_string** (String)
-- **if_type_subband** (String)
-- **instance_uuid** (String)
-- **slot_id** (Number)
+- `channel` (String)
+- `channel_string` (String)
+- `id` (Number)
+- `if_mode` (String)
+- `if_type_string` (String)
+- `if_type_subband` (String)
+- `instance_uuid` (String)
+- `slot_id` (Number)
 
 

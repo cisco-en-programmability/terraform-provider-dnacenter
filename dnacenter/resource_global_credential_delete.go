@@ -2,12 +2,14 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -73,6 +75,7 @@ func resourceGlobalCredentialDeleteCreate(ctx context.Context, d *schema.Resourc
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vGlobalCredentialID := resourceItem["global_credential_id"]
 
 	vvGlobalCredentialID := vGlobalCredentialID.(string)
@@ -83,9 +86,8 @@ func resourceGlobalCredentialDeleteCreate(ctx context.Context, d *schema.Resourc
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeleteGlobalCredentialsByID", err,
-			"Failure at DeleteGlobalCredentialsByID, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing DeleteGlobalCredentialsByID", err))
 		return diags
 	}
 
@@ -139,6 +141,7 @@ func resourceGlobalCredentialDeleteCreate(ctx context.Context, d *schema.Resourc
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

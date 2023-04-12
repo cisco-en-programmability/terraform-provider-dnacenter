@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -47,7 +47,6 @@ func resourceWirelessDynamicInterface() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"vlan_id": &schema.Schema{
 							Description: `Vlan id
 `,
@@ -120,7 +119,9 @@ func resourceWirelessDynamicInterfaceCreate(ctx context.Context, d *schema.Resou
 			"Failure when executing CreateUpdateDynamicInterface", err))
 		return diags
 	}
-	executionId := resp1.ExecutionID
+	resp1Array := *resp1
+	item := resp1Array[0]
+	executionId := item.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
@@ -249,7 +250,9 @@ func resourceWirelessDynamicInterfaceUpdate(ctx context.Context, d *schema.Resou
 				"Failure when executing CreateUpdateDynamicInterface", err))
 			return diags
 		}
-		executionId := resp1.ExecutionID
+		resp1Array := *resp1
+		item := resp1Array[0]
+		executionId := item.ExecutionID
 		log.Printf("[DEBUG] ExecutionID => %s", executionId)
 		if executionId != "" {
 			time.Sleep(5 * time.Second)

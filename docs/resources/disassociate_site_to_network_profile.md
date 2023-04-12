@@ -20,10 +20,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_disassociate_site_to_network_profile" "example" {
   provider = dnacenter
   parameters {
@@ -43,24 +39,21 @@ output "dnacenter_disassociate_site_to_network_profile_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **network_profile_id** (String) networkProfileId path parameter. Network-Profile Id to be associated
-- **site_id** (String) siteId path parameter. Site Id to be associated
+- `network_profile_id` (String) networkProfileId path parameter. Network-Profile Id to be associated
+- `site_id` (String) siteId path parameter. Site Id to be associated
 
 
 <a id="nestedatt--item"></a>
@@ -68,7 +61,7 @@ Required:
 
 Read-Only:
 
-- **task_id** (String)
-- **url** (String)
+- `task_id` (String)
+- `url` (String)
 
 

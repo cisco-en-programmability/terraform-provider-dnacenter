@@ -44,23 +44,23 @@ output "dnacenter_global_credential_example" {
 
 ### Optional
 
-- **credential_sub_type** (String) credentialSubType query parameter. Credential type as CLI / SNMPV2_READ_COMMUNITY / SNMPV2_WRITE_COMMUNITY / SNMPV3 / HTTP_WRITE / HTTP_READ / NETCONF
-- **id** (String) id path parameter. Global Credential ID
-- **order** (String) order query parameter.
-- **sort_by** (String) sortBy query parameter.
+- `credential_sub_type` (String) credentialSubType query parameter. Credential type as CLI / SNMPV2_READ_COMMUNITY / SNMPV2_WRITE_COMMUNITY / SNMPV3 / HTTP_WRITE / HTTP_READ / NETCONF
+- `id` (String) id path parameter. Global Credential ID
+- `order` (String) order query parameter.
+- `sort_by` (String) sortBy query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (String)
-- **version** (String)
+- `response` (String)
+- `version` (String)
 
 
 <a id="nestedatt--items"></a>
@@ -68,11 +68,18 @@ Read-Only:
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `netconf_port` (String)
+- `password` (String)
+- `port` (Number)
+- `read_community` (String)
+- `secure` (String)
+- `username` (String)
+- `write_community` (String)
 
 

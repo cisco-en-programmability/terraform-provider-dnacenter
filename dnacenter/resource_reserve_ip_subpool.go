@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -48,19 +48,16 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"group_owner": &schema.Schema{
 							Description: `Group Owner`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"id": &schema.Schema{
 							Description: `Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"ip_pools": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -69,17 +66,15 @@ func resourceReserveIPSubpool() *schema.Resource {
 
 									"client_options": &schema.Schema{
 										Description: `Client Options`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
-
 									"configure_external_dhcp": &schema.Schema{
 										Description: `Configure External Dhcp`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"context": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -91,13 +86,11 @@ func resourceReserveIPSubpool() *schema.Resource {
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"context_value": &schema.Schema{
 													Description: `Context Value`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"owner": &schema.Schema{
 													Description: `Owner`,
 													Type:        schema.TypeString,
@@ -106,13 +99,11 @@ func resourceReserveIPSubpool() *schema.Resource {
 											},
 										},
 									},
-
 									"create_time": &schema.Schema{
 										Description: `Create Time`,
 										Type:        schema.TypeInt,
 										Computed:    true,
 									},
-
 									"dhcp_server_ips": &schema.Schema{
 										Description: `Dhcp Server Ips`,
 										Type:        schema.TypeList,
@@ -121,7 +112,6 @@ func resourceReserveIPSubpool() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"dns_server_ips": &schema.Schema{
 										Description: `Dns Server Ips`,
 										Type:        schema.TypeList,
@@ -130,7 +120,6 @@ func resourceReserveIPSubpool() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"gateways": &schema.Schema{
 										Description: `Gateways`,
 										Type:        schema.TypeList,
@@ -139,82 +128,69 @@ func resourceReserveIPSubpool() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"group_uuid": &schema.Schema{
 										Description: `Group Uuid`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"id": &schema.Schema{
 										Description: `Id`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"ip_pool_cidr": &schema.Schema{
 										Description: `Ip Pool Cidr`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"ip_pool_name": &schema.Schema{
 										Description: `Ip Pool Name`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"ipv6": &schema.Schema{
 										Description: `Ipv6`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"last_update_time": &schema.Schema{
 										Description: `Last Update Time`,
 										Type:        schema.TypeInt,
 										Computed:    true,
 									},
-
 									"overlapping": &schema.Schema{
 										Description: `Overlapping`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"owner": &schema.Schema{
 										Description: `Owner`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"parent_uuid": &schema.Schema{
 										Description: `Parent Uuid`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"shared": &schema.Schema{
 										Description: `Shared`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"total_ip_address_count": &schema.Schema{
 										Description: `Total Ip Address Count`,
-										Type:        schema.TypeFloat,
+										Type:        schema.TypeInt,
 										Computed:    true,
 									},
-
 									"used_ip_address_count": &schema.Schema{
 										Description: `Used Ip Address Count`,
-										Type:        schema.TypeFloat,
+										Type:        schema.TypeInt,
 										Computed:    true,
 									},
-
 									"used_percentage": &schema.Schema{
 										Description: `Used Percentage`,
 										Type:        schema.TypeString,
@@ -223,19 +199,16 @@ func resourceReserveIPSubpool() *schema.Resource {
 								},
 							},
 						},
-
 						"site_hierarchy": &schema.Schema{
 							Description: `Site Hierarchy`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"site_id": &schema.Schema{
 							Description: `Site Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"type": &schema.Schema{
 							Description: `Type`,
 							Type:        schema.TypeString,
@@ -246,9 +219,8 @@ func resourceReserveIPSubpool() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -256,13 +228,14 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `id path parameter. Id of reserve ip subpool to be deleted.
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 						"ipv4_dhcp_servers": &schema.Schema{
 							Description: `IPv4 input for dhcp server ip example: 1.1.1.1
 `,
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -272,6 +245,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 `,
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -281,52 +255,60 @@ func resourceReserveIPSubpool() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"ipv4_global_pool": &schema.Schema{
 							Description: `IP v4 Global pool address with cidr, example: 175.175.0.0/16
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"ipv4_prefix": &schema.Schema{
 							Description: `IPv4 prefix value is true, the ip4 prefix length input field is enabled , if it is false ipv4 total Host input is enable
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"ipv4_prefix_length": &schema.Schema{
 							Description: `The ipv4 prefix length is required when ipv4prefix value is true.
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"ipv4_subnet": &schema.Schema{
 							Description: `IPv4 Subnet address, example: 175.175.0.0
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"ipv4_total_host": &schema.Schema{
 							Description: `IPv4 total host is required when ipv4prefix value is false.
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"ipv6_address_space": &schema.Schema{
 							Description: `If the value is false only ipv4 input are required, otherwise both ipv6 and ipv4 are required
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"ipv6_dhcp_servers": &schema.Schema{
 							Description: `IPv6 format dhcp server as input example : 2001:db8::1234
 `,
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -336,6 +318,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 `,
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -345,44 +328,51 @@ func resourceReserveIPSubpool() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"ipv6_global_pool": &schema.Schema{
 							Description: `IPv6 Global pool address with cidr this is required when Ipv6AddressSpace value is true, example: 2001:db8:85a3::/64
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"ipv6_prefix": &schema.Schema{
 							Description: `Ipv6 prefix value is true, the ip6 prefix length input field is enabled , if it is false ipv6 total Host input is enable
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"ipv6_prefix_length": &schema.Schema{
 							Description: `IPv6 prefix length is required when the ipv6prefix value is true
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"ipv6_subnet": &schema.Schema{
 							Description: `IPv6 Subnet address, example :2001:db8:85a3:0:100::
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"ipv6_total_host": &schema.Schema{
 							Description: `IPv6 total host is required when ipv6prefix value is false.
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"name": &schema.Schema{
 							Description: `Name of the reserve ip sub pool
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Computed: true,
 						},
 						"site_id": &schema.Schema{
 							Description: `siteId path parameter. Site id of site to update sub pool.
@@ -392,16 +382,18 @@ func resourceReserveIPSubpool() *schema.Resource {
 						},
 						"slaac_support": &schema.Schema{
 							Description: `Slaac Support`,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Description: `Type of the reserve ip sub pool
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -524,8 +516,10 @@ func resourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData, m
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		vItem1 := flattenNetworkSettingsGetReserveIPSubpoolItem(response1)
+		items := []dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponse{
+			*response1,
+		}
+		vItem1 := flattenNetworkSettingsGetReserveIPSubpoolItems(&items)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetReserveIPSubpool search response",
@@ -714,10 +708,7 @@ func expandRequestReserveIPSubpoolReserveIPSubpool(ctx context.Context, key stri
 		request.IPv4Prefix = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_prefix_length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_prefix_length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_prefix_length")))) {
-		log.Printf("[DEBUG] IPv4PrefixLength%d", interfaceToIntPtr(v))
-		if interfaceToIntPtr(v) != nil && *interfaceToIntPtr(v) != 0 {
-			request.IPv4PrefixLength = interfaceToIntPtr(v)
-		}
+		request.IPv4PrefixLength = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_subnet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_subnet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_subnet")))) {
 		request.IPv4Subnet = interfaceToString(v)
@@ -738,9 +729,7 @@ func expandRequestReserveIPSubpoolReserveIPSubpool(ctx context.Context, key stri
 		request.IPv6Prefix = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_prefix_length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) {
-		if interfaceToIntPtr(v) != nil && *interfaceToIntPtr(v) != 0 {
-			request.IPv6PrefixLength = interfaceToIntPtr(v)
-		}
+		request.IPv6PrefixLength = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_subnet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_subnet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_subnet")))) {
 		request.IPv6Subnet = interfaceToString(v)
@@ -766,7 +755,6 @@ func expandRequestReserveIPSubpoolReserveIPSubpool(ctx context.Context, key stri
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -791,11 +779,7 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 		request.IPv6Prefix = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_prefix_length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) {
-		log.Printf("[DEBUG] IPv6PrefixLength%d", interfaceToIntPtr(v))
-		if interfaceToIntPtr(v) != nil && *interfaceToIntPtr(v) != 0 {
-			request.IPv6PrefixLength = interfaceToIntPtr(v)
-		}
-
+		request.IPv6PrefixLength = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_subnet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_subnet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_subnet")))) {
 		request.IPv6Subnet = interfaceToString(v)
@@ -810,10 +794,7 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 		request.IPv6DNSServers = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_total_host")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_total_host")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_total_host")))) {
-		log.Printf("[DEBUG] IPv6PrefixLength%d", interfaceToIntPtr(v))
-		if interfaceToIntPtr(v) != nil && *interfaceToIntPtr(v) != 0 {
-			request.IPv6TotalHost = interfaceToIntPtr(v)
-		}
+		request.IPv6TotalHost = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".slaac_support")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".slaac_support")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".slaac_support")))) {
 		request.SLAacSupport = interfaceToBoolPtr(v)
@@ -824,7 +805,6 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 

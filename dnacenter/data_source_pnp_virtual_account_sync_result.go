@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -89,7 +89,7 @@ func dataSourcePnpVirtualAccountSyncResult() *schema.Resource {
 
 									"make_default": &schema.Schema{
 										Description: `Make Default`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -114,7 +114,7 @@ func dataSourcePnpVirtualAccountSyncResult() *schema.Resource {
 
 									"proxy": &schema.Schema{
 										Description: `Proxy`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -218,7 +218,7 @@ func dataSourcePnpVirtualAccountSyncResultRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSyncResultForVirtualAccount")
+		log.Printf("[DEBUG] Selected method: GetSyncResultForVirtualAccount")
 		vvDomain := vDomain.(string)
 		vvName := vName.(string)
 
@@ -243,6 +243,7 @@ func dataSourcePnpVirtualAccountSyncResultRead(ctx context.Context, d *schema.Re
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
