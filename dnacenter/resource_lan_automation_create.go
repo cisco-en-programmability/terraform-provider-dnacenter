@@ -127,7 +127,7 @@ func resourceLanAutomationCreate() *schema.Resource {
 										ForceNew: true,
 										Computed: true,
 									},
-									"mulitcast_enabled": &schema.Schema{
+									"multicast_enabled": &schema.Schema{
 										Description: `To enable underlay native multicast.
 `,
 										// Type:        schema.TypeBool,
@@ -281,7 +281,7 @@ func expandRequestLanAutomationCreateLanAutomationStartItem(ctx context.Context,
 		request.IPPools = expandRequestLanAutomationCreateLanAutomationStartItemIPPoolsArray(ctx, key+".ip_pools", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mulitcast_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mulitcast_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mulitcast_enabled")))) {
-		request.MulitcastEnabled = interfaceToBoolPtr(v)
+		request.MulticastEnabled = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".host_name_prefix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".host_name_prefix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".host_name_prefix")))) {
 		request.HostNamePrefix = interfaceToString(v)
