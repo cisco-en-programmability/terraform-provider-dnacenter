@@ -1,197 +1,5 @@
-
 resource "dnacenter_configuration_template" "example" {
   provider = dnacenter
-  item {
-
-
-
-    containing_templates {
-
-
-
-      device_types {
-
-
-
-
-      }
-
-
-
-
-      rollback_template_params {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        range {
-
-
-
-
-        }
-
-        selection {
-
-
-
-
-
-        }
-      }
-      tags {
-
-
-
-      }
-
-      template_params {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        range {
-
-
-
-
-        }
-
-        selection {
-
-
-
-
-
-        }
-      }
-
-    }
-
-
-
-    device_types {
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-    rollback_template_params {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      range {
-
-
-
-
-      }
-
-      selection {
-
-
-
-
-
-      }
-    }
-
-
-
-    tags {
-
-
-
-    }
-
-    template_params {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      range {
-
-
-
-
-      }
-
-      selection {
-
-
-
-
-
-      }
-    }
-    validation_errors {
-
-
-
-
-
-    }
-
-  }
   parameters {
 
     author    = "string"
@@ -277,7 +85,7 @@ resource "dnacenter_configuration_template" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = "string"
+          selection_values        = ""
         }
       }
       version = "string"
@@ -377,8 +185,8 @@ resource "dnacenter_configuration_template" "example" {
     }
     validation_errors {
 
-      rollback_template_errors = ["string"]
-      template_errors          = ["string"]
+      rollback_template_errors = "string"
+      template_errors          = "string"
       template_id              = "string"
       template_version         = "string"
     }

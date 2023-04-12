@@ -31,91 +31,91 @@ output "dnacenter_app_policy_queuing_profile_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **name** (String) name query parameter. queuing profile name
+- `name` (String) name query parameter. queuing profile name
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **cfs_change_info** (List of String)
-- **clause** (List of Object) (see [below for nested schema](#nestedobjatt--items--clause))
-- **contract_classifier** (List of String)
-- **create_time** (Number)
-- **custom_provisions** (List of String)
-- **deployed** (String)
-- **description** (String)
-- **display_name** (String)
-- **gen_id** (Number)
-- **id** (String)
-- **instance_created_on** (Number)
-- **instance_id** (Number)
-- **instance_updated_on** (Number)
-- **instance_version** (Number)
-- **internal** (String)
-- **is_deleted** (String)
-- **is_seeded** (String)
-- **is_stale** (String)
-- **ise_reserved** (String)
-- **last_update_time** (Number)
-- **name** (String)
-- **namespace** (String)
-- **provisioning_state** (String)
-- **pushed** (String)
-- **qualifier** (String)
-- **resource_version** (Number)
-- **target_id_list** (List of String)
-- **type** (String)
+- `cfs_change_info` (List of String)
+- `clause` (List of Object) (see [below for nested schema](#nestedobjatt--items--clause))
+- `contract_classifier` (List of String)
+- `create_time` (Number)
+- `custom_provisions` (List of String)
+- `deployed` (String)
+- `description` (String)
+- `display_name` (String)
+- `gen_id` (Number)
+- `id` (String)
+- `instance_created_on` (Number)
+- `instance_id` (Number)
+- `instance_updated_on` (Number)
+- `instance_version` (Number)
+- `internal` (String)
+- `is_deleted` (String)
+- `is_seeded` (String)
+- `is_stale` (String)
+- `ise_reserved` (String)
+- `last_update_time` (Number)
+- `name` (String)
+- `namespace` (String)
+- `provisioning_state` (String)
+- `pushed` (String)
+- `qualifier` (String)
+- `resource_version` (Number)
+- `target_id_list` (List of String)
+- `type` (String)
 
 <a id="nestedobjatt--items--clause"></a>
 ### Nested Schema for `items.clause`
 
 Read-Only:
 
-- **display_name** (String)
-- **id** (String)
-- **instance_created_on** (Number)
-- **instance_id** (Number)
-- **instance_updated_on** (Number)
-- **instance_version** (Number)
-- **interface_speed_bandwidth_clauses** (List of Object) (see [below for nested schema](#nestedobjatt--items--clause--interface_speed_bandwidth_clauses))
-- **is_common_between_all_interface_speeds** (String)
-- **priority** (Number)
-- **tc_dscp_settings** (List of Object) (see [below for nested schema](#nestedobjatt--items--clause--tc_dscp_settings))
-- **type** (String)
+- `display_name` (String)
+- `id` (String)
+- `instance_created_on` (Number)
+- `instance_id` (Number)
+- `instance_updated_on` (Number)
+- `instance_version` (Number)
+- `interface_speed_bandwidth_clauses` (List of Object) (see [below for nested schema](#nestedobjatt--items--clause--interface_speed_bandwidth_clauses))
+- `is_common_between_all_interface_speeds` (String)
+- `priority` (Number)
+- `tc_dscp_settings` (List of Object) (see [below for nested schema](#nestedobjatt--items--clause--tc_dscp_settings))
+- `type` (String)
 
 <a id="nestedobjatt--items--clause--interface_speed_bandwidth_clauses"></a>
 ### Nested Schema for `items.clause.interface_speed_bandwidth_clauses`
 
 Read-Only:
 
-- **display_name** (String)
-- **id** (String)
-- **instance_created_on** (Number)
-- **instance_id** (Number)
-- **instance_updated_on** (Number)
-- **instance_version** (Number)
-- **interface_speed** (String)
-- **tc_bandwidth_settings** (List of Object) (see [below for nested schema](#nestedobjatt--items--clause--interface_speed_bandwidth_clauses--tc_bandwidth_settings))
+- `display_name` (String)
+- `id` (String)
+- `instance_created_on` (Number)
+- `instance_id` (Number)
+- `instance_updated_on` (Number)
+- `instance_version` (Number)
+- `interface_speed` (String)
+- `tc_bandwidth_settings` (List of Object) (see [below for nested schema](#nestedobjatt--items--clause--interface_speed_bandwidth_clauses--tc_bandwidth_settings))
 
 <a id="nestedobjatt--items--clause--interface_speed_bandwidth_clauses--tc_bandwidth_settings"></a>
 ### Nested Schema for `items.clause.interface_speed_bandwidth_clauses.tc_bandwidth_settings`
 
 Read-Only:
 
-- **bandwidth_percentage** (Number)
-- **display_name** (String)
-- **id** (String)
-- **instance_created_on** (Number)
-- **instance_id** (Number)
-- **instance_updated_on** (Number)
-- **instance_version** (Number)
-- **traffic_class** (String)
+- `bandwidth_percentage` (Number)
+- `display_name` (String)
+- `id` (String)
+- `instance_created_on` (Number)
+- `instance_id` (Number)
+- `instance_updated_on` (Number)
+- `instance_version` (Number)
+- `traffic_class` (String)
 
 
 
@@ -124,13 +124,13 @@ Read-Only:
 
 Read-Only:
 
-- **display_name** (String)
-- **dscp** (String)
-- **id** (String)
-- **instance_created_on** (Number)
-- **instance_id** (Number)
-- **instance_updated_on** (Number)
-- **instance_version** (Number)
-- **traffic_class** (String)
+- `display_name` (String)
+- `dscp` (String)
+- `id` (String)
+- `instance_created_on` (Number)
+- `instance_id` (Number)
+- `instance_updated_on` (Number)
+- `instance_version` (Number)
+- `traffic_class` (String)
 
 

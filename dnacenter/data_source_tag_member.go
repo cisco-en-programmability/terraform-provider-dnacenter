@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,7 +34,7 @@ func dataSourceTagMember() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Used to Number of maximum members to return in the result
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"member_association_type": &schema.Schema{
@@ -52,7 +52,7 @@ func dataSourceTagMember() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Used for pagination. It indicates the starting row number out of available member records
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 
@@ -86,17 +86,17 @@ func dataSourceTagMemberRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTagMembersByID")
+		log.Printf("[DEBUG] Selected method: GetTagMembersByID")
 		vvID := vID.(string)
 		queryParams1 := dnacentersdkgo.GetTagMembersByIDQueryParams{}
 
 		queryParams1.MemberType = vMemberType.(string)
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(string)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(string)
 		}
 		if okMemberAssociationType {
 			queryParams1.MemberAssociationType = vMemberAssociationType.(string)
@@ -126,6 +126,7 @@ func dataSourceTagMemberRead(ctx context.Context, d *schema.ResourceData, m inte
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

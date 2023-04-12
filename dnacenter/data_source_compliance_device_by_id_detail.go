@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -94,7 +94,7 @@ func dataSourceComplianceDeviceByIDDetail() *schema.Resource {
 
 						"last_sync_time": &schema.Schema{
 							Description: `Last Sync Time`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 
@@ -309,7 +309,7 @@ func dataSourceComplianceDeviceByIDDetailRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ComplianceDetailsOfDevice")
+		log.Printf("[DEBUG] Selected method: ComplianceDetailsOfDevice")
 		vvDeviceUUID := vDeviceUUID.(string)
 		queryParams1 := dnacentersdkgo.ComplianceDetailsOfDeviceQueryParams{}
 
@@ -350,6 +350,7 @@ func dataSourceComplianceDeviceByIDDetailRead(ctx context.Context, d *schema.Res
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

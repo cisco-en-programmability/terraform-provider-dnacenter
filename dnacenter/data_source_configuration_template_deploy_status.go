@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -196,7 +196,7 @@ func dataSourceConfigurationTemplateDeployStatusRead(ctx context.Context, d *sch
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: StatusOfTemplateDeployment")
+		log.Printf("[DEBUG] Selected method: StatusOfTemplateDeployment")
 		vvDeploymentID := vDeploymentID.(string)
 
 		response1, restyResp1, err := client.ConfigurationTemplates.StatusOfTemplateDeployment(vvDeploymentID)
@@ -213,13 +213,14 @@ func dataSourceConfigurationTemplateDeployStatusRead(ctx context.Context, d *sch
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenConfigurationTemplatesStatusOfTemplateDeploymentItem(response1)
+		vItem1 := flattenConfigurationTemplatesStatusOfTemplateDeploymentStatusItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting StatusOfTemplateDeployment response",
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -227,14 +228,14 @@ func dataSourceConfigurationTemplateDeployStatusRead(ctx context.Context, d *sch
 	return diags
 }
 
-func flattenConfigurationTemplatesStatusOfTemplateDeploymentItem(item *dnacentersdkgo.ResponseConfigurationTemplatesStatusOfTemplateDeployment) []map[string]interface{} {
+func flattenConfigurationTemplatesStatusOfTemplateDeploymentStatusItem(item *dnacentersdkgo.ResponseConfigurationTemplatesStatusOfTemplateDeployment) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["deployment_id"] = item.DeploymentID
 	respItem["deployment_name"] = item.DeploymentName
-	respItem["devices"] = flattenConfigurationTemplatesStatusOfTemplateDeploymentItemDevices(item.Devices)
+	respItem["devices"] = flattenConfigurationTemplatesStatusOfTemplateDeploymentStatusItemDevices(item.Devices)
 	respItem["duration"] = item.Duration
 	respItem["end_time"] = item.EndTime
 	respItem["project_name"] = item.ProjectName
@@ -248,7 +249,7 @@ func flattenConfigurationTemplatesStatusOfTemplateDeploymentItem(item *dnacenter
 	}
 }
 
-func flattenConfigurationTemplatesStatusOfTemplateDeploymentItemDevices(items *[]dnacentersdkgo.ResponseConfigurationTemplatesStatusOfTemplateDeploymentDevices) []map[string]interface{} {
+func flattenConfigurationTemplatesStatusOfTemplateDeploymentStatusItemDevices(items *[]dnacentersdkgo.ResponseConfigurationTemplatesStatusOfTemplateDeploymentDevices) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

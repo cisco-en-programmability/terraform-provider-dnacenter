@@ -2,10 +2,12 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
+	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -218,11 +220,15 @@ func resourceNetworkDevice() *schema.Resource {
 }
 
 func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
+	// TODO: Add the path params to `item` schema
+	//       & return it individually
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
+	// resourceMap["name"] = interfaceToString(resourceItem["name"])
 	d.SetId(joinResourceID(resourceMap))
-	return resourceNetworkDeviceRead(ctx, d, m)
+	return diags
 }
 
 func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -232,22 +238,17 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+
 	vID := resourceMap["id"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceByID")
+		log.Printf("[DEBUG] Selected method: GetDeviceByID")
 		vvID := vID
 
-		response1, restyResp1, _ := client.Devices.GetDeviceByID(vvID)
+		response1, restyResp1, err := client.Devices.GetDeviceByID(vvID)
 
-		/*		if err != nil {
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetDeviceByID", err,
-					"Failure at GetDeviceByID, unexpected response", ""))
-				return diags
-			}*/
-		if response1 == nil {
+		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -264,6 +265,7 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+
 		return diags
 
 	}
@@ -282,21 +284,13 @@ func resourceNetworkDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vID := resourceMap["id"]
 
-	selectedMethod := 1
-	var vvID string
-	if selectedMethod == 1 {
-		vvID = vID
-		getResp, _, err := client.Devices.GetDeviceByID(vvID)
-		if err != nil || getResp == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-	}
-	queryParams1 := dnacentersdkgo.DeleteDeviceByIDQueryParams{}
-	queryParams1.CleanConfig = true
-	response1, restyResp1, err := client.Devices.DeleteDeviceByID(vvID, &queryParams1)
+	// queryParamDelete := dnacentersdkgo.DeleteDeviceByIDQueryParams{}
+
+	vvID := resourceMap["id"]
+	// queryParamDelete.CleanConfig = vvCleanConfig
+
+	response1, restyResp1, err := client.Devices.DeleteDeviceByID(vvID, nil)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -309,6 +303,35 @@ func resourceNetworkDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 			"Failure when executing DeleteDeviceByID", err,
 			"Failure at DeleteDeviceByID, unexpected response", ""))
 		return diags
+	}
+
+	if response1.Response == nil {
+		diags = append(diags, diagError(
+			"Failure when executing DeleteDeviceByID", err))
+		return diags
+	}
+	taskId := response1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
+			diags = append(diags, diagError(
+				"Failure when executing DeleteDeviceByID", err1))
+			return diags
+		}
 	}
 
 	// d.SetId("") is automatically called assuming delete returns no errors, but

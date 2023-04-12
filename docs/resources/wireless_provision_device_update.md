@@ -24,6 +24,7 @@ resource "dnacenter_wireless_provision_device_update" "example" {
   provider = dnacenter
   parameters {
     payload {
+
       device_name = "string"
       dynamic_interfaces {
 
@@ -35,6 +36,7 @@ resource "dnacenter_wireless_provision_device_update" "example" {
         vlan_id                    = 1
       }
       managed_aplocations = ["string"]
+      persistbapioutput   = "false"
     }
   }
 }
@@ -49,44 +51,42 @@ output "dnacenter_wireless_provision_device_update_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **payload** (Block List) Array of RequestWirelessProvisionUpdate (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestWirelessProvisionUpdate (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
 
 Optional:
 
-- **device_name** (String) Device Name
-- **dynamic_interfaces** (Block List) (see [below for nested schema](#nestedblock--parameters--payload--dynamic_interfaces))
-- **managed_aplocations** (List of String) Managed APLocations
+- `device_name` (String) Device Name
+- `dynamic_interfaces` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--dynamic_interfaces))
+- `managed_aplocations` (List of String) Managed APLocations
+- `persistbapioutput` (String) Device Name
 
 <a id="nestedblock--parameters--payload--dynamic_interfaces"></a>
 ### Nested Schema for `parameters.payload.dynamic_interfaces`
 
 Optional:
 
-- **interface_gateway** (String) Interface Gateway
-- **interface_ipaddress** (String) Interface IPAddress
-- **interface_name** (String) Interface Name
-- **interface_netmask_in_cid_r** (Number) Interface Netmask In CIDR
-- **lag_or_port_number** (Number) Lag Or Port Number
-- **vlan_id** (Number) Vlan Id
+- `interface_gateway` (String) Interface Gateway
+- `interface_ipaddress` (String) Interface IPAddress
+- `interface_name` (String) Interface Name
+- `interface_netmask_in_cid_r` (Number) Interface Netmask In CIDR
+- `lag_or_port_number` (Number) Lag Or Port Number
+- `vlan_id` (Number) Vlan Id
 
 
 
@@ -96,16 +96,16 @@ Optional:
 
 Read-Only:
 
-- **execution_id** (String)
-- **execution_url** (String)
-- **provisioning_tasks** (List of Object) (see [below for nested schema](#nestedobjatt--item--provisioning_tasks))
+- `execution_id` (String)
+- `execution_url` (String)
+- `provisioning_tasks` (List of Object) (see [below for nested schema](#nestedobjatt--item--provisioning_tasks))
 
 <a id="nestedobjatt--item--provisioning_tasks"></a>
 ### Nested Schema for `item.provisioning_tasks`
 
 Read-Only:
 
-- **failed** (List of String)
-- **success** (List of String)
+- `failed` (List of String)
+- `success` (List of String)
 
 

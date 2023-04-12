@@ -12,7 +12,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -2205,10 +2205,10 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrors {
 	request := dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrors{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rollback_template_errors")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rollback_template_errors")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rollback_template_errors")))) {
-		request.RollbackTemplateErrors = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsRollbackTemplateErrorsArray(ctx, key+".rollback_template_errors", d)
+		request.RollbackTemplateErrors = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsRollbackTemplateErrors(ctx, key+".rollback_template_errors.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_errors")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_errors")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_errors")))) {
-		request.TemplateErrors = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsTemplateErrorsArray(ctx, key+".template_errors", d)
+		request.TemplateErrors = expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsTemplateErrors(ctx, key+".template_errors.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
 		request.TemplateID = interfaceToString(v)
@@ -2219,49 +2219,9 @@ func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided
 	return &request
 }
 
-func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsRollbackTemplateErrorsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsRollbackTemplateErrors {
-	request := []dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsRollbackTemplateErrors{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsRollbackTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
 func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsRollbackTemplateErrors(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsRollbackTemplateErrors {
 	var request dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsRollbackTemplateErrors
 	request = d.Get(fixKeyAccess(key))
-	return &request
-}
-
-func expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsTemplateErrorsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsTemplateErrors {
-	request := []dnacentersdkgo.RequestItemConfigurationTemplatesImportsTheTemplatesProvidedValidationErrorsTemplateErrors{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvidedItemValidationErrorsTemplateErrors(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
 	return &request
 }
 

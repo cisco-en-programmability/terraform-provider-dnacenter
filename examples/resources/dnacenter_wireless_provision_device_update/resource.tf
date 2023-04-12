@@ -3,6 +3,7 @@ resource "dnacenter_wireless_provision_device_update" "example" {
   provider = dnacenter
   parameters {
     payload {
+
       device_name = "string"
       dynamic_interfaces {
 
@@ -14,6 +15,7 @@ resource "dnacenter_wireless_provision_device_update" "example" {
         vlan_id                    = 1
       }
       managed_aplocations = ["string"]
+      persistbapioutput   = "false"
     }
   }
 }

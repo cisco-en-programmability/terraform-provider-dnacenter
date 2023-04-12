@@ -34,39 +34,39 @@ output "dnacenter_discovery_jobs_example" {
 
 ### Required
 
-- **ip_address** (String) ipAddress query parameter.
+- `ip_address` (String) ipAddress query parameter.
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **limit** (Number) limit query parameter.
-- **name** (String) name query parameter.
-- **offset** (Number) offset query parameter.
+- `limit` (Number) limit query parameter.
+- `name` (String) name query parameter.
+- `offset` (Number) offset query parameter.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **attribute_info** (String)
-- **cli_status** (String)
-- **discovery_status** (String)
-- **end_time** (String)
-- **http_status** (String)
-- **id** (String)
-- **inventory_collection_status** (String)
-- **inventory_reachability_status** (String)
-- **ip_address** (String)
-- **job_status** (String)
-- **name** (String)
-- **netconf_status** (String)
-- **ping_status** (String)
-- **snmp_status** (String)
-- **start_time** (String)
-- **task_id** (String)
+- `attribute_info` (String)
+- `cli_status` (String)
+- `discovery_status` (String)
+- `end_time` (String)
+- `http_status` (String)
+- `id` (String)
+- `inventory_collection_status` (String)
+- `inventory_reachability_status` (String)
+- `ip_address` (String)
+- `job_status` (String)
+- `name` (String)
+- `netconf_status` (String)
+- `ping_status` (String)
+- `snmp_status` (String)
+- `start_time` (String)
+- `task_id` (String)
 
 

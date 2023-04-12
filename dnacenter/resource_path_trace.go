@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -3190,56 +3190,79 @@ get results and follow progress.
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"control_path": &schema.Schema{
-							// Type:     schema.TypeBool,
+							Description: `Control path tracing
+`,
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"dest_ip": &schema.Schema{
+							Description: `Destination IP address
+`,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"dest_port": &schema.Schema{
+							Description: `Destination Port
+`,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"flow_analysis_id": &schema.Schema{
 							Description: `flowAnalysisId path parameter. Flow analysis request id
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 						"inclusions": &schema.Schema{
+							Description: `Subset of {INTERFACE-STATS, QOS-STATS, DEVICE-STATS, PERFORMANCE-STATS, ACL-TRACE}
+`,
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"periodic_refresh": &schema.Schema{
-							// Type:     schema.TypeBool,
+							Description: `Periodic refresh of path for every 30 sec
+`,
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"protocol": &schema.Schema{
+							Description: `Protocol
+`,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"source_ip": &schema.Schema{
+							Description: `Source IP address
+`,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"source_port": &schema.Schema{
+							Description: `Source Port
+`,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -3259,7 +3282,6 @@ func resourcePathTraceCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	vFlowAnalysisID := resourceItem["flow_analysis_id"]
 	vvFlowAnalysisID := interfaceToString(vFlowAnalysisID)
-
 	if vvFlowAnalysisID != "" {
 		getResponse2, _, err := client.PathTrace.RetrievesPreviousPathtrace(vvFlowAnalysisID)
 		if err == nil && getResponse2 != nil {
@@ -3269,7 +3291,6 @@ func resourcePathTraceCreate(ctx context.Context, d *schema.ResourceData, m inte
 			return resourcePathTraceRead(ctx, d, m)
 		}
 	}
-
 	resp1, restyResp1, err := client.PathTrace.InitiateANewPathtrace(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -3302,14 +3323,13 @@ func resourcePathTraceCreate(ctx context.Context, d *schema.ResourceData, m inte
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
 				"Failure when executing InitiateANewPathtrace", err1))
 			return diags
 		}
 	}
-
 	vvFlowAnalysisID = resp1.Response.FlowAnalysisID
 
 	resourceMap := make(map[string]string)
@@ -3464,6 +3484,5 @@ func expandRequestPathTraceInitiateANewPathtrace(ctx context.Context, key string
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

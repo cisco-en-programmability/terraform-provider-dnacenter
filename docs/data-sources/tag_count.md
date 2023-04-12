@@ -36,24 +36,24 @@ output "dnacenter_tag_count_example" {
 
 ### Optional
 
-- **attribute_name** (String) attributeName query parameter.
-- **id** (String) The ID of this resource.
-- **level** (String) level query parameter.
-- **name** (String) name query parameter.
-- **name_space** (String) nameSpace query parameter.
-- **size** (String) size query parameter. size in kilobytes(KB)
-- **system_tag** (String) systemTag query parameter.
+- `attribute_name` (String) attributeName query parameter.
+- `level` (String) level query parameter.
+- `name` (String) name query parameter.
+- `name_space` (String) nameSpace query parameter.
+- `size` (String) size query parameter. size in kilobytes(KB)
+- `system_tag` (String) systemTag query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
-- **version** (String)
+- `response` (Number)
+- `version` (String)
 
 

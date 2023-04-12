@@ -20,10 +20,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_lan_automation_delete" "example" {
   provider = dnacenter
   parameters {
@@ -42,23 +38,20 @@ output "dnacenter_lan_automation_delete_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **id** (String) id path parameter. LAN Automation id can be obtained from /dna/intent/api/v1/lan-automation/status.
+- `id` (String) id path parameter. LAN Automation id can be obtained from /dna/intent/api/v1/lan-automation/status.
 
 
 <a id="nestedatt--item"></a>
@@ -66,8 +59,8 @@ Required:
 
 Read-Only:
 
-- **detail** (String)
-- **error_code** (String)
-- **message** (String)
+- `detail` (String)
+- `error_code` (String)
+- `message` (String)
 
 

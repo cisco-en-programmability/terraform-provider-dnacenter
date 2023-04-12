@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -66,11 +66,8 @@ func resourceTag() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"items": &schema.Schema{
-													Type:     schema.TypeList,
+													Type:     schema.TypeString,
 													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 												"name": &schema.Schema{
 													Type:     schema.TypeString,
@@ -110,7 +107,7 @@ func resourceTag() *schema.Resource {
 							Computed: true,
 						},
 						"system_tag": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -119,58 +116,54 @@ func resourceTag() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"dynamic_rules": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
-							MaxItems: 1,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"member_type": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"rules": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"items": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													MaxItems: 1,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
 												"name": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"operation": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"value": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"values": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
-													MaxItems: 1,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -184,20 +177,24 @@ func resourceTag() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"instance_tenant_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"system_tag": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -586,7 +583,6 @@ func expandRequestTagCreateTag(ctx context.Context, key string, d *schema.Resour
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -610,7 +606,6 @@ func expandRequestTagCreateTagDynamicRulesArray(ctx context.Context, key string,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -625,7 +620,6 @@ func expandRequestTagCreateTagDynamicRules(ctx context.Context, key string, d *s
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -635,7 +629,7 @@ func expandRequestTagCreateTagDynamicRulesRules(ctx context.Context, key string,
 		request.Values = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".items")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".items")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".items")))) {
-		request.Items = expandRequestTagCreateTagDynamicRulesRulesItemsArray(ctx, key+".items", d)
+		request.Items = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation")))) {
 		request.Operation = interfaceToString(v)
@@ -649,41 +643,6 @@ func expandRequestTagCreateTagDynamicRulesRules(ctx context.Context, key string,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
-	return &request
-}
-
-func expandRequestTagCreateTagDynamicRulesRulesItemsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems {
-	request := []dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestTagCreateTagDynamicRulesRulesItems(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
-	return &request
-}
-
-func expandRequestTagCreateTagDynamicRulesRulesItems(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems {
-	var request dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems
-	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
@@ -710,7 +669,6 @@ func expandRequestTagUpdateTag(ctx context.Context, key string, d *schema.Resour
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -734,7 +692,6 @@ func expandRequestTagUpdateTagDynamicRulesArray(ctx context.Context, key string,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -749,7 +706,6 @@ func expandRequestTagUpdateTagDynamicRules(ctx context.Context, key string, d *s
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -759,7 +715,7 @@ func expandRequestTagUpdateTagDynamicRulesRules(ctx context.Context, key string,
 		request.Values = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".items")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".items")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".items")))) {
-		request.Items = expandRequestTagUpdateTagDynamicRulesRulesItemsArray(ctx, key+".items", d)
+		request.Items = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation")))) {
 		request.Operation = interfaceToString(v)
@@ -773,41 +729,6 @@ func expandRequestTagUpdateTagDynamicRulesRules(ctx context.Context, key string,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
-	return &request
-}
-
-func expandRequestTagUpdateTagDynamicRulesRulesItemsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems {
-	request := []dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestTagUpdateTagDynamicRulesRulesItems(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
-	return &request
-}
-
-func expandRequestTagUpdateTagDynamicRulesRulesItems(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems {
-	var request dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems
-	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

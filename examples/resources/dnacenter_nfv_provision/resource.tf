@@ -158,6 +158,11 @@ resource "dnacenter_nfv_provision" "example" {
       }
       site_profile_name = "string"
     }
+
+    runsync           = "false"
+    timeout           = "false"
+    persistbapioutput = "false"
+
   }
 }
 

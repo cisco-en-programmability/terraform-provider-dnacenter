@@ -1,6 +1,7 @@
 
 resource "dnacenter_wireless_enterprise_ssid" "example" {
   provider = dnacenter
+
   parameters {
 
     basic_service_set_client_idle_timeout = 1

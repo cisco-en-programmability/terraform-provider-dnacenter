@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -46,7 +47,6 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"filter": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -61,7 +61,6 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"domains_subdomains": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -73,7 +72,6 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"sub_domains": &schema.Schema{
 													Description: `Sub Domains`,
 													Type:        schema.TypeList,
@@ -85,7 +83,6 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 											},
 										},
 									},
-
 									"event_ids": &schema.Schema{
 										Description: `Event Ids`,
 										Type:        schema.TypeList,
@@ -94,7 +91,6 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"others": &schema.Schema{
 										Description: `Others`,
 										Type:        schema.TypeList,
@@ -103,7 +99,6 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"severities": &schema.Schema{
 										Description: `Severities`,
 										Type:        schema.TypeList,
@@ -112,7 +107,6 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"site_ids": &schema.Schema{
 										Description: `Site Ids`,
 										Type:        schema.TypeList,
@@ -121,7 +115,6 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"sources": &schema.Schema{
 										Description: `Sources`,
 										Type:        schema.TypeList,
@@ -130,7 +123,6 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"types": &schema.Schema{
 										Description: `Types`,
 										Type:        schema.TypeList,
@@ -142,20 +134,17 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 								},
 							},
 						},
-
 						"is_private": &schema.Schema{
 							Description: `Is Private`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"name": &schema.Schema{
 							Description: `Name`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"subscription_endpoints": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -167,13 +156,11 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"instance_id": &schema.Schema{
 										Description: `Instance Id`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"subscription_details": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -185,25 +172,21 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"description": &schema.Schema{
 													Description: `Description`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"instance_id": &schema.Schema{
 													Description: `Instance Id`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"name": &schema.Schema{
 													Description: `Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"syslog_config": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -215,37 +198,31 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
-
 															"description": &schema.Schema{
 																Description: `Description`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
-
 															"host": &schema.Schema{
 																Description: `Host`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
-
 															"name": &schema.Schema{
 																Description: `Name`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
-
 															"port": &schema.Schema{
 																Description: `Port`,
 																Type:        schema.TypeInt,
 																Computed:    true,
 															},
-
 															"tenant_id": &schema.Schema{
 																Description: `Tenant Id`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
-
 															"version": &schema.Schema{
 																Description: `Version`,
 																Type:        schema.TypeString,
@@ -260,19 +237,16 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 								},
 							},
 						},
-
 						"subscription_id": &schema.Schema{
 							Description: `Subscription Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"tenant_id": &schema.Schema{
 							Description: `Tenant Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"version": &schema.Schema{
 							Description: `Version`,
 							Type:        schema.TypeString,
@@ -284,28 +258,28 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 			"parameters": &schema.Schema{
 				Description: `Array of RequestEventManagementCreateSyslogEventSubscription`,
 				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"payload": &schema.Schema{
 							Description: `Array of RequestEventManagementCreateSyslogEventSubscription`,
 							Type:        schema.TypeList,
 							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-
 									"description": &schema.Schema{
 										Description: `Description
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"filter": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -313,6 +287,7 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 													Description: `Categories`,
 													Type:        schema.TypeList,
 													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -320,6 +295,7 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 												"domains_subdomains": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -327,11 +303,13 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 																Description: `Domain`,
 																Type:        schema.TypeString,
 																Optional:    true,
+																Computed:    true,
 															},
 															"sub_domains": &schema.Schema{
 																Description: `Sub Domains`,
 																Type:        schema.TypeList,
 																Optional:    true,
+																Computed:    true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -344,6 +322,7 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 `,
 													Type:     schema.TypeList,
 													Optional: true,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -352,6 +331,7 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 													Description: `Severities`,
 													Type:        schema.TypeList,
 													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -360,6 +340,7 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 													Description: `Site Ids`,
 													Type:        schema.TypeList,
 													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -368,6 +349,7 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 													Description: `Sources`,
 													Type:        schema.TypeList,
 													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -376,6 +358,7 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 													Description: `Types`,
 													Type:        schema.TypeList,
 													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -388,10 +371,12 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Default:  "",
 									},
 									"subscription_endpoints": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -400,11 +385,12 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"subscription_details": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
-													MaxItems: 1,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -413,6 +399,7 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 `,
 																Type:     schema.TypeString,
 																Optional: true,
+																Computed: true,
 															},
 														},
 													},
@@ -425,17 +412,16 @@ func resourceEventSubscriptionSyslog() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Default:  "",
 									},
 									"version": &schema.Schema{
 										Description: `Version
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
-								},
-							},
-						},
-					},
+								}}}},
 				},
 			},
 		},
@@ -447,24 +433,24 @@ func resourceEventSubscriptionSyslogCreate(ctx context.Context, d *schema.Resour
 
 	var diags diag.Diagnostics
 
+	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
 	request1 := expandRequestEventSubscriptionSyslogCreateSyslogEventSubscription(ctx, "parameters.0", d)
-	vName := d.Get("parameters.0.payload.0.name")
-	vvName := interfaceToString(vName)
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	queryParams1 := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
-	queryParams1.Name = vvName
-	item, _, err := client.EventManagement.GetSyslogEventSubscriptions(&queryParams1)
-	if err == nil && (item != nil && len(*item) > 0) {
+	vName := resourceItem["name"]
+	vvName := interfaceToString(vName)
+	vSubscriptionID := resourceItem["subscription_id"]
+	vvSubscriptionID := interfaceToString(vSubscriptionID)
+	queryParamImport := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
+	queryParamImport.Name = vvName
+	item2, err := searchEventManagementGetSyslogEventSubscriptions(m, queryParamImport, vvSubscriptionID)
+	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
-		resourceMap["name"] = vvName
+		resourceMap["name"] = item2.Name
+		resourceMap["id"] = item2.SubscriptionID
 		d.SetId(joinResourceID(resourceMap))
 		return resourceEventSubscriptionSyslogRead(ctx, d, m)
 	}
-
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
-
 	resp1, restyResp1, err := client.EventManagement.CreateSyslogEventSubscription(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -476,44 +462,49 @@ func resourceEventSubscriptionSyslogCreate(ctx context.Context, d *schema.Resour
 			"Failure when executing CreateSyslogEventSubscription", err))
 		return diags
 	}
+	// TODO REVIEW
+	queryParamValidate := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
+	queryParamValidate.Name = vvName
+	item3, err := searchEventManagementGetSyslogEventSubscriptions(m, queryParamValidate, "")
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing CreateSyslogEventSubscription", err,
+			"Failure at CreateSyslogEventSubscription, unexpected response", ""))
+		return diags
+	}
+
 	resourceMap := make(map[string]string)
 	resourceMap["name"] = vvName
+	resourceMap["id"] = item3.SubscriptionID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceEventSubscriptionSyslogRead(ctx, d, m)
 }
 
 func resourceEventSubscriptionSyslogRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+
 	var diags diag.Diagnostics
-	client := m.(*dnacentersdkgo.Client)
+
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vName, _ := resourceMap["name"]
+
+	vName := resourceMap["name"]
+	vvID := resourceMap["id"]
+
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSyslogEventSubscriptions %s", vName)
-
+		log.Printf("[DEBUG] Selected method: GetSyslogEventSubscriptions")
 		queryParams1 := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
 		queryParams1.Name = vName
-		item, _, err := client.EventManagement.GetSyslogEventSubscriptions(&queryParams1)
-		log.Println("[DEBUG] searchEventManagementGetSyslogEventSubscriptions")
-		if err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetSyslogEventSubscriptions search response",
-				err))
-			return diags
-		}
-		if item == nil {
+		item1, err := searchEventManagementGetSyslogEventSubscriptions(m, queryParams1, vvID)
+		if err != nil || item1 == nil {
 			d.SetId("")
 			return diags
 		}
-
-		log.Println("[DEBUG] searchEventManagementGetSyslogEventSubscriptions 2")
-
-		if item != nil {
-			log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*item))
+		items := dnacentersdkgo.ResponseEventManagementGetSyslogEventSubscriptions{
+			*item1,
 		}
-
-		vItem1 := flattenEventManagementGetSyslogEventSubscriptionsItems(item)
+		// Review flatten function used
+		vItem1 := flattenEventManagementGetSyslogEventSubscriptionsItems(&items)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSyslogEventSubscriptions search response",
@@ -530,33 +521,9 @@ func resourceEventSubscriptionSyslogUpdate(ctx context.Context, d *schema.Resour
 
 	var diags diag.Diagnostics
 
-	resourceID := d.Id()
-	resourceMap := separateResourceID(resourceID)
-	vName, _ := resourceMap["name"]
-
-	queryParams1 := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
-	queryParams1.Name = vName
-	item, _, err := client.EventManagement.GetSyslogEventSubscriptions(&queryParams1)
-	if err != nil || item == nil || len(*item) <= 0 {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetSyslogEventSubscriptions", err,
-			"Failure at GetSyslogEventSubscriptions, unexpected response", ""))
-		return diags
-	}
-
-	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
-		request1 := expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscription(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-		// Add SubscriptionID to update
-		if request1 != nil && len(*request1) > 0 && item != nil && len(*item) > 0 {
-			found := *item
-			req := *request1
-			req[0].SubscriptionID = responseInterfaceToString(found[0].SubscriptionID)
-			request1 = &req
-		}
+		request1 := expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscription(ctx, "parameters", d)
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.EventManagement.UpdateSyslogEventSubscription(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -571,58 +538,18 @@ func resourceEventSubscriptionSyslogUpdate(ctx context.Context, d *schema.Resour
 				"Failure at UpdateSyslogEventSubscription, unexpected response", ""))
 			return diags
 		}
+
+		//TODO REVIEW
+
 	}
 
 	return resourceEventSubscriptionSyslogRead(ctx, d, m)
 }
 
 func resourceEventSubscriptionSyslogDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-
-	resourceID := d.Id()
-	resourceMap := separateResourceID(resourceID)
-	vName, _ := resourceMap["name"]
-
-	queryParams1 := dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams{}
-	queryParams1.Name = vName
-	item, _, err := client.EventManagement.GetSyslogEventSubscriptions(&queryParams1)
-	if err != nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetEventSubscriptions", err,
-			"Failure at GetEventSubscriptions, unexpected response", ""))
-		return diags
-	}
-	if item == nil || len(*item) == 0 {
-		return diags
-	}
-
-	// REVIEW: Add getAllItems and search function to get missing params
-	queryParams2 := dnacentersdkgo.DeleteEventSubscriptionsQueryParams{}
-	if len(*item) > 0 {
-		itemCopy := *item
-		queryParams2.Subscriptions = responseInterfaceToString(itemCopy[0].SubscriptionID)
-	}
-	response1, restyResp1, err := client.EventManagement.DeleteEventSubscriptions(&queryParams2)
-	if err != nil || response1 == nil {
-		if restyResp1 != nil {
-			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
-			diags = append(diags, diagErrorWithAltAndResponse(
-				"Failure when executing DeleteEventSubscriptions", err, restyResp1.String(),
-				"Failure at DeleteEventSubscriptions, unexpected response", ""))
-			return diags
-		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeleteEventSubscriptions", err,
-			"Failure at DeleteEventSubscriptions, unexpected response", ""))
-		return diags
-	}
-
-	// d.SetId("") is automatically called assuming delete returns no errors, but
-	// it is added here for explicitness.
-	d.SetId("")
-
+	// NOTE: Unable to delete EventSubscriptionSyslog on Dna Center
+	//       Returning empty diags to delete it on Terraform
 	return diags
 }
 func expandRequestEventSubscriptionSyslogCreateSyslogEventSubscription(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementCreateSyslogEventSubscription {
@@ -971,4 +898,46 @@ func expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscriptionItemFilter
 		return nil
 	}
 	return &request
+}
+
+func searchEventManagementGetSyslogEventSubscriptions(m interface{}, queryParams dnacentersdkgo.GetSyslogEventSubscriptionsQueryParams, vID string) (*dnacentersdkgo.ResponseItemEventManagementGetSyslogEventSubscriptions, error) {
+	client := m.(*dnacentersdkgo.Client)
+	var err error
+	var foundItem *dnacentersdkgo.ResponseItemEventManagementGetSyslogEventSubscriptions
+	var ite *dnacentersdkgo.ResponseEventManagementGetSyslogEventSubscriptions
+	if vID != "" {
+		queryParams.Offset = 1
+		nResponse, _, err := client.EventManagement.GetSyslogEventSubscriptions(nil)
+		maxPageSize := len(*nResponse)
+		for len(*nResponse) > 0 {
+			time.Sleep(15 * time.Second)
+			for _, item := range *nResponse {
+				if vID == item.SubscriptionID {
+					foundItem = &item
+					return foundItem, err
+				}
+			}
+			queryParams.Limit = float64(maxPageSize)
+			queryParams.Offset += float64(maxPageSize)
+			nResponse, _, err = client.EventManagement.GetSyslogEventSubscriptions(&queryParams)
+		}
+		return nil, err
+	} else if queryParams.Name != "" {
+		ite, _, err = client.EventManagement.GetSyslogEventSubscriptions(&queryParams)
+		if err != nil || ite == nil {
+			return foundItem, err
+		}
+		itemsCopy := *ite
+		if itemsCopy == nil {
+			return foundItem, err
+		}
+		for _, item := range itemsCopy {
+			if item.Name == queryParams.Name {
+				foundItem = &item
+				return foundItem, err
+			}
+		}
+		return foundItem, err
+	}
+	return foundItem, err
 }

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -13,7 +13,7 @@ import (
 
 func dataSourceBusinessSdaVirtualNetworkSummary() *schema.Resource {
 	return &schema.Resource{
-		Description: `It performs read operation.
+		Description: `It performs read operation on SDA.
 
 - Get Virtual Network Summary
 `,
@@ -34,21 +34,47 @@ func dataSourceBusinessSdaVirtualNetworkSummary() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"fabric_count": &schema.Schema{
-							Description: `Fabric Count`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Virtual Network summary retrieved successfully from SDA Fabric
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"virtual_network_count": &schema.Schema{
+							Description: `Virtual Networks Count
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"virtual_network_summary": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"site_name_hierarchy": &schema.Schema{
+										Description: `Site Name Hierarchy
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"virtual_network_name": &schema.Schema{
+										Description: `Virtual Network Name
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -65,7 +91,7 @@ func dataSourceBusinessSdaVirtualNetworkSummaryRead(ctx context.Context, d *sche
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetVirtualNetworkSummary")
+		log.Printf("[DEBUG] Selected method: GetVirtualNetworkSummary")
 		queryParams1 := dnacentersdkgo.GetVirtualNetworkSummaryQueryParams{}
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy.(string)
@@ -84,13 +110,14 @@ func dataSourceBusinessSdaVirtualNetworkSummaryRead(ctx context.Context, d *sche
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenGetVirtualNetworkSummaryItem(response1.Response)
+		vItem1 := flattenSdaGetVirtualNetworkSummaryItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetVirtualNetworkSummary response",
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -98,15 +125,30 @@ func dataSourceBusinessSdaVirtualNetworkSummaryRead(ctx context.Context, d *sche
 	return diags
 }
 
-func flattenGetVirtualNetworkSummaryItem(item *dnacentersdkgo.ResponseSdaGetVirtualNetworkSummaryResponse) []map[string]interface{} {
+func flattenSdaGetVirtualNetworkSummaryItem(item *dnacentersdkgo.ResponseSdaGetVirtualNetworkSummary) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
+	respItem["virtual_network_count"] = item.VirtualNetworkCount
+	respItem["virtual_network_summary"] = flattenSdaGetVirtualNetworkSummaryItemVirtualNetworkSummary(item.VirtualNetworkSummary)
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
-	respItem["fabric_count"] = item.FabricCount
 	return []map[string]interface{}{
 		respItem,
 	}
+}
+
+func flattenSdaGetVirtualNetworkSummaryItemVirtualNetworkSummary(items *[]dnacentersdkgo.ResponseSdaGetVirtualNetworkSummaryVirtualNetworkSummary) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+		respItem["virtual_network_name"] = item.VirtualNetworkName
+		respItems = append(respItems, respItem)
+	}
+	return respItems
 }

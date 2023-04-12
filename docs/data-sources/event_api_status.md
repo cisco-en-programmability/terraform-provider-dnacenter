@@ -31,23 +31,20 @@ output "dnacenter_event_api_status_example" {
 
 ### Required
 
-- **execution_id** (String) executionId path parameter. Execution ID
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `execution_id` (String) executionId path parameter. Execution ID
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **api_status** (String)
-- **error_message** (String)
-- **status_message** (String)
+- `api_status` (String)
+- `error_message` (String)
+- `status_message` (String)
 
 

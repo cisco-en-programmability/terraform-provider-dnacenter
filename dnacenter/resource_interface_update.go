@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -116,24 +116,28 @@ Request body.
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Description: `Description`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"vlan_id": &schema.Schema{
 							Description: `Vlan Id`,
 							Type:        schema.TypeInt,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"voice_vlan_id": &schema.Schema{
 							Description: `Voice Vlan Id`,
 							Type:        schema.TypeInt,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -147,16 +151,12 @@ func resourceInterfaceUpdateCreate(ctx context.Context, d *schema.ResourceData, 
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vInterfaceUUID := resourceItem["interface_uuid"]
-	vDeploymentMode, okDeploymentMode := resourceItem["deployment_mode"]
 
 	vvInterfaceUUID := vInterfaceUUID.(string)
 	request1 := expandRequestInterfaceUpdateUpdateInterfaceDetails(ctx, "parameters.0", d)
 	queryParams1 := dnacentersdkgo.UpdateInterfaceDetailsQueryParams{}
-
-	if okDeploymentMode {
-		queryParams1.DeploymentMode = vDeploymentMode.(string)
-	}
 
 	response1, restyResp1, err := client.Devices.UpdateInterfaceDetails(vvInterfaceUUID, request1, &queryParams1)
 
@@ -168,9 +168,9 @@ func resourceInterfaceUpdateCreate(ctx context.Context, d *schema.ResourceData, 
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing UpdateInterfaceDetails", err,
-			"Failure at UpdateInterfaceDetails, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -185,6 +185,7 @@ func resourceInterfaceUpdateCreate(ctx context.Context, d *schema.ResourceData, 
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

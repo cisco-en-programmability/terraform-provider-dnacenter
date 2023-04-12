@@ -23,7 +23,8 @@ resource "dnacenter_wireless_provision_ssid_create_provision" "example" {
       traffic_type           = "string"
       web_auth_url           = "string"
     }
-    ssid_type = "string"
+    ssid_type         = "string"
+    persistbapioutput = "false"
   }
 }
 

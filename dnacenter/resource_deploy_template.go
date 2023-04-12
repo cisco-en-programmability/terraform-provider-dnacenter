@@ -2,30 +2,33 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
+	"time"
+
 	"fmt"
 	"reflect"
-	"strings"
-	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceDeployTemplate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Configuration Templates.
-	•	V2 API to deploy a template.
+
+- V2 API to deploy a template.
 `,
 
 		CreateContext: resourceDeployTemplateCreate,
 		ReadContext:   resourceDeployTemplateRead,
 		DeleteContext: resourceDeployTemplateDelete,
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -37,151 +40,11 @@ func resourceDeployTemplate() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"deployment_id": &schema.Schema{
-							Description: `UUID of deployment
-`,
+						"task_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
-						"deployment_name": &schema.Schema{
-							Description: `Name of deployment
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"devices": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"detailed_status_message": &schema.Schema{
-										Description: `Device detailed status message
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"device_id": &schema.Schema{
-										Description: `UUID of device
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"duration": &schema.Schema{
-										Description: `Total duration of deployment
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"end_time": &schema.Schema{
-										Description: `EndTime of deployment
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"identifier": &schema.Schema{
-										Description: `Identifier of device based on the target type
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"ip_address": &schema.Schema{
-										Description: `Device IPAddress
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"name": &schema.Schema{
-										Description: `Name of device
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"start_time": &schema.Schema{
-										Description: `StartTime of deployment
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"status": &schema.Schema{
-										Description: `Current status of device
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"target_type": &schema.Schema{
-										Description: `Target type of device
-`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-
-						"duration": &schema.Schema{
-							Description: `Total deployment duration
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"end_time": &schema.Schema{
-							Description: `Deployment end time
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"project_name": &schema.Schema{
-							Description: `Name of project
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"start_time": &schema.Schema{
-							Description: `Deployment start time
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"status": &schema.Schema{
-							Description: `Current status of deployment
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"status_message": &schema.Schema{
-							Description: `Status message of deployment
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"template_name": &schema.Schema{
-							Description: `Name of template deployed
-`,
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"template_version": &schema.Schema{
-							Description: `Version of template deployed
-`,
+						"url": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -196,104 +59,106 @@ func resourceDeployTemplate() *schema.Resource {
 				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
 						"force_push_template": &schema.Schema{
-
+							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							ForceNew:     true,
+							Computed:     true,
 						},
 						"is_composite": &schema.Schema{
 							Description: `Composite template flag
-			`,
-
+`,
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							ForceNew:     true,
+							Computed:     true,
 						},
 						"main_template_id": &schema.Schema{
 							Description: `Main template UUID of versioned template
-			`,
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"member_template_deployment_info": &schema.Schema{
 							Description: `memberTemplateDeploymentInfo
-			`,
-							Type:     schema.TypeList,
+`,
+							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
+							Computed: true,
 						},
 						"target_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"host_name": &schema.Schema{
 										Description: `Hostname of device is required if targetType is MANAGED_DEVICE_HOSTNAME
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"id": &schema.Schema{
 										Description: `UUID of target is required if targetType is MANAGED_DEVICE_UUID
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"params": &schema.Schema{
 										Description: `Template params/values to be provisioned
-			`,
-										Type:     schema.TypeMap,
+`,
+										Type:     schema.TypeString, //TEST,
 										Optional: true,
 										ForceNew: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
+										Computed: true,
 									},
 									"resource_params": &schema.Schema{
 										Description: `Resource params to be provisioned
-			`,
-										Type:     schema.TypeList,
+`,
+										Type:     schema.TypeString, //TEST,
 										Optional: true,
 										ForceNew: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
+										Computed: true,
 									},
 									"type": &schema.Schema{
 										Description: `Target type of device
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"versioned_template_id": &schema.Schema{
 										Description: `Versioned templateUUID to be provisioned
-			`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 								},
 							},
 						},
 						"template_id": &schema.Schema{
 							Description: `UUID of template to be provisioned
-			`,
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -304,27 +169,22 @@ func resourceDeployTemplate() *schema.Resource {
 
 func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-
 	var diags diag.Diagnostics
-	var deploymentId string
-	log.Printf("[DEBUG] Selected method 1: DeployTemplateV2")
-	request1 := expandRequestConfigurationTemplateDeployV2DeployTemplateV2(ctx, "parameters.0", d)
+
+	request1 := expandRequestDeployTemplateDeployTemplateV2(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.ConfigurationTemplates.DeployTemplateV2(request1)
-
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeployTemplateV2", err,
-			"Failure at DeployTemplateV2, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing ExportDeviceConfigurations", err))
 		return diags
 	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 	if response1.Response == nil {
 		diags = append(diags, diagError(
@@ -334,14 +194,8 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 	taskId := response1.Response.TaskID
 	log.Printf("[DEBUG] TASKID => %s", taskId)
 	if taskId != "" {
-
 		time.Sleep(5 * time.Second)
 		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-		if response2.Response == nil {
-			diags = append(diags, diagError(
-				"Failure when executing GetTaskByID", err))
-			return diags
-		}
 		if err != nil || response2 == nil {
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
@@ -351,111 +205,54 @@ func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m
 				"Failure at GetTaskByID, unexpected response", ""))
 			return diags
 		}
-		for response2.Response.EndTime == nil || response2.Response.EndTime != nil && *response2.Response.EndTime == 0 {
-			time.Sleep(5 * time.Second)
-			response2, restyResp2, err = client.Task.GetTaskByID(taskId)
-			if response2.Response == nil {
-				diags = append(diags, diagError(
-					"Failure when executing GetTaskByID", err))
-				return diags
-			}
-			if err != nil || response2 == nil {
-				if restyResp2 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-				}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			restyResp3, err := client.CustomCall.GetCustomCall(response2.Response.AdditionalStatusURL, nil)
+			if err != nil {
 				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetTaskByID", err,
-					"Failure at GetTaskByID, unexpected response", ""))
+					"Failure when executing GetCustomCall", err,
+					"Failure at GetCustomCall, unexpected response", ""))
 				return diags
 			}
-		}
-		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError || response2.Response != nil && !isValidUUID(getLastString(response2.Response.Progress)) {
-			if response2.Response.Progress != "Provisioning success for template basic" {
-				log.Printf("[DEBUG] Error reason %s", response2.Response.Progress)
-				errorMsg := response2.Response.Progress
-				err1 := errors.New(errorMsg)
-				diags = append(diags, diagError(
-					"Failure when executing DeployTemplateV2", err1))
-				return diags
+			var errorMsg string
+			if restyResp3 == nil {
+				errorMsg = response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
 			} else {
-				deploymentId = ""
+				errorMsg = restyResp3.String()
 			}
-		} else {
-			newProgress := strings.Trim(response2.Response.Progress, " ")
-			deploymentId = getLastString(newProgress)
-			response3, restyResp3, err := client.ConfigurationTemplates.StatusOfTemplateDeployment(deploymentId)
-			if err != nil || response3 == nil {
-				if restyResp3 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-				}
-				errorMsg := response2.Response.Progress
-				err1 := errors.New(errorMsg)
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing StatusOfTemplateDeployment", err1,
-					"Failure at StatusOfTemplateDeployment, unexpected response", ""))
-				return diags
-			}
-
-			if response3.Status == "FAILURE" {
-				errorMsg := response2.Response.Progress
-				err1 := errors.New(errorMsg)
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing StatusOfTemplateDeployment", err1,
-					"Failure at StatusOfTemplateDeployment, unexpected response", ""))
-				return diags
-			}
-		}
-	}
-
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-	resourceMap := make(map[string]string)
-	resourceMap["deployment_id"] = deploymentId
-	resourceMap["time_updated"] = getUnixTimeString()
-	d.SetId(joinResourceID(resourceMap))
-
-	return resourceDeployTemplateRead(ctx, d, m)
-}
-
-func resourceDeployTemplateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
-
-	var diags diag.Diagnostics
-	resourceID := d.Id()
-	resourceMap := separateResourceID(resourceID)
-	vDeploymentID := resourceMap["deployment_id"]
-	log.Printf("[DEBUG] Selected method 1: StatusOfTemplateDeployment")
-	if vDeploymentID != "" {
-		response1, restyResp1, err := client.ConfigurationTemplates.StatusOfTemplateDeployment(vDeploymentID)
-
-		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing StatusOfTemplateDeployment", err,
-				"Failure at StatusOfTemplateDeployment, unexpected response", ""))
-			return diags
-		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		vItem1 := flattenConfigurationTemplatesStatusOfTemplateDeploymentItem(response1)
-		if err := d.Set("item", vItem1); err != nil {
+			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when setting StatusOfTemplateDeployment response",
-				err))
+				"Failure when executing DeployTemplateV2", err1))
 			return diags
 		}
 	}
 
+	vItem1 := flattenConfigurationTemplatesDeployTemplateV2Item(response1.Response)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting DeployTemplateV2 response",
+			err))
+		return diags
+	}
+
+	d.SetId(getUnixTimeString())
+	return diags
+
+}
+func resourceDeployTemplateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	//client := m.(*dnacentersdkgo.Client)
+	var diags diag.Diagnostics
 	return diags
 }
 
 func resourceDeployTemplateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	//client := m.(*dnacentersdkgo.Client)
+
 	var diags diag.Diagnostics
 	return diags
 }
-func expandRequestConfigurationTemplateDeployV2DeployTemplateV2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2 {
+
+func expandRequestDeployTemplateDeployTemplateV2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2 {
 	request := dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".force_push_template")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".force_push_template")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".force_push_template")))) {
 		request.ForcePushTemplate = interfaceToBoolPtr(v)
@@ -467,56 +264,18 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2(ctx context.Cont
 		request.MainTemplateID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".member_template_deployment_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_template_deployment_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_template_deployment_info")))) {
-		request.MemberTemplateDeploymentInfo = expandRequestConfigurationTemplateDeployV2DeployTemplateV2MemberTemplateDeploymentInfoArray(ctx, key+".member_template_deployment_info", d)
+		request.MemberTemplateDeploymentInfo = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".target_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".target_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".target_info")))) {
-		request.TargetInfo = expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoArray(ctx, key+".target_info", d)
+		request.TargetInfo = expandRequestDeployTemplateDeployTemplateV2TargetInfoArray(ctx, key+".target_info", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
 		request.TemplateID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
-func expandRequestConfigurationTemplateDeployV2DeployTemplateV2MemberTemplateDeploymentInfoArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2MemberTemplateDeploymentInfo {
-	request := []dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2MemberTemplateDeploymentInfo{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestConfigurationTemplateDeployV2DeployTemplateV2MemberTemplateDeploymentInfo(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
-	return &request
-}
-
-func expandRequestConfigurationTemplateDeployV2DeployTemplateV2MemberTemplateDeploymentInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2MemberTemplateDeploymentInfo {
-	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2MemberTemplateDeploymentInfo
-	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
-	return &request
-}
-
-func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfo {
+func expandRequestDeployTemplateDeployTemplateV2TargetInfoArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfo {
 	request := []dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfo{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
@@ -528,19 +287,15 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoArray(c
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfo(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestDeployTemplateDeployTemplateV2TargetInfo(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
-func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfo {
+func expandRequestDeployTemplateDeployTemplateV2TargetInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfo {
 	request := dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfo{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".host_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".host_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".host_name")))) {
 		request.HostName = interfaceToString(v)
@@ -549,10 +304,10 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfo(ctx co
 		request.ID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".params")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".params")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".params")))) {
-		request.Params = expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoParams(ctx, key+".params", d)
+		request.Params = expandRequestDeployTemplateDeployTemplateV2TargetInfoParams(ctx, key+".params.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".resource_params")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".resource_params")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".resource_params")))) {
-		request.ResourceParams = expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoResourceParamsArray(ctx, key+".resource_params", d)
+		request.ResourceParams = expandRequestDeployTemplateDeployTemplateV2TargetInfoResourceParams(ctx, key+".resource_params.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
@@ -560,54 +315,18 @@ func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfo(ctx co
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".versioned_template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".versioned_template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".versioned_template_id")))) {
 		request.VersionedTemplateID = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
-func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoParams {
+func expandRequestDeployTemplateDeployTemplateV2TargetInfoParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoParams {
 	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoParams
 	request = d.Get(fixKeyAccess(key)).(map[string]interface{})
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 
-func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoResourceParamsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoResourceParams {
-	request := []dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoResourceParams{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoResourceParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
-	return &request
-}
-
-func expandRequestConfigurationTemplateDeployV2DeployTemplateV2TargetInfoResourceParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoResourceParams {
+func expandRequestDeployTemplateDeployTemplateV2TargetInfoResourceParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoResourceParams {
 	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateV2TargetInfoResourceParams
 	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

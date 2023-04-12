@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -61,14 +62,12 @@ func resourceNfvProfile() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"network_name": &schema.Schema{
 													Description: `name of custom network (eg: cust-1)
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"services_to_connect": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -84,14 +83,12 @@ func resourceNfvProfile() *schema.Resource {
 														},
 													},
 												},
-
 												"vlan_id": &schema.Schema{
 													Description: `Vlan id for the custom network(eg: 4000)
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"vlan_mode": &schema.Schema{
 													Description: `Vlan network mode (eg Access or Trunk)
 `,
@@ -101,7 +98,6 @@ func resourceNfvProfile() *schema.Resource {
 											},
 										},
 									},
-
 									"custom_template": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -114,14 +110,12 @@ func resourceNfvProfile() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"template": &schema.Schema{
 													Description: `Name of the template(eg NFVIS template)
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"template_type": &schema.Schema{
 													Description: `Name of the template to which template is associated (eg: Cloud DayN Templates)
 `,
@@ -131,29 +125,25 @@ func resourceNfvProfile() *schema.Resource {
 											},
 										},
 									},
-
 									"device_tag": &schema.Schema{
 										Description: `Device Tag name(eg: dev1)
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"device_type": &schema.Schema{
 										Description: `Name of the device used in creating nfv profile(eg: Cisco 5400 Enterprise Network Compute System)
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"direct_internet_access_for_firewall": &schema.Schema{
 										Description: `Direct internet access value should be boolean (eg: false)
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"service_provider_profile": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -163,26 +153,23 @@ func resourceNfvProfile() *schema.Resource {
 												"connect": &schema.Schema{
 													Description: `Connection of service provider and device value should be boolean (eg: true)
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"connect_default_gateway_on_wan": &schema.Schema{
 													Description: `Default gateway connect value as boolean (eg: true)
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"link_type": &schema.Schema{
 													Description: `Name of connection type(eg: GigabitEthernet) 
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"service_provider": &schema.Schema{
 													Description: `Name of the service provider(eg: Airtel)
 `,
@@ -192,7 +179,6 @@ func resourceNfvProfile() *schema.Resource {
 											},
 										},
 									},
-
 									"services": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -205,35 +191,30 @@ func resourceNfvProfile() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"image_name": &schema.Schema{
 													Description: `Service image name (eg: isrv-universalk9.16.12.01a.tar.gz)
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"profile_type": &schema.Schema{
 													Description: `Profile type of service (eg: ISRv-mini)
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"service_name": &schema.Schema{
 													Description: `Name of service (eg: router-1)
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"service_type": &schema.Schema{
 													Description: `Service type (eg: ISRV)
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"v_nic_mapping": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -243,11 +224,10 @@ func resourceNfvProfile() *schema.Resource {
 															"assign_ip_address_to_network": &schema.Schema{
 																Description: `Assign ip address to network (eg: true)
 `,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
-
 															"network_type": &schema.Schema{
 																Description: `Type of connection (eg:  wan, lan or internal)
 `,
@@ -260,7 +240,6 @@ func resourceNfvProfile() *schema.Resource {
 											},
 										},
 									},
-
 									"vlan_for_l2": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -273,14 +252,12 @@ func resourceNfvProfile() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"vlan_id": &schema.Schema{
 													Description: `Vlan id(eg.4018)
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"vlan_type": &schema.Schema{
 													Description: `Vlan type(eg. Access or Trunk)
 `,
@@ -293,14 +270,12 @@ func resourceNfvProfile() *schema.Resource {
 								},
 							},
 						},
-
 						"id": &schema.Schema{
 							Description: `Id of nfv created nfv profile
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"profile_name": &schema.Schema{
 							Description: `Name of the profile to create NFV profile( eg: Nfvis_profile)
 `,
@@ -312,15 +287,15 @@ func resourceNfvProfile() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"device": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -329,10 +304,12 @@ func resourceNfvProfile() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"custom_networks": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -341,16 +318,19 @@ func resourceNfvProfile() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"network_name": &schema.Schema{
 													Description: `Name of custom network (eg: cust-1)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"services_to_connect": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -359,6 +339,7 @@ func resourceNfvProfile() *schema.Resource {
 `,
 																Type:     schema.TypeString,
 																Optional: true,
+																Computed: true,
 															},
 														},
 													},
@@ -368,12 +349,14 @@ func resourceNfvProfile() *schema.Resource {
 `,
 													Type:     schema.TypeFloat,
 													Optional: true,
+													Computed: true,
 												},
 												"vlan_mode": &schema.Schema{
 													Description: `Network mode (eg Access or Trunk)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -381,26 +364,30 @@ func resourceNfvProfile() *schema.Resource {
 									"custom_template": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"device_type": &schema.Schema{
-													Description: `Type of the device. Allowed values are 'Cisco 5400 Enterprise Network Compute System', 'Cisco Integrated Services Virtual Router', 'Cisco Adaptive Security Virtual Appliance (ASAv)', 'NFVIS', 'ASAV'.
+													Description: `Type of the device(eg: Cisco 5400 Enterprise Network Compute System)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"template": &schema.Schema{
 													Description: `Name of the template(eg NFVIS template)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"template_type": &schema.Schema{
-													Description: `Name of the template type to which template is associated (eg: Cloud DayN Templates). Allowed values are 'Onboarding Template(s)' and 'Day-N-Template(s)'.
+													Description: `Name of the template type to which template is associated (eg: Cloud DayN Templates)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -410,54 +397,62 @@ func resourceNfvProfile() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"device_type": &schema.Schema{
-										Description: `Name of the device used in creating nfv profile. Allowed values are 'Cisco 5400 Enterprise Network Compute System', 'Cisco 5100 Enterprise Network Compute System'.
+										Description: `Name of the device used in creating nfv profile
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"direct_internet_access_for_firewall": &schema.Schema{
 										Description: `Direct internet access value should be boolean (eg: false or true)
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
+										Computed:     true,
 									},
 									"service_provider_profile": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"connect": &schema.Schema{
 													Description: `Connection of service provider and device value should be boolean (eg: true)
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
+													Computed:     true,
 												},
 												"connect_default_gateway_on_wan": &schema.Schema{
 													Description: `Connect default gateway connect value as boolean (eg: true)
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
+													Computed:     true,
 												},
 												"link_type": &schema.Schema{
 													Description: `Name of connection type(eg: GigabitEthernet) 
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"service_provider": &schema.Schema{
 													Description: `Name of the service provider(eg: Airtel)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -465,6 +460,7 @@ func resourceNfvProfile() *schema.Resource {
 									"services": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -473,34 +469,40 @@ func resourceNfvProfile() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"image_name": &schema.Schema{
 													Description: `Service image name (eg: isrv-universalk9.16.12.01a.tar.gz)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"profile_type": &schema.Schema{
 													Description: `Profile type of service (eg: ISRv-mini)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"service_name": &schema.Schema{
 													Description: `Name of the service (eg: Router-1)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"service_type": &schema.Schema{
 													Description: `Service type (eg: ISRV)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"v_nic_mapping": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -509,12 +511,14 @@ func resourceNfvProfile() *schema.Resource {
 `,
 																Type:     schema.TypeString,
 																Optional: true,
+																Computed: true,
 															},
 															"network_type": &schema.Schema{
 																Description: `Type of connection (eg:  wan, lan or internal)
 `,
 																Type:     schema.TypeString,
 																Optional: true,
+																Computed: true,
 															},
 														},
 													},
@@ -525,6 +529,7 @@ func resourceNfvProfile() *schema.Resource {
 									"vlan_for_l2": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -533,18 +538,21 @@ func resourceNfvProfile() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"vlan_id": &schema.Schema{
 													Description: `Vlan id (eg: 4018)
 `,
 													Type:     schema.TypeFloat,
 													Optional: true,
+													Computed: true,
 												},
 												"vlan_type": &schema.Schema{
 													Description: `Vlan type(eg: Access or Trunk)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -562,7 +570,8 @@ func resourceNfvProfile() *schema.Resource {
 							Description: `Name of the profile to create NFV profile
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Default:  "",
 						},
 					},
 				},
@@ -711,6 +720,42 @@ func resourceNfvProfileUpdate(ctx context.Context, d *schema.ResourceData, m int
 				"Failure at UpdateNfvProfile, unexpected response", ""))
 			return diags
 		}
+
+		executionId := response1.ExecutionID
+		log.Printf("[DEBUG] ExecutionID => %s", executionId)
+		if executionId != "" {
+			time.Sleep(5 * time.Second)
+			response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+			for response2.Status == "IN_PROGRESS" {
+				time.Sleep(10 * time.Second)
+				response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+				if err != nil || response2 == nil {
+					if restyResp2 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+					}
+					diags = append(diags, diagErrorWithAlt(
+						"Failure when executing GetExecutionByID", err,
+						"Failure at GetExecutionByID, unexpected response", ""))
+					return diags
+				}
+			}
+			if response2.Status == "FAILURE" {
+				log.Printf("[DEBUG] Error %s", response2.BapiError)
+				diags = append(diags, diagError(
+					"Failure when executing UpdateNfvProfile", err))
+				return diags
+			}
+		}
+
 	}
 
 	return resourceNfvProfileRead(ctx, d, m)
@@ -753,6 +798,41 @@ func resourceNfvProfileDelete(ctx context.Context, d *schema.ResourceData, m int
 		return diags
 	}
 
+	executionId := response1.ExecutionID
+	log.Printf("[DEBUG] ExecutionID => %s", executionId)
+	if executionId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetExecutionByID", err,
+				"Failure at GetExecutionByID, unexpected response", ""))
+			return diags
+		}
+		for response2.Status == "IN_PROGRESS" {
+			time.Sleep(10 * time.Second)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+		}
+		if response2.Status == "FAILURE" {
+			log.Printf("[DEBUG] Error %s", response2.BapiError)
+			diags = append(diags, diagError(
+				"Failure when executing DeleteNfvProfile", err))
+			return diags
+		}
+	}
+
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")
@@ -770,7 +850,6 @@ func expandRequestNfvProfileCreateNfvProfile(ctx context.Context, key string, d 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -794,7 +873,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceArray(ctx context.Context, key
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -827,7 +905,6 @@ func expandRequestNfvProfileCreateNfvProfileDevice(ctx context.Context, key stri
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -851,7 +928,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServiceProviderProfileArray(ct
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -872,7 +948,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServiceProviderProfile(ctx con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -896,7 +971,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServicesArray(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -923,7 +997,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServices(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -947,7 +1020,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServicesVNicMappingArray(ctx c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -962,7 +1034,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceServicesVNicMapping(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -986,7 +1057,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworksArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1010,7 +1080,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworks(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1034,7 +1103,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworksServicesToConnec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1046,7 +1114,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomNetworksServicesToConnec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1070,7 +1137,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceVLANForL2Array(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1088,7 +1154,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceVLANForL2(ctx context.Context,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1112,7 +1177,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomTemplateArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1130,7 +1194,6 @@ func expandRequestNfvProfileCreateNfvProfileDeviceCustomTemplate(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1142,7 +1205,6 @@ func expandRequestNfvProfileUpdateNfvProfile(ctx context.Context, key string, d 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1166,7 +1228,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceArray(ctx context.Context, key
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1196,7 +1257,6 @@ func expandRequestNfvProfileUpdateNfvProfileDevice(ctx context.Context, key stri
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1220,7 +1280,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceServicesArray(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1247,7 +1306,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceServices(ctx context.Context, 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1271,7 +1329,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceServicesVNicMappingArray(ctx c
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1286,7 +1343,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceServicesVNicMapping(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1310,7 +1366,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworksArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1334,7 +1389,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworks(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1358,7 +1412,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworksServicesToConnec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1370,7 +1423,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomNetworksServicesToConnec
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1394,7 +1446,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceVLANForL2Array(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1412,7 +1463,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceVLANForL2(ctx context.Context,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1436,7 +1486,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomTemplateArray(ctx contex
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -1454,7 +1503,6 @@ func expandRequestNfvProfileUpdateNfvProfileDeviceCustomTemplate(ctx context.Con
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 

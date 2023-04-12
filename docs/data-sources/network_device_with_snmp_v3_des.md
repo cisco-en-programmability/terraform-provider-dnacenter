@@ -37,32 +37,32 @@ output "dnacenter_network_device_with_snmp_v3_des_example" {
 
 ### Required
 
-- **site_id** (String) siteId path parameter.
+- `site_id` (String) siteId path parameter.
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **limit** (String) limit query parameter. Default value is 500
-- **offset** (String) offset query parameter. Row Number.  Default value is 1
-- **order** (String) order query parameter.
-- **sort_by** (String) sortBy query parameter. Sort By
+- `limit` (Number) limit query parameter. Default value is 500
+- `offset` (Number) offset query parameter. Row Number.  Default value is 1
+- `order` (String) order query parameter.
+- `sort_by` (String) sortBy query parameter. Sort By
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **family** (String)
-- **hostname** (String)
-- **id** (String)
-- **last_updated** (String)
-- **management_ip_address** (String)
-- **reachability_status** (String)
-- **type** (String)
-- **up_time** (String)
+- `family` (String)
+- `hostname` (String)
+- `id` (String)
+- `last_updated` (String)
+- `management_ip_address` (String)
+- `reachability_status` (String)
+- `type` (String)
+- `up_time` (String)
 
 

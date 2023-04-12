@@ -35,40 +35,40 @@ output "dnacenter_system_health_example" {
 
 ### Optional
 
-- **domain** (String) domain query parameter. Fetch system events with this domain. Possible values of domain are listed here : /dna/platform/app/consumer-portal/developer-toolkit/events
-- **id** (String) The ID of this resource.
-- **limit** (Number) limit query parameter.
-- **offset** (Number) offset query parameter.
-- **subdomain** (String) subdomain query parameter. Fetch system events with this subdomain. Possible values of subdomain are listed here : /dna/platform/app/consumer-portal/developer-toolkit/events
-- **summary** (Boolean) summary query parameter. Fetch the latest high severity event
+- `domain` (String) domain query parameter. Fetch system events with this domain. Possible values of domain are listed here : /dna/platform/app/consumer-portal/developer-toolkit/events
+- `limit` (Number) limit query parameter.
+- `offset` (Number) offset query parameter.
+- `subdomain` (String) subdomain query parameter. Fetch system events with this subdomain. Possible values of subdomain are listed here : /dna/platform/app/consumer-portal/developer-toolkit/events
+- `summary` (Boolean) summary query parameter. Fetch the latest high severity event
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **cimcaddress** (List of String)
-- **health_events** (List of Object) (see [below for nested schema](#nestedobjatt--item--health_events))
-- **host_name** (String)
-- **version** (String)
+- `cimcaddress` (List of String)
+- `health_events` (List of Object) (see [below for nested schema](#nestedobjatt--item--health_events))
+- `host_name` (String)
+- `version` (String)
 
 <a id="nestedobjatt--item--health_events"></a>
 ### Nested Schema for `item.health_events`
 
 Read-Only:
 
-- **description** (String)
-- **domain** (String)
-- **hostname** (String)
-- **instance** (String)
-- **severity** (String)
-- **state** (String)
-- **status** (String)
-- **sub_domain** (String)
-- **timestamp** (String)
+- `description` (String)
+- `domain` (String)
+- `hostname` (String)
+- `instance` (String)
+- `severity` (String)
+- `state` (String)
+- `status` (String)
+- `sub_domain` (String)
+- `timestamp` (String)
 
 

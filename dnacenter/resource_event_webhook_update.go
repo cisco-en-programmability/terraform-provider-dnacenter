@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -79,11 +79,13 @@ func resourceEventWebhookUpdate() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"headers": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -92,26 +94,30 @@ func resourceEventWebhookUpdate() *schema.Resource {
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 									"encrypt": &schema.Schema{
 										Description: `Encrypt`,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"name": &schema.Schema{
 										Description: `Name`,
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 									"value": &schema.Schema{
 										Description: `Value`,
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 								},
 							},
@@ -121,26 +127,30 @@ func resourceEventWebhookUpdate() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Description: `Name`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"trust_cert": &schema.Schema{
 							Description: `Trust Cert`,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							ForceNew:     true,
+							Computed:     true,
 						},
 						"url": &schema.Schema{
 							Description: `Url`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"webhook_id": &schema.Schema{
 							Description: `Required only for update webhook configuration
@@ -148,6 +158,7 @@ func resourceEventWebhookUpdate() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -172,9 +183,9 @@ func resourceEventWebhookUpdateCreate(ctx context.Context, d *schema.ResourceDat
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing UpdateWebhookDestination", err,
-			"Failure at UpdateWebhookDestination, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -189,6 +200,7 @@ func resourceEventWebhookUpdateCreate(ctx context.Context, d *schema.ResourceDat
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

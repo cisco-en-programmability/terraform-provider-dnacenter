@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -122,7 +122,7 @@ func dataSourceNetworkDeviceWithSNMPV3DesRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DES")
+		log.Printf("[DEBUG] Selected method: ReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DES")
 		vvSiteID := vSiteID.(string)
 		queryParams1 := dnacentersdkgo.ReturnsDevicesAddedToCiscoDnaCenterWithSNMPV3DESQueryParams{}
 
@@ -160,6 +160,7 @@ func dataSourceNetworkDeviceWithSNMPV3DesRead(ctx context.Context, d *schema.Res
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

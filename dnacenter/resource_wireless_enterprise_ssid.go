@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -50,95 +50,129 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"inherited_group_name": &schema.Schema{
 							Description: `Inherited Group Name
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"inherited_group_uuid": &schema.Schema{
 							Description: `Inherited Group Uuid
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"instance_uuid": &schema.Schema{
 							Description: `Instance Uuid
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"ssid_details": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"aaa_override": &schema.Schema{
+										Description: `Aaa Override
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"auth_server": &schema.Schema{
 										Description: `Auth Server
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
+									"client_rate_limit": &schema.Schema{
+										Description: `Client Rate Limit. (in bits per second)
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
+									},
+									"coverage_hole_detection_enable": &schema.Schema{
+										Description: `Coverage Hole Detection Enable
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"enable_broadcast_ssi_d": &schema.Schema{
 										Description: `Enable Broadcast SSID
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"enable_fast_lane": &schema.Schema{
 										Description: `Enable Fast Lane
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"enable_mac_filtering": &schema.Schema{
 										Description: `Enable MAC Filtering
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"fast_transition": &schema.Schema{
 										Description: `Fast Transition
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"is_enabled": &schema.Schema{
 										Description: `Is Enabled
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"is_fabric": &schema.Schema{
 										Description: `Is Fabric
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"multi_psk_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
 
+												"passphrase": &schema.Schema{
+													Description: `Passphrase`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+												"passphrase_type": &schema.Schema{
+													Description: `Passphrase Type
+`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"priority": &schema.Schema{
+													Description: `Priority
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
+									},
 									"name": &schema.Schema{
 										Description: `SSID Name
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"nas_options": &schema.Schema{
 										Description: `Nas Options`,
 										Type:        schema.TypeList,
@@ -147,35 +181,35 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"passphrase": &schema.Schema{
 										Description: `Passphrase
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
+									"protected_management_frame": &schema.Schema{
+										Description: `Protected Management Frame`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
 									"radio_policy": &schema.Schema{
 										Description: `Radio Policy
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"security_level": &schema.Schema{
 										Description: `Security Level
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"traffic_type": &schema.Schema{
 										Description: `Traffic Type
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"wlan_type": &schema.Schema{
 										Description: `Wlan Type
 `,
@@ -185,7 +219,6 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 								},
 							},
 						},
-
 						"version": &schema.Schema{
 							Description: `Version
 `,
@@ -197,9 +230,8 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -207,96 +239,110 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Description: `Basic Service Set Client Idle Timeout`,
 							Type:        schema.TypeInt,
 							Optional:    true,
+							Computed:    true,
 						},
 						"client_exclusion_timeout": &schema.Schema{
 							Description: `Client Exclusion Timeout
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"enable_basic_service_set_max_idle": &schema.Schema{
 							Description: `Enable Basic Service Set Max Idle 
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"enable_broadcast_ssi_d": &schema.Schema{
 							Description: `Enable Broadcase SSID 
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"enable_client_exclusion": &schema.Schema{
 							Description: `Enable Client Exclusion
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"enable_directed_multicast_service": &schema.Schema{
 							Description: `Enable Directed Multicast Service`,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"enable_fast_lane": &schema.Schema{
 							Description: `Enable FastLane
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"enable_mac_filtering": &schema.Schema{
 							Description: `Enable MAC Filtering
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"enable_neighbor_list": &schema.Schema{
 							Description: `Enable Neighbor List`,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"enable_session_time_out": &schema.Schema{
 							Description: `Enable Session Timeout
 `,
-
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"fast_transition": &schema.Schema{
 							Description: `Fast Transition
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"mfp_client_protection": &schema.Schema{
 							Description: `Management Frame Protection Client`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Description: `SSID NAME
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"nas_options": &schema.Schema{
 							Description: `Nas Options`,
 							Type:        schema.TypeList,
 							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -306,24 +352,28 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"radio_policy": &schema.Schema{
 							Description: `Radio Policy Enum (enum: Triple band operation (2.4GHz, 5GHz and 6GHz), Triple band operation with band select, 5GHz only, 2.4GHz only, 6GHz only)
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"security_level": &schema.Schema{
 							Description: `Security Level
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"session_time_out": &schema.Schema{
 							Description: `Session Time Out
 `,
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"ssid_name": &schema.Schema{
 							Description: `ssidName path parameter. Enter the SSID name to be deleted
@@ -336,6 +386,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},

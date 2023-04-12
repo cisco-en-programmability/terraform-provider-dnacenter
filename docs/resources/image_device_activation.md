@@ -20,20 +20,20 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_image_device_activation" "example" {
   provider = dnacenter
   parameters {
-
-    activate_lower_image_version = "false"
-    device_upgrade_mode          = "string"
-    device_uuid                  = "string"
-    distribute_if_needed         = "false"
-    image_uuid_list              = ["string"]
-    smu_image_uuid_list          = ["string"]
+    client_type       = "string"
+    client_url        = "string"
+    schedule_validate = false
+    payload {
+      activate_lower_image_version = "false"
+      device_upgrade_mode          = "string"
+      device_uuid                  = "string"
+      distribute_if_needed         = "false"
+      image_uuid_list              = ["string"]
+      smu_image_uuid_list          = ["string"]
+    }
   }
 }
 
@@ -47,41 +47,38 @@ output "dnacenter_image_device_activation_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **client_type** (String) Client-Type header parameter. Client-type (Optional)
-- **client_url** (String) Client-Url header parameter. Client-url (Optional)
+- `client_type` (String) Client-Type header parameter. Client-type (Optional)
+- `client_url` (String) Client-Url header parameter. Client-url (Optional)
 
 Optional:
 
-- **payload** (Block List) Array of RequestSoftwareImageManagementSwimTriggerSoftwareImageActivation (see [below for nested schema](#nestedblock--parameters--payload))
-- **schedule_validate** (Boolean) scheduleValidate query parameter. scheduleValidate, validates data before schedule (Optional)
+- `payload` (Block List) Array of RequestSoftwareImageManagementSwimTriggerSoftwareImageActivation (see [below for nested schema](#nestedblock--parameters--payload))
+- `schedule_validate` (Boolean) scheduleValidate query parameter. scheduleValidate, validates data before schedule (Optional)
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
 
 Optional:
 
-- **activate_lower_image_version** (String)
-- **device_upgrade_mode** (String)
-- **device_uuid** (String)
-- **distribute_if_needed** (String)
-- **image_uuid_list** (List of String)
-- **smu_image_uuid_list** (List of String)
+- `activate_lower_image_version` (String)
+- `device_upgrade_mode` (String)
+- `device_uuid` (String)
+- `distribute_if_needed` (String)
+- `image_uuid_list` (List of String)
+- `smu_image_uuid_list` (List of String)
 
 
 
@@ -90,7 +87,7 @@ Optional:
 
 Read-Only:
 
-- **task_id** (String)
-- **url** (String)
+- `task_id` (String)
+- `url` (String)
 
 

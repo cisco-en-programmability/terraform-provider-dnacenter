@@ -24,13 +24,11 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_itsm_integration_events_retry" "example" {
-  provider   = dnacenter
-  parameters = ["string"]
+  provider = dnacenter
+  parameters {
+    payload = ["string"]
+  }
 }
 
 output "dnacenter_itsm_integration_events_retry_example" {
@@ -43,23 +41,20 @@ output "dnacenter_itsm_integration_events_retry_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **payload** (List of String) Array of RequestItsmRetryIntegrationEvents
+- `payload` (List of String) Array of RequestItsmRetryIntegrationEvents
 
 
 <a id="nestedatt--item"></a>
@@ -67,8 +62,8 @@ Optional:
 
 Read-Only:
 
-- **execution_id** (String)
-- **execution_status_url** (String)
-- **message** (String)
+- `execution_id` (String)
+- `execution_status_url` (String)
+- `message` (String)
 
 

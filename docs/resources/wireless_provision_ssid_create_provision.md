@@ -22,10 +22,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_wireless_provision_ssid_create_provision" "example" {
   provider = dnacenter
   parameters {
@@ -50,7 +46,8 @@ resource "dnacenter_wireless_provision_ssid_create_provision" "example" {
       traffic_type           = "string"
       web_auth_url           = "string"
     }
-    ssid_type = "string"
+    ssid_type         = "string"
+    persistbapioutput = "false"
   }
 }
 
@@ -64,35 +61,33 @@ output "dnacenter_wireless_provision_ssid_create_provision_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **enable_fabric** (String) Enable SSID for Fabric
-- **flex_connect** (Block List) (see [below for nested schema](#nestedblock--parameters--flex_connect))
-- **managed_aplocations** (List of String) Managed AP Locations (Enter entire Site(s) hierarchy)
-- **ssid_details** (Block List) (see [below for nested schema](#nestedblock--parameters--ssid_details))
-- **ssid_type** (String) SSID Type
+- `enable_fabric` (String) Enable SSID for Fabric
+- `flex_connect` (Block List) (see [below for nested schema](#nestedblock--parameters--flex_connect))
+- `managed_aplocations` (List of String) Managed AP Locations (Enter entire Site(s) hierarchy)
+- `persistbapioutput` (String) Device Name
+- `ssid_details` (Block List) (see [below for nested schema](#nestedblock--parameters--ssid_details))
+- `ssid_type` (String) SSID Type
 
 <a id="nestedblock--parameters--flex_connect"></a>
 ### Nested Schema for `parameters.flex_connect`
 
 Optional:
 
-- **enable_flex_connect** (String) Enable Flex Connect
-- **local_to_vlan** (Number) Local To Vlan (range is 1 to 4094)
+- `enable_flex_connect` (String) Enable Flex Connect
+- `local_to_vlan` (Number) Local To Vlan (range is 1 to 4094)
 
 
 <a id="nestedblock--parameters--ssid_details"></a>
@@ -100,16 +95,16 @@ Optional:
 
 Optional:
 
-- **enable_broadcast_ssi_d** (String) Enable Broadcast SSID
-- **enable_fast_lane** (String) Enable Fast Lane
-- **enable_mac_filtering** (String) Enable MAC Filtering
-- **fast_transition** (String) Fast Transition
-- **name** (String) SSID Name
-- **passphrase** (String) Pass Phrase ( Only applicable for SSID with PERSONAL auth type )
-- **radio_policy** (String) Radio Policy. Allowed values are 'Dual band operation (2.4GHz and 5GHz)', 'Dual band operation with band select', '5GHz only', '2.4GHz only'.
-- **security_level** (String) Security Level(For guest SSID OPEN/WEB_AUTH, For Enterprise SSID ENTERPRISE/PERSONAL/OPEN)
-- **traffic_type** (String) Traffic Type
-- **web_auth_url** (String) Web Auth URL
+- `enable_broadcast_ssi_d` (String) Enable Broadcast SSID
+- `enable_fast_lane` (String) Enable Fast Lane
+- `enable_mac_filtering` (String) Enable MAC Filtering
+- `fast_transition` (String) Fast Transition
+- `name` (String) SSID Name
+- `passphrase` (String) Pass Phrase ( Only applicable for SSID with PERSONAL auth type )
+- `radio_policy` (String) Radio Policy
+- `security_level` (String) Security Level(For guest SSID OPEN/WEB_AUTH, For Enterprise SSID ENTERPRISE/PERSONAL/OPEN)
+- `traffic_type` (String) Traffic Type
+- `web_auth_url` (String) Web Auth URL
 
 
 
@@ -118,8 +113,8 @@ Optional:
 
 Read-Only:
 
-- **execution_id** (String)
-- **execution_status_url** (String)
-- **message** (String)
+- `execution_id` (String)
+- `execution_status_url` (String)
+- `message` (String)
 
 

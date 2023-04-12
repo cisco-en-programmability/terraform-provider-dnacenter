@@ -18,10 +18,6 @@ It manages create, read and delete operations on Wireless.
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_wireless_dynamic_interface" "example" {
   provider = dnacenter
   parameters {
@@ -41,27 +37,24 @@ output "dnacenter_wireless_dynamic_interface_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **interface_name** (String) dynamic-interface name
+- `interface_name` (String) dynamic-interface name
 
 Optional:
 
-- **vlan_id** (Number) Vlan Id
+- `vlan_id` (Number) Vlan Id
 
 
 <a id="nestedatt--item"></a>
@@ -69,8 +62,8 @@ Optional:
 
 Read-Only:
 
-- **interface_name** (String)
-- **vlan_id** (Number)
+- `interface_name` (String)
+- `vlan_id` (Number)
 
 ## Import
 

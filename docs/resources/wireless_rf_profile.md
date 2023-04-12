@@ -18,10 +18,6 @@ It manages create, read and delete operations on Wireless.
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_wireless_rf_profile" "example" {
   provider = dnacenter
   parameters {
@@ -81,48 +77,48 @@ output "dnacenter_wireless_rf_profile_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **rf_profile_name** (String) rfProfileName path parameter. RF profile name to be deleted(required) *non-custom RF profile cannot be deleted
+- `rf_profile_name` (String) rfProfileName path parameter. RF profile name to be deleted(required) *non-custom RF profile cannot be deleted
 
 Optional:
 
-- **channel_width** (String) Channel Width
-- **default_rf_profile** (String) is Default Rf Profile
-- **enable_brown_field** (String) Enable Brown Field
-- **enable_custom** (String) Enable Custom
-- **enable_radio_type_a** (String) Enable Radio Type A
-- **enable_radio_type_b** (String) Enable Radio Type B
-- **enable_radio_type_c** (String) Enable Radio Type C (6GHz)
-- **name** (String) RF Profile Name
-- **radio_type_a_properties** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--radio_type_a_properties))
-- **radio_type_b_properties** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--radio_type_b_properties))
-- **radio_type_c_properties** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--radio_type_c_properties))
+- `channel_width` (String) Channel Width
+- `default_rf_profile` (String) is Default Rf Profile
+- `enable_brown_field` (String) Enable Brown Field
+- `enable_custom` (String) Enable Custom
+- `enable_radio_type_a` (String) Enable Radio Type A
+- `enable_radio_type_b` (String) Enable Radio Type B
+- `enable_radio_type_c` (String) Enable Radio Type C (6GHz)
+- `name` (String) RF Profile Name
+- `radio_type_a_properties` (Block List) (see [below for nested schema](#nestedblock--parameters--radio_type_a_properties))
+- `radio_type_b_properties` (Block List) (see [below for nested schema](#nestedblock--parameters--radio_type_b_properties))
+- `radio_type_c_properties` (Block List) (see [below for nested schema](#nestedblock--parameters--radio_type_c_properties))
 
 <a id="nestedblock--parameters--radio_type_a_properties"></a>
 ### Nested Schema for `parameters.radio_type_a_properties`
 
 Optional:
 
-- **data_rates** (String) Data Rates
-- **mandatory_data_rates** (String) Mandatory Data Rates
-- **max_power_level** (Number) Max Power Level
-- **min_power_level** (Number) Rx Sop Threshold
-- **parent_profile** (String) Parent Profile
-- **power_threshold_v1** (Number) Power Threshold V1
-- **radio_channels** (String) Radio Channels
-- **rx_sop_threshold** (String) Rx Sop Threshold
+- `data_rates` (String) Data Rates
+- `mandatory_data_rates` (String) Mandatory Data Rates
+- `max_power_level` (Number) Max Power Level
+- `min_power_level` (Number) Rx Sop Threshold
+- `parent_profile` (String) Parent Profile
+- `power_threshold_v1` (Number) Power Threshold V1
+- `radio_channels` (String) Radio Channels
+- `rx_sop_threshold` (String) Rx Sop Threshold
 
 
 <a id="nestedblock--parameters--radio_type_b_properties"></a>
@@ -130,14 +126,14 @@ Optional:
 
 Optional:
 
-- **data_rates** (String) Data Rates
-- **mandatory_data_rates** (String) Mandatory Data Rates
-- **max_power_level** (Number) Max Power Level
-- **min_power_level** (Number) Min Power Level
-- **parent_profile** (String) Parent Profile
-- **power_threshold_v1** (Number) Power Threshold V1
-- **radio_channels** (String) Radio Channels
-- **rx_sop_threshold** (String) Rx Sop Threshold
+- `data_rates` (String) Data Rates
+- `mandatory_data_rates` (String) Mandatory Data Rates
+- `max_power_level` (Number) Max Power Level
+- `min_power_level` (Number) Min Power Level
+- `parent_profile` (String) Parent Profile
+- `power_threshold_v1` (Number) Power Threshold V1
+- `radio_channels` (String) Radio Channels
+- `rx_sop_threshold` (String) Rx Sop Threshold
 
 
 <a id="nestedblock--parameters--radio_type_c_properties"></a>
@@ -145,52 +141,52 @@ Optional:
 
 Optional:
 
-- **data_rates** (String) Data Rates
-- **mandatory_data_rates** (String) Mandatory Data Rates
-- **max_power_level** (Number) Max Power Level
-- **min_power_level** (Number) Min Power Level
-- **parent_profile** (String) Parent Profile
-- **power_threshold_v1** (Number) Power Threshold V1
-- **radio_channels** (String) Radio Channels
-- **rx_sop_threshold** (String) Rx Sop Threshold
+- `data_rates` (String) Data Rates
+- `mandatory_data_rates` (String) Mandatory Data Rates
+- `max_power_level` (Number) Max Power Level
+- `min_power_level` (Number) Min Power Level
+- `parent_profile` (String) Parent Profile
+- `power_threshold_v1` (Number) Power Threshold V1
+- `radio_channels` (String) Radio Channels
+- `rx_sop_threshold` (String) Rx Sop Threshold
 
 
 
-<a id="nestedatt--items"></a>
-### Nested Schema for `items`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
-- **a_radio_channels** (String)
-- **b_radio_channels** (String)
-- **c_radio_channels** (String)
-- **channel_width** (String)
-- **data_rates_a** (String)
-- **data_rates_b** (String)
-- **data_rates_c** (String)
-- **default_rf_profile** (String)
-- **enable_a_radio_type** (String)
-- **enable_b_radio_type** (String)
-- **enable_brown_field** (String)
-- **enable_c_radio_type** (String)
-- **enable_custom** (String)
-- **mandatory_data_rates_a** (String)
-- **mandatory_data_rates_b** (String)
-- **mandatory_data_rates_c** (String)
-- **max_power_level_a** (String)
-- **max_power_level_b** (String)
-- **min_power_level_a** (String)
-- **min_power_level_b** (String)
-- **min_power_level_c** (String)
-- **name** (String)
-- **parent_profile_a** (String)
-- **parent_profile_b** (String)
-- **power_threshold_v1_a** (Number)
-- **power_threshold_v1_b** (Number)
-- **power_threshold_v1_c** (Number)
-- **rx_sop_threshold_a** (String)
-- **rx_sop_threshold_b** (String)
-- **rx_sop_threshold_c** (String)
+- `a_radio_channels` (String)
+- `b_radio_channels` (String)
+- `c_radio_channels` (String)
+- `channel_width` (String)
+- `data_rates_a` (String)
+- `data_rates_b` (String)
+- `data_rates_c` (String)
+- `default_rf_profile` (String)
+- `enable_a_radio_type` (String)
+- `enable_b_radio_type` (String)
+- `enable_brown_field` (String)
+- `enable_c_radio_type` (String)
+- `enable_custom` (String)
+- `mandatory_data_rates_a` (String)
+- `mandatory_data_rates_b` (String)
+- `mandatory_data_rates_c` (String)
+- `max_power_level_a` (String)
+- `max_power_level_b` (String)
+- `min_power_level_a` (String)
+- `min_power_level_b` (String)
+- `min_power_level_c` (String)
+- `name` (String)
+- `parent_profile_a` (String)
+- `parent_profile_b` (String)
+- `power_threshold_v1_a` (Number)
+- `power_threshold_v1_b` (Number)
+- `power_threshold_v1_c` (Number)
+- `rx_sop_threshold_a` (String)
+- `rx_sop_threshold_b` (String)
+- `rx_sop_threshold_c` (String)
 
 ## Import
 

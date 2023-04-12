@@ -34,27 +34,27 @@ output "dnacenter_network_device_interface_poe_example" {
 
 ### Required
 
-- **device_uuid** (String) deviceUuid path parameter. uuid of the device
+- `device_uuid` (String) deviceUuid path parameter. uuid of the device
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **interface_name_list** (String) interfaceNameList query parameter. comma seperated interface names
+- `interface_name_list` (String) interfaceNameList query parameter. comma seperated interface names
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **admin_status** (String)
-- **allocated_power** (String)
-- **interface_name** (String)
-- **max_port_power** (String)
-- **oper_status** (String)
-- **port_power_drawn** (String)
+- `admin_status` (String)
+- `allocated_power` (String)
+- `interface_name` (String)
+- `max_port_power` (String)
+- `oper_status` (String)
+- `port_power_drawn` (String)
 
 

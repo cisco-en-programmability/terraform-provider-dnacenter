@@ -35,36 +35,36 @@ output "dnacenter_site_membership_example" {
 
 ### Required
 
-- **site_id** (String) siteId path parameter. Site id to retrieve device associated with the site.
+- `site_id` (String) siteId path parameter. Site id to retrieve device associated with the site.
 
 ### Optional
 
-- **device_family** (String) deviceFamily query parameter. Device family name
-- **id** (String) The ID of this resource.
-- **limit** (String) limit query parameter. Number of sites to be retrieved
-- **offset** (String) offset query parameter. offset/starting row
-- **serial_number** (String) serialNumber query parameter. Device serial number
+- `device_family` (String) deviceFamily query parameter. Device family name
+- `limit` (Number) limit query parameter. Number of sites to be retrieved
+- `offset` (Number) offset query parameter. offset/starting row
+- `serial_number` (String) serialNumber query parameter. Device serial number
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **device** (List of Object) (see [below for nested schema](#nestedobjatt--item--device))
-- **site** (List of Object) (see [below for nested schema](#nestedobjatt--item--site))
+- `device` (List of Object) (see [below for nested schema](#nestedobjatt--item--device))
+- `site` (List of Object) (see [below for nested schema](#nestedobjatt--item--site))
 
 <a id="nestedobjatt--item--device"></a>
 ### Nested Schema for `item.device`
 
 Read-Only:
 
-- **response** (List of String)
-- **site_id** (String)
-- **version** (String)
+- `response` (List of String)
+- `site_id` (String)
+- `version` (String)
 
 
 <a id="nestedobjatt--item--site"></a>
@@ -72,7 +72,7 @@ Read-Only:
 
 Read-Only:
 
-- **response** (List of String)
-- **version** (String)
+- `response` (List of String)
+- `version` (String)
 
 

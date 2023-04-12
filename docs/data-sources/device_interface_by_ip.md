@@ -31,50 +31,47 @@ output "dnacenter_device_interface_by_ip_example" {
 
 ### Required
 
-- **ip_address** (String) ipAddress path parameter. IP address of the interface
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `ip_address` (String) ipAddress path parameter. IP address of the interface
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **admin_status** (String)
-- **class_name** (String)
-- **description** (String)
-- **device_id** (String)
-- **duplex** (String)
-- **id** (String)
-- **if_index** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **interface_type** (String)
-- **ipv4_address** (String)
-- **ipv4_mask** (String)
-- **isis_support** (String)
-- **last_updated** (String)
-- **mac_address** (String)
-- **mapped_physical_interface_id** (String)
-- **mapped_physical_interface_name** (String)
-- **media_type** (String)
-- **native_vlan_id** (String)
-- **ospf_support** (String)
-- **pid** (String)
-- **port_mode** (String)
-- **port_name** (String)
-- **port_type** (String)
-- **serial_no** (String)
-- **series** (String)
-- **speed** (String)
-- **status** (String)
-- **vlan_id** (String)
-- **voice_vlan** (String)
+- `admin_status` (String)
+- `class_name` (String)
+- `description` (String)
+- `device_id` (String)
+- `duplex` (String)
+- `id` (String)
+- `if_index` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `interface_type` (String)
+- `ipv4_address` (String)
+- `ipv4_mask` (String)
+- `isis_support` (String)
+- `last_updated` (String)
+- `mac_address` (String)
+- `mapped_physical_interface_id` (String)
+- `mapped_physical_interface_name` (String)
+- `media_type` (String)
+- `native_vlan_id` (String)
+- `ospf_support` (String)
+- `pid` (String)
+- `port_mode` (String)
+- `port_name` (String)
+- `port_type` (String)
+- `serial_no` (String)
+- `series` (String)
+- `speed` (String)
+- `status` (String)
+- `vlan_id` (String)
+- `voice_vlan` (String)
 
 

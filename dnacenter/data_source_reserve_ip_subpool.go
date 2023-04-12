@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -71,13 +71,13 @@ func dataSourceReserveIPSubpool() *schema.Resource {
 
 									"client_options": &schema.Schema{
 										Description: `Client Options`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
 									"configure_external_dhcp": &schema.Schema{
 										Description: `Configure External Dhcp`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -168,7 +168,7 @@ func dataSourceReserveIPSubpool() *schema.Resource {
 
 									"ipv6": &schema.Schema{
 										Description: `Ipv6`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -181,7 +181,7 @@ func dataSourceReserveIPSubpool() *schema.Resource {
 
 									"overlapping": &schema.Schema{
 										Description: `Overlapping`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -200,20 +200,20 @@ func dataSourceReserveIPSubpool() *schema.Resource {
 
 									"shared": &schema.Schema{
 										Description: `Shared`,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"total_ip_address_count": &schema.Schema{
 										Description: `Total Ip Address Count`,
-										Type:        schema.TypeFloat,
+										Type:        schema.TypeInt,
 										Computed:    true,
 									},
 
 									"used_ip_address_count": &schema.Schema{
 										Description: `Used Ip Address Count`,
-										Type:        schema.TypeFloat,
+										Type:        schema.TypeInt,
 										Computed:    true,
 									},
 
@@ -260,7 +260,7 @@ func dataSourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetReserveIPSubpool")
+		log.Printf("[DEBUG] Selected method: GetReserveIPSubpool")
 		queryParams1 := dnacentersdkgo.GetReserveIPSubpoolQueryParams{}
 
 		if okSiteID {
@@ -294,6 +294,7 @@ func dataSourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -318,23 +319,6 @@ func flattenNetworkSettingsGetReserveIPSubpoolItems(items *[]dnacentersdkgo.Resp
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-func flattenNetworkSettingsGetReserveIPSubpoolItem(item *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-
-	respItem := make(map[string]interface{})
-	respItem["id"] = item.ID
-	respItem["group_name"] = item.GroupName
-	respItem["ip_pools"] = flattenNetworkSettingsGetReserveIPSubpoolItemsIPPools(item.IPPools)
-	respItem["site_id"] = item.SiteID
-	respItem["site_hierarchy"] = item.SiteHierarchy
-	respItem["type"] = item.Type
-	respItem["group_owner"] = item.GroupOwner
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPools(items *[]dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponseIPPools) []map[string]interface{} {
@@ -367,37 +351,6 @@ func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPools(items *[]dnacentersdk
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-func flattenNetworkSettingsGetReserveIPSubpoolItemIPPools(item *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponseIPPools) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-
-	respItem := make(map[string]interface{})
-	respItem["ip_pool_name"] = item.IPPoolName
-	respItem["dhcp_server_ips"] = flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsDhcpServerIPs(item.DhcpServerIPs)
-	respItem["gateways"] = item.Gateways
-	respItem["create_time"] = item.CreateTime
-	respItem["last_update_time"] = item.LastUpdateTime
-	respItem["total_ip_address_count"] = item.TotalIPAddressCount
-	respItem["used_ip_address_count"] = item.UsedIPAddressCount
-	respItem["parent_uuid"] = item.ParentUUID
-	respItem["owner"] = item.Owner
-	respItem["shared"] = boolPtrToString(item.Shared)
-	respItem["overlapping"] = boolPtrToString(item.Overlapping)
-	respItem["configure_external_dhcp"] = boolPtrToString(item.ConfigureExternalDhcp)
-	respItem["used_percentage"] = item.UsedPercentage
-	respItem["client_options"] = flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsClientOptions(item.ClientOptions)
-	respItem["group_uuid"] = item.GroupUUID
-	respItem["dns_server_ips"] = flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsDNSServerIPs(item.DNSServerIPs)
-	respItem["context"] = flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsContext(item.Context)
-	respItem["ipv6"] = boolPtrToString(item.IPv6)
-	respItem["id"] = item.ID
-	respItem["ip_pool_cidr"] = item.IPPoolCidr
-
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsDhcpServerIPs(items *[]dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponseIPPoolsDhcpServerIPs) []interface{} {

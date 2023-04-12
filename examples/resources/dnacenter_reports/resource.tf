@@ -1,59 +1,6 @@
 
 resource "dnacenter_reports" "example" {
   provider = dnacenter
-  item {
-
-
-
-
-    executions {
-
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-    view {
-
-
-      field_groups {
-
-
-
-        fields {
-
-
-
-        }
-      }
-      filters {
-
-
-
-
-
-      }
-      format {
-
-
-
-
-      }
-
-
-
-    }
-
-
-  }
   parameters {
 
     deliveries = ["string"]

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -104,7 +104,7 @@ func dataSourceServiceProvider() *schema.Resource {
 
 						"version": &schema.Schema{
 							Description: `Version`,
-							Type:        schema.TypeInt,
+							Type:        schema.TypeString,
 							Computed:    true,
 						},
 					},
@@ -121,7 +121,7 @@ func dataSourceServiceProviderRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetServiceProviderDetails")
+		log.Printf("[DEBUG] Selected method: GetServiceProviderDetails")
 
 		response1, restyResp1, err := client.NetworkSettings.GetServiceProviderDetails()
 
@@ -144,6 +144,7 @@ func dataSourceServiceProviderRead(ctx context.Context, d *schema.ResourceData, 
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -171,28 +172,6 @@ func flattenNetworkSettingsGetServiceProviderDetailsItems(items *[]dnacentersdkg
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenNetworkSettingsGetServiceProviderDetailsItem(item *dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetailsResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-
-	respItem := make(map[string]interface{})
-	respItem["instance_type"] = item.InstanceType
-	respItem["instance_uuid"] = item.InstanceUUID
-	respItem["namespace"] = item.Namespace
-	respItem["type"] = item.Type
-	respItem["key"] = item.Key
-	respItem["version"] = item.Version
-	respItem["value"] = flattenNetworkSettingsGetServiceProviderDetailsItemsValue(item.Value)
-	respItem["group_uuid"] = item.GroupUUID
-	respItem["inherited_group_uuid"] = item.InheritedGroupUUID
-	respItem["inherited_group_name"] = item.InheritedGroupName
-
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenNetworkSettingsGetServiceProviderDetailsItemsValue(items *[]dnacentersdkgo.ResponseNetworkSettingsGetServiceProviderDetailsResponseValue) []map[string]interface{} {

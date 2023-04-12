@@ -44,19 +44,29 @@ output "dnacenter_network_device_count_example" {
 
 ### Optional
 
-- **device_id** (String) deviceId path parameter. Device ID
-- **id** (String) The ID of this resource.
+- `device_id` (String) deviceId path parameter. Device ID
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
+- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
 
-<a id="nestedatt--item"></a>
-### Nested Schema for `item`
+<a id="nestedatt--item_id"></a>
+### Nested Schema for `item_id`
 
 Read-Only:
 
-- **response** (Number)
-- **version** (String)
+- `response` (Number)
+- `version` (String)
+
+
+<a id="nestedatt--item_name"></a>
+### Nested Schema for `item_name`
+
+Read-Only:
+
+- `response` (Number)
+- `version` (String)
 
 

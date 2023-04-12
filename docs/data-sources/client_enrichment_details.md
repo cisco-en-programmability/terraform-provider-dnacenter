@@ -35,98 +35,95 @@ output "dnacenter_client_enrichment_details_example" {
 
 ### Required
 
-- **entity_type** (String) entity_type header parameter. Client enrichment details can be fetched based on either User ID or Client MAC address. This parameter value must either be network_user_id/mac_address
-- **entity_value** (String) entity_value header parameter. Contains the actual value for the entity type that has been defined
-- **issue_category** (String) issueCategory header parameter. The category of the DNA event based on which the underlying issues need to be fetched
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `entity_type` (String) entity_type header parameter. Client enrichment details can be fetched based on either User ID or Client MAC address. This parameter value must either be network_user_id/mac_address
+- `entity_value` (String) entity_value header parameter. Contains the actual value for the entity type that has been defined
+- `issue_category` (String) issueCategory header parameter. The category of the DNA event based on which the underlying issues need to be fetched
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **connected_device** (List of Object) (see [below for nested schema](#nestedobjatt--items--connected_device))
-- **issue_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--issue_details))
-- **user_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--user_details))
+- `connected_device` (List of Object) (see [below for nested schema](#nestedobjatt--items--connected_device))
+- `issue_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--issue_details))
+- `user_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--user_details))
 
 <a id="nestedobjatt--items--connected_device"></a>
 ### Nested Schema for `items.connected_device`
 
 Read-Only:
 
-- **device_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--connected_device--device_details))
+- `device_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--connected_device--device_details))
 
 <a id="nestedobjatt--items--connected_device--device_details"></a>
 ### Nested Schema for `items.connected_device.device_details`
 
 Read-Only:
 
-- **ap_manager_interface_ip** (String)
-- **associated_wlc_ip** (String)
-- **boot_date_time** (String)
-- **cisco360view** (String)
-- **collection_interval** (String)
-- **collection_status** (String)
-- **error_code** (String)
-- **error_description** (String)
-- **family** (String)
-- **hostname** (String)
-- **id** (String)
-- **instance_uuid** (String)
-- **interface_count** (String)
-- **inventory_status_detail** (String)
-- **last_update_time** (Number)
-- **last_updated** (String)
-- **line_card_count** (String)
-- **line_card_id** (String)
-- **location** (String)
-- **location_name** (String)
-- **mac_address** (String)
-- **management_ip_address** (String)
-- **memory_size** (String)
-- **neighbor_topology** (List of Object) (see [below for nested schema](#nestedobjatt--items--connected_device--device_details--neighbor_topology))
-- **platform_id** (String)
-- **reachability_failure_reason** (String)
-- **reachability_status** (String)
-- **role** (String)
-- **role_source** (String)
-- **serial_number** (String)
-- **series** (String)
-- **snmp_contact** (String)
-- **snmp_location** (String)
-- **software_version** (String)
-- **tag_count** (String)
-- **tunnel_udp_port** (String)
-- **type** (String)
-- **up_time** (String)
-- **waas_device_mode** (String)
+- `ap_manager_interface_ip` (String)
+- `associated_wlc_ip` (String)
+- `boot_date_time` (String)
+- `cisco360view` (String)
+- `collection_interval` (String)
+- `collection_status` (String)
+- `error_code` (String)
+- `error_description` (String)
+- `family` (String)
+- `hostname` (String)
+- `id` (String)
+- `instance_uuid` (String)
+- `interface_count` (String)
+- `inventory_status_detail` (String)
+- `last_update_time` (Number)
+- `last_updated` (String)
+- `line_card_count` (String)
+- `line_card_id` (String)
+- `location` (String)
+- `location_name` (String)
+- `mac_address` (String)
+- `management_ip_address` (String)
+- `memory_size` (String)
+- `neighbor_topology` (List of Object) (see [below for nested schema](#nestedobjatt--items--connected_device--device_details--neighbor_topology))
+- `platform_id` (String)
+- `reachability_failure_reason` (String)
+- `reachability_status` (String)
+- `role` (String)
+- `role_source` (String)
+- `serial_number` (String)
+- `series` (String)
+- `snmp_contact` (String)
+- `snmp_location` (String)
+- `software_version` (String)
+- `tag_count` (String)
+- `tunnel_udp_port` (String)
+- `type` (String)
+- `up_time` (String)
+- `waas_device_mode` (String)
 
 <a id="nestedobjatt--items--connected_device--device_details--neighbor_topology"></a>
 ### Nested Schema for `items.connected_device.device_details.waas_device_mode`
 
 Read-Only:
 
-- **links** (List of Object) (see [below for nested schema](#nestedobjatt--items--connected_device--device_details--waas_device_mode--links))
-- **nodes** (List of Object) (see [below for nested schema](#nestedobjatt--items--connected_device--device_details--waas_device_mode--nodes))
+- `links` (List of Object) (see [below for nested schema](#nestedobjatt--items--connected_device--device_details--waas_device_mode--links))
+- `nodes` (List of Object) (see [below for nested schema](#nestedobjatt--items--connected_device--device_details--waas_device_mode--nodes))
 
 <a id="nestedobjatt--items--connected_device--device_details--waas_device_mode--links"></a>
 ### Nested Schema for `items.connected_device.device_details.waas_device_mode.links`
 
 Read-Only:
 
-- **id** (String)
-- **label** (List of String)
-- **link_status** (String)
-- **port_utilization** (String)
-- **source** (String)
-- **target** (String)
+- `id` (String)
+- `label` (List of String)
+- `link_status` (String)
+- `port_utilization` (String)
+- `source` (String)
+- `target` (String)
 
 
 <a id="nestedobjatt--items--connected_device--device_details--waas_device_mode--nodes"></a>
@@ -134,23 +131,23 @@ Read-Only:
 
 Read-Only:
 
-- **clients** (Number)
-- **count** (String)
-- **description** (String)
-- **device_type** (String)
-- **fabric_group** (String)
-- **family** (String)
-- **health_score** (String)
-- **id** (String)
-- **ip** (String)
-- **level** (Number)
-- **name** (String)
-- **node_type** (String)
-- **platform_id** (String)
-- **radio_frequency** (String)
-- **role** (String)
-- **software_version** (String)
-- **user_id** (String)
+- `clients` (Number)
+- `count` (String)
+- `description` (String)
+- `device_type` (String)
+- `fabric_group` (String)
+- `family` (String)
+- `health_score` (String)
+- `id` (String)
+- `ip` (String)
+- `level` (Number)
+- `name` (String)
+- `node_type` (String)
+- `platform_id` (String)
+- `radio_frequency` (String)
+- `role` (String)
+- `software_version` (String)
+- `user_id` (String)
 
 
 
@@ -161,53 +158,53 @@ Read-Only:
 
 Read-Only:
 
-- **issue** (List of Object) (see [below for nested schema](#nestedobjatt--items--issue_details--issue))
+- `issue` (List of Object) (see [below for nested schema](#nestedobjatt--items--issue_details--issue))
 
 <a id="nestedobjatt--items--issue_details--issue"></a>
 ### Nested Schema for `items.issue_details.issue`
 
 Read-Only:
 
-- **impacted_hosts** (List of Object) (see [below for nested schema](#nestedobjatt--items--issue_details--issue--impacted_hosts))
-- **issue_category** (String)
-- **issue_description** (String)
-- **issue_entity** (String)
-- **issue_entity_value** (String)
-- **issue_id** (String)
-- **issue_name** (String)
-- **issue_priority** (String)
-- **issue_severity** (String)
-- **issue_source** (String)
-- **issue_summary** (String)
-- **issue_timestamp** (Number)
-- **suggested_actions** (List of Object) (see [below for nested schema](#nestedobjatt--items--issue_details--issue--suggested_actions))
+- `impacted_hosts` (List of Object) (see [below for nested schema](#nestedobjatt--items--issue_details--issue--impacted_hosts))
+- `issue_category` (String)
+- `issue_description` (String)
+- `issue_entity` (String)
+- `issue_entity_value` (String)
+- `issue_id` (String)
+- `issue_name` (String)
+- `issue_priority` (String)
+- `issue_severity` (String)
+- `issue_source` (String)
+- `issue_summary` (String)
+- `issue_timestamp` (Number)
+- `suggested_actions` (List of Object) (see [below for nested schema](#nestedobjatt--items--issue_details--issue--suggested_actions))
 
 <a id="nestedobjatt--items--issue_details--issue--impacted_hosts"></a>
 ### Nested Schema for `items.issue_details.issue.suggested_actions`
 
 Read-Only:
 
-- **connected_interface** (String)
-- **failed_attempts** (Number)
-- **host_name** (String)
-- **host_os** (String)
-- **host_type** (String)
-- **location** (List of Object) (see [below for nested schema](#nestedobjatt--items--issue_details--issue--suggested_actions--location))
-- **mac_address** (String)
-- **ssid** (String)
-- **timestamp** (Number)
+- `connected_interface` (String)
+- `failed_attempts` (Number)
+- `host_name` (String)
+- `host_os` (String)
+- `host_type` (String)
+- `location` (List of Object) (see [below for nested schema](#nestedobjatt--items--issue_details--issue--suggested_actions--location))
+- `mac_address` (String)
+- `ssid` (String)
+- `timestamp` (Number)
 
 <a id="nestedobjatt--items--issue_details--issue--suggested_actions--location"></a>
 ### Nested Schema for `items.issue_details.issue.suggested_actions.location`
 
 Read-Only:
 
-- **aps_impacted** (List of String)
-- **area** (String)
-- **building** (String)
-- **floor** (String)
-- **site_id** (String)
-- **site_type** (String)
+- `aps_impacted` (List of String)
+- `area` (String)
+- `building` (String)
+- `floor` (String)
+- `site_id` (String)
+- `site_type` (String)
 
 
 
@@ -216,8 +213,8 @@ Read-Only:
 
 Read-Only:
 
-- **message** (String)
-- **steps** (List of String)
+- `message` (String)
+- `steps` (List of String)
 
 
 
@@ -227,38 +224,38 @@ Read-Only:
 
 Read-Only:
 
-- **auth_type** (String)
-- **client_connection** (String)
-- **connected_device** (List of String)
-- **connection_status** (String)
-- **data_rate** (String)
-- **health_score** (List of Object) (see [below for nested schema](#nestedobjatt--items--user_details--health_score))
-- **host_ip_v4** (String)
-- **host_ip_v6** (List of String)
-- **host_mac** (String)
-- **host_name** (String)
-- **host_os** (String)
-- **host_type** (String)
-- **host_version** (String)
-- **id** (String)
-- **issue_count** (Number)
-- **last_updated** (Number)
-- **location** (String)
-- **port** (String)
-- **rssi** (String)
-- **snr** (String)
-- **ssid** (String)
-- **sub_type** (String)
-- **user_id** (String)
-- **vlan_id** (String)
+- `auth_type` (String)
+- `client_connection` (String)
+- `connected_device` (List of String)
+- `connection_status` (String)
+- `data_rate` (String)
+- `health_score` (List of Object) (see [below for nested schema](#nestedobjatt--items--user_details--health_score))
+- `host_ip_v4` (String)
+- `host_ip_v6` (List of String)
+- `host_mac` (String)
+- `host_name` (String)
+- `host_os` (String)
+- `host_type` (String)
+- `host_version` (String)
+- `id` (String)
+- `issue_count` (Number)
+- `last_updated` (Number)
+- `location` (String)
+- `port` (String)
+- `rssi` (String)
+- `snr` (String)
+- `ssid` (String)
+- `sub_type` (String)
+- `user_id` (String)
+- `vlan_id` (String)
 
 <a id="nestedobjatt--items--user_details--health_score"></a>
 ### Nested Schema for `items.user_details.health_score`
 
 Read-Only:
 
-- **health_type** (String)
-- **reason** (String)
-- **score** (Number)
+- `health_type` (String)
+- `reason` (String)
+- `score` (Number)
 
 

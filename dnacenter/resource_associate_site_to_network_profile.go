@@ -2,12 +2,14 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,7 +18,7 @@ import (
 // resourceAction
 func resourceAssociateSiteToNetworkProfile() *schema.Resource {
 	return &schema.Resource{
-		Description: `It performs create operation on Site Design.
+		Description: `It performs create operation on Sites.
 
 - Associate Site to a Network Profile
 `,
@@ -82,7 +84,9 @@ func resourceAssociateSiteToNetworkProfileCreate(ctx context.Context, d *schema.
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vNetworkProfileID := resourceItem["network_profile_id"]
+
 	vSiteID := resourceItem["site_id"]
 
 	vvNetworkProfileID := vNetworkProfileID.(string)
@@ -94,9 +98,8 @@ func resourceAssociateSiteToNetworkProfileCreate(ctx context.Context, d *schema.
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing Associate", err,
-			"Failure at Associate, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing Associate", err))
 		return diags
 	}
 
@@ -143,13 +146,14 @@ func resourceAssociateSiteToNetworkProfileCreate(ctx context.Context, d *schema.
 		}
 	}
 
-	vItem1 := flattenSiteDesignAssociateItem(response1.Response)
+	vItem1 := flattenSitesAssociateItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
 			"Failure when setting Associate response",
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 
@@ -167,7 +171,7 @@ func resourceAssociateSiteToNetworkProfileDelete(ctx context.Context, d *schema.
 	return diags
 }
 
-func flattenSiteDesignAssociateItem(item *dnacentersdkgo.ResponseSiteDesignAssociateResponse) []map[string]interface{} {
+func flattenSitesAssociateItem(item *dnacentersdkgo.ResponseSiteDesignAssociateResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

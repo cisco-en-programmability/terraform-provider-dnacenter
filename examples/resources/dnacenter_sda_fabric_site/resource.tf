@@ -4,6 +4,7 @@ resource "dnacenter_sda_fabric_site" "example" {
   parameters {
 
     fabric_name         = "string"
+    fabric_type         = "string"
     site_name_hierarchy = "string"
   }
 }

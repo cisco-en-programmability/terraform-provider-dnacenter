@@ -39,25 +39,25 @@ output "dnacenter_client_proximity_example" {
 
 ### Required
 
-- **username** (String) username query parameter. Wireless client username for which proximity information is required
+- `username` (String) username query parameter. Wireless client username for which proximity information is required
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **number_days** (Number) number_days query parameter. Number of days to track proximity until current date. Defaults and maximum up to 14 days.
-- **time_resolution** (Number) time_resolution query parameter. Time interval (in minutes) to measure proximity. Defaults to 15 minutes with a minimum 5 minutes.
+- `number_days` (Number) number_days query parameter. Number of days to track proximity until current date. Defaults and maximum up to 14 days.
+- `time_resolution` (Number) time_resolution query parameter. Time interval (in minutes) to measure proximity. Defaults to 15 minutes with a minimum 5 minutes.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **execution_id** (String)
-- **execution_status_url** (String)
-- **message** (String)
+- `execution_id` (String)
+- `execution_status_url` (String)
+- `message` (String)
 
 

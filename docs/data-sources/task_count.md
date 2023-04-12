@@ -40,28 +40,28 @@ output "dnacenter_task_count_example" {
 
 ### Optional
 
-- **data** (String) data query parameter. Fetch tasks that contains this data
-- **end_time** (String) endTime query parameter. This is the epoch end time upto which audit records need to be fetched
-- **error_code** (String) errorCode query parameter. Fetch tasks that have this error code
-- **failure_reason** (String) failureReason query parameter. Fetch tasks that contains this failure reason
-- **id** (String) The ID of this resource.
-- **is_error** (String) isError query parameter. Fetch tasks ended as success or failure. Valid values: true, false
-- **parent_id** (String) parentId query parameter. Fetch tasks that have this parent Id
-- **progress** (String) progress query parameter. Fetch tasks that contains this progress
-- **service_type** (String) serviceType query parameter. Fetch tasks with this service type
-- **start_time** (String) startTime query parameter. This is the epoch start time from which tasks need to be fetched
-- **username** (String) username query parameter. Fetch tasks with this username
+- `data` (String) data query parameter. Fetch tasks that contains this data
+- `end_time` (String) endTime query parameter. This is the epoch end time upto which audit records need to be fetched
+- `error_code` (String) errorCode query parameter. Fetch tasks that have this error code
+- `failure_reason` (String) failureReason query parameter. Fetch tasks that contains this failure reason
+- `is_error` (String) isError query parameter. Fetch tasks ended as success or failure. Valid values: true, false
+- `parent_id` (String) parentId query parameter. Fetch tasks that have this parent Id
+- `progress` (String) progress query parameter. Fetch tasks that contains this progress
+- `service_type` (String) serviceType query parameter. Fetch tasks with this service type
+- `start_time` (String) startTime query parameter. This is the epoch start time from which tasks need to be fetched
+- `username` (String) username query parameter. Fetch tasks with this username
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
-- **version** (String)
+- `response` (Number)
+- `version` (String)
 
 

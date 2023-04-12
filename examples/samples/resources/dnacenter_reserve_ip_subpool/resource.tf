@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.0.19-beta"
+      version = "1.1.0-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -17,7 +17,7 @@ resource "dnacenter_reserve_ip_subpool" "example" {
   parameters {
     ipv4_prefix      = "false"
     ipv4_global_pool = "10.43.192.0"
-    
+
     //id                 = "string"
     # ipv4_dhcp_servers  = []
     # ipv4_dns_servers   = []

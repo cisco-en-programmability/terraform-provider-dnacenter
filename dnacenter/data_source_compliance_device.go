@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -35,13 +35,13 @@ func dataSourceComplianceDevice() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of records to be retrieved
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. offset/starting row
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 
@@ -98,7 +98,7 @@ func dataSourceComplianceDeviceRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetComplianceStatus")
+		log.Printf("[DEBUG] Selected method: GetComplianceStatus")
 		queryParams1 := dnacentersdkgo.GetComplianceStatusQueryParams{}
 
 		if okComplianceStatus {
@@ -108,10 +108,10 @@ func dataSourceComplianceDeviceRead(ctx context.Context, d *schema.ResourceData,
 			queryParams1.DeviceUUID = vDeviceUUID.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 
 		response1, restyResp1, err := client.Compliance.GetComplianceStatus(&queryParams1)
@@ -135,6 +135,7 @@ func dataSourceComplianceDeviceRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

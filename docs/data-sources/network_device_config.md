@@ -41,21 +41,21 @@ output "dnacenter_network_device_config_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **network_device_id** (String) networkDeviceId path parameter.
+- `network_device_id` (String) networkDeviceId path parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (String)
-- **version** (String)
+- `response` (String)
+- `version` (String)
 
 
 <a id="nestedatt--items"></a>
@@ -63,16 +63,16 @@ Read-Only:
 
 Read-Only:
 
-- **attribute_info** (String)
-- **cdp_neighbors** (String)
-- **health_monitor** (String)
-- **id** (String)
-- **intf_description** (String)
-- **inventory** (String)
-- **ip_intf_brief** (String)
-- **mac_address_table** (String)
-- **running_config** (String)
-- **snmp** (String)
-- **version** (String)
+- `attribute_info` (String)
+- `cdp_neighbors` (String)
+- `health_monitor` (String)
+- `id` (String)
+- `intf_description` (String)
+- `inventory` (String)
+- `ip_intf_brief` (String)
+- `mac_address_table` (String)
+- `running_config` (String)
+- `snmp` (String)
+- `version` (String)
 
 

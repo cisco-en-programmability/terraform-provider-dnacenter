@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -33,42 +33,52 @@ func dataSourceSdaFabricEdgeDevice() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Edge device info retrieved successfully in sda fabric
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"device_management_ip_address": &schema.Schema{
-							Description: `Device Management Ip Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Management Ip Address of the Device which is provisioned successfully
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
-						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"device_name": &schema.Schema{
+							Description: `Device Name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"fabric_site_name_hierarchy": &schema.Schema{
+							Description: `Fabric Site Name Hierarchy
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"roles": &schema.Schema{
-							Description: `Roles`,
-							Type:        schema.TypeList,
-							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
+							Description: `Assigned roles
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
-						"site_hierarchy": &schema.Schema{
-							Description: `Site Hierarchy`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"site_name_hierarchy": &schema.Schema{
+							Description: `Site Name Hierarchy
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -85,7 +95,7 @@ func dataSourceSdaFabricEdgeDeviceRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEdgeDeviceFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetEdgeDeviceFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetEdgeDeviceFromSdaFabricQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress.(string)
@@ -111,6 +121,7 @@ func dataSourceSdaFabricEdgeDeviceRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -123,12 +134,13 @@ func flattenSdaGetEdgeDeviceFromSdaFabricItem(item *dnacentersdkgo.ResponseSdaGe
 		return nil
 	}
 	respItem := make(map[string]interface{})
+	respItem["device_management_ip_address"] = item.DeviceManagementIPAddress
+	respItem["device_name"] = item.DeviceName
+	respItem["roles"] = item.Roles
+	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+	respItem["fabric_site_name_hierarchy"] = item.FabricSiteNameHierarchy
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
-	respItem["name"] = item.Name
-	respItem["roles"] = item.Roles
-	respItem["device_management_ip_address"] = item.DeviceManagementIPAddress
-	respItem["site_hierarchy"] = item.SiteHierarchy
 	return []map[string]interface{}{
 		respItem,
 	}

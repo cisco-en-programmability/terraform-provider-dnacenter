@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -81,19 +81,19 @@ func resourceLanAutomationDeleteCreate(ctx context.Context, d *schema.ResourceDa
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vID := resourceItem["id"]
 
 	vvID := vID.(string)
 
-	response1, restyResp1, err := client.LanAutomation.LanAutomation(vvID)
+	response1, restyResp1, err := client.LanAutomation.LanAutomationStop(vvID)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing LanAutomation", err,
-			"Failure at LanAutomation, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing LanAutomationStop", err))
 		return diags
 	}
 
@@ -101,13 +101,14 @@ func resourceLanAutomationDeleteCreate(ctx context.Context, d *schema.ResourceDa
 
 	//Analizar verificacion.
 
-	vItem1 := flattenLanAutomationLanAutomationItem(response1.Response)
+	vItem1 := flattenLanAutomationLanAutomationStopItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
-			"Failure when setting LanAutomation response",
+			"Failure when setting LanAutomationStop response",
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 
@@ -125,7 +126,7 @@ func resourceLanAutomationDeleteDelete(ctx context.Context, d *schema.ResourceDa
 	return diags
 }
 
-func flattenLanAutomationLanAutomationItem(item *dnacentersdkgo.ResponseLanAutomationLanAutomationResponse) []map[string]interface{} {
+func flattenLanAutomationLanAutomationStopItem(item *dnacentersdkgo.ResponseLanAutomationLanAutomationStopResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

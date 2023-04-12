@@ -3,10 +3,11 @@ package dnacenter
 import (
 	"context"
 	"reflect"
+	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -32,10 +33,133 @@ func resourceNfvProvisionDetail() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"begin_step": &schema.Schema{
+							Description: `Begin Step`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"duration": &schema.Schema{
+							Description: `Duration`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"end_time": &schema.Schema{
+							Description: `End Time`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"start_time": &schema.Schema{
+							Description: `Start Time`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"status": &schema.Schema{
+							Description: `Status`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"status_message": &schema.Schema{
+							Description: `Status Message`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"task_nodes": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"cli_template_user_message_dto": &schema.Schema{
+										Description: `Cli Template User Message D T O`,
+										Type:        schema.TypeString, //TEST,
+										Computed:    true,
+									},
+									"duration": &schema.Schema{
+										Description: `Duration`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"end_time": &schema.Schema{
+										Description: `End Time`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"error_payload": &schema.Schema{
+										Description: `Error Payload`,
+										Type:        schema.TypeString, //TEST,
+										Computed:    true,
+									},
+									"name": &schema.Schema{
+										Description: `Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"next_task": &schema.Schema{
+										Description: `Next Task`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"parent_task": &schema.Schema{
+										Description: `Parent Task`,
+										Type:        schema.TypeString, //TEST,
+										Computed:    true,
+									},
+									"payload": &schema.Schema{
+										Description: `Payload`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"provisioned_names": &schema.Schema{
+										Description: `Provisioned Names`,
+										Type:        schema.TypeString, //TEST,
+										Computed:    true,
+									},
+									"start_time": &schema.Schema{
+										Description: `Start Time`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"status": &schema.Schema{
+										Description: `Status`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"status_message": &schema.Schema{
+										Description: `Status Message`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"step_ran": &schema.Schema{
+										Description: `Step Ran`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"target": &schema.Schema{
+										Description: `Target`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+								},
+							},
+						},
+						"topology": &schema.Schema{
+							Description: `Topology`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -43,6 +167,7 @@ func resourceNfvProvisionDetail() *schema.Resource {
 							Description: `Device Ip`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -52,15 +177,26 @@ func resourceNfvProvisionDetail() *schema.Resource {
 }
 
 func resourceNfvProvisionDetailCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	//client := m.(*dnacentersdkgo.Client)
+	client := m.(*dnacentersdkgo.Client)
 
-	//var diags diag.Diagnostics
+	var diags diag.Diagnostics
 
-	//resourceItem := *getResourceItem(d.Get("parameters"))
+	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNfvProvisionDetailNfvProvisioningDetail(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	/*resp1, restyResp1, err := client.SiteDesign.NfvProvisioningDetail(request1)
+	vDeviceIP := resourceItem["device_ip"]
+	vvDeviceIP := interfaceToString(vDeviceIP)
+	queryParamImport := dnacentersdkgo.GetDeviceDetailsByIPQueryParams{}
+	queryParamImport.DeviceIP = vvDeviceIP
+	item2, _, err := client.SiteDesign.GetDeviceDetailsByIP(&queryParamImport)
+	if err == nil && item2 != nil {
+		resourceMap := make(map[string]string)
+		resourceMap["device_ip"] = vvDeviceIP
+		d.SetId(joinResourceID(resourceMap))
+		return resourceNfvProvisionDetailRead(ctx, d, m)
+	}
+	resp1, restyResp1, err := client.SiteDesign.NfvProvisioningDetail(request1, nil)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
@@ -70,8 +206,54 @@ func resourceNfvProvisionDetailCreate(ctx context.Context, d *schema.ResourceDat
 		diags = append(diags, diagError(
 			"Failure when executing NfvProvisioningDetail", err))
 		return diags
-	}*/
+	}
+	executionId := resp1.ExecutionID
+	log.Printf("[DEBUG] ExecutionID => %s", executionId)
+	if executionId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetExecutionByID", err,
+				"Failure at GetExecutionByID, unexpected response", ""))
+			return diags
+		}
+		for response2.Status == "IN_PROGRESS" {
+			time.Sleep(10 * time.Second)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+		}
+		if response2.Status == "FAILURE" {
+			log.Printf("[DEBUG] Error %s", response2.BapiError)
+			diags = append(diags, diagError(
+				"Failure when executing NfvProvisioningDetail", err))
+			return diags
+		}
+	}
+	queryParamValidate := dnacentersdkgo.GetDeviceDetailsByIPQueryParams{}
+	queryParamValidate.DeviceIP = vvDeviceIP
+	item3, _, err := client.SiteDesign.GetDeviceDetailsByIP(&queryParamValidate)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing NfvProvisioningDetail", err,
+			"Failure at NfvProvisioningDetail, unexpected response", ""))
+		return diags
+	}
+
 	resourceMap := make(map[string]string)
+	resourceMap["device_ip"] = vvDeviceIP
+
 	d.SetId(joinResourceID(resourceMap))
 	return resourceNfvProvisionDetailRead(ctx, d, m)
 }
@@ -83,24 +265,19 @@ func resourceNfvProvisionDetailRead(ctx context.Context, d *schema.ResourceData,
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+
 	vDeviceIP := resourceMap["device_ip"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceDetailsByIP")
+		log.Printf("[DEBUG] Selected method: GetDeviceDetailsByIP")
 		queryParams1 := dnacentersdkgo.GetDeviceDetailsByIPQueryParams{}
 
 		queryParams1.DeviceIP = vDeviceIP
 
-		response1, restyResp1, _ := client.SiteDesign.GetDeviceDetailsByIP(&queryParams1)
+		response1, restyResp1, err := client.SiteDesign.GetDeviceDetailsByIP(&queryParams1)
 
-		/*		if err != nil {
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetDeviceDetailsByIP", err,
-					"Failure at GetDeviceDetailsByIP, unexpected response", ""))
-				return diags
-			}*/
-		if response1 == nil {
+		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -117,6 +294,7 @@ func resourceNfvProvisionDetailRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		return diags
 
 	}
@@ -141,6 +319,5 @@ func expandRequestNfvProvisionDetailNfvProvisioningDetail(ctx context.Context, k
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }

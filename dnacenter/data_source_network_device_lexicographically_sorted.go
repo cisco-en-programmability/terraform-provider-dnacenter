@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -55,7 +55,7 @@ device management IP addresses that match fully or partially the provided attrib
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 			"mac_address": &schema.Schema{
@@ -70,7 +70,7 @@ device management IP addresses that match fully or partially the provided attrib
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 			"platform_id": &schema.Schema{
@@ -188,7 +188,7 @@ func dataSourceNetworkDeviceLexicographicallySortedRead(ctx context.Context, d *
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute")
+		log.Printf("[DEBUG] Selected method: GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute")
 		queryParams1 := dnacentersdkgo.GetDeviceValuesThatMatchFullyOrPartiallyAnAttributeQueryParams{}
 
 		if okVrfName {
@@ -252,10 +252,10 @@ func dataSourceNetworkDeviceLexicographicallySortedRead(ctx context.Context, d *
 			queryParams1.AssociatedWlcIP = vAssociatedWlcIP.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 
 		response1, restyResp1, err := client.Devices.GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute(&queryParams1)
@@ -279,6 +279,7 @@ func dataSourceNetworkDeviceLexicographicallySortedRead(ctx context.Context, d *
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
