@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -22,7 +22,7 @@ func dataSourceApplicationSets() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 			"name": &schema.Schema{
@@ -32,7 +32,7 @@ func dataSourceApplicationSets() *schema.Resource {
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 
@@ -91,14 +91,14 @@ func dataSourceApplicationSetsRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetApplicationSets")
+		log.Printf("[DEBUG] Selected method: GetApplicationSets")
 		queryParams1 := dnacentersdkgo.GetApplicationSetsQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okName {
 			queryParams1.Name = vName.(string)
@@ -125,6 +125,7 @@ func dataSourceApplicationSetsRead(ctx context.Context, d *schema.ResourceData, 
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -145,21 +146,6 @@ func flattenApplicationPolicyGetApplicationSetsItems(items *[]dnacentersdkgo.Res
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenApplicationPolicyGetApplicationSetsItem(item *dnacentersdkgo.ResponseApplicationPolicyGetApplicationSetsResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-
-	respItem := make(map[string]interface{})
-	respItem["id"] = item.ID
-	respItem["identity_source"] = flattenApplicationPolicyGetApplicationSetsItemsIDentitySource(item.IDentitySource)
-	respItem["name"] = item.Name
-
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenApplicationPolicyGetApplicationSetsItemsIDentitySource(item *dnacentersdkgo.ResponseApplicationPolicyGetApplicationSetsResponseIDentitySource) []map[string]interface{} {

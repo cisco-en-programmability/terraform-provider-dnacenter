@@ -32,24 +32,21 @@ output "dnacenter_network_device_interface_neighbor_example" {
 
 ### Required
 
-- **device_uuid** (String) deviceUuid path parameter. instanceuuid of Device
-- **interface_uuid** (String) interfaceUuid path parameter. instanceuuid of interface
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_uuid` (String) deviceUuid path parameter. instanceuuid of Device
+- `interface_uuid` (String) interfaceUuid path parameter. instanceuuid of interface
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **capabilities** (List of String)
-- **neighbor_device** (String)
-- **neighbor_port** (String)
+- `capabilities` (List of String)
+- `neighbor_device` (String)
+- `neighbor_port` (String)
 
 

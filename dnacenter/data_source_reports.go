@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -148,13 +148,13 @@ func dataSourceReports() *schema.Resource {
 						"report_was_executed": &schema.Schema{
 							Description: `true if atleast one execution has started
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"schedule": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -257,7 +257,7 @@ func dataSourceReports() *schema.Resource {
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type.
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeString, //TEST,
 													Computed: true,
 												},
 											},
@@ -273,7 +273,7 @@ func dataSourceReports() *schema.Resource {
 												"default": &schema.Schema{
 													Description: `true, if the format type is considered default
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -443,13 +443,13 @@ func dataSourceReports() *schema.Resource {
 						"report_was_executed": &schema.Schema{
 							Description: `true if atleast one execution has started
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"schedule": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -552,7 +552,7 @@ func dataSourceReports() *schema.Resource {
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type.
 `,
-													Type:     schema.TypeString,
+													Type:     schema.TypeString, //TEST,
 													Computed: true,
 												},
 											},
@@ -568,7 +568,7 @@ func dataSourceReports() *schema.Resource {
 												"default": &schema.Schema{
 													Description: `true, if the format type is considered default
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -649,7 +649,7 @@ func dataSourceReportsRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetListOfScheduledReports")
+		log.Printf("[DEBUG] Selected method: GetListOfScheduledReports")
 		queryParams1 := dnacentersdkgo.GetListOfScheduledReportsQueryParams{}
 
 		if okViewGroupID {
@@ -680,12 +680,13 @@ func dataSourceReportsRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetAScheduledReport")
+		log.Printf("[DEBUG] Selected method: GetAScheduledReport")
 		vvReportID := vReportID.(string)
 
 		response2, restyResp2, err := client.Reports.GetAScheduledReport(vvReportID)
@@ -709,6 +710,7 @@ func dataSourceReportsRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

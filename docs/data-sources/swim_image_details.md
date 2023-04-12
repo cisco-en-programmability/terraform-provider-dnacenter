@@ -48,66 +48,66 @@ output "dnacenter_swim_image_details_example" {
 
 ### Optional
 
-- **application_type** (String) applicationType query parameter.
-- **created_time** (Number) createdTime query parameter. time in milliseconds (epoch format)
-- **family** (String) family query parameter.
-- **id** (String) The ID of this resource.
-- **image_integrity_status** (String) imageIntegrityStatus query parameter. imageIntegrityStatus FAILURE, UNKNOWN, VERIFIED
-- **image_name** (String) imageName query parameter. image Name
-- **image_series** (String) imageSeries query parameter. image Series
-- **image_size_greater_than** (Number) imageSizeGreaterThan query parameter. size in bytes
-- **image_size_lesser_than** (Number) imageSizeLesserThan query parameter. size in bytes
-- **image_uuid** (String) imageUuid query parameter.
-- **is_cco_latest** (Boolean) isCCOLatest query parameter. is latest from cisco.com
-- **is_cco_recommended** (Boolean) isCCORecommended query parameter. is recommended from cisco.com
-- **is_tagged_golden** (Boolean) isTaggedGolden query parameter. is Tagged Golden
-- **limit** (Number) limit query parameter.
-- **name** (String) name query parameter.
-- **offset** (Number) offset query parameter.
-- **sort_by** (String) sortBy query parameter. sort results by this field
-- **sort_order** (String) sortOrder query parameter. sort order 'asc' or 'des'. Default is asc
-- **version** (String) version query parameter. software Image Version
+- `application_type` (String) applicationType query parameter.
+- `created_time` (Number) createdTime query parameter. time in milliseconds (epoch format)
+- `family` (String) family query parameter.
+- `image_integrity_status` (String) imageIntegrityStatus query parameter. imageIntegrityStatus FAILURE, UNKNOWN, VERIFIED
+- `image_name` (String) imageName query parameter. image Name
+- `image_series` (String) imageSeries query parameter. image Series
+- `image_size_greater_than` (Number) imageSizeGreaterThan query parameter. size in bytes
+- `image_size_lesser_than` (Number) imageSizeLesserThan query parameter. size in bytes
+- `image_uuid` (String) imageUuid query parameter.
+- `is_cco_latest` (Boolean) isCCOLatest query parameter. is latest from cisco.com
+- `is_cco_recommended` (Boolean) isCCORecommended query parameter. is recommended from cisco.com
+- `is_tagged_golden` (Boolean) isTaggedGolden query parameter. is Tagged Golden
+- `limit` (Number) limit query parameter.
+- `name` (String) name query parameter.
+- `offset` (Number) offset query parameter.
+- `sort_by` (String) sortBy query parameter. sort results by this field
+- `sort_order` (String) sortOrder query parameter. sort order 'asc' or 'des'. Default is asc
+- `version` (String) version query parameter. software Image Version
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **applicable_devices_for_image** (List of Object) (see [below for nested schema](#nestedobjatt--items--applicable_devices_for_image))
-- **application_type** (String)
-- **created_time** (String)
-- **extended_attributes** (String)
-- **family** (String)
-- **feature** (String)
-- **file_service_id** (String)
-- **file_size** (String)
-- **image_integrity_status** (String)
-- **image_name** (String)
-- **image_series** (List of String)
-- **image_source** (String)
-- **image_type** (String)
-- **image_uuid** (String)
-- **import_source_type** (String)
-- **is_tagged_golden** (String)
-- **md5_checksum** (String)
-- **name** (String)
-- **profile_info** (List of Object) (see [below for nested schema](#nestedobjatt--items--profile_info))
-- **sha_check_sum** (String)
-- **vendor** (String)
-- **version** (String)
+- `applicable_devices_for_image` (List of Object) (see [below for nested schema](#nestedobjatt--items--applicable_devices_for_image))
+- `application_type` (String)
+- `created_time` (String)
+- `extended_attributes` (String)
+- `family` (String)
+- `feature` (String)
+- `file_service_id` (String)
+- `file_size` (String)
+- `image_integrity_status` (String)
+- `image_name` (String)
+- `image_series` (List of String)
+- `image_source` (String)
+- `image_type` (String)
+- `image_uuid` (String)
+- `import_source_type` (String)
+- `is_tagged_golden` (String)
+- `md5_checksum` (String)
+- `name` (String)
+- `profile_info` (List of Object) (see [below for nested schema](#nestedobjatt--items--profile_info))
+- `sha_check_sum` (String)
+- `vendor` (String)
+- `version` (String)
 
 <a id="nestedobjatt--items--applicable_devices_for_image"></a>
 ### Nested Schema for `items.applicable_devices_for_image`
 
 Read-Only:
 
-- **mdf_id** (String)
-- **product_id** (List of String)
-- **product_name** (String)
+- `mdf_id` (String)
+- `product_id` (List of String)
+- `product_name` (String)
 
 
 <a id="nestedobjatt--items--profile_info"></a>
@@ -115,12 +115,12 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **extended_attributes** (String)
-- **memory** (Number)
-- **product_type** (String)
-- **profile_name** (String)
-- **shares** (Number)
-- **v_cpu** (Number)
+- `description` (String)
+- `extended_attributes` (String)
+- `memory` (Number)
+- `product_type` (String)
+- `profile_name` (String)
+- `shares` (Number)
+- `v_cpu` (Number)
 
 

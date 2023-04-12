@@ -31,31 +31,28 @@ output "dnacenter_dnacaap_management_execution_status_example" {
 
 ### Required
 
-- **execution_id** (String) executionId path parameter. Execution Id of API
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `execution_id` (String) executionId path parameter. Execution Id of API
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **bapi_error** (String)
-- **bapi_execution_id** (String)
-- **bapi_key** (String)
-- **bapi_name** (String)
-- **end_time** (String)
-- **end_time_epoch** (Number)
-- **runtime_instance_id** (String)
-- **start_time** (String)
-- **start_time_epoch** (Number)
-- **status** (String)
-- **time_duration** (Number)
+- `bapi_error` (String)
+- `bapi_execution_id` (String)
+- `bapi_key` (String)
+- `bapi_name` (String)
+- `end_time` (String)
+- `end_time_epoch` (Number)
+- `runtime_instance_id` (String)
+- `start_time` (String)
+- `start_time_epoch` (Number)
+- `status` (String)
+- `time_duration` (Number)
 
 

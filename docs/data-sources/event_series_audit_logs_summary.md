@@ -49,38 +49,38 @@ output "dnacenter_event_series_audit_logs_summary_example" {
 
 ### Optional
 
-- **category** (String) category query parameter. Audit Log notification's event category. Supported values: INFO, WARN, ERROR, ALERT, TASK_PROGRESS, TASK_FAILURE, TASK_COMPLETE, COMMAND, QUERY, CONVERSATION
-- **context** (String) context query parameter. Audit Log notification's event correlationId.
-- **description** (String) description query parameter. String full/partial search (Provided input string is case insensitively matched for records).
-- **device_id** (String) deviceId query parameter. Audit Log notification's deviceId.
-- **domain** (String) domain query parameter. Audit Log notification's event domain.
-- **end_time** (Number) endTime query parameter. End Time in milliseconds since Epoch Eg. 1597961437211 (when provided startTime is mandatory)
-- **event_hierarchy** (String) eventHierarchy query parameter. Audit Log notification's event eventHierarchy. Example: "US.CA.San Jose" OR "US.CA" OR "CA.San Jose" Delimiter for hierarchy separation is ".".
-- **event_id** (String) eventId query parameter. Audit Log notification's event ID.
-- **id** (String) The ID of this resource.
-- **instance_id** (String) instanceId query parameter. InstanceID of the Audit Log.
-- **is_parent_only** (Boolean) isParentOnly query parameter. Parameter to filter parent only audit-logs.
-- **is_system_events** (Boolean) isSystemEvents query parameter. Parameter to filter system generated audit-logs.
-- **name** (String) name query parameter. Audit Log notification event name.
-- **parent_instance_id** (String) parentInstanceId query parameter. Parent Audit Log record's instanceID.
-- **severity** (String) severity query parameter. Audit Log notification's event severity. Supported values: 1, 2, 3, 4, 5.
-- **site_id** (String) siteId query parameter. Audit Log notification's siteId.
-- **source** (String) source query parameter. Audit Log notification's event source.
-- **start_time** (Number) startTime query parameter. Start Time in milliseconds since Epoch Eg. 1597950637211 (when provided endTime is mandatory)
-- **sub_domain** (String) subDomain query parameter. Audit Log notification's event sub-domain.
-- **user_id** (String) userId query parameter. Audit Log notification's event userId.
+- `category` (String) category query parameter. Audit Log notification's event category. Supported values: INFO, WARN, ERROR, ALERT, TASK_PROGRESS, TASK_FAILURE, TASK_COMPLETE, COMMAND, QUERY, CONVERSATION
+- `context` (String) context query parameter. Audit Log notification's event correlationId.
+- `description` (String) description query parameter. String full/partial search (Provided input string is case insensitively matched for records).
+- `device_id` (String) deviceId query parameter. Audit Log notification's deviceId.
+- `domain` (String) domain query parameter. Audit Log notification's event domain.
+- `end_time` (Number) endTime query parameter. End Time in milliseconds since Epoch Eg. 1597961437211 (when provided startTime is mandatory)
+- `event_hierarchy` (String) eventHierarchy query parameter. Audit Log notification's event eventHierarchy. Example: "US.CA.San Jose" OR "US.CA" OR "CA.San Jose" Delimiter for hierarchy separation is ".".
+- `event_id` (String) eventId query parameter. Audit Log notification's event ID.
+- `instance_id` (String) instanceId query parameter. InstanceID of the Audit Log.
+- `is_parent_only` (Boolean) isParentOnly query parameter. Parameter to filter parent only audit-logs.
+- `is_system_events` (Boolean) isSystemEvents query parameter. Parameter to filter system generated audit-logs.
+- `name` (String) name query parameter. Audit Log notification event name.
+- `parent_instance_id` (String) parentInstanceId query parameter. Parent Audit Log record's instanceID.
+- `severity` (String) severity query parameter. Audit Log notification's event severity. Supported values: 1, 2, 3, 4, 5.
+- `site_id` (String) siteId query parameter. Audit Log notification's siteId.
+- `source` (String) source query parameter. Audit Log notification's event source.
+- `start_time` (Number) startTime query parameter. Start Time in milliseconds since Epoch Eg. 1597950637211 (when provided endTime is mandatory)
+- `sub_domain` (String) subDomain query parameter. Audit Log notification's event sub-domain.
+- `user_id` (String) userId query parameter. Audit Log notification's event userId.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **count** (Number)
-- **max_timestamp** (Number)
-- **min_timestamp** (Number)
+- `count` (Number)
+- `max_timestamp` (Number)
+- `min_timestamp` (Number)
 
 

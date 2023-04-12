@@ -4,14 +4,14 @@ page_title: "dnacenter_sda_fabric_authentication_profile Resource - terraform-pr
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on SDA.
-  Deploy authentication template in SDA FabricUpdate default authentication profile in SDA FabricDelete default authentication profile in SDA Fabric
+  Add default authentication template in SDA FabricUpdate default authentication profile in SDA FabricDelete default authentication profile in SDA Fabric
 ---
 
 # dnacenter_sda_fabric_authentication_profile (Resource)
 
 It manages create, read, update and delete operations on SDA.
 
-- Deploy authentication template in SDA Fabric
+- Add default authentication template in SDA Fabric
 
 - Update default authentication profile in SDA Fabric
 
@@ -24,6 +24,8 @@ resource "dnacenter_sda_fabric_authentication_profile" "example" {
   provider = dnacenter
   parameters {
     payload {
+
+
       authenticate_template_name    = "string"
       authentication_order          = "string"
       dot1x_to_mab_fallback_timeout = "string"
@@ -44,35 +46,32 @@ output "dnacenter_sda_fabric_authentication_profile_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabric (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabric (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **payload** (Block List, Min: 1) Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabric (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List, Min: 1) Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabric (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
 
 Optional:
 
-- **authenticate_template_name** (String) Authenticate Template Name
-- **authentication_order** (String) Authentication Order
-- **dot1x_to_mab_fallback_timeout** (String) Dot1x To MabFallback Timeout( Allowed range is [3-120])
-- **number_of_hosts** (String) Number Of Hosts
-- **site_name_hierarchy** (String) Path of sda Fabric Site
-- **wake_on_lan** (String) Wake On Lan
+- `authenticate_template_name` (String) Authenticate Template Name
+- `authentication_order` (String) Authentication Order
+- `dot1x_to_mab_fallback_timeout` (String) Dot1x To MabFallback Timeout( Allowed range is [3-120])
+- `number_of_hosts` (String) Number Of Hosts
+- `site_name_hierarchy` (String) Path of sda Fabric Site
+- `wake_on_lan` (String) Wake On Lan
 
 
 
@@ -81,9 +80,14 @@ Optional:
 
 Read-Only:
 
-- **authenticate_template_id** (String)
-- **authenticate_template_name** (String)
-- **site_name_hierarchy** (String)
+- `authenticate_template_name` (String)
+- `authentication_order` (String)
+- `description` (String)
+- `dot1x_to_mab_fallback_timeout` (String)
+- `number_of_hosts` (String)
+- `site_name_hierarchy` (String)
+- `status` (String)
+- `wake_on_lan` (String)
 
 ## Import
 

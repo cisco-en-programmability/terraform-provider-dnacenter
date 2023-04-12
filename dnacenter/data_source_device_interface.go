@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -28,14 +28,26 @@ func dataSourceDeviceInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"last_input_time": &schema.Schema{
+				Description: `lastInputTime query parameter. Last Input Time
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"last_output_time": &schema.Schema{
+				Description: `lastOutputTime query parameter. Last Output Time
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 
@@ -366,23 +378,31 @@ func dataSourceDeviceInterfaceRead(ctx context.Context, d *schema.ResourceData, 
 	var diags diag.Diagnostics
 	vOffset, okOffset := d.GetOk("offset")
 	vLimit, okLimit := d.GetOk("limit")
+	vLastInputTime, okLastInputTime := d.GetOk("last_input_time")
+	vLastOutputTime, okLastOutputTime := d.GetOk("last_output_time")
 	vID, okID := d.GetOk("id")
 
-	method1 := []bool{okOffset, okLimit}
+	method1 := []bool{okOffset, okLimit, okLastInputTime, okLastOutputTime}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAllInterfaces")
+		log.Printf("[DEBUG] Selected method: GetAllInterfaces")
 		queryParams1 := dnacentersdkgo.GetAllInterfacesQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
+		}
+		if okLastInputTime {
+			queryParams1.LastInputTime = vLastInputTime.(string)
+		}
+		if okLastOutputTime {
+			queryParams1.LastOutputTime = vLastOutputTime.(string)
 		}
 
 		response1, restyResp1, err := client.Devices.GetAllInterfaces(&queryParams1)
@@ -406,12 +426,13 @@ func dataSourceDeviceInterfaceRead(ctx context.Context, d *schema.ResourceData, 
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetInterfaceByID")
+		log.Printf("[DEBUG] Selected method: GetInterfaceByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.Devices.GetInterfaceByID(vvID)
@@ -435,6 +456,7 @@ func dataSourceDeviceInterfaceRead(ctx context.Context, d *schema.ResourceData, 
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

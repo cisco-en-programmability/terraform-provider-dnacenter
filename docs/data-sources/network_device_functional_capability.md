@@ -43,35 +43,35 @@ output "dnacenter_network_device_functional_capability_example" {
 
 ### Optional
 
-- **device_id** (String) deviceId query parameter. Accepts comma separated deviceid's and return list of functional-capabilities for the given id's. If invalid or not-found id's are provided, null entry will be returned in the list.
-- **function_name** (List of String) functionName query parameter.
-- **id** (String) id path parameter. Functional Capability UUID
+- `device_id` (String) deviceId query parameter. Accepts comma separated deviceid's and return list of functional-capabilities for the given id's. If invalid or not-found id's are provided, null entry will be returned in the list.
+- `function_name` (List of String) functionName query parameter.
+- `id` (String) id path parameter. Functional Capability UUID
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **attribute_info** (String)
-- **function_details** (List of Object) (see [below for nested schema](#nestedobjatt--item--function_details))
-- **function_name** (String)
-- **function_op_state** (String)
-- **id** (String)
+- `attribute_info` (String)
+- `function_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--function_details))
+- `function_name` (String)
+- `function_op_state` (String)
+- `id` (String)
 
 <a id="nestedobjatt--item--function_details"></a>
 ### Nested Schema for `item.function_details`
 
 Read-Only:
 
-- **attribute_info** (String)
-- **id** (String)
-- **property_name** (String)
-- **string_value** (String)
+- `attribute_info` (String)
+- `id` (String)
+- `property_name` (String)
+- `string_value` (String)
 
 
 
@@ -80,30 +80,30 @@ Read-Only:
 
 Read-Only:
 
-- **attribute_info** (String)
-- **device_id** (String)
-- **functional_capability** (List of Object) (see [below for nested schema](#nestedobjatt--items--functional_capability))
-- **id** (String)
+- `attribute_info` (String)
+- `device_id` (String)
+- `functional_capability` (List of Object) (see [below for nested schema](#nestedobjatt--items--functional_capability))
+- `id` (String)
 
 <a id="nestedobjatt--items--functional_capability"></a>
 ### Nested Schema for `items.functional_capability`
 
 Read-Only:
 
-- **attribute_info** (String)
-- **function_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--functional_capability--function_details))
-- **function_name** (String)
-- **function_op_state** (String)
-- **id** (String)
+- `attribute_info` (String)
+- `function_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--functional_capability--function_details))
+- `function_name` (String)
+- `function_op_state` (String)
+- `id` (String)
 
 <a id="nestedobjatt--items--functional_capability--function_details"></a>
 ### Nested Schema for `items.functional_capability.function_details`
 
 Read-Only:
 
-- **attribute_info** (String)
-- **id** (String)
-- **property_name** (String)
-- **string_value** (String)
+- `attribute_info` (String)
+- `id` (String)
+- `property_name` (String)
+- `string_value` (String)
 
 

@@ -20,10 +20,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_pnp_device_config_preview" "example" {
   provider = dnacenter
   parameters {
@@ -44,25 +40,22 @@ output "dnacenter_pnp_device_config_preview_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **device_id** (String)
-- **site_id** (String)
-- **type** (String)
+- `device_id` (String)
+- `site_id` (String)
+- `type` (String)
 
 
 <a id="nestedatt--item"></a>
@@ -70,15 +63,15 @@ Optional:
 
 Read-Only:
 
-- **complete** (String)
-- **config** (String)
-- **error** (String)
-- **error_message** (String)
-- **expired_time** (Number)
-- **rf_profile** (String)
-- **sensor_profile** (String)
-- **site_id** (String)
-- **start_time** (Number)
-- **task_id** (String)
+- `complete` (String)
+- `config` (String)
+- `error` (String)
+- `error_message` (String)
+- `expired_time` (Number)
+- `rf_profile` (String)
+- `sensor_profile` (String)
+- `site_id` (String)
+- `start_time` (Number)
+- `task_id` (String)
 
 

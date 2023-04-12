@@ -31,195 +31,199 @@ output "dnacenter_sda_fabric_border_device_example" {
 
 ### Required
 
-- **device_management_ip_address** (String) deviceManagementIpAddress query parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_management_ip_address` (String) deviceManagementIpAddress query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **akc_settings_cfs** (List of String)
-- **auth_entity_class** (Number)
-- **auth_entity_id** (Number)
-- **cfs_change_info** (List of String)
-- **configs** (List of String)
-- **create_time** (Number)
-- **custom_provisions** (List of String)
-- **deploy_pending** (String)
-- **deployed** (String)
-- **description** (String)
-- **device_interface_info** (List of String)
-- **device_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_settings))
-- **display_name** (String)
-- **id** (String)
-- **instance_id** (Number)
-- **instance_tenant_id** (String)
-- **instance_version** (Number)
-- **is_seeded** (String)
-- **is_stale** (String)
-- **last_update_time** (Number)
-- **managed_sites** (List of String)
-- **name** (String)
-- **namespace** (String)
-- **network_device_id** (String)
-- **network_wide_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_wide_settings))
-- **other_device** (List of String)
-- **provisioning_state** (String)
-- **resource_version** (Number)
-- **roles** (List of String)
-- **save_wan_connectivity_details_only** (String)
-- **site_id** (String)
-- **status** (String)
-- **target_id_list** (List of String)
-- **transit_networks** (List of Object) (see [below for nested schema](#nestedobjatt--item--transit_networks))
-- **type** (String)
-- **virtual_network** (List of String)
-- **wlan** (List of String)
+- `description` (String)
+- `payload` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload))
+- `status` (String)
 
-<a id="nestedobjatt--item--device_settings"></a>
-### Nested Schema for `item.device_settings`
+<a id="nestedobjatt--item--payload"></a>
+### Nested Schema for `item.payload`
 
 Read-Only:
 
-- **connected_to** (List of String)
-- **cpu** (Number)
-- **deploy_pending** (String)
-- **dhcp_enabled** (String)
-- **display_name** (String)
-- **ext_connectivity_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_settings--ext_connectivity_settings))
-- **external_connectivity_ip_pool** (String)
-- **external_domain_routing_protocol** (String)
-- **id** (String)
-- **instance_id** (Number)
-- **instance_tenant_id** (String)
-- **instance_version** (Number)
-- **internal_domain_protocol_number** (String)
-- **memory** (Number)
-- **node_type** (List of String)
-- **storage** (Number)
+- `akc_settings_cfs` (List of String)
+- `auth_entity_class` (Number)
+- `auth_entity_id` (Number)
+- `cfs_change_info` (List of String)
+- `configs` (List of String)
+- `create_time` (Number)
+- `custom_provisions` (List of String)
+- `deploy_pending` (String)
+- `deployed` (String)
+- `device_interface_info` (List of String)
+- `device_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--device_settings))
+- `display_name` (String)
+- `id` (String)
+- `instance_id` (Number)
+- `instance_tenant_id` (String)
+- `instance_version` (Number)
+- `is_seeded` (String)
+- `is_stale` (String)
+- `last_update_time` (Number)
+- `managed_sites` (List of String)
+- `name` (String)
+- `namespace` (String)
+- `network_device_id` (String)
+- `network_wide_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_wide_settings))
+- `other_device` (List of String)
+- `provisioning_state` (String)
+- `resource_version` (Number)
+- `roles` (List of String)
+- `save_wan_connectivity_details_only` (String)
+- `site_id` (String)
+- `target_id_list` (List of String)
+- `transit_networks` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--transit_networks))
+- `type` (String)
+- `virtual_network` (List of String)
+- `wlan` (List of String)
 
-<a id="nestedobjatt--item--device_settings--ext_connectivity_settings"></a>
-### Nested Schema for `item.device_settings.ext_connectivity_settings`
-
-Read-Only:
-
-- **deploy_pending** (String)
-- **display_name** (String)
-- **external_domain_protocol_number** (String)
-- **id** (String)
-- **instance_id** (Number)
-- **instance_tenant_id** (String)
-- **instance_version** (Number)
-- **interface_uuid** (String)
-- **l2_handoff** (List of String)
-- **l3_handoff** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_settings--ext_connectivity_settings--l3_handoff))
-- **policy_propagation_enabled** (String)
-- **policy_sgt_tag** (Number)
-
-<a id="nestedobjatt--item--device_settings--ext_connectivity_settings--l3_handoff"></a>
-### Nested Schema for `item.device_settings.ext_connectivity_settings.policy_sgt_tag`
-
-Read-Only:
-
-- **deploy_pending** (String)
-- **display_name** (String)
-- **id** (String)
-- **instance_id** (Number)
-- **instance_tenant_id** (String)
-- **instance_version** (Number)
-- **local_ip_address** (String)
-- **remote_ip_address** (String)
-- **virtual_network** (List of Object) (see [below for nested schema](#nestedobjatt--item--device_settings--ext_connectivity_settings--policy_sgt_tag--virtual_network))
-- **vlan_id** (Number)
-
-<a id="nestedobjatt--item--device_settings--ext_connectivity_settings--policy_sgt_tag--virtual_network"></a>
-### Nested Schema for `item.device_settings.ext_connectivity_settings.policy_sgt_tag.virtual_network`
+<a id="nestedobjatt--item--payload--device_settings"></a>
+### Nested Schema for `item.payload.device_settings`
 
 Read-Only:
 
-- **id_ref** (String)
+- `connected_to` (List of String)
+- `cpu` (Number)
+- `deploy_pending` (String)
+- `dhcp_enabled` (String)
+- `display_name` (String)
+- `ext_connectivity_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--device_settings--ext_connectivity_settings))
+- `external_connectivity_ip_pool` (String)
+- `external_domain_routing_protocol` (String)
+- `id` (String)
+- `instance_id` (Number)
+- `instance_tenant_id` (String)
+- `instance_version` (Number)
+- `internal_domain_protocol_number` (String)
+- `memory` (Number)
+- `node_type` (List of String)
+- `storage` (Number)
 
-
-
-
-
-<a id="nestedobjatt--item--network_wide_settings"></a>
-### Nested Schema for `item.network_wide_settings`
-
-Read-Only:
-
-- **aaa** (List of String)
-- **cmx** (List of String)
-- **deploy_pending** (String)
-- **dhcp** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_wide_settings--dhcp))
-- **display_name** (String)
-- **dns** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_wide_settings--dns))
-- **id** (String)
-- **instance_id** (Number)
-- **instance_tenant_id** (String)
-- **instance_version** (Number)
-- **ldap** (List of String)
-- **native_vlan** (List of String)
-- **netflow** (List of String)
-- **ntp** (List of String)
-- **snmp** (List of String)
-- **syslogs** (List of String)
-
-<a id="nestedobjatt--item--network_wide_settings--dhcp"></a>
-### Nested Schema for `item.network_wide_settings.dhcp`
+<a id="nestedobjatt--item--payload--device_settings--ext_connectivity_settings"></a>
+### Nested Schema for `item.payload.device_settings.storage`
 
 Read-Only:
 
-- **id** (String)
-- **ip_address** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_wide_settings--dhcp--ip_address))
+- `deploy_pending` (String)
+- `display_name` (String)
+- `external_domain_protocol_number` (String)
+- `id` (String)
+- `instance_id` (Number)
+- `instance_tenant_id` (String)
+- `instance_version` (Number)
+- `interface_uuid` (String)
+- `l2_handoff` (List of String)
+- `l3_handoff` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--device_settings--storage--l3_handoff))
+- `policy_propagation_enabled` (String)
+- `policy_sgt_tag` (Number)
 
-<a id="nestedobjatt--item--network_wide_settings--dhcp--ip_address"></a>
-### Nested Schema for `item.network_wide_settings.dhcp.ip_address`
-
-Read-Only:
-
-- **address** (String)
-- **address_type** (String)
-- **id** (String)
-- **padded_address** (String)
-
-
-
-<a id="nestedobjatt--item--network_wide_settings--dns"></a>
-### Nested Schema for `item.network_wide_settings.dns`
+<a id="nestedobjatt--item--payload--device_settings--storage--l3_handoff"></a>
+### Nested Schema for `item.payload.device_settings.storage.l3_handoff`
 
 Read-Only:
 
-- **domain_name** (String)
-- **id** (String)
-- **ip** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_wide_settings--dns--ip))
+- `deploy_pending` (String)
+- `display_name` (String)
+- `id` (String)
+- `instance_id` (Number)
+- `instance_tenant_id` (String)
+- `instance_version` (Number)
+- `local_ip_address` (String)
+- `remote_ip_address` (String)
+- `virtual_network` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--device_settings--storage--l3_handoff--virtual_network))
+- `vlan_id` (Number)
 
-<a id="nestedobjatt--item--network_wide_settings--dns--ip"></a>
-### Nested Schema for `item.network_wide_settings.dns.ip`
-
-Read-Only:
-
-- **address** (String)
-- **address_type** (String)
-- **id** (String)
-- **padded_address** (String)
-
-
-
-
-<a id="nestedobjatt--item--transit_networks"></a>
-### Nested Schema for `item.transit_networks`
+<a id="nestedobjatt--item--payload--device_settings--storage--l3_handoff--virtual_network"></a>
+### Nested Schema for `item.payload.device_settings.storage.l3_handoff.vlan_id`
 
 Read-Only:
 
-- **id_ref** (String)
+- `id_ref` (String)
+
+
+
+
+
+<a id="nestedobjatt--item--payload--network_wide_settings"></a>
+### Nested Schema for `item.payload.network_wide_settings`
+
+Read-Only:
+
+- `aaa` (List of String)
+- `cmx` (List of String)
+- `deploy_pending` (String)
+- `dhcp` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_wide_settings--dhcp))
+- `display_name` (String)
+- `dns` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_wide_settings--dns))
+- `id` (String)
+- `instance_id` (Number)
+- `instance_tenant_id` (String)
+- `instance_version` (Number)
+- `ldap` (List of String)
+- `native_vlan` (List of String)
+- `netflow` (List of String)
+- `ntp` (List of String)
+- `snmp` (List of String)
+- `syslogs` (List of String)
+
+<a id="nestedobjatt--item--payload--network_wide_settings--dhcp"></a>
+### Nested Schema for `item.payload.network_wide_settings.syslogs`
+
+Read-Only:
+
+- `id` (String)
+- `ip_address` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_wide_settings--syslogs--ip_address))
+
+<a id="nestedobjatt--item--payload--network_wide_settings--syslogs--ip_address"></a>
+### Nested Schema for `item.payload.network_wide_settings.syslogs.ip_address`
+
+Read-Only:
+
+- `address` (String)
+- `address_type` (String)
+- `id` (String)
+- `padded_address` (String)
+
+
+
+<a id="nestedobjatt--item--payload--network_wide_settings--dns"></a>
+### Nested Schema for `item.payload.network_wide_settings.syslogs`
+
+Read-Only:
+
+- `domain_name` (String)
+- `id` (String)
+- `ip` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_wide_settings--syslogs--ip))
+
+<a id="nestedobjatt--item--payload--network_wide_settings--syslogs--ip"></a>
+### Nested Schema for `item.payload.network_wide_settings.syslogs.ip`
+
+Read-Only:
+
+- `address` (String)
+- `address_type` (String)
+- `id` (String)
+- `padded_address` (String)
+
+
+
+
+<a id="nestedobjatt--item--payload--transit_networks"></a>
+### Nested Schema for `item.payload.transit_networks`
+
+Read-Only:
+
+- `id_ref` (String)
 
 

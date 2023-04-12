@@ -10,7 +10,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -68,6 +68,7 @@ func resourceNfvProvision() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -75,6 +76,7 @@ func resourceNfvProvision() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -82,6 +84,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -91,6 +94,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Description: `Name of custom network (eg: cust-1)
@@ -98,6 +102,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"port": &schema.Schema{
 																Description: `Port for custom network (eg: 443)
@@ -105,6 +110,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -115,6 +121,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"ip": &schema.Schema{
 													Description: `IP address of the device (eg: 172.20.126.90)
@@ -122,11 +129,13 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"service_providers": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -136,11 +145,13 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"wan_interface": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -150,6 +161,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"gateway": &schema.Schema{
 																			Description: `Gateway (eg: 175.175.190.1)
@@ -157,6 +169,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"interface_name": &schema.Schema{
 																			Description: `Name of the interface (eg: GE0-0)
@@ -164,6 +177,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"ip_address": &schema.Schema{
 																			Description: `IP address (eg: 175.175.190.205)
@@ -171,6 +185,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"subnetmask": &schema.Schema{
 																			Description: `Subnet mask (eg: 255.255.255.0)
@@ -178,6 +193,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -189,6 +205,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -198,6 +215,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"central_manager_ip": &schema.Schema{
 																Description: `WAAS Package needs to be installed to populate Central Manager IP automatically.
@@ -205,6 +223,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"central_registration_key": &schema.Schema{
 																Description: `Central registration key 
@@ -212,6 +231,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"common_key": &schema.Schema{
 																Description: `Common key 
@@ -219,6 +239,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"disk": &schema.Schema{
 																Description: `Name of disk type (eg: internal)
@@ -226,6 +247,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"mode": &schema.Schema{
 																Description: `Mode of firewall (eg: transparent)
@@ -233,6 +255,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"system_ip": &schema.Schema{
 																Description: `System IP 
@@ -240,6 +263,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"type": &schema.Schema{
 																Description: `Type of service (eg: ISR)
@@ -247,6 +271,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -255,6 +280,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -264,6 +290,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"ip_subnet": &schema.Schema{
 																Description: `IP pool cidir (eg: 175.175.140.0)
@@ -271,6 +298,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Description: `Name of the ip sub pool (eg; Lan-65)
@@ -278,6 +306,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"parent_pool_name": &schema.Schema{
 																Description: `Name of parent pool (global pool name)
@@ -285,6 +314,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"type": &schema.Schema{
 																Description: `Tyep of ip sub pool (eg: Lan)
@@ -292,6 +322,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -302,11 +333,13 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"template_param": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -314,6 +347,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -323,6 +357,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -331,6 +366,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -340,6 +376,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -351,6 +388,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -360,6 +398,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"interfaces": &schema.Schema{
 																Description: `Interface (eg: GigabitEathernet1/0)
@@ -367,6 +406,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"network": &schema.Schema{
 																Description: `Network name to connect (eg: lan-net)
@@ -374,6 +414,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"type": &schema.Schema{
 																Description: `Vlan type(eg. Access or Trunk)
@@ -381,6 +422,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -392,6 +434,7 @@ func resourceNfvProvision() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -399,6 +442,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -408,6 +452,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"parent_name": &schema.Schema{
 																Description: `Parent name of the area to be created
@@ -415,6 +460,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -423,6 +469,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -432,6 +479,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"latitude": &schema.Schema{
 																Description: `Latitude coordinate of the building (eg:37.338)
@@ -439,6 +487,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeFloat,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"longitude": &schema.Schema{
 																Description: `Longitude coordinate of the building (eg:-121.832)
@@ -446,6 +495,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeFloat,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Description: `Name of the building (eg: building1)
@@ -453,6 +503,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"parent_name": &schema.Schema{
 																Description: `Address of the building to be created
@@ -460,6 +511,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -468,6 +520,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -477,6 +530,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeFloat,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"length": &schema.Schema{
 																Description: `Length of the floor (eg: 100)
@@ -484,6 +538,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeFloat,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Description: `Name of the floor (eg:floor-1)
@@ -491,6 +546,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"parent_name": &schema.Schema{
 																Description: `Parent name of the floor to be created
@@ -498,6 +554,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"rf_model": &schema.Schema{
 																Description: `Type of floor (eg: Cubes And Walled Offices)
@@ -505,6 +562,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"width": &schema.Schema{
 																Description: `Width of the floor (eg:100)
@@ -512,6 +570,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeFloat,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -522,6 +581,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -533,6 +593,7 @@ func resourceNfvProvision() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -540,6 +601,7 @@ func resourceNfvProvision() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -547,6 +609,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -556,6 +619,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Description: `Name of custom network (eg: cust-1)
@@ -563,6 +627,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"network_mode": &schema.Schema{
 																Description: `Network mode (eg Access or Trunk)
@@ -570,11 +635,13 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"services_to_connect": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -584,6 +651,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -594,6 +662,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -602,6 +671,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -611,6 +681,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"image_name": &schema.Schema{
 																Description: `Image name of custom service (eg: redhat7.tar.gz.tar.gz)
@@ -618,6 +689,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Description: `Name of custom service (eg: LINUX-1)
@@ -625,6 +697,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"profile": &schema.Schema{
 																Description: `Profile type of service (eg: rhel7-medium)
@@ -632,11 +705,13 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"topology": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -646,6 +721,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"name": &schema.Schema{
 																			Description: `Name of connection from custom service(eg: wan-net)
@@ -653,6 +729,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"type": &schema.Schema{
 																			Description: `Type of connection from custom service (eg:  wan, lan or internal)
@@ -660,6 +737,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -671,6 +749,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -680,6 +759,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"template": &schema.Schema{
 																Description: `Name of the template(eg NFVIS template)
@@ -687,6 +767,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -697,40 +778,45 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"dia": &schema.Schema{
 													Description: `Direct internet access value should be boolean (eg: false)
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"service_providers": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"connect": &schema.Schema{
 																Description: `Connection of service provider and device value should be boolean (eg: true)
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"default_gateway": &schema.Schema{
 																Description: `Default gateway connect value as boolean (eg: true)
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"link_type": &schema.Schema{
 																Description: `Name of connection type(eg: GigabitEthernet) 
@@ -738,6 +824,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"service_provider": &schema.Schema{
 																Description: `Name of the service provider(eg: Airtel)
@@ -745,6 +832,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -753,6 +841,7 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -762,6 +851,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"mode": &schema.Schema{
 																Description: `Mode of firewall (eg: routed, transparent)
@@ -769,6 +859,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Description: `Name of the service (eg: isrv) 
@@ -776,6 +867,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"profile": &schema.Schema{
 																Description: `Profile type of service (eg: ISRv-mini)
@@ -783,11 +875,13 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"topology": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -797,6 +891,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"name": &schema.Schema{
 																			Description: `Name of connection (eg: wan-net)
@@ -804,6 +899,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"type": &schema.Schema{
 																			Description: `Type of connection (eg:  wan, lan or internal)
@@ -811,6 +907,7 @@ func resourceNfvProvision() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -821,6 +918,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -831,11 +929,13 @@ func resourceNfvProvision() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"vlan": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -845,6 +945,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"type": &schema.Schema{
 																Description: `Vlan type(eg. Access or Trunk)
@@ -852,6 +953,7 @@ func resourceNfvProvision() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -865,9 +967,37 @@ func resourceNfvProvision() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 								},
 							},
+						},
+						"runsync": &schema.Schema{
+							Description: `Name of the profile to create site profile profile( eg: profile-1)
+`,
+							Type:         schema.TypeString,
+							Optional:     true,
+							ForceNew:     true,
+							Default:      "false",
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+						},
+						"timeout": &schema.Schema{
+							Description: `Name of the profile to create site profile profile( eg: profile-1)
+`,
+							Type:         schema.TypeString,
+							Optional:     true,
+							ForceNew:     true,
+							Default:      "false",
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+						},
+						"persistbapioutput": &schema.Schema{
+							Description: `Name of the profile to create site profile profile( eg: profile-1)
+`,
+							Type:         schema.TypeString,
+							Optional:     true,
+							ForceNew:     true,
+							Default:      "false",
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 						},
 					},
 				},
@@ -881,8 +1011,11 @@ func resourceNfvProvisionCreate(ctx context.Context, d *schema.ResourceData, m i
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vRunsync := resourceItem["runsync"]
+
 	vTimeout := resourceItem["timeout"]
+
 	vPersistbapioutput := resourceItem["persistbapioutput"]
 
 	request1 := expandRequestNfvProvisionProvisionNfv(ctx, "parameters.0", d)
@@ -905,9 +1038,9 @@ func resourceNfvProvisionCreate(ctx context.Context, d *schema.ResourceData, m i
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ProvisionNfv", err,
-			"Failure at ProvisionNfv, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -956,6 +1089,7 @@ func resourceNfvProvisionCreate(ctx context.Context, d *schema.ResourceData, m i
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

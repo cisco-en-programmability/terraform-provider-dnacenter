@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -56,7 +56,7 @@ func dataSourcePnpDeviceHistory() *schema.Resource {
 
 						"error_flag": &schema.Schema{
 							Description: `Error Flag`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -176,7 +176,7 @@ func dataSourcePnpDeviceHistoryRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceHistory")
+		log.Printf("[DEBUG] Selected method: GetDeviceHistory")
 		queryParams1 := dnacentersdkgo.GetDeviceHistoryQueryParams{}
 
 		queryParams1.SerialNumber = vSerialNumber.(string)
@@ -209,6 +209,7 @@ func dataSourcePnpDeviceHistoryRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

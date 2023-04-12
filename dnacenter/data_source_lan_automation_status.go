@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -141,7 +141,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						"multicast_enabled": &schema.Schema{
 							Description: `Shows whether underlay multicast is enabled or not. 
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -173,7 +173,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						"redistribute_isis_to_bgp": &schema.Schema{
 							Description: `Shows whether advertise LAN Automation summary route into BGP is enabled or not.
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -288,7 +288,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						"multicast_enabled": &schema.Schema{
 							Description: `Shows whether underlay multicast is enabled or not. 
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -320,7 +320,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						"redistribute_isis_to_bgp": &schema.Schema{
 							Description: `Shows whether advertise LAN Automation summary route into BGP is enabled or not.
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -353,7 +353,7 @@ func dataSourceLanAutomationStatusRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: LanAutomationStatus")
+		log.Printf("[DEBUG] Selected method: LanAutomationStatus")
 		queryParams1 := dnacentersdkgo.LanAutomationStatusQueryParams{}
 
 		if okOffset {
@@ -384,12 +384,13 @@ func dataSourceLanAutomationStatusRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: LanAutomationStatusByID")
+		log.Printf("[DEBUG] Selected method: LanAutomationStatusByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.LanAutomation.LanAutomationStatusByID(vvID)
@@ -413,6 +414,7 @@ func dataSourceLanAutomationStatusRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

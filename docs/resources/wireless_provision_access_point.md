@@ -23,15 +23,15 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 resource "dnacenter_wireless_provision_access_point" "example" {
   provider = dnacenter
   parameters {
-    payload {
-      custom_ap_group_name   = "string"
-      custom_flex_group_name = ["string"]
-      device_name            = "string"
-      rf_profile             = "string"
-      site_id                = "string"
-      site_name_hierarchy    = "string"
-      type                   = "string"
-    }
+
+    custom_ap_group_name   = "string"
+    custom_flex_group_name = ["string"]
+    device_name            = "string"
+    rf_profile             = "string"
+    site_id                = "string"
+    site_name_hierarchy    = "string"
+    type                   = "string"
+    persistbapioutput      = "false"
   }
 }
 
@@ -45,46 +45,46 @@ output "dnacenter_wireless_provision_access_point_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **payload** (Block List) Array of RequestWirelessAPProvision (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestWirelessAPProvision (see [below for nested schema](#nestedblock--parameters--payload))
+
+Read-Only:
+
+- `items` (List of Object) (see [below for nested schema](#nestedatt--parameters--items))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
 
 Optional:
 
-- **custom_ap_group_name** (String) Custom AP group name
-- **custom_flex_group_name** (List of String) ["Custom flex group name"]
-- **device_name** (String) Device name
-- **rf_profile** (String) Radio frequency profile name
-- **site_id** (String) Site name hierarchy(ex: Global/...)
-- **site_name_hierarchy** (String) Site name hierarchy(ex: Global/...)
-- **type** (String) ApWirelessConfiguration
+- `custom_ap_group_name` (String) Custom AP group name
+- `custom_flex_group_name` (List of String) ["Custom flex group name"]
+- `device_name` (String) Device name
+- `persistbapioutput` (String) persistbapioutput
+- `rf_profile` (String) Radio frequency profile name
+- `site_id` (String) Site name hierarchy(ex: Global/...)
+- `site_name_hierarchy` (String) Site name hierarchy(ex: Global/...)
+- `type` (String) ApWirelessConfiguration
 
 
-
-<a id="nestedatt--item"></a>
-### Nested Schema for `item`
+<a id="nestedatt--parameters--items"></a>
+### Nested Schema for `parameters.items`
 
 Read-Only:
 
-- **execution_id** (String)
-- **execution_url** (String)
-- **message** (String)
+- `execution_id` (String)
+- `execution_url` (String)
+- `message` (String)
 
 

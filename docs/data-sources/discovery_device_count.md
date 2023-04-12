@@ -34,22 +34,22 @@ output "dnacenter_discovery_device_count_example" {
 
 ### Required
 
-- **id** (String) id path parameter. Discovery ID
+- `id` (String) id path parameter. Discovery ID
 
 ### Optional
 
-- **task_id** (String) taskId query parameter.
+- `task_id` (String) taskId query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
-- **version** (String)
+- `response` (Number)
+- `version` (String)
 
 

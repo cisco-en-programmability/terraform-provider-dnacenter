@@ -31,51 +31,48 @@ output "dnacenter_license_device_license_details_example" {
 
 ### Required
 
-- **device_uuid** (String) device_uuid path parameter. Id of device
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_uuid` (String) device_uuid path parameter. Id of device
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **access_points** (List of Object) (see [below for nested schema](#nestedobjatt--items--access_points))
-- **chassis_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--chassis_details))
-- **device_name** (String)
-- **device_type** (String)
-- **device_uuid** (String)
-- **dna_level** (String)
-- **evaluation_license_expiry** (String)
-- **feature_license** (List of String)
-- **has_sup_cards** (String)
-- **ip_address** (String)
-- **is_license_expired** (String)
-- **is_stacked_device** (String)
-- **license_mode** (String)
-- **mac_address** (String)
-- **model** (String)
-- **network_license** (String)
-- **site** (String)
-- **sntc_status** (String)
-- **software_version** (String)
-- **stacked_devices** (List of Object) (see [below for nested schema](#nestedobjatt--items--stacked_devices))
-- **udi** (String)
-- **virtual_account_name** (String)
+- `access_points` (List of Object) (see [below for nested schema](#nestedobjatt--items--access_points))
+- `chassis_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--chassis_details))
+- `device_name` (String)
+- `device_type` (String)
+- `device_uuid` (String)
+- `dna_level` (String)
+- `evaluation_license_expiry` (String)
+- `feature_license` (List of String)
+- `has_sup_cards` (String)
+- `ip_address` (String)
+- `is_license_expired` (String)
+- `is_stacked_device` (String)
+- `license_mode` (String)
+- `mac_address` (String)
+- `model` (String)
+- `network_license` (String)
+- `site` (String)
+- `sntc_status` (String)
+- `software_version` (String)
+- `stacked_devices` (List of Object) (see [below for nested schema](#nestedobjatt--items--stacked_devices))
+- `udi` (String)
+- `virtual_account_name` (String)
 
 <a id="nestedobjatt--items--access_points"></a>
 ### Nested Schema for `items.access_points`
 
 Read-Only:
 
-- **ap_type** (String)
-- **count** (String)
+- `ap_type` (String)
+- `count` (String)
 
 
 <a id="nestedobjatt--items--chassis_details"></a>
@@ -83,20 +80,20 @@ Read-Only:
 
 Read-Only:
 
-- **board_serial_number** (String)
-- **modules** (List of Object) (see [below for nested schema](#nestedobjatt--items--chassis_details--modules))
-- **port** (Number)
-- **supervisor_cards** (List of Object) (see [below for nested schema](#nestedobjatt--items--chassis_details--supervisor_cards))
+- `board_serial_number` (String)
+- `modules` (List of Object) (see [below for nested schema](#nestedobjatt--items--chassis_details--modules))
+- `port` (Number)
+- `supervisor_cards` (List of Object) (see [below for nested schema](#nestedobjatt--items--chassis_details--supervisor_cards))
 
 <a id="nestedobjatt--items--chassis_details--modules"></a>
 ### Nested Schema for `items.chassis_details.modules`
 
 Read-Only:
 
-- **id** (String)
-- **module_name** (String)
-- **module_type** (String)
-- **serial_number** (String)
+- `id` (String)
+- `module_name` (String)
+- `module_type` (String)
+- `serial_number` (String)
 
 
 <a id="nestedobjatt--items--chassis_details--supervisor_cards"></a>
@@ -104,9 +101,9 @@ Read-Only:
 
 Read-Only:
 
-- **serial_number** (String)
-- **status** (String)
-- **supervisor_card_type** (String)
+- `serial_number` (String)
+- `status` (String)
+- `supervisor_card_type` (String)
 
 
 
@@ -115,9 +112,9 @@ Read-Only:
 
 Read-Only:
 
-- **id** (String)
-- **mac_address** (String)
-- **role** (String)
-- **serial_number** (String)
+- `id` (String)
+- `mac_address` (String)
+- `role` (String)
+- `serial_number` (String)
 
 

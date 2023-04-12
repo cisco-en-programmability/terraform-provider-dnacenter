@@ -31,40 +31,37 @@ output "dnacenter_network_device_stack_details_example" {
 
 ### Required
 
-- **device_id** (String) deviceId path parameter. Device ID
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_id` (String) deviceId path parameter. Device ID
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **device_id** (String)
-- **stack_port_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--stack_port_info))
-- **stack_switch_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--stack_switch_info))
-- **svl_switch_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--svl_switch_info))
+- `device_id` (String)
+- `stack_port_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--stack_port_info))
+- `stack_switch_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--stack_switch_info))
+- `svl_switch_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--svl_switch_info))
 
 <a id="nestedobjatt--item--stack_port_info"></a>
 ### Nested Schema for `item.stack_port_info`
 
 Read-Only:
 
-- **is_synch_ok** (String)
-- **link_active** (String)
-- **link_ok** (String)
-- **name** (String)
-- **neighbor_port** (String)
-- **nr_link_ok_changes** (Number)
-- **stack_cable_length_info** (String)
-- **stack_port_oper_status_info** (String)
-- **switch_port** (String)
+- `is_synch_ok` (String)
+- `link_active` (String)
+- `link_ok` (String)
+- `name` (String)
+- `neighbor_port` (String)
+- `nr_link_ok_changes` (Number)
+- `stack_cable_length_info` (String)
+- `stack_port_oper_status_info` (String)
+- `switch_port` (String)
 
 
 <a id="nestedobjatt--item--stack_switch_info"></a>
@@ -72,17 +69,17 @@ Read-Only:
 
 Read-Only:
 
-- **ent_physical_index** (String)
-- **hw_priority** (Number)
-- **mac_address** (String)
-- **num_next_reload** (Number)
-- **platform_id** (String)
-- **role** (String)
-- **serial_number** (String)
-- **software_image** (String)
-- **stack_member_number** (Number)
-- **state** (String)
-- **switch_priority** (Number)
+- `ent_physical_index` (String)
+- `hw_priority` (Number)
+- `mac_address` (String)
+- `num_next_reload` (Number)
+- `platform_id` (String)
+- `role` (String)
+- `serial_number` (String)
+- `software_image` (String)
+- `stack_member_number` (Number)
+- `state` (String)
+- `switch_priority` (Number)
 
 
 <a id="nestedobjatt--item--svl_switch_info"></a>
@@ -90,40 +87,40 @@ Read-Only:
 
 Read-Only:
 
-- **dad_protocol** (String)
-- **dad_recovery_reload_enabled** (String)
-- **domain_number** (Number)
-- **in_dad_recovery_mode** (String)
-- **sw_virtual_status** (String)
-- **switch_members** (List of Object) (see [below for nested schema](#nestedobjatt--item--svl_switch_info--switch_members))
+- `dad_protocol` (String)
+- `dad_recovery_reload_enabled` (String)
+- `domain_number` (Number)
+- `in_dad_recovery_mode` (String)
+- `sw_virtual_status` (String)
+- `switch_members` (List of Object) (see [below for nested schema](#nestedobjatt--item--svl_switch_info--switch_members))
 
 <a id="nestedobjatt--item--svl_switch_info--switch_members"></a>
 ### Nested Schema for `item.svl_switch_info.switch_members`
 
 Read-Only:
 
-- **bandwidth** (String)
-- **svl_member_end_points** (List of Object) (see [below for nested schema](#nestedobjatt--item--svl_switch_info--switch_members--svl_member_end_points))
-- **svl_member_number** (Number)
-- **svl_member_pep_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--svl_switch_info--switch_members--svl_member_pep_settings))
+- `bandwidth` (String)
+- `svl_member_end_points` (List of Object) (see [below for nested schema](#nestedobjatt--item--svl_switch_info--switch_members--svl_member_end_points))
+- `svl_member_number` (Number)
+- `svl_member_pep_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--svl_switch_info--switch_members--svl_member_pep_settings))
 
 <a id="nestedobjatt--item--svl_switch_info--switch_members--svl_member_end_points"></a>
 ### Nested Schema for `item.svl_switch_info.switch_members.svl_member_pep_settings`
 
 Read-Only:
 
-- **svl_member_end_point_ports** (List of Object) (see [below for nested schema](#nestedobjatt--item--svl_switch_info--switch_members--svl_member_pep_settings--svl_member_end_point_ports))
-- **svl_number** (Number)
-- **svl_status** (String)
+- `svl_member_end_point_ports` (List of Object) (see [below for nested schema](#nestedobjatt--item--svl_switch_info--switch_members--svl_member_pep_settings--svl_member_end_point_ports))
+- `svl_number` (Number)
+- `svl_status` (String)
 
 <a id="nestedobjatt--item--svl_switch_info--switch_members--svl_member_pep_settings--svl_member_end_point_ports"></a>
 ### Nested Schema for `item.svl_switch_info.switch_members.svl_member_pep_settings.svl_member_end_point_ports`
 
 Read-Only:
 
-- **svl_protocol_status** (String)
-- **sw_local_interface** (String)
-- **sw_remote_interface** (String)
+- `svl_protocol_status` (String)
+- `sw_local_interface` (String)
+- `sw_remote_interface` (String)
 
 
 
@@ -132,7 +129,7 @@ Read-Only:
 
 Read-Only:
 
-- **dad_enabled** (String)
-- **dad_interface_name** (String)
+- `dad_enabled` (String)
+- `dad_interface_name` (String)
 
 

@@ -2,13 +2,14 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -46,67 +47,54 @@ func resourceDeviceReplacement() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"family": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"faulty_device_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"faulty_device_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"faulty_device_platform": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"faulty_device_serial_number": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"neighbour_device_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"network_readiness_task_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"replacement_device_platform": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"replacement_device_serial_number": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"replacement_status": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"replacement_time": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"workflow_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -117,69 +105,89 @@ func resourceDeviceReplacement() *schema.Resource {
 			"parameters": &schema.Schema{
 				Description: `Array of RequestDeviceReplacementMarkDeviceForReplacement`,
 				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"payload": &schema.Schema{
+							Description: `Array of RequestDeviceReplacementMarkDeviceForReplacement`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-						"creation_time": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-						},
-						"family": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"faulty_device_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"faulty_device_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"faulty_device_platform": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"faulty_device_serial_number": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"neighbour_device_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"network_readiness_task_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"replacement_device_platform": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"replacement_device_serial_number": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"replacement_status": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"replacement_time": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-						},
-						"workflow_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-					},
+									"creation_time": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"family": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"faulty_device_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Default:  "",
+									},
+									"faulty_device_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Default:  "",
+									},
+									"faulty_device_platform": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"faulty_device_serial_number": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"id": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"neighbour_device_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"network_readiness_task_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"replacement_device_platform": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"replacement_device_serial_number": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Default:  "",
+									},
+									"replacement_status": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"replacement_time": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"workflow_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+								}}}},
 				},
 			},
 		},
@@ -188,9 +196,12 @@ func resourceDeviceReplacement() *schema.Resource {
 
 func resourceDeviceReplacementCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
-	resourceItem := *getResourceItem(d.Get("parameters"))
-	resourceMap := make(map[string]string)
+
 	var diags diag.Diagnostics
+
+	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
+	request1 := expandRequestDeviceReplacementMarkDeviceForReplacement(ctx, "parameters.0", d)
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vFaultyDeviceID := resourceItem["faulty_device_id"]
 	vFaultyDeviceSerialNumber := resourceItem["faulty_device_serial_number"]
@@ -201,28 +212,21 @@ func resourceDeviceReplacementCreate(ctx context.Context, d *schema.ResourceData
 	vvReplacementDeviceSerialNumber := interfaceToString(vReplacementDeviceSerialNumber)
 
 	log.Printf("[DEBUG] Selected method 1: ReturnListOfReplacementDevicesWithReplacementDetails")
-	queryParams1 := dnacentersdkgo.ReturnListOfReplacementDevicesWithReplacementDetailsQueryParams{}
+	queryParamImport := dnacentersdkgo.ReturnListOfReplacementDevicesWithReplacementDetailsQueryParams{}
 
-	queryParams1.FaultyDeviceSerialNumber = vvFaultyDeviceSerialNumber
+	queryParamImport.FaultyDeviceSerialNumber = vvFaultyDeviceSerialNumber
 
-	queryParams1.ReplacementDeviceSerialNumber = vvReplacementDeviceSerialNumber
+	queryParamImport.ReplacementDeviceSerialNumber = vvReplacementDeviceSerialNumber
 
-	item, err := searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails(m, queryParams1, vvFaultyDeviceID)
-
-	if err != nil || item != nil {
+	item2, err := searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails(m, queryParamImport, vvFaultyDeviceID)
+	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
-		resourceMap["faulty_device_serial_number"] = vvFaultyDeviceSerialNumber
-		resourceMap["replacement_device_serial_number"] = vvReplacementDeviceSerialNumber
-		resourceMap["faulty_device_id"] = vvFaultyDeviceID
+		resourceMap["faulty_device_serial_number"] = item2.FaultyDeviceSerialNumber
+		resourceMap["replacement_device_serial_number"] = item2.ReplacementDeviceSerialNumber
+		resourceMap["faulty_device_id"] = item2.ID
 		d.SetId(joinResourceID(resourceMap))
 		return resourceDeviceReplacementRead(ctx, d, m)
 	}
-
-	request1 := expandRequestDeviceReplacementMarkDeviceForReplacement(ctx, "parameters", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
-
 	resp1, restyResp1, err := client.DeviceReplacement.MarkDeviceForReplacement(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
@@ -234,9 +238,49 @@ func resourceDeviceReplacementCreate(ctx context.Context, d *schema.ResourceData
 			"Failure when executing MarkDeviceForReplacement", err))
 		return diags
 	}
-	resourceMap["faulty_device_serial_number"] = vvFaultyDeviceSerialNumber
-	resourceMap["replacement_device_serial_number"] = vvReplacementDeviceSerialNumber
-	resourceMap["faulty_device_id"] = vvFaultyDeviceID
+	if resp1.Response == nil {
+		diags = append(diags, diagError(
+			"Failure when executing MarkDeviceForReplacement", err))
+		return diags
+	}
+	taskId := resp1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
+			diags = append(diags, diagError(
+				"Failure when executing MarkDeviceForReplacement", err1))
+			return diags
+		}
+	}
+	queryParamValidate := dnacentersdkgo.ReturnListOfReplacementDevicesWithReplacementDetailsQueryParams{}
+	queryParamValidate.FaultyDeviceSerialNumber = vvFaultyDeviceSerialNumber
+	queryParamValidate.ReplacementDeviceSerialNumber = vvReplacementDeviceSerialNumber
+	item3, err := searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails(m, queryParamValidate, vvFaultyDeviceID)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing MarkDeviceForReplacement", err,
+			"Failure at MarkDeviceForReplacement, unexpected response", ""))
+		return diags
+	}
+
+	resourceMap := make(map[string]string)
+	resourceMap["faulty_device_serial_number"] = item3.FaultyDeviceSerialNumber
+	resourceMap["replacement_device_serial_number"] = item3.ReplacementDeviceSerialNumber
+	resourceMap["faulty_device_id"] = item3.ID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceDeviceReplacementRead(ctx, d, m)
 }
@@ -249,40 +293,31 @@ func resourceDeviceReplacementRead(ctx context.Context, d *schema.ResourceData, 
 	resourceMap := separateResourceID(resourceID)
 
 	vFaultyDeviceID, _ := resourceMap["faulty_device_id"]
-	vFaultyDeviceSerialNumber, okFaultyDeviceSerialNumber := resourceMap["faulty_device_serial_number"]
-	vReplacementDeviceSerialNumber, okReplacementDeviceSerialNumber := resourceMap["replacement_device_serial_number"]
+	vFaultyDeviceSerialNumber := resourceMap["faulty_device_serial_number"]
+	vReplacementDeviceSerialNumber := resourceMap["replacement_device_serial_number"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ReturnListOfReplacementDevicesWithReplacementDetails")
+		log.Printf("[DEBUG] Selected method: ReturnListOfReplacementDevicesWithReplacementDetails")
 		queryParams1 := dnacentersdkgo.ReturnListOfReplacementDevicesWithReplacementDetailsQueryParams{}
 
-		if okReplacementDeviceSerialNumber {
-			queryParams1.ReplacementDeviceSerialNumber = vReplacementDeviceSerialNumber
-		}
-		if okFaultyDeviceSerialNumber {
-			queryParams1.FaultyDeviceSerialNumber = vFaultyDeviceSerialNumber
-		}
+		queryParams1.ReplacementDeviceSerialNumber = vReplacementDeviceSerialNumber
 
-		response1, err := searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails(m, queryParams1, vFaultyDeviceID)
+		queryParams1.FaultyDeviceSerialNumber = vFaultyDeviceSerialNumber
 
-		if err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting ReturnListOfReplacementDevicesWithReplacementDetails search response",
-				err))
-			return diags
-		}
-		if response1 == nil {
+		item1, err := searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails(m, queryParams1, vFaultyDeviceID)
+		if err != nil || item1 == nil {
 			d.SetId("")
 			return diags
 		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		vItems1 := flattenDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetailsItem(response1)
-		if err := d.Set("item", vItems1); err != nil {
+		items := []dnacentersdkgo.ResponseDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetailsResponse{
+			*item1,
+		}
+		// Review flatten function used
+		vItem1 := flattenDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetailsItems(&items)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting ReturnListOfReplacementDevicesWithReplacementDetails response",
+				"Failure when setting ReturnListOfReplacementDevicesWithReplacementDetails search response",
 				err))
 			return diags
 		}
@@ -311,21 +346,13 @@ func resourceDeviceReplacementUpdate(ctx context.Context, d *schema.ResourceData
 	if vReplacementDeviceSerialNumber != "" {
 		queryParams1.ReplacementDeviceSerialNumber = vReplacementDeviceSerialNumber
 	}
-
-	item, err := searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails(m, queryParams1, vFaultyDeviceID)
-
-	if err != nil || item == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetApplications", err,
-			"Failure at yGetApplications, unexpected response", ""))
-		return diags
-	}
-
-	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
-		request1 := expandRequestDeviceReplacementUnmarkDeviceForReplacement(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestDeviceReplacementUnmarkDeviceForReplacement(ctx, "parameters", d)
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil && len(*request1) > 0 {
+			req := *request1
+			req[0].ID = vFaultyDeviceID
+			request1 = &req
 		}
 		response1, restyResp1, err := client.DeviceReplacement.UnmarkDeviceForReplacement(request1)
 		if err != nil || response1 == nil {
@@ -341,6 +368,36 @@ func resourceDeviceReplacementUpdate(ctx context.Context, d *schema.ResourceData
 				"Failure at UnmarkDeviceForReplacement, unexpected response", ""))
 			return diags
 		}
+
+		if response1.Response == nil {
+			diags = append(diags, diagError(
+				"Failure when executing UnmarkDeviceForReplacement", err))
+			return diags
+		}
+		taskId := response1.Response.TaskID
+		log.Printf("[DEBUG] TASKID => %s", taskId)
+		if taskId != "" {
+			time.Sleep(5 * time.Second)
+			response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+			if err != nil || response2 == nil {
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetTaskByID", err,
+					"Failure at GetTaskByID, unexpected response", ""))
+				return diags
+			}
+			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+				errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
+				err1 := errors.New(errorMsg)
+				diags = append(diags, diagError(
+					"Failure when executing UnmarkDeviceForReplacement", err1))
+				return diags
+			}
+		}
+
 	}
 
 	return resourceDeviceReplacementRead(ctx, d, m)
@@ -354,13 +411,12 @@ func resourceDeviceReplacementDelete(ctx context.Context, d *schema.ResourceData
 }
 func expandRequestDeviceReplacementMarkDeviceForReplacement(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceReplacementMarkDeviceForReplacement {
 	request := dnacentersdkgo.RequestDeviceReplacementMarkDeviceForReplacement{}
-	if v := expandRequestDeviceReplacementMarkDeviceForReplacementItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestDeviceReplacementMarkDeviceForReplacementItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -384,7 +440,6 @@ func expandRequestDeviceReplacementMarkDeviceForReplacementItemArray(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -435,19 +490,17 @@ func expandRequestDeviceReplacementMarkDeviceForReplacementItem(ctx context.Cont
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestDeviceReplacementUnmarkDeviceForReplacement(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceReplacementUnmarkDeviceForReplacement {
 	request := dnacentersdkgo.RequestDeviceReplacementUnmarkDeviceForReplacement{}
-	if v := expandRequestDeviceReplacementUnmarkDeviceForReplacementItemArray(ctx, key+".", d); v != nil {
+	if v := expandRequestDeviceReplacementUnmarkDeviceForReplacementItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -471,7 +524,6 @@ func expandRequestDeviceReplacementUnmarkDeviceForReplacementItemArray(ctx conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -522,7 +574,6 @@ func expandRequestDeviceReplacementUnmarkDeviceForReplacementItem(ctx context.Co
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -531,38 +582,10 @@ func searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails
 	var err error
 	var foundItem *dnacentersdkgo.ResponseDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetailsResponse
 	var ite *dnacentersdkgo.ResponseDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails
-	if queryParams.FaultyDeviceSerialNumber != "" &&
-		queryParams.ReplacementDeviceSerialNumber != "" {
-		ite, _, err = client.DeviceReplacement.ReturnListOfReplacementDevicesWithReplacementDetails(&queryParams)
-		if err != nil {
-			return foundItem, err
-		}
-		if ite == nil {
-			return foundItem, err
-		}
-
-		if ite.Response == nil {
-			return foundItem, err
-		}
-		items := ite
-		itemsCopy := *items.Response
-		for _, item := range itemsCopy {
-			// Call get by _ method and set value to foundItem and return
-			if item.FaultyDeviceName == queryParams.FaultyDeviceName {
-				var getItem *dnacentersdkgo.ResponseDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetailsResponse
-				getItem = &item
-				foundItem = getItem
-				return foundItem, err
-			}
-		}
-	} else if vID != "" {
-		queryParams.FaultyDeviceSerialNumber = ""
-		queryParams.ReplacementDeviceSerialNumber = ""
+	if vID != "" {
 		queryParams.Offset = 1
-
 		nResponse, _, err := client.DeviceReplacement.ReturnListOfReplacementDevicesWithReplacementDetails(nil)
 		maxPageSize := len(*nResponse.Response)
-		//maxPageSize := 10
 		for len(*nResponse.Response) > 0 {
 			time.Sleep(15 * time.Second)
 			for _, item := range *nResponse.Response {
@@ -576,6 +599,22 @@ func searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails
 			nResponse, _, err = client.DeviceReplacement.ReturnListOfReplacementDevicesWithReplacementDetails(&queryParams)
 		}
 		return nil, err
+	} else if queryParams.FaultyDeviceName != "" {
+		ite, _, err = client.DeviceReplacement.ReturnListOfReplacementDevicesWithReplacementDetails(&queryParams)
+		if err != nil || ite == nil {
+			return foundItem, err
+		}
+		itemsCopy := *ite.Response
+		if itemsCopy == nil {
+			return foundItem, err
+		}
+		for _, item := range itemsCopy {
+			if item.FaultyDeviceName == queryParams.FaultyDeviceName {
+				foundItem = &item
+				return foundItem, err
+			}
+		}
+		return foundItem, err
 	}
 	return foundItem, err
 }

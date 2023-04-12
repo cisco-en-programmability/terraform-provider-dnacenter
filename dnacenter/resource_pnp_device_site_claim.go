@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -19,8 +19,12 @@ func resourcePnpDeviceSiteClaim() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Device Onboarding (PnP).
 
-- Claim a device based on DNA-C Site based design process. Different parameters are required for different device
-platforms.
+- Claim a device based on DNA-C Site-based design process. Some required parameters differ based on device platform:
+Default/StackSwitch: imageInfo, configInfo.
+AccessPoints: rfProfile.
+Sensors: sensorProfile.
+CatalystWLC/MobilityExpress/EWC: staticIP, subnetMask, gateway. vlanID and ipInterfaceName are also allowed for Catalyst
+9800 WLCs.
 `,
 
 		CreateContext: resourcePnpDeviceSiteClaimCreate,
@@ -60,30 +64,38 @@ platforms.
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"config_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
+										Description: `Config Id`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										ForceNew:    true,
+										Computed:    true,
 									},
 									"config_parameters": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"key": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
+													Description: `Key`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 												},
 												"value": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
+													Description: `Value`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 												},
 											},
 										},
@@ -92,88 +104,108 @@ platforms.
 							},
 						},
 						"device_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							ForceNew: true,
+							Description: `Device Id`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							ForceNew:    true,
+							Computed:    true,
 						},
 						"gateway": &schema.Schema{
+							Description: `for CatalystWLC/MobilityExpress
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
-						},
-						"hostname": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							ForceNew: true,
-						},
-						"image_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							ForceNew: true,
+							Computed: true,
 						},
 						"image_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"image_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
+										Description: `Image Id`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										ForceNew:    true,
+										Computed:    true,
 									},
 									"skip": &schema.Schema{
-										// Type:     schema.TypeBool,
+										Description: `Skip`,
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
-						"ip_interface_name": &schema.Schema{
+						"interface_name": &schema.Schema{
+							Description: `for Catalyst 9800 WLC
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
-						},
-						"remove_inactive": &schema.Schema{
-							// Type:     schema.TypeBool,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							ForceNew:     true,
+							Computed: true,
 						},
 						"rf_profile": &schema.Schema{
+							Description: `for Access Points
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
+						},
+						"sensor_profile": &schema.Schema{
+							Description: `for Sensors
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+							Computed: true,
 						},
 						"site_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							ForceNew: true,
+							Description: `Site Id`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							ForceNew:    true,
+							Computed:    true,
 						},
 						"static_ip": &schema.Schema{
+							Description: `for CatalystWLC/MobilityExpress
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"subnet_mask": &schema.Schema{
+							Description: `for CatalystWLC/MobilityExpress
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"type": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							ForceNew: true,
+							Description: `Type`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							ForceNew:    true,
+							Computed:    true,
 						},
 						"vlan_id": &schema.Schema{
+							Description: `for Catalyst 9800 WLC
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -198,9 +230,9 @@ func resourcePnpDeviceSiteClaimCreate(ctx context.Context, d *schema.ResourceDat
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ClaimADeviceToASite", err,
-			"Failure at ClaimADeviceToASite, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -215,6 +247,7 @@ func resourcePnpDeviceSiteClaimCreate(ctx context.Context, d *schema.ResourceDat
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 
@@ -247,22 +280,7 @@ func expandRequestPnpDeviceSiteClaimClaimADeviceToASite(ctx context.Context, key
 		request.ImageInfo = *expandRequestPnpDeviceSiteClaimClaimADeviceToASiteImageInfo(ctx, key+".image_info.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_info")))) {
-		request.ConfigInfo = *expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfo(ctx, key+".config_info.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hostname")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hostname")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hostname")))) {
-		request.Hostname = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".gateway")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".gateway")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".gateway")))) {
-		request.Gateway = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_id")))) {
-		request.ImageID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remove_inactive")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remove_inactive")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remove_inactive")))) {
-		request.RemoveInactive = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_interface_name")))) {
-		request.IPInterfaceName = interfaceToString(v)
+		request.ConfigInfo = *expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoArray(ctx, key+".config_info", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rf_profile")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rf_profile")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rf_profile")))) {
 		request.RfProfile = interfaceToString(v)
@@ -273,8 +291,17 @@ func expandRequestPnpDeviceSiteClaimClaimADeviceToASite(ctx context.Context, key
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subnet_mask")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subnet_mask")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subnet_mask")))) {
 		request.SubnetMask = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".gateway")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".gateway")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".gateway")))) {
+		request.Gateway = interfaceToString(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan_id")))) {
 		request.VLANID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".interface_name")))) {
+		request.InterfaceName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sensor_profile")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sensor_profile")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sensor_profile")))) {
+		request.SensorProfile = interfaceToString(v)
 	}
 	return &request
 }
@@ -290,19 +317,8 @@ func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteImageInfo(ctx context.Con
 	return &request
 }
 
-func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfo {
-	request := dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfo{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_id")))) {
-		request.ConfigID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_parameters")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_parameters")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_parameters")))) {
-		request.ConfigParameters = *expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoConfigParametersArray(ctx, key+".config_parameters", d)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoConfigParametersArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfoConfigParameters {
-	request := []dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfoConfigParameters{}
+func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfo {
+	request := []dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfo{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -313,10 +329,21 @@ func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoConfigParameter
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoConfigParameters(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfo(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
+	}
+	return &request
+}
+
+func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfo {
+	request := dnacentersdkgo.RequestDeviceOnboardingPnpClaimADeviceToASiteConfigInfo{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_id")))) {
+		request.ConfigID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_parameters")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_parameters")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_parameters")))) {
+		request.ConfigParameters = *expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoConfigParameters(ctx, key+".config_parameters.0", d)
 	}
 	return &request
 }

@@ -39,26 +39,26 @@ output "dnacenter_event_series_count_example" {
 
 ### Optional
 
-- **category** (String) category query parameter.
-- **domain** (String) domain query parameter.
-- **end_time** (Number) endTime query parameter. End Time in milliseconds
-- **event_ids** (String) eventIds query parameter. The registered EventId should be provided
-- **id** (String) The ID of this resource.
-- **severity** (String) severity query parameter.
-- **source** (String) source query parameter.
-- **start_time** (Number) startTime query parameter. Start Time in milliseconds
-- **sub_domain** (String) subDomain query parameter. Sub Domain
-- **type** (String) type query parameter.
+- `category` (String) category query parameter.
+- `domain` (String) domain query parameter.
+- `end_time` (Number) endTime query parameter. End Time in milliseconds
+- `event_ids` (String) eventIds query parameter. The registered EventId should be provided
+- `severity` (String) severity query parameter.
+- `source` (String) source query parameter.
+- `start_time` (Number) startTime query parameter. Start Time in milliseconds
+- `sub_domain` (String) subDomain query parameter. Sub Domain
+- `type` (String) type query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (String)
+- `response` (String)
 
 

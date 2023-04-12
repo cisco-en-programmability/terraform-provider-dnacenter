@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -60,7 +60,7 @@ func dataSourceEventCountRead(ctx context.Context, d *schema.ResourceData, m int
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CountOfEvents")
+		log.Printf("[DEBUG] Selected method: CountOfEvents")
 		queryParams1 := dnacentersdkgo.CountOfEventsQueryParams{}
 
 		if okEventID {
@@ -89,6 +89,7 @@ func dataSourceEventCountRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

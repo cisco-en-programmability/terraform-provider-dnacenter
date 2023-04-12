@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -104,7 +104,7 @@ func dataSourceSecurityAdvisoriesPerDeviceRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAdvisoriesPerDevice")
+		log.Printf("[DEBUG] Selected method: GetAdvisoriesPerDevice")
 		vvDeviceID := vDeviceID.(string)
 
 		response1, restyResp1, err := client.SecurityAdvisories.GetAdvisoriesPerDevice(vvDeviceID)
@@ -128,6 +128,7 @@ func dataSourceSecurityAdvisoriesPerDeviceRead(ctx context.Context, d *schema.Re
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

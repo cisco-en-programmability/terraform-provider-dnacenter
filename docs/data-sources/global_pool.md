@@ -32,46 +32,46 @@ output "dnacenter_global_pool_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **limit** (String) limit query parameter. No of Global Pools to be retrieved
-- **offset** (String) offset query parameter. offset/starting row
+- `limit` (Number) limit query parameter. No of Global Pools to be retrieved
+- `offset` (Number) offset query parameter. offset/starting row
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **client_options** (String)
-- **configure_external_dhcp** (String)
-- **context** (List of Object) (see [below for nested schema](#nestedobjatt--items--context))
-- **create_time** (Number)
-- **dhcp_server_ips** (List of String)
-- **dns_server_ips** (List of String)
-- **gateways** (List of String)
-- **id** (String)
-- **ip_pool_cidr** (String)
-- **ip_pool_name** (String)
-- **ipv6** (String)
-- **last_update_time** (Number)
-- **overlapping** (String)
-- **owner** (String)
-- **parent_uuid** (String)
-- **shared** (String)
-- **total_ip_address_count** (Number)
-- **used_ip_address_count** (Number)
-- **used_percentage** (String)
+- `client_options` (String)
+- `configure_external_dhcp` (String)
+- `context` (List of Object) (see [below for nested schema](#nestedobjatt--items--context))
+- `create_time` (String)
+- `dhcp_server_ips` (List of String)
+- `dns_server_ips` (List of String)
+- `gateways` (List of String)
+- `id` (String)
+- `ip_pool_cidr` (String)
+- `ip_pool_name` (String)
+- `ipv6` (String)
+- `last_update_time` (String)
+- `overlapping` (String)
+- `owner` (String)
+- `parent_uuid` (String)
+- `shared` (String)
+- `total_ip_address_count` (String)
+- `used_ip_address_count` (String)
+- `used_percentage` (String)
 
 <a id="nestedobjatt--items--context"></a>
 ### Nested Schema for `items.context`
 
 Read-Only:
 
-- **context_key** (String)
-- **context_value** (String)
-- **owner** (String)
+- `context_key` (String)
+- `context_value` (String)
+- `owner` (String)
 
 

@@ -32,27 +32,25 @@ output "dnacenter_sda_virtual_network_example" {
 
 ### Required
 
-- **site_name_hierarchy** (String) siteNameHierarchy query parameter.
-- **virtual_network_name** (String) virtualNetworkName query parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `site_name_hierarchy` (String) siteNameHierarchy query parameter.
+- `virtual_network_name` (String) virtualNetworkName query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **description** (String)
-- **device_management_ip_address** (String)
-- **name** (String)
-- **roles** (List of String)
-- **site_hierarchy** (String)
-- **status** (String)
+- `description` (String)
+- `fabric_name` (String)
+- `is_default_vn` (String)
+- `is_infra_vn` (String)
+- `site_name_hierarchy` (String)
+- `status` (String)
+- `virtual_network_name` (String)
 
 

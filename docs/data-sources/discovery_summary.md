@@ -42,30 +42,30 @@ output "dnacenter_discovery_summary_example" {
 
 ### Required
 
-- **id** (String) id path parameter. Discovery ID
+- `id` (String) id path parameter. Discovery ID
 
 ### Optional
 
-- **cli_status** (List of String) cliStatus query parameter.
-- **http_status** (List of String) httpStatus query parameter.
-- **ip_address** (List of String) ipAddress query parameter.
-- **netconf_status** (List of String) netconfStatus query parameter.
-- **ping_status** (List of String) pingStatus query parameter.
-- **snmp_status** (List of String) snmpStatus query parameter.
-- **sort_by** (String) sortBy query parameter.
-- **sort_order** (String) sortOrder query parameter.
-- **task_id** (String) taskId query parameter.
+- `cli_status` (List of String) cliStatus query parameter.
+- `http_status` (List of String) httpStatus query parameter.
+- `ip_address` (List of String) ipAddress query parameter.
+- `netconf_status` (List of String) netconfStatus query parameter.
+- `ping_status` (List of String) pingStatus query parameter.
+- `snmp_status` (List of String) snmpStatus query parameter.
+- `sort_by` (String) sortBy query parameter.
+- `sort_order` (String) sortOrder query parameter.
+- `task_id` (String) taskId query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
-- **version** (String)
+- `response` (Number)
+- `version` (String)
 
 

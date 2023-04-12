@@ -33,43 +33,40 @@ output "dnacenter_license_usage_details_example" {
 
 ### Required
 
-- **device_type** (String) device_type query parameter. Type of device like router, switch, wireless or ise
-- **smart_account_id** (String) smart_account_id path parameter. Id of smart account
-- **virtual_account_name** (String) virtual_account_name path parameter. Name of virtual account. Putting "All" will give license usage detail for all virtual accounts.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_type` (String) device_type query parameter. Type of device like router, switch, wireless or ise
+- `smart_account_id` (String) smart_account_id path parameter. Id of smart account
+- `virtual_account_name` (String) virtual_account_name path parameter. Name of virtual account. Putting "All" will give license term detail for all virtual accounts.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **purchased_dna_license** (List of Object) (see [below for nested schema](#nestedobjatt--item--purchased_dna_license))
-- **purchased_network_license** (List of Object) (see [below for nested schema](#nestedobjatt--item--purchased_network_license))
-- **used_dna_license** (List of Object) (see [below for nested schema](#nestedobjatt--item--used_dna_license))
-- **used_network_license** (List of Object) (see [below for nested schema](#nestedobjatt--item--used_network_license))
+- `purchased_dna_license` (List of Object) (see [below for nested schema](#nestedobjatt--item--purchased_dna_license))
+- `purchased_network_license` (List of Object) (see [below for nested schema](#nestedobjatt--item--purchased_network_license))
+- `used_dna_license` (List of Object) (see [below for nested schema](#nestedobjatt--item--used_dna_license))
+- `used_network_license` (List of Object) (see [below for nested schema](#nestedobjatt--item--used_network_license))
 
 <a id="nestedobjatt--item--purchased_dna_license"></a>
 ### Nested Schema for `item.purchased_dna_license`
 
 Read-Only:
 
-- **license_count_by_type** (List of Object) (see [below for nested schema](#nestedobjatt--item--purchased_dna_license--license_count_by_type))
-- **total_license_count** (Number)
+- `license_count_by_type` (List of Object) (see [below for nested schema](#nestedobjatt--item--purchased_dna_license--license_count_by_type))
+- `total_license_count` (Number)
 
 <a id="nestedobjatt--item--purchased_dna_license--license_count_by_type"></a>
 ### Nested Schema for `item.purchased_dna_license.license_count_by_type`
 
 Read-Only:
 
-- **license_count** (Number)
-- **license_type** (String)
+- `license_count` (Number)
+- `license_type` (String)
 
 
 
@@ -78,16 +75,16 @@ Read-Only:
 
 Read-Only:
 
-- **license_count_by_type** (List of Object) (see [below for nested schema](#nestedobjatt--item--purchased_network_license--license_count_by_type))
-- **total_license_count** (Number)
+- `license_count_by_type` (List of Object) (see [below for nested schema](#nestedobjatt--item--purchased_network_license--license_count_by_type))
+- `total_license_count` (Number)
 
 <a id="nestedobjatt--item--purchased_network_license--license_count_by_type"></a>
 ### Nested Schema for `item.purchased_network_license.license_count_by_type`
 
 Read-Only:
 
-- **license_count** (Number)
-- **license_type** (String)
+- `license_count` (Number)
+- `license_type` (String)
 
 
 
@@ -96,16 +93,16 @@ Read-Only:
 
 Read-Only:
 
-- **license_count_by_type** (List of Object) (see [below for nested schema](#nestedobjatt--item--used_dna_license--license_count_by_type))
-- **total_license_count** (Number)
+- `license_count_by_type` (List of Object) (see [below for nested schema](#nestedobjatt--item--used_dna_license--license_count_by_type))
+- `total_license_count` (Number)
 
 <a id="nestedobjatt--item--used_dna_license--license_count_by_type"></a>
 ### Nested Schema for `item.used_dna_license.license_count_by_type`
 
 Read-Only:
 
-- **license_count** (Number)
-- **license_type** (String)
+- `license_count` (Number)
+- `license_type` (String)
 
 
 
@@ -114,15 +111,15 @@ Read-Only:
 
 Read-Only:
 
-- **license_count_by_type** (List of Object) (see [below for nested schema](#nestedobjatt--item--used_network_license--license_count_by_type))
-- **total_license_count** (Number)
+- `license_count_by_type` (List of Object) (see [below for nested schema](#nestedobjatt--item--used_network_license--license_count_by_type))
+- `total_license_count` (Number)
 
 <a id="nestedobjatt--item--used_network_license--license_count_by_type"></a>
 ### Nested Schema for `item.used_network_license.license_count_by_type`
 
 Read-Only:
 
-- **license_count** (Number)
-- **license_type** (String)
+- `license_count` (Number)
+- `license_type` (String)
 
 

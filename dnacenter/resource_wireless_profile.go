@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,12 +18,12 @@ func resourceWirelessProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Wireless.
 
-- Delete the Wireless Profile from DNAC whose name is provided.
+- Delete the Wireless Profile from Cisco DNA Center whose name is provided.
 
 - Updates the wireless Network Profile with updated details provided. All sites to be present in the network profile
 should be provided.
 
-- Creates Wireless Network Profile on DNAC and associates sites and SSIDs to it.
+- Creates Wireless Network Profile on Cisco DNA Center and associates sites and SSIDs to it.
 `,
 
 		CreateContext: resourceWirelessProfileCreate,
@@ -57,7 +57,6 @@ should be provided.
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"sites": &schema.Schema{
 										Description: `array of site name hierarchies(eg: ["Global/aaa/zzz", "Global/aaa/zzz"])
 `,
@@ -67,7 +66,6 @@ should be provided.
 											Type: schema.TypeString,
 										},
 									},
-
 									"ssid_details": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -77,11 +75,10 @@ should be provided.
 												"enable_fabric": &schema.Schema{
 													Description: `true if fabric is enabled else false
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"flex_connect": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -91,11 +88,10 @@ should be provided.
 															"enable_flex_connect": &schema.Schema{
 																Description: `true if flex connect is enabled else false
 `,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
-
 															"local_to_vlan": &schema.Schema{
 																Description: `Local To VLAN ID
 `,
@@ -105,21 +101,18 @@ should be provided.
 														},
 													},
 												},
-
 												"interface_name": &schema.Schema{
 													Description: `Interface Name
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"name": &schema.Schema{
 													Description: `SSID Name
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"type": &schema.Schema{
 													Description: `SSID Type(enum: Enterprise/Guest)
 `,
@@ -137,17 +130,15 @@ should be provided.
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"profile_details": &schema.Schema{
 							Type:     schema.TypeList,
-							Required: true,
-							MaxItems: 1,
-							MinItems: 1,
+							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -155,14 +146,15 @@ should be provided.
 										Description: `Profile Name
 `,
 										Type:     schema.TypeString,
-										Required: true,
+										Optional: true,
+										Computed: true,
 									},
 									"sites": &schema.Schema{
-										Description: `array of site name hierarchies(eg: ["Global/aaa/zzz", "Global/aaa/zzz"]) 
+										Description: `array of site name hierarchies(eg: ["Global/aaa/zzz", "Global/aaa/zzz"])
 `,
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -170,37 +162,41 @@ should be provided.
 									"ssid_details": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"enable_fabric": &schema.Schema{
-													Description: `true is ssid is fabric else false
+													Description: `true if ssid is fabric else false
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
+													Computed:     true,
 												},
 												"flex_connect": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
-													MaxItems: 1,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"enable_flex_connect": &schema.Schema{
 																Description: `true if flex connect is enabled else false
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
+																Computed:     true,
 															},
 															"local_to_vlan": &schema.Schema{
-																Description: `Local To Vlan
+																Description: `Local To Vlan Id
 `,
 																Type:     schema.TypeInt,
 																Optional: true,
+																Computed: true,
 															},
 														},
 													},
@@ -210,18 +206,35 @@ should be provided.
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Description: `Ssid Name
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
+												},
+												"policy_profile_name": &schema.Schema{
+													Description: `Policy Profile Name
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
 												},
 												"type": &schema.Schema{
 													Description: `Ssid Type(enum: Enterprise/Guest)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
+												},
+												"wlan_profile_name": &schema.Schema{
+													Description: `WLAN Profile Name 
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -233,7 +246,7 @@ should be provided.
 							Description: `wirelessProfileName path parameter. Wireless Profile Name
 `,
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 					},
 				},
@@ -549,7 +562,6 @@ func expandRequestWirelessProfileCreateWirelessProfile(ctx context.Context, key 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -567,7 +579,6 @@ func expandRequestWirelessProfileCreateWirelessProfileProfileDetails(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -591,7 +602,6 @@ func expandRequestWirelessProfileCreateWirelessProfileProfileDetailsSSIDDetailsA
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -612,10 +622,15 @@ func expandRequestWirelessProfileCreateWirelessProfileProfileDetailsSSIDDetails(
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".interface_name")))) {
 		request.InterfaceName = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".wlan_profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".wlan_profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".wlan_profile_name")))) {
+		request.WLANProfileName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".policy_profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".policy_profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".policy_profile_name")))) {
+		request.PolicyProfileName = interfaceToString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -630,17 +645,15 @@ func expandRequestWirelessProfileCreateWirelessProfileProfileDetailsSSIDDetailsF
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
 func expandRequestWirelessProfileUpdateWirelessProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateWirelessProfile {
 	request := dnacentersdkgo.RequestWirelessUpdateWirelessProfile{}
-	request.ProfileDetails = expandRequestWirelessProfileUpdateWirelessProfileProfileDetails(ctx, key+".profile_details.0", d)
+	request.ProfileDetails = expandRequestWirelessProfileUpdateWirelessProfileProfileDetails(ctx, key, d)
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -658,7 +671,6 @@ func expandRequestWirelessProfileUpdateWirelessProfileProfileDetails(ctx context
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -682,7 +694,6 @@ func expandRequestWirelessProfileUpdateWirelessProfileProfileDetailsSSIDDetailsA
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -703,10 +714,15 @@ func expandRequestWirelessProfileUpdateWirelessProfileProfileDetailsSSIDDetails(
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".interface_name")))) {
 		request.InterfaceName = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".wlan_profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".wlan_profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".wlan_profile_name")))) {
+		request.WLANProfileName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".policy_profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".policy_profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".policy_profile_name")))) {
+		request.PolicyProfileName = interfaceToString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -721,7 +737,6 @@ func expandRequestWirelessProfileUpdateWirelessProfileProfileDetailsSSIDDetailsF
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 

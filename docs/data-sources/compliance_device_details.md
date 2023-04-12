@@ -35,29 +35,29 @@ output "dnacenter_compliance_device_details_example" {
 
 ### Optional
 
-- **compliance_status** (String) complianceStatus query parameter. Compliance status can have value among 'COMPLIANT', 'NON_COMPLIANT', 'IN_PROGRESS', 'NOT_AVAILABLE', 'NOT_APPLICABLE', 'ERROR'
-- **compliance_type** (String) complianceType query parameter. complianceType can have any value among 'NETWORK_PROFILE', 'IMAGE', 'APPLICATION_VISIBILITY', 'FABRIC', 'PSIRT', 'RUNNING_CONFIG', 'WORKFLOW'
-- **device_uuid** (String) deviceUuid query parameter. Comma separated deviceUuids
-- **id** (String) The ID of this resource.
-- **limit** (String) limit query parameter. Number of records to be retrieved
-- **offset** (String) offset query parameter. offset/starting row
+- `compliance_status` (String) complianceStatus query parameter. Compliance status can have value among 'COMPLIANT', 'NON_COMPLIANT', 'IN_PROGRESS', 'NOT_AVAILABLE', 'NOT_APPLICABLE', 'ERROR'
+- `compliance_type` (String) complianceType query parameter. complianceType can have any value among 'NETWORK_PROFILE', 'IMAGE', 'APPLICATION_VISIBILITY', 'FABRIC', 'PSIRT', 'RUNNING_CONFIG', 'WORKFLOW'
+- `device_uuid` (String) deviceUuid query parameter. Comma separated deviceUuids
+- `limit` (Number) limit query parameter. Number of records to be retrieved
+- `offset` (Number) offset query parameter. offset/starting row
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **category** (String)
-- **compliance_type** (String)
-- **device_uuid** (String)
-- **display_name** (String)
-- **last_sync_time** (String)
-- **last_update_time** (Number)
-- **state** (String)
-- **status** (String)
+- `category` (String)
+- `compliance_type` (String)
+- `device_uuid` (String)
+- `display_name` (String)
+- `last_sync_time` (Number)
+- `last_update_time` (Number)
+- `state` (String)
+- `status` (String)
 
 

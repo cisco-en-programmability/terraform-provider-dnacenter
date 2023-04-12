@@ -34,83 +34,83 @@ output "dnacenter_site_health_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **limit** (Number) limit query parameter. The max number of sites in the returned data set.  Default is 25, and max at 50
-- **offset** (Number) offset query parameter. The offset value, starting from 1, of the first returned site entry.  Default is 1.
-- **site_type** (String) siteType query parameter. Type of the site to return.  AREA or BUILDING.  Default to AREA
-- **timestamp** (String) timestamp query parameter. Epoch time(in milliseconds) when the Site Hierarchy data is required
+- `limit` (Number) limit query parameter. The max number of sites in the returned data set.  Default is 25, and max at 50
+- `offset` (Number) offset query parameter. The offset value, starting from 1, of the first returned site entry.  Default is 1.
+- `site_type` (String) siteType query parameter. Type of the site to return.  AREA or BUILDING.  Default to AREA
+- `timestamp` (String) timestamp query parameter. Epoch time(in milliseconds) when the Site Hierarchy data is required
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **access_good_count** (String)
-- **access_total_count** (String)
-- **application_bytes_total_count** (String)
-- **application_good_count** (String)
-- **application_health** (String)
-- **application_health_stats** (List of Object) (see [below for nested schema](#nestedobjatt--items--application_health_stats))
-- **application_total_count** (String)
-- **client_health_wired** (String)
-- **client_health_wireless** (String)
-- **core_good_count** (String)
-- **core_total_count** (String)
-- **distribution_good_count** (String)
-- **distribution_total_count** (String)
-- **dnac_info** (String)
-- **healthy_clients_percentage** (String)
-- **healthy_network_device_percentage** (String)
-- **latitude** (Number)
-- **longitude** (Number)
-- **network_health_access** (String)
-- **network_health_average** (String)
-- **network_health_core** (String)
-- **network_health_distribution** (String)
-- **network_health_others** (String)
-- **network_health_router** (String)
-- **network_health_wireless** (String)
-- **number_of_clients** (String)
-- **number_of_network_device** (String)
-- **number_of_wired_clients** (String)
-- **number_of_wireless_clients** (String)
-- **overall_good_devices** (String)
-- **parent_site_id** (String)
-- **parent_site_name** (String)
-- **router_good_count** (String)
-- **router_total_count** (String)
-- **site_id** (String)
-- **site_name** (String)
-- **site_type** (String)
-- **total_number_of_active_wireless_clients** (String)
-- **total_number_of_connected_wired_clients** (String)
-- **wired_good_clients** (String)
-- **wireless_device_good_count** (String)
-- **wireless_device_total_count** (String)
-- **wireless_good_clients** (String)
+- `access_good_count` (String)
+- `access_total_count` (String)
+- `application_bytes_total_count` (String)
+- `application_good_count` (String)
+- `application_health` (String)
+- `application_health_stats` (List of Object) (see [below for nested schema](#nestedobjatt--items--application_health_stats))
+- `application_total_count` (String)
+- `client_health_wired` (String)
+- `client_health_wireless` (String)
+- `core_good_count` (String)
+- `core_total_count` (String)
+- `distribution_good_count` (String)
+- `distribution_total_count` (String)
+- `dnac_info` (String)
+- `healthy_clients_percentage` (String)
+- `healthy_network_device_percentage` (String)
+- `latitude` (Number)
+- `longitude` (Number)
+- `network_health_access` (String)
+- `network_health_average` (String)
+- `network_health_core` (String)
+- `network_health_distribution` (String)
+- `network_health_others` (String)
+- `network_health_router` (String)
+- `network_health_wireless` (String)
+- `number_of_clients` (String)
+- `number_of_network_device` (String)
+- `number_of_wired_clients` (String)
+- `number_of_wireless_clients` (String)
+- `overall_good_devices` (String)
+- `parent_site_id` (String)
+- `parent_site_name` (String)
+- `router_good_count` (String)
+- `router_total_count` (String)
+- `site_id` (String)
+- `site_name` (String)
+- `site_type` (String)
+- `total_number_of_active_wireless_clients` (String)
+- `total_number_of_connected_wired_clients` (String)
+- `wired_good_clients` (String)
+- `wireless_device_good_count` (String)
+- `wireless_device_total_count` (String)
+- `wireless_good_clients` (String)
 
 <a id="nestedobjatt--items--application_health_stats"></a>
 ### Nested Schema for `items.application_health_stats`
 
 Read-Only:
 
-- **app_total_count** (Number)
-- **business_irrelevant_app_count** (List of Object) (see [below for nested schema](#nestedobjatt--items--application_health_stats--business_irrelevant_app_count))
-- **business_relevant_app_count** (List of Object) (see [below for nested schema](#nestedobjatt--items--application_health_stats--business_relevant_app_count))
-- **default_health_app_count** (List of Object) (see [below for nested schema](#nestedobjatt--items--application_health_stats--default_health_app_count))
+- `app_total_count` (Number)
+- `business_irrelevant_app_count` (List of Object) (see [below for nested schema](#nestedobjatt--items--application_health_stats--business_irrelevant_app_count))
+- `business_relevant_app_count` (List of Object) (see [below for nested schema](#nestedobjatt--items--application_health_stats--business_relevant_app_count))
+- `default_health_app_count` (List of Object) (see [below for nested schema](#nestedobjatt--items--application_health_stats--default_health_app_count))
 
 <a id="nestedobjatt--items--application_health_stats--business_irrelevant_app_count"></a>
 ### Nested Schema for `items.application_health_stats.business_irrelevant_app_count`
 
 Read-Only:
 
-- **fair** (Number)
-- **good** (Number)
-- **poor** (Number)
+- `fair` (Number)
+- `good` (Number)
+- `poor` (Number)
 
 
 <a id="nestedobjatt--items--application_health_stats--business_relevant_app_count"></a>
@@ -118,9 +118,9 @@ Read-Only:
 
 Read-Only:
 
-- **fair** (Number)
-- **good** (Number)
-- **poor** (Number)
+- `fair` (Number)
+- `good` (Number)
+- `poor` (Number)
 
 
 <a id="nestedobjatt--items--application_health_stats--default_health_app_count"></a>
@@ -128,8 +128,8 @@ Read-Only:
 
 Read-Only:
 
-- **fair** (Number)
-- **good** (Number)
-- **poor** (Number)
+- `fair` (Number)
+- `good` (Number)
+- `poor` (Number)
 
 

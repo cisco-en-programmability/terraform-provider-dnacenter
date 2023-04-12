@@ -31,22 +31,19 @@ output "dnacenter_security_advisories_devices_example" {
 
 ### Required
 
-- **advisory_id** (String) advisoryId path parameter. Advisory ID
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `advisory_id` (String) advisoryId path parameter. Advisory ID
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **response** (List of String)
-- **version** (String)
+- `response` (List of String)
+- `version` (String)
 
 

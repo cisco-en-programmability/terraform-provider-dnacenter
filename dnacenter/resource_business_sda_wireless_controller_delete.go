@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -67,6 +67,15 @@ func resourceBusinessSdaWirelessControllerDelete() *schema.Resource {
 							Required: true,
 							ForceNew: true,
 						},
+						"persistbapioutput": &schema.Schema{
+							Description: `deviceIPAddress query parameter. Device Management IP Address
+`,
+							Type:         schema.TypeString,
+							Optional:     true,
+							ForceNew:     true,
+							Default:      "false",
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+						},
 					},
 				},
 			},
@@ -79,21 +88,26 @@ func resourceBusinessSdaWirelessControllerDeleteCreate(ctx context.Context, d *s
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vDeviceIPAddress := resourceItem["device_ipaddress"]
 
+	vPersistbapioutput := resourceItem["persistbapioutput"]
+
+	headerParams1 := dnacentersdkgo.RemoveWLCFromFabricDomainHeaderParams{}
 	queryParams1 := dnacentersdkgo.RemoveWLCFromFabricDomainQueryParams{}
 
 	queryParams1.DeviceIPAddress = vDeviceIPAddress.(string)
 
-	response1, restyResp1, err := client.FabricWireless.RemoveWLCFromFabricDomain(&queryParams1)
+	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+
+	response1, restyResp1, err := client.FabricWireless.RemoveWLCFromFabricDomain(&headerParams1, &queryParams1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing RemoveWLCFromFabricDomain", err,
-			"Failure at RemoveWLCFromFabricDomain, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing RemoveWLCFromFabricDomain", err))
 		return diags
 	}
 
@@ -142,6 +156,7 @@ func resourceBusinessSdaWirelessControllerDeleteCreate(ctx context.Context, d *s
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

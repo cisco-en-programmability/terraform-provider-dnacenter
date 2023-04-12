@@ -21,5 +21,5 @@ data "dnacenter_templates_details" "example" {
 }
 
 output "dnacenter_templates_details_example" {
-  value = data.dnacenter_templates_details.example.items
+  value = data.dnacenter_templates_details.example.item
 }

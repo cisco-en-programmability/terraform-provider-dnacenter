@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -85,7 +85,7 @@ func dataSourceTaskTree() *schema.Resource {
 						},
 
 						"operation_id_list": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -138,7 +138,7 @@ func dataSourceTaskTreeRead(ctx context.Context, d *schema.ResourceData, m inter
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTaskTree")
+		log.Printf("[DEBUG] Selected method: GetTaskTree")
 		vvTaskID := vTaskID.(string)
 
 		response1, restyResp1, err := client.Task.GetTaskTree(vvTaskID)
@@ -162,6 +162,7 @@ func dataSourceTaskTreeRead(ctx context.Context, d *schema.ResourceData, m inter
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

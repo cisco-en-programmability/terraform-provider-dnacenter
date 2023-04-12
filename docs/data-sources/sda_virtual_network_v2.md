@@ -31,28 +31,23 @@ output "dnacenter_sda_virtual_network_v2_example" {
 
 ### Required
 
-- **virtual_network_name** (String) virtualNetworkName query parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `virtual_network_name` (String) virtualNetworkName query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **description** (String)
-- **execution_status_url** (String)
-- **is_guest_virtual_network** (String)
-- **scalable_group_names** (List of String)
-- **status** (String)
-- **task_id** (String)
-- **task_status_url** (String)
-- **virtual_network_name** (String)
+- `description` (String)
+- `is_guest_virtual_network` (String)
+- `scalable_group_names` (List of String)
+- `status` (String)
+- `v_manage_vpn_id` (String)
+- `virtual_network_name` (String)
 
 

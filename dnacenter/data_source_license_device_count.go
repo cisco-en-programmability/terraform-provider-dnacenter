@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -27,7 +27,7 @@ func dataSourceLicenseDeviceCount() *schema.Resource {
 				Optional: true,
 			},
 			"dna_level": &schema.Schema{
-				Description: `dna_level query parameter. Device Cisco DNA license level
+				Description: `dna_level query parameter. Device Cisco DNA License Level
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -39,13 +39,13 @@ func dataSourceLicenseDeviceCount() *schema.Resource {
 				Optional: true,
 			},
 			"smart_account_id": &schema.Schema{
-				Description: `smart_account_id query parameter. Id of smart account
+				Description: `smart_account_id query parameter. Smart account id
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"virtual_account_name": &schema.Schema{
-				Description: `virtual_account_name query parameter. Name of virtual account
+				Description: `virtual_account_name query parameter. Virtual account name
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -89,8 +89,8 @@ func dataSourceLicenseDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeviceCountDetails")
-		queryParams1 := dnacentersdkgo.DeviceCountDetailsQueryParams{}
+		log.Printf("[DEBUG] Selected method: DeviceCountDetails2")
+		queryParams1 := dnacentersdkgo.DeviceCountDetails2QueryParams{}
 
 		if okDeviceType {
 			queryParams1.DeviceType = vDeviceType.(string)
@@ -108,27 +108,28 @@ func dataSourceLicenseDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 			queryParams1.SmartAccountID = vSmartAccountID.(string)
 		}
 
-		response1, restyResp1, err := client.Licenses.DeviceCountDetails(&queryParams1)
+		response1, restyResp1, err := client.Licenses.DeviceCountDetails2(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing DeviceCountDetails", err,
-				"Failure at DeviceCountDetails, unexpected response", ""))
+				"Failure when executing DeviceCountDetails2", err,
+				"Failure at DeviceCountDetails2, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenLicensesDeviceCountDetailsItem(response1)
+		vItem1 := flattenLicensesDeviceCountDetails2Item(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting DeviceCountDetails response",
+				"Failure when setting DeviceCountDetails2 response",
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -136,7 +137,7 @@ func dataSourceLicenseDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 	return diags
 }
 
-func flattenLicensesDeviceCountDetailsItem(item *dnacentersdkgo.ResponseLicensesDeviceCountDetails) []map[string]interface{} {
+func flattenLicensesDeviceCountDetails2Item(item *dnacentersdkgo.ResponseLicensesDeviceCountDetails2) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

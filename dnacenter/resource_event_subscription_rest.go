@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -46,7 +46,6 @@ func resourceEventSubscriptionRest() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"filter": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -61,7 +60,6 @@ func resourceEventSubscriptionRest() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"domains_subdomains": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -73,7 +71,6 @@ func resourceEventSubscriptionRest() *schema.Resource {
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"sub_domains": &schema.Schema{
 													Description: `Sub Domains`,
 													Type:        schema.TypeList,
@@ -85,7 +82,6 @@ func resourceEventSubscriptionRest() *schema.Resource {
 											},
 										},
 									},
-
 									"event_ids": &schema.Schema{
 										Description: `Event Ids`,
 										Type:        schema.TypeList,
@@ -94,7 +90,6 @@ func resourceEventSubscriptionRest() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"others": &schema.Schema{
 										Description: `Others`,
 										Type:        schema.TypeList,
@@ -103,7 +98,6 @@ func resourceEventSubscriptionRest() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"severities": &schema.Schema{
 										Description: `Severities`,
 										Type:        schema.TypeList,
@@ -112,7 +106,6 @@ func resourceEventSubscriptionRest() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"site_ids": &schema.Schema{
 										Description: `Site Ids`,
 										Type:        schema.TypeList,
@@ -121,7 +114,6 @@ func resourceEventSubscriptionRest() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"sources": &schema.Schema{
 										Description: `Sources`,
 										Type:        schema.TypeList,
@@ -130,7 +122,6 @@ func resourceEventSubscriptionRest() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"types": &schema.Schema{
 										Description: `Types`,
 										Type:        schema.TypeList,
@@ -142,20 +133,16 @@ func resourceEventSubscriptionRest() *schema.Resource {
 								},
 							},
 						},
-
 						"is_private": &schema.Schema{
 							Description: `Is Private`,
-
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
-
 						"name": &schema.Schema{
 							Description: `Name`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"subscription_endpoints": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -167,13 +154,11 @@ func resourceEventSubscriptionRest() *schema.Resource {
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"instance_id": &schema.Schema{
 										Description: `Instance Id`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"subscription_details": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -185,31 +170,26 @@ func resourceEventSubscriptionRest() *schema.Resource {
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"body": &schema.Schema{
 													Description: `Body`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"connect_timeout": &schema.Schema{
 													Description: `Connect Timeout`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"connector_type": &schema.Schema{
 													Description: `Connector Type`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"description": &schema.Schema{
 													Description: `Description`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"headers": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -224,25 +204,21 @@ func resourceEventSubscriptionRest() *schema.Resource {
 														},
 													},
 												},
-
 												"instance_id": &schema.Schema{
 													Description: `Instance Id`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"method": &schema.Schema{
 													Description: `Method`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"name": &schema.Schema{
 													Description: `Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"path_params": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -257,7 +233,6 @@ func resourceEventSubscriptionRest() *schema.Resource {
 														},
 													},
 												},
-
 												"query_params": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -272,25 +247,21 @@ func resourceEventSubscriptionRest() *schema.Resource {
 														},
 													},
 												},
-
 												"read_timeout": &schema.Schema{
 													Description: `Read Timeout`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"resource": &schema.Schema{
 													Description: `Resource`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"trust_cert": &schema.Schema{
 													Description: `Trust Cert`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"url": &schema.Schema{
 													Description: `Url`,
 													Type:        schema.TypeString,
@@ -302,19 +273,16 @@ func resourceEventSubscriptionRest() *schema.Resource {
 								},
 							},
 						},
-
 						"subscription_id": &schema.Schema{
 							Description: `Subscription Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"tenant_id": &schema.Schema{
 							Description: `Tenant Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"version": &schema.Schema{
 							Description: `Version`,
 							Type:        schema.TypeString,
@@ -326,29 +294,28 @@ func resourceEventSubscriptionRest() *schema.Resource {
 			"parameters": &schema.Schema{
 				Description: `Array of RequestEventManagementCreateRestWebhookEventSubscription`,
 				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"payload": &schema.Schema{
 							Description: `Array of RequestEventManagementCreateRestWebhookEventSubscription`,
 							Type:        schema.TypeList,
-							Required:    true,
-							MinItems:    1,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-
 									"description": &schema.Schema{
 										Description: `Description
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"filter": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -356,6 +323,7 @@ func resourceEventSubscriptionRest() *schema.Resource {
 													Description: `Categories`,
 													Type:        schema.TypeList,
 													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -363,6 +331,7 @@ func resourceEventSubscriptionRest() *schema.Resource {
 												"domains_subdomains": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -370,11 +339,13 @@ func resourceEventSubscriptionRest() *schema.Resource {
 																Description: `Domain`,
 																Type:        schema.TypeString,
 																Optional:    true,
+																Computed:    true,
 															},
 															"sub_domains": &schema.Schema{
 																Description: `Sub Domains`,
 																Type:        schema.TypeList,
 																Optional:    true,
+																Computed:    true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -387,6 +358,7 @@ func resourceEventSubscriptionRest() *schema.Resource {
 `,
 													Type:     schema.TypeList,
 													Optional: true,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -395,6 +367,7 @@ func resourceEventSubscriptionRest() *schema.Resource {
 													Description: `Severities`,
 													Type:        schema.TypeList,
 													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -403,6 +376,7 @@ func resourceEventSubscriptionRest() *schema.Resource {
 													Description: `Site Ids`,
 													Type:        schema.TypeList,
 													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -411,6 +385,7 @@ func resourceEventSubscriptionRest() *schema.Resource {
 													Description: `Sources`,
 													Type:        schema.TypeList,
 													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -419,6 +394,7 @@ func resourceEventSubscriptionRest() *schema.Resource {
 													Description: `Types`,
 													Type:        schema.TypeList,
 													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -430,11 +406,13 @@ func resourceEventSubscriptionRest() *schema.Resource {
 										Description: `Name
 `,
 										Type:     schema.TypeString,
-										Required: true,
+										Optional: true,
+										Default:  "",
 									},
 									"subscription_endpoints": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -443,11 +421,12 @@ func resourceEventSubscriptionRest() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"subscription_details": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
-													MaxItems: 1,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -456,6 +435,7 @@ func resourceEventSubscriptionRest() *schema.Resource {
 `,
 																Type:     schema.TypeString,
 																Optional: true,
+																Computed: true,
 															},
 														},
 													},
@@ -468,17 +448,16 @@ func resourceEventSubscriptionRest() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Default:  "",
 									},
 									"version": &schema.Schema{
 										Description: `Version
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
-								},
-							},
-						},
-					},
+								}}}},
 				},
 			},
 		},

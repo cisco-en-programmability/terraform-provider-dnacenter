@@ -31,18 +31,18 @@ output "dnacenter_network_device_meraki_organization_example" {
 
 ### Required
 
-- **id** (String) id path parameter.
+- `id` (String) id path parameter.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **response** (List of String)
-- **version** (String)
+- `response` (List of String)
+- `version` (String)
 
 

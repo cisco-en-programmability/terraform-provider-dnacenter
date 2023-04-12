@@ -2,22 +2,24 @@ package dnacenter
 
 import (
 	"context"
-	"fmt"
+
 	"time"
 
+	"fmt"
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceAssignDeviceToSite() *schema.Resource {
 	return &schema.Resource{
-		Description: `It performs create operation.
+		Description: `It performs create operation on Site Design.
 
 - Assigns unassigned devices to a site. This data source action does not move assigned devices to other sites.
 `,
@@ -26,39 +28,10 @@ func resourceAssignDeviceToSite() *schema.Resource {
 		ReadContext:   resourceAssignDeviceToSiteRead,
 		DeleteContext: resourceAssignDeviceToSiteDelete,
 		Schema: map[string]*schema.Schema{
-			"parameters": &schema.Schema{
-				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
-				ForceNew: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"site_id": &schema.Schema{
-							Description: `siteId path parameter. Site id to which site the device to assign
-					`,
-							Type:     schema.TypeString,
-							Required: true,
-							ForceNew: true,
-						},
-						"device": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							ForceNew: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"ip": &schema.Schema{
-										Description: `Device ip (eg: 10.104.240.64)
-					`,
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-									},
-								},
-							},
-						},
-					}}},
+			"last_updated": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -83,100 +56,135 @@ func resourceAssignDeviceToSite() *schema.Resource {
 					},
 				},
 			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Required: true,
+				MaxItems: 1,
+				MinItems: 1,
+				ForceNew: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"site_id": &schema.Schema{
+							Description: `siteId path parameter. Site id to which site the device to assign
+`,
+							Type:     schema.TypeString,
+							Required: true,
+							ForceNew: true,
+						},
+						"device": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							ForceNew: true,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"ip": &schema.Schema{
+										Description: `Device ip (eg: 10.104.240.64)
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 		},
 	}
 }
 
+func resourceAssignDeviceToSiteCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
+	var diags diag.Diagnostics
+
+	resourceItem := *getResourceItem(d.Get("parameters"))
+
+	vSiteID := resourceItem["site_id"]
+
+	vvSiteID := vSiteID.(string)
+	request1 := expandRequestAssignDeviceToSiteAssignDevicesToSite(ctx, "parameters.0", d)
+
+	headerParams1 := dnacentersdkgo.AssignDevicesToSiteHeaderParams{}
+
+	headerParams1.Runsync = "false"
+
+	headerParams1.Persistbapioutput = "false"
+
+	headerParams1.Runsynctimeout = "false"
+
+	response1, restyResp1, err := client.Sites.AssignDevicesToSite(vvSiteID, request1, &headerParams1)
+
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing AssignDevicesToSite", err,
+			"Failure at AssignDevicesToSite execution", err.Error()))
+		return diags
+	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	executionId := response1.ExecutionID
+	log.Printf("[DEBUG] ExecutionID => %s", executionId)
+	if executionId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetBusinessAPIExecutionDetails", err,
+				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+			return diags
+		}
+		for response2.Status == "IN_PROGRESS" {
+			time.Sleep(10 * time.Second)
+			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp1 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+		}
+		if response2.Status == "FAILURE" {
+			bapiError := response2.BapiError
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing AssignDevicesToSite", err,
+				"Failure at AssignDevicesToSite execution", bapiError))
+			return diags
+		}
+	}
+
+	vItem1 := flattenSitesAssignDevicesToSiteItem(response1)
+	if err := d.Set("item", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting AssignDevicesToSite response",
+			err))
+		return diags
+	}
+
+	d.SetId(getUnixTimeString())
+	return diags
+
+}
 func resourceAssignDeviceToSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
-	return diags
-}
-
-func resourceAssignDeviceToSiteCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
-
-	var diags diag.Diagnostics
-	vSiteID := d.Get("parameters.0.site_id")
-	selectedMethod := 1
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: AssignDevicesToSite")
-		vvSiteID := vSiteID.(string)
-		request1 := expandRequestAssignDeviceToSiteAssignDevicesToSite(ctx, "parameters.0", d)
-
-		headerParams1 := dnacentersdkgo.AssignDevicesToSiteHeaderParams{}
-
-		headerParams1.Runsync = "false"
-
-		headerParams1.Persistbapioutput = "false"
-
-		headerParams1.Runsynctimeout = "false"
-
-		response1, restyResp1, err := client.Sites.AssignDevicesToSite(vvSiteID, request1, &headerParams1)
-
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-
-		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing AssignDevicesToSite", err,
-				"Failure at AssignDevicesToSite, unexpected response", ""))
-			return diags
-		}
-
-		executionId := response1.ExecutionID
-		log.Printf("[DEBUG] ExecutionID => %s", executionId)
-		if executionId != "" {
-			time.Sleep(5 * time.Second)
-			response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
-			if err != nil || response2 == nil {
-				if restyResp2 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetBusinessAPIExecutionDetails", err,
-					"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
-				return diags
-			}
-			for response2.Status == "IN_PROGRESS" {
-				time.Sleep(10 * time.Second)
-				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
-				if err != nil || response2 == nil {
-					if restyResp1 != nil {
-						log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-					}
-					diags = append(diags, diagErrorWithAlt(
-						"Failure when executing GetExecutionByID", err,
-						"Failure at GetExecutionByID, unexpected response", ""))
-					return diags
-				}
-			}
-			if response2.Status == "FAILURE" {
-				bapiError := response2.BapiError
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing AssignDevicesToSite", err,
-					"Failure at AssignDevicesToSite execution", bapiError))
-				return diags
-			}
-		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		vItem1 := flattenAssignDevicesToSiteItem(response1)
-		if err := d.Set("item", vItem1); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting AssignDevicesToSite response",
-				err))
-			return diags
-		}
-		d.SetId(getUnixTimeString())
-		return diags
-
-	}
 	return diags
 }
 
@@ -223,7 +231,7 @@ func expandRequestAssignDeviceToSiteAssignDevicesToSiteDevice(ctx context.Contex
 	return &request
 }
 
-func flattenAssignDevicesToSiteItem(item *dnacentersdkgo.ResponseSitesAssignDevicesToSite) []map[string]interface{} {
+func flattenSitesAssignDevicesToSiteItem(item *dnacentersdkgo.ResponseSitesAssignDevicesToSite) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

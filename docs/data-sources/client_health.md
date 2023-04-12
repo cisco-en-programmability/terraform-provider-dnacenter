@@ -31,41 +31,41 @@ output "dnacenter_client_health_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **timestamp** (String) timestamp query parameter. Epoch time(in milliseconds) when the Client health data is required
+- `timestamp` (String) timestamp query parameter. Epoch time(in milliseconds) when the Client health data is required
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **score_detail** (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail))
-- **site_id** (String)
+- `score_detail` (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail))
+- `site_id` (String)
 
 <a id="nestedobjatt--items--score_detail"></a>
 ### Nested Schema for `items.score_detail`
 
 Read-Only:
 
-- **client_count** (Number)
-- **client_unique_count** (Number)
-- **endtime** (Number)
-- **score_category** (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_category))
-- **score_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list))
-- **score_value** (Number)
-- **starttime** (Number)
+- `client_count` (Number)
+- `client_unique_count` (Number)
+- `endtime` (Number)
+- `score_category` (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_category))
+- `score_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list))
+- `score_value` (Number)
+- `starttime` (Number)
 
 <a id="nestedobjatt--items--score_detail--score_category"></a>
 ### Nested Schema for `items.score_detail.score_category`
 
 Read-Only:
 
-- **score_category** (String)
-- **value** (String)
+- `score_category` (String)
+- `value` (String)
 
 
 <a id="nestedobjatt--items--score_detail--score_list"></a>
@@ -73,21 +73,21 @@ Read-Only:
 
 Read-Only:
 
-- **client_count** (Number)
-- **client_unique_count** (Number)
-- **endtime** (Number)
-- **score_category** (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list--score_category))
-- **score_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list--score_list))
-- **score_value** (Number)
-- **starttime** (Number)
+- `client_count` (Number)
+- `client_unique_count` (Number)
+- `endtime` (Number)
+- `score_category` (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list--score_category))
+- `score_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list--score_list))
+- `score_value` (Number)
+- `starttime` (Number)
 
 <a id="nestedobjatt--items--score_detail--score_list--score_category"></a>
 ### Nested Schema for `items.score_detail.score_list.starttime`
 
 Read-Only:
 
-- **score_category** (String)
-- **value** (String)
+- `score_category` (String)
+- `value` (String)
 
 
 <a id="nestedobjatt--items--score_detail--score_list--score_list"></a>
@@ -95,19 +95,19 @@ Read-Only:
 
 Read-Only:
 
-- **client_count** (Number)
-- **client_unique_count** (String)
-- **endtime** (Number)
-- **score_category** (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list--starttime--score_category))
-- **score_value** (Number)
-- **starttime** (Number)
+- `client_count` (Number)
+- `client_unique_count` (String)
+- `endtime` (Number)
+- `score_category` (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list--starttime--score_category))
+- `score_value` (Number)
+- `starttime` (Number)
 
 <a id="nestedobjatt--items--score_detail--score_list--starttime--score_category"></a>
 ### Nested Schema for `items.score_detail.score_list.starttime.score_category`
 
 Read-Only:
 
-- **score_category** (String)
-- **value** (String)
+- `score_category` (String)
+- `value` (String)
 
 

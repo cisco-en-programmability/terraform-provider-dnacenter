@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -23,7 +23,7 @@ func dataSourceApplications() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. The maximum number of applications to be returned
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"name": &schema.Schema{
@@ -35,7 +35,7 @@ func dataSourceApplications() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The offset of the first application to be returned
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 
@@ -289,14 +289,14 @@ func dataSourceApplicationsRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetApplications")
+		log.Printf("[DEBUG] Selected method: GetApplications")
 		queryParams1 := dnacentersdkgo.GetApplicationsQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okName {
 			queryParams1.Name = vName.(string)
@@ -323,27 +323,12 @@ func dataSourceApplicationsRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	return diags
-}
-
-func flattenApplicationPolicyGetApplicationsItem(item *dnacentersdkgo.ResponseApplicationPolicyGetApplicationsResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["id"] = item.ID
-	respItem["name"] = item.Name
-	respItem["indicative_network_identity"] = flattenApplicationPolicyGetApplicationsItemsIndicativeNetworkIDentity(item.IndicativeNetworkIDentity)
-	respItem["network_applications"] = flattenApplicationPolicyGetApplicationsItemsNetworkApplications(item.NetworkApplications)
-	respItem["network_identity"] = flattenApplicationPolicyGetApplicationsItemsNetworkIDentity(item.NetworkIDentity)
-	respItem["application_set"] = flattenApplicationPolicyGetApplicationsItemsApplicationSet(item.ApplicationSet)
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenApplicationPolicyGetApplicationsItems(items *[]dnacentersdkgo.ResponseApplicationPolicyGetApplicationsResponse) []map[string]interface{} {

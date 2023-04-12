@@ -14,7 +14,7 @@ resource "dnacenter_assign_device_to_site" "example" {
 
     device {
 
-      ip = "69.0.0.10"
+      ip = "10.122.1.1"
     }
     site_id = "1ba55132-0fb8-4986-a31e-674d30e8b8ee"
   }

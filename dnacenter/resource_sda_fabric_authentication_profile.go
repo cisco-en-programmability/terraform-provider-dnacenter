@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,7 +18,7 @@ func resourceSdaFabricAuthenticationProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SDA.
 
-- Deploy authentication template in SDA Fabric
+- Add default authentication template in SDA Fabric
 
 - Update default authentication profile in SDA Fabric
 
@@ -44,22 +44,54 @@ func resourceSdaFabricAuthenticationProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"authenticate_template_id": &schema.Schema{
-							Description: `Authenticate Template Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
 						"authenticate_template_name": &schema.Schema{
-							Description: `Authenticate Template Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Authenticate Template Name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
+						"authentication_order": &schema.Schema{
+							Description: `Authentication Order
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Description: `Authenticate Template info reterieved successfully in sda fabric site
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dot1x_to_mab_fallback_timeout": &schema.Schema{
+							Description: `Dot1x To Mab Fallback Timeout
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"number_of_hosts": &schema.Schema{
+							Description: `Number Of Hosts
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Path of sda Fabric Site
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"status": &schema.Schema{
+							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"wake_on_lan": &schema.Schema{
+							Description: `Wake On Lan
+`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -148,9 +180,12 @@ func resourceSdaFabricAuthenticationProfileCreate(ctx context.Context, d *schema
 	queryParams1.SiteNameHierarchy = vvSiteNameHierarchy
 	queryParams1.AuthenticateTemplateName = vvAuthenticateTemplateName
 	getResponse2, _, err := client.Sda.GetDefaultAuthenticationProfileFromSdaFabric(&queryParams1)
-	if err == nil && getResponse2 != nil && getResponse2.SiteNameHierarchy != "" {
+
+	if err == nil && getResponse2 != nil {
+		responseArray := *getResponse2
+		response2 := responseArray[0]
 		resourceMap := make(map[string]string)
-		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
+		resourceMap["site_name_hierarchy"] = response2.SiteNameHierarchy
 		resourceMap["authenticate_template_name"] = vvAuthenticateTemplateName
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaFabricAuthenticationProfileRead(ctx, d, m)
@@ -244,7 +279,7 @@ func resourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema.R
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItem(response1)
+		vItem1 := flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItems(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDefaultAuthenticationProfileFromSdaFabric response",
@@ -281,8 +316,9 @@ func resourceSdaFabricAuthenticationProfileUpdate(ctx context.Context, d *schema
 			"Failure at GetDefaultAuthenticationProfileFromSdaFabric, unexpected response", ""))
 		return diags
 	}
-
-	vvName := item.SiteNameHierarchy
+	responseArray := *item
+	response2 := responseArray[0]
+	vvName := response2.SiteNameHierarchy
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
@@ -367,8 +403,12 @@ func resourceSdaFabricAuthenticationProfileDelete(ctx context.Context, d *schema
 		return diags
 	}
 
+	responseArray := *item
+	response2 := responseArray[0]
+	vvName := response2.SiteNameHierarchy
+
 	queryParams2 := dnacentersdkgo.DeleteDefaultAuthenticationProfileFromSdaFabricQueryParams{}
-	queryParams2.SiteNameHierarchy = item.SiteNameHierarchy
+	queryParams2.SiteNameHierarchy = vvName
 	response1, restyResp1, err := client.Sda.DeleteDefaultAuthenticationProfileFromSdaFabric(&queryParams2)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {

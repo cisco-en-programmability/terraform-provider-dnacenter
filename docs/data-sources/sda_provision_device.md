@@ -31,27 +31,21 @@ output "dnacenter_sda_provision_device_example" {
 
 ### Required
 
-- **device_management_ip_address** (String) deviceManagementIpAddress query parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_management_ip_address` (String) deviceManagementIpAddress query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **description** (String)
-- **device_management_ip_address** (String)
-- **execution_status_url** (String)
-- **site_name_hierarchy** (String)
-- **status** (String)
-- **task_id** (String)
-- **task_status_url** (String)
+- `description` (String)
+- `device_management_ip_address` (String)
+- `site_name_hierarchy` (String)
+- `status` (String)
 
 

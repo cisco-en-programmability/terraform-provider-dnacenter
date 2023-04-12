@@ -31,24 +31,21 @@ output "dnacenter_network_device_linecard_details_example" {
 
 ### Required
 
-- **device_uuid** (String) deviceUuid path parameter. instanceuuid of device
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_uuid` (String) deviceUuid path parameter. instanceuuid of device
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **partno** (String)
-- **serialno** (String)
-- **slotno** (String)
-- **switchno** (String)
+- `partno` (String)
+- `serialno` (String)
+- `slotno` (String)
+- `switchno` (String)
 
 

@@ -33,46 +33,46 @@ output "dnacenter_pnp_device_history_example" {
 
 ### Required
 
-- **serial_number** (String) serialNumber query parameter. Device Serial Number
+- `serial_number` (String) serialNumber query parameter. Device Serial Number
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **sort** (List of String) sort query parameter. Comma seperated list of fields to sort on
-- **sort_order** (String) sortOrder query parameter. Sort Order Ascending (asc) or Descending (des)
+- `sort` (List of String) sort query parameter. Comma seperated list of fields to sort on
+- `sort_order` (String) sortOrder query parameter. Sort Order Ascending (asc) or Descending (des)
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **details** (String)
-- **error_flag** (String)
-- **history_task_info** (List of Object) (see [below for nested schema](#nestedobjatt--items--history_task_info))
-- **timestamp** (Number)
+- `details` (String)
+- `error_flag` (String)
+- `history_task_info` (List of Object) (see [below for nested schema](#nestedobjatt--items--history_task_info))
+- `timestamp` (Number)
 
 <a id="nestedobjatt--items--history_task_info"></a>
 ### Nested Schema for `items.history_task_info`
 
 Read-Only:
 
-- **addn_details** (List of Object) (see [below for nested schema](#nestedobjatt--items--history_task_info--addn_details))
-- **name** (String)
-- **time_taken** (Number)
-- **type** (String)
-- **work_item_list** (List of Object) (see [below for nested schema](#nestedobjatt--items--history_task_info--work_item_list))
+- `addn_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--history_task_info--addn_details))
+- `name` (String)
+- `time_taken` (Number)
+- `type` (String)
+- `work_item_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--history_task_info--work_item_list))
 
 <a id="nestedobjatt--items--history_task_info--addn_details"></a>
 ### Nested Schema for `items.history_task_info.addn_details`
 
 Read-Only:
 
-- **key** (String)
-- **value** (String)
+- `key` (String)
+- `value` (String)
 
 
 <a id="nestedobjatt--items--history_task_info--work_item_list"></a>
@@ -80,11 +80,11 @@ Read-Only:
 
 Read-Only:
 
-- **command** (String)
-- **end_time** (Number)
-- **output_str** (String)
-- **start_time** (Number)
-- **state** (String)
-- **time_taken** (Number)
+- `command` (String)
+- `end_time` (Number)
+- `output_str` (String)
+- `start_time` (Number)
+- `state` (String)
+- `time_taken` (Number)
 
 

@@ -5,6 +5,7 @@ resource "dnacenter_sda_virtual_network_ip_pool" "example" {
 
     auto_generate_vlan_name  = "false"
     ip_pool_name             = "string"
+    is_bridge_mode_vm        = "false"
     is_common_pool           = "false"
     is_ip_directed_broadcast = "false"
     is_l2_flooding_enabled   = "false"

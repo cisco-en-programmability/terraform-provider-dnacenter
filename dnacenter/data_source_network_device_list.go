@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -119,7 +119,7 @@ ignores the other request parameters. You can also specify offset & limit to get
 			"limit": &schema.Schema{
 				Description: `limit query parameter. 1 <= limit <= 500 [max. no. of devices to be returned in the result]
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"location": &schema.Schema{
@@ -213,7 +213,7 @@ ignores the other request parameters. You can also specify offset & limit to get
 			"offset": &schema.Schema{
 				Description: `offset query parameter. offset >= 1 [X gives results from Xth device onwards]
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"platform_id": &schema.Schema{
@@ -297,7 +297,7 @@ ignores the other request parameters. You can also specify offset & limit to get
 
 						"ap_ethernet_mac_address": &schema.Schema{
 							Description: `Ap Ethernet Mac Address`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -423,13 +423,13 @@ ignores the other request parameters. You can also specify offset & limit to get
 
 						"location": &schema.Schema{
 							Description: `Location`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
 						"location_name": &schema.Schema{
 							Description: `Location Name`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -441,7 +441,7 @@ ignores the other request parameters. You can also specify offset & limit to get
 
 						"managed_atleast_once": &schema.Schema{
 							Description: `Managed Atleast Once`,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -538,7 +538,7 @@ ignores the other request parameters. You can also specify offset & limit to get
 
 						"tunnel_udp_port": &schema.Schema{
 							Description: `Tunnel Udp Port`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 
@@ -562,7 +562,7 @@ ignores the other request parameters. You can also specify offset & limit to get
 
 						"waas_device_mode": &schema.Schema{
 							Description: `Waas Device Mode`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
 					},
@@ -613,7 +613,7 @@ func dataSourceNetworkDeviceListRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceList")
+		log.Printf("[DEBUG] Selected method: GetDeviceList")
 		queryParams1 := dnacentersdkgo.GetDeviceListQueryParams{}
 
 		if okHostname {
@@ -713,10 +713,10 @@ func dataSourceNetworkDeviceListRead(ctx context.Context, d *schema.ResourceData
 			queryParams1.DeviceSupportLevel = vDeviceSupportLevel.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 
 		response1, restyResp1, err := client.Devices.GetDeviceList(&queryParams1)
@@ -740,6 +740,7 @@ func dataSourceNetworkDeviceListRead(ctx context.Context, d *schema.ResourceData
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

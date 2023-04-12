@@ -1,3 +1,44 @@
+## 1.1.0-beta (April 12, 2023)
+`dnacenter-go-sdk` version changes from `github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk` to `github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk`.(Cisco DNA Center's v2.3.5.3 API)
+FEATURES:
+* **New Data Source:** `data_source_accesspoint_configuration_details_by_task_id`
+* **New Data Source:** `data_source_authentication_policy_servers`
+* **New Data Source:** `data_source_deploy_template`
+* **New Data Source:** `data_source_device_reboot_apreboot`
+* **New Data Source:** `data_source_dnac_packages`
+* **New Data Source:** `data_source_eox_status_device`
+* **New Data Source:** `data_source_eox_status_summary`
+* **New Data Source:** `data_source_event_email_config`
+* **New Data Source:** `data_source_event_snmp_config`
+* **New Data Source:** `data_source_event_syslog_config`
+* **New Data Source:** `data_source_global_credential_v2`
+* **New Data Source:** `data_source_golden_tag_image`
+* **New Data Source:** `data_source_integration_settings_instances_itsm`
+* **New Data Source:** `data_source_lan_automation_log_by_serial_number`
+* **New Data Source:** `data_source_license_device`
+* **New Data Source:** `data_source_network_device_user_defined_field`
+* **New Data Source:** `data_source_network_v2`
+* **New Data Source:** `data_source_role_permissions`
+* **New Data Source:** `data_source_roles`
+* **New Data Source:** `data_source_service_provider_v2`
+* **New Data Source:** `data_source_user`
+* **New Data Source:** `data_source_users_external_servers`
+* **New Data Source:** `data_source_wireless_accesspoint_configuration_summary`
+* **New Resource:** `resource_credential_to_site_by_siteid_create_v2`
+* **New Resource:** `resource_device_reboot_apreboot`
+* **New Resource:** `resource_event_syslog_config`
+* **New Resource:** `resource_execute_suggested_actions_commands`
+* **New Resource:** `resource_global_credential_v2`
+* **New Resource:** `resource_golden_tag_image`
+* **New Resource:** `resource_integration_settings_instances_itsm`
+* **New Resource:** `resource_network_device_user_defined_field`
+* **New Resource:** `resource_network_v2`
+* **New Resource:** `resource_pnp_device_unclaim`
+* **New Resource:** `resource_service_provider_v2`
+* **New Resource:** `resource_sp_profile_delete_v2`
+* **New Resource:** `resource_user`
+* **New Resource:** `resource_wireless_accespoint_configuration`
+
 ## 1.0.19-beta (Mar 03, 2023)
 UPGRADE NOTES:
 * The go version of the provider was updated to 1.20, this due to the new prerequisites of terraform gorealeser, in which it is detailed that you must have a GO version of 1.18 or higher. Here are [gorealeaser docs](https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework/providers-plugin-framework-release-publish).

@@ -31,18 +31,18 @@ output "dnacenter_network_device_polling_interval_example" {
 
 ### Required
 
-- **id** (String) id path parameter. Device ID
+- `id` (String) id path parameter. Device ID
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
-- **version** (String)
+- `response` (Number)
+- `version` (String)
 
 

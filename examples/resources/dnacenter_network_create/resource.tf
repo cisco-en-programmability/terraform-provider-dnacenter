@@ -51,7 +51,8 @@ resource "dnacenter_network_create" "example" {
       }
       timezone = "string"
     }
-    site_id = "string"
+    site_id           = "string"
+    persistbapioutput = "false"
   }
 }
 

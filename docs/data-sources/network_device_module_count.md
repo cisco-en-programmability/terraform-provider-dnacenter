@@ -35,26 +35,26 @@ output "dnacenter_network_device_module_count_example" {
 
 ### Required
 
-- **device_id** (String) deviceId query parameter.
+- `device_id` (String) deviceId query parameter.
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **name_list** (List of String) nameList query parameter.
-- **operational_state_code_list** (List of String) operationalStateCodeList query parameter.
-- **part_number_list** (List of String) partNumberList query parameter.
-- **vendor_equipment_type_list** (List of String) vendorEquipmentTypeList query parameter.
+- `name_list` (List of String) nameList query parameter.
+- `operational_state_code_list` (List of String) operationalStateCodeList query parameter.
+- `part_number_list` (List of String) partNumberList query parameter.
+- `vendor_equipment_type_list` (List of String) vendorEquipmentTypeList query parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
-- **version** (String)
+- `response` (Number)
+- `version` (String)
 
 
