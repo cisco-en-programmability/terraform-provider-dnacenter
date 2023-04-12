@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -29,7 +29,7 @@ func dataSourceEventSubscriptionDetailsRest() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. The number of Rest/Webhook Subscription detail's to limit in the resultset whose default value 10
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"name": &schema.Schema{
@@ -41,7 +41,7 @@ func dataSourceEventSubscriptionDetailsRest() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. The number of Rest/Webhook Subscription detail's to offset in the resultset whose default value 0
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -162,7 +162,7 @@ func dataSourceEventSubscriptionDetailsRestRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetRestWebhookSubscriptionDetails")
+		log.Printf("[DEBUG] Selected method: GetRestWebhookSubscriptionDetails")
 		queryParams1 := dnacentersdkgo.GetRestWebhookSubscriptionDetailsQueryParams{}
 
 		if okName {
@@ -172,10 +172,10 @@ func dataSourceEventSubscriptionDetailsRestRead(ctx context.Context, d *schema.R
 			queryParams1.InstanceID = vInstanceID.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okSortBy {
 			queryParams1.SortBy = vSortBy.(string)
@@ -205,6 +205,7 @@ func dataSourceEventSubscriptionDetailsRestRead(ctx context.Context, d *schema.R
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

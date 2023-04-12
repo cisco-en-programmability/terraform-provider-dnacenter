@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -42,20 +42,24 @@ func resourceSdaMulticast() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"description": &schema.Schema{
+							Description: `multicast configuration info retrieved successfully from sda fabric
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"multicast_method": &schema.Schema{
 							Description: `Multicast Method
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"multicast_type": &schema.Schema{
 							Description: `Multicast Type
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"multicast_vn_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -63,14 +67,13 @@ func resourceSdaMulticast() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"external_rp_ip_address": &schema.Schema{
-										Description: `ExternalRpIpAddress, required if multicastType is asm_with_external_rp
+										Description: `ExternalRpIpAddress
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"internal_rp_ip_address": &schema.Schema{
-										Description: `InternalRpIpAddress, required if multicastType is asm_with_internal_rp
+										Description: `InternalRpIpAddress
 `,
 										Type:     schema.TypeList,
 										Computed: true,
@@ -78,14 +81,12 @@ func resourceSdaMulticast() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
-
 									"ip_pool_name": &schema.Schema{
 										Description: `Ip Pool Name, that is reserved to Fabric Site
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"ssm_info": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -93,14 +94,13 @@ func resourceSdaMulticast() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"ssm_group_range": &schema.Schema{
-													Description: `Valid SSM group range ip address(e.g., 230.0.0.0)
+													Description: `SSM group range
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-
 												"ssm_wildcard_mask": &schema.Schema{
-													Description: `Valid SSM Wildcard Mask ip address(e.g.,0.255.255.255)
+													Description: `SSM Wildcard Mask 
 `,
 													Type:     schema.TypeString,
 													Computed: true,
@@ -108,7 +108,6 @@ func resourceSdaMulticast() *schema.Resource {
 											},
 										},
 									},
-
 									"virtual_network_name": &schema.Schema{
 										Description: `Virtual Network Name, that is associated to Fabric Site
 `,
@@ -118,9 +117,8 @@ func resourceSdaMulticast() *schema.Resource {
 								},
 							},
 						},
-
-						"site_name_hierarchy": &schema.Schema{
-							Description: `Full path of sda Fabric Site
+						"status": &schema.Schema{
+							Description: `Status
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -131,6 +129,7 @@ func resourceSdaMulticast() *schema.Resource {
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -139,16 +138,19 @@ func resourceSdaMulticast() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"multicast_type": &schema.Schema{
 							Description: `Multicast Type
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"multicast_vn_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -157,12 +159,14 @@ func resourceSdaMulticast() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"internal_rp_ip_address": &schema.Schema{
 										Description: `InternalRpIpAddress, required if multicastType is asm_with_internal_rp
 `,
 										Type:     schema.TypeList,
 										Optional: true,
+										Computed: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -172,11 +176,12 @@ func resourceSdaMulticast() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 									"ssm_info": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -185,12 +190,14 @@ func resourceSdaMulticast() *schema.Resource {
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 												"ssm_wildcard_mask": &schema.Schema{
 													Description: `Valid SSM Wildcard Mask ip address(e.g.,0.255.255.255)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -200,6 +207,7 @@ func resourceSdaMulticast() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -209,6 +217,7 @@ func resourceSdaMulticast() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -224,26 +233,21 @@ func resourceSdaMulticastCreate(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSdaMulticastAddMulticastInSdaFabric(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+
 	vSiteNameHierarchy := resourceItem["site_name_hierarchy"]
 	vvSiteNameHierarchy := interfaceToString(vSiteNameHierarchy)
-
-	queryParams1 := dnacentersdkgo.GetMulticastDetailsFromSdaFabricQueryParams{}
-
-	queryParams1.SiteNameHierarchy = vvSiteNameHierarchy
-
-	getResponse2, _, err := client.Sda.GetMulticastDetailsFromSdaFabric(&queryParams1)
-
-	if err == nil && getResponse2 != nil {
+	queryParamImport := dnacentersdkgo.GetMulticastDetailsFromSdaFabricQueryParams{}
+	queryParamImport.SiteNameHierarchy = vvSiteNameHierarchy
+	item2, _, err := client.Sda.GetMulticastDetailsFromSdaFabric(&queryParamImport)
+	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaMulticastRead(ctx, d, m)
 	}
-	response1, restyResp1, err := client.Sda.AddMulticastInSdaFabric(request1)
-	if err != nil || response1 == nil {
+	resp1, restyResp1, err := client.Sda.AddMulticastInSdaFabric(request1)
+	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
 				"Failure when executing AddMulticastInSdaFabric", err, restyResp1.String()))
@@ -253,14 +257,14 @@ func resourceSdaMulticastCreate(ctx context.Context, d *schema.ResourceData, m i
 			"Failure when executing AddMulticastInSdaFabric", err))
 		return diags
 	}
-	executionId := response1.ExecutionID
+	executionId := resp1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
@@ -269,10 +273,10 @@ func resourceSdaMulticastCreate(ctx context.Context, d *schema.ResourceData, m i
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -287,8 +291,19 @@ func resourceSdaMulticastCreate(ctx context.Context, d *schema.ResourceData, m i
 			return diags
 		}
 	}
+	queryParamValidate := dnacentersdkgo.GetMulticastDetailsFromSdaFabricQueryParams{}
+	queryParamValidate.SiteNameHierarchy = vvSiteNameHierarchy
+	item3, _, err := client.Sda.GetMulticastDetailsFromSdaFabric(&queryParamValidate)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing AddMulticastInSdaFabric", err,
+			"Failure at AddMulticastInSdaFabric, unexpected response", ""))
+		return diags
+	}
+
 	resourceMap := make(map[string]string)
 	resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
+
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSdaMulticastRead(ctx, d, m)
 }
@@ -300,24 +315,19 @@ func resourceSdaMulticastRead(ctx context.Context, d *schema.ResourceData, m int
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+
 	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetMulticastDetailsFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetMulticastDetailsFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetMulticastDetailsFromSdaFabricQueryParams{}
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 
-		response1, restyResp1, _ := client.Sda.GetMulticastDetailsFromSdaFabric(&queryParams1)
+		response1, restyResp1, err := client.Sda.GetMulticastDetailsFromSdaFabric(&queryParams1)
 
-		/*		if err != nil {
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetMulticastDetailsFromSdaFabric", err,
-					"Failure at GetMulticastDetailsFromSdaFabric, unexpected response", ""))
-				return diags
-			}*/
-		if response1 == nil {
+		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -334,6 +344,7 @@ func resourceSdaMulticastRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+
 		return diags
 
 	}
@@ -352,19 +363,13 @@ func resourceSdaMulticastDelete(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
 
-	queryParams1 := dnacentersdkgo.GetMulticastDetailsFromSdaFabricQueryParams{}
-	queryParams1.SiteNameHierarchy = vSiteNameHierarchy
-	item, restyResp1, err := client.Sda.GetMulticastDetailsFromSdaFabric(&queryParams1)
-	if err != nil || item == nil {
-		d.SetId("")
-		return diags
-	}
-	queryParams2 := dnacentersdkgo.DeleteMulticastFromSdaFabricQueryParams{}
-	queryParams2.SiteNameHierarchy = vSiteNameHierarchy
+	queryParamDelete := dnacentersdkgo.DeleteMulticastFromSdaFabricQueryParams{}
 
-	response1, restyResp1, err := client.Sda.DeleteMulticastFromSdaFabric(&queryParams2)
+	vvSiteNameHierarchy := resourceMap["site_name_hierarchy"]
+	queryParamDelete.SiteNameHierarchy = vvSiteNameHierarchy
+
+	response1, restyResp1, err := client.Sda.DeleteMulticastFromSdaFabric(&queryParamDelete)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -378,13 +383,15 @@ func resourceSdaMulticastDelete(ctx context.Context, d *schema.ResourceData, m i
 			"Failure at DeleteMulticastFromSdaFabric, unexpected response", ""))
 		return diags
 	}
+
 	executionId := response1.ExecutionID
+	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
@@ -393,10 +400,10 @@ func resourceSdaMulticastDelete(ctx context.Context, d *schema.ResourceData, m i
 		}
 		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -476,7 +483,30 @@ func expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfo(ctx context
 		request.ExternalRpIPAddress = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssm_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssm_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssm_info")))) {
-		request.SsmInfo = expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfoSsmInfo(ctx, key+".ssm_info.0", d)
+		request.SsmInfo = expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfoSsmInfoArray(ctx, key+".ssm_info", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfoSsmInfoArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestSdaAddMulticastInSdaFabricMulticastVnInfoSsmInfo {
+	request := []dnacentersdkgo.RequestSdaAddMulticastInSdaFabricMulticastVnInfoSsmInfo{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaMulticastAddMulticastInSdaFabricMulticastVnInfoSsmInfo(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

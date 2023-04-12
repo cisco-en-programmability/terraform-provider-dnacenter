@@ -22,10 +22,6 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_interface_operation_create" "example" {
   provider = dnacenter
   parameters {
@@ -46,29 +42,26 @@ output "dnacenter_interface_operation_create_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **interface_uuid** (String) interfaceUuid path parameter. Interface Id
+- `interface_uuid` (String) interfaceUuid path parameter. Interface Id
 
 Optional:
 
-- **deployment_mode** (String) deploymentMode query parameter. Preview/Deploy ['Preview' means the configuration is not pushed to the device. 'Deploy' makes the configuration pushed to the device]
-- **operation** (String) Operation
-- **payload** (String) Payload
+- `deployment_mode` (String) deploymentMode query parameter. Preview/Deploy ['Preview' means the configuration is not pushed to the device. 'Deploy' makes the configuration pushed to the device]
+- `operation` (String) Operation
+- `payload` (String) Payload
 
 
 <a id="nestedatt--item"></a>
@@ -76,7 +69,7 @@ Optional:
 
 Read-Only:
 
-- **task_id** (String)
-- **url** (String)
+- `task_id` (String)
+- `url` (String)
 
 

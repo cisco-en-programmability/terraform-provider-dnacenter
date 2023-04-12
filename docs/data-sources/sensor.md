@@ -31,40 +31,40 @@ output "dnacenter_sensor_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **site_id** (String) siteId query parameter.
+- `site_id` (String) siteId query parameter.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **backhaul_type** (String)
-- **ethernet_mac_address** (String)
-- **ip_address** (String)
-- **is_led_enabled** (String)
-- **last_seen** (Number)
-- **location** (String)
-- **name** (String)
-- **radio_mac_address** (String)
-- **serial_number** (String)
-- **ssh_config** (List of Object) (see [below for nested schema](#nestedobjatt--items--ssh_config))
-- **status** (String)
-- **type** (String)
-- **version** (String)
+- `backhaul_type` (String)
+- `ethernet_mac_address` (String)
+- `ip_address` (String)
+- `is_led_enabled` (String)
+- `last_seen` (Number)
+- `location` (String)
+- `name` (String)
+- `radio_mac_address` (String)
+- `serial_number` (String)
+- `ssh_config` (List of Object) (see [below for nested schema](#nestedobjatt--items--ssh_config))
+- `status` (String)
+- `type` (String)
+- `version` (String)
 
 <a id="nestedobjatt--items--ssh_config"></a>
 ### Nested Schema for `items.ssh_config`
 
 Read-Only:
 
-- **enable_password** (String)
-- **ssh_password** (String)
-- **ssh_state** (String)
-- **ssh_user_name** (String)
+- `enable_password` (String)
+- `ssh_password` (String)
+- `ssh_state` (String)
+- `ssh_user_name` (String)
 
 

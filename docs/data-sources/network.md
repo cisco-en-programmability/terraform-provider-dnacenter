@@ -31,35 +31,35 @@ output "dnacenter_network_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **site_id** (String) siteId query parameter. Site id to get the network settings associated with the site.
+- `site_id` (String) siteId query parameter. Site id to get the network settings associated with the site.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **group_uuid** (String)
-- **inherited_group_name** (String)
-- **inherited_group_uuid** (String)
-- **instance_type** (String)
-- **instance_uuid** (String)
-- **key** (String)
-- **namespace** (String)
-- **type** (String)
-- **value** (List of Object) (see [below for nested schema](#nestedobjatt--items--value))
-- **version** (Number)
+- `group_uuid` (String)
+- `inherited_group_name` (String)
+- `inherited_group_uuid` (String)
+- `instance_type` (String)
+- `instance_uuid` (String)
+- `key` (String)
+- `namespace` (String)
+- `type` (String)
+- `value` (List of Object) (see [below for nested schema](#nestedobjatt--items--value))
+- `version` (Number)
 
 <a id="nestedobjatt--items--value"></a>
 ### Nested Schema for `items.value`
 
 Read-Only:
 
-- **configure_dnac_ip** (String)
-- **ip_addresses** (List of String)
+- `configure_dnac_ip` (String)
+- `ip_addresses` (List of String)
 
 

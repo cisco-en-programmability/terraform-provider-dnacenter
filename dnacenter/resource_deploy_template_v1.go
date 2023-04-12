@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -381,7 +381,7 @@ func expandRequestConfigurationTemplateDeployDeployTemplate(ctx context.Context,
 		request.MainTemplateID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".member_template_deployment_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_template_deployment_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_template_deployment_info")))) {
-		request.MemberTemplateDeploymentInfo = expandRequestConfigurationTemplateDeployDeployTemplateMemberTemplateDeploymentInfoArray(ctx, key+".member_template_deployment_info", d)
+		request.MemberTemplateDeploymentInfo = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".target_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".target_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".target_info")))) {
 		request.TargetInfo = expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoArray(ctx, key+".target_info", d)
@@ -396,39 +396,39 @@ func expandRequestConfigurationTemplateDeployDeployTemplate(ctx context.Context,
 	return &request
 }
 
-func expandRequestConfigurationTemplateDeployDeployTemplateMemberTemplateDeploymentInfoArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateMemberTemplateDeploymentInfo {
-	request := []dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateMemberTemplateDeploymentInfo{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestConfigurationTemplateDeployDeployTemplateMemberTemplateDeploymentInfo(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
+// func expandRequestConfigurationTemplateDeployDeployTemplateMemberTemplateDeploymentInfoArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateMemberTemplateDeploymentInfo {
+// 	request := []dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateMemberTemplateDeploymentInfo{}
+// 	key = fixKeyAccess(key)
+// 	o := d.Get(key)
+// 	if o == nil {
+// 		return nil
+// 	}
+// 	objs := o.([]interface{})
+// 	if len(objs) == 0 {
+// 		return nil
+// 	}
+// 	for item_no := range objs {
+// 		i := expandRequestConfigurationTemplateDeployDeployTemplateMemberTemplateDeploymentInfo(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+// 		if i != nil {
+// 			request = append(request, *i)
+// 		}
+// 	}
+// 	if isEmptyValue(reflect.ValueOf(request)) {
+// 		return nil
+// 	}
 
-	return &request
-}
+// 	return &request
+// }
 
-func expandRequestConfigurationTemplateDeployDeployTemplateMemberTemplateDeploymentInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateMemberTemplateDeploymentInfo {
-	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateMemberTemplateDeploymentInfo
-	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
+// func expandRequestConfigurationTemplateDeployDeployTemplateMemberTemplateDeploymentInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateMemberTemplateDeploymentInfo {
+// 	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateMemberTemplateDeploymentInfo
+// 	request = d.Get(fixKeyAccess(key))
+// 	if isEmptyValue(reflect.ValueOf(request)) {
+// 		return nil
+// 	}
 
-	return &request
-}
+// 	return &request
+// }
 
 func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateTargetInfo {
 	request := []dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateTargetInfo{}
@@ -466,7 +466,7 @@ func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfo(ctx contex
 		request.Params = expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoParams(ctx, key+".params", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".resource_params")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".resource_params")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".resource_params")))) {
-		request.ResourceParams = expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoResourceParamsArray(ctx, key+".resource_params", d)
+		request.ResourceParams = expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoResourceParams(ctx, key+".resource_params.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
@@ -487,30 +487,6 @@ func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoParams(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-	return &request
-}
-
-func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoResourceParamsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateTargetInfoResourceParams {
-	request := []dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateTargetInfoResourceParams{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoResourceParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }
 

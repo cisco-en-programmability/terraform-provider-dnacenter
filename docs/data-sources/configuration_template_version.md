@@ -31,38 +31,35 @@ output "dnacenter_configuration_template_version_example" {
 
 ### Required
 
-- **template_id** (String) templateId path parameter. templateId(UUID) to get list of versioned templates
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `template_id` (String) templateId path parameter. templateId(UUID) to get list of versioned templates
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **composite** (String)
-- **name** (String)
-- **project_id** (String)
-- **project_name** (String)
-- **template_id** (String)
-- **versions_info** (List of Object) (see [below for nested schema](#nestedobjatt--items--versions_info))
+- `composite` (String)
+- `name` (String)
+- `project_id` (String)
+- `project_name` (String)
+- `template_id` (String)
+- `versions_info` (List of Object) (see [below for nested schema](#nestedobjatt--items--versions_info))
 
 <a id="nestedobjatt--items--versions_info"></a>
 ### Nested Schema for `items.versions_info`
 
 Read-Only:
 
-- **author** (String)
-- **description** (String)
-- **id** (String)
-- **version** (String)
-- **version_comment** (String)
-- **version_time** (Number)
+- `author` (String)
+- `description` (String)
+- `id` (String)
+- `version` (String)
+- `version_comment` (String)
+- `version_time` (Number)
 
 

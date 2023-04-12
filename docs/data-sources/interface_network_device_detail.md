@@ -32,51 +32,48 @@ output "dnacenter_interface_network_device_detail_example" {
 
 ### Required
 
-- **device_id** (String) deviceId path parameter. Device ID
-- **name** (String) name query parameter. Interface name
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_id` (String) deviceId path parameter. Device ID
+- `name` (String) name query parameter. Interface name
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **admin_status** (String)
-- **class_name** (String)
-- **description** (String)
-- **device_id** (String)
-- **duplex** (String)
-- **id** (String)
-- **if_index** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **interface_type** (String)
-- **ipv4_address** (String)
-- **ipv4_mask** (String)
-- **isis_support** (String)
-- **last_updated** (String)
-- **mac_address** (String)
-- **mapped_physical_interface_id** (String)
-- **mapped_physical_interface_name** (String)
-- **media_type** (String)
-- **native_vlan_id** (String)
-- **ospf_support** (String)
-- **pid** (String)
-- **port_mode** (String)
-- **port_name** (String)
-- **port_type** (String)
-- **serial_no** (String)
-- **series** (String)
-- **speed** (String)
-- **status** (String)
-- **vlan_id** (String)
-- **voice_vlan** (String)
+- `admin_status` (String)
+- `class_name` (String)
+- `description` (String)
+- `device_id` (String)
+- `duplex` (String)
+- `id` (String)
+- `if_index` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `interface_type` (String)
+- `ipv4_address` (String)
+- `ipv4_mask` (String)
+- `isis_support` (String)
+- `last_updated` (String)
+- `mac_address` (String)
+- `mapped_physical_interface_id` (String)
+- `mapped_physical_interface_name` (String)
+- `media_type` (String)
+- `native_vlan_id` (String)
+- `ospf_support` (String)
+- `pid` (String)
+- `port_mode` (String)
+- `port_name` (String)
+- `port_type` (String)
+- `serial_no` (String)
+- `series` (String)
+- `speed` (String)
+- `status` (String)
+- `vlan_id` (String)
+- `voice_vlan` (String)
 
 

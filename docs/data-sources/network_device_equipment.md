@@ -32,28 +32,28 @@ output "dnacenter_network_device_equipment_example" {
 
 ### Required
 
-- **device_uuid** (String) deviceUuid path parameter.
-- **type** (String) type query parameter. Type value should be PowerSupply or Fan
+- `device_uuid` (String) deviceUuid path parameter.
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `type` (String) type query parameter. Type value can be PowerSupply, Fan, Chassis, Backplane, Module, PROCESSOR, Other, SFP. If no type is mentioned, All equipments are fetched for the device.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **description** (String)
-- **instance_uuid** (String)
-- **name** (String)
-- **operational_state_code** (String)
-- **product_id** (String)
-- **serial_number** (String)
-- **vendor_equipment_type** (String)
+- `description` (String)
+- `instance_uuid` (String)
+- `name` (String)
+- `operational_state_code` (String)
+- `product_id` (String)
+- `serial_number` (String)
+- `vendor_equipment_type` (String)
 
 

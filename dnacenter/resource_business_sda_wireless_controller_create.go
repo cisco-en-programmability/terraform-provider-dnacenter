@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -37,18 +37,17 @@ func resourceBusinessSdaWirelessControllerCreate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"execution_id": &schema.Schema{
-							Description: `Status of the job for wireless state change in fabric domain
-`,
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Execution Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"execution_status_url": &schema.Schema{
-							Description: `executionStatusURL`,
+							Description: `Execution Status Url`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"message": &schema.Schema{
-							Description: `message`,
+							Description: `Message`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -143,7 +142,6 @@ func resourceBusinessSdaWirelessControllerCreateCreate(ctx context.Context, d *s
 			return diags
 		}
 	}
-
 	vItem1 := flattenFabricWirelessAddWLCToFabricDomainItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(

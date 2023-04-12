@@ -2,12 +2,14 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -80,7 +82,9 @@ func resourceDiscoveryRangeDeleteCreate(ctx context.Context, d *schema.ResourceD
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vStartIndex := resourceItem["start_index"]
+
 	vRecordsToDelete := resourceItem["records_to_delete"]
 
 	vvStartIndex := vStartIndex.(int)
@@ -92,9 +96,8 @@ func resourceDiscoveryRangeDeleteCreate(ctx context.Context, d *schema.ResourceD
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeleteDiscoveryBySpecifiedRange", err,
-			"Failure at DeleteDiscoveryBySpecifiedRange, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing DeleteDiscoveryBySpecifiedRange", err))
 		return diags
 	}
 
@@ -148,6 +151,7 @@ func resourceDiscoveryRangeDeleteCreate(ctx context.Context, d *schema.ResourceD
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

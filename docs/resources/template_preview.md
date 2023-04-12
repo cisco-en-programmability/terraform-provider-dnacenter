@@ -20,17 +20,13 @@ Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNA
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_template_preview" "example" {
   provider = dnacenter
   parameters {
 
     device_id       = "string"
     params          = "string"
-    resource_params = ["string"]
+    resource_params = "string"
     template_id     = "string"
   }
 }
@@ -45,26 +41,23 @@ output "dnacenter_template_preview_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **device_id** (String) UUID of device to get template preview
-- **params** (String) Params to render preview
-- **resource_params** (List of String) Resource params to render preview
-- **template_id** (String) UUID of template to get template preview
+- `device_id` (String) UUID of device to get template preview
+- `params` (String) Params to render preview
+- `resource_params` (String) Resource params to render preview
+- `template_id` (String) UUID of template to get template preview
 
 
 <a id="nestedatt--item"></a>
@@ -72,9 +65,9 @@ Optional:
 
 Read-Only:
 
-- **cli_preview** (String)
-- **device_id** (String)
-- **template_id** (String)
-- **validation_errors** (String)
+- `cli_preview` (String)
+- `device_id` (String)
+- `template_id` (String)
+- `validation_errors` (String)
 
 

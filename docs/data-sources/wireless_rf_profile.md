@@ -31,47 +31,47 @@ output "dnacenter_wireless_rf_profile_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **rf_profile_name** (String) rf-profile-name query parameter. RF Profile Name
+- `rf_profile_name` (String) rf-profile-name query parameter. RF Profile Name
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **a_radio_channels** (String)
-- **b_radio_channels** (String)
-- **c_radio_channels** (String)
-- **channel_width** (String)
-- **data_rates_a** (String)
-- **data_rates_b** (String)
-- **data_rates_c** (String)
-- **default_rf_profile** (String)
-- **enable_a_radio_type** (String)
-- **enable_b_radio_type** (String)
-- **enable_brown_field** (String)
-- **enable_c_radio_type** (String)
-- **enable_custom** (String)
-- **mandatory_data_rates_a** (String)
-- **mandatory_data_rates_b** (String)
-- **mandatory_data_rates_c** (String)
-- **max_power_level_a** (String)
-- **max_power_level_b** (String)
-- **min_power_level_a** (String)
-- **min_power_level_b** (String)
-- **min_power_level_c** (String)
-- **name** (String)
-- **parent_profile_a** (String)
-- **parent_profile_b** (String)
-- **power_threshold_v1_a** (Number)
-- **power_threshold_v1_b** (Number)
-- **power_threshold_v1_c** (Number)
-- **rx_sop_threshold_a** (String)
-- **rx_sop_threshold_b** (String)
-- **rx_sop_threshold_c** (String)
+- `a_radio_channels` (String)
+- `b_radio_channels` (String)
+- `c_radio_channels` (String)
+- `channel_width` (String)
+- `data_rates_a` (String)
+- `data_rates_b` (String)
+- `data_rates_c` (String)
+- `default_rf_profile` (String)
+- `enable_a_radio_type` (String)
+- `enable_b_radio_type` (String)
+- `enable_brown_field` (String)
+- `enable_c_radio_type` (String)
+- `enable_custom` (String)
+- `mandatory_data_rates_a` (String)
+- `mandatory_data_rates_b` (String)
+- `mandatory_data_rates_c` (String)
+- `max_power_level_a` (String)
+- `max_power_level_b` (String)
+- `min_power_level_a` (String)
+- `min_power_level_b` (String)
+- `min_power_level_c` (String)
+- `name` (String)
+- `parent_profile_a` (String)
+- `parent_profile_b` (String)
+- `power_threshold_v1_a` (Number)
+- `power_threshold_v1_b` (Number)
+- `power_threshold_v1_c` (Number)
+- `rx_sop_threshold_a` (String)
+- `rx_sop_threshold_b` (String)
+- `rx_sop_threshold_c` (String)
 
 

@@ -2,14 +2,16 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -67,6 +69,7 @@ func resourceGlobalCredentialUpdate() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -83,6 +86,7 @@ func resourceGlobalCredentialUpdateCreate(ctx context.Context, d *schema.Resourc
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vGlobalCredentialID := resourceItem["global_credential_id"]
 
 	vvGlobalCredentialID := vGlobalCredentialID.(string)
@@ -98,9 +102,8 @@ func resourceGlobalCredentialUpdateCreate(ctx context.Context, d *schema.Resourc
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing UpdateGlobalCredentials", err,
-			"Failure at UpdateGlobalCredentials, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing UpdateGlobalCredentials", err))
 		return diags
 	}
 
@@ -154,6 +157,7 @@ func resourceGlobalCredentialUpdateCreate(ctx context.Context, d *schema.Resourc
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

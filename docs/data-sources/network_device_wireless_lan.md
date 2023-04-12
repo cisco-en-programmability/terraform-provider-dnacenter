@@ -31,28 +31,28 @@ output "dnacenter_network_device_wireless_lan_example" {
 
 ### Required
 
-- **id** (String) id path parameter. Device ID
+- `id` (String) id path parameter. Device ID
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **admin_enabled_ports** (List of Number)
-- **ap_group_name** (String)
-- **device_id** (String)
-- **eth_mac_address** (String)
-- **flex_group_name** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **lag_mode_enabled** (String)
-- **netconf_enabled** (String)
-- **wireless_license_info** (String)
-- **wireless_package_installed** (String)
+- `admin_enabled_ports` (List of Number)
+- `ap_group_name` (String)
+- `device_id` (String)
+- `eth_mac_address` (String)
+- `flex_group_name` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `lag_mode_enabled` (String)
+- `netconf_enabled` (String)
+- `wireless_license_info` (String)
+- `wireless_package_installed` (String)
 
 

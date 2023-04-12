@@ -32,22 +32,22 @@ output "dnacenter_event_count_example" {
 
 ### Required
 
-- **tags** (String) tags query parameter. The registered Tags should be provided
+- `tags` (String) tags query parameter. The registered Tags should be provided
 
 ### Optional
 
-- **event_id** (String) eventId query parameter. The registered EventId should be provided
-- **id** (String) The ID of this resource.
+- `event_id` (String) eventId query parameter. The registered EventId should be provided
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
+- `response` (Number)
 
 

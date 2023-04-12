@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -76,11 +76,6 @@ func resourcePnpDeviceImport() *schema.Resource {
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
 									"day_zero_config": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -97,7 +92,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 									},
 									"day_zero_config_preview": &schema.Schema{
 										Description: `Day Zero Config Preview`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 									"device_info": &schema.Schema{
@@ -216,7 +211,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 															},
 															"readable": &schema.Schema{
 																Description: `Readable`,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -232,7 +227,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 															},
 															"writeable": &schema.Schema{
 																Description: `Writeable`,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -286,7 +281,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 
 															"ipv4_address": &schema.Schema{
 																Description: `Ipv4 Address`,
-																Type:        schema.TypeString,
+																Type:        schema.TypeString, //TEST,
 																Computed:    true,
 															},
 															"ipv6_address_list": &schema.Schema{
@@ -456,7 +451,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 															},
 															"discovery_created": &schema.Schema{
 																Description: `Discovery Created`,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -478,12 +473,12 @@ func resourcePnpDeviceImport() *schema.Resource {
 																		},
 																		"ipv4_address": &schema.Schema{
 																			Description: `Ipv4 Address`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 																		"ipv6_address": &schema.Schema{
 																			Description: `Ipv6 Address`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 																		"port": &schema.Schema{
@@ -522,12 +517,12 @@ func resourcePnpDeviceImport() *schema.Resource {
 																		},
 																		"ipv4_address": &schema.Schema{
 																			Description: `Ipv4 Address`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 																		"ipv6_address": &schema.Schema{
 																			Description: `Ipv6 Address`,
-																			Type:        schema.TypeString,
+																			Type:        schema.TypeString, //TEST,
 																			Computed:    true,
 																		},
 																		"port": &schema.Schema{
@@ -548,7 +543,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"populate_inventory": &schema.Schema{
 													Description: `Populate Inventory`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -583,7 +578,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"reload_requested": &schema.Schema{
 													Description: `Reload Requested`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -614,7 +609,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"stack": &schema.Schema{
 													Description: `Stack`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -626,7 +621,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 
 															"is_full_ring": &schema.Schema{
 																Description: `Is Full Ring`,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -706,7 +701,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 															},
 															"supports_stack_workflows": &schema.Schema{
 																Description: `Supports Stack Workflows`,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -733,13 +728,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"sudi_required": &schema.Schema{
 													Description: `Sudi Required`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"tags": &schema.Schema{
 													Description: `Tags`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeString, //TEST,
 													Computed:    true,
 												},
 												"user_mic_numbers": &schema.Schema{
@@ -776,6 +771,11 @@ func resourcePnpDeviceImport() *schema.Resource {
 											},
 										},
 									},
+									"id": &schema.Schema{
+										Description: `Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
 									"run_summary_list": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -789,7 +789,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"error_flag": &schema.Schema{
 													Description: `Error Flag`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -896,7 +896,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"add_to_inventory": &schema.Schema{
 													Description: `Add To Inventory`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1084,7 +1084,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"add_to_inventory": &schema.Schema{
 													Description: `Add To Inventory`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1282,7 +1282,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 												},
 												"add_to_inventory": &schema.Schema{
 													Description: `Add To Inventory`,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1533,6 +1533,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -1540,11 +1541,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"device_info": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -1552,6 +1555,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1560,11 +1564,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Optional:  true,
 																ForceNew:  true,
 																Sensitive: true,
+																Computed:  true,
 															},
 															"username": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -1573,11 +1579,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"addn_mac_addrs": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -1586,21 +1594,25 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"auth_status": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"authenticated_sudi_serial_no": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"capabilities_supported": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -1609,16 +1621,19 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"description": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"device_sudi_serial_nos": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -1627,11 +1642,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"features_supported": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -1640,6 +1657,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1647,11 +1665,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"readable": &schema.Schema{
 																// Type:     schema.TypeBool,
@@ -1659,16 +1679,19 @@ func resourcePnpDeviceImport() *schema.Resource {
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"size": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"type": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"writeable": &schema.Schema{
 																// Type:     schema.TypeBool,
@@ -1676,6 +1699,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 														},
 													},
@@ -1684,16 +1708,19 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"hostname": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"http_headers": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1701,11 +1728,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"value": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -1714,28 +1743,33 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"image_version": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"ip_interfaces": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"ipv4_address": &schema.Schema{
-																Type:     schema.TypeString,
+																Type:     schema.TypeString, //TEST,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"ipv6_address_list": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -1744,16 +1778,19 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"status": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -1762,21 +1799,25 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"last_sync_time": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"last_update_on": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"location": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1784,26 +1825,31 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"altitude": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"latitude": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"longitude": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"site_id": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -1812,21 +1858,25 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"mode": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"neighbor_links": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1834,46 +1884,55 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"local_mac_address": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"local_short_interface_name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"remote_device_name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"remote_interface_name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"remote_mac_address": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"remote_platform": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"remote_short_interface_name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"remote_version": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -1882,16 +1941,19 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"pid": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"pnp_profile_list": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1899,6 +1961,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"discovery_created": &schema.Schema{
 																// Type:     schema.TypeBool,
@@ -1906,11 +1969,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"primary_endpoint": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -1918,31 +1983,37 @@ func resourcePnpDeviceImport() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"fqdn": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"ipv4_address": &schema.Schema{
-																			Type:     schema.TypeString,
+																			Type:     schema.TypeString, //TEST,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"ipv6_address": &schema.Schema{
-																			Type:     schema.TypeString,
+																			Type:     schema.TypeString, //TEST,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"port": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"protocol": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -1951,11 +2022,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"secondary_endpoint": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -1963,31 +2036,37 @@ func resourcePnpDeviceImport() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"fqdn": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"ipv4_address": &schema.Schema{
-																			Type:     schema.TypeString,
+																			Type:     schema.TypeString, //TEST,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"ipv6_address": &schema.Schema{
-																			Type:     schema.TypeString,
+																			Type:     schema.TypeString, //TEST,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"port": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"protocol": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -2001,11 +2080,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"pre_workflow_cli_ouputs": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -2013,11 +2094,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"cli_output": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -2026,11 +2109,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"project_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"reload_requested": &schema.Schema{
 													// Type:     schema.TypeBool,
@@ -2038,21 +2123,25 @@ func resourcePnpDeviceImport() *schema.Resource {
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"serial_number": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"smart_account_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"source": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"stack": &schema.Schema{
 													// Type:     schema.TypeBool,
@@ -2060,11 +2149,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"stack_info": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -2074,11 +2165,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"stack_member_list": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -2086,61 +2179,73 @@ func resourcePnpDeviceImport() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"license_level": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"license_type": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"mac_address": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"pid": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"priority": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"role": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"serial_number": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"software_version": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"stack_number": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"state": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"sudi_serial_number": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -2149,6 +2254,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"supports_stack_workflows": &schema.Schema{
 																// Type:     schema.TypeBool,
@@ -2156,16 +2262,19 @@ func resourcePnpDeviceImport() *schema.Resource {
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"total_member_count": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"valid_license_levels": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -2177,6 +2286,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"sudi_required": &schema.Schema{
 													// Type:     schema.TypeBool,
@@ -2184,16 +2294,19 @@ func resourcePnpDeviceImport() *schema.Resource {
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"tags": &schema.Schema{
-													Type:     schema.TypeString,
+													Type:     schema.TypeString, //TEST,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"user_sudi_serial_nos": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -2202,16 +2315,19 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"workflow_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"workflow_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -2220,6 +2336,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -2227,6 +2344,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"error_flag": &schema.Schema{
 													// Type:     schema.TypeBool,
@@ -2234,11 +2352,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"history_task_info": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -2246,6 +2366,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -2253,11 +2374,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"value": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -2266,21 +2389,25 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"time_taken": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"type": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"work_item_list": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -2288,31 +2415,37 @@ func resourcePnpDeviceImport() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"end_time": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"output_str": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"start_time": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"state": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"time_taken": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -2324,6 +2457,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -2332,6 +2466,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -2339,6 +2474,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"add_to_inventory": &schema.Schema{
 													// Type:     schema.TypeBool,
@@ -2346,71 +2482,85 @@ func resourcePnpDeviceImport() *schema.Resource {
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"added_on": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"config_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"curr_task_idx": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"description": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"end_time": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"exec_time": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"image_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"instance_type": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"lastupdate_on": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"start_time": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"state": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"tasks": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -2418,46 +2568,55 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"end_time": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"start_time": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"state": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"task_seq_no": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"time_taken": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"type": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"work_item_list": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -2465,31 +2624,37 @@ func resourcePnpDeviceImport() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"end_time": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"output_str": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"start_time": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"state": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"time_taken": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -2501,21 +2666,25 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"type": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"use_state": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"version": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -2524,6 +2693,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -2531,6 +2701,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"add_to_inventory": &schema.Schema{
 													// Type:     schema.TypeBool,
@@ -2538,71 +2709,85 @@ func resourcePnpDeviceImport() *schema.Resource {
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"added_on": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"config_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"curr_task_idx": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"description": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"end_time": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"exec_time": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"image_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"instance_type": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"lastupdate_on": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"start_time": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"state": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"tasks": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -2610,46 +2795,55 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"end_time": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"start_time": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"state": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"task_seq_no": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"time_taken": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"type": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"work_item_list": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -2657,31 +2851,37 @@ func resourcePnpDeviceImport() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"end_time": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"output_str": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"start_time": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"state": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"time_taken": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -2693,21 +2893,25 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"type": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"use_state": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"version": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -2716,16 +2920,19 @@ func resourcePnpDeviceImport() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"version": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"workflow": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -2733,6 +2940,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"add_to_inventory": &schema.Schema{
 													// Type:     schema.TypeBool,
@@ -2740,71 +2948,85 @@ func resourcePnpDeviceImport() *schema.Resource {
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"added_on": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"config_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"curr_task_idx": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"description": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"end_time": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"exec_time": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"image_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"instance_type": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"lastupdate_on": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"start_time": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"state": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"tasks": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -2812,46 +3034,55 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"end_time": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"start_time": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"state": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"task_seq_no": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"time_taken": &schema.Schema{
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"type": &schema.Schema{
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"work_item_list": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -2859,31 +3090,37 @@ func resourcePnpDeviceImport() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"end_time": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"output_str": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"start_time": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"state": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"time_taken": &schema.Schema{
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -2895,21 +3132,25 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"type": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"use_state": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"version": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -2918,6 +3159,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -2925,6 +3167,7 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -2932,11 +3175,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"config_parameters": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -2944,11 +3189,13 @@ func resourcePnpDeviceImport() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"value": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -2960,16 +3207,19 @@ func resourcePnpDeviceImport() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"license_type": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"top_of_stack_serial_number": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -3000,9 +3250,9 @@ func resourcePnpDeviceImportCreate(ctx context.Context, d *schema.ResourceData, 
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ImportDevicesInBulk", err,
-			"Failure at ImportDevicesInBulk, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -3011,13 +3261,13 @@ func resourcePnpDeviceImportCreate(ctx context.Context, d *schema.ResourceData, 
 	//Analizar verificacion.
 
 	vItem1 := flattenDeviceOnboardingPnpImportDevicesInBulkItem(response1)
-	log.Printf("[DEBUG] vItem1 => %v", responseInterfaceToString(vItem1))
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
 			"Failure when setting ImportDevicesInBulk response",
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

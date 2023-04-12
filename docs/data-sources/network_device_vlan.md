@@ -32,28 +32,28 @@ output "dnacenter_network_device_vlan_example" {
 
 ### Required
 
-- **id** (String) id path parameter.
+- `id` (String) id path parameter.
 
 ### Optional
 
-- **interface_type** (String) interfaceType query parameter. Vlan assocaited with sub-interface
+- `interface_type` (String) interfaceType query parameter. Vlan assocaited with sub-interface
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **interface_name** (String)
-- **ip_address** (String)
-- **mask** (Number)
-- **network_address** (String)
-- **number_of_ips** (Number)
-- **prefix** (String)
-- **vlan_number** (Number)
-- **vlan_type** (String)
+- `interface_name` (String)
+- `ip_address` (String)
+- `mask` (Number)
+- `network_address` (String)
+- `number_of_ips` (Number)
+- `prefix` (String)
+- `vlan_number` (Number)
+- `vlan_type` (String)
 
 

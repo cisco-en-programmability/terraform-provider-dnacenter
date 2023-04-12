@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -46,19 +46,16 @@ provide all the custom prompt in case of any update
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"custom_username_prompt": &schema.Schema{
 							Description: `Custom Username`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"default_password_prompt": &schema.Schema{
 							Description: `Default Password`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"default_username_prompt": &schema.Schema{
 							Description: `Default Username`,
 							Type:        schema.TypeString,
@@ -69,9 +66,8 @@ provide all the custom prompt in case of any update
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -80,11 +76,13 @@ provide all the custom prompt in case of any update
 							Type:        schema.TypeString,
 							Optional:    true,
 							Sensitive:   true,
+							Default:     "",
 						},
 						"username_prompt": &schema.Schema{
 							Description: `Username Prompt`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Default:     "",
 						},
 					},
 				},
@@ -100,10 +98,6 @@ func resourceNetworkDeviceCustomPromptCreate(ctx context.Context, d *schema.Reso
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNetworkDeviceCustomPromptCustomPromptPostAPI(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
-
 	vPasswordPrompt := resourceItem["password_prompt"]
 
 	vvPasswordPrompt := interfaceToString(vPasswordPrompt)
@@ -146,13 +140,14 @@ func resourceNetworkDeviceCustomPromptCreate(ctx context.Context, d *schema.Reso
 		}
 		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-			errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+			errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
 				"Failure when executing CustomPromptPostAPI", err1))
 			return diags
 		}
 	}
+
 	resourceMap := make(map[string]string)
 	resourceMap["password_prompt"] = vvPasswordPrompt
 	resourceMap["username_prompt"] = vvUsernamePrompt
@@ -165,9 +160,12 @@ func resourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Resour
 
 	var diags diag.Diagnostics
 
+	// resourceID := d.Id()
+	// resourceMap := separateResourceID(resourceID)
+
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CustomPromptSupportGetAPI")
+		log.Printf("[DEBUG] Selected method: CustomPromptSupportGetAPI")
 
 		response1, restyResp1, err := client.SystemSettings.CustomPromptSupportGetAPI()
 
@@ -175,9 +173,7 @@ func resourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Resour
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing CustomPromptSupportGetAPI", err,
-				"Failure at CustomPromptSupportGetAPI, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -190,6 +186,7 @@ func resourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Resour
 				err))
 			return diags
 		}
+
 		return diags
 
 	}
@@ -213,6 +210,9 @@ func expandRequestNetworkDeviceCustomPromptCustomPromptPostAPI(ctx context.Conte
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password_prompt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password_prompt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password_prompt")))) {
 		request.PasswordPrompt = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
 	}
 	return &request
 }

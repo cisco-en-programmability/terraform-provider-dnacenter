@@ -2,14 +2,13 @@ package dnacenter
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"fmt"
 	"reflect"
 
-	"log"
-
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -38,19 +37,22 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"execution_id": &schema.Schema{
-							Description: `Execution Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Execution Id
+		`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"execution_url": &schema.Schema{
-							Description: `Execution Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Execution URL
+		`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"message": &schema.Schema{
-							Description: `Message`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Response
+		`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -63,11 +65,43 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"items": &schema.Schema{
+							Type:     schema.TypeList,
+							ForceNew: true,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"execution_id": &schema.Schema{
+										Description: `Execution Id
+`,
+										Type:     schema.TypeString,
+										ForceNew: true,
+										Computed: true,
+									},
+									"execution_url": &schema.Schema{
+										Description: `Execution URL
+`,
+										Type:     schema.TypeString,
+										ForceNew: true,
+										Computed: true,
+									},
+									"message": &schema.Schema{
+										Description: `Response
+`,
+										Type:     schema.TypeString,
+										ForceNew: true,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"payload": &schema.Schema{
 							Description: `Array of RequestWirelessAPProvision`,
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -77,6 +111,7 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"custom_flex_group_name": &schema.Schema{
 										Description: `["Custom flex group name"]
@@ -84,6 +119,7 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -94,6 +130,7 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"rf_profile": &schema.Schema{
 										Description: `Radio frequency profile name
@@ -101,6 +138,7 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"site_id": &schema.Schema{
 										Description: `Site name hierarchy(ex: Global/...)
@@ -108,6 +146,7 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"site_name_hierarchy": &schema.Schema{
 										Description: `Site name hierarchy(ex: Global/...)
@@ -115,6 +154,7 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"type": &schema.Schema{
 										Description: `ApWirelessConfiguration
@@ -122,6 +162,16 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
+									},
+									"persistbapioutput": &schema.Schema{
+										Description: `persistbapioutput
+`,
+										Type:         schema.TypeString,
+										Optional:     true,
+										ForceNew:     true,
+										Default:      "false",
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 									},
 								},
 							},
@@ -137,16 +187,16 @@ func resourceWirelessProvisionAccessPointCreate(ctx context.Context, d *schema.R
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	// resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
-	// vPersistbapioutput := resourceItem["persistbapioutput"]
+	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
+	vPersistbapioutput := resourceItem["persistbapioutput"]
 
 	request1 := expandRequestWirelessProvisionAccessPointApProvision(ctx, "parameters.0", d)
 
-	// headerParams1 := dnacentersdkgo.ApProvisionHeaderParams{}
+	headerParams1 := dnacentersdkgo.ApProvisionHeaderParams{}
 
-	// headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
-	response1, restyResp1, err := client.Wireless.ApProvision(request1, nil)
+	response1, restyResp1, err := client.Wireless.ApProvision(request1, &headerParams1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -163,7 +213,6 @@ func resourceWirelessProvisionAccessPointCreate(ctx context.Context, d *schema.R
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {

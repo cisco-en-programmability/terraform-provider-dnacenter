@@ -1,9 +1,11 @@
 
 resource "dnacenter_application_sets" "example" {
   provider = dnacenter
-  parameters {
 
-    name = "string"
+  parameters {
+    payload {
+      name = "string"
+    }
   }
 }
 

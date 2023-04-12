@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -77,7 +77,7 @@ func dataSourceNfvProvisionDetail() *schema.Resource {
 
 									"cli_template_user_message_dto": &schema.Schema{
 										Description: `Cli Template User Message D T O`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -95,7 +95,7 @@ func dataSourceNfvProvisionDetail() *schema.Resource {
 
 									"error_payload": &schema.Schema{
 										Description: `Error Payload`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -113,7 +113,7 @@ func dataSourceNfvProvisionDetail() *schema.Resource {
 
 									"parent_task": &schema.Schema{
 										Description: `Parent Task`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -125,7 +125,7 @@ func dataSourceNfvProvisionDetail() *schema.Resource {
 
 									"provisioned_names": &schema.Schema{
 										Description: `Provisioned Names`,
-										Type:        schema.TypeString,
+										Type:        schema.TypeString, //TEST,
 										Computed:    true,
 									},
 
@@ -182,7 +182,7 @@ func dataSourceNfvProvisionDetailRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceDetailsByIP")
+		log.Printf("[DEBUG] Selected method: GetDeviceDetailsByIP")
 		queryParams1 := dnacentersdkgo.GetDeviceDetailsByIPQueryParams{}
 
 		queryParams1.DeviceIP = vDeviceIP.(string)
@@ -208,6 +208,7 @@ func dataSourceNfvProvisionDetailRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -284,7 +284,7 @@ func dataSourceDiscoveryDeviceRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDiscoveredNetworkDevicesByDiscoveryID")
+		log.Printf("[DEBUG] Selected method: GetDiscoveredNetworkDevicesByDiscoveryID")
 		vvID := vID.(string)
 		queryParams1 := dnacentersdkgo.GetDiscoveredNetworkDevicesByDiscoveryIDQueryParams{}
 
@@ -313,6 +313,7 @@ func dataSourceDiscoveryDeviceRead(ctx context.Context, d *schema.ResourceData, 
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

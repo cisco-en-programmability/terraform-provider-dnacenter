@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -146,6 +146,7 @@ func resourceGlobalCredentialSNMPv3() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Default:  "",
 						},
 						"instance_tenant_id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -275,8 +276,10 @@ func resourceGlobalCredentialSNMPv3Read(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		//TODO FOR DNAC
-
-		vItem1 := flattenDiscoveryGetGlobalCredentialsItem(response1)
+		items := []dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse{
+			*response1,
+		}
+		vItem1 := flattenDiscoveryGetGlobalCredentialsItems(&items)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGlobalCredentials search response",

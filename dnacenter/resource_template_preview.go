@@ -3,12 +3,11 @@ package dnacenter
 import (
 	"context"
 
-	"fmt"
 	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -57,7 +56,7 @@ func resourceTemplatePreview() *schema.Resource {
 						"validation_errors": &schema.Schema{
 							Description: `Validation error in template content if any
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 					},
@@ -77,23 +76,23 @@ func resourceTemplatePreview() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"params": &schema.Schema{
 							Description: `Params to render preview
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeString, //TEST,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"resource_params": &schema.Schema{
 							Description: `Resource params to render preview
 `,
-							Type:     schema.TypeList,
+							Type:     schema.TypeString, //TEST,
 							Optional: true,
 							ForceNew: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
+							Computed: true,
 						},
 						"template_id": &schema.Schema{
 							Description: `UUID of template to get template preview
@@ -101,6 +100,7 @@ func resourceTemplatePreview() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -125,9 +125,9 @@ func resourceTemplatePreviewCreate(ctx context.Context, d *schema.ResourceData, 
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing PreviewTemplate", err,
-			"Failure at PreviewTemplate, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -142,6 +142,7 @@ func resourceTemplatePreviewCreate(ctx context.Context, d *schema.ResourceData, 
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 
@@ -168,7 +169,7 @@ func expandRequestTemplatePreviewPreviewTemplate(ctx context.Context, key string
 		request.Params = expandRequestTemplatePreviewPreviewTemplateParams(ctx, key+".params.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".resource_params")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".resource_params")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".resource_params")))) {
-		request.ResourceParams = expandRequestTemplatePreviewPreviewTemplateResourceParamsArray(ctx, key+".resource_params", d)
+		request.ResourceParams = expandRequestTemplatePreviewPreviewTemplateResourceParams(ctx, key+".resource_params.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".template_id")))) {
 		request.TemplateID = interfaceToString(v)
@@ -179,26 +180,6 @@ func expandRequestTemplatePreviewPreviewTemplate(ctx context.Context, key string
 func expandRequestTemplatePreviewPreviewTemplateParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesPreviewTemplateParams {
 	var request dnacentersdkgo.RequestConfigurationTemplatesPreviewTemplateParams
 	request = d.Get(fixKeyAccess(key))
-	return &request
-}
-
-func expandRequestTemplatePreviewPreviewTemplateResourceParamsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestConfigurationTemplatesPreviewTemplateResourceParams {
-	request := []dnacentersdkgo.RequestConfigurationTemplatesPreviewTemplateResourceParams{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestTemplatePreviewPreviewTemplateResourceParams(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
 	return &request
 }
 

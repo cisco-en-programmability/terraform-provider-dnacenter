@@ -20,10 +20,6 @@ Upload the file to the **file** form data field
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_swim_image_file" "example" {
   provider = dnacenter
 }
@@ -38,31 +34,28 @@ output "dnacenter_swim_image_file_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **file_name** (String) File name.
-- **file_path** (String) File absolute path.
+- `file_name` (String) File name.
+- `file_path` (String) File absolute path.
 
 Optional:
 
-- **is_third_party** (Boolean) isThirdParty query parameter. Third party Image check
-- **third_party_application_type** (String) thirdPartyApplicationType query parameter. Third Party Application Type
-- **third_party_image_family** (String) thirdPartyImageFamily query parameter. Third Party image family
-- **third_party_vendor** (String) thirdPartyVendor query parameter. Third Party Vendor
+- `is_third_party` (Boolean) isThirdParty query parameter. Third party Image check
+- `third_party_application_type` (String) thirdPartyApplicationType query parameter. Third Party Application Type
+- `third_party_image_family` (String) thirdPartyImageFamily query parameter. Third Party image family
+- `third_party_vendor` (String) thirdPartyVendor query parameter. Third Party Vendor
 
 
 <a id="nestedatt--item"></a>
@@ -70,37 +63,37 @@ Optional:
 
 Read-Only:
 
-- **applicable_devices_for_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--applicable_devices_for_image))
-- **application_type** (String)
-- **created_time** (String)
-- **extended_attributes** (String)
-- **family** (String)
-- **feature** (String)
-- **file_service_id** (String)
-- **file_size** (String)
-- **image_integrity_status** (String)
-- **image_name** (String)
-- **image_series** (List of String)
-- **image_source** (String)
-- **image_type** (String)
-- **image_uuid** (String)
-- **import_source_type** (String)
-- **is_tagged_golden** (String)
-- **md5_checksum** (String)
-- **name** (String)
-- **profile_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--profile_info))
-- **sha_check_sum** (String)
-- **vendor** (String)
-- **version** (String)
+- `applicable_devices_for_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--applicable_devices_for_image))
+- `application_type` (String)
+- `created_time` (String)
+- `extended_attributes` (String)
+- `family` (String)
+- `feature` (String)
+- `file_service_id` (String)
+- `file_size` (String)
+- `image_integrity_status` (String)
+- `image_name` (String)
+- `image_series` (List of String)
+- `image_source` (String)
+- `image_type` (String)
+- `image_uuid` (String)
+- `import_source_type` (String)
+- `is_tagged_golden` (String)
+- `md5_checksum` (String)
+- `name` (String)
+- `profile_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--profile_info))
+- `sha_check_sum` (String)
+- `vendor` (String)
+- `version` (String)
 
 <a id="nestedobjatt--item--applicable_devices_for_image"></a>
 ### Nested Schema for `item.applicable_devices_for_image`
 
 Read-Only:
 
-- **mdf_id** (String)
-- **product_id** (List of String)
-- **product_name** (String)
+- `mdf_id` (String)
+- `product_id` (List of String)
+- `product_name` (String)
 
 
 <a id="nestedobjatt--item--profile_info"></a>
@@ -108,12 +101,12 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **extended_attributes** (String)
-- **memory** (Number)
-- **product_type** (String)
-- **profile_name** (String)
-- **shares** (Number)
-- **v_cpu** (Number)
+- `description` (String)
+- `extended_attributes` (String)
+- `memory` (Number)
+- `product_type` (String)
+- `profile_name` (String)
+- `shares` (Number)
+- `v_cpu` (Number)
 
 

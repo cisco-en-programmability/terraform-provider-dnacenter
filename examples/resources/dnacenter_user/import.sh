@@ -1,0 +1,1 @@
+terraform import dnacenter_user.example "id:=string"

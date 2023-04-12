@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -99,6 +99,43 @@ func dataSourceGlobalCredential() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+
+						"netconf_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+
+						"port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"read_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"secure": &schema.Schema{
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"username": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"write_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -122,7 +159,7 @@ func dataSourceGlobalCredentialRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetGlobalCredentials")
+		log.Printf("[DEBUG] Selected method: GetGlobalCredentials")
 		queryParams1 := dnacentersdkgo.GetGlobalCredentialsQueryParams{}
 
 		if okCredentialSubType {
@@ -156,12 +193,13 @@ func dataSourceGlobalCredentialRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetCredentialSubTypeByCredentialID")
+		log.Printf("[DEBUG] Selected method: GetCredentialSubTypeByCredentialID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.Discovery.GetCredentialSubTypeByCredentialID(vvID)
@@ -185,6 +223,7 @@ func dataSourceGlobalCredentialRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -205,26 +244,16 @@ func flattenDiscoveryGetGlobalCredentialsItems(items *[]dnacentersdkgo.ResponseD
 		respItem["id"] = item.ID
 		respItem["instance_tenant_id"] = item.InstanceTenantID
 		respItem["instance_uuid"] = item.InstanceUUID
+		respItem["password"] = item.Password
+		respItem["port"] = item.Port
+		respItem["secure"] = boolPtrToString(item.Secure)
+		respItem["username"] = item.Username
+		respItem["netconf_port"] = item.NetconfPort
+		respItem["read_community"] = item.ReadCommunity
+		respItem["write_community"] = item.WriteCommunity
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenDiscoveryGetGlobalCredentialsItem(item *dnacentersdkgo.ResponseDiscoveryGetGlobalCredentialsResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-
-	respItem := make(map[string]interface{})
-	respItem["comments"] = item.Comments
-	respItem["credential_type"] = item.CredentialType
-	respItem["description"] = item.Description
-	respItem["id"] = item.ID
-	respItem["instance_tenant_id"] = item.InstanceTenantID
-	respItem["instance_uuid"] = item.InstanceUUID
-	return []map[string]interface{}{
-		respItem,
-	}
 }
 
 func flattenDiscoveryGetCredentialSubTypeByCredentialIDItem(item *dnacentersdkgo.ResponseDiscoveryGetCredentialSubTypeByCredentialID) []map[string]interface{} {

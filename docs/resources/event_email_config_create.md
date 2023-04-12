@@ -16,13 +16,10 @@ It performs create operation on Event Management.
 ~>**Warning:**
 This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
 Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+
 ## Example Usage
 
 ```terraform
-provider "dnacenter" {
-  debug = "true"
-}
-
 resource "dnacenter_event_email_config_create" "example" {
   provider = dnacenter
   parameters {
@@ -58,38 +55,35 @@ output "dnacenter_event_email_config_create_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **email_config_id** (String) Required only for update email configuration
-- **from_email** (String) From Email
-- **primary_smt_p_config** (Block List) (see [below for nested schema](#nestedblock--parameters--primary_smt_p_config))
-- **secondary_smt_p_config** (Block List) (see [below for nested schema](#nestedblock--parameters--secondary_smt_p_config))
-- **subject** (String) Subject
-- **to_email** (String) To Email
+- `email_config_id` (String) Required only for update email configuration
+- `from_email` (String) From Email
+- `primary_smt_p_config` (Block List) (see [below for nested schema](#nestedblock--parameters--primary_smt_p_config))
+- `secondary_smt_p_config` (Block List) (see [below for nested schema](#nestedblock--parameters--secondary_smt_p_config))
+- `subject` (String) Subject
+- `to_email` (String) To Email
 
 <a id="nestedblock--parameters--primary_smt_p_config"></a>
 ### Nested Schema for `parameters.primary_smt_p_config`
 
 Optional:
 
-- **host_name** (String) Host Name
-- **password** (String, Sensitive) Password
-- **port** (String) Port
-- **user_name** (String) User Name
+- `host_name` (String) Host Name
+- `password` (String, Sensitive) Password
+- `port` (String) Port
+- `user_name` (String) User Name
 
 
 <a id="nestedblock--parameters--secondary_smt_p_config"></a>
@@ -97,10 +91,10 @@ Optional:
 
 Optional:
 
-- **host_name** (String) Host Name
-- **password** (String, Sensitive) Password
-- **port** (String) Port
-- **user_name** (String) User Name
+- `host_name` (String) Host Name
+- `password` (String, Sensitive) Password
+- `port` (String) Port
+- `user_name` (String) User Name
 
 
 
@@ -109,6 +103,6 @@ Optional:
 
 Read-Only:
 
-- **status_uri** (String)
+- `status_uri` (String)
 
 

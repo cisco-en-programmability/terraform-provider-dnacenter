@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -157,7 +157,7 @@ func dataSourceNfvProfile() *schema.Resource {
 									"direct_internet_access_for_firewall": &schema.Schema{
 										Description: `Direct internet access value should be boolean (eg: false)
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -171,7 +171,7 @@ func dataSourceNfvProfile() *schema.Resource {
 												"connect": &schema.Schema{
 													Description: `Connection of service provider and device value should be boolean (eg: true)
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -179,7 +179,7 @@ func dataSourceNfvProfile() *schema.Resource {
 												"connect_default_gateway_on_wan": &schema.Schema{
 													Description: `Default gateway connect value as boolean (eg: true)
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -251,7 +251,7 @@ func dataSourceNfvProfile() *schema.Resource {
 															"assign_ip_address_to_network": &schema.Schema{
 																Description: `Assign ip address to network (eg: true)
 `,
-
+																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -333,7 +333,7 @@ func dataSourceNfvProfileRead(ctx context.Context, d *schema.ResourceData, m int
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNfvProfile")
+		log.Printf("[DEBUG] Selected method: GetNfvProfile")
 		vvID := vID.(string)
 		queryParams1 := dnacentersdkgo.GetNfvProfileQueryParams{}
 
@@ -368,6 +368,7 @@ func dataSourceNfvProfileRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

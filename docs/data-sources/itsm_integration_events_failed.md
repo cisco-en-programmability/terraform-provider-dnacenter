@@ -31,39 +31,39 @@ output "dnacenter_itsm_integration_events_failed_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **instance_id** (String) instanceId query parameter. Instance Id of the failed event as in the Runtime Dashboard
+- `instance_id` (String) instanceId query parameter. Instance Id of the failed event as in the Runtime Dashboard
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **category** (String)
-- **description** (String)
-- **domain** (String)
-- **enrichment_info** (List of Object) (see [below for nested schema](#nestedobjatt--items--enrichment_info))
-- **event_id** (String)
-- **instance_id** (String)
-- **name** (String)
-- **severity** (String)
-- **source** (String)
-- **sub_domain** (String)
-- **timestamp** (Number)
-- **type** (String)
+- `category` (String)
+- `description` (String)
+- `domain` (String)
+- `enrichment_info` (List of Object) (see [below for nested schema](#nestedobjatt--items--enrichment_info))
+- `event_id` (String)
+- `instance_id` (String)
+- `name` (String)
+- `severity` (String)
+- `source` (String)
+- `sub_domain` (String)
+- `timestamp` (Number)
+- `type` (String)
 
 <a id="nestedobjatt--items--enrichment_info"></a>
 ### Nested Schema for `items.enrichment_info`
 
 Read-Only:
 
-- **error_code** (String)
-- **error_description** (String)
-- **event_status** (String)
-- **response_received_from_itsmsystem** (String)
+- `error_code` (String)
+- `error_description` (String)
+- `event_status` (String)
+- `response_received_from_itsmsystem` (String)
 
 

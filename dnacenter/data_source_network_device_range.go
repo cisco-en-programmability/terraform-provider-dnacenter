@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,19 +15,20 @@ func dataSourceNetworkDeviceRange() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Devices.
 
-- Returns the list of network devices for the given pagination range
+- Returns the list of network devices for the given pagination range. The maximum number of records that can be
+retrieved is 500
 `,
 
 		ReadContext: dataSourceNetworkDeviceRangeRead,
 		Schema: map[string]*schema.Schema{
 			"records_to_return": &schema.Schema{
-				Description: `recordsToReturn path parameter. Number of records to return
+				Description: `recordsToReturn path parameter. Number of records to return [1<= recordsToReturn <= 500]
 `,
 				Type:     schema.TypeInt,
 				Required: true,
 			},
 			"start_index": &schema.Schema{
-				Description: `startIndex path parameter. Start index
+				Description: `startIndex path parameter. Start index [>=1]
 `,
 				Type:     schema.TypeInt,
 				Required: true,
@@ -249,7 +250,7 @@ func dataSourceNetworkDeviceRangeRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkDeviceByPaginationRange")
+		log.Printf("[DEBUG] Selected method: GetNetworkDeviceByPaginationRange")
 		vvStartIndex := vStartIndex.(int)
 		vvRecordsToReturn := vRecordsToReturn.(int)
 
@@ -274,6 +275,7 @@ func dataSourceNetworkDeviceRangeRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

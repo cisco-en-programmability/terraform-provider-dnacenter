@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -67,6 +67,14 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"aaa_override": &schema.Schema{
+										Description: `Aaa Override
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
 									"auth_server": &schema.Schema{
 										Description: `Auth Server
 `,
@@ -74,10 +82,25 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 										Computed: true,
 									},
 
+									"client_rate_limit": &schema.Schema{
+										Description: `Client Rate Limit. (in bits per second)
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
+									},
+
+									"coverage_hole_detection_enable": &schema.Schema{
+										Description: `Coverage Hole Detection Enable
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
 									"enable_broadcast_ssi_d": &schema.Schema{
 										Description: `Enable Broadcast SSID
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -85,7 +108,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"enable_fast_lane": &schema.Schema{
 										Description: `Enable Fast Lane
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -93,7 +116,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"enable_mac_filtering": &schema.Schema{
 										Description: `Enable MAC Filtering
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -108,7 +131,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"is_enabled": &schema.Schema{
 										Description: `Is Enabled
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -116,9 +139,38 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 									"is_fabric": &schema.Schema{
 										Description: `Is Fabric
 `,
-
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
+									},
+
+									"multi_psk_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"passphrase": &schema.Schema{
+													Description: `Passphrase`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"passphrase_type": &schema.Schema{
+													Description: `Passphrase Type
+`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"priority": &schema.Schema{
+													Description: `Priority
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
 									},
 
 									"name": &schema.Schema{
@@ -142,6 +194,12 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Computed: true,
+									},
+
+									"protected_management_frame": &schema.Schema{
+										Description: `Protected Management Frame`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 
 									"radio_policy": &schema.Schema{
@@ -196,7 +254,7 @@ func dataSourceWirelessEnterpriseSSIDRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEnterpriseSSID")
+		log.Printf("[DEBUG] Selected method: GetEnterpriseSSID")
 		queryParams1 := dnacentersdkgo.GetEnterpriseSSIDQueryParams{}
 
 		if okSSIDName {
@@ -224,6 +282,7 @@ func dataSourceWirelessEnterpriseSSIDRead(ctx context.Context, d *schema.Resourc
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 
@@ -270,6 +329,26 @@ func flattenWirelessGetEnterpriseSSIDItemsSSIDDetails(items *[]dnacentersdkgo.Re
 		respItem["radio_policy"] = item.RadioPolicy
 		respItem["enable_broadcast_ssi_d"] = boolPtrToString(item.EnableBroadcastSSID)
 		respItem["nas_options"] = item.NasOptions
+		respItem["aaa_override"] = boolPtrToString(item.AAAOverride)
+		respItem["coverage_hole_detection_enable"] = boolPtrToString(item.CoverageHoleDetectionEnable)
+		respItem["protected_management_frame"] = item.ProtectedManagementFrame
+		respItem["multi_psk_settings"] = flattenWirelessGetEnterpriseSSIDItemsSSIDDetailsMultipSKSettings(item.MultipSKSettings)
+		respItem["client_rate_limit"] = item.ClientRateLimit
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenWirelessGetEnterpriseSSIDItemsSSIDDetailsMultipSKSettings(items *[]dnacentersdkgo.ResponseItemWirelessGetEnterpriseSSIDSSIDDetailsMultipSKSettings) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["priority"] = item.Priority
+		respItem["passphrase_type"] = item.PassphraseType
+		respItem["passphrase"] = item.Passphrase
 		respItems = append(respItems, respItem)
 	}
 	return respItems

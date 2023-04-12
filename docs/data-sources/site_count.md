@@ -31,19 +31,19 @@ output "dnacenter_site_count_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **site_id** (String) siteId query parameter. Site id to retrieve site count.
+- `site_id` (String) siteId query parameter. Site id to retrieve site count.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **response** (Number)
-- **version** (String)
+- `response` (Number)
+- `version` (String)
 
 

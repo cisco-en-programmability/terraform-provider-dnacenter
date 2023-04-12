@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -79,36 +79,42 @@ func resourceSyslogConfigUpdate() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"description": &schema.Schema{
 							Description: `Description`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"host": &schema.Schema{
 							Description: `Host`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Description: `Name`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"port": &schema.Schema{
 							Description: `Port`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"protocol": &schema.Schema{
 							Description: `Protocol`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -133,9 +139,9 @@ func resourceSyslogConfigUpdateCreate(ctx context.Context, d *schema.ResourceDat
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing UpdateSyslogDestination", err,
-			"Failure at UpdateSyslogDestination, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when setting CreateWebhookDestination response",
+			err))
 		return diags
 	}
 
@@ -150,6 +156,7 @@ func resourceSyslogConfigUpdateCreate(ctx context.Context, d *schema.ResourceDat
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

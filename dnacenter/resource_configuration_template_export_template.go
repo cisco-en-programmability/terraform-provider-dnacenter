@@ -2,14 +2,16 @@ package dnacenter
 
 import (
 	"context"
+
 	"errors"
+
 	"time"
 
 	"fmt"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -61,6 +63,7 @@ func resourceConfigurationTemplateExportTemplate() *schema.Resource {
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -88,9 +91,8 @@ func resourceConfigurationTemplateExportTemplateCreate(ctx context.Context, d *s
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ExportsTheTemplatesForAGivenCriteria", err,
-			"Failure at ExportsTheTemplatesForAGivenCriteria, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing ExportTemplates", err))
 		return diags
 	}
 
@@ -144,6 +146,7 @@ func resourceConfigurationTemplateExportTemplateCreate(ctx context.Context, d *s
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

@@ -43,46 +43,46 @@ output "dnacenter_reports_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **report_id** (String) reportId path parameter. reportId of report
-- **view_group_id** (String) viewGroupId query parameter. viewGroupId of viewgroup for report
-- **view_id** (String) viewId query parameter. viewId of view for report
+- `report_id` (String) reportId path parameter. reportId of report
+- `view_group_id` (String) viewGroupId query parameter. viewGroupId of viewgroup for report
+- `view_id` (String) viewId query parameter. viewId of view for report
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **data_category** (String)
-- **deliveries** (List of String)
-- **execution_count** (Number)
-- **executions** (List of Object) (see [below for nested schema](#nestedobjatt--item--executions))
-- **name** (String)
-- **report_id** (String)
-- **report_was_executed** (String)
-- **schedule** (String)
-- **tags** (List of String)
-- **view** (List of Object) (see [below for nested schema](#nestedobjatt--item--view))
-- **view_group_id** (String)
-- **view_group_version** (String)
+- `data_category` (String)
+- `deliveries` (List of String)
+- `execution_count` (Number)
+- `executions` (List of Object) (see [below for nested schema](#nestedobjatt--item--executions))
+- `name` (String)
+- `report_id` (String)
+- `report_was_executed` (String)
+- `schedule` (String)
+- `tags` (List of String)
+- `view` (List of Object) (see [below for nested schema](#nestedobjatt--item--view))
+- `view_group_id` (String)
+- `view_group_version` (String)
 
 <a id="nestedobjatt--item--executions"></a>
 ### Nested Schema for `item.executions`
 
 Read-Only:
 
-- **end_time** (Number)
-- **errors** (List of String)
-- **execution_id** (String)
-- **process_status** (String)
-- **request_status** (String)
-- **start_time** (Number)
-- **warnings** (List of String)
+- `end_time` (Number)
+- `errors` (List of String)
+- `execution_id` (String)
+- `process_status` (String)
+- `request_status` (String)
+- `start_time` (Number)
+- `warnings` (List of String)
 
 
 <a id="nestedobjatt--item--view"></a>
@@ -90,30 +90,30 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **field_groups** (List of Object) (see [below for nested schema](#nestedobjatt--item--view--field_groups))
-- **filters** (List of Object) (see [below for nested schema](#nestedobjatt--item--view--filters))
-- **format** (List of Object) (see [below for nested schema](#nestedobjatt--item--view--format))
-- **name** (String)
-- **view_id** (String)
-- **view_info** (String)
+- `description` (String)
+- `field_groups` (List of Object) (see [below for nested schema](#nestedobjatt--item--view--field_groups))
+- `filters` (List of Object) (see [below for nested schema](#nestedobjatt--item--view--filters))
+- `format` (List of Object) (see [below for nested schema](#nestedobjatt--item--view--format))
+- `name` (String)
+- `view_id` (String)
+- `view_info` (String)
 
 <a id="nestedobjatt--item--view--field_groups"></a>
 ### Nested Schema for `item.view.field_groups`
 
 Read-Only:
 
-- **field_group_display_name** (String)
-- **field_group_name** (String)
-- **fields** (List of Object) (see [below for nested schema](#nestedobjatt--item--view--field_groups--fields))
+- `field_group_display_name` (String)
+- `field_group_name` (String)
+- `fields` (List of Object) (see [below for nested schema](#nestedobjatt--item--view--field_groups--fields))
 
 <a id="nestedobjatt--item--view--field_groups--fields"></a>
 ### Nested Schema for `item.view.field_groups.fields`
 
 Read-Only:
 
-- **display_name** (String)
-- **name** (String)
+- `display_name` (String)
+- `name` (String)
 
 
 
@@ -122,10 +122,10 @@ Read-Only:
 
 Read-Only:
 
-- **display_name** (String)
-- **name** (String)
-- **type** (String)
-- **value** (String)
+- `display_name` (String)
+- `name` (String)
+- `type` (String)
+- `value` (String)
 
 
 <a id="nestedobjatt--item--view--format"></a>
@@ -133,9 +133,9 @@ Read-Only:
 
 Read-Only:
 
-- **default** (String)
-- **format_type** (String)
-- **name** (String)
+- `default` (String)
+- `format_type` (String)
+- `name` (String)
 
 
 
@@ -145,31 +145,31 @@ Read-Only:
 
 Read-Only:
 
-- **data_category** (String)
-- **deliveries** (List of String)
-- **execution_count** (Number)
-- **executions** (List of Object) (see [below for nested schema](#nestedobjatt--items--executions))
-- **name** (String)
-- **report_id** (String)
-- **report_was_executed** (String)
-- **schedule** (String)
-- **tags** (List of String)
-- **view** (List of Object) (see [below for nested schema](#nestedobjatt--items--view))
-- **view_group_id** (String)
-- **view_group_version** (String)
+- `data_category` (String)
+- `deliveries` (List of String)
+- `execution_count` (Number)
+- `executions` (List of Object) (see [below for nested schema](#nestedobjatt--items--executions))
+- `name` (String)
+- `report_id` (String)
+- `report_was_executed` (String)
+- `schedule` (String)
+- `tags` (List of String)
+- `view` (List of Object) (see [below for nested schema](#nestedobjatt--items--view))
+- `view_group_id` (String)
+- `view_group_version` (String)
 
 <a id="nestedobjatt--items--executions"></a>
 ### Nested Schema for `items.executions`
 
 Read-Only:
 
-- **end_time** (Number)
-- **errors** (List of String)
-- **execution_id** (String)
-- **process_status** (String)
-- **request_status** (String)
-- **start_time** (Number)
-- **warnings** (List of String)
+- `end_time` (Number)
+- `errors` (List of String)
+- `execution_id` (String)
+- `process_status` (String)
+- `request_status` (String)
+- `start_time` (Number)
+- `warnings` (List of String)
 
 
 <a id="nestedobjatt--items--view"></a>
@@ -177,30 +177,30 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **field_groups** (List of Object) (see [below for nested schema](#nestedobjatt--items--view--field_groups))
-- **filters** (List of Object) (see [below for nested schema](#nestedobjatt--items--view--filters))
-- **format** (List of Object) (see [below for nested schema](#nestedobjatt--items--view--format))
-- **name** (String)
-- **view_id** (String)
-- **view_info** (String)
+- `description` (String)
+- `field_groups` (List of Object) (see [below for nested schema](#nestedobjatt--items--view--field_groups))
+- `filters` (List of Object) (see [below for nested schema](#nestedobjatt--items--view--filters))
+- `format` (List of Object) (see [below for nested schema](#nestedobjatt--items--view--format))
+- `name` (String)
+- `view_id` (String)
+- `view_info` (String)
 
 <a id="nestedobjatt--items--view--field_groups"></a>
 ### Nested Schema for `items.view.field_groups`
 
 Read-Only:
 
-- **field_group_display_name** (String)
-- **field_group_name** (String)
-- **fields** (List of Object) (see [below for nested schema](#nestedobjatt--items--view--field_groups--fields))
+- `field_group_display_name` (String)
+- `field_group_name` (String)
+- `fields` (List of Object) (see [below for nested schema](#nestedobjatt--items--view--field_groups--fields))
 
 <a id="nestedobjatt--items--view--field_groups--fields"></a>
 ### Nested Schema for `items.view.field_groups.fields`
 
 Read-Only:
 
-- **display_name** (String)
-- **name** (String)
+- `display_name` (String)
+- `name` (String)
 
 
 
@@ -209,10 +209,10 @@ Read-Only:
 
 Read-Only:
 
-- **display_name** (String)
-- **name** (String)
-- **type** (String)
-- **value** (String)
+- `display_name` (String)
+- `name` (String)
+- `type` (String)
+- `value` (String)
 
 
 <a id="nestedobjatt--items--view--format"></a>
@@ -220,8 +220,8 @@ Read-Only:
 
 Read-Only:
 
-- **default** (String)
-- **format_type** (String)
-- **name** (String)
+- `default` (String)
+- `format_type` (String)
+- `name` (String)
 
 

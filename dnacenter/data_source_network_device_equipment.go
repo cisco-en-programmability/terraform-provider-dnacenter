@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -26,10 +26,10 @@ func dataSourceNetworkDeviceEquipment() *schema.Resource {
 				Required:    true,
 			},
 			"type": &schema.Schema{
-				Description: `type query parameter. Type value should be PowerSupply or Fan
+				Description: `type query parameter. Type value can be PowerSupply, Fan, Chassis, Backplane, Module, PROCESSOR, Other, SFP. If no type is mentioned, All equipments are fetched for the device.
 `,
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 			},
 
 			"items": &schema.Schema{
@@ -91,15 +91,17 @@ func dataSourceNetworkDeviceEquipmentRead(ctx context.Context, d *schema.Resourc
 
 	var diags diag.Diagnostics
 	vDeviceUUID := d.Get("device_uuid")
-	vType := d.Get("type")
+	vType, okType := d.GetOk("type")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ReturnPowerSupplyFanDetailsForTheGivenDevice")
+		log.Printf("[DEBUG] Selected method: ReturnPowerSupplyFanDetailsForTheGivenDevice")
 		vvDeviceUUID := vDeviceUUID.(string)
 		queryParams1 := dnacentersdkgo.ReturnPowerSupplyFanDetailsForTheGivenDeviceQueryParams{}
 
-		queryParams1.Type = vType.(string)
+		if okType {
+			queryParams1.Type = vType.(string)
+		}
 
 		response1, restyResp1, err := client.Devices.ReturnPowerSupplyFanDetailsForTheGivenDevice(vvDeviceUUID, &queryParams1)
 
@@ -122,6 +124,7 @@ func dataSourceNetworkDeviceEquipmentRead(ctx context.Context, d *schema.Resourc
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

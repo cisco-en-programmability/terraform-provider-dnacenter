@@ -31,14 +31,11 @@ output "dnacenter_pnp_virtual_accounts_example" {
 
 ### Required
 
-- **domain** (String) domain path parameter. Smart Account Domain
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `domain` (String) domain path parameter. Smart Account Domain
 
 ### Read-Only
 
-- **items** (List of String)
+- `id` (String) The ID of this resource.
+- `items` (List of String)
 
 

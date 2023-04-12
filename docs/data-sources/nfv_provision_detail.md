@@ -31,48 +31,45 @@ output "dnacenter_nfv_provision_detail_example" {
 
 ### Required
 
-- **device_ip** (String) deviceIp query parameter. Device to which the provisioning detail has to be retrieved
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `device_ip` (String) deviceIp query parameter. Device to which the provisioning detail has to be retrieved
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **begin_step** (String)
-- **duration** (String)
-- **end_time** (String)
-- **start_time** (String)
-- **status** (String)
-- **status_message** (String)
-- **task_nodes** (List of Object) (see [below for nested schema](#nestedobjatt--item--task_nodes))
-- **topology** (String)
+- `begin_step` (String)
+- `duration` (String)
+- `end_time` (String)
+- `start_time` (String)
+- `status` (String)
+- `status_message` (String)
+- `task_nodes` (List of Object) (see [below for nested schema](#nestedobjatt--item--task_nodes))
+- `topology` (String)
 
 <a id="nestedobjatt--item--task_nodes"></a>
 ### Nested Schema for `item.task_nodes`
 
 Read-Only:
 
-- **cli_template_user_message_dto** (String)
-- **duration** (String)
-- **end_time** (String)
-- **error_payload** (String)
-- **name** (String)
-- **next_task** (String)
-- **parent_task** (String)
-- **payload** (String)
-- **provisioned_names** (String)
-- **start_time** (String)
-- **status** (String)
-- **status_message** (String)
-- **step_ran** (String)
-- **target** (String)
+- `cli_template_user_message_dto` (String)
+- `duration` (String)
+- `end_time` (String)
+- `error_payload` (String)
+- `name` (String)
+- `next_task` (String)
+- `parent_task` (String)
+- `payload` (String)
+- `provisioned_names` (String)
+- `start_time` (String)
+- `status` (String)
+- `status_message` (String)
+- `step_ran` (String)
+- `target` (String)
 
 
