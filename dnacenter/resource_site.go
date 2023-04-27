@@ -242,7 +242,8 @@ func resourceSite() *schema.Resource {
 							Description: `siteId path parameter. Site id to which site details to be updated.
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Default:  "",
 						},
 						"type": &schema.Schema{
 							Description: `Type of site to create (eg: area, building, floor)
