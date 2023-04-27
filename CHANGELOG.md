@@ -1,3 +1,22 @@
+## 1.1.1-beta (April 27, 2023)
+BUGFIXES:
+* Adding to `provider.go` file following resources:
+  - `dnacenter_sensor_test_delete`
+  - `dnacenter_sensor_test_create`
+  - `dnacenter_golden_image`
+  - `dnacenter_deploy_template_v1`
+  - `dnacenter_global_credential_snmpv3`
+  - `dnacenter_global_credential_snmpv2_write_community`
+  - `dnacenter_global_credential_snmpv2_read_community`
+  - `dnacenter_global_credential_netconf`
+  - `dnacenter_global_credential_http_write`
+  - `dnacenter_global_credential_http_read`
+  - `dnacenter_global_credential_cli`
+  - `dnacenter_tag_membership`
+* Adding to `provider.go` file following data sources:
+  - `dnacenter_license_smart_account_details`
+  - `dnacenter_golden_tag_image_details`
+* `dnacenter_site` documentation issues fixed.
 ## 1.1.0-beta (April 12, 2023)
 `dnacenter-go-sdk` version changes from `github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk` to `github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk`.(Cisco DNA Center's v2.3.5.3 API)
 FEATURES:

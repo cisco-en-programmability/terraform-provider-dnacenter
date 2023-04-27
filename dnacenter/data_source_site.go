@@ -58,11 +58,21 @@ func dataSourceSite() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"additional_info": &schema.Schema{
-							Description: `Additional Info`,
-							Type:        schema.TypeList,
-							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"attributes": &schema.Schema{
+										Type:     schema.TypeMap,
+										Computed: true,
+									},
+
+									"name_space": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
 							},
 						},
 
@@ -177,7 +187,7 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItem := make(map[string]interface{})
 		respItem["parent_id"] = item.ParentID
 		respItem["name"] = item.Name
-		respItem["additional_info"] = item.AdditionalInfo
+		respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo)
 		respItem["site_hierarchy"] = item.SiteHierarchy
 		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 		respItem["instance_tenant_id"] = item.InstanceTenantID
@@ -185,4 +195,45 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItems = append(respItems, respItem)
 	}
 	return respItems
+}
+
+func flattenSitesGetSiteItem(item *dnacentersdkgo.ResponseSitesGetSiteResponse) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+
+	respItem := make(map[string]interface{})
+	respItem["parent_id"] = item.ParentID
+	respItem["name"] = item.Name
+	respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo)
+	respItem["site_hierarchy"] = item.SiteHierarchy
+	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+	respItem["instance_tenant_id"] = item.InstanceTenantID
+	respItem["id"] = item.ID
+	respItems = append(respItems, respItem)
+
+	return respItems
+}
+
+func flattenSitesGetSiteItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfo) []map[string]interface{} {
+	var respItems []map[string]interface{}
+	for _, item := range items {
+		respItem := make(map[string]interface{})
+		respItem["name_space"] = item.Namespace
+		respItem["attributes"] = item.Attributes
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenSitesGetSiteItemsAdditionalInfoAtributes(item *dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfoAttributes) map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	for key, value := range *item {
+		respItem[key] = value
+	}
+	return respItem
 }
