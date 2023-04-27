@@ -25,7 +25,7 @@ resource "dnacenter_site" "example" {
     
     */
       building {
-        name        = "MyTestFinal${count.index}"
+        name        = "MyTestFinalq1"
         address     = "255 China Basin Street, San Francisco, California 94158, United States 2"
         parent_name = "Global"
         latitude    = 37.77178651716143
