@@ -378,7 +378,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `siteId path parameter. Site id of site to update sub pool.
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"slaac_support": &schema.Schema{
 							Description: `Slaac Support`,
