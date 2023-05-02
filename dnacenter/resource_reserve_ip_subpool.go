@@ -228,7 +228,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `id path parameter. Id of reserve ip subpool to be deleted.
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"ipv4_dhcp_servers": &schema.Schema{
 							Description: `IPv4 input for dhcp server ip example: 1.1.1.1
@@ -426,7 +426,7 @@ func resourceReserveIPSubpoolCreate(ctx context.Context, d *schema.ResourceData,
 
 	if err != nil || response1 != nil {
 		resourceMap := make(map[string]string)
-		resourceMap["site_id"] = vvSiteID
+		resourceMap["site_id"] = response1.SiteID
 		resourceMap["name"] = vvName
 		d.SetId(joinResourceID(resourceMap))
 		return resourceReserveIPSubpoolRead(ctx, d, m)
