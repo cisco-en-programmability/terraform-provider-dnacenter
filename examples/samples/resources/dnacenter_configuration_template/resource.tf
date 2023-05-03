@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.1-beta"
+      version = "1.1.2-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source, change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -119,7 +119,7 @@ resource "dnacenter_configuration_template" "example" {
     language = "VELOCITY"
     #last_update_time = 1
     #latest_version_time = 1
-    name                      = "DMVPN Spoke for Branch Router - System Default for Test Project n17"
+    name                      = "DMVPN Spoke for Branch Router - System Default for Test Project n17111111"
     parent_template_id        = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
     project_id                = "c3e77f82-bea7-45db-9eab-c7140b54a4a8"
     project_name              = "Cloud Test Template 2"

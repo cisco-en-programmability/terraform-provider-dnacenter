@@ -49,6 +49,10 @@ func resourceGlobalCredentialNetconf() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"read_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 
 						"credential_type": &schema.Schema{
 							Type:     schema.TypeString,

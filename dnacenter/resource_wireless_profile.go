@@ -246,7 +246,7 @@ should be provided.
 							Description: `wirelessProfileName path parameter. Wireless Profile Name
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 					},
 				},

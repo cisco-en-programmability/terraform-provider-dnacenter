@@ -31,7 +31,7 @@ func dataSourceSdaFabricAuthenticationProfile() *schema.Resource {
 				Required:    true,
 			},
 
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -132,8 +132,8 @@ func dataSourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItems(response1)
-		if err := d.Set("items", vItems1); err != nil {
+		vItem1 := flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItem(response1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDefaultAuthenticationProfileFromSdaFabric response",
 				err))
@@ -147,22 +147,20 @@ func dataSourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema
 	return diags
 }
 
-func flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItems(items *dnacentersdkgo.ResponseSdaGetDefaultAuthenticationProfileFromSdaFabric) []map[string]interface{} {
-	if items == nil {
+func flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItem(item *dnacentersdkgo.ResponseSdaGetDefaultAuthenticationProfileFromSdaFabric) []map[string]interface{} {
+	if item == nil {
 		return nil
 	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
-		respItem["authenticate_template_name"] = item.AuthenticateTemplateName
-		respItem["authentication_order"] = item.AuthenticationOrder
-		respItem["dot1x_to_mab_fallback_timeout"] = item.Dot1XToMabFallbackTimeout
-		respItem["wake_on_lan"] = boolPtrToString(item.WakeOnLan)
-		respItem["number_of_hosts"] = item.NumberOfHosts
-		respItem["status"] = item.Status
-		respItem["description"] = item.Description
-		respItems = append(respItems, respItem)
+	respItem := make(map[string]interface{})
+	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+	respItem["authenticate_template_name"] = item.AuthenticateTemplateName
+	respItem["authentication_order"] = item.AuthenticationOrder
+	respItem["dot1x_to_mab_fallback_timeout"] = item.Dot1XToMabFallbackTimeout
+	respItem["wake_on_lan"] = boolPtrToString(item.WakeOnLan)
+	respItem["number_of_hosts"] = item.NumberOfHosts
+	respItem["status"] = item.Status
+	respItem["description"] = item.Description
+	return []map[string]interface{}{
+		respItem,
 	}
-	return respItems
 }

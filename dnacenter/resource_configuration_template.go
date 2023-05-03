@@ -2312,7 +2312,7 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 
 	resourceMap := make(map[string]string)
 	resourceMap["template_id"] = item3.TemplateID
-	resourceMap["project_id"] = vvProjectID
+	resourceMap["project_id"] = item3.ProjectID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceConfigurationTemplateRead(ctx, d, m)
 }

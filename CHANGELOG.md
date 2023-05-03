@@ -1,3 +1,11 @@
+## 1.1.2-beta (May 03, 2023)
+BUGFIXES:
+* dnacenter_reserve_ip_subpool requires id parameter #159.
+* Mandatory parameter wireless_profile_name for dnacenter_wireless_profile resource #160
+* failure when refreshing state of dnacenter_global_credential_cli and dnacenter_global_credential_netconf resources #161
+* dnacenter_sda_fabric_authentication_profile - Provider produced inconsistent result after apply #162
+* Provider produced inconsistent result after apply while creating dnacenter_global_pool #164
+
 ## 1.1.1-beta (April 27, 2023)
 BUGFIXES:
 * Adding to `provider.go` file following resources:
