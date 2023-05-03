@@ -44,18 +44,22 @@ func resourceGlobalPool() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"available_ip_address_count": &schema.Schema{
+							Description: `availableIpAddressCount`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
 						"client_options": &schema.Schema{
 							Description: `Client Options`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeString, //TEST,
 							Computed:    true,
 						},
-
 						"configure_external_dhcp": &schema.Schema{
 							Description: `Configure External Dhcp`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
 						"context": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -67,13 +71,11 @@ func resourceGlobalPool() *schema.Resource {
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"context_value": &schema.Schema{
 										Description: `Context Value`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-
 									"owner": &schema.Schema{
 										Description: `Owner`,
 										Type:        schema.TypeString,
@@ -82,13 +84,16 @@ func resourceGlobalPool() *schema.Resource {
 								},
 							},
 						},
-
 						"create_time": &schema.Schema{
 							Description: `Create Time`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
-
+						"default_assigned_ip_address_count": &schema.Schema{
+							Description: `defaultAssignedIpAddressCount`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
 						"dhcp_server_ips": &schema.Schema{
 							Description: `Dhcp Server Ips`,
 							Type:        schema.TypeList,
@@ -97,7 +102,6 @@ func resourceGlobalPool() *schema.Resource {
 								Type: schema.TypeString,
 							},
 						},
-
 						"dns_server_ips": &schema.Schema{
 							Description: `Dns Server Ips`,
 							Type:        schema.TypeList,
@@ -106,7 +110,6 @@ func resourceGlobalPool() *schema.Resource {
 								Type: schema.TypeString,
 							},
 						},
-
 						"gateways": &schema.Schema{
 							Description: `Gateways`,
 							Type:        schema.TypeList,
@@ -115,73 +118,85 @@ func resourceGlobalPool() *schema.Resource {
 								Type: schema.TypeString,
 							},
 						},
-
+						"has_subpools": &schema.Schema{
+							Description: `hasSubpools`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"id": &schema.Schema{
 							Description: `Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"ip_pool_cidr": &schema.Schema{
 							Description: `Ip Pool Cidr`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"ip_pool_name": &schema.Schema{
 							Description: `Ip Pool Name`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
-						"ipv6": &schema.Schema{
-							Description: `Ipv6`,
+						"ip_pool_type": &schema.Schema{
+							Description: `Ip Pool Type`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
+						"ipv6": &schema.Schema{
+							Description: `Ipv6`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"last_update_time": &schema.Schema{
 							Description: `Last Update Time`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
-
 						"overlapping": &schema.Schema{
 							Description: `Overlapping`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-
 						"owner": &schema.Schema{
 							Description: `Owner`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"parent_uuid": &schema.Schema{
 							Description: `Parent Uuid`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
 						"shared": &schema.Schema{
 							Description: `Shared`,
-							Type:        schema.TypeString,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"total_assignable_ip_address_count": &schema.Schema{
+							Description: `totalAssignableIpAddressCount`,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
-
 						"total_ip_address_count": &schema.Schema{
 							Description: `Total Ip Address Count`,
-							Type:        schema.TypeFloat,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
-
+						"unavailable_ip_address_count": &schema.Schema{
+							Description: `unavailableIpAddressCount`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
 						"used_ip_address_count": &schema.Schema{
 							Description: `Used Ip Address Count`,
-							Type:        schema.TypeFloat,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
-
 						"used_percentage": &schema.Schema{
 							Description: `Used Percentage`,
 							Type:        schema.TypeString,

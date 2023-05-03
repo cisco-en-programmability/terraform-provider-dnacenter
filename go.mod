@@ -69,7 +69,7 @@ require (
 )
 
 require (
-	github.com/cisco-en-programmability/dnacenter-go-sdk/v5 v5.0.2
+	github.com/cisco-en-programmability/dnacenter-go-sdk/v5 v5.0.3
 	github.com/mattn/go-isatty v0.0.18 // indirect
 	golang.org/x/text v0.9.0 // indirect
 )
