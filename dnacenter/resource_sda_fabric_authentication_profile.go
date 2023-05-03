@@ -182,8 +182,7 @@ func resourceSdaFabricAuthenticationProfileCreate(ctx context.Context, d *schema
 	getResponse2, _, err := client.Sda.GetDefaultAuthenticationProfileFromSdaFabric(&queryParams1)
 
 	if err == nil && getResponse2 != nil {
-		responseArray := *getResponse2
-		response2 := responseArray[0]
+		response2 := *getResponse2
 		resourceMap := make(map[string]string)
 		resourceMap["site_name_hierarchy"] = response2.SiteNameHierarchy
 		resourceMap["authenticate_template_name"] = vvAuthenticateTemplateName
@@ -279,7 +278,7 @@ func resourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema.R
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItems(response1)
+		vItem1 := flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDefaultAuthenticationProfileFromSdaFabric response",
@@ -316,8 +315,8 @@ func resourceSdaFabricAuthenticationProfileUpdate(ctx context.Context, d *schema
 			"Failure at GetDefaultAuthenticationProfileFromSdaFabric, unexpected response", ""))
 		return diags
 	}
-	responseArray := *item
-	response2 := responseArray[0]
+	response2 := *item
+	// response2 := responseArray[0]
 	vvName := response2.SiteNameHierarchy
 	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
@@ -403,8 +402,8 @@ func resourceSdaFabricAuthenticationProfileDelete(ctx context.Context, d *schema
 		return diags
 	}
 
-	responseArray := *item
-	response2 := responseArray[0]
+	response2 := *item
+	// response2 := responseArray[0]
 	vvName := response2.SiteNameHierarchy
 
 	queryParams2 := dnacentersdkgo.DeleteDefaultAuthenticationProfileFromSdaFabricQueryParams{}

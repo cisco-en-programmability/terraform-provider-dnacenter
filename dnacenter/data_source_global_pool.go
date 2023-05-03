@@ -39,6 +39,12 @@ func dataSourceGlobalPool() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"available_ip_address_count": &schema.Schema{
+							Description: `availableIpAddressCount`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
 						"client_options": &schema.Schema{
 							Description: `Client Options`,
 							Type:        schema.TypeString, //TEST,
@@ -47,8 +53,9 @@ func dataSourceGlobalPool() *schema.Resource {
 
 						"configure_external_dhcp": &schema.Schema{
 							Description: `Configure External Dhcp`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"context": &schema.Schema{
@@ -80,7 +87,13 @@ func dataSourceGlobalPool() *schema.Resource {
 
 						"create_time": &schema.Schema{
 							Description: `Create Time`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"default_assigned_ip_address_count": &schema.Schema{
+							Description: `defaultAssignedIpAddressCount`,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 
@@ -111,6 +124,13 @@ func dataSourceGlobalPool() *schema.Resource {
 							},
 						},
 
+						"has_subpools": &schema.Schema{
+							Description: `hasSubpools`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"id": &schema.Schema{
 							Description: `Id`,
 							Type:        schema.TypeString,
@@ -129,22 +149,30 @@ func dataSourceGlobalPool() *schema.Resource {
 							Computed:    true,
 						},
 
-						"ipv6": &schema.Schema{
-							Description: `Ipv6`,
+						"ip_pool_type": &schema.Schema{
+							Description: `Ip Pool Type`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 
+						"ipv6": &schema.Schema{
+							Description: `Ipv6`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"last_update_time": &schema.Schema{
 							Description: `Last Update Time`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 
 						"overlapping": &schema.Schema{
 							Description: `Overlapping`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"owner": &schema.Schema{
@@ -161,19 +189,32 @@ func dataSourceGlobalPool() *schema.Resource {
 
 						"shared": &schema.Schema{
 							Description: `Shared`,
-							Type:        schema.TypeString,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"total_assignable_ip_address_count": &schema.Schema{
+							Description: `totalAssignableIpAddressCount`,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 
 						"total_ip_address_count": &schema.Schema{
 							Description: `Total Ip Address Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"unavailable_ip_address_count": &schema.Schema{
+							Description: `unavailableIpAddressCount`,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 
 						"used_ip_address_count": &schema.Schema{
 							Description: `Used Ip Address Count`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 
@@ -253,16 +294,22 @@ func flattenNetworkSettingsGetGlobalPoolItems(items *[]dnacentersdkgo.ResponseNe
 		respItem["used_ip_address_count"] = item.UsedIPAddressCount
 		respItem["parent_uuid"] = item.ParentUUID
 		respItem["owner"] = item.Owner
-		respItem["shared"] = item.Shared
-		respItem["overlapping"] = item.Overlapping
-		respItem["configure_external_dhcp"] = item.ConfigureExternalDhcp
+		respItem["shared"] = boolPtrToString(item.Shared)
+		respItem["overlapping"] = boolPtrToString(item.Overlapping)
+		respItem["configure_external_dhcp"] = boolPtrToString(item.ConfigureExternalDhcp)
 		respItem["used_percentage"] = item.UsedPercentage
 		respItem["client_options"] = flattenNetworkSettingsGetGlobalPoolItemsClientOptions(item.ClientOptions)
 		respItem["dns_server_ips"] = item.DNSServerIPs
 		respItem["context"] = flattenNetworkSettingsGetGlobalPoolItemsContext(item.Context)
-		respItem["ipv6"] = item.IPv6
+		respItem["ipv6"] = boolPtrToString(item.IPv6)
 		respItem["id"] = item.ID
 		respItem["ip_pool_cidr"] = item.IPPoolCidr
+		respItem["ip_pool_type"] = item.IPPoolType
+		respItem["unavailable_ip_address_count"] = item.UnavailableIpAddressCount
+		respItem["available_ip_address_count"] = item.AvailableIpAddressCount
+		respItem["total_assignable_ip_address_count"] = item.TotalAssignableIpAddressCount
+		respItem["has_subpools"] = boolPtrToString(item.HasSubpools)
+		respItem["default_assigned_ip_address_count"] = item.DefaultAssignedIpAddressCount
 		respItems = append(respItems, respItem)
 	}
 	return respItems
