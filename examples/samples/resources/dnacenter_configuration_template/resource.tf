@@ -119,10 +119,10 @@ resource "dnacenter_configuration_template" "example" {
     language = "VELOCITY"
     #last_update_time = 1
     #latest_version_time = 1
-    name                      = "DMVPN Spoke for Branch Router - System Default for Test Project n17111111"
+    name                      = "Saludo"
     parent_template_id        = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
-    project_id                = "c3e77f82-bea7-45db-9eab-c7140b54a4a8"
-    project_name              = "Cloud Test Template 2"
+    project_id                = "035c73c4-ec57-4a1a-b1d3-4cb20643ce13"
+    project_name              = "Cloud Test Template 4"
     rollback_template_content = "string"
     # rollback_template_params {
     #   /*

@@ -62,7 +62,7 @@ resource "dnacenter_discovery" "example" {
     # ip_filter_list  = [""]
     is_auto_cdp = "true"
     lldp_level  = 1
-    name        = "DMZ Lab 2"
+    name        = "DMZ Lab 4"
     #netconf_port = "string"
     num_devices = 1
     #parent_discovery_id = "string"

@@ -78,7 +78,27 @@ func resourceGlobalCredentialCli() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"username": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"secure": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"read_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"password": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"netconf_port": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
