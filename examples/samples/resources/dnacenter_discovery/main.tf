@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.2-beta"
+      version = "1.1.3-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -62,7 +62,7 @@ resource "dnacenter_discovery" "example" {
     # ip_filter_list  = [""]
     is_auto_cdp = "true"
     lldp_level  = 1
-    name        = "DMZ Lab 2"
+    name        = "DMZ Lab 4"
     #netconf_port = "string"
     num_devices = 1
     #parent_discovery_id = "string"

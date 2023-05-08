@@ -25,7 +25,7 @@ The following table shows the supported versions.
 | 2.2.3.3                  | 0.3.0-beta                             |
 | 2.2.3.3                  | 0.3.0                                  |
 | 2.3.3.0                  | 1.0.19-beta                            |
-| 2.3.5.3                  | 1.1.2-beta                             |
+| 2.3.5.3                  | 1.1.3-beta                             |
 
 If your SDK, Terraform provider is older please consider updating it first.
 

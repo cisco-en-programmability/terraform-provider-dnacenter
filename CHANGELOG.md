@@ -1,3 +1,10 @@
+## 1.1.3-beta (May 08, 2023)
+BUGFIXES:
+* Failure when refreshing state of dnacenter_global_credential_cli and dnacenter_global_credential_netconf resources #161
+* Failure when creating resource dnacenter_configuration_template #163
+* Failure when executing AddVnInFabric #167
+* dnacenter_site resource does not save site_id in state any more, however site_id is required for creating other resources #168
+
 ## 1.1.2-beta (May 03, 2023)
 BUGFIXES:
 * dnacenter_reserve_ip_subpool requires id parameter #159.
