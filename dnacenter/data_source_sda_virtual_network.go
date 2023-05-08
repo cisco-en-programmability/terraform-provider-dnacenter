@@ -145,8 +145,8 @@ func flattenSdaGetVnFromSdaFabricItem(item *dnacentersdkgo.ResponseSdaGetVnFromS
 	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 	respItem["virtual_network_name"] = item.VirtualNetworkName
 	respItem["fabric_name"] = item.FabricName
-	respItem["is_infra_vn"] = item.IsInfraVn
-	respItem["is_default_vn"] = item.IsDefaultVn
+	respItem["is_infra_vn"] = boolPtrToString(item.IsInfraVn)
+	respItem["is_default_vn"] = boolPtrToString(item.IsDefaultVn)
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
 	return []map[string]interface{}{

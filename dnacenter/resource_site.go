@@ -46,11 +46,21 @@ func resourceSite() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"additional_info": &schema.Schema{
-							Description: `Additional Info`,
-							Type:        schema.TypeList,
-							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"attributes": &schema.Schema{
+										Type:     schema.TypeMap,
+										Computed: true,
+									},
+
+									"name_space": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
 							},
 						},
 						"id": &schema.Schema{
