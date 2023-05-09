@@ -1,3 +1,7 @@
+## 1.1.6-beta (May 09, 2023)
+BUGFIXES:
+* Updating Registry documentation, supports 2.3.5.3 DNA Center API Version.
+
 ## 1.1.5-beta (May 09, 2023)
 FEATURES:
 **New Resource:** `resourceConfigurationTemplateVersion`
