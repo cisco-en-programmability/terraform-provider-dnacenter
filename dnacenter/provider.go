@@ -187,6 +187,7 @@ func Provider() *schema.Provider {
 			"dnacenter_global_credential_http_read":                resourceGlobalCredentialHTTPRead(),
 			"dnacenter_global_credential_cli":                      resourceGlobalCredentialCli(),
 			"dnacenter_tag_membership":                             resourceTagMembership(),
+			"dnacenter_configuration_template_version":             resourceConfigurationTemplateVersion(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"dnacenter_reserve_ip_subpool":                             dataSourceReserveIPSubpool(),

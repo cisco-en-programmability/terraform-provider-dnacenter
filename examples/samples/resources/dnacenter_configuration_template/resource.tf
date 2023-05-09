@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.4-beta"
+      version = "1.1.5-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source, change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -119,7 +119,7 @@ resource "dnacenter_configuration_template" "example" {
     language = "VELOCITY"
     #last_update_time = 1
     #latest_version_time = 1
-    name                      = "Saludo"
+    name                      = "Saludo2"
     parent_template_id        = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
     project_id                = "035c73c4-ec57-4a1a-b1d3-4cb20643ce13"
     project_name              = "Cloud Test Template 4"

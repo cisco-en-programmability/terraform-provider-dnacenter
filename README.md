@@ -12,7 +12,7 @@ terraform-provider-dnacenter is a Terraform Provider for [Cisco DNA Center](http
 
 The terraform-provider-dnacenter provides a Terraform provider for managing and automating your Cisco DNA Center environment. It consists of a set of resources and data-sources for performing tasks related to DNA Center.
 
-This collection has been tested and supports Cisco DNA Center 2.2.3.3.
+This collection has been tested and supports Cisco DNA Center 2.3.5.3.
 
 Other versions of this collection have support for previous Cisco DNA Center versions. The recommended versions are listed below on the [Compatibility matrix](#compatibility-matrix).
 
@@ -25,7 +25,7 @@ The following table shows the supported versions.
 | 2.2.3.3                  | 0.3.0-beta                             |
 | 2.2.3.3                  | 0.3.0                                  |
 | 2.3.3.0                  | 1.0.19-beta                            |
-| 2.3.5.3                  | 1.1.4-beta                             |
+| 2.3.5.3                  | 1.1.5-beta                             |
 
 If your SDK, Terraform provider is older please consider updating it first.
 

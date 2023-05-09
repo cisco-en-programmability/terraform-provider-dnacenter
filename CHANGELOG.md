@@ -1,3 +1,10 @@
+## 1.1.5-beta (May 09, 2023)
+FEATURES:
+**New Resource:** `resourceConfigurationTemplateVersion`
+
+BUGFIXES:
+* Updating README, supports 2.3.5.3 DNA Center API Version.
+
 ## 1.1.4-beta (May 09, 2023)
 BUGFIXES:
 * dnacenter_site resource does not save site_id in state any more, however site_id is required for creating other resources #168
