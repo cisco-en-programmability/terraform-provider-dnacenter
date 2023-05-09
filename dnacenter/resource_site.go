@@ -63,6 +63,7 @@ func resourceSite() *schema.Resource {
 								},
 							},
 						},
+
 						"id": &schema.Schema{
 							Description: `Id`,
 							Type:        schema.TypeString,
@@ -372,7 +373,7 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 	}
 	queryParams2 := dnacentersdkgo.GetSiteQueryParams{}
 	queryParams2.Name = newName
-	queryParams2.SiteID = vvSiteID
+	// queryParams2.SiteID = vvSiteID
 	item2, err := searchSitesGetSite(m, queryParams2)
 	if err != nil || item2 == nil {
 		diags = append(diags, diagErrorWithAlt(
@@ -394,35 +395,33 @@ func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}
 	resourceMap := separateResourceID(resourceID)
 	vName := resourceMap["name"]
 	log.Printf("[DEBUG] Read SiteNameHierarchy => %s", vName)
-	vSiteID := resourceMap["site_id"]
+	// vSiteID := resourceMap["site_id"]
 	//vParentName := resourceMap["parent_name"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
 		queryParams1.Name = vName
-		queryParams1.SiteID = vSiteID
+		// queryParams1.SiteID = vSiteID
 		log.Printf("[DEBUG] Read name => %s", queryParams1.Name)
 		log.Printf("[DEBUG] Read site => %s", queryParams1.SiteID)
-		if vSiteID == "" {
-			response1, restyResp1, err := client.Sites.GetSite(&queryParams1)
-			if err != nil || response1 == nil {
-				log.Printf("[DEBUG] Error => %s", err.Error())
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response3 %s", restyResp1.String())
-				}
-				d.SetId("")
-				return diags
+		response1, restyResp1, err := client.Sites.GetSite(&queryParams1)
+		if err != nil || response1 == nil {
+			log.Printf("[DEBUG] Error => %s", err.Error())
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response3 %s", restyResp1.String())
 			}
+			d.SetId("")
+			return diags
+		}
 
-			vItem1 := flattenSitesGetSiteItems(response1.Response)
-			log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem1))
-			if err := d.Set("item", vItem1); err != nil {
-				diags = append(diags, diagError(
-					"Failure when setting GetSite search response",
-					err))
-				return diags
-			}
+		vItem1 := flattenSitesGetSiteItems(response1.Response)
+		log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem1))
+		if err := d.Set("item", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSite search response",
+				err))
+			return diags
 		}
 
 	}

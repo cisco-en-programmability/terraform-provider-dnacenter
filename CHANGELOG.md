@@ -1,3 +1,7 @@
+## 1.1.4-beta (May 09, 2023)
+BUGFIXES:
+* dnacenter_site resource does not save site_id in state any more, however site_id is required for creating other resources #168
+* Failure when refreshing state of dnacenter_global_credential_cli and dnacenter_global_credential_netconf resources #161 
 ## 1.1.3-beta (May 08, 2023)
 BUGFIXES:
 * Failure when refreshing state of dnacenter_global_credential_cli and dnacenter_global_credential_netconf resources #161
