@@ -1,3 +1,7 @@
+## 1.1.7-beta (May 11, 2023)
+BUGFIXES:
+*  Resource dnacenter_pnp_device_site_claim generates wrong POST BODY when multiple config_parameters sections are present #175 
+
 ## 1.1.6-beta (May 09, 2023)
 BUGFIXES:
 * Updating Registry documentation, supports 2.3.5.3 DNA Center API Version.
