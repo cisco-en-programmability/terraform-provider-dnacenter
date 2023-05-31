@@ -97,6 +97,27 @@ provider "dnacenter" {
 
 There are several examples of the use of the provider within the folder [samples](./examples/samples)
 
+## Example for_each
+```hcl
+locals {
+ interfaces = {
+   "1" = { description = "desc1", interface_uuid = "c6820b57-ecde-4b6d-98db-06ba10486809" },
+   "2" = { description = "desc2", interface_uuid = "c6820b57-ecde-4b6d-98db-06ba10486801" },
+   "3" = { description = "desc3", interface_uuid = "c6820b57-ecde-4b6d-98db-06ba10486802" }
+ }
+}
+
+resource "dnacenter_interface_update" "example" {
+  provider = dnacenter
+  for_each = local.interfaces
+  parameters {
+    description    = each.value.description
+    interface_uuid = each.value.interface_uuid
+    vlan_id        = each.key
+  }
+}
+```
+
 ## Developing the Provider
 
 If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed
