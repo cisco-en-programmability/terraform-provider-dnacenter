@@ -16,13 +16,13 @@ resource "dnacenter_reserve_ip_subpool" "example" {
   provider = dnacenter
   parameters {
     ipv4_prefix      = "false"
-    ipv4_global_pool = "10.43.192.0"
+    ipv4_global_pool = "10.0.0.0"
 
     //id                 = "string"
     # ipv4_dhcp_servers  = []
     # ipv4_dns_servers   = []
-    ipv4_gate_way      = "10.43.192.1"
-    ipv4_prefix_length = 1
+    ipv4_gate_way      = "10.0.0.1"
+    ipv4_prefix_length = 27
     ipv4_subnet        = "17"
     # ipv4_total_host    = 2
     # ipv6_address_space = "false"
