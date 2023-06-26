@@ -14,7 +14,7 @@ provider "dnacenter" {
 data "dnacenter_sda_virtual_network" "example" {
   provider             = dnacenter
   site_name_hierarchy  = "Global/San Francisco"
-  virtual_network_name = "string"
+  virtual_network_name = "Test_terraform"
 }
 
 output "dnacenter_sda_virtual_network_example" {
