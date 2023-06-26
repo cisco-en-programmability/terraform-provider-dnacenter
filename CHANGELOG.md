@@ -1,3 +1,9 @@
+## 1.1.8-beta (June 26, 2023)
+BUGFIXES:
+* Local state of Authenticate Template not updated #176
+* Resource dnacenter_pnp_device_site_claim generates wrong POST BODY when multiple config_parameterssections are present #175
+* Creation of enterprise SSID #148
+
 ## 1.1.7-beta (May 11, 2023)
 BUGFIXES:
 *  Resource dnacenter_pnp_device_site_claim generates wrong POST BODY when multiple config_parameters sections are present #175 
