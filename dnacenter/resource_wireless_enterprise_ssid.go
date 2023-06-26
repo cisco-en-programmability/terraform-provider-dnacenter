@@ -379,7 +379,7 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Description: `ssidName path parameter. Enter the SSID name to be deleted
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"traffic_type": &schema.Schema{
 							Description: `Traffic Type Enum (voicedata or data )
