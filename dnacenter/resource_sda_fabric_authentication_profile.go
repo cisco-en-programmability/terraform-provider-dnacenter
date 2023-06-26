@@ -115,40 +115,64 @@ func resourceSdaFabricAuthenticationProfile() *schema.Resource {
 									"authenticate_template_name": &schema.Schema{
 										Description: `Authenticate Template Name
 `,
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"authentication_order": &schema.Schema{
 										Description: `Authentication Order
 `,
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"dot1x_to_mab_fallback_timeout": &schema.Schema{
 										Description: `Dot1x To MabFallback Timeout( Allowed range is [3-120])
 `,
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"number_of_hosts": &schema.Schema{
 										Description: `Number Of Hosts
 `,
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"site_name_hierarchy": &schema.Schema{
 										Description: `Path of sda Fabric Site
 `,
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"wake_on_lan": &schema.Schema{
 										Description: `Wake On Lan
 `,
 
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
+									},
+									"description": &schema.Schema{
+										Description: `Authenticate Template info reterieved successfully in sda fabric site
+			`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"status": &schema.Schema{
+										Description: `Status
+			`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -189,6 +213,7 @@ func resourceSdaFabricAuthenticationProfileCreate(ctx context.Context, d *schema
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaFabricAuthenticationProfileRead(ctx, d, m)
 	}
+
 	response1, restyResp1, err := client.Sda.AddDefaultAuthenticationTemplateInSdaFabric(request1)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -200,6 +225,7 @@ func resourceSdaFabricAuthenticationProfileCreate(ctx context.Context, d *schema
 			"Failure when executing DeployAuthenticationTemplateInSdaFabric", err))
 		return diags
 	}
+
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
@@ -234,6 +260,7 @@ func resourceSdaFabricAuthenticationProfileCreate(ctx context.Context, d *schema
 			return diags
 		}
 	}
+
 	resourceMap := make(map[string]string)
 	resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 	resourceMap["authenticate_template_name"] = vvAuthenticateTemplateName
@@ -280,6 +307,15 @@ func resourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema.R
 
 		vItem1 := flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDefaultAuthenticationProfileFromSdaFabric response",
+				err))
+			return diags
+		}
+
+		vItem2 := flattenSdaGetDefaultAuthenticationProfileFromSdaFabricPayload(response1)
+
+		if err := d.Set("parameters", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDefaultAuthenticationProfileFromSdaFabric response",
 				err))
