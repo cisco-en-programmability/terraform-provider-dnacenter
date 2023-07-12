@@ -1,3 +1,7 @@
+## 1.1.9-beta (July 12, 2023)
+BUGFIXES:
+* Resource pnp_device_site_claim request struct fixed.
+
 ## 1.1.8-beta (June 26, 2023)
 BUGFIXES:
 * Local state of Authenticate Template not updated #176
