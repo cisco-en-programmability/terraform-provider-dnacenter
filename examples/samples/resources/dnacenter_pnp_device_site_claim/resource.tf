@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.7-beta"
+      version = "1.1.9-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -13,28 +13,33 @@ provider "dnacenter" {
   debug = "true"
 }
 
-resource "dnacenter_pnp_device_site_claim" "example" {
-  provider = dnacenter
-
+resource "dnacenter_pnp_device_site_claim" "this" {
   parameters {
-    device_id = "61fd411fd86a6c29631156f2"
-    site_id   = "9625864c-2228-42ec-ac9c-1d0e8e099825"
-    type      = "Default"
-    # hostname  = "Catalyst2"
+    site_id   = "f1188cff-6110-45a3-946c-4831d62a3cd4"
+    device_id = "645b9623e0a25d5fbb063d9b"
+
+    type = "Default" # Default means switch. Available values: Default, StackSwitch, AccessPoint, Sensor, CatalystWLC, MobilityExpress
     image_info {
-      image_id = ""
-      skip     = "true"
+      skip = true # TODO: don't skip this
     }
     config_info {
-      config_id = "60657208-dc2c-433f-be40-6c002d19d0fb"
+      config_id = "d6456fd2-a0b8-4c7c-9fea-f00b12f69b64"
       config_parameters {
-        key   = ""
-        value = ""
+        key   = "HOSTNAME"
+        value = "labhf-osl-bn-2"
+      }
+      config_parameters {
+        key   = "LOOPBACK0"
+        value = "100.68.12.1"
+      }
+      config_parameters {
+        key   = "BORDER-AS"
+        value = "65002"
       }
     }
   }
 }
 
-output "dnacenter_pnp_device_site_claim_example" {
-  value = dnacenter_pnp_device_site_claim.example
-}
+# output "dnacenter_pnp_device_site_claim_example" {
+#   value = dnacenter_pnp_device_site_claim.example
+# }

@@ -277,10 +277,10 @@ func expandRequestPnpDeviceSiteClaimClaimADeviceToASite(ctx context.Context, key
 		request.Type = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_info")))) {
-		request.ImageInfo = *expandRequestPnpDeviceSiteClaimClaimADeviceToASiteImageInfo(ctx, key+".image_info.0", d)
+		request.ImageInfo = expandRequestPnpDeviceSiteClaimClaimADeviceToASiteImageInfo(ctx, key+".image_info.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_info")))) {
-		request.ConfigInfo = *expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfo(ctx, key+".config_info", d)
+		request.ConfigInfo = expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfo(ctx, key+".config_info.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rf_profile")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rf_profile")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rf_profile")))) {
 		request.RfProfile = interfaceToString(v)
@@ -312,7 +312,7 @@ func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteImageInfo(ctx context.Con
 		request.ImageID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".skip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".skip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".skip")))) {
-		request.Skip = *interfaceToBoolPtr(v)
+		request.Skip = interfaceToBoolPtr(v)
 	}
 	return &request
 }
@@ -323,7 +323,7 @@ func expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfo(ctx context.Co
 		request.ConfigID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_parameters")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_parameters")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_parameters")))) {
-		request.ConfigParameters = *expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoConfigParametersArray(ctx, key+".config_parameters", d)
+		request.ConfigParameters = expandRequestPnpDeviceSiteClaimClaimADeviceToASiteConfigInfoConfigParametersArray(ctx, key+".config_parameters", d)
 	}
 	return &request
 }
