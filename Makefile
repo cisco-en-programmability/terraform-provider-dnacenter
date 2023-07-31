@@ -3,8 +3,9 @@ HOSTNAME=hashicorp.com
 NAMESPACE=edu
 NAME=dnacenter
 BINARY=terraform-provider-${NAME}
-VERSION=1.1.9-beta
+VERSION=1.1.10-beta
 OS_ARCH=darwin_amd64
+# Change to OS_ARCH=darwin_arm64 or your current architecture
 GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
 WEBSITE_REPO=github.com/hashicorp/terraform-website
 

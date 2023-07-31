@@ -1,3 +1,7 @@
+## 1.1.10-beta (July 31, 2023)
+BUGFIXES:
+* Resource sda_fabric_authentication_profile response struct patched.
+
 ## 1.1.9-beta (July 12, 2023)
 BUGFIXES:
 * Resource pnp_device_site_claim request struct fixed.
