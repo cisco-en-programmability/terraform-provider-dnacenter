@@ -1,6 +1,7 @@
 ## 1.1.10-beta (July 31, 2023)
 BUGFIXES:
-* Resource sda_fabric_authentication_profile response struct patched.
+* Resource sda_fabric_authentication_profile response struct patched #189
+* Update examples of dnacenter_wireless_provision_access_point #181
 
 ## 1.1.9-beta (July 12, 2023)
 BUGFIXES:
