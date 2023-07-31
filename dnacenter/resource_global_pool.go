@@ -361,7 +361,7 @@ func resourceGlobalPoolCreate(ctx context.Context, d *schema.ResourceData, m int
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for response2.Status == "IN_PROGRESS" {
+		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -374,7 +374,7 @@ func resourceGlobalPoolCreate(ctx context.Context, d *schema.ResourceData, m int
 				return diags
 			}
 		}
-		if response2.Status == "FAILURE" {
+		if statusIsFailure(response2.Status) {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing CreateGlobalPool", err,
@@ -485,7 +485,7 @@ func resourceGlobalPoolUpdate(ctx context.Context, d *schema.ResourceData, m int
 					"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 				return diags
 			}
-			for response2.Status == "IN_PROGRESS" {
+			for statusIsPending(response2.Status) {
 				time.Sleep(10 * time.Second)
 				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 				if err != nil || response2 == nil {
@@ -498,7 +498,7 @@ func resourceGlobalPoolUpdate(ctx context.Context, d *schema.ResourceData, m int
 					return diags
 				}
 			}
-			if response2.Status == "FAILURE" {
+			if statusIsFailure(response2.Status) {
 				bapiError := response2.BapiError
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing UpdateGlobalPool", err,
@@ -563,7 +563,7 @@ func resourceGlobalPoolDelete(ctx context.Context, d *schema.ResourceData, m int
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for response2.Status == "IN_PROGRESS" {
+		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -576,7 +576,7 @@ func resourceGlobalPoolDelete(ctx context.Context, d *schema.ResourceData, m int
 				return diags
 			}
 		}
-		if response2.Status == "FAILURE" {
+		if statusIsFailure(response2.Status) {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing UpdateGlobalPool", err,

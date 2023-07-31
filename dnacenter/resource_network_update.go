@@ -417,7 +417,7 @@ func resourceNetworkUpdateCreate(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for response2.Status == "IN_PROGRESS" {
+		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -430,7 +430,7 @@ func resourceNetworkUpdateCreate(ctx context.Context, d *schema.ResourceData, m 
 				return diags
 			}
 		}
-		if response2.Status == "FAILURE" {
+		if statusIsFailure(response2.Status) {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing UpdateNetwork", err,

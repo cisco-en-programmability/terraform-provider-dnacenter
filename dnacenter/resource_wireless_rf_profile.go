@@ -532,7 +532,7 @@ func resourceWirelessRfProfileCreate(ctx context.Context, d *schema.ResourceData
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for response2.Status == "IN_PROGRESS" {
+		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -545,7 +545,7 @@ func resourceWirelessRfProfileCreate(ctx context.Context, d *schema.ResourceData
 				return diags
 			}
 		}
-		if response2.Status == "FAILURE" {
+		if statusIsFailure(response2.Status) {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing CreateOrUpdateRfProfile", err))
@@ -657,7 +657,7 @@ func resourceWirelessRfProfileDelete(ctx context.Context, d *schema.ResourceData
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for response2.Status == "IN_PROGRESS" {
+		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -670,7 +670,7 @@ func resourceWirelessRfProfileDelete(ctx context.Context, d *schema.ResourceData
 				return diags
 			}
 		}
-		if response2.Status == "FAILURE" {
+		if statusIsFailure(response2.Status) {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeleteRfProfiles", err))

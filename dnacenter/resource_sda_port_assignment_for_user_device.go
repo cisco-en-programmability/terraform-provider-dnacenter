@@ -218,7 +218,7 @@ func resourceSdaPortAssignmentForUserDeviceCreate(ctx context.Context, d *schema
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for response2.Status == "IN_PROGRESS" {
+		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -231,7 +231,7 @@ func resourceSdaPortAssignmentForUserDeviceCreate(ctx context.Context, d *schema
 				return diags
 			}
 		}
-		if response2.Status == "FAILURE" {
+		if statusIsFailure(response2.Status) {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing AddPortAssignmentForUserDeviceInSdaFabric", err))
@@ -355,7 +355,7 @@ func resourceSdaPortAssignmentForUserDeviceDelete(ctx context.Context, d *schema
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for response2.Status == "IN_PROGRESS" {
+		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -368,7 +368,7 @@ func resourceSdaPortAssignmentForUserDeviceDelete(ctx context.Context, d *schema
 				return diags
 			}
 		}
-		if response2.Status == "FAILURE" {
+		if statusIsFailure(response2.Status) {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeletePortAssignmentForUserDeviceInSdaFabric", err))
