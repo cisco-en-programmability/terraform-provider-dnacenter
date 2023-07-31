@@ -1,3 +1,46 @@
+## 1.1.10-beta (July 31, 2023)
+BUGFIXES:
+* Patches resource sda_fabric_authentication_profile response struct #189
+* Updates examples of dnacenter_wireless_provision_access_point #181
+* Fixes business execution status verification for following resources:
+    - assign_device_to_site
+    - business_sda_hostonboarding_ssid_ippool
+    - business_sda_wireless_controller_create
+    - business_sda_wireless_controller_delete
+    - global_pool
+    - itsm_integration_events_retry
+    - network_create
+    - network_update
+    - nfv_profile
+    - nfv_provision
+    - nfv_provision_detail
+    - reserve_ip_subpool
+    - sda_fabric_authentication_profile
+    - sda_fabric_border_device
+    - sda_fabric_control_plane_device
+    - sda_fabric_edge_device
+    - sda_fabric_site
+    - sda_multicast
+    - sda_port_assignment_for_access_point
+    - sda_port_assignment_for_user_device
+    - sda_provision_device
+    - sda_virtual_network
+    - sda_virtual_network_ip_pool
+    - sda_virtual_network_v2
+    - service_provider
+    - site
+    - site_assign_credential
+    - transit_peer_network
+    - wireless_dynamic_interface
+    - wireless_enterprise_ssid
+    - wireless_profile
+    - wireless_provision_access_point
+    - wireless_provision_device_create
+    - wireless_provision_device_update
+    - wireless_provision_ssid_create_provision
+    - wireless_provision_ssid_delete_reprovision
+    - wireless_rf_profile
+
 ## 1.1.9-beta (July 12, 2023)
 BUGFIXES:
 * Resource pnp_device_site_claim request struct fixed.

@@ -313,7 +313,7 @@ func resourceWirelessProfileCreate(ctx context.Context, d *schema.ResourceData, 
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for response2.Status == "IN_PROGRESS" {
+		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionID)
 			if err != nil || response2 == nil {
@@ -326,7 +326,7 @@ func resourceWirelessProfileCreate(ctx context.Context, d *schema.ResourceData, 
 				return diags
 			}
 		}
-		if response2.Status == "FAILURE" {
+		if statusIsFailure(response2.Status) {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing CreateWirelessProfile", err))
@@ -449,7 +449,7 @@ func resourceWirelessProfileUpdate(ctx context.Context, d *schema.ResourceData, 
 					"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 				return diags
 			}
-			for response2.Status == "IN_PROGRESS" {
+			for statusIsPending(response2.Status) {
 				time.Sleep(10 * time.Second)
 				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionID)
 				if err != nil || response2 == nil {
@@ -462,7 +462,7 @@ func resourceWirelessProfileUpdate(ctx context.Context, d *schema.ResourceData, 
 					return diags
 				}
 			}
-			if response2.Status == "FAILURE" {
+			if statusIsFailure(response2.Status) {
 				log.Printf("[DEBUG] Error %s", response2.BapiError)
 				diags = append(diags, diagError(
 					"Failure when executing UpdateWirelessProfile", err))
@@ -530,7 +530,7 @@ func resourceWirelessProfileDelete(ctx context.Context, d *schema.ResourceData, 
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for response2.Status == "IN_PROGRESS" {
+		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionID)
 			if err != nil || response2 == nil {
@@ -543,7 +543,7 @@ func resourceWirelessProfileDelete(ctx context.Context, d *schema.ResourceData, 
 				return diags
 			}
 		}
-		if response2.Status == "FAILURE" {
+		if statusIsFailure(response2.Status) {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeleteWirelessProfile", err))
