@@ -240,7 +240,7 @@ func resourceSdaFabricAuthenticationProfileCreate(ctx context.Context, d *schema
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for response2.Status == "IN_PROGRESS" {
+		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -253,7 +253,7 @@ func resourceSdaFabricAuthenticationProfileCreate(ctx context.Context, d *schema
 				return diags
 			}
 		}
-		if response2.Status == "FAILURE" {
+		if statusIsFailure(response2.Status) {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeployAuthenticationTemplateInSdaFabric", err))
@@ -389,7 +389,7 @@ func resourceSdaFabricAuthenticationProfileUpdate(ctx context.Context, d *schema
 					"Failure at GetExecutionByID, unexpected response", ""))
 				return diags
 			}
-			for response2.Status == "IN_PROGRESS" {
+			for statusIsPending(response2.Status) {
 				time.Sleep(10 * time.Second)
 				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 				if err != nil || response2 == nil {
@@ -402,7 +402,7 @@ func resourceSdaFabricAuthenticationProfileUpdate(ctx context.Context, d *schema
 					return diags
 				}
 			}
-			if response2.Status == "FAILURE" {
+			if statusIsFailure(response2.Status) {
 				log.Printf("[DEBUG] Error %s", response2.BapiError)
 				diags = append(diags, diagError(
 					"Failure when executing UpdateDefaultAuthenticationProfileInSdaFabric", err))
@@ -473,7 +473,7 @@ func resourceSdaFabricAuthenticationProfileDelete(ctx context.Context, d *schema
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for response2.Status == "IN_PROGRESS" {
+		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -486,7 +486,7 @@ func resourceSdaFabricAuthenticationProfileDelete(ctx context.Context, d *schema
 				return diags
 			}
 		}
-		if response2.Status == "FAILURE" {
+		if statusIsFailure(response2.Status) {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeleteDefaultAuthenticationProfileFromSdaFabric", err))

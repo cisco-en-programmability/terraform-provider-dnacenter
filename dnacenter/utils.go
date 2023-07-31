@@ -16,6 +16,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 )
 
+func statusIsFailure(status string) bool {
+	return status == "failed" || status == "FAILURE"
+}
+
+func statusIsPending(status string) bool {
+	return status == "pending" || status == "IN_PROGRESS"
+}
+
 func fixKeyAccess(key string) string {
 	return strings.Trim(key, ".")
 }

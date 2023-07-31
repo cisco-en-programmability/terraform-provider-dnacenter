@@ -119,7 +119,11 @@ func interfaceToSliceInt(v interface{}) *[]int {
 }
 
 func interfaceToString(v interface{}) string {
-	return fmt.Sprint(v)
+	if v == nil {
+		return ""
+	} else {
+		return fmt.Sprint(v)
+	}
 }
 
 func responseInterfaceToSliceString(v interface{}) []string {
