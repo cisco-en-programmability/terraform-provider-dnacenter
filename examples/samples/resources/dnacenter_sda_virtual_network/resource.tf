@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.9-beta"
+      version = "1.1.10-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source, change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -11,8 +11,8 @@ terraform {
 resource "dnacenter_sda_virtual_network" "example" {
   provider = dnacenter
   parameters {
-      site_name_hierarchy  = "Global/New Jersey/MurrayHill/test/TestFloor"
-      virtual_network_name = "ANSIBLE80"
+    site_name_hierarchy  = "Global/New Jersey/MurrayHill/test/TestFloor"
+    virtual_network_name = "ANSIBLE80"
   }
 }
 
