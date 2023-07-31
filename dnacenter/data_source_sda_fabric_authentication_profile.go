@@ -156,7 +156,7 @@ func flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItem(item *dnacenters
 	respItem["authenticate_template_name"] = item.AuthenticateTemplateName
 	respItem["authentication_order"] = item.AuthenticationOrder
 	respItem["dot1x_to_mab_fallback_timeout"] = item.Dot1XToMabFallbackTimeout
-	respItem["wake_on_lan"] = item.WakeOnLan
+	respItem["wake_on_lan"] = interfaceToString(item.WakeOnLan)
 	respItem["number_of_hosts"] = item.NumberOfHosts
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
