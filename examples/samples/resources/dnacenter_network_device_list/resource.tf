@@ -3,7 +3,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.10-beta"
+      version = "1.1.11-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -31,7 +31,7 @@ resource "dnacenter_network_device_list" "example" {
     http_password  = "123"
     http_port      = "8081"
     http_secure    = "true"
-    ip_address     = ["10.121.1.1"]
+    ip_address     = ["10.121.1.10", ]
     # serial_number           = "FLM2213W05R"
     #type                    = "Cisco 4331 Integrated Services Router"
     type = "COMPUTE_DEVICE"
@@ -57,8 +57,8 @@ resource "dnacenter_network_device_list" "example" {
     */
     #role = "DISTRIBUTION"
     #role_source = "AUTO"
-    role        = "ACCESS"
-    role_source = "MANUAL"
+    #role        = "ACCESS"
+    #role_source = "MANUAL"
   }
 }
 

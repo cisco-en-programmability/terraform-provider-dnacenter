@@ -2,12 +2,11 @@ package dnacenter
 
 import (
 	"context"
+	"log"
 	"reflect"
 	"strconv"
 	"strings"
 	"time"
-
-	"log"
 
 	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
 
@@ -15,21 +14,21 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceSite() *schema.Resource {
+func resourceArea() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Sites.
 
-- Creates site with area/building/floor with specified hierarchy.
+- Creates site with area with specified hierarchy.
 
-- Update site area/building/floor with specified hierarchy and new values
+- Update site area with specified hierarchy and new values
 
-- Delete site with area/building/floor by siteId.
+- Delete site with area by siteId.
 `,
 
-		CreateContext: resourceSiteCreate,
-		ReadContext:   resourceSiteRead,
-		UpdateContext: resourceSiteUpdate,
-		DeleteContext: resourceSiteDelete,
+		CreateContext: resourceAreaCreate,
+		ReadContext:   resourceAreaRead,
+		UpdateContext: resourceAreaUpdate,
+		DeleteContext: resourceAreaDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
@@ -52,8 +51,28 @@ func resourceSite() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"attributes": &schema.Schema{
-										Type:     schema.TypeMap,
+										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"addressinheritedfrom": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"parent_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
 									},
 
 									"name_space": &schema.Schema{
@@ -135,117 +154,6 @@ func resourceSite() *schema.Resource {
 											},
 										},
 									},
-									"building": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"address": &schema.Schema{
-													Description: `Address of the building to be created
-`,
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
-												},
-												"country": &schema.Schema{
-													Description: `Country (eg:United States)
-`,
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
-												},
-												"latitude": &schema.Schema{
-													Description: `Latitude coordinate of the building (eg:37.338)
-`,
-													Type:     schema.TypeFloat,
-													Optional: true,
-													Computed: true,
-												},
-												"longitude": &schema.Schema{
-													Description: `Longitude coordinate of the building (eg:-121.832)
-`,
-													Type:     schema.TypeFloat,
-													Optional: true,
-													Computed: true,
-												},
-												"name": &schema.Schema{
-													Description: `Name of the building (eg: building1)
-`,
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
-												},
-												"parent_name": &schema.Schema{
-													Description: `Parent name of building to be created
-`,
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"floor": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"floor_number": &schema.Schema{
-													Description: `Floor number. (eg: 5)
-`,
-													Type:     schema.TypeFloat,
-													Optional: true,
-													Computed: true,
-												},
-												"height": &schema.Schema{
-													Description: `Height of the floor. Unit of measure is ft. (eg: 15)
-`,
-													Type:     schema.TypeFloat,
-													Optional: true,
-													Computed: true,
-												},
-												"length": &schema.Schema{
-													Description: `Length of the floor. Unit of measure is ft. (eg: 100)
-`,
-													Type:     schema.TypeFloat,
-													Optional: true,
-													Computed: true,
-												},
-												"name": &schema.Schema{
-													Description: `Name of the floor (eg:floor-1)
-`,
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
-												},
-												"parent_name": &schema.Schema{
-													Description: `Parent name of the floor to be created
-`,
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
-												},
-												"rf_model": &schema.Schema{
-													Description: `Type of floor (eg: Cubes And Walled Offices0
-`,
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
-												},
-												"width": &schema.Schema{
-													Description: `Width of the floor. Unit of measure is ft. (eg: 100)
-`,
-													Type:     schema.TypeFloat,
-													Optional: true,
-													Computed: true,
-												},
-											},
-										},
-									},
 								},
 							},
 						},
@@ -270,7 +178,7 @@ func resourceSite() *schema.Resource {
 	}
 }
 
-func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAreaCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
@@ -316,7 +224,7 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 		resourceMap["site_id"] = item.ID
 		resourceMap["name"] = item.SiteNameHierarchy
 		d.SetId(joinResourceID(resourceMap))
-		return resourceSiteRead(ctx, d, m)
+		return resourceAreaRead(ctx, d, m)
 	}
 	headers := dnacentersdkgo.CreateSiteHeaderParams{}
 	headers.Persistbapioutput = "false"
@@ -367,7 +275,7 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing CreateSite", err,
-				"Failure at CreateSite execution", bapiError))
+				"Failure at CreateSite exeecution", bapiError))
 			return diags
 		}
 	}
@@ -385,10 +293,10 @@ func resourceSiteCreate(ctx context.Context, d *schema.ResourceData, m interface
 	resourceMap["site_id"] = item2.ID
 	resourceMap["name"] = item2.SiteNameHierarchy
 	d.SetId(joinResourceID(resourceMap))
-	return resourceSiteRead(ctx, d, m)
+	return resourceAreaRead(ctx, d, m)
 }
 
-func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAreaRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 	resourceID := d.Id()
@@ -405,7 +313,7 @@ func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}
 		// queryParams1.SiteID = vSiteID
 		log.Printf("[DEBUG] Read name => %s", queryParams1.Name)
 		log.Printf("[DEBUG] Read site => %s", queryParams1.SiteID)
-		response1, restyResp1, err := client.Sites.GetSite(&queryParams1)
+		response1, restyResp1, err := client.Sites.GetArea(&queryParams1)
 		if err != nil || response1 == nil {
 			log.Printf("[DEBUG] Error => %s", err.Error())
 			if restyResp1 != nil {
@@ -414,8 +322,7 @@ func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}
 			d.SetId("")
 			return diags
 		}
-
-		vItem1 := flattenSitesGetSiteItems(response1.Response)
+		vItem1 := flattenSitesGetAreaItems(response1.Response)
 		log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem1))
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
@@ -423,12 +330,21 @@ func resourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}
 				err))
 			return diags
 		}
+		/*
+			vItem2 := flattenSitesGetAreaParams(response1.Response)
+			if err := d.Set("parameters", []map[string]interface{}{vItem2}); err != nil {
+				diags = append(diags, diagError(
+					"Failure when setting GetSite search response",
+					err))
+				log.Printf("Dentro")
+				return diags
+			}*/
 
 	}
 	return diags
 }
 
-func resourceSiteUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAreaUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
@@ -473,10 +389,10 @@ func resourceSiteUpdate(ctx context.Context, d *schema.ResourceData, m interface
 		}
 	}
 
-	return resourceSiteRead(ctx, d, m)
+	return resourceAreaRead(ctx, d, m)
 }
 
-func resourceSiteDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAreaDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	client := m.(*dnacentersdkgo.Client)
 
@@ -557,13 +473,18 @@ func resourceSiteDelete(ctx context.Context, d *schema.ResourceData, m interface
 
 	return diags
 }
+
+// fixKeyAccess(key + ".type") now is fixKeyAccess("area.type")
 func expandRequestSiteCreateSite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesCreateSite {
 	request := dnacentersdkgo.RequestSitesCreateSite{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
+	if v, ok := d.GetOkExists(fixKeyAccess("area.type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess("area.type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess("area.type")))) {
 		request.Type = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site")))) {
 		request.Site = expandRequestSiteCreateSiteSite(ctx, key+".site.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
+		request.Type = "area"
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -575,13 +496,13 @@ func expandRequestSiteCreateSiteSite(ctx context.Context, key string, d *schema.
 	request := dnacentersdkgo.RequestSitesCreateSiteSite{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".area")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".area")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".area")))) {
 		request.Area = expandRequestSiteCreateSiteSiteArea(ctx, key+".area.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".building")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".building")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".building")))) {
-		request.Building = expandRequestSiteCreateSiteSiteBuilding(ctx, key+".building.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor")))) {
-		request.Floor = expandRequestSiteCreateSiteSiteFloor(ctx, key+".floor.0", d)
-	}
+	} /*
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".building")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".building")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".building")))) {
+			request.Building = expandRequestSiteCreateSiteSiteBuilding(ctx, key+".building.0", d)
+		}
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor")))) {
+			request.Floor = expandRequestSiteCreateSiteSiteFloor(ctx, key+".floor.0", d)
+		}*/
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -602,68 +523,17 @@ func expandRequestSiteCreateSiteSiteArea(ctx context.Context, key string, d *sch
 	return &request
 }
 
-func expandRequestSiteCreateSiteSiteBuilding(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesCreateSiteSiteBuilding {
-	request := dnacentersdkgo.RequestSitesCreateSiteSiteBuilding{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".address")))) {
-		request.Address = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_name")))) {
-		request.ParentName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".latitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".latitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".latitude")))) {
-		request.Latitude = interfaceToFloat64Ptr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".longitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".longitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".longitude")))) {
-		request.Longitude = interfaceToFloat64Ptr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".country")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".country")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".country")))) {
-		request.Country = interfaceToString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestSiteCreateSiteSiteFloor(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesCreateSiteSiteFloor {
-	request := dnacentersdkgo.RequestSitesCreateSiteSiteFloor{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_name")))) {
-		request.ParentName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rf_model")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rf_model")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rf_model")))) {
-		request.RfModel = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".width")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".width")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".width")))) {
-		request.Width = interfaceToFloat64Ptr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".length")))) {
-		request.Length = interfaceToFloat64Ptr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".height")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".height")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".height")))) {
-		request.Height = interfaceToFloat64Ptr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor_number")))) {
-		request.FloorNumber = interfaceToFloat64Ptr(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
+// GetOkExists(fixKeyAccess(key + ".type")) now is GetOkExists(fixKeyAccess("area.type"))
 func expandRequestSiteUpdateSite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesUpdateSite {
 	request := dnacentersdkgo.RequestSitesUpdateSite{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
+	if v, ok := d.GetOkExists(fixKeyAccess("area.type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess("area.type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess("area.type")))) {
 		request.Type = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site")))) {
 		request.Site = expandRequestSiteUpdateSiteSite(ctx, key+".site.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
+		request.Type = "area"
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -675,13 +545,13 @@ func expandRequestSiteUpdateSiteSite(ctx context.Context, key string, d *schema.
 	request := dnacentersdkgo.RequestSitesUpdateSiteSite{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".area")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".area")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".area")))) {
 		request.Area = expandRequestSiteUpdateSiteSiteArea(ctx, key+".area.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".building")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".building")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".building")))) {
-		request.Building = expandRequestSiteUpdateSiteSiteBuilding(ctx, key+".building.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor")))) {
-		request.Floor = expandRequestSiteUpdateSiteSiteFloor(ctx, key+".floor.0", d)
-	}
+	} /*
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".building")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".building")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".building")))) {
+			request.Building = expandRequestSiteUpdateSiteSiteBuilding(ctx, key+".building.0", d)
+		}
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".floor")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".floor")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".floor")))) {
+			request.Floor = expandRequestSiteUpdateSiteSiteFloor(ctx, key+".floor.0", d)
+		}*/
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -695,52 +565,6 @@ func expandRequestSiteUpdateSiteSiteArea(ctx context.Context, key string, d *sch
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_name")))) {
 		request.ParentName = interfaceToString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestSiteUpdateSiteSiteBuilding(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesUpdateSiteSiteBuilding {
-	request := dnacentersdkgo.RequestSitesUpdateSiteSiteBuilding{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".address")))) {
-		request.Address = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_name")))) {
-		request.ParentName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".latitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".latitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".latitude")))) {
-		request.Latitude = interfaceToFloat64Ptr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".longitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".longitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".longitude")))) {
-		request.Longitude = interfaceToFloat64Ptr(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestSiteUpdateSiteSiteFloor(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSitesUpdateSiteSiteFloor {
-	request := dnacentersdkgo.RequestSitesUpdateSiteSiteFloor{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rf_model")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rf_model")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rf_model")))) {
-		request.RfModel = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".width")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".width")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".width")))) {
-		request.Width = interfaceToFloat64Ptr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".length")))) {
-		request.Length = interfaceToFloat64Ptr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".height")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".height")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".height")))) {
-		request.Height = interfaceToFloat64Ptr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
