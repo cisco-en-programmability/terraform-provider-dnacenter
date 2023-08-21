@@ -17,12 +17,12 @@ resource "dnacenter_area" "example" {
   provider = dnacenter
   parameters {
     site {
-    
+
       area {
-          name= "test_tf_area13"
-          parent_name= "Global"
+        name        = "test_tf_area13"
+        parent_name = "Global"
       }
-    
+
     }
     type = "area"
     # site_id ="70c232d5-141e-4a03-918e-5a81acda6f38"

@@ -6,16 +6,17 @@ UPGRADE
 FEATURES
 * Possibility to receive an update from outside of the Terraform file.
 * Separation of the 'site' resource into three new resources.
-- **New resources** `resource_Building`
-- **New resources** `resource_area`
-- **New resources** `resource_floor`
-- **New dataresources** `dnacenter_building`
+- **New resources** `dnacenter_Building`
+- **New resources** `dnacenter_area`
 - **New resources** `dnacenter_floor`
 
 * Adding to `provider.go` file following resources:
  - `dnacenter_area`
  - `dnacenter_building`
  - `dnacenter_floor`
+
+BUGFIXES:
+* `resourceBusinessSdaHostonboardingSSIDIPpoolCreate` adding validation after create. Documentation issue, `ResponseFabricWirelessAddSSIDToIPPoolMapping` is not array.
 
 ## 1.1.10-beta (July 31, 2023)
 BUGFIXES:
