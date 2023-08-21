@@ -1,5 +1,5 @@
 
-data "dnacenter_site" "example" {
+data "dnacenter_area" "example" {
   provider = dnacenter
   limit    = 1
   name     = "string"
@@ -8,6 +8,6 @@ data "dnacenter_site" "example" {
   type     = "string"
 }
 
-output "dnacenter_site_example" {
-  value = data.dnacenter_site.example.items
+output "dnacenter_area_example" {
+  value = data.dnacenter_area.example.items
 }

@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.10-beta"
+      version = "1.1.11-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -24,7 +24,7 @@ resource "dnacenter_network_device" "example" {
 output "dnacenter_network_device_example" {
   value = dnacenter_network_device.example
 }
-
+/*
 resource "dnacenter_compliance" "example" {
   depends_on = [dnacenter_network_device.example]
   provider   = dnacenter
@@ -38,3 +38,4 @@ resource "dnacenter_compliance" "example" {
 output "dnacenter_compliance_example" {
   value = dnacenter_compliance.example
 }
+*/
