@@ -483,7 +483,8 @@ func resourceNetworkDeviceListCreate(ctx context.Context, d *schema.ResourceData
 
 	response1, _, err := client.Devices.GetDeviceList(&queryParams1)
 
-	if err != nil || response1 != nil {
+	if err != nil || len(*response1.Response) > 0 {
+		log.Printf("Prueba2 %v", response1)
 		resourceMap := make(map[string]string)
 		resourceMap["serial_number"] = vvSerialNumber
 		resourceMap["ip_address"] = vvIPAddress
@@ -491,6 +492,7 @@ func resourceNetworkDeviceListCreate(ctx context.Context, d *schema.ResourceData
 		return resourceNetworkDeviceListRead(ctx, d, m)
 	}
 	resp1, restyResp1, err := client.Devices.AddDevice2(request1)
+	log.Printf("ADDDEVICE ERROR %v", restyResp1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(

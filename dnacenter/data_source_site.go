@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"strconv"
 
 	"log"
 
@@ -192,9 +193,116 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 		respItem["instance_tenant_id"] = item.InstanceTenantID
 		respItem["id"] = item.ID
+		//respItem["latitude"] = item.
 		respItems = append(respItems, respItem)
 	}
 	return respItems
+}
+
+func flattenSitesGetFloorItems(items *[]dnacentersdkgo.ResponseSitesGetFloorResponse) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["parent_id"] = item.ParentID
+		respItem["name"] = item.Name
+		respItem["additional_info"] = flattenSitesGetFloorItemsAdditionalInfo(item.AdditionalInfo)
+		respItem["site_hierarchy"] = item.SiteHierarchy
+		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+		respItem["instance_tenant_id"] = item.InstanceTenantID
+		respItem["id"] = item.ID
+		//respItem["latitude"] = item.
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenSitesGetAreaItems(items *[]dnacentersdkgo.ResponseSitesGetAreaResponse) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["parent_id"] = item.ParentID
+		respItem["name"] = item.Name
+		respItem["additional_info"] = flattenSitesGetAreaItemsAdditionalInfo(item.AdditionalInfo)
+		respItem["site_hierarchy"] = item.SiteHierarchy
+		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+		respItem["instance_tenant_id"] = item.InstanceTenantID
+		respItem["id"] = item.ID
+		//respItem["latitude"] = item.
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenSitesGetSiteParams(items *[]dnacentersdkgo.ResponseSitesGetSiteResponse) map[string]interface{} {
+	respParams := make(map[string]interface{})
+	buildings := make([]map[string]interface{}, 0)
+
+	for _, item := range *items {
+		for _, additionalInfo := range item.AdditionalInfo {
+			attributes := additionalInfo.Attributes
+			latitudeStr := attributes.Latitude
+			longitudeStr := attributes.Longitude
+			latitude, err := strconv.ParseFloat(latitudeStr, 64)
+			if err != nil {
+				log.Printf("Error in parse float latitude")
+			}
+
+			longitude, err := strconv.ParseFloat(longitudeStr, 64)
+			if err != nil {
+				log.Printf("Error in parse float longitude")
+			}
+			building := map[string]interface{}{
+				"address":     attributes.Address,
+				"latitude":    latitude,
+				"longitude":   longitude,
+				"name":        item.Name,
+				"parent_name": "Global",
+				//"type":      attributes["type"],
+			}
+			buildings = append(buildings, building)
+		}
+	}
+
+	respParams["site"] = []map[string]interface{}{
+		{
+			"building": buildings,
+		},
+	}
+	respParams["type"] = "building"
+
+	return respParams
+
+}
+
+func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaResponse) map[string]interface{} {
+	respParams := make(map[string]interface{})
+	areas := make([]map[string]interface{}, 0)
+
+	for _, item := range *items {
+
+		area := map[string]interface{}{
+			"name": item.Name,
+			//"type":      attributes["type"],
+		}
+		areas = append(areas, area)
+
+	}
+
+	respParams["site"] = []map[string]interface{}{
+		{
+			"area": areas,
+		},
+	}
+	respParams["type"] = "area"
+
+	return respParams
+
 }
 
 func flattenSitesGetSiteItem(item *dnacentersdkgo.ResponseSitesGetSiteResponse) []map[string]interface{} {
@@ -207,10 +315,7 @@ func flattenSitesGetSiteItem(item *dnacentersdkgo.ResponseSitesGetSiteResponse) 
 	respItem["parent_id"] = item.ParentID
 	respItem["name"] = item.Name
 	respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo)
-	respItem["site_hierarchy"] = item.SiteHierarchy
-	respItem["site_name_hierarchy"] = item.SiteNameHierarchy
-	respItem["instance_tenant_id"] = item.InstanceTenantID
-	respItem["id"] = item.ID
+
 	respItems = append(respItems, respItem)
 
 	return respItems
@@ -221,7 +326,60 @@ func flattenSitesGetSiteItemsAdditionalInfo(items []dnacentersdkgo.ResponseSites
 	for _, item := range items {
 		respItem := make(map[string]interface{})
 		respItem["name_space"] = item.Namespace
-		respItem["attributes"] = item.Attributes
+		respItem["attributes"] = []map[string]interface{}{
+			{
+				"country":              item.Attributes.Country,
+				"address":              item.Attributes.Address,
+				"latitude":             item.Attributes.Latitude,
+				"addressinheritedfrom": item.Attributes.AddressInheritedFrom,
+				"type":                 item.Attributes.Type,
+				"longitude":            item.Attributes.Longitude,
+				"offsetx":              item.Attributes.OffsetX,
+				"offsety":              item.Attributes.OffsetY,
+				"length":               item.Attributes.Length,
+				"width":                item.Attributes.Width,
+				"height":               item.Attributes.Height,
+				"rfmodel":              item.Attributes.RfModel,
+				"floorindex":           item.Attributes.FloorIndex,
+			},
+		}
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenSitesGetFloorItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetFloorResponseAdditionalInfo) []map[string]interface{} {
+	var respItems []map[string]interface{}
+	for _, item := range items {
+		respItem := make(map[string]interface{})
+		respItem["name_space"] = item.Namespace
+		respItem["attributes"] = []map[string]interface{}{
+			{
+				"floor_number": item.Attributes.FloorNumber,
+				"height":       item.Attributes.Height,
+				"length":       item.Attributes.Length,
+				"name":         item.Attributes.Name,
+				"parent_name":  item.Attributes.ParentName,
+				"rfModel":      item.Attributes.RfModel,
+				"width":        item.Attributes.Width,
+			},
+		}
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenSitesGetAreaItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetAreaResponseAdditionalInfo) []map[string]interface{} {
+	var respItems []map[string]interface{}
+	for _, item := range items {
+		respItem := make(map[string]interface{})
+		respItem["name_space"] = item.Namespace
+		respItem["attributes"] = []map[string]interface{}{
+			{
+				"addressinheritedfrom": item.Attributes.AddressInheritedFrom,
+				"type":                 item.Attributes.Type,
+			},
+		}
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -232,8 +390,19 @@ func flattenSitesGetSiteItemsAdditionalInfoAtributes(item *dnacentersdkgo.Respon
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	for key, value := range *item {
-		respItem[key] = value
-	}
+	respItem["country"] = item.Country
+	respItem["address"] = item.Address
+	respItem["latitude"] = item.Latitude
+	respItem["addressInheritedFrom"] = item.AddressInheritedFrom
+	respItem["type"] = item.Longitude
+	respItem["offsetX"] = item.OffsetX
+	respItem["offsetY"] = item.OffsetY
+	respItem["length"] = item.Length
+	respItem["width"] = item.Width
+	respItem["height"] = item.Height
+	respItem["rfModel"] = item.RfModel
+	respItem["rfModel"] = item.RfModel
+	respItem["floorIndex"] = item.FloorIndex
+
 	return respItem
 }

@@ -1,1 +1,0 @@
-terraform import dnacenter_site.example "site_id:=712fe769-78c9-4766-9189-165caa042eea"

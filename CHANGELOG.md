@@ -1,3 +1,22 @@
+## 1.1.11-beta (August 21, 2023)
+UPGRADE
+* Updating the ResponseSitesGetSiteResponseAdditionalInfoAttributes structure
+* Updating of `Schema` in resource_area, resource_building and resource_floor
+
+FEATURES
+* Possibility to receive an update from outside of the Terraform file.
+* Separation of the 'site' resource into three new resources.
+- **New resources** `resource_Building`
+- **New resources** `resource_area`
+- **New resources** `resource_floor`
+- **New dataresources** `dnacenter_building`
+- **New resources** `dnacenter_floor`
+
+* Adding to `provider.go` file following resources:
+ - `dnacenter_area`
+ - `dnacenter_building`
+ - `dnacenter_floor`
+
 ## 1.1.10-beta (July 31, 2023)
 BUGFIXES:
 * Patches resource sda_fabric_authentication_profile response struct #189
