@@ -150,20 +150,47 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolCreate(ctx context.Context, d *s
 			"Failure when executing AddSSIDToIPPoolMapping", err))
 		return diags
 	}
-	// TODO REVIEW
-	queryParamValidate := dnacentersdkgo.GetSSIDToIPPoolMappingQueryParams{}
-	queryParamValidate.VLANName = vvVLANName
-	queryParamValidate.SiteNameHierarchy = vvSiteNameHierarchy
-	item3, _, err := client.FabricWireless.GetSSIDToIPPoolMapping(&queryParamValidate)
-	if err != nil || item3 == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing AddSSIDToIPPoolMapping", err,
-			"Failure at AddSSIDToIPPoolMapping, unexpected response", ""))
-		return diags
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*resp1))
+
+	executionId := resp1.ExecutionID
+	log.Printf("[DEBUG] ExecutionID => %s", executionId)
+	if executionId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetBusinessAPIExecutionDetails", err,
+				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+			return diags
+		}
+		for statusIsPending(response2.Status) {
+			time.Sleep(10 * time.Second)
+			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			if err != nil || response2 == nil {
+				if restyResp1 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+		}
+		if statusIsFailure(response2.Status) {
+			bapiError := response2.BapiError
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing AddSSIDToIPPoolMapping", err,
+				"Failure at AddSSIDToIPPoolMapping execution", bapiError))
+			return diags
+		}
 	}
 
 	resourceMap := make(map[string]string)
-	resourceMap["vlan_name"] = item3.VLANName
+	resourceMap["vlan_name"] = vvVLANName
 	resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 
 	d.SetId(joinResourceID(resourceMap))

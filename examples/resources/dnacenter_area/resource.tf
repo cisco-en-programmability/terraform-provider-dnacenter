@@ -10,7 +10,7 @@ resource "dnacenter_area" "example" {
         name        = "string"
         parent_name = "string"
       }
-      
+
     }
     site_id = "string"
     type    = "string"

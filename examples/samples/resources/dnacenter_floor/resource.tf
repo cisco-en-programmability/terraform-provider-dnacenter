@@ -18,13 +18,13 @@ resource "dnacenter_floor" "example" {
   parameters {
     site {
       floor {
-        floor_number        = 5
-        height              = 5
-        length              = 100
-        name                = "floor-1"
-        parent_name         = "Global"
-        rf_model            = "Cubes And Walled Offices"
-        width               = 100
+        floor_number = 5
+        height       = 5
+        length       = 100
+        name         = "floor-1"
+        parent_name  = "Global"
+        rf_model     = "Cubes And Walled Offices"
+        width        = 100
       }
     }
     type = "floor"

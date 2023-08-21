@@ -31,7 +31,7 @@ resource "dnacenter_network_device_list" "example" {
     http_password  = "123"
     http_port      = "8081"
     http_secure    = "true"
-    ip_address     = ["10.121.1.10",]
+    ip_address     = ["10.121.1.10", ]
     # serial_number           = "FLM2213W05R"
     #type                    = "Cisco 4331 Integrated Services Router"
     type = "COMPUTE_DEVICE"
