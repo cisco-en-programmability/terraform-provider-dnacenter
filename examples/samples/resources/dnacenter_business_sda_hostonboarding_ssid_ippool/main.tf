@@ -18,9 +18,9 @@ resource "dnacenter_business_sda_hostonboarding_ssid_ippool" "example" {
   parameters {
 
     # scalable_group_name = "string"
-    site_name_hierarchy = "Global/San Francisco/Default LAN Fabric 2"
+    site_name_hierarchy = "siteNameHierarchy 1"
     ssid_names          = ["lab"]
-    vlan_name           = "wlan1"
+    vlan_name           = "vlanName 1"
   }
 }
 

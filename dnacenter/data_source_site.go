@@ -360,7 +360,7 @@ func flattenSitesGetFloorItemsAdditionalInfo(items []dnacentersdkgo.ResponseSite
 				"length":       item.Attributes.Length,
 				"name":         item.Attributes.Name,
 				"parent_name":  item.Attributes.ParentName,
-				"rfModel":      item.Attributes.RfModel,
+				"rf_model":     item.Attributes.RfModel,
 				"width":        item.Attributes.Width,
 			},
 		}
