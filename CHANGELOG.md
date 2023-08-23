@@ -1,3 +1,8 @@
+## 1.1.12-beta (August 23, 2023)
+BUGFIXES:
+* dnacenter provider is not able to detect changes on infrastructure after modifications are done using DNAC GUI
+#188, Changing parameter rfModel to rf_model, to avoid address set problems.
+
 ## 1.1.11-beta (August 21, 2023)
 UPGRADE
 * Updating the ResponseSitesGetSiteResponseAdditionalInfoAttributes structure

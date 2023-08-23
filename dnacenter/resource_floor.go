@@ -75,7 +75,7 @@ func resourceFloor() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"rfmodel": &schema.Schema{
+												"rf_model": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -610,7 +610,7 @@ func resourceFloorDelete(ctx context.Context, d *schema.ResourceData, m interfac
 		if statusIsFailure(response2.Status) {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing DeleteSite22222", err,
+				"Failure when executing DeleteSite", err,
 				"Failure at DeleteSite execution1111", bapiError))
 			return diags
 		}
