@@ -322,7 +322,8 @@ func resourceAreaRead(ctx context.Context, d *schema.ResourceData, m interface{}
 			d.SetId("")
 			return diags
 		}
-		vItem1 := flattenSitesGetAreaItems(response1.Response)
+		parameters := d.Get("parameters").([]interface{})
+		vItem1 := flattenSitesGetAreaItems(response1.Response, parameters)
 		log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem1))
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
@@ -330,15 +331,14 @@ func resourceAreaRead(ctx context.Context, d *schema.ResourceData, m interface{}
 				err))
 			return diags
 		}
-		/*
-			vItem2 := flattenSitesGetAreaParams(response1.Response)
-			if err := d.Set("parameters", []map[string]interface{}{vItem2}); err != nil {
-				diags = append(diags, diagError(
-					"Failure when setting GetSite search response",
-					err))
-				log.Printf("Dentro")
-				return diags
-			}*/
+
+		vItem2 := flattenSitesGetAreaParams(response1.Response)
+		if err := d.Set("parameters", []map[string]interface{}{vItem2}); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSite search response",
+				err))
+			return diags
+		}
 
 	}
 	return diags
