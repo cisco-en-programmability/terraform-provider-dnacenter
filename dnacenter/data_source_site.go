@@ -164,7 +164,8 @@ func dataSourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenSitesGetSiteItems(response1.Response)
+		parameters := d.Get("parameters").([]interface{})
+		vItems1 := flattenSitesGetSiteItems(response1.Response, parameters)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSite response",
@@ -179,7 +180,7 @@ func dataSourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface
 	return diags
 }
 
-func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteResponse) []map[string]interface{} {
+func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteResponse, parameters []interface{}) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -188,7 +189,7 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItem := make(map[string]interface{})
 		respItem["parent_id"] = item.ParentID
 		respItem["name"] = item.Name
-		respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo)
+		respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo, parameters)
 		respItem["site_hierarchy"] = item.SiteHierarchy
 		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 		respItem["instance_tenant_id"] = item.InstanceTenantID
@@ -219,7 +220,7 @@ func flattenSitesGetFloorItems(items *[]dnacentersdkgo.ResponseSitesGetFloorResp
 	return respItems
 }
 
-func flattenSitesGetAreaItems(items *[]dnacentersdkgo.ResponseSitesGetAreaResponse) []map[string]interface{} {
+func flattenSitesGetAreaItems(items *[]dnacentersdkgo.ResponseSitesGetAreaResponse, parameters []interface{}) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -228,7 +229,7 @@ func flattenSitesGetAreaItems(items *[]dnacentersdkgo.ResponseSitesGetAreaRespon
 		respItem := make(map[string]interface{})
 		respItem["parent_id"] = item.ParentID
 		respItem["name"] = item.Name
-		respItem["additional_info"] = flattenSitesGetAreaItemsAdditionalInfo(item.AdditionalInfo)
+		respItem["additional_info"] = flattenSitesGetAreaItemsAdditionalInfo(item.AdditionalInfo, parameters)
 		respItem["site_hierarchy"] = item.SiteHierarchy
 		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 		respItem["instance_tenant_id"] = item.InstanceTenantID
@@ -239,9 +240,10 @@ func flattenSitesGetAreaItems(items *[]dnacentersdkgo.ResponseSitesGetAreaRespon
 	return respItems
 }
 
-func flattenSitesGetSiteParams(items *[]dnacentersdkgo.ResponseSitesGetSiteResponse) map[string]interface{} {
+func flattenSitesGetSiteParams(items *[]dnacentersdkgo.ResponseSitesGetSiteResponse, parameters []interface{}) map[string]interface{} {
 	respParams := make(map[string]interface{})
 	buildings := make([]map[string]interface{}, 0)
+	parentName := getParametersOfLastUpdatedBuilding(parameters, "parent_name", "building")
 
 	for _, item := range *items {
 		for _, additionalInfo := range item.AdditionalInfo {
@@ -262,7 +264,7 @@ func flattenSitesGetSiteParams(items *[]dnacentersdkgo.ResponseSitesGetSiteRespo
 				"latitude":    latitude,
 				"longitude":   longitude,
 				"name":        item.Name,
-				"parent_name": "Global",
+				"parent_name": parentName,
 				//"type":      attributes["type"],
 			}
 			buildings = append(buildings, building)
@@ -280,6 +282,58 @@ func flattenSitesGetSiteParams(items *[]dnacentersdkgo.ResponseSitesGetSiteRespo
 
 }
 
+func flattenSitesGetFloorParams(items *[]dnacentersdkgo.ResponseSitesGetFloorResponse, parameters []interface{}) map[string]interface{} {
+	respParams := make(map[string]interface{})
+	floors := make([]map[string]interface{}, 0)
+	parentName := getParametersOfLastUpdatedBuilding(parameters, "parent_name", "floor")
+
+	for _, item := range *items {
+		for _, additionalInfo := range item.AdditionalInfo {
+			attributes := additionalInfo.Attributes
+			floorNumber, err := strconv.ParseFloat(attributes.FloorNumber, 64)
+			if err != nil {
+				log.Printf("Error in parse float floorNumber")
+			}
+
+			height, err := strconv.ParseFloat(attributes.Height, 64)
+			if err != nil {
+				log.Printf("Error in parse float height")
+			}
+
+			length, err := strconv.ParseFloat(attributes.Length, 64)
+			if err != nil {
+				log.Printf("Error in parse float length")
+			}
+
+			width, err := strconv.ParseFloat(attributes.Width, 64)
+			if err != nil {
+				log.Printf("Error in parse float width")
+			}
+
+			floor := map[string]interface{}{
+				"floor_number": floorNumber,
+				"height":       height,
+				"length":       length,
+				"name":         attributes.Name,
+				"parent_name":  parentName,
+				"rf_model":     attributes.RfModel,
+				"width":        width,
+			}
+			floors = append(floors, floor)
+		}
+	}
+
+	respParams["site"] = []map[string]interface{}{
+		{
+			"floor": floors,
+		},
+	}
+	respParams["type"] = "floor"
+
+	return respParams
+
+}
+
 func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaResponse) map[string]interface{} {
 	respParams := make(map[string]interface{})
 	areas := make([]map[string]interface{}, 0)
@@ -287,7 +341,8 @@ func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaRespo
 	for _, item := range *items {
 
 		area := map[string]interface{}{
-			"name": item.Name,
+			"name":        item.Name,
+			"parent_name": "Global",
 			//"type":      attributes["type"],
 		}
 		areas = append(areas, area)
@@ -300,11 +355,12 @@ func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaRespo
 		},
 	}
 	respParams["type"] = "area"
-
+	respParams["site_id"] = ""
 	return respParams
 
 }
 
+/*
 func flattenSitesGetSiteItem(item *dnacentersdkgo.ResponseSitesGetSiteResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
@@ -319,10 +375,11 @@ func flattenSitesGetSiteItem(item *dnacentersdkgo.ResponseSitesGetSiteResponse) 
 	respItems = append(respItems, respItem)
 
 	return respItems
-}
+}*/
 
-func flattenSitesGetSiteItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfo) []map[string]interface{} {
+func flattenSitesGetSiteItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfo, parameters []interface{}) []map[string]interface{} {
 	var respItems []map[string]interface{}
+	parentName := getParametersOfLastUpdatedBuilding(parameters, "parent_name", "building")
 	for _, item := range items {
 		respItem := make(map[string]interface{})
 		respItem["name_space"] = item.Namespace
@@ -341,6 +398,7 @@ func flattenSitesGetSiteItemsAdditionalInfo(items []dnacentersdkgo.ResponseSites
 				"height":               item.Attributes.Height,
 				"rfmodel":              item.Attributes.RfModel,
 				"floorindex":           item.Attributes.FloorIndex,
+				"parent_name":          parentName,
 			},
 		}
 		respItems = append(respItems, respItem)
@@ -369,15 +427,18 @@ func flattenSitesGetFloorItemsAdditionalInfo(items []dnacentersdkgo.ResponseSite
 	return respItems
 }
 
-func flattenSitesGetAreaItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetAreaResponseAdditionalInfo) []map[string]interface{} {
+func flattenSitesGetAreaItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetAreaResponseAdditionalInfo, parameters []interface{}) []map[string]interface{} {
 	var respItems []map[string]interface{}
+	//parentName := getParametersOfLastUpdatedBuilding(parameters, "parent_name", "area")
 	for _, item := range items {
 		respItem := make(map[string]interface{})
 		respItem["name_space"] = item.Namespace
 		respItem["attributes"] = []map[string]interface{}{
 			{
 				"addressinheritedfrom": item.Attributes.AddressInheritedFrom,
+				"parent_name":          "Global",
 				"type":                 item.Attributes.Type,
+				"name":                 item.Attributes.Name,
 			},
 		}
 		respItems = append(respItems, respItem)
@@ -405,4 +466,49 @@ func flattenSitesGetSiteItemsAdditionalInfoAtributes(item *dnacentersdkgo.Respon
 	respItem["floorIndex"] = item.FloorIndex
 
 	return respItem
+}
+
+func getParametersOfLastUpdatedBuilding(parameters []interface{}, searchValue string, typeSite string) string {
+	for _, param := range parameters {
+		paramData, ok := param.(map[string]interface{})
+		if !ok {
+			log.Printf("Error in paramData")
+			continue
+		}
+
+		siteDataArray, ok := paramData["site"].([]interface{})
+		if !ok || len(siteDataArray) == 0 {
+			log.Printf("Error in enter site")
+			continue
+		}
+
+		siteData, ok := siteDataArray[0].(map[string]interface{})
+		if !ok {
+			log.Printf("Error in enter data site ")
+			continue
+		}
+
+		resourceDataArray, ok := siteData[typeSite].([]interface{})
+		if !ok || len(resourceDataArray) == 0 {
+			log.Printf("Error in enter resource ")
+			continue
+		}
+
+		resourceData, ok := resourceDataArray[0].(map[string]interface{})
+		if !ok {
+			log.Printf("Error in enter data resource ")
+			continue
+		}
+
+		value, ok := resourceData[searchValue].(string)
+		if !ok {
+			log.Printf("Error in get value  ")
+			continue
+		}
+
+		return value
+	}
+
+	return ""
+
 }
