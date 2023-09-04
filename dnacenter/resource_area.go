@@ -332,7 +332,7 @@ func resourceAreaRead(ctx context.Context, d *schema.ResourceData, m interface{}
 			return diags
 		}
 
-		vItem2 := flattenSitesGetAreaParams(response1.Response)
+		vItem2 := flattenSitesGetAreaParams(response1.Response, parameters)
 		if err := d.Set("parameters", []map[string]interface{}{vItem2}); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSite search response",

@@ -277,6 +277,9 @@ func flattenSitesGetSiteParams(items *[]dnacentersdkgo.ResponseSitesGetSiteRespo
 		},
 	}
 	respParams["type"] = "building"
+	if len(parameters) > 0 {
+		respParams["site_id"] = parameters[0].(map[string]interface{})["site_id"].(string)
+	}
 
 	return respParams
 
@@ -329,20 +332,23 @@ func flattenSitesGetFloorParams(items *[]dnacentersdkgo.ResponseSitesGetFloorRes
 		},
 	}
 	respParams["type"] = "floor"
+	if len(parameters) > 0 {
+		respParams["site_id"] = parameters[0].(map[string]interface{})["site_id"].(string)
+	}
 
 	return respParams
 
 }
 
-func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaResponse) map[string]interface{} {
+func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaResponse, parameters []interface{}) map[string]interface{} {
 	respParams := make(map[string]interface{})
 	areas := make([]map[string]interface{}, 0)
-
+	parentName := getParametersOfLastUpdatedBuilding(parameters, "parent_name", "area")
 	for _, item := range *items {
 
 		area := map[string]interface{}{
 			"name":        item.Name,
-			"parent_name": "Global",
+			"parent_name": parentName,
 			//"type":      attributes["type"],
 		}
 		areas = append(areas, area)
@@ -354,8 +360,11 @@ func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaRespo
 			"area": areas,
 		},
 	}
+
 	respParams["type"] = "area"
-	respParams["site_id"] = ""
+	if len(parameters) > 0 {
+		respParams["site_id"] = parameters[0].(map[string]interface{})["site_id"].(string)
+	}
 	return respParams
 
 }
@@ -429,14 +438,14 @@ func flattenSitesGetFloorItemsAdditionalInfo(items []dnacentersdkgo.ResponseSite
 
 func flattenSitesGetAreaItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetAreaResponseAdditionalInfo, parameters []interface{}) []map[string]interface{} {
 	var respItems []map[string]interface{}
-	//parentName := getParametersOfLastUpdatedBuilding(parameters, "parent_name", "area")
+	parentName := getParametersOfLastUpdatedBuilding(parameters, "parent_name", "area")
 	for _, item := range items {
 		respItem := make(map[string]interface{})
 		respItem["name_space"] = item.Namespace
 		respItem["attributes"] = []map[string]interface{}{
 			{
 				"addressinheritedfrom": item.Attributes.AddressInheritedFrom,
-				"parent_name":          "Global",
+				"parent_name":          parentName,
 				"type":                 item.Attributes.Type,
 				"name":                 item.Attributes.Name,
 			},
