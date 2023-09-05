@@ -1,3 +1,13 @@
+## 1.1.13-beta (September 05, 2023)
+BUGFIXES:
+* Fix in resource building, inconsistency with parent_name modification, updated Terraform output. #197
+
+* dnacenter provider is not able to detect changes on infrastructure  after modifications are done using DNAC GUI on the resource floor.
+#188, Upgrade of resource floor to detect changes on infrastructure.
+
+* Upgrade of resource_area about inconsistency with parent_name`
+* Modified resource_sd_virtual_network_ip_pool.go to fix issue #198
+
 ## 1.1.12-beta (August 23, 2023)
 BUGFIXES:
 * dnacenter provider is not able to detect changes on infrastructure after modifications are done using DNAC GUI
