@@ -257,7 +257,10 @@ func resourceSdaVirtualNetworkIPPoolCreate(ctx context.Context, d *schema.Resour
 		resourceMap := make(map[string]string)
 		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 		resourceMap["virtual_network_name"] = item2.VirtualNetworkName
-		resourceMap["ip_pool_name"] = item2.IPPoolName
+		//resourceMap["ip_pool_name"] = item2.IPPoolName
+		if item2.IPPoolName == "" {
+			resourceMap["ip_pool_name"] = item2.VLANName
+		}
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaVirtualNetworkIPPoolRead(ctx, d, m)
 	}

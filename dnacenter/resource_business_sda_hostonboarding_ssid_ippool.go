@@ -136,6 +136,57 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolCreate(ctx context.Context, d *s
 		resourceMap := make(map[string]string)
 		resourceMap["vlan_name"] = item2.VLANName
 		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
+		request2 := expandRequestBusinessSdaHostonboardingSSIDIPpoolUpdateSSIDToIPPoolMapping(ctx, "parameters.0", d)
+		log.Printf("[DEBUG] update request => %s", responseInterfaceToString(*request2))
+		response3, restyResp3, err := client.FabricWireless.UpdateSSIDToIPPoolMapping(request2)
+		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp3.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing UpdateSSIDToIPPoolMapping", err, restyResp3.String(),
+					"Failure at UpdateSSIDToIPPoolMapping, unexpected response", ""))
+				return diags
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing UpdateSSIDToIPPoolMapping", err,
+				"Failure at UpdateSSIDToIPPoolMapping, unexpected response", ""))
+			return diags
+		}
+
+		executionId2 := response3.ExecutionID
+		log.Printf("[DEBUG] executionId2 => %s", executionId2)
+		if executionId2 != "" {
+			time.Sleep(5 * time.Second)
+			response4, restyResp4, err := client.Task.GetBusinessAPIExecutionDetails(executionId2)
+			if err != nil || response4 == nil {
+				if restyResp4 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp4.String())
+				}
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing GetExecutionByID", err,
+					"Failure at GetExecutionByID, unexpected response", ""))
+				return diags
+			}
+			for statusIsPending(response4.Status) {
+				time.Sleep(10 * time.Second)
+				response4, restyResp4, err = client.Task.GetBusinessAPIExecutionDetails(executionId2)
+				if err != nil || response4 == nil {
+					if restyResp4 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp4.String())
+					}
+					diags = append(diags, diagErrorWithAlt(
+						"Failure when executing GetExecutionByID", err,
+						"Failure at GetExecutionByID, unexpected response", ""))
+					return diags
+				}
+			}
+			if statusIsFailure(response4.Status) {
+				log.Printf("[DEBUG] Error %s", response4.BapiError)
+				diags = append(diags, diagError(
+					"Failure when executing Loading resource", err))
+				return diags
+			}
+		}
 		d.SetId(joinResourceID(resourceMap))
 		return resourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx, d, m)
 	}
