@@ -369,10 +369,19 @@ func resourceFloorRead(ctx context.Context, d *schema.ResourceData, m interface{
 			d.SetId("")
 			return diags
 		}
-
+		parameters := d.Get("parameters").([]interface{})
 		vItem1 := flattenSitesGetFloorItems(response1.Response)
 		log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem1))
 		if err := d.Set("item", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSite search response",
+				err))
+			return diags
+		}
+
+		vItem2 := flattenSitesGetFloorParams(response1.Response, parameters)
+		log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem2))
+		if err := d.Set("parameters", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSite search response",
 				err))

@@ -107,6 +107,10 @@ func resourceBuilding() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+												"parent_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
 											},
 										},
 									},
@@ -385,8 +389,8 @@ func resourceBuildingRead(ctx context.Context, d *schema.ResourceData, m interfa
 			d.SetId("")
 			return diags
 		}
-
-		vItem1 := flattenSitesGetSiteItems(response1.Response)
+		parameters := d.Get("parameters").([]interface{})
+		vItem1 := flattenSitesGetSiteItems(response1.Response, parameters)
 		log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem1))
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
@@ -395,7 +399,7 @@ func resourceBuildingRead(ctx context.Context, d *schema.ResourceData, m interfa
 			return diags
 		}
 
-		vItem2 := flattenSitesGetSiteParams(response1.Response)
+		vItem2 := flattenSitesGetSiteParams(response1.Response, parameters)
 		if err := d.Set("parameters", []map[string]interface{}{vItem2}); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSite search response",
