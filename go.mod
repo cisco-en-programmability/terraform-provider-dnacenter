@@ -76,6 +76,6 @@ require (
 )
 
 require (
-	github.com/cisco-en-programmability/dnacenter-go-sdk/v5 v5.0.10
+	github.com/kuba-mazurkiewicz/dnacenter-go-sdk/v5 v5.0.11
 	github.com/mattn/go-isatty v0.0.19 // indirect
 )

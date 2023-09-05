@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/kuba-mazurkiewicz/dnacenter-go-sdk/v5/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -248,6 +248,7 @@ func resourceSdaVirtualNetworkIPPoolCreate(ctx context.Context, d *schema.Resour
 	vvVirtualNetworkName := interfaceToString(vVirtualNetworkName)
 	vIPPoolName := resourceItem["ip_pool_name"]
 	vvIPPoolName := interfaceToString(vIPPoolName)
+
 	queryParamImport := dnacentersdkgo.GetIPPoolFromSdaVirtualNetworkQueryParams{}
 	queryParamImport.SiteNameHierarchy = vvSiteNameHierarchy
 	queryParamImport.VirtualNetworkName = vvVirtualNetworkName
@@ -257,7 +258,10 @@ func resourceSdaVirtualNetworkIPPoolCreate(ctx context.Context, d *schema.Resour
 		resourceMap := make(map[string]string)
 		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 		resourceMap["virtual_network_name"] = item2.VirtualNetworkName
-		resourceMap["ip_pool_name"] = item2.IPPoolName
+		//resourceMap["ip_pool_name"] = item2.IPPoolName
+		if item2.IPPoolName == "" {
+			resourceMap["ip_pool_name"] = item2.VLANName
+		}
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaVirtualNetworkIPPoolRead(ctx, d, m)
 	}
@@ -321,7 +325,10 @@ func resourceSdaVirtualNetworkIPPoolCreate(ctx context.Context, d *schema.Resour
 	resourceMap := make(map[string]string)
 	resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 	resourceMap["virtual_network_name"] = item3.VirtualNetworkName
-	resourceMap["ip_pool_name"] = item3.IPPoolName
+	//resourceMap["ip_pool_name"] = item3.IPPoolName
+	if item3.IPPoolName == "" {
+		resourceMap["ip_pool_name"] = item3.VLANName
+	}
 
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSdaVirtualNetworkIPPoolRead(ctx, d, m)
