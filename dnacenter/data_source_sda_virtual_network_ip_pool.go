@@ -166,6 +166,7 @@ func flattenSdaGetIPPoolFromSdaVirtualNetworkItem(item *dnacentersdkgo.ResponseS
 	respItem["scalable_group_name"] = item.ScalableGroupName
 	respItem["is_l2_flooding_enabled"] = boolPtrToString(item.IsL2FloodingEnabled)
 	respItem["is_this_critical_pool"] = boolPtrToString(item.IsThisCriticalPool)
+	respItem["vlan_name"] = item.VLANName
 	return []map[string]interface{}{
 		respItem,
 	}

@@ -391,7 +391,6 @@ func resourceBuildingRead(ctx context.Context, d *schema.ResourceData, m interfa
 		}
 		parameters := d.Get("parameters").([]interface{})
 		vItem1 := flattenSitesGetSiteItems(response1.Response, parameters)
-		log.Printf("TEST1", response1.Response)
 		log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem1))
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
