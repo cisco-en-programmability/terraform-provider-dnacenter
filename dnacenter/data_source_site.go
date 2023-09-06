@@ -278,7 +278,11 @@ func flattenSitesGetSiteParams(items *[]dnacentersdkgo.ResponseSitesGetSiteRespo
 	}
 	respParams["type"] = "building"
 	if len(parameters) > 0 {
-		respParams["site_id"] = parameters[0].(map[string]interface{})["site_id"].(string)
+		if parameters[0].(map[string]interface{})["site_id"] == nil || parameters[0].(map[string]interface{})["site_id"].(string) == "" {
+			log.Print("[DEBUG] site_id Not setted")
+		} else {
+			respParams["site_id"] = parameters[0].(map[string]interface{})["site_id"].(string)
+		}
 	}
 
 	return respParams
@@ -333,7 +337,11 @@ func flattenSitesGetFloorParams(items *[]dnacentersdkgo.ResponseSitesGetFloorRes
 	}
 	respParams["type"] = "floor"
 	if len(parameters) > 0 {
-		respParams["site_id"] = parameters[0].(map[string]interface{})["site_id"].(string)
+		if parameters[0].(map[string]interface{})["site_id"] == nil || parameters[0].(map[string]interface{})["site_id"].(string) == "" {
+			log.Print("[DEBUG] site_id Not setted")
+		} else {
+			respParams["site_id"] = parameters[0].(map[string]interface{})["site_id"].(string)
+		}
 	}
 
 	return respParams
@@ -363,7 +371,11 @@ func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaRespo
 
 	respParams["type"] = "area"
 	if len(parameters) > 0 {
-		respParams["site_id"] = parameters[0].(map[string]interface{})["site_id"].(string)
+		if parameters[0].(map[string]interface{})["site_id"] == nil || parameters[0].(map[string]interface{})["site_id"].(string) == "" {
+			log.Print("[DEBUG] site_id Not setted")
+		} else {
+			respParams["site_id"] = parameters[0].(map[string]interface{})["site_id"].(string)
+		}
 	}
 	return respParams
 
