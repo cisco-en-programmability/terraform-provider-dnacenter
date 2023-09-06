@@ -1,3 +1,7 @@
+## 1.1.14-beta (September 06, 2023)
+BUGFIXES:
+* Fix in resource floor, source data must be an array for set parameters. #188
+
 ## 1.1.13-beta (September 05, 2023)
 BUGFIXES:
 * Fix in resource building, inconsistency with parent_name modification, updated Terraform output. #197
