@@ -13,7 +13,7 @@ data "dnacenter_site" "example" {
   # name     = "string"
   # offset   = 1
   # site_id  = "string"
-  # type     = "string"
+  # type     = "floor"
 }
 
 output "dnacenter_site_example" {

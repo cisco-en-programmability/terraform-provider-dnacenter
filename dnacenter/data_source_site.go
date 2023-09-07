@@ -65,8 +65,80 @@ func dataSourceSite() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"attributes": &schema.Schema{
-										Type:     schema.TypeMap,
+										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"country": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"address": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"latitude": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"addressinheritedfrom": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"longitude": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"offsetx": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"offsety": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"length": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"width": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"height": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rfmodel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"floorindex": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"parent_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"floor_number": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rf_model": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
 									},
 
 									"name_space": &schema.Schema{
@@ -164,8 +236,7 @@ func dataSourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		parameters := d.Get("parameters").([]interface{})
-		vItems1 := flattenSitesGetSiteItems(response1.Response, parameters)
+		vItems1 := flattenSitesGetSiteItems(response1.Response, nil)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSite response",
@@ -265,7 +336,7 @@ func flattenSitesGetSiteParams(items *[]dnacentersdkgo.ResponseSitesGetSiteRespo
 				"longitude":   longitude,
 				"name":        item.Name,
 				"parent_name": parentName,
-				//"type":      attributes["type"],
+				// "type":        attributes.Type,
 			}
 			buildings = append(buildings, building)
 		}
@@ -334,7 +405,6 @@ func flattenSitesGetFloorParams(items *[]dnacentersdkgo.ResponseSitesGetFloorRes
 					log.Printf("Error in parse float floorNumber")
 				}
 				floorNumber = floorNumber_
-
 			}
 		}
 		floor := map[string]interface{}{
@@ -371,14 +441,12 @@ func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaRespo
 	areas := make([]map[string]interface{}, 0)
 	parentName := getParametersOfLastUpdatedBuilding(parameters, "parent_name", "area")
 	for _, item := range *items {
-
 		area := map[string]interface{}{
 			"name":        item.Name,
 			"parent_name": parentName,
-			//"type":      attributes["type"],
+			// "type":        attributes.Type,
 		}
 		areas = append(areas, area)
-
 	}
 
 	respParams["site"] = []map[string]interface{}{
@@ -386,7 +454,6 @@ func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaRespo
 			"area": areas,
 		},
 	}
-
 	respParams["type"] = "area"
 	if len(parameters) > 0 {
 		if parameters[0].(map[string]interface{})["site_id"] == nil || parameters[0].(map[string]interface{})["site_id"].(string) == "" {
@@ -418,7 +485,12 @@ func flattenSitesGetSiteItem(item *dnacentersdkgo.ResponseSitesGetSiteResponse) 
 
 func flattenSitesGetSiteItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfo, parameters []interface{}) []map[string]interface{} {
 	var respItems []map[string]interface{}
-	parentName := getParametersOfLastUpdatedBuilding(parameters, "parent_name", "building")
+	var parentName string
+	if parameters != nil {
+		parentName = getParametersOfLastUpdatedBuilding(parameters, "parent_name", "building")
+	} else {
+		parentName = ""
+	}
 	for _, item := range items {
 		respItem := make(map[string]interface{})
 		respItem["name_space"] = item.Namespace
@@ -468,7 +540,12 @@ func flattenSitesGetFloorItemsAdditionalInfo(items []dnacentersdkgo.ResponseSite
 
 func flattenSitesGetAreaItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetAreaResponseAdditionalInfo, parameters []interface{}) []map[string]interface{} {
 	var respItems []map[string]interface{}
-	parentName := getParametersOfLastUpdatedBuilding(parameters, "parent_name", "area")
+	var parentName string
+	if parameters != nil {
+		parentName = getParametersOfLastUpdatedBuilding(parameters, "parent_name", "area")
+	} else {
+		parentName = ""
+	}
 	for _, item := range items {
 		respItem := make(map[string]interface{})
 		respItem["name_space"] = item.Namespace
