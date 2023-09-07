@@ -160,18 +160,16 @@ func resourceFloor() *schema.Resource {
 												"height": &schema.Schema{
 													Description: `Height of the floor. Unit of measure is ft. (eg: 15)
 `,
-													Type:             schema.TypeFloat,
-													Optional:         true,
-													DiffSuppressFunc: diffSupressOptional(),
-													Computed:         true,
+													Type:     schema.TypeFloat,
+													Optional: true,
+													Computed: true,
 												},
 												"length": &schema.Schema{
 													Description: `Length of the floor. Unit of measure is ft. (eg: 100)
 `,
-													Type:             schema.TypeFloat,
-													Optional:         true,
-													DiffSuppressFunc: diffSupressOptional(),
-													Computed:         true,
+													Type:     schema.TypeFloat,
+													Optional: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Description: `Name of the floor (eg:floor-1)
@@ -190,18 +188,16 @@ func resourceFloor() *schema.Resource {
 												"rf_model": &schema.Schema{
 													Description: `Type of floor (eg: Cubes And Walled Offices0
 `,
-													Type:             schema.TypeString,
-													Optional:         true,
-													DiffSuppressFunc: diffSupressOptional(),
-													Computed:         true,
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
 												},
 												"width": &schema.Schema{
 													Description: `Width of the floor. Unit of measure is ft. (eg: 100)
 `,
-													Type:             schema.TypeFloat,
-													Optional:         true,
-													DiffSuppressFunc: diffSupressOptional(),
-													Computed:         true,
+													Type:     schema.TypeFloat,
+													Optional: true,
+													Computed: true,
 												},
 											},
 										},
