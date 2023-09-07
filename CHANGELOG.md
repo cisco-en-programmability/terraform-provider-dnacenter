@@ -1,3 +1,8 @@
+## 1.1.15-beta (September 07, 2023)
+BUGFIXES:
+* Fix in resource floor, update to detect changes on infrastructure with terraform
+and using DNAC GUI. #188
+
 ## 1.1.14-beta (September 06, 2023)
 BUGFIXES:
 * Fix in resource floor, source data must be an array for set parameters. #188

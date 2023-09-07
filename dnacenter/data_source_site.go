@@ -291,45 +291,63 @@ func flattenSitesGetSiteParams(items *[]dnacentersdkgo.ResponseSitesGetSiteRespo
 
 func flattenSitesGetFloorParams(items *[]dnacentersdkgo.ResponseSitesGetFloorResponse, parameters []interface{}) map[string]interface{} {
 	respParams := make(map[string]interface{})
-	floors := make([]map[string]interface{}, 0)
 	parentName := getParametersOfLastUpdatedBuilding(parameters, "parent_name", "floor")
+	rfModel := getParametersOfLastUpdatedBuilding(parameters, "rf_model", "floor")
+	floors := make([]map[string]interface{}, 0)
 
 	for _, item := range *items {
+		var name string
+		//var rfModel string
+		var height float64
+		var width float64
+		var length float64
+		var floorNumber float64
+		//var respFloor []map[string]interface{}
+
+		name = item.Name
+
 		for _, additionalInfo := range item.AdditionalInfo {
 			attributes := additionalInfo.Attributes
-			floorNumber, err := strconv.ParseFloat(attributes.FloorNumber, 64)
-			if err != nil {
-				log.Printf("Error in parse float floorNumber")
-			}
+			if additionalInfo.Namespace == "mapGeometry" {
+				height_, err := strconv.ParseFloat(attributes.Height, 64)
+				if err != nil {
+					log.Printf("Error in parse float height")
+				}
 
-			height, err := strconv.ParseFloat(attributes.Height, 64)
-			if err != nil {
-				log.Printf("Error in parse float height")
-			}
+				length_, err := strconv.ParseFloat(attributes.Length, 64)
+				if err != nil {
+					log.Printf("Error in parse float length")
+				}
 
-			length, err := strconv.ParseFloat(attributes.Length, 64)
-			if err != nil {
-				log.Printf("Error in parse float length")
-			}
+				width_, err := strconv.ParseFloat(attributes.Width, 64)
+				if err != nil {
+					log.Printf("Error in parse float width")
+				}
 
-			width, err := strconv.ParseFloat(attributes.Width, 64)
-			if err != nil {
-				log.Printf("Error in parse float width")
-			}
+				width = width_
+				length = length_
+				height = height_
 
-			floor := map[string]interface{}{
-				"floor_number": floorNumber,
-				"height":       height,
-				"length":       length,
-				"name":         attributes.Name,
-				"parent_name":  parentName,
-				"rf_model":     attributes.RfModel,
-				"width":        width,
+			} else if additionalInfo.Namespace == "mapsSummary" {
+				floorNumber_, err := strconv.ParseFloat(attributes.FloorIndex, 64)
+				if err != nil {
+					log.Printf("Error in parse float floorNumber")
+				}
+				floorNumber = floorNumber_
+
 			}
-			floors = append(floors, floor)
 		}
+		floor := map[string]interface{}{
+			"floor_number": floorNumber,
+			"height":       height,
+			"length":       length,
+			"name":         name,
+			"parent_name":  parentName,
+			"rf_model":     rfModel,
+			"width":        width,
+		}
+		floors = append(floors, floor)
 	}
-
 	respParams["site"] = []map[string]interface{}{
 		{
 			"floor": floors,
@@ -434,7 +452,7 @@ func flattenSitesGetFloorItemsAdditionalInfo(items []dnacentersdkgo.ResponseSite
 		respItem["name_space"] = item.Namespace
 		respItem["attributes"] = []map[string]interface{}{
 			{
-				"floor_number": item.Attributes.FloorNumber,
+				"floor_number": item.Attributes.FloorIndex,
 				"height":       item.Attributes.Height,
 				"length":       item.Attributes.Length,
 				"name":         item.Attributes.Name,
