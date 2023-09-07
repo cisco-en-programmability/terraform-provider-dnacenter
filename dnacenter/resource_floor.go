@@ -155,6 +155,7 @@ func resourceFloor() *schema.Resource {
 													Type:     schema.TypeFloat,
 													Optional: true,
 													Computed: true,
+													ForceNew: true,
 												},
 												"height": &schema.Schema{
 													Description: `Height of the floor. Unit of measure is ft. (eg: 15)
@@ -380,7 +381,8 @@ func resourceFloorRead(ctx context.Context, d *schema.ResourceData, m interface{
 		}
 
 		vItem2 := flattenSitesGetFloorParams(response1.Response, parameters)
-		log.Printf("[DEBUG] response flatten sent => %v", responseInterfaceToString(vItem2))
+		log.Printf("RESPONSE TEST %v", vItem2)
+		log.Printf("[DEBUG] response flatten sent2 => %v", responseInterfaceToString(vItem2))
 		if err := d.Set("parameters", []map[string]interface{}{vItem2}); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSite search response",
