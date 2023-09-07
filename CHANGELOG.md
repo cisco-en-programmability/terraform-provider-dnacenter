@@ -2,6 +2,7 @@
 BUGFIXES:
 * Fix in resource floor, update to detect changes on infrastructure with terraform
 and using DNAC GUI. #188
+* Fix in `data_source_site`, Fixing nil pointer exception. Usage of data.dnacenter_site datasource causes provider panic. #204 
 
 ## 1.1.14-beta (September 06, 2023)
 BUGFIXES:
