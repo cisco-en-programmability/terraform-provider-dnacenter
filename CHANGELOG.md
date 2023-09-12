@@ -1,3 +1,7 @@
+## 1.1.16-beta (September 12, 2023)
+BUGFIXES:
+* Unable to create layer 2 only VN with dnacenter_sda_virtual_network_ip_pool #198 
+
 ## 1.1.15-beta (September 07, 2023)
 BUGFIXES:
 * Fix in resource floor, update to detect changes on infrastructure with terraform
