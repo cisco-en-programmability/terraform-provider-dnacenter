@@ -447,15 +447,15 @@ func resourceSdaVirtualNetworkIPPoolRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
-		vItem2 := flattenSdaGetIPPoolFromSdaVirtualNetworkItem(response1)
-		vItem2[0]["site_name_hierarchy"] = vSiteNameHierarchy
-		log.Printf("[DEBUG] Retrieved response2222 %+v", responseInterfaceToString(vItem2))
-		if err := d.Set("parameters", vItem2); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetIPPoolFromSdaVirtualNetwork response (Parameters)",
-				err))
-			return diags
-		}
+		// vItem2 := flattenSdaGetIPPoolFromSdaVirtualNetworkItem(response1)
+		// vItem2[0]["site_name_hierarchy"] = vSiteNameHierarchy
+		// log.Printf("[DEBUG] Retrieved response2222 %+v", responseInterfaceToString(vItem2))
+		// if err := d.Set("parameters", vItem2); err != nil {
+		// 	diags = append(diags, diagError(
+		// 		"Failure when setting GetIPPoolFromSdaVirtualNetwork response (Parameters)",
+		// 		err))
+		// 	return diags
+		// }
 
 		return diags
 
