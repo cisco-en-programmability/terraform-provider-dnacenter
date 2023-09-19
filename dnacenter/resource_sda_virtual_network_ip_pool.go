@@ -46,6 +46,11 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
+						"status": &schema.Schema{
+							Description: `Status`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
 						"description": &schema.Schema{
 							Description: `Description`,
 							Type:        schema.TypeString,
@@ -68,13 +73,44 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"is_bridge_mode_vm": &schema.Schema{
+							Description: `Is Bridge Mode Vm`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_layer2_only_pool": &schema.Schema{
+							Description: `Is Layer2 Only Pool`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_wireless_pool": &schema.Schema{
+							Description: `Is Wireless Pool`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_selective_flooding_enabled": &schema.Schema{
+							Description: `Is Selective Flooding enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_common_pool": &schema.Schema{
+							Description: `Is Common Pool`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_ip_directed_broadcast": &schema.Schema{
+							Description: `Is Ip Directed Broadcast`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"scalable_group_name": &schema.Schema{
 							Description: `Scalable Group Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"status": &schema.Schema{
-							Description: `Status`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -104,6 +140,21 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"authentication_policy_name": &schema.Schema{
+							Description: `Authentication Policy Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"status": &schema.Schema{
+							Description: `Status`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"description": &schema.Schema{
+							Description: `Description`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
 						"auto_generate_vlan_name": &schema.Schema{
 							Description: `It will auto generate vlanName, if vlanName is empty(applicable for L3  and INFRA_VN)
 `,
@@ -119,6 +170,18 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Default:  "",
+						},
+						"is_layer2_only_pool": &schema.Schema{
+							Description: `Is Layer2 Only Pool`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_selective_flooding_enabled": &schema.Schema{
+							Description: `Is Selective Flooding enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"is_bridge_mode_vm": &schema.Schema{
 							Description: `Bridge Mode Vm enablement flag (applicable for L3 and L2 and default value is False )
@@ -200,9 +263,10 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 						"site_name_hierarchy": &schema.Schema{
 							Description: `Path of sda Fabric Site
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-							Default:  "",
+							Type:             schema.TypeString,
+							DiffSuppressFunc: diffSupressOptional(),
+							Optional:         true,
+							Default:          "",
 						},
 						"traffic_type": &schema.Schema{
 							Description: `Traffic type(applicable for L3  and L2)
@@ -263,7 +327,7 @@ func resourceSdaVirtualNetworkIPPoolCreate(ctx context.Context, d *schema.Resour
 		resourceMap := make(map[string]string)
 		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 		resourceMap["virtual_network_name"] = item2.VirtualNetworkName
-		//resourceMap["ip_pool_name"] = item2.IPPoolName
+		resourceMap["ip_pool_name"] = item2.IPPoolName
 		if item2.IPPoolName == "" {
 			resourceMap["ip_pool_name"] = item2.VLANName
 		}
@@ -331,7 +395,10 @@ func resourceSdaVirtualNetworkIPPoolCreate(ctx context.Context, d *schema.Resour
 	resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 	resourceMap["virtual_network_name"] = item3.VirtualNetworkName
 	resourceMap["ip_pool_name"] = item3.IPPoolName
-
+	if item3.IPPoolName == "" {
+		resourceMap["ip_pool_name"] = item3.VLANName
+	}
+	time.Sleep(10 * time.Second)
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSdaVirtualNetworkIPPoolRead(ctx, d, m)
 }
@@ -377,6 +444,15 @@ func resourceSdaVirtualNetworkIPPoolRead(ctx context.Context, d *schema.Resource
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetIPPoolFromSdaVirtualNetwork response",
+				err))
+			return diags
+		}
+		vItem2 := flattenSdaGetIPPoolFromSdaVirtualNetworkItem(response1)
+		vItem2[0]["site_name_hierarchy"] = vSiteNameHierarchy
+		log.Printf("[DEBUG] Retrieved response2222 %+v", responseInterfaceToString(vItem2))
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIPPoolFromSdaVirtualNetwork response (Parameters)",
 				err))
 			return diags
 		}
@@ -524,3 +600,11 @@ func expandRequestSdaVirtualNetworkIPPoolAddIPPoolInSdaVirtualNetwork(ctx contex
 	}
 	return &request
 }
+
+// func upadateParams(item *dnacentersdkgo.ResponseSdaGetIPPoolFromSdaVirtualNetwork, param []interface{}) []map[string]interface{} {
+// 	var newParams *dnacentersdkgo.RequestSdaAddIPPoolInSdaVirtualNetwork
+// 	newParams.IPPoolName = item.IPPoolName
+// 	newParams.IsL2FloodingEnabled = item.IsL2FloodingEnabled
+// 	newParams.IsThisCriticalPool = item.IsThisCriticalPool
+// 	item.
+// }
