@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 	"time"
 
@@ -302,13 +303,22 @@ func resourceNfvProvisionDetailRead(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceNfvProvisionDetailUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceNfvProvisionDetailRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing NfvProvisionDetailUpdate", err, "",
+		"Failure at NfvProvisionDetailUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceNfvProvisionDetailDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete NfvProvisionDetail on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing NfvProvisionDetailDelete", err, "",
+		"Failure at NfvProvisionDetailDelete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestNfvProvisionDetailNfvProvisioningDetail(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSiteDesignNfvProvisioningDetail {

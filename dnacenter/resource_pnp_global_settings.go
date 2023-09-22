@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 
@@ -670,8 +671,11 @@ func resourcePnpGlobalSettingsUpdate(ctx context.Context, d *schema.ResourceData
 
 func resourcePnpGlobalSettingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete PnpGlobalSettings on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing PnpGlobalSettingsDelete", err, "",
+		"Failure at PnpGlobalSettingsDelete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestPnpGlobalSettingsUpdatePnpGlobalSettings(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceOnboardingPnpUpdatePnpGlobalSettings {

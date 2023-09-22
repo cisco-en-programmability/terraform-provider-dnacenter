@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 
@@ -365,7 +366,13 @@ func resourceSensorRead(ctx context.Context, d *schema.ResourceData, m interface
 }
 
 func resourceSensorUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSensorRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SensorUpdate", err, "",
+		"Failure at SensorUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceSensorDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

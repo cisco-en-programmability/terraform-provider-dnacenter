@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 	"time"
 
@@ -464,7 +465,13 @@ func resourceSdaVirtualNetworkIPPoolRead(ctx context.Context, d *schema.Resource
 }
 
 func resourceSdaVirtualNetworkIPPoolUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSdaVirtualNetworkIPPoolRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SdaVirtualNetworkIPPoolUpdate", err, "",
+		"Failure at SdaVirtualNetworkIPPoolUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceSdaVirtualNetworkIPPoolDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

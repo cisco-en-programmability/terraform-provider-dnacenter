@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -1023,7 +1024,13 @@ func resourceSdaFabricBorderDeviceRead(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourceSdaFabricBorderDeviceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSdaFabricBorderDeviceRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SdaFabricBorderDeviceUpdate", err, "",
+		"Failure at SdaFabricBorderDeviceUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceSdaFabricBorderDeviceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

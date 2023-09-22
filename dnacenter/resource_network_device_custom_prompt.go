@@ -194,13 +194,22 @@ func resourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Resour
 }
 
 func resourceNetworkDeviceCustomPromptUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceNetworkDeviceCustomPromptRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing NetworkDeviceCustomPromptUpdate", err, "",
+		"Failure at NetworkDeviceCustomPromptUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceNetworkDeviceCustomPromptDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete NetworkDeviceCustomPrompt on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing NetworkDeviceCustomPromptDelete", err, "",
+		"Failure at NetworkDeviceCustomPromptDelete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestNetworkDeviceCustomPromptCustomPromptPostAPI(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSystemSettingsCustomPromptPostAPI {

@@ -3384,7 +3384,13 @@ func resourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourcePathTraceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourcePathTraceRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing PathTraceUpdate", err, "",
+		"Failure at PathTraceUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourcePathTraceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

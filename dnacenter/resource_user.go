@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 
 	"log"
@@ -282,8 +283,11 @@ func resourceUserUpdate(ctx context.Context, d *schema.ResourceData, m interface
 
 func resourceUserDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete User on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing UserDelete", err, "",
+		"Failure at UserDelete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestUserAddUserApI(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestUserandRolesAddUserApI {

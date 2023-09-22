@@ -140,7 +140,13 @@ func resourceConfigurationTemplateImportProjectRead(ctx context.Context, d *sche
 }
 
 func resourceConfigurationTemplateImportProjectUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceConfigurationTemplateImportProjectRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing ConfigurationTemplateImportProjectUpdate", err, "",
+		"Failure at ConfigurationTemplateImportProjectUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceConfigurationTemplateImportProjectDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

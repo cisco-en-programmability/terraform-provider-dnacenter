@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 
@@ -631,7 +632,13 @@ func resourceReportsRead(ctx context.Context, d *schema.ResourceData, m interfac
 }
 
 func resourceReportsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceReportsRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing ReportsUpdate", err, "",
+		"Failure at ReportsUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceReportsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

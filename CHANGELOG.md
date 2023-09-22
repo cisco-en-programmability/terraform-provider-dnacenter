@@ -1,3 +1,41 @@
+## 1.1.18-beta (September 22, 2023)
+BUGFIXES:
+* Manage if DELETE or PUT context is available in application_sets resource.
+* Manage if DELETE or PUT context is available in business_sda_hostonboarding_ssid_ippool resource.
+* Manage if DELETE or PUT context is available in configuration_template_import_project resource.
+* Manage if DELETE or PUT context is available in configuration_template_version resource.
+* Manage if DELETE or PUT context is available in device_reboot_apreboot resource.
+* Manage if DELETE or PUT context is available in device_replacement resource.
+* Manage if DELETE or PUT context is available in event_subscription_email resource.
+* Manage if DELETE or PUT context is available in event_subscription_syslog resource.
+* Manage if DELETE or PUT context is available in event_syslog_config resource.
+* Manage if DELETE or PUT context is available in golden_image resource.
+* Manage if DELETE or PUT context is available in golden_tag_image resource.
+* Manage if DELETE or PUT context is available in network_device resource.
+* Manage if DELETE or PUT context is available in network_device_custom_prompt resource.
+* Manage if DELETE or PUT context is available in network_device_list resource.
+* Manage if DELETE or PUT context is available in network_v2 resource.
+* Manage if DELETE or PUT context is available in nfv_provision_detail resource.
+* Manage if DELETE or PUT context is available in path_trace resource.
+* Manage if DELETE or PUT context is available in pnp_global_settings resource.
+* Manage if DELETE or PUT context is available in reports resource.
+* Manage if DELETE or PUT context is available in sda_fabric_border_device resource.
+* Manage if DELETE or PUT context is available in sda_fabric_control_plane_device resource.
+* Manage if DELETE or PUT context is available in sda_fabric_edge_device resource.
+* Manage if DELETE or PUT context is available in sda_fabric_site resource.
+* Manage if DELETE or PUT context is available in sda_multicast resource.
+* Manage if DELETE or PUT context is available in sda_port_assignment_for_access_point resource.
+* Manage if DELETE or PUT context is available in sda_port_assignment_for_user_device resource.
+* Manage if DELETE or PUT context is available in sda_virtual_network resource.
+* Manage if DELETE or PUT context is available in sda_virtual_network_ip_pool resource.
+* Manage if DELETE or PUT context is available in sensor resource.
+* Manage if DELETE or PUT context is available in service_provider_v2 resource.
+* Manage if DELETE or PUT context is available in snmp_properties resource.
+* Manage if DELETE or PUT context is available in swim_image_file resource.
+* Manage if DELETE or PUT context is available in transit_peer_network resource.
+* Manage if DELETE or PUT context is available in user resource.
+* Manage if DELETE or PUT context is available in wireless_rf_profile resource.
+
 ## 1.1.17-beta (September 19, 2023)
 BUGFIXES:
 * Delay and manage ids in dnacenter_sda_virtual_network_ip_pool #198.
@@ -23,7 +61,7 @@ BUGFIXES:
 #188, Upgrade of resource floor to detect changes on infrastructure.
 
 * Upgrade of resource_area about inconsistency with parent_name`
-* Modified resource_sd_virtual_network_ip_pool.go to fix issue #198
+* Modified resource_sd_virtual_network_ip_pool resource. to fix issue #198
 
 ## 1.1.12-beta (August 23, 2023)
 BUGFIXES:
@@ -42,7 +80,7 @@ FEATURES
 - **New resources** `dnacenter_area`
 - **New resources** `dnacenter_floor`
 
-* Adding to `provider.go` file following resources:
+* Adding to `provider resource.` file following resources:
  - `dnacenter_area`
  - `dnacenter_building`
  - `dnacenter_floor`
@@ -58,7 +96,7 @@ BUGFIXES:
     - assign_device_to_site
     - business_sda_hostonboarding_ssid_ippool
     - business_sda_wireless_controller_create
-    - business_sda_wireless_controller_delete
+    - business_sda_wireless_controller_DELETE
     - global_pool
     - itsm_integration_events_retry
     - network_create
@@ -90,7 +128,7 @@ BUGFIXES:
     - wireless_provision_device_create
     - wireless_provision_device_update
     - wireless_provision_ssid_create_provision
-    - wireless_provision_ssid_delete_reprovision
+    - wireless_provision_ssid_DELETE_reprovision
     - wireless_rf_profile
 
 ## 1.1.9-beta (July 12, 2023)
@@ -139,8 +177,8 @@ BUGFIXES:
 
 ## 1.1.1-beta (April 27, 2023)
 BUGFIXES:
-* Adding to `provider.go` file following resources:
-  - `dnacenter_sensor_test_delete`
+* Adding to `provider resource.` file following resources:
+  - `dnacenter_sensor_test_DELETE`
   - `dnacenter_sensor_test_create`
   - `dnacenter_golden_image`
   - `dnacenter_deploy_template_v1`
@@ -152,7 +190,7 @@ BUGFIXES:
   - `dnacenter_global_credential_http_read`
   - `dnacenter_global_credential_cli`
   - `dnacenter_tag_membership`
-* Adding to `provider.go` file following data sources:
+* Adding to `provider resource.` file following data sources:
   - `dnacenter_license_smart_account_details`
   - `dnacenter_golden_tag_image_details`
 * `dnacenter_site` documentation issues fixed.
@@ -193,7 +231,7 @@ FEATURES:
 * **New Resource:** `resource_network_v2`
 * **New Resource:** `resource_pnp_device_unclaim`
 * **New Resource:** `resource_service_provider_v2`
-* **New Resource:** `resource_sp_profile_delete_v2`
+* **New Resource:** `resource_sp_profile_DELETE_v2`
 * **New Resource:** `resource_user`
 * **New Resource:** `resource_wireless_accespoint_configuration`
 
@@ -263,12 +301,12 @@ BUGFIXES:
 
 ## 1.0.8-beta (Oct 10, 2022)
 BUGFIXES:
-* Resource `dnacenter_site` fixed to update name and delete.
+* Resource `dnacenter_site` fixed to update name and DELETE.
 * Data source `dnacenter_site` fixed to make request by site_id.
   
 ## 1.0.7-beta (July 18, 2022)
 BUGFIXES:
-* Resource `dnacenter_discovery destroy method` fixed to delete only the managed resource.
+* Resource `dnacenter_discovery destroy method` fixed to DELETE only the managed resource.
 * Resource `dnacenter_sda_fabric_border_device` item updated.
 * Data Source `dnacenter_sda_fabric_border_device` item and flatten updated.
 
@@ -352,7 +390,7 @@ FEATURES:
 * **New Resource:** `resource_interface_operation_create`
 * **New Resource:** `resource_interface_update`
 * **New Resource:** `resource_lan_automation_create`
-* **New Resource:** `resource_lan_automation_delete`
+* **New Resource:** `resource_lan_automation_DELETE`
 * **New Resource:** `resource_syslog_config_create`
 * **New Resource:** `resource_syslog_config_update`
 * **New Resource:** `resource_event_email_config_update`
@@ -360,7 +398,7 @@ FEATURES:
 * **New Resource:** `resource_event_webhook_create`
 * **New Resource:** `resource_event_webhook_update`
 * **New Resource:** `resource_file_import`
-* **New Resource:** `resource_global_credential_delete`
+* **New Resource:** `resource_global_credential_DELETE`
 * **New Resource:** `resource_global_credential_update`
 * **New Resource:** `resource_network_create`
 * **New Resource:** `resource_network_device_update_role`
@@ -406,7 +444,7 @@ FEATURES:
 * **New Resource:** `resource_authentication_import_certificate`
 * **New Resource:** `resource_authentication_import_certificate_p12`
 * **New Resource:** `resource_business_sda_wireless_controller_create`
-* **New Resource:** `resource_business_sda_wireless_controller_delete`
+* **New Resource:** `resource_business_sda_wireless_controller_DELETE`
 * **New Resource:** `resource_command_runner_run_command`
 * **New Resource:** `resource_compliance`
 * **New Resource:** `resource_configuration_template_clone`
@@ -422,7 +460,7 @@ FEATURES:
 * **New Resource:** `resource_nfv_provision`
 * **New Resource:** `resource_profiling_rules_in_bulk_create`
 * **New Resource:** `resource_sensor_test_create`
-* **New Resource:** `resource_sensor_test_delete`
+* **New Resource:** `resource_sensor_test_DELETE`
 * **New Resource:** `resource_sensor_test_run`
 * **New Resource:** `resource_sensor_test_template_duplicate`
 * **New Resource:** `resource_sensor_test_template_edit`
@@ -433,7 +471,7 @@ FEATURES:
 * **New Resource:** `resource_wireless_provision_device_create.`
 * **New Resource:** `resource_wireless_provision_device_update.`
 * **New Resource:** `resource_wireless_provision_ssid_create_provision`
-* **New Resource:** `resource_wireless_provision_ssid_delete_reprovisio`
+* **New Resource:** `resource_wireless_provision_ssid_DELETE_reprovisio`
 
 ## 0.2.0-beta (March 01, 2022)
 
@@ -452,9 +490,9 @@ FEATURES:
 * **New Resource:** `resource_service_provider`
 
 IMPROVEMENTS:
-* dnacenter/resource_wireless_enterprise_ssid: Add trigger for update passphrase
-* dnacenter/resource_network_device: Add trigger for update role of a device
-* dnacenter/resource_configuration_template: Add trigger for new versio released
+* wireless_enterprise_ssid: Add trigger for update passphrase
+* network_device: Add trigger for update role of a device
+* configuration_template: Add trigger for new versio released
 
 BUG FIXES:
 * Remove `use_api_gateway` and `use_csrf_token` configuration parameters from `provider`
@@ -472,7 +510,7 @@ BREAKING CHANGES:
 * Data Source of type 'action' `dnacenter_authentication_import_certificate_p12` has been removed
 * Data Source of type 'action' `dnacenter_authentication_import_certificate` has been removed
 * Data Source of type 'action' `dnacenter_business_sda_wireless_controller_create` has been removed
-* Data Source of type 'action' `dnacenter_business_sda_wireless_controller_delete` has been removed
+* Data Source of type 'action' `dnacenter_business_sda_wireless_controller_DELETE` has been removed
 * Data Source of type 'action' `dnacenter_cli_credential_create` has been removed
 * Data Source of type 'action' `dnacenter_cli_credential_update` has been removed
 * Data Source of type 'action' `dnacenter_command_runner_run_command` has been removed
@@ -488,15 +526,15 @@ BREAKING CHANGES:
 * Data Source of type 'action' `dnacenter_configuration_template_version_create` has been removed
 * Data Source of type 'action' `dnacenter_device_configurations_export` has been removed
 * Data Source of type 'action' `dnacenter_device_credential_create` has been removed
-* Data Source of type 'action' `dnacenter_device_credential_delete` has been removed
+* Data Source of type 'action' `dnacenter_device_credential_DELETE` has been removed
 * Data Source of type 'action' `dnacenter_device_credential_update` has been removed
 * Data Source of type 'action' `dnacenter_device_replacement_deploy` has been removed
 * Data Source of type 'action' `dnacenter_disassociate_site_to_network_profile` has been removed
-* Data Source of type 'action' `dnacenter_discovery_range_delete` has been removed
-* Data Source of type 'action' `dnacenter_global_credential_delete` has been removed
+* Data Source of type 'action' `dnacenter_discovery_range_DELETE` has been removed
+* Data Source of type 'action' `dnacenter_global_credential_DELETE` has been removed
 * Data Source of type 'action' `dnacenter_global_credential_update` has been removed
 * Data Source of type 'action' `dnacenter_golden_image_create` has been removed
-* Data Source of type 'action' `dnacenter_golden_tag_image_delete` has been removed
+* Data Source of type 'action' `dnacenter_golden_tag_image_DELETE` has been removed
 * Data Source of type 'action' `dnacenter_http_read_credential_create` has been removed
 * Data Source of type 'action' `dnacenter_http_read_credential_update` has been removed
 * Data Source of type 'action' `dnacenter_http_write_credential_create` has been removed
@@ -515,7 +553,7 @@ BREAKING CHANGES:
 * Data Source of type 'action' `dnacenter_nfv_provision_details` has been removed
 * Data Source of type 'action' `dnacenter_nfv_provision` has been removed
 * Data Source of type 'action' `dnacenter_path_trace_create` has been removed
-* Data Source of type 'action' `dnacenter_path_trace_delete` has been removed
+* Data Source of type 'action' `dnacenter_path_trace_DELETE` has been removed
 * Data Source of type 'action' `dnacenter_pnp_device_claim_to_site` has been removed
 * Data Source of type 'action' `dnacenter_pnp_device_claim` has been removed
 * Data Source of type 'action' `dnacenter_pnp_device_config_preview` has been removed
@@ -528,17 +566,17 @@ BREAKING CHANGES:
 * Data Source of type 'action' `dnacenter_pnp_virtual_account_devices_sync` has been removed
 * Data Source of type 'action' `dnacenter_profiling_rules_in_bulk_create` has been removed
 * Data Source of type 'action' `dnacenter_sensor_create` has been removed
-* Data Source of type 'action' `dnacenter_sensor_delete` has been removed
+* Data Source of type 'action' `dnacenter_sensor_DELETE` has been removed
 * Data Source of type 'action' `dnacenter_sensor_test_run` has been removed
 * Data Source of type 'action' `dnacenter_sensor_test_template_duplicate` has been removed
 * Data Source of type 'action' `dnacenter_sensor_test_template_edit` has been removed
 * Data Source of type 'action' `dnacenter_service_provider_create` has been removed
-* Data Source of type 'action' `dnacenter_service_provider_profile_delete` has been removed
+* Data Source of type 'action' `dnacenter_service_provider_profile_DELETE` has been removed
 * Data Source of type 'action' `dnacenter_service_provider_update` has been removed
 * Data Source of type 'action' `dnacenter_site_assign_credential` has been removed
 * Data Source of type 'action' `dnacenter_site_assign_device` has been removed
 * Data Source of type 'action' `dnacenter_site_create` has been removed
-* Data Source of type 'action' `dnacenter_site_delete` has been removed
+* Data Source of type 'action' `dnacenter_site_DELETE` has been removed
 * Data Source of type 'action' `dnacenter_site_update` has been removed
 * Data Source of type 'action' `dnacenter_snmpv2_read_community_credential_create` has been removed
 * Data Source of type 'action' `dnacenter_snmpv2_read_community_credential_update` has been removed
@@ -551,14 +589,14 @@ BREAKING CHANGES:
 * Data Source of type 'action' `dnacenter_swim_trigger_activation` has been removed
 * Data Source of type 'action' `dnacenter_swim_trigger_distribution` has been removed
 * Data Source of type 'action' `dnacenter_tag_member_create` has been removed
-* Data Source of type 'action' `dnacenter_tag_member_delete` has been removed
+* Data Source of type 'action' `dnacenter_tag_member_DELETE` has been removed
 * Data Source of type 'action' `dnacenter_tag_membership` has been removed
 * Data Source of type 'action' `dnacenter_template_preview` has been removed
 * Data Source of type 'action' `dnacenter_wireless_provision_access_point` has been removed
 * Data Source of type 'action' `dnacenter_wireless_provision_device_create` has been removed
 * Data Source of type 'action' `dnacenter_wireless_provision_device_update` has been removed
 * Data Source of type 'action' `dnacenter_wireless_provision_ssid_create_provision` has been removed
-* Data Source of type 'action' `dnacenter_wireless_provision_ssid_delete_reprovision` has been removed
+* Data Source of type 'action' `dnacenter_wireless_provision_ssid_DELETE_reprovision` has been removed
 ## 0.1.0-beta.1 (February 01, 2022)
 
 BUG FIXES:
@@ -593,10 +631,10 @@ FEATURES:
 * **New Data Source:** `dnacenter_tag_membership`
 * **New Data Source:** `dnacenter_tag_member`
 * **New Data Source:** `dnacenter_tag`
-* **New Data Source:** `dnacenter_service_provider_profile_delete`
+* **New Data Source:** `dnacenter_service_provider_profile_DELETE`
 * **New Data Source:** `dnacenter_snmp_properties`
 * **New Data Source:** `dnacenter_site_update`
-* **New Data Source:** `dnacenter_site_delete`
+* **New Data Source:** `dnacenter_site_DELETE`
 * **New Data Source:** `dnacenter_site_create`
 * **New Data Source:** `dnacenter_site`
 * **New Data Source:** `dnacenter_service_provider_create`
@@ -656,10 +694,10 @@ FEATURES:
 * **New Data Source:** `dnacenter_cli_credential_create`
 * **New Data Source:** `dnacenter_cli_credential_update`
 * **New Data Source:** `dnacenter_global_credential_update`
-* **New Data Source:** `dnacenter_global_credential_delete`
+* **New Data Source:** `dnacenter_global_credential_DELETE`
 * **New Data Source:** `dnacenter_path_trace`
 * **New Data Source:** `dnacenter_path_trace_create`
-* **New Data Source:** `dnacenter_path_trace_delete`
+* **New Data Source:** `dnacenter_path_trace_DELETE`
 * **New Data Source:** `dnacenter_event_subscription_syslog`
 * **New Data Source:** `dnacenter_event_subscription_rest`
 * **New Data Source:** `dnacenter_event_subscription_email`
@@ -667,18 +705,18 @@ FEATURES:
 * **New Data Source:** `dnacenter_wireless_dynamic_interface`
 * **New Data Source:** `dnacenter_wireless_psk_override`
 * **New Data Source:** `dnacenter_wireless_enterprise_ssid`
-* **New Data Source:** `dnacenter_discovery_range_delete`
+* **New Data Source:** `dnacenter_discovery_range_DELETE`
 * **New Data Source:** `dnacenter_discovery`
 * **New Data Source:** `dnacenter_device_replacement_deploy`
 * **New Data Source:** `dnacenter_device_replacement`
 * **New Data Source:** `dnacenter_device_credential_create`
 * **New Data Source:** `dnacenter_device_credential_update`
 * **New Data Source:** `dnacenter_device_credential`
-* **New Data Source:** `dnacenter_device_credential_delete`
+* **New Data Source:** `dnacenter_device_credential_DELETE`
 * **New Data Source:** `dnacenter_reports`
 * **New Data Source:** `dnacenter_site_assign_credential`
 * **New Data Source:** `dnacenter_compliance_check_run`
-* **New Data Source:** `dnacenter_wireless_provision_ssid_delete_reprovision`
+* **New Data Source:** `dnacenter_wireless_provision_ssid_DELETE_reprovision`
 * **New Data Source:** `dnacenter_wireless_provision_ssid_create_provision`
 * **New Data Source:** `dnacenter_sda_multicast`
 * **New Data Source:** `dnacenter_sda_virtual_network_v2`
@@ -852,7 +890,7 @@ FEATURES:
 * **New Data Source:** `dnacenter_app_policy_queuing_profile_count`
 * **New Data Source:** `dnacenter_business_sda_hostonboarding_ssid_ippool`
 * **New Data Source:** `dnacenter_business_sda_wireless_controller_create`
-* **New Data Source:** `dnacenter_business_sda_wireless_controller_delete`
+* **New Data Source:** `dnacenter_business_sda_wireless_controller_DELETE`
 * **New Data Source:** `dnacenter_disasterrecovery_system_operationstatus`
 * **New Data Source:** `dnacenter_disasterrecovery_system_status`
 * **New Data Source:** `dnacenter_dnacaap_management_execution_status`
@@ -862,7 +900,7 @@ FEATURES:
 * **New Data Source:** `dnacenter_device_family_identifiers_details`
 * **New Data Source:** `dnacenter_golden_image_create`
 * **New Data Source:** `dnacenter_golden_tag_image_details`
-* **New Data Source:** `dnacenter_golden_tag_image_delete`
+* **New Data Source:** `dnacenter_golden_tag_image_DELETE`
 * **New Data Source:** `dnacenter_associate_site_to_network_profile`
 * **New Data Source:** `dnacenter_disassociate_site_to_network_profile`
 * **New Data Source:** `dnacenter_qos_device_interface`
@@ -870,9 +908,9 @@ FEATURES:
 * **New Data Source:** `dnacenter_projects_details`
 * **New Data Source:** `dnacenter_templates_details`
 * **New Data Source:** `dnacenter_sensor_create`
-* **New Data Source:** `dnacenter_sensor_delete`
+* **New Data Source:** `dnacenter_sensor_DELETE`
 * **New Data Source:** `dnacenter_tag_member_create`
-* **New Data Source:** `dnacenter_tag_member_delete`
+* **New Data Source:** `dnacenter_tag_member_DELETE`
 * **New Resource:** `dnacenter_reserve_ip_subpool`
 * **New Resource:** `dnacenter_wireless_rf_profile`
 * **New Resource:** `dnacenter_wireless_profile`
@@ -926,25 +964,25 @@ BUG FIXES:
 * dnacenter/data_source_dna_pnp_device_reset: Change comparisson to verify if is present.
 * dnacenter/data_source_dna_pnp_device_sync_vaact: Change comparisson to verify if is present.
 * dnacenter/data_source_dna_template_deploy: Change comparisson to verify if is present.
-* dnacenter/resource_dna_cli_credential: Change comparisson to verify if is present.
-* dnacenter/resource_dna_discovery: Change comparisson to verify if is present.
-* dnacenter/resource_dna_http_read_credential: Change comparisson to verify if is present.
-* dnacenter/resource_dna_http_write_credential: Change comparisson to verify if is present.
-* dnacenter/resource_dna_netconf_credential: Change comparisson to verify if is present.
-* dnacenter/resource_dna_network: Change comparisson to verify if is present.
-* dnacenter/resource_dna_network_global_ip_pool: Change comparisson to verify if is present.
-* dnacenter/resource_dna_pnp_device: Change comparisson to verify if is present.
-* dnacenter/resource_dna_pnp_global_settings: Change comparisson to verify if is present.
-* dnacenter/resource_dna_pnp_workflow: Change comparisson to verify if is present.
-* dnacenter/resource_dna_sda_fabric_border_device: Change comparisson to verify if is present.
-* dnacenter/resource_dna_sda_fabric_ip_pool_in_vn: Change comparisson to verify if is present.
-* dnacenter/resource_dna_sda_fabric_ip_pool_in_vn: Change comparisson to verify if is present.
-* dnacenter/resource_dna_site: Change comparisson to verify if is present.
-* dnacenter/resource_dna_snmpv2_read_community_credential: Change comparisson to verify if is present.
-* dnacenter/resource_dna_snmpv2_write_community_credential: Change comparisson to verify if is present.
-* dnacenter/resource_dna_snmpv3_credential: Change comparisson to verify if is present.
-* dnacenter/resource_dna_tag: Change comparisson to verify if is present.
-* dnacenter/resource_dna_template: Change comparisson to verify if is present.
+* dna_cli_credential: Change comparisson to verify if is present.
+* dna_discovery: Change comparisson to verify if is present.
+* dna_http_read_credential: Change comparisson to verify if is present.
+* dna_http_write_credential: Change comparisson to verify if is present.
+* dna_netconf_credential: Change comparisson to verify if is present.
+* dna_network: Change comparisson to verify if is present.
+* dna_network_global_ip_pool: Change comparisson to verify if is present.
+* dna_pnp_device: Change comparisson to verify if is present.
+* dna_pnp_global_settings: Change comparisson to verify if is present.
+* dna_pnp_workflow: Change comparisson to verify if is present.
+* dna_sda_fabric_border_device: Change comparisson to verify if is present.
+* dna_sda_fabric_ip_pool_in_vn: Change comparisson to verify if is present.
+* dna_sda_fabric_ip_pool_in_vn: Change comparisson to verify if is present.
+* dna_site: Change comparisson to verify if is present.
+* dna_snmpv2_read_community_credential: Change comparisson to verify if is present.
+* dna_snmpv2_write_community_credential: Change comparisson to verify if is present.
+* dna_snmpv3_credential: Change comparisson to verify if is present.
+* dna_tag: Change comparisson to verify if is present.
+* dna_template: Change comparisson to verify if is present.
 
 ## 0.0.3 (February 01, 2021)
 
@@ -956,7 +994,7 @@ FEATURES:
 * **New Data Source:** `dna_applications_count`
 * **New Data Source:** `dna_command_runner_keywords`
 * **New Data Source:** `dna_command_runner_run_command`
-* **New Data Source:** `dna_discovery_all_delete`
+* **New Data Source:** `dna_discovery_all_DELETE`
 * **New Data Source:** `dna_discovery_count`
 * **New Data Source:** `dna_discovery_device`
 * **New Data Source:** `dna_discovery_device_count`
@@ -964,7 +1002,7 @@ FEATURES:
 * **New Data Source:** `dna_discovery_job`
 * **New Data Source:** `dna_discovery_jobs`
 * **New Data Source:** `dna_discovery_range`
-* **New Data Source:** `dna_discovery_range_delete`
+* **New Data Source:** `dna_discovery_range_DELETE`
 * **New Data Source:** `dna_discovery_snmp_property`
 * **New Data Source:** `dna_discovery_snmp_property_add`
 * **New Data Source:** `dna_discovery_summary`

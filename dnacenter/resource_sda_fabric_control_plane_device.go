@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 	"time"
 
@@ -247,7 +248,13 @@ func resourceSdaFabricControlPlaneDeviceRead(ctx context.Context, d *schema.Reso
 }
 
 func resourceSdaFabricControlPlaneDeviceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSdaFabricControlPlaneDeviceRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SdaFabricControlPlaneDeviceUpdate", err, "",
+		"Failure at SdaFabricControlPlaneDeviceUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceSdaFabricControlPlaneDeviceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
