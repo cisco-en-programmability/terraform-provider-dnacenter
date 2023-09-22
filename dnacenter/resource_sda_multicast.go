@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -352,7 +353,13 @@ func resourceSdaMulticastRead(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceSdaMulticastUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSdaMulticastRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SdaMulticastUpdate", err, "",
+		"Failure at SdaMulticastUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceSdaMulticastDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

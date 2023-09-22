@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 	"time"
 
@@ -281,7 +282,13 @@ func resourceSdaPortAssignmentForAccessPointRead(ctx context.Context, d *schema.
 }
 
 func resourceSdaPortAssignmentForAccessPointUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSdaPortAssignmentForAccessPointRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SdaPortAssignmentForAccessPointUpdate", err, "",
+		"Failure at SdaPortAssignmentForAccessPointUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceSdaPortAssignmentForAccessPointDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

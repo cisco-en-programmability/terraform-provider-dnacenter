@@ -445,13 +445,22 @@ func resourceSwimImageFileRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceSwimImageFileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSwimImageFileRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SwimImageFileUpdate", err, "",
+		"Failure at SwimImageFileUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceSwimImageFileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete SwimImageFile on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SwimImageFileDelete", err, "",
+		"Failure at SwimImageFileDelete, unexpected response", ""))
+
 	return diags
 }
 

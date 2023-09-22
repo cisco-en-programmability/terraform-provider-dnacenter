@@ -246,7 +246,13 @@ func resourceGoldenImageRead(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceGoldenImageUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceGoldenImageRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing GoldenImageUpdate", err, "",
+		"Failure at GoldenImageUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceGoldenImageDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

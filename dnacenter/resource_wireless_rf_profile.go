@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 	"time"
 
@@ -607,7 +608,13 @@ func resourceWirelessRfProfileRead(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceWirelessRfProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceWirelessRfProfileRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing WirelessRfProfileUpdate", err, "",
+		"Failure at WirelessRfProfileUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceWirelessRfProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
