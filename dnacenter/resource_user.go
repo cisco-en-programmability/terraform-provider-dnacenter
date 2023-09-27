@@ -285,7 +285,7 @@ func resourceUserDelete(ctx context.Context, d *schema.ResourceData, m interface
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing UserDelete", err, "",
+		"Failure when executing UserDelete", err, "Delete method is not supported",
 		"Failure at UserDelete, unexpected response", ""))
 
 	return diags

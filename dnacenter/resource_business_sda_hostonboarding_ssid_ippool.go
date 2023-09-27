@@ -363,7 +363,7 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolDelete(ctx context.Context, d *s
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing BusinessSdaHostonboardingSSIDIPpoolDelete", err, "",
+		"Failure when executing BusinessSdaHostonboardingSSIDIPpoolDelete", err, "Delete method is not supported",
 		"Failure at BusinessSdaHostonboardingSSIDIPpoolDelete, unexpected response", ""))
 
 	return diags

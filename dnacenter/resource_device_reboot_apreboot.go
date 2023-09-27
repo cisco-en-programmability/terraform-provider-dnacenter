@@ -186,7 +186,7 @@ func resourceDeviceRebootAprebootUpdate(ctx context.Context, d *schema.ResourceD
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing DeviceRebootAprebootUpdate", err, "",
+		"Failure when executing DeviceRebootAprebootUpdate", err, "Update method is not supported",
 		"Failure at DeviceRebootAprebootUpdate, unexpected response", ""))
 
 	return diags
@@ -196,7 +196,7 @@ func resourceDeviceRebootAprebootDelete(ctx context.Context, d *schema.ResourceD
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing DeviceRebootAprebootDelete", err, "",
+		"Failure when executing DeviceRebootAprebootDelete", err, "Delete method is not supported",
 		"Failure at DeviceRebootAprebootDelete, unexpected response", ""))
 
 	return diags

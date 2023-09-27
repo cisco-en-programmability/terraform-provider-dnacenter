@@ -197,7 +197,7 @@ func resourceNetworkDeviceCustomPromptUpdate(ctx context.Context, d *schema.Reso
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing NetworkDeviceCustomPromptUpdate", err, "",
+		"Failure when executing NetworkDeviceCustomPromptUpdate", err, "Update method is not supported",
 		"Failure at NetworkDeviceCustomPromptUpdate, unexpected response", ""))
 
 	return diags
@@ -207,7 +207,7 @@ func resourceNetworkDeviceCustomPromptDelete(ctx context.Context, d *schema.Reso
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing NetworkDeviceCustomPromptDelete", err, "",
+		"Failure when executing NetworkDeviceCustomPromptDelete", err, "Delete method is not supported",
 		"Failure at NetworkDeviceCustomPromptDelete, unexpected response", ""))
 
 	return diags

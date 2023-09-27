@@ -673,7 +673,7 @@ func resourcePnpGlobalSettingsDelete(ctx context.Context, d *schema.ResourceData
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing PnpGlobalSettingsDelete", err, "",
+		"Failure when executing PnpGlobalSettingsDelete", err, "Delete method is not supported",
 		"Failure at PnpGlobalSettingsDelete, unexpected response", ""))
 
 	return diags

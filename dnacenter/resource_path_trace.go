@@ -3387,7 +3387,7 @@ func resourcePathTraceUpdate(ctx context.Context, d *schema.ResourceData, m inte
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing PathTraceUpdate", err, "",
+		"Failure when executing PathTraceUpdate", err, "Update method is not supported",
 		"Failure at PathTraceUpdate, unexpected response", ""))
 
 	return diags

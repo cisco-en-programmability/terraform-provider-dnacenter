@@ -336,7 +336,7 @@ func resourceTransitPeerNetworkUpdate(ctx context.Context, d *schema.ResourceDat
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing TransitPeerNetworkUpdate", err, "",
+		"Failure when executing TransitPeerNetworkUpdate", err, "Update method is not supported",
 		"Failure at TransitPeerNetworkUpdate, unexpected response", ""))
 
 	return diags

@@ -245,7 +245,7 @@ func resourceSdaFabricSiteUpdate(ctx context.Context, d *schema.ResourceData, m 
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SdaFabricSiteUpdate", err, "",
+		"Failure when executing SdaFabricSiteUpdate", err, "Update method is not supported",
 		"Failure at SdaFabricSiteUpdate, unexpected response", ""))
 
 	return diags

@@ -611,7 +611,7 @@ func resourceWirelessRfProfileUpdate(ctx context.Context, d *schema.ResourceData
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing WirelessRfProfileUpdate", err, "",
+		"Failure when executing WirelessRfProfileUpdate", err, "Update method is not supported",
 		"Failure at WirelessRfProfileUpdate, unexpected response", ""))
 
 	return diags

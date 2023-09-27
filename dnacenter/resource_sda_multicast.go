@@ -356,7 +356,7 @@ func resourceSdaMulticastUpdate(ctx context.Context, d *schema.ResourceData, m i
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SdaMulticastUpdate", err, "",
+		"Failure when executing SdaMulticastUpdate", err, "Update method is not supported",
 		"Failure at SdaMulticastUpdate, unexpected response", ""))
 
 	return diags

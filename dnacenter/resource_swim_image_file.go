@@ -448,7 +448,7 @@ func resourceSwimImageFileUpdate(ctx context.Context, d *schema.ResourceData, m 
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SwimImageFileUpdate", err, "",
+		"Failure when executing SwimImageFileUpdate", err, "Update method is not supported",
 		"Failure at SwimImageFileUpdate, unexpected response", ""))
 
 	return diags
@@ -458,7 +458,7 @@ func resourceSwimImageFileDelete(ctx context.Context, d *schema.ResourceData, m 
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SwimImageFileDelete", err, "",
+		"Failure when executing SwimImageFileDelete", err, "Delete method is not supported",
 		"Failure at SwimImageFileDelete, unexpected response", ""))
 
 	return diags

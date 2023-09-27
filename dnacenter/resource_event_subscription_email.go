@@ -571,7 +571,7 @@ func resourceEventSubscriptionEmailDelete(ctx context.Context, d *schema.Resourc
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing EventSubscriptionEmailDelete", err, "",
+		"Failure when executing EventSubscriptionEmailDelete", err, "Delete method is not supported",
 		"Failure at EventSubscriptionEmailDelete, unexpected response", ""))
 
 	return diags

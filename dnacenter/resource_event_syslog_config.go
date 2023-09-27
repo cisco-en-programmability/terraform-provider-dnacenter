@@ -281,7 +281,7 @@ func resourceEventSyslogConfigDelete(ctx context.Context, d *schema.ResourceData
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing EventSyslogConfigDelete", err, "",
+		"Failure when executing EventSyslogConfigDelete", err, "Delete method is not supported",
 		"Failure at EventSyslogConfigDelete, unexpected response", ""))
 
 	return diags
