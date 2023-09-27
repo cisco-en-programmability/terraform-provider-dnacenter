@@ -249,7 +249,7 @@ func resourceGoldenImageUpdate(ctx context.Context, d *schema.ResourceData, m in
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing GoldenImageUpdate", err, "",
+		"Failure when executing GoldenImageUpdate", err, "Update method is not supported",
 		"Failure at GoldenImageUpdate, unexpected response", ""))
 
 	return diags

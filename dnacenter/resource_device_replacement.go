@@ -407,7 +407,7 @@ func resourceDeviceReplacementDelete(ctx context.Context, d *schema.ResourceData
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing DeviceReplacementDelete", err, "",
+		"Failure when executing DeviceReplacementDelete", err, "Delete method is not supported",
 		"Failure at DeviceReplacementDelete, unexpected response", ""))
 
 	return diags

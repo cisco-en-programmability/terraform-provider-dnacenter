@@ -143,7 +143,7 @@ func resourceConfigurationTemplateImportProjectUpdate(ctx context.Context, d *sc
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing ConfigurationTemplateImportProjectUpdate", err, "",
+		"Failure when executing ConfigurationTemplateImportProjectUpdate", err, "Update method is not supported",
 		"Failure at ConfigurationTemplateImportProjectUpdate, unexpected response", ""))
 
 	return diags

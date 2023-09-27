@@ -221,7 +221,7 @@ func resourceApplicationSetsUpdate(ctx context.Context, d *schema.ResourceData, 
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing ApplicationSetsUpdate", err, "",
+		"Failure when executing ApplicationSetsUpdate", err, "Update method is not supported",
 		"Failure at ApplicationSetsUpdate, unexpected response", ""))
 
 	return diags

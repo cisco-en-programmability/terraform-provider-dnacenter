@@ -251,7 +251,7 @@ func resourceSdaFabricControlPlaneDeviceUpdate(ctx context.Context, d *schema.Re
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SdaFabricControlPlaneDeviceUpdate", err, "",
+		"Failure when executing SdaFabricControlPlaneDeviceUpdate", err, "Update method is not supported",
 		"Failure at SdaFabricControlPlaneDeviceUpdate, unexpected response", ""))
 
 	return diags

@@ -671,7 +671,7 @@ func resourceNetworkDeviceListDelete(ctx context.Context, d *schema.ResourceData
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing NetworkDeviceListDelete", err, "",
+		"Failure when executing NetworkDeviceListDelete", err, "Delete method is not supported",
 		"Failure at NetworkDeviceListDelete, unexpected response", ""))
 
 	return diags

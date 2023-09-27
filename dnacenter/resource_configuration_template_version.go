@@ -218,7 +218,7 @@ func resourceConfigurationTemplateVersionUpdate(ctx context.Context, d *schema.R
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing ConfigurationTemplateVersionUpdate", err, "",
+		"Failure when executing ConfigurationTemplateVersionUpdate", err, "Update method is not supported",
 		"Failure at ConfigurationTemplateVersionUpdate, unexpected response", ""))
 
 	return diags
@@ -228,7 +228,7 @@ func resourceConfigurationTemplateVersionDelete(ctx context.Context, d *schema.R
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing ConfigurationTemplateVersionDelete", err, "",
+		"Failure when executing ConfigurationTemplateVersionDelete", err, "Delete method is not supported",
 		"Failure at ConfigurationTemplateVersionDelete, unexpected response", ""))
 
 	return diags

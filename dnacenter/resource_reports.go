@@ -635,7 +635,7 @@ func resourceReportsUpdate(ctx context.Context, d *schema.ResourceData, m interf
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing ReportsUpdate", err, "",
+		"Failure when executing ReportsUpdate", err, "Update method is not supported",
 		"Failure at ReportsUpdate, unexpected response", ""))
 
 	return diags

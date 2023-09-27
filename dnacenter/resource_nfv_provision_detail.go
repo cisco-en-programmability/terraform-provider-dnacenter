@@ -306,7 +306,7 @@ func resourceNfvProvisionDetailUpdate(ctx context.Context, d *schema.ResourceDat
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing NfvProvisionDetailUpdate", err, "",
+		"Failure when executing NfvProvisionDetailUpdate", err, "Update method is not supported",
 		"Failure at NfvProvisionDetailUpdate, unexpected response", ""))
 
 	return diags
@@ -316,7 +316,7 @@ func resourceNfvProvisionDetailDelete(ctx context.Context, d *schema.ResourceDat
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing NfvProvisionDetailDelete", err, "",
+		"Failure when executing NfvProvisionDetailDelete", err, "Delete method is not supported",
 		"Failure at NfvProvisionDetailDelete, unexpected response", ""))
 
 	return diags

@@ -309,7 +309,7 @@ func resourceSdaPortAssignmentForUserDeviceUpdate(ctx context.Context, d *schema
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SdaPortAssignmentForUserDeviceUpdate", err, "",
+		"Failure when executing SdaPortAssignmentForUserDeviceUpdate", err, "Update method is not supported",
 		"Failure at SdaPortAssignmentForUserDeviceUpdate, unexpected response", ""))
 
 	return diags

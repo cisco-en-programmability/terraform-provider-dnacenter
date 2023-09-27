@@ -348,7 +348,7 @@ func resourceServiceProviderV2Delete(ctx context.Context, d *schema.ResourceData
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing ServiceProviderV2Delete", err, "",
+		"Failure when executing ServiceProviderV2Delete", err, "Delete method is not supported",
 		"Failure at ServiceProviderV2Delete, unexpected response", ""))
 
 	return diags

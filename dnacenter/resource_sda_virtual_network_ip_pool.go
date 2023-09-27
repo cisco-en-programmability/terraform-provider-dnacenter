@@ -468,7 +468,7 @@ func resourceSdaVirtualNetworkIPPoolUpdate(ctx context.Context, d *schema.Resour
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SdaVirtualNetworkIPPoolUpdate", err, "",
+		"Failure when executing SdaVirtualNetworkIPPoolUpdate", err, "Update method is not supported",
 		"Failure at SdaVirtualNetworkIPPoolUpdate, unexpected response", ""))
 
 	return diags

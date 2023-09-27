@@ -254,7 +254,7 @@ func resourceSdaVirtualNetworkUpdate(ctx context.Context, d *schema.ResourceData
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SdaVirtualNetworkUpdate", err, "",
+		"Failure when executing SdaVirtualNetworkUpdate", err, "Update method is not supported",
 		"Failure at SdaVirtualNetworkUpdate, unexpected response", ""))
 
 	return diags

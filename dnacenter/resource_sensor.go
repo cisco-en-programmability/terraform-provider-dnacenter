@@ -369,7 +369,7 @@ func resourceSensorUpdate(ctx context.Context, d *schema.ResourceData, m interfa
 	var diags diag.Diagnostics
 	err := errors.New("Update not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SensorUpdate", err, "",
+		"Failure when executing SensorUpdate", err, "Update method is not supported",
 		"Failure at SensorUpdate, unexpected response", ""))
 
 	return diags

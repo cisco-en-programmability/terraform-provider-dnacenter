@@ -551,7 +551,7 @@ func resourceEventSubscriptionSyslogDelete(ctx context.Context, d *schema.Resour
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing EventSubscriptionSyslogDelete", err, "",
+		"Failure when executing EventSubscriptionSyslogDelete", err, "Delete method is not supported",
 		"Failure at EventSubscriptionSyslogDelete, unexpected response", ""))
 
 	return diags
