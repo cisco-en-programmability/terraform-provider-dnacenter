@@ -1962,13 +1962,6 @@ func resourceConfigurationTemplate() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
-						"template_id": &schema.Schema{
-							Description: `templateId path parameter. templateId(UUID) of template to be deleted
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-							Default:  "",
-						},
 						"template_params": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
@@ -2267,16 +2260,18 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 	} else {
 		queryParamImport := dnacentersdkgo.GetsAListOfProjectsQueryParams{}
 		queryParamImport.Name = vvProjectName
-
+		log.Print("[DEBUG] 1")
 		response2, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParamImport, vvName)
-		// log.Printf("[DEBUG] response2 sent => %v", responseInterfaceToString(*response2))
+		log.Printf("[DEBUG] response2 sent => %v", responseInterfaceToString(*response2))
 		if response2 != nil && err == nil {
+			log.Print("[DEBUG] 2")
 			resourceMap := make(map[string]string)
 			resourceMap["template_name"] = response2.Name
 			resourceMap["project_name"] = response2.ProjectName
 			resourceMap["template_id"] = response2.ID
 			resourceMap["project_id"] = response2.ProjectID
 			d.SetId(joinResourceID(resourceMap))
+			log.Print("[DEBUG] 3")
 			return resourceConfigurationTemplateRead(ctx, d, m)
 		}
 	}
@@ -2369,6 +2364,12 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 		}
 		vItem1 := flattenConfigurationTemplatesGetsAListOfProjectsItemsTemplates(&items)
 		if err := d.Set("item", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetsTheTemplatesAvailable search response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetsTheTemplatesAvailable search response",
 				err))
@@ -4427,9 +4428,14 @@ func searchConfigurationTemplatesGetsTheTemplatesAvailable(m interface{}, queryP
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseItemConfigurationTemplatesGetsAListOfProjectsTemplates
+	log.Print("[DEBUG] 4")
 	nResponse, _, err := client.ConfigurationTemplates.GetsAListOfProjects(&queryParams)
-
+	log.Print("[DEBUG] 5")
 	if err != nil {
+		log.Printf("[DEBUG] Error when search => %s", err.Error())
+		return foundItem, err
+	}
+	if nResponse == nil {
 		log.Printf("[DEBUG] Error when search => %s", err.Error())
 		return foundItem, err
 	}
