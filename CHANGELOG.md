@@ -1,4 +1,4 @@
-## 1.1.18-beta (September 22, 2023)
+## 1.1.18-beta (September 28, 2023)
 BUGFIXES:
 * Manage if DELETE or PUT context is available in application_sets resource.
 * Manage if DELETE or PUT context is available in business_sda_hostonboarding_ssid_ippool resource.
