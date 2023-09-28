@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 	"time"
 
@@ -250,7 +251,13 @@ func resourceSdaVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceSdaVirtualNetworkUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSdaVirtualNetworkRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SdaVirtualNetworkUpdate", err, "Update method is not supported",
+		"Failure at SdaVirtualNetworkUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceSdaVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

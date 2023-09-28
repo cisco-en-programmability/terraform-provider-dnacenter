@@ -183,13 +183,22 @@ func resourceDeviceRebootAprebootRead(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceDeviceRebootAprebootUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceDeviceRebootAprebootRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing DeviceRebootAprebootUpdate", err, "Update method is not supported",
+		"Failure at DeviceRebootAprebootUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceDeviceRebootAprebootDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete DeviceRebootApreboot on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing DeviceRebootAprebootDelete", err, "Delete method is not supported",
+		"Failure at DeviceRebootAprebootDelete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestDeviceRebootAprebootRebootAccessPoints(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessRebootAccessPoints {

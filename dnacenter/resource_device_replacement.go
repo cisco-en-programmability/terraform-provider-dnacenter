@@ -405,8 +405,11 @@ func resourceDeviceReplacementUpdate(ctx context.Context, d *schema.ResourceData
 
 func resourceDeviceReplacementDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete DeviceReplacement on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing DeviceReplacementDelete", err, "Delete method is not supported",
+		"Failure at DeviceReplacementDelete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestDeviceReplacementMarkDeviceForReplacement(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceReplacementMarkDeviceForReplacement {

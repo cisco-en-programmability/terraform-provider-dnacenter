@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.17-beta"
+      version = "1.1.18-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source, change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -17,197 +17,223 @@ resource "dnacenter_configuration_template" "example" {
   provider = dnacenter
   parameters {
 
-    author    = "Test"
-    composite = "false"
-    containing_templates {
-      /*
-        composite = "false"
-        description = "string"
-        device_types {
+  #   author    = "Test"
+  #   composite = "false"
+  #   containing_templates {
+  #     /*
+  #       composite = "false"
+  #       description = "string"
+  #       device_types {
           
-          product_family = "Routers"
-          #product_series = "string"
-          #product_type = "string"
-        }
-        language = "string"
-        name = "string"
-        project_name = "string"
-        rollback_template_params {
+  #         product_family = "Routers"
+  #         #product_series = "string"
+  #         #product_type = "string"
+  #       }
+  #       language = "string"
+  #       name = "string"
+  #       project_name = "string"
+  #       rollback_template_params {
           
-          binding = "string"
-          custom_order = 1
-          data_type = "string"
-          default_value = "string"
-          description = "string"
-          display_name = "string"
-          group = "string"
-          id = "string"
-          instruction_text = "string"
-          key = "string"
-          not_param = "false"
-          order = 1
-          param_array = "false"
-          parameter_name = "string"
-          provider = "string"
-          range {
+  #         binding = "string"
+  #         custom_order = 1
+  #         data_type = "string"
+  #         default_value = "string"
+  #         description = "string"
+  #         display_name = "string"
+  #         group = "string"
+  #         id = "string"
+  #         instruction_text = "string"
+  #         key = "string"
+  #         not_param = "false"
+  #         order = 1
+  #         param_array = "false"
+  #         parameter_name = "string"
+  #         provider = "string"
+  #         range {
             
-            id = "string"
-            max_value = 1
-            min_value = 1
-          }
-          required = "false"
-          selection {
+  #           id = "string"
+  #           max_value = 1
+  #           min_value = 1
+  #         }
+  #         required = "false"
+  #         selection {
             
-            default_selected_values = ["string"]
-            id = "string"
-            selection_type = "string"
-            selection_values = ["string"]
-          }
-        }
-        tags {
+  #           default_selected_values = ["string"]
+  #           id = "string"
+  #           selection_type = "string"
+  #           selection_values = ["string"]
+  #         }
+  #       }
+  #       tags {
           
-          id = "string"
-          name = "string"
-        }
-        template_content = "string"
-        template_params {
+  #         id = "string"
+  #         name = "string"
+  #       }
+  #       template_content = "string"
+  #       template_params {
           
-          binding = "string"
-          custom_order = 1
-          data_type = "string"
-          default_value = "string"
-          description = "string"
-          display_name = "string"
-          group = "string"
-          id = "string"
-          instruction_text = "string"
-          key = "string"
-          not_param = "false"
-          order = 1
-          param_array = "false"
-          parameter_name = "string"
-          provider = "string"
-          range {
+  #         binding = "string"
+  #         custom_order = 1
+  #         data_type = "string"
+  #         default_value = "string"
+  #         description = "string"
+  #         display_name = "string"
+  #         group = "string"
+  #         id = "string"
+  #         instruction_text = "string"
+  #         key = "string"
+  #         not_param = "false"
+  #         order = 1
+  #         param_array = "false"
+  #         parameter_name = "string"
+  #         provider = "string"
+  #         range {
             
-            id = "string"
-            max_value = 1
-            min_value = 1
-          }
-          required = "false"
-          selection {
+  #           id = "string"
+  #           max_value = 1
+  #           min_value = 1
+  #         }
+  #         required = "false"
+  #         selection {
             
-            default_selected_values = ["string"]
-            id = "string"
-            selection_type = "string"
-            selection_values = ["string"]
-          }
-        }
-        version = "string"
-        */
-    }
-    #create_time = 1
-    custom_params_order = "false"
-    description         = "Test Terraform by ID Update"
-    device_types {
+  #           default_selected_values = ["string"]
+  #           id = "string"
+  #           selection_type = "string"
+  #           selection_values = ["string"]
+  #         }
+  #       }
+  #       version = "string"
+  #       */
+  #   }
+  #   #create_time = 1
+  #   custom_params_order = "false"
+  #   description         = "Test Terraform by ID Update"
+  #   device_types {
 
-      product_family = "Routers"
-      #product_series = "string"
-      #product_type = "string"
-    }
-    failure_policy = "CONTINUE_ON_ERROR"
-    #id             = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
-    language = "VELOCITY"
-    #last_update_time = 1
-    #latest_version_time = 1
-    name                      = "Saludo2"
-    parent_template_id        = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
-    project_id                = "035c73c4-ec57-4a1a-b1d3-4cb20643ce13"
-    project_name              = "Cloud Test Template 4"
-    rollback_template_content = "string"
-    # rollback_template_params {
-    #   /*
-    #     binding = "string"
-    #     custom_order = 1
-    #     data_type = "string"
-    #     default_value = "string"
-    #     description = "string"
-    #     display_name = "string"
-    #     group = "string"
-    #     id = "string"
-    #     instruction_text = "string"
-    #     key = "string"
-    #     not_param = "false"
-    #     order = 1
-    #     param_array = "false"
-    #     parameter_name = "string"
-    #     provider = "string"
-    #     range {
+  #     product_family = "Routers"
+  #     #product_series = "string"
+  #     #product_type = "string"
+  #   }
+  #   failure_policy = "CONTINUE_ON_ERROR"
+  #   #id             = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
+  #   language = "VELOCITY"
+  #   #last_update_time = 1
+  #   #latest_version_time = 1
+  #   name                      = "Saludo2"
+  #   parent_template_id        = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
+  #   project_id                = "035c73c4-ec57-4a1a-b1d3-4cb20643ce13"
+  #   project_name              = "Cloud Test Template 4"
+  #   rollback_template_content = "string"
+  #   # rollback_template_params {
+  #   #   /*
+  #   #     binding = "string"
+  #   #     custom_order = 1
+  #   #     data_type = "string"
+  #   #     default_value = "string"
+  #   #     description = "string"
+  #   #     display_name = "string"
+  #   #     group = "string"
+  #   #     id = "string"
+  #   #     instruction_text = "string"
+  #   #     key = "string"
+  #   #     not_param = "false"
+  #   #     order = 1
+  #   #     param_array = "false"
+  #   #     parameter_name = "string"
+  #   #     provider = "string"
+  #   #     range {
 
-    #       id = "string"
-    #       max_value = 1
-    #       min_value = 1
-    #     }
-    #     required = "false"
-    #     selection {
+  #   #       id = "string"
+  #   #       max_value = 1
+  #   #       min_value = 1
+  #   #     }
+  #   #     required = "false"
+  #   #     selection {
 
-    #       default_selected_values = ["string"]
-    #       id = "string"
-    #       selection_type = "string"
-    #       selection_values = ["string"]
-    #     }
-    #     */
-    # }
-    software_type    = "IOS"
-    software_variant = "XE"
-    # template_errors = ["string"]
-    #software_version = "string"
-    tags {
-    }
-    #template_content = "string"
-    # template_id = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
-    template_params {
-      /*
-        binding = "string"
-        custom_order = 1
-        data_type = "string"
-        default_value = "string"
-        description = "string"
-        display_name = "string"
-        group = "string"
-        id = "string"
-        instruction_text = "string"
-        key = "string"
-        not_param = "false"
-        order = 1
-        param_array = "false"
-        parameter_name = "string"
-        provider = "string"
-        range {
+  #   #       default_selected_values = ["string"]
+  #   #       id = "string"
+  #   #       selection_type = "string"
+  #   #       selection_values = ["string"]
+  #   #     }
+  #   #     */
+  #   # }
+  #   software_type    = "IOS"
+  #   software_variant = "XE"
+  #   # template_errors = ["string"]
+  #   #software_version = "string"
+  #   tags {
+  #   }
+  #   #template_content = "string"
+  #   # template_id = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
+  #   template_params {
+  #     /*
+  #       binding = "string"
+  #       custom_order = 1
+  #       data_type = "string"
+  #       default_value = "string"
+  #       description = "string"
+  #       display_name = "string"
+  #       group = "string"
+  #       id = "string"
+  #       instruction_text = "string"
+  #       key = "string"
+  #       not_param = "false"
+  #       order = 1
+  #       param_array = "false"
+  #       parameter_name = "string"
+  #       provider = "string"
+  #       range {
           
-          id = "string"
-          max_value = 1
-          min_value = 1
-        }
-        required = "false"
-        selection {
+  #         id = "string"
+  #         max_value = 1
+  #         min_value = 1
+  #       }
+  #       required = "false"
+  #       selection {
           
-          default_selected_values = ["string"]
-          id = "string"
-          selection_type = "string"
-          selection_values = ["string"]
-        }
-        */
-    }
-    validation_errors {
+  #         default_selected_values = ["string"]
+  #         id = "string"
+  #         selection_type = "string"
+  #         selection_values = ["string"]
+  #       }
+  #       */
+  #   }
+  #   validation_errors {
 
-      rollback_template_errors = ""
-      template_errors          = ""
-      # template_id              = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
-      template_version = null
-    }
-    version = "1.0"
-    # comments = "Test tf"
+  #     rollback_template_errors = ""
+  #     template_errors          = ""
+  #     # template_id              = "fe2bd8b9-2cf0-4b73-b7dc-755ff0f26363"
+  #     template_version = null
+  #   }
+  #   version = "1.0"
+  #   # comments = "Test tf"
+  # }
+      author                    = ""
+      composite                 = "false"
+      custom_params_order       = "false"
+      description               = "hola"
+      # device_types              = []
+      failure_policy            = ""
+      id                        = "57f61371-2805-4351-8dba-cf1b3e47f49c"
+      language                  = "VELOCITY"
+      last_update_time          = 1695661748160
+      latest_version_time       = 0
+      name                      = "tf_template_test2"
+      parent_template_id        = ""
+      project_id                = "026bc13b-4616-4f38-9dc5-0a5d57cf0d39"
+      project_name              = "Onboarding Configuration"
+      # rollback_template_content = ""
+      # rollback_template_params  = []
+      software_type             = ""
+      software_variant          = ""
+      software_version          = ""
+      # tags                      = []
+      template_content          = ""
+      # template_params           = []
+      # validation_errors         = []
+      version                   = ""
   }
+
 }
 
 output "dnacenter_configuration_template_example" {

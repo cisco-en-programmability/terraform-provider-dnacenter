@@ -552,8 +552,11 @@ func resourceNetworkV2Update(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceNetworkV2Delete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete NetworkV2 on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing NetworkV2Delete", err, "Delete method is not supported",
+		"Failure at NetworkV2Delete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestNetworkV2CreateNetworkV2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateNetworkV2 {

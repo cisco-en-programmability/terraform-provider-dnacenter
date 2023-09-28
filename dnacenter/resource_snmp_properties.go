@@ -216,13 +216,22 @@ func resourceSNMPPropertiesRead(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceSNMPPropertiesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSNMPPropertiesRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SNMPPropertiesUpdate", err, "Update method is not supported",
+		"Failure at SNMPPropertiesUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceSNMPPropertiesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete SNMPProperties on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SNMPPropertiesDelete", err, "Delete method is not supported",
+		"Failure at SNMPPropertiesDelete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestSNMPPropertiesCreateUpdateSNMPProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateUpdateSNMPProperties {

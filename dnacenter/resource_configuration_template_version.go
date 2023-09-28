@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 
 	"log"
@@ -214,13 +215,22 @@ func resourceConfigurationTemplateVersionRead(ctx context.Context, d *schema.Res
 }
 
 func resourceConfigurationTemplateVersionUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceConfigurationTemplateVersionRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing ConfigurationTemplateVersionUpdate", err, "Update method is not supported",
+		"Failure at ConfigurationTemplateVersionUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceConfigurationTemplateVersionDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete ConfigurationTemplateVersion on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing ConfigurationTemplateVersionDelete", err, "Delete method is not supported",
+		"Failure at ConfigurationTemplateVersionDelete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestConfigurationTemplateVersionVersionTemplate(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesVersionTemplate {

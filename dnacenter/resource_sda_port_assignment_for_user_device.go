@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 	"time"
 
@@ -305,7 +306,13 @@ func resourceSdaPortAssignmentForUserDeviceRead(ctx context.Context, d *schema.R
 }
 
 func resourceSdaPortAssignmentForUserDeviceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSdaPortAssignmentForUserDeviceRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SdaPortAssignmentForUserDeviceUpdate", err, "Update method is not supported",
+		"Failure at SdaPortAssignmentForUserDeviceUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceSdaPortAssignmentForUserDeviceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

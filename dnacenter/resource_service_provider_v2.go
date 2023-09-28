@@ -346,8 +346,11 @@ func resourceServiceProviderV2Update(ctx context.Context, d *schema.ResourceData
 
 func resourceServiceProviderV2Delete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete ServiceProviderV2 on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing ServiceProviderV2Delete", err, "Delete method is not supported",
+		"Failure at ServiceProviderV2Delete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestServiceProviderV2CreateSpProfileV2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateSpProfileV2 {
