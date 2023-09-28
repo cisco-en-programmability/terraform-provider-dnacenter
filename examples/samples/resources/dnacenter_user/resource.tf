@@ -1,4 +1,3 @@
-
 terraform {
   required_providers {
     dnacenter = {
@@ -13,15 +12,21 @@ provider "dnacenter" {
   debug = "true"
 }
 
-resource "dnacenter_compliance" "example" {
+resource "dnacenter_user" "example" {
   provider = dnacenter
   parameters {
-    trigger_full = true
-    categories   = ["PSIRT"]
-    device_uuids = ["3eb928b8-2414-4121-ac35-1247e5d666a4"]
+
+    email      = "john.doe@example.com"
+    first_name = "John"
+    last_name  = "Doe"
+    password   = "Secure_password"
+    role_list  = ["63060e76f5bc0031ecc68c14"]
+    user_id    = "johndoe123"
+    username   = "johndoe"
   }
 }
 
-output "dnacenter_compliance_example" {
-  value = dnacenter_compliance.example
+output "dnacenter_user_example" {
+  sensitive = true
+  value = dnacenter_user.example
 }

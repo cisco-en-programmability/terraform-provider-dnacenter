@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 	"time"
 
@@ -241,7 +242,13 @@ func resourceSdaFabricSiteRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceSdaFabricSiteUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSdaFabricSiteRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing SdaFabricSiteUpdate", err, "Update method is not supported",
+		"Failure at SdaFabricSiteUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceSdaFabricSiteDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

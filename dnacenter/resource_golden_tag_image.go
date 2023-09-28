@@ -227,7 +227,13 @@ func resourceGoldenTagImageRead(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceGoldenTagImageUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceGoldenTagImageRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing GoldenTagImageUpdate", err, "Update method is not supported",
+		"Failure at GoldenTagImageUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceGoldenTagImageDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

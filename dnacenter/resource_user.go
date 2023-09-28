@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 
 	"log"
@@ -171,7 +172,7 @@ func resourceUserCreate(ctx context.Context, d *schema.ResourceData, m interface
 	vvInvokeSource := interfaceToString(vInvokeSource)
 	queryParamImport := dnacentersdkgo.GetUsersApIQueryParams{}
 	queryParamImport.InvokeSource = vvInvokeSource
-	item2, _, err := client.UserandRoles.GetUsersApI(&queryParamImport)
+	item2, err := searchUserGetUserApi(m, queryParamImport, request1.Username)
 	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["invoke_source"] = vvInvokeSource
@@ -282,8 +283,11 @@ func resourceUserUpdate(ctx context.Context, d *schema.ResourceData, m interface
 
 func resourceUserDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete User on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing UserDelete", err, "Delete method is not supported",
+		"Failure at UserDelete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestUserAddUserApI(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestUserandRolesAddUserApI {
@@ -336,4 +340,40 @@ func expandRequestUserUpdateUserApI(ctx context.Context, key string, d *schema.R
 		return nil
 	}
 	return &request
+}
+
+func searchUserGetUserApi(m interface{}, queryParams dnacentersdkgo.GetUsersApIQueryParams, username string) (*dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers, error) {
+	client := m.(*dnacentersdkgo.Client)
+	var err error
+	var foundItem *dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers
+	ite, _, err := client.UserandRoles.GetUsersApI(&queryParams)
+	if err != nil {
+		return foundItem, err
+	}
+
+	if ite == nil {
+		return foundItem, err
+	}
+
+	if ite.Response == nil {
+		return foundItem, err
+	}
+
+	if ite.Response.Users == nil {
+		return foundItem, err
+	}
+
+	items := ite.Response.Users
+
+	itemsCopy := *items
+	for _, item := range itemsCopy {
+		// Call get by _ method and set value to foundItem and return
+		if item.Username == username {
+			var getItem *dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers
+			getItem = &item
+			foundItem = getItem
+			return foundItem, err
+		}
+	}
+	return foundItem, err
 }

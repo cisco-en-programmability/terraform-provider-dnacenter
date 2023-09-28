@@ -218,7 +218,13 @@ func resourceApplicationSetsRead(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceApplicationSetsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceApplicationSetsRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing ApplicationSetsUpdate", err, "Update method is not supported",
+		"Failure at ApplicationSetsUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceApplicationSetsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

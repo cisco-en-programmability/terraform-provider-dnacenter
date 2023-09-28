@@ -2,6 +2,7 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
 
 	"log"
@@ -278,8 +279,11 @@ func resourceEventSyslogConfigUpdate(ctx context.Context, d *schema.ResourceData
 
 func resourceEventSyslogConfigDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete EventSyslogConfig on Dna Center
-	//       Returning empty diags to delete it on Terraform
+	err := errors.New("Delete not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing EventSyslogConfigDelete", err, "Delete method is not supported",
+		"Failure at EventSyslogConfigDelete, unexpected response", ""))
+
 	return diags
 }
 func expandRequestEventSyslogConfigCreateSyslogDestination(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestEventManagementCreateSyslogDestination {

@@ -273,7 +273,13 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceNetworkDeviceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceNetworkDeviceRead(ctx, d, m)
+	var diags diag.Diagnostics
+	err := errors.New("Update not possible in this resource")
+	diags = append(diags, diagErrorWithAltAndResponse(
+		"Failure when executing NetworkDeviceUpdate", err, "Update method is not supported",
+		"Failure at NetworkDeviceUpdate, unexpected response", ""))
+
+	return diags
 }
 
 func resourceNetworkDeviceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
