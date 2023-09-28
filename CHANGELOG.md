@@ -35,6 +35,9 @@ BUGFIXES:
 * Manage if DELETE or PUT context is available in transit_peer_network resource.
 * Manage if DELETE or PUT context is available in user resource.
 * Manage if DELETE or PUT context is available in wireless_rf_profile resource.
+* Cannot create user #213 adding search method by username.
+* In-place update of resource dnacenter_configuration_template_version does not do anything with API #212
+* Provider does not detect changes in resource dnacenter_configuration_template made outside of terraform #211 
 
 ## 1.1.17-beta (September 19, 2023)
 BUGFIXES:
