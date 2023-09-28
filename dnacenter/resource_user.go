@@ -355,6 +355,14 @@ func searchUserGetUserApi(m interface{}, queryParams dnacentersdkgo.GetUsersApIQ
 		return foundItem, err
 	}
 
+	if ite.Response == nil {
+		return foundItem, err
+	}
+
+	if ite.Response.Users == nil {
+		return foundItem, err
+	}
+
 	items := ite.Response.Users
 
 	itemsCopy := *items
