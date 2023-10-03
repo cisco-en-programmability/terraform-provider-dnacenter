@@ -1,3 +1,7 @@
+## 1.1.19-beta (October 03, 2023)
+BUGFIXES:
+* Pagination support when interacting with API #215 - Adding code to paginate in resource.
+
 ## 1.1.18-beta (September 28, 2023)
 BUGFIXES:
 * Manage if DELETE or PUT context is available in application_sets resource.
