@@ -812,27 +812,35 @@ func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacent
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponse
-	var ite *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpool
-	ite, _, err = client.NetworkSettings.GetReserveIPSubpool(&queryParams)
+	var nResponse *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpool
+	offset := 1
+	queryParams.Offset = offset
+	nResponse, _, err = client.NetworkSettings.GetReserveIPSubpool(&queryParams)
 	if err != nil {
 		return foundItem, err
 	}
 
-	if ite == nil {
+	if nResponse == nil {
 		return foundItem, err
 	}
 
-	if ite.Response == nil {
+	if nResponse.Response == nil {
 		return nil, err
 	}
-
-	items := ite
-	itemsCopy := *items.Response
-	for _, item := range itemsCopy {
-		// Call get by _ method and set value to foundItem and return
-		if item.GroupName == vName {
-			return &item, err
+	maxPageSize := len(*nResponse.Response)
+	//maxPageSize := 10
+	for nResponse != nil && nResponse.Response != nil && len(*nResponse.Response) > 0 {
+		for _, item := range *nResponse.Response {
+			if vName == item.GroupName {
+				return &item, err
+			}
 		}
+
+		queryParams.Limit = maxPageSize
+		offset += maxPageSize
+		queryParams.Offset = offset
+		time.Sleep(15 * time.Second)
+		nResponse, _, err = client.NetworkSettings.GetReserveIPSubpool(&queryParams)
 	}
 	return foundItem, err
 }
