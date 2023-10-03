@@ -28,5 +28,5 @@ resource "dnacenter_user" "example" {
 
 output "dnacenter_user_example" {
   sensitive = true
-  value = dnacenter_user.example
+  value     = dnacenter_user.example
 }

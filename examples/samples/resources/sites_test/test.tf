@@ -49,7 +49,7 @@ resource "dnacenter_building" "test_building_1" {
         parent_name = dnacenter_area.test_area_1.item[0].site_name_hierarchy
       }
     }
-    type    = "building"
+    type = "building"
   }
 }
 
@@ -70,7 +70,7 @@ resource "dnacenter_floor" "test_floor_0" {
         width        = 10
       }
     }
-    type    = "floor"
+    type = "floor"
   }
 }
 
@@ -83,8 +83,8 @@ resource "dnacenter_floor" "test_floor_1" {
 
       floor {
 
-        floor_number = 1 
-        height       = 10 
+        floor_number = 1
+        height       = 10
         length       = 10
         name         = "Test Floor 1"
         parent_name  = dnacenter_building.test_building_1.item[0].site_name_hierarchy
@@ -92,7 +92,7 @@ resource "dnacenter_floor" "test_floor_1" {
         width        = 10
       }
     }
-    type    = "floor"
+    type = "floor"
   }
 }
 

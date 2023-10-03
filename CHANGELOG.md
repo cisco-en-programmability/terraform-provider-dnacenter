@@ -1,6 +1,7 @@
 ## 1.1.19-beta (October 03, 2023)
 BUGFIXES:
 * Pagination support when interacting with API #215 - Adding code to paginate in resource.
+* Unable to remove `dnacenter_configuration_template_version` resource #216 - `dnacenter_configuration_template_version` is an action resource
 
 ## 1.1.18-beta (September 28, 2023)
 BUGFIXES:
