@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.18-beta"
+      version = "1.1.19-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # source = "cisco-en-programmability/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
@@ -23,11 +23,11 @@ resource "dnacenter_sda_virtual_network_ip_pool" "example" {
     # is_l2_flooding_enabled   = "false"
     # is_layer2_only           = "false"
     # is_this_critical_pool    = "false"
-    is_wireless_pool         = "false"
+    is_wireless_pool = "false"
     # pool_type                = "string"
     # scalable_group_name      = "string"
     # traffic_type             = "string"
-    site_name_hierarchy  ="Global/New Jersey/MurrayHill/test/TestFloor"
+    site_name_hierarchy  = "Global/New Jersey/MurrayHill/test/TestFloor"
     virtual_network_name = "ANSIBLE800"
     # vlan_id                  = "string"
     # vlan_name                = "string"
