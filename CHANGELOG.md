@@ -1,3 +1,7 @@
+## 1.1.20-beta (October 04, 2023)
+BUGFIXES:
+* SearchUserGetUserApi added in resourceUserCreate and resourceUserRead to be able to create a user (Cannot create user #213)
+
 ## 1.1.19-beta (October 03, 2023)
 BUGFIXES:
 * Pagination support when interacting with API #215 - Adding code to paginate in resource.
