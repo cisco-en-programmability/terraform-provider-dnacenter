@@ -177,6 +177,7 @@ func resourceUserCreate(ctx context.Context, d *schema.ResourceData, m interface
 	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["invoke_source"] = vvInvokeSource
+		resourceMap["id"] = item2.UserID
 		d.SetId(joinResourceID(resourceMap))
 		return resourceUserRead(ctx, d, m)
 	}
@@ -205,6 +206,7 @@ func resourceUserCreate(ctx context.Context, d *schema.ResourceData, m interface
 
 	resourceMap := make(map[string]string)
 	resourceMap["invoke_source"] = vvInvokeSource
+	resourceMap["id"] = item3.UserID
 
 	d.SetId(joinResourceID(resourceMap))
 	return resourceUserRead(ctx, d, m)
