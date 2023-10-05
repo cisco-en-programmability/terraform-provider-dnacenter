@@ -1,3 +1,7 @@
+## 1.1.21-beta (October 05, 2023)
+BUGFIXES:
+* userId was added to resourceUserCreate and resourceUserRead to be able to create and read the user (Cannot create user #213).
+
 ## 1.1.20-beta (October 04, 2023)
 BUGFIXES:
 * SearchUserGetUserApi added in resourceUserCreate and resourceUserRead to be able to create a user (Cannot create user #213)
