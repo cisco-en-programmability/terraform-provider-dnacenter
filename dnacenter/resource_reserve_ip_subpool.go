@@ -839,7 +839,6 @@ func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacent
 		queryParams.Limit = maxPageSize
 		offset += maxPageSize
 		queryParams.Offset = offset
-		time.Sleep(15 * time.Second)
 		nResponse, _, err = client.NetworkSettings.GetReserveIPSubpool(&queryParams)
 	}
 	return foundItem, err
