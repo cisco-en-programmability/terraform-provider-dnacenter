@@ -784,7 +784,7 @@ func searchNetworkSettingsGetGlobalPool(m interface{}, queryParams dnacentersdkg
 		queryParams.Limit = maxPageSize
 		offset += maxPageSize
 		queryParams.Offset = offset
-		time.Sleep(15 * time.Second)
+
 		nResponse, _, err = client.NetworkSettings.GetGlobalPool(&queryParams)
 	}
 	return &foundItems, err

@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
-	"time"
 
 	"log"
 
@@ -964,7 +963,7 @@ func searchEventManagementGetEmailEventSubscriptions(m interface{}, queryParams 
 		nResponse, _, err := client.EventManagement.GetEmailEventSubscriptions(nil)
 		maxPageSize := len(*nResponse)
 		for len(*nResponse) > 0 {
-			time.Sleep(15 * time.Second)
+
 			for _, item := range *nResponse {
 				if vID == item.SubscriptionID {
 					foundItem = &item
