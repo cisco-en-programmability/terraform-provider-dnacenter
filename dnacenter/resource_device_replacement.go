@@ -590,7 +590,7 @@ func searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails
 		nResponse, _, err := client.DeviceReplacement.ReturnListOfReplacementDevicesWithReplacementDetails(nil)
 		maxPageSize := len(*nResponse.Response)
 		for len(*nResponse.Response) > 0 {
-			time.Sleep(15 * time.Second)
+
 			for _, item := range *nResponse.Response {
 				if vID == item.FaultyDeviceID {
 					foundItem = &item

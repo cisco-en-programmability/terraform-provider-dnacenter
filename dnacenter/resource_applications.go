@@ -1160,7 +1160,7 @@ func searchApplicationPolicyGetApplications(m interface{}, queryParams dnacenter
 		nResponse, _, err := client.ApplicationPolicy.GetApplications(nil)
 		maxPageSize := len(*nResponse.Response)
 		for len(*nResponse.Response) > 0 {
-			time.Sleep(15 * time.Second)
+
 			for _, item := range *nResponse.Response {
 				if vID == item.ID {
 					foundItem = &item
