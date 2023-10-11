@@ -1,3 +1,7 @@
+## 1.1.22-beta (October 10, 2023)
+BUGFIXES:
+* Provider does not detect changes in resource dnacenter_configuration_template made outside of terraform #211 - possible nil answer exeption managed. Now is possible to test #216.
+* Pagination support when interacting with API #215 - removing sleep, code 429 is managed by go-sdk.
 ## 1.1.21-beta (October 05, 2023)
 BUGFIXES:
 * userId was added to resourceUserCreate and resourceUserRead to be able to create and read the user (Cannot create user #213).

@@ -347,7 +347,7 @@ func searchApplicationPolicyGetApplicationSets(m interface{}, queryParams dnacen
 		nResponse, _, err := client.ApplicationPolicy.GetApplicationSets(&queryParams)
 		maxPageSize := len(*nResponse.Response)
 		for len(*nResponse.Response) > 0 {
-			time.Sleep(15 * time.Second)
+
 			for _, item := range *nResponse.Response {
 				if vID == item.ID {
 					foundItem = &item
