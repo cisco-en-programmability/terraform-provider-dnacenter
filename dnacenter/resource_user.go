@@ -172,10 +172,12 @@ func resourceUserCreate(ctx context.Context, d *schema.ResourceData, m interface
 	vvInvokeSource := interfaceToString(vInvokeSource)
 	queryParamImport := dnacentersdkgo.GetUsersApIQueryParams{}
 	queryParamImport.InvokeSource = vvInvokeSource
-	item2, err := searchUserGetUserApi(m, queryParamImport, request1.Username)
+	_, item2, err := searchUserGetUserApi(m, queryParamImport, request1.Username)
+
 	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["invoke_source"] = vvInvokeSource
+		resourceMap["id"] = item2.UserID
 		d.SetId(joinResourceID(resourceMap))
 		return resourceUserRead(ctx, d, m)
 	}
@@ -193,7 +195,8 @@ func resourceUserCreate(ctx context.Context, d *schema.ResourceData, m interface
 	// TODO REVIEW
 	queryParamValidate := dnacentersdkgo.GetUsersApIQueryParams{}
 	queryParamValidate.InvokeSource = vvInvokeSource
-	item3, _, err := client.UserandRoles.GetUsersApI(&queryParamValidate)
+	//item3, _, err := client.UserandRoles.GetUsersApI(&queryParamValidate)
+	_, item3, err := searchUserGetUserApi(m, queryParamValidate, request1.Username)
 	if err != nil || item3 == nil {
 		diags = append(diags, diagErrorWithAlt(
 			"Failure when executing AddUserApI", err,
@@ -203,14 +206,14 @@ func resourceUserCreate(ctx context.Context, d *schema.ResourceData, m interface
 
 	resourceMap := make(map[string]string)
 	resourceMap["invoke_source"] = vvInvokeSource
+	resourceMap["id"] = item3.UserID
 
 	d.SetId(joinResourceID(resourceMap))
 	return resourceUserRead(ctx, d, m)
 }
 
 func resourceUserRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*dnacentersdkgo.Client)
-
+	//client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
@@ -222,18 +225,21 @@ func resourceUserRead(ctx context.Context, d *schema.ResourceData, m interface{}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetUsersApI")
 		queryParams1 := dnacentersdkgo.GetUsersApIQueryParams{}
-
+		request1 := expandRequestUserAddUserApI(ctx, "parameters.0", d)
 		queryParams1.InvokeSource = vInvokeSource
-
-		response1, restyResp1, err := client.UserandRoles.GetUsersApI(&queryParams1)
-
-		if err != nil || response1 == nil {
+		//response1, restyResp1, err := client.UserandRoles.GetUsersApI(&queryParams1)
+		response1, item1, err := searchUserGetUserApi(m, queryParams1, request1.Username)
+		if err != nil || item1 == nil {
+			d.SetId("")
+			return diags
+		}
+		/*if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			d.SetId("")
 			return diags
-		}
+		}*/
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
@@ -342,25 +348,25 @@ func expandRequestUserUpdateUserApI(ctx context.Context, key string, d *schema.R
 	return &request
 }
 
-func searchUserGetUserApi(m interface{}, queryParams dnacentersdkgo.GetUsersApIQueryParams, username string) (*dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers, error) {
+func searchUserGetUserApi(m interface{}, queryParams dnacentersdkgo.GetUsersApIQueryParams, username string) (*dnacentersdkgo.ResponseUserandRolesGetUsersApI, *dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers
 	ite, _, err := client.UserandRoles.GetUsersApI(&queryParams)
 	if err != nil {
-		return foundItem, err
+		return ite, foundItem, err
 	}
 
 	if ite == nil {
-		return foundItem, err
+		return ite, foundItem, err
 	}
 
 	if ite.Response == nil {
-		return foundItem, err
+		return ite, foundItem, err
 	}
 
 	if ite.Response.Users == nil {
-		return foundItem, err
+		return ite, foundItem, err
 	}
 
 	items := ite.Response.Users
@@ -372,8 +378,8 @@ func searchUserGetUserApi(m interface{}, queryParams dnacentersdkgo.GetUsersApIQ
 			var getItem *dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers
 			getItem = &item
 			foundItem = getItem
-			return foundItem, err
+			return ite, foundItem, err
 		}
 	}
-	return foundItem, err
+	return ite, foundItem, err
 }
