@@ -1665,9 +1665,10 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"last_update_time": &schema.Schema{
 							Description: `Update time of template
 `,
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							Computed:         true,
+							DiffSuppressFunc: diffSuppressAlways(),
 						},
 						"latest_version_time": &schema.Schema{
 							Description: `Latest versioned template time
@@ -1699,9 +1700,10 @@ func resourceConfigurationTemplate() *schema.Resource {
 						"project_name": &schema.Schema{
 							Description: `Project name
 `,
-							Type:     schema.TypeString,
-							Optional: true,
-							Default:  "",
+							Type:             schema.TypeString,
+							Optional:         true,
+							Default:          "",
+							DiffSuppressFunc: diffSuppressAlways(),
 						},
 						"rollback_template_content": &schema.Schema{
 							Description: `Rollback template content
@@ -2262,7 +2264,9 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 		queryParamImport.Name = vvProjectName
 		log.Print("[DEBUG] 1")
 		response2, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParamImport, vvName)
-		log.Printf("[DEBUG] response2 sent => %v", responseInterfaceToString(*response2))
+		if response2 != nil {
+			log.Printf("[DEBUG] response2 sent => %v", responseInterfaceToString(*response2))
+		}
 		if response2 != nil && err == nil {
 			log.Print("[DEBUG] 2")
 			resourceMap := make(map[string]string)
@@ -2334,14 +2338,15 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 }
 
 func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	// client := m.(*dnacentersdkgo.Client)
+	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vProjectName := resourceMap["project_name"]
-	vTemplateName := resourceMap["template_name"]
+	// vTemplateName := resourceMap["template_name"]
+	vTemplateID := resourceMap["template_id"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -2349,26 +2354,29 @@ func resourceConfigurationTemplateRead(ctx context.Context, d *schema.ResourceDa
 		queryParams1 := dnacentersdkgo.GetsAListOfProjectsQueryParams{}
 		queryParams1.Name = vProjectName
 
-		response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
-
+		// response1, err := searchConfigurationTemplatesGetsTheTemplatesAvailable(m, queryParams1, vTemplateName)
+		response1, restyResp1, err := client.ConfigurationTemplates.GetsDetailsOfAGivenTemplate(vTemplateID, nil)
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("resty response= %s", restyResp1.String())
+			}
 			d.SetId("")
 			return diags
 		}
-
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		// Review flatten function used
-		items := []dnacentersdkgo.ResponseItemConfigurationTemplatesGetsAListOfProjectsTemplates{
-			*response1,
-		}
-		vItem1 := flattenConfigurationTemplatesGetsAListOfProjectsItemsTemplates(&items)
+		// items := dnacentersdkgo.ResponseConfigurationTemplatesGetsDetailsOfAGivenTemplate{
+		// 	*response1,
+
+		vItem1 := flattenConfigurationTemplatesGetsDetailsOfAGivenTemplateItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetsTheTemplatesAvailable search response",
 				err))
 			return diags
 		}
+
 		if err := d.Set("parameters", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetsTheTemplatesAvailable search response",
@@ -4444,6 +4452,7 @@ func searchConfigurationTemplatesGetsTheTemplatesAvailable(m interface{}, queryP
 	for _, item := range *nResponse {
 		for _, item2 := range *item.Templates {
 			if vName == item2.Name {
+				log.Printf("Vname %s , item2.Name %s", vName, item2.Name)
 				foundItem = &item2
 				return foundItem, err
 			}
