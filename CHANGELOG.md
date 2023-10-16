@@ -1,3 +1,6 @@
+## 1.1.23-beta (October 16, 2023)
+BUGFIXES:
+* Token is refreshing in go-sdk.
 ## 1.1.22-beta (October 10, 2023)
 BUGFIXES:
 * Provider does not detect changes in resource dnacenter_configuration_template made outside of terraform #211 - possible nil answer exeption managed. Now is possible to test #216.
