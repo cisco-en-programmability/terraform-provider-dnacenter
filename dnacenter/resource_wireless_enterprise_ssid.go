@@ -388,6 +388,12 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"protected_management_frame": &schema.Schema{
+							Description: `Protected Management Frame`,
+							Type:        schema.TypeString,
+							Computed:    true,
+							Optional:    true,
+						},
 					},
 				},
 			},
@@ -510,7 +516,39 @@ func resourceWirelessEnterpriseSSIDRead(ctx context.Context, d *schema.ResourceD
 				err))
 			return diags
 		}
-
+		response1NoPointer := *response1
+		responseItemSSID := *response1NoPointer[0].SSIDDetails
+		responseItemSSIDItem := responseItemSSID[0]
+		request := expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSID(ctx, "parameters.0", d)
+		vParameters := map[string]interface{}{
+			"basic_service_set_client_idle_timeout": request.BasicServiceSetClientIDleTimeout,
+			"client_exclusion_timeout":              request.ClientExclusionTimeout,
+			"enable_basic_service_set_max_idle":     boolPtrToString(request.EnableBasicServiceSetMaxIDle),
+			"enable_broadcast_ssi_d":                boolPtrToString(responseItemSSIDItem.EnableBroadcastSSID),
+			"enable_client_exclusion":               boolPtrToString(request.EnableClientExclusion),
+			"enable_directed_multicast_service":     boolPtrToString(request.EnableDirectedMulticastService),
+			"enable_fast_lane":                      boolPtrToString(responseItemSSIDItem.EnableFastLane),
+			"enable_mac_filtering":                  boolPtrToString(responseItemSSIDItem.EnableMacFiltering),
+			"enable_neighbor_list":                  boolPtrToString(request.EnableNeighborList),
+			"enable_session_time_out":               boolPtrToString(request.EnableSessionTimeOut),
+			"fast_transition":                       responseItemSSIDItem.FastTransition,
+			"mfp_client_protection":                 responseItemSSIDItem.MfpClientProtection,
+			"name":                                  responseItemSSIDItem.Name,
+			"nas_options":                           responseItemSSIDItem.NasOptions,
+			"passphrase":                            responseItemSSIDItem.Passphrase,
+			"radio_policy":                          responseItemSSIDItem.RadioPolicy,
+			"security_level":                        responseItemSSIDItem.SecurityLevel,
+			"session_time_out":                      request.SessionTimeOut,
+			"traffic_type":                          responseItemSSIDItem.TrafficType,
+			"protected_management_frame":            responseItemSSIDItem.ProtectedManagementFrame,
+		}
+		// vItem1 := flattenWirelessGetEnterpriseSSIDItems(response1)
+		if err := d.Set("parameters", []map[string]interface{}{vParameters}); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetEnterpriseSSID search response",
+				err))
+			return diags
+		}
 	}
 	return diags
 }
@@ -840,6 +878,9 @@ func expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSID(ctx context.Context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".nas_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".nas_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".nas_options")))) {
 		request.NasOptions = interfaceToSliceString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".protected_management_frame")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".protected_management_frame")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".protected_management_frame")))) {
+		request.ProtectedManagementFrame = interfaceToString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -904,6 +945,9 @@ func expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSID(ctx context.Context
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".nas_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".nas_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".nas_options")))) {
 		request.NasOptions = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".protected_management_frame")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".protected_management_frame")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".protected_management_frame")))) {
+		request.ProtectedManagementFrame = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

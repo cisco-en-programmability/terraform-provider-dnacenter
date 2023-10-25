@@ -38,7 +38,7 @@ resource "dnacenter_wireless_profile" "example" {
         }
         interface_name = "management"
         name           = "Test222"
-        type           = "string"
+        type           = "string2"
       }
     }
     #wireless_profile_name = "string"
