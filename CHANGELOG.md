@@ -1,4 +1,4 @@
-## 1.1.23-beta (October 25, 2023)
+## 1.1.24-beta (October 25, 2023)
 BUGFIXES:
 * Resource dnacenter_wireless_profile does not support adding new SSIDs to profile #229.
 * Hardcoded sleep in dnacenter_floor, dnacenter_building, dnacenter_area resources #227 - Sleep removed.
@@ -8,6 +8,9 @@ BUGFIXES:
 * dnacenter_wireless_enterprise_ssid WPA3 SSIDs fail to provision due to missing parameter #232  - Params added and Idempotency manged.
 * dnacenter_wireless_profiles does not properly read or synchronizes to state #233 - Idemportency managed.
 
+## 1.1.23-beta (October 16, 2023)
+BUGFIXES:
+* Token is refreshing in go-sdk.
 ## 1.1.22-beta (October 10, 2023)
 BUGFIXES:
 * Provider does not detect changes in resource dnacenter_configuration_template made outside of terraform #211 - possible nil answer exeption managed. Now is possible to test #216.
