@@ -320,10 +320,14 @@ func resourceFloorCreate(ctx context.Context, d *schema.ResourceData, m interfac
 			}
 		}
 		if statusIsFailure(response2.Status) {
-			bapiError := response2.BapiError
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing CreateSite", err,
-				"Failure at CreateSite execution", bapiError))
+			if strings.Contains(response2.BapiError, "Rate Limit") {
+				return resourceAreaCreate(ctx, d, m)
+			} else {
+				bapiError := response2.BapiError
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing CreateFloor", err,
+					"Failure at CreateFloor execution", bapiError))
+			}
 			return diags
 		}
 	}
@@ -619,10 +623,14 @@ func resourceFloorDelete(ctx context.Context, d *schema.ResourceData, m interfac
 		}
 
 		if statusIsFailure(response2.Status) {
-			bapiError := response2.BapiError
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing DeleteSite", err,
-				"Failure at DeleteSite execution1111", bapiError))
+			if strings.Contains(response2.BapiError, "Rate Limit") {
+				return resourceFloorCreate(ctx, d, m)
+			} else {
+				bapiError := response2.BapiError
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing DeleteFloor", err,
+					"Failure at DeleteFloor execution", bapiError))
+			}
 			return diags
 		}
 	}

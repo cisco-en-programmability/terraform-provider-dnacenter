@@ -338,11 +338,16 @@ func resourceBuildingCreate(ctx context.Context, d *schema.ResourceData, m inter
 				return diags
 			}
 		}
+
 		if statusIsFailure(response2.Status) {
-			bapiError := response2.BapiError
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing CreateSite", err,
-				"Failure at CreateSite execution", bapiError))
+			if strings.Contains(response2.BapiError, "Rate Limit") {
+				return resourceBuildingCreate(ctx, d, m)
+			} else {
+				bapiError := response2.BapiError
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing CreateSite", err,
+					"Failure at CreateSite execution", bapiError))
+			}
 			return diags
 		}
 	}
@@ -573,7 +578,7 @@ func resourceBuildingDelete(ctx context.Context, d *schema.ResourceData, m inter
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vSiteID := resourceMap["site_id"]
-	time.Sleep(1 * time.Minute)
+	// time.Sleep(1 * time.Minute)
 	// queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
 	// queryParams1.Name = vName
 	// queryParams1.SiteID = vSiteID
@@ -618,7 +623,7 @@ func resourceBuildingDelete(ctx context.Context, d *schema.ResourceData, m inter
 		}
 		for statusIsPending(response2.Status) {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId) //pausa x cantidad 1min
 			if err != nil || response2 == nil {
 				if restyResp1 != nil {
 					log.Printf("[DEBUG] Retrieved error response2 %s", restyResp1.String())
@@ -631,10 +636,14 @@ func resourceBuildingDelete(ctx context.Context, d *schema.ResourceData, m inter
 		}
 
 		if statusIsFailure(response2.Status) {
-			bapiError := response2.BapiError
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing DeleteSite22222", err,
-				"Failure at DeleteSite execution1111", bapiError))
+			if strings.Contains(response2.BapiError, "Rate Limit") {
+				return resourceBuildingDelete(ctx, d, m)
+			} else {
+				bapiError := response2.BapiError
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing DeleteBuilding", err,
+					"Failure at DeleteBuilding execution", bapiError))
+			}
 			return diags
 		}
 	}
