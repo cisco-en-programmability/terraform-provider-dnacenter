@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.23-beta"
+      version = "1.1.24-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -26,14 +26,14 @@ provider "dnacenter" {
 resource "dnacenter_configuration_template" "example" {
   provider = dnacenter
   parameters {
-    project_id = "2128b364-8751-45f5-95cb-f5ecaa2e9085"
+    project_id       = "2128b364-8751-45f5-95cb-f5ecaa2e9085"
     template_content = "if a > b \n hola22"
-    language = "JINJA"
-    name = "Saludo Terraform"
-    software_type = "IOS-XE"
-    author = "altus"
-    description = "Created by Terraform automation"
-    device_types{
+    language         = "JINJA"
+    name             = "Saludo Terraform"
+    software_type    = "IOS-XE"
+    author           = "altus"
+    description      = "Created by Terraform automation"
+    device_types {
       product_family = "Switches and Hubs"
       product_series = "Cisco Catalyst 9300 Series Switches"
     }

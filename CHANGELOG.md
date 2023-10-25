@@ -1,3 +1,13 @@
+## 1.1.24-beta (October 25, 2023)
+BUGFIXES:
+* Resource dnacenter_wireless_profile does not support adding new SSIDs to profile #229.
+* Hardcoded sleep in dnacenter_floor, dnacenter_building, dnacenter_area resources #227 - Sleep removed.
+* Pagination support when interacting with API #215 - Limit Changes to 500.
+* Provider crash when creating dnacenter_reserve_ip_subpool resource.#228  - API error with 200 Code managed.
+* GET operations on ´dnacenter_sda_fabric_border_device´ not working #230 - API bug in documentation.
+* dnacenter_wireless_enterprise_ssid WPA3 SSIDs fail to provision due to missing parameter #232  - Params added and Idempotency manged.
+* dnacenter_wireless_profiles does not properly read or synchronizes to state #233 - Idemportency managed.
+
 ## 1.1.23-beta (October 16, 2023)
 BUGFIXES:
 * Token is refreshing in go-sdk.

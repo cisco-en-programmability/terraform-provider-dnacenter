@@ -272,10 +272,14 @@ func resourceAreaCreate(ctx context.Context, d *schema.ResourceData, m interface
 			}
 		}
 		if statusIsFailure(response2.Status) {
-			bapiError := response2.BapiError
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing CreateSite", err,
-				"Failure at CreateSite exeecution", bapiError))
+			if strings.Contains(response2.BapiError, "Rate Limit") {
+				return resourceAreaCreate(ctx, d, m)
+			} else {
+				bapiError := response2.BapiError
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing CreateArea", err,
+					"Failure at CreateArea execution", bapiError))
+			}
 			return diags
 		}
 	}
@@ -285,8 +289,8 @@ func resourceAreaCreate(ctx context.Context, d *schema.ResourceData, m interface
 	item2, err := searchSitesGetSite(m, queryParams2)
 	if err != nil || item2 == nil {
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing CreateSite", err,
-			"Failure at CreateSite execution", ""))
+			"Failure when executing CreateArea", err,
+			"Failure at CreateArea execution", ""))
 		return diags
 	}
 	resourceMap := make(map[string]string)
@@ -459,10 +463,14 @@ func resourceAreaDelete(ctx context.Context, d *schema.ResourceData, m interface
 		}
 
 		if statusIsFailure(response2.Status) {
-			bapiError := response2.BapiError
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing DeleteSite22222", err,
-				"Failure at DeleteSite execution1111", bapiError))
+			if strings.Contains(response2.BapiError, "Rate Limit") {
+				return resourceAreaDelete(ctx, d, m)
+			} else {
+				bapiError := response2.BapiError
+				diags = append(diags, diagErrorWithAlt(
+					"Failure when executing DeleteArea", err,
+					"Failure at DeleteArea execution", bapiError))
+			}
 			return diags
 		}
 	}

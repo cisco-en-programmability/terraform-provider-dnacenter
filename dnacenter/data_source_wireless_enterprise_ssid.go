@@ -339,6 +339,37 @@ func flattenWirelessGetEnterpriseSSIDItemsSSIDDetails(items *[]dnacentersdkgo.Re
 	return respItems
 }
 
+func flattenWirelessGetEnterpriseSSIDParamsSSIDDetails(items *[]dnacentersdkgo.ResponseItemWirelessGetEnterpriseSSIDSSIDDetails) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["name"] = item.Name
+		respItem["wlan_type"] = item.WLANType
+		respItem["enable_fast_lane"] = boolPtrToString(item.EnableFastLane)
+		respItem["security_level"] = item.SecurityLevel
+		respItem["auth_server"] = item.AuthServer
+		respItem["passphrase"] = item.Passphrase
+		respItem["traffic_type"] = item.TrafficType
+		respItem["enable_mac_filtering"] = boolPtrToString(item.EnableMacFiltering)
+		respItem["is_enabled"] = boolPtrToString(item.IsEnabled)
+		respItem["is_fabric"] = boolPtrToString(item.IsFabric)
+		respItem["fast_transition"] = item.FastTransition
+		respItem["radio_policy"] = item.RadioPolicy
+		respItem["enable_broadcast_ssi_d"] = boolPtrToString(item.EnableBroadcastSSID)
+		respItem["nas_options"] = item.NasOptions
+		respItem["aaa_override"] = boolPtrToString(item.AAAOverride)
+		respItem["coverage_hole_detection_enable"] = boolPtrToString(item.CoverageHoleDetectionEnable)
+		respItem["protected_management_frame"] = item.ProtectedManagementFrame
+		respItem["multi_psk_settings"] = flattenWirelessGetEnterpriseSSIDItemsSSIDDetailsMultipSKSettings(item.MultipSKSettings)
+		respItem["client_rate_limit"] = item.ClientRateLimit
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
 func flattenWirelessGetEnterpriseSSIDItemsSSIDDetailsMultipSKSettings(items *[]dnacentersdkgo.ResponseItemWirelessGetEnterpriseSSIDSSIDDetailsMultipSKSettings) []map[string]interface{} {
 	if items == nil {
 		return nil

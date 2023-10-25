@@ -48,256 +48,126 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-						"payload": &schema.Schema{
+
+						"akc_settings_cfs": &schema.Schema{
+							Description: `Akc Settings Cfs`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"auth_entity_class": &schema.Schema{
+							Description: `Auth Entity Class`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"auth_entity_id": &schema.Schema{
+							Description: `Auth Entity Id`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"cfs_change_info": &schema.Schema{
+							Description: `Cfs Change Info`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"configs": &schema.Schema{
+							Description: `Configs`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"create_time": &schema.Schema{
+							Description: `Create Time`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"custom_provisions": &schema.Schema{
+							Description: `Custom Provisions`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"deploy_pending": &schema.Schema{
+							Description: `Deploy Pending`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"deployed": &schema.Schema{
+							Description: `Deployed`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"device_interface_info": &schema.Schema{
+							Description: `Device Interface Info`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"device_settings": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"akc_settings_cfs": &schema.Schema{
-										Description: `Akc Settings Cfs`,
+									"connected_to": &schema.Schema{
+										Description: `Connected To`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
-									"auth_entity_class": &schema.Schema{
-										Description: `Auth Entity Class`,
-										Type:        schema.TypeInt,
+									"cpu": &schema.Schema{
+										Description: `Cpu`,
+										Type:        schema.TypeFloat,
 										Computed:    true,
-									},
-									"auth_entity_id": &schema.Schema{
-										Description: `Auth Entity Id`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-									"cfs_change_info": &schema.Schema{
-										Description: `Cfs Change Info`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"configs": &schema.Schema{
-										Description: `Configs`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"create_time": &schema.Schema{
-										Description: `Create Time`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-									"custom_provisions": &schema.Schema{
-										Description: `Custom Provisions`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
 									"deploy_pending": &schema.Schema{
 										Description: `Deploy Pending`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-									"deployed": &schema.Schema{
-										Description: `Deployed`,
+									"dhcp_enabled": &schema.Schema{
+										Description: `Dhcp Enabled`,
 										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"device_interface_info": &schema.Schema{
-										Description: `Device Interface Info`,
-										Type:        schema.TypeList,
+									"display_name": &schema.Schema{
+										Description: `Display Name`,
+										Type:        schema.TypeString,
 										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
-									"device_settings": &schema.Schema{
+									"ext_connectivity_settings": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"connected_to": &schema.Schema{
-													Description: `Connected To`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"cpu": &schema.Schema{
-													Description: `Cpu`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
 												"deploy_pending": &schema.Schema{
 													Description: `Deploy Pending`,
 													Type:        schema.TypeString,
 													Computed:    true,
-												},
-												"dhcp_enabled": &schema.Schema{
-													Description: `Dhcp Enabled`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
 												},
 												"display_name": &schema.Schema{
 													Description: `Display Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-												"ext_connectivity_settings": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"deploy_pending": &schema.Schema{
-																Description: `Deploy Pending`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"display_name": &schema.Schema{
-																Description: `Display Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"external_domain_protocol_number": &schema.Schema{
-																Description: `External Domain Protocol Number`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"id": &schema.Schema{
-																Description: `Id`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"instance_id": &schema.Schema{
-																Description: `Instance Id`,
-																Type:        schema.TypeInt,
-																Computed:    true,
-															},
-															"instance_tenant_id": &schema.Schema{
-																Description: `Instance Tenant Id`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"instance_version": &schema.Schema{
-																Description: `Instance Version`,
-																Type:        schema.TypeInt,
-																Computed:    true,
-															},
-															"interface_uuid": &schema.Schema{
-																Description: `Interface Uuid`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"l2_handoff": &schema.Schema{
-																Description: `L2 Handoff`,
-																Type:        schema.TypeList,
-																Computed:    true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-															},
-															"l3_handoff": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"deploy_pending": &schema.Schema{
-																			Description: `Deploy Pending`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"display_name": &schema.Schema{
-																			Description: `Display Name`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"id": &schema.Schema{
-																			Description: `Id`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"instance_id": &schema.Schema{
-																			Description: `Instance Id`,
-																			Type:        schema.TypeInt,
-																			Computed:    true,
-																		},
-																		"instance_tenant_id": &schema.Schema{
-																			Description: `Instance Tenant Id`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"instance_version": &schema.Schema{
-																			Description: `Instance Version`,
-																			Type:        schema.TypeFloat,
-																			Computed:    true,
-																		},
-																		"local_ip_address": &schema.Schema{
-																			Description: `Local Ip Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"remote_ip_address": &schema.Schema{
-																			Description: `Remote Ip Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"virtual_network": &schema.Schema{
-																			Type:     schema.TypeList,
-																			Computed: true,
-																			Elem: &schema.Resource{
-																				Schema: map[string]*schema.Schema{
-
-																					"id_ref": &schema.Schema{
-																						Description: `Id Ref`,
-																						Type:        schema.TypeString,
-																						Computed:    true,
-																					},
-																				},
-																			},
-																		},
-																		"vlan_id": &schema.Schema{
-																			Description: `Vlan Id`,
-																			Type:        schema.TypeInt,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-															"policy_propagation_enabled": &schema.Schema{
-																Description: `Policy Propagation Enabled`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"policy_sgt_tag": &schema.Schema{
-																Description: `Policy Sgt Tag`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
-															},
-														},
-													},
-												},
-												"external_connectivity_ip_pool": &schema.Schema{
-													Description: `External Connectivity Ip Pool`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-												"external_domain_routing_protocol": &schema.Schema{
-													Description: `External Domain Routing Protocol`,
+												"external_domain_protocol_number": &schema.Schema{
+													Description: `External Domain Protocol Number`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -321,34 +191,108 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 													Type:        schema.TypeInt,
 													Computed:    true,
 												},
-												"internal_domain_protocol_number": &schema.Schema{
-													Description: `Internal Domain Protocol Number`,
+												"interface_uuid": &schema.Schema{
+													Description: `Interface Uuid`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-												"memory": &schema.Schema{
-													Description: `Memory`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
-												},
-												"node_type": &schema.Schema{
-													Description: `Node Type`,
+												"l2_handoff": &schema.Schema{
+													Description: `L2 Handoff`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
 												},
-												"storage": &schema.Schema{
-													Description: `Storage`,
+												"l3_handoff": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"deploy_pending": &schema.Schema{
+																Description: `Deploy Pending`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"display_name": &schema.Schema{
+																Description: `Display Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"id": &schema.Schema{
+																Description: `Id`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"instance_id": &schema.Schema{
+																Description: `Instance Id`,
+																Type:        schema.TypeInt,
+																Computed:    true,
+															},
+															"instance_tenant_id": &schema.Schema{
+																Description: `Instance Tenant Id`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"instance_version": &schema.Schema{
+																Description: `Instance Version`,
+																Type:        schema.TypeFloat,
+																Computed:    true,
+															},
+															"local_ip_address": &schema.Schema{
+																Description: `Local Ip Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"remote_ip_address": &schema.Schema{
+																Description: `Remote Ip Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"virtual_network": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"id_ref": &schema.Schema{
+																			Description: `Id Ref`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																	},
+																},
+															},
+															"vlan_id": &schema.Schema{
+																Description: `Vlan Id`,
+																Type:        schema.TypeInt,
+																Computed:    true,
+															},
+														},
+													},
+												},
+												"policy_propagation_enabled": &schema.Schema{
+													Description: `Policy Propagation Enabled`,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"policy_sgt_tag": &schema.Schema{
+													Description: `Policy Sgt Tag`,
 													Type:        schema.TypeFloat,
 													Computed:    true,
 												},
 											},
 										},
 									},
-									"display_name": &schema.Schema{
-										Description: `Display Name`,
+									"external_connectivity_ip_pool": &schema.Schema{
+										Description: `External Connectivity Ip Pool`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"external_domain_routing_protocol": &schema.Schema{
+										Description: `External Domain Routing Protocol`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
@@ -372,129 +316,148 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 										Type:        schema.TypeInt,
 										Computed:    true,
 									},
-									"is_seeded": &schema.Schema{
-										Description: `Is Seeded`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"is_stale": &schema.Schema{
-										Description: `Is Stale`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"last_update_time": &schema.Schema{
-										Description: `Last Update Time`,
-										Type:        schema.TypeInt,
+									"internal_domain_protocol_number": &schema.Schema{
+										Description: `Internal Domain Protocol Number`,
+										Type:        schema.TypeString,
 										Computed:    true,
 									},
-									"managed_sites": &schema.Schema{
-										Description: `Managed Sites`,
+									"memory": &schema.Schema{
+										Description: `Memory`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+									"node_type": &schema.Schema{
+										Description: `Node Type`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
-									"name": &schema.Schema{
-										Description: `Name`,
+									"storage": &schema.Schema{
+										Description: `Storage`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+								},
+							},
+						},
+						"display_name": &schema.Schema{
+							Description: `Display Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"id": &schema.Schema{
+							Description: `Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"instance_id": &schema.Schema{
+							Description: `Instance Id`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"instance_tenant_id": &schema.Schema{
+							Description: `Instance Tenant Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"instance_version": &schema.Schema{
+							Description: `Instance Version`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"is_seeded": &schema.Schema{
+							Description: `Is Seeded`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_stale": &schema.Schema{
+							Description: `Is Stale`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"last_update_time": &schema.Schema{
+							Description: `Last Update Time`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"managed_sites": &schema.Schema{
+							Description: `Managed Sites`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"name": &schema.Schema{
+							Description: `Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"namespace": &schema.Schema{
+							Description: `Namespace`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"network_device_id": &schema.Schema{
+							Description: `Network Device Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"network_wide_settings": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"aaa": &schema.Schema{
+										Description: `Aaa`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"cmx": &schema.Schema{
+										Description: `Cmx`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"deploy_pending": &schema.Schema{
+										Description: `Deploy Pending`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-									"namespace": &schema.Schema{
-										Description: `Namespace`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-									"network_device_id": &schema.Schema{
-										Description: `Network Device Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-									"network_wide_settings": &schema.Schema{
+									"dhcp": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"aaa": &schema.Schema{
-													Description: `Aaa`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"cmx": &schema.Schema{
-													Description: `Cmx`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"deploy_pending": &schema.Schema{
-													Description: `Deploy Pending`,
+												"id": &schema.Schema{
+													Description: `Id`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-												"dhcp": &schema.Schema{
+												"ip_address": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"id": &schema.Schema{
-																Description: `Id`,
+															"address": &schema.Schema{
+																Description: `Address`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
-															"ip_address": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"address": &schema.Schema{
-																			Description: `Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"address_type": &schema.Schema{
-																			Description: `Address Type`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"id": &schema.Schema{
-																			Description: `Id`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"padded_address": &schema.Schema{
-																			Description: `Padded Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-												"display_name": &schema.Schema{
-													Description: `Display Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-												"dns": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"domain_name": &schema.Schema{
-																Description: `Domain Name`,
+															"address_type": &schema.Schema{
+																Description: `Address Type`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -503,183 +466,132 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
-															"ip": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"address": &schema.Schema{
-																			Description: `Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"address_type": &schema.Schema{
-																			Description: `Address Type`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"id": &schema.Schema{
-																			Description: `Id`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																		"padded_address": &schema.Schema{
-																			Description: `Padded Address`,
-																			Type:        schema.TypeString,
-																			Computed:    true,
-																		},
-																	},
-																},
+															"padded_address": &schema.Schema{
+																Description: `Padded Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
+												},
+											},
+										},
+									},
+									"display_name": &schema.Schema{
+										Description: `Display Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"dns": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"domain_name": &schema.Schema{
+													Description: `Domain Name`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"id": &schema.Schema{
 													Description: `Id`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-												"instance_id": &schema.Schema{
-													Description: `Instance Id`,
-													Type:        schema.TypeInt,
-													Computed:    true,
-												},
-												"instance_tenant_id": &schema.Schema{
-													Description: `Instance Tenant Id`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-												"instance_version": &schema.Schema{
-													Description: `Instance Version`,
-													Type:        schema.TypeInt,
-													Computed:    true,
-												},
-												"ldap": &schema.Schema{
-													Description: `Ldap`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"native_vlan": &schema.Schema{
-													Description: `Native Vlan`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"netflow": &schema.Schema{
-													Description: `Netflow`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"ntp": &schema.Schema{
-													Description: `Ntp`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"snmp": &schema.Schema{
-													Description: `Snmp`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"syslogs": &schema.Schema{
-													Description: `Syslogs`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
+												"ip": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"address": &schema.Schema{
+																Description: `Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"address_type": &schema.Schema{
+																Description: `Address Type`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"id": &schema.Schema{
+																Description: `Id`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"padded_address": &schema.Schema{
+																Description: `Padded Address`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+														},
 													},
 												},
 											},
 										},
 									},
-									"other_device": &schema.Schema{
-										Description: `Other Device`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"provisioning_state": &schema.Schema{
-										Description: `Provisioning State`,
+									"id": &schema.Schema{
+										Description: `Id`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-									"resource_version": &schema.Schema{
-										Description: `Resource Version`,
+									"instance_id": &schema.Schema{
+										Description: `Instance Id`,
 										Type:        schema.TypeInt,
 										Computed:    true,
 									},
-									"roles": &schema.Schema{
-										Description: `Roles`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"save_wan_connectivity_details_only": &schema.Schema{
-										Description: `Save Wan Connectivity Details Only`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"site_id": &schema.Schema{
-										Description: `Site Id`,
+									"instance_tenant_id": &schema.Schema{
+										Description: `Instance Tenant Id`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
-									"target_id_list": &schema.Schema{
-										Description: `Target Id List`,
+									"instance_version": &schema.Schema{
+										Description: `Instance Version`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+									"ldap": &schema.Schema{
+										Description: `Ldap`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
-									"transit_networks": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"id_ref": &schema.Schema{
-													Description: `Id Ref`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
-									},
-									"type": &schema.Schema{
-										Description: `Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-									"virtual_network": &schema.Schema{
-										Description: `Virtual Network`,
+									"native_vlan": &schema.Schema{
+										Description: `Native Vlan`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
-									"wlan": &schema.Schema{
-										Description: `Wlan`,
+									"netflow": &schema.Schema{
+										Description: `Netflow`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"ntp": &schema.Schema{
+										Description: `Ntp`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"snmp": &schema.Schema{
+										Description: `Snmp`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"syslogs": &schema.Schema{
+										Description: `Syslogs`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Schema{
@@ -689,6 +601,87 @@ func resourceSdaFabricBorderDevice() *schema.Resource {
 								},
 							},
 						},
+						"other_device": &schema.Schema{
+							Description: `Other Device`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"provisioning_state": &schema.Schema{
+							Description: `Provisioning State`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"resource_version": &schema.Schema{
+							Description: `Resource Version`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"roles": &schema.Schema{
+							Description: `Roles`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"save_wan_connectivity_details_only": &schema.Schema{
+							Description: `Save Wan Connectivity Details Only`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"site_id": &schema.Schema{
+							Description: `Site Id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"target_id_list": &schema.Schema{
+							Description: `Target Id List`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"transit_networks": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"id_ref": &schema.Schema{
+										Description: `Id Ref`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+								},
+							},
+						},
+						"type": &schema.Schema{
+							Description: `Type`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"virtual_network": &schema.Schema{
+							Description: `Virtual Network`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"wlan": &schema.Schema{
+							Description: `Wlan`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+
 						"status": &schema.Schema{
 							Description: `Status`,
 							Type:        schema.TypeString,

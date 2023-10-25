@@ -45,6 +45,7 @@ resource "dnacenter_wireless_enterprise_ssid" "example" {
     session_time_out                      = 1
     ssid_name                             = "string"
     traffic_type                          = "string"
+    protected_management_frame            = "string"
   }
 }
 
@@ -69,10 +70,6 @@ output "dnacenter_wireless_enterprise_ssid_example" {
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
-Required:
-
-- `ssid_name` (String) ssidName path parameter. Enter the SSID name to be deleted
-
 Optional:
 
 - `basic_service_set_client_idle_timeout` (Number) Basic Service Set Client Idle Timeout
@@ -90,9 +87,11 @@ Optional:
 - `name` (String) SSID NAME
 - `nas_options` (List of String) Nas Options
 - `passphrase` (String) Passphrase
+- `protected_management_frame` (String) Protected Management Frame
 - `radio_policy` (String) Radio Policy Enum (enum: Triple band operation (2.4GHz, 5GHz and 6GHz), Triple band operation with band select, 5GHz only, 2.4GHz only, 6GHz only)
 - `security_level` (String) Security Level
 - `session_time_out` (Number) Session Time Out
+- `ssid_name` (String) ssidName path parameter. Enter the SSID name to be deleted
 - `traffic_type` (String) Traffic Type Enum (voicedata or data )
 
 

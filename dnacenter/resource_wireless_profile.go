@@ -242,12 +242,6 @@ should be provided.
 								},
 							},
 						},
-						"wireless_profile_name": &schema.Schema{
-							Description: `wirelessProfileName path parameter. Wireless Profile Name
-`,
-							Type:     schema.TypeString,
-							Optional: true,
-						},
 					},
 				},
 			},
@@ -383,6 +377,13 @@ func resourceWirelessProfileRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetWirelessProfile search response",
+				err))
+			return diags
+		}
+
 	}
 	return diags
 }
@@ -392,18 +393,19 @@ func resourceWirelessProfileUpdate(ctx context.Context, d *schema.ResourceData, 
 
 	var diags diag.Diagnostics
 
-	//resourceID := d.Id()
-	//resourceMap := separateResourceID(resourceID)
-	vvName := ""
-	if _, ok := d.GetOk("parameters.0"); ok {
-		if _, ok := d.GetOk("parameters.0.profile_details"); ok {
-			if _, ok := d.GetOk("parameters.0.profile_details.0"); ok {
-				if v, ok := d.GetOk("parameters.0.profile_details.0.name"); ok {
-					vvName = interfaceToString(v)
-				}
-			}
-		}
-	}
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vvName := resourceMap["name"]
+
+	// if _, ok := d.GetOk("parameters.0"); ok {
+	// 	if _, ok := d.GetOk("parameters.0.profile_details"); ok {
+	// 		if _, ok := d.GetOk("parameters.0.profile_details.0"); ok {
+	// 			if v, ok := d.GetOk("parameters.0.profile_details.0.name"); ok {
+	// 				vvName = interfaceToString(v)
+	// 			}
+	// 		}
+	// 	}
+	// }
 	queryParams1 := dnacentersdkgo.GetWirelessProfileQueryParams{}
 	queryParams1.ProfileName = vvName
 	item, err := searchWirelessGetWirelessProfile(m, queryParams1)
@@ -494,13 +496,13 @@ func resourceWirelessProfileDelete(ctx context.Context, d *schema.ResourceData, 
 	}
 	queryParams1 := dnacentersdkgo.GetWirelessProfileQueryParams{}
 	queryParams1.ProfileName = vvName
-	item, err := searchWirelessGetWirelessProfile(m, queryParams1)
-	var vvWirelessProfileName string
-	if err != nil || item == nil {
-		return diags
-	}
+	// item, err := searchWirelessGetWirelessProfile(m, queryParams1)
+	// var vvWirelessProfileName string
+	// if err != nil || item == nil {
+	// 	return diags
+	// }
 
-	vvWirelessProfileName = queryParams1.ProfileName
+	vvWirelessProfileName := queryParams1.ProfileName
 
 	response1, restyResp1, err := client.Wireless.DeleteWirelessProfile(vvWirelessProfileName)
 	if err != nil || response1 == nil {
@@ -650,7 +652,7 @@ func expandRequestWirelessProfileCreateWirelessProfileProfileDetailsSSIDDetailsF
 
 func expandRequestWirelessProfileUpdateWirelessProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateWirelessProfile {
 	request := dnacentersdkgo.RequestWirelessUpdateWirelessProfile{}
-	request.ProfileDetails = expandRequestWirelessProfileUpdateWirelessProfileProfileDetails(ctx, key, d)
+	request.ProfileDetails = expandRequestWirelessProfileUpdateWirelessProfileProfileDetails(ctx, key+".profile_details.0", d)
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
