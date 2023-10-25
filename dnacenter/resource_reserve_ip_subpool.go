@@ -2,7 +2,9 @@ package dnacenter
 
 import (
 	"context"
+	"errors"
 	"reflect"
+	"strings"
 	"time"
 
 	"log"
@@ -475,6 +477,14 @@ func resourceReserveIPSubpoolCreate(ctx context.Context, d *schema.ResourceData,
 			diags = append(diags, diagError(
 				"Failure when executing ReserveIPSubpool", err))
 			return diags
+		} else {
+			if strings.Contains(response2.BapiSyncResponse, "FailureReason:") {
+				err1 := errors.New(response2.BapiError)
+				log.Printf("[DEBUG] Error %s", response2.BapiSyncResponse)
+				diags = append(diags, diagError(
+					"Failure when executing ReserveIPSubpool", err1))
+				return diags
+			}
 		}
 	}
 	resourceMap := make(map[string]string)
@@ -813,8 +823,10 @@ func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacent
 	var err error
 	var foundItem *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponse
 	var nResponse *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpool
+	maxPageSize := 500
 	offset := 1
 	queryParams.Offset = offset
+	queryParams.Limit = maxPageSize
 	nResponse, _, err = client.NetworkSettings.GetReserveIPSubpool(&queryParams)
 	if err != nil {
 		return foundItem, err
@@ -827,8 +839,7 @@ func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacent
 	if nResponse.Response == nil {
 		return nil, err
 	}
-	maxPageSize := len(*nResponse.Response)
-	//maxPageSize := 10
+	// maxPageSize := len(*nResponse.Response)
 	for nResponse != nil && nResponse.Response != nil && len(*nResponse.Response) > 0 {
 		for _, item := range *nResponse.Response {
 			if vName == item.GroupName {

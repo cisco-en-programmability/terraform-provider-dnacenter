@@ -14,11 +14,12 @@ provider "dnacenter" {
 }
 
 resource "dnacenter_building" "example" {
+  count    = 100
   provider = dnacenter
   parameters {
     site {
       building {
-        name        = "MyTestFinalq"
+        name        = "Terraform-Test-${count.index}"
         address     = "255 China Basin Street, San Francisco, California 94158, United States 1"
         parent_name = "Global"
         latitude    = 37.77178651716143
@@ -29,6 +30,7 @@ resource "dnacenter_building" "example" {
     # site_id ="70c232d5-141e-4a03-918e-5a81acda6f38"
   }
 }
+
 
 output "dnacenter_building_example" {
   value = dnacenter_building.example
