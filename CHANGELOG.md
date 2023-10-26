@@ -1,3 +1,7 @@
+## 1.1.25-beta (October 26, 2023)
+BUGFIXES:
+* Hardcoded sleep in dnacenter_floor, dnacenter_area resources #227 - 1 minute sleep removed.
+
 ## 1.1.24-beta (October 25, 2023)
 BUGFIXES:
 * Resource dnacenter_wireless_profile does not support adding new SSIDs to profile #229.

@@ -565,7 +565,7 @@ func resourceFloorDelete(ctx context.Context, d *schema.ResourceData, m interfac
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vSiteID := resourceMap["site_id"]
-	time.Sleep(1 * time.Minute)
+	// time.Sleep(1 * time.Minute)
 	// queryParams1 := dnacentersdkgo.GetSiteQueryParams{}
 	// queryParams1.Name = vName
 	// queryParams1.SiteID = vSiteID
