@@ -521,6 +521,7 @@ func resourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 		if response1 == nil {
+			//			log.Print("[DEBUG] Error response")
 			d.SetId("")
 			return diags
 		}
@@ -531,6 +532,17 @@ func resourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData, m
 		}
 		vItem1 := flattenNetworkSettingsGetReserveIPSubpoolItems(&items)
 		if err := d.Set("item", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetReserveIPSubpool search response",
+				err))
+			return diags
+		}
+		request1 := expandRequestReserveIPSubpoolReserveIPSubpool(ctx, "parameters.0", d)
+		updatedParameters := updateReserveIpPoolParameters(request1, response1)
+
+		vParameters := flattenNetworkSettingsGetReserveIPSubpoolParameters(updatedParameters)
+		vParameters[0]["site_id"] = vSiteID
+		if err := d.Set("parameters", vParameters); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetReserveIPSubpool search response",
 				err))
@@ -842,6 +854,7 @@ func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacent
 	// maxPageSize := len(*nResponse.Response)
 	for nResponse != nil && nResponse.Response != nil && len(*nResponse.Response) > 0 {
 		for _, item := range *nResponse.Response {
+			//			log.Printf("Vname: %s   GroupName: %s", vName, item.GroupName)
 			if vName == item.GroupName {
 				return &item, err
 			}
@@ -853,4 +866,25 @@ func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacent
 		nResponse, _, err = client.NetworkSettings.GetReserveIPSubpool(&queryParams)
 	}
 	return foundItem, err
+}
+
+func updateReserveIpPoolParameters(request *dnacentersdkgo.RequestNetworkSettingsReserveIPSubpool, response *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponse) *dnacentersdkgo.RequestNetworkSettingsReserveIPSubpool {
+	for _, v := range *response.IPPools {
+		// log.Printf("IPPOOL %s", responseInterfaceToString(v))
+		if v.IPv6 != nil && *v.IPv6 {
+			if v.IPPoolName == request.Name {
+				request.Name = v.IPPoolName
+				request.IPv6DhcpServers = interfaceToSliceString(v.DhcpServerIPs)
+				request.IPv6DNSServers = interfaceToSliceString(v.DNSServerIPs)
+			}
+			// request.SLAacSupport      =
+		} else {
+			if v.IPPoolName == request.Name {
+				request.Name = v.IPPoolName
+				request.IPv4DhcpServers = interfaceToSliceString(v.DhcpServerIPs)
+				request.IPv4DNSServers = interfaceToSliceString(v.DNSServerIPs)
+			}
+		}
+	}
+	return request
 }

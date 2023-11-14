@@ -368,6 +368,20 @@ func resourceWirelessProfileRead(ctx context.Context, d *schema.ResourceData, m 
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		resp := *response1
+		// ssidDetails := *resp[0].ProfileDetails.SSIDDetails
+		// sort.SliceStable(ssidDetails, func(i, j int) bool {
+		// 	pass1 := ssidDetails[i]
+		// 	pass2 := ssidDetails[j]
+		// 	return pass1.Name < pass2.Name
+		// })
+
+		// *resp[0].ProfileDetails.SSIDDetails = ssidDetails
+
+		// response1 = &resp
+
+		request1 := expandRequestWirelessProfileCreateWirelessProfile(ctx, "parameters.0", d)
+		*resp[0].ProfileDetails.SSIDDetails = *orderSSIDDetails(*request1.ProfileDetails.SSIDDetails, *resp[0].ProfileDetails.SSIDDetails)
 
 		vItem1 := flattenWirelessGetWirelessProfileItems(response1)
 		if err := d.Set("item", vItem1); err != nil {
@@ -769,4 +783,41 @@ func searchWirelessGetWirelessProfile(m interface{}, queryParams dnacentersdkgo.
 		}
 	}
 	return foundItem, err
+}
+
+func orderSSIDDetails(requestSSID []dnacentersdkgo.RequestWirelessCreateWirelessProfileProfileDetailsSSIDDetails, responseSSID []dnacentersdkgo.ResponseItemWirelessGetWirelessProfileProfileDetailsSSIDDetails) *[]dnacentersdkgo.ResponseItemWirelessGetWirelessProfileProfileDetailsSSIDDetails {
+	var notFound []dnacentersdkgo.ResponseItemWirelessGetWirelessProfileProfileDetailsSSIDDetails
+
+	var orderedResponse []dnacentersdkgo.ResponseItemWirelessGetWirelessProfileProfileDetailsSSIDDetails
+	for i := 0; i < len(requestSSID); i++ {
+		found1 := false
+		for j := 0; j < len(responseSSID); j++ {
+			if requestSSID[i].Name == responseSSID[j].Name {
+				orderedResponse = append(orderedResponse, responseSSID[j])
+				found1 = true
+				break
+			}
+		}
+		if !found1 {
+			orderedResponse = append(orderedResponse, dnacentersdkgo.ResponseItemWirelessGetWirelessProfileProfileDetailsSSIDDetails{})
+		}
+	}
+
+	if len(responseSSID) > len(requestSSID) {
+		for i := 0; i < len(responseSSID); i++ {
+			found := false
+			for j := 0; j < len(requestSSID); j++ {
+				if requestSSID[j].Name == responseSSID[i].Name {
+					found = true
+					break
+				}
+			}
+			if !found {
+				notFound = append(notFound, responseSSID[i])
+			}
+		}
+
+		orderedResponse = append(orderedResponse, notFound...)
+	}
+	return &orderedResponse
 }
