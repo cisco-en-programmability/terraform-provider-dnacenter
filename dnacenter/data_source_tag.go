@@ -469,7 +469,7 @@ func flattenTagGetTagByIDItemDynamicRulesRules(item *dnacentersdkgo.ResponseTagG
 	}
 	respItem := make(map[string]interface{})
 	respItem["values"] = item.Values
-	respItem["items"] = item.Items
+	respItem["items"] = flattenTagGetTagByIDItemDynamicRulesRulesItems(item.Items)
 	respItem["operation"] = item.Operation
 	respItem["name"] = item.Name
 	respItem["value"] = item.Value
@@ -478,4 +478,19 @@ func flattenTagGetTagByIDItemDynamicRulesRules(item *dnacentersdkgo.ResponseTagG
 		respItem,
 	}
 
+}
+
+func flattenTagGetTagByIDItemDynamicRulesRulesItems(items *[]dnacentersdkgo.ResponseTagGetTagByIDResponseDynamicRulesRulesItems) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["name"] = item.Name
+		respItem["operation"] = item.Operation
+		respItem["value"] = item.Value
+		respItems = append(respItems, respItem)
+	}
+	return respItems
 }

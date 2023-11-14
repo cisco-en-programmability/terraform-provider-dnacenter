@@ -66,9 +66,25 @@ func resourceTag() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"items": &schema.Schema{
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
+													Optional: true,
 													Computed: true,
-												},
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"name": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"operation": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"value": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														}}},
 												"name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
@@ -144,10 +160,31 @@ func resourceTag() *schema.Resource {
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
+												"items": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
 
+															"name": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+															"operation": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+															"value": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+														}}},
 												"name": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"operation": &schema.Schema{
@@ -157,12 +194,10 @@ func resourceTag() *schema.Resource {
 												},
 												"value": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"values": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
@@ -220,6 +255,8 @@ func resourceTagCreate(ctx context.Context, d *schema.ResourceData, m interface{
 	vvName := interfaceToString(vName)
 	if okID && vvID != "" {
 		getResponse2, _, err := client.Tag.GetTagByID(vvID)
+		log.Printf("[DEBUG] request sent 1 => %v", responseInterfaceToString(*getResponse2))
+		log.Printf("[DEBUG] request sent 2 => %s", err.Error())
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
@@ -233,8 +270,9 @@ func resourceTagCreate(ctx context.Context, d *schema.ResourceData, m interface{
 
 		queryParams1.Name = vvName
 		response1, err := searchTagGetTag(m, queryParams1)
-
-		if err != nil || response1 != nil {
+		// log.Printf("[DEBUG] request sent 3 => %v", responseInterfaceToString(response1))
+		// log.Printf("[DEBUG] request sent 4 => %s", err.Error())
+		if err == nil && response1 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
@@ -352,6 +390,13 @@ func resourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{})
 			return diags
 		}
 
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTagByID response",
+				err))
+			return diags
+		}
+
 	}
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method 2: GetTagByID")
@@ -377,6 +422,13 @@ func resourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{})
 
 		vItem2 := flattenTagGetTagByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTagByID response",
+				err))
+			return diags
+		}
+
+		if err := d.Set("parameters", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTagByID response",
 				err))
@@ -431,6 +483,7 @@ func resourceTagUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 		request1 := expandRequestTagUpdateTag(ctx, "parameters.0", d)
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			request1.ID = vvID
 		}
 		response1, restyResp1, err := client.Tag.UpdateTag(request1)
 		if err != nil || response1 == nil {
@@ -625,24 +678,62 @@ func expandRequestTagCreateTagDynamicRules(ctx context.Context, key string, d *s
 
 func expandRequestTagCreateTagDynamicRulesRules(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagCreateTagDynamicRulesRules {
 	request := dnacentersdkgo.RequestTagCreateTagDynamicRulesRules{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".values")))) {
-		request.Values = interfaceToSliceString(v)
-	}
+	// if v, ok := d.GetOkExists(fixKeyAccess(key + ".values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".values")))) {
+	// 	request.Values = interfaceToSliceString(v)
+	// }
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".items")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".items")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".items")))) {
-		request.Items = interfaceToString(v)
+		request.Items = expandRequestTagCreateTagDynamicRulesRulesItemArray(ctx, key+".items", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation")))) {
 		request.Operation = interfaceToString(v)
 	}
+	// if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+	// 	request.Name = interfaceToString(v)
+	// }
+	// if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
+	// 	request.Value = interfaceToString(v)
+	// }
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestTagCreateTagDynamicRulesRulesItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems {
+	request := []dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestTagCreateTagDynamicRulesRulesItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestTagCreateTagDynamicRulesRulesItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems {
+	request := dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation")))) {
+		request.Operation = interfaceToString(v)
 	}
+
 	return &request
 }
 
@@ -708,14 +799,13 @@ func expandRequestTagUpdateTagDynamicRules(ctx context.Context, key string, d *s
 	}
 	return &request
 }
-
 func expandRequestTagUpdateTagDynamicRulesRules(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagUpdateTagDynamicRulesRules {
 	request := dnacentersdkgo.RequestTagUpdateTagDynamicRulesRules{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".values")))) {
 		request.Values = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".items")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".items")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".items")))) {
-		request.Items = interfaceToSliceString(v)
+		request.Items = expandRequestTagUpdateTagDynamicRulesRulesItemArray(ctx, key+".items", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation")))) {
 		request.Operation = interfaceToString(v)
@@ -729,6 +819,44 @@ func expandRequestTagUpdateTagDynamicRulesRules(ctx context.Context, key string,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
+
+func expandRequestTagUpdateTagDynamicRulesRulesItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems {
+	request := []dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestTagUpdateTagDynamicRulesRulesItems(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestTagUpdateTagDynamicRulesRulesItems(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems {
+	request := dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
+		request.Value = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation")))) {
+		request.Operation = interfaceToString(v)
+	}
+
 	return &request
 }
 

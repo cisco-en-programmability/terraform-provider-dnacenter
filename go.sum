@@ -20,8 +20,8 @@ github.com/armon/go-radix v1.0.0/go.mod h1:ufUuZ+zHj4x4TnLV4JWEpy2hxWSpsRywHrMgI
 github.com/bgentry/speakeasy v0.1.0 h1:ByYyxL9InA1OWqxJqqp2A5pYHUrCiAL6K3J+LKSsQkY=
 github.com/bgentry/speakeasy v0.1.0/go.mod h1:+zsyZBPWlz7T6j88CTgSN5bM796AkVf0kBD4zp0CCIs=
 github.com/bwesterb/go-ristretto v1.2.0/go.mod h1:fUIoIZaG73pV5biE2Blr2xEzDoMj7NFEuV9ekS419A0=
-github.com/cisco-en-programmability/dnacenter-go-sdk/v5 v5.0.17 h1:5SF1KBXOAzR1kC+rcGFlV2P7F7eqamP0IVlxqSq2mRc=
-github.com/cisco-en-programmability/dnacenter-go-sdk/v5 v5.0.17/go.mod h1:4Km+JuiyL/LsNRvO4dMWUSUVbnNBRmbwzJMU1oUbn0E=
+github.com/cisco-en-programmability/dnacenter-go-sdk/v5 v5.0.18 h1:J/6QK10VJd/T2jd44blLwu6zP/vgN+EdpQ9aZSTfiNc=
+github.com/cisco-en-programmability/dnacenter-go-sdk/v5 v5.0.18/go.mod h1:4Km+JuiyL/LsNRvO4dMWUSUVbnNBRmbwzJMU1oUbn0E=
 github.com/cloudflare/circl v1.1.0/go.mod h1:prBCrKB9DV4poKZY1l9zBXg2QJY7mvgRvtMxxK7fi4I=
 github.com/cloudflare/circl v1.3.3 h1:fE/Qz0QdIGqeWfnwq0RE0R7MI51s0M2E4Ga9kq5AEMs=
 github.com/cloudflare/circl v1.3.3/go.mod h1:5XYMA4rFBvNIrhs50XuiBJ15vF2pZn4nnUKZrLbUZFA=
