@@ -30,11 +30,12 @@ resource "dnacenter_tag" "example" {
 
       member_type = "string"
       rules {
-
-        name      = "string"
         operation = "string"
-        value     = "string"
-        values    = ["string"]
+        items {
+          name      = "string"
+          operation = "string"
+          value     = "string"
+        }
       }
     }
     id                 = "string"
@@ -90,10 +91,17 @@ Optional:
 
 Optional:
 
+- `items` (Block List) (see [below for nested schema](#nestedblock--parameters--dynamic_rules--rules--items))
+
+<a id="nestedblock--parameters--dynamic_rules--rules--items"></a>
+### Nested Schema for `parameters.dynamic_rules.rules.items`
+
+Optional:
+
 - `name` (String)
 - `operation` (String)
 - `value` (String)
-- `values` (List of String)
+
 
 
 

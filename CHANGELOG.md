@@ -1,3 +1,11 @@
+## 1.1.26-beta (November 14, 2023)
+BUGFIXES:
+*  Resource `dnacenter_reserve_ip_subpool` does not detect changes made outside terraform #217
+*  `dnacenter_wireless_enterprise_ssid` WPA3 SSIDs fail to provision due to missing parameter #232
+*  `dnacenter_wireless_profiles` does not properly read or synchronizes to state #233 
+*   Unable to create `dnacenter_tag` with multiple rules. #238
+
+
 ## 1.1.25-beta (October 26, 2023)
 BUGFIXES:
 * Hardcoded sleep in dnacenter_floor, dnacenter_area resources #227 - 1 minute sleep removed.

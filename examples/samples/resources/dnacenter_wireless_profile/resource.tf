@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.24-beta"
+      version = "1.1.26-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -13,13 +13,17 @@ provider "dnacenter" {
   debug = "true"
 }
 
+
 resource "dnacenter_wireless_profile" "example" {
   provider = dnacenter
-  parameters {
 
+  parameters {
     profile_details {
       name  = "Test22"
       sites = ["Global/CR"]
+
+
+      
       ssid_details {
         enable_fabric = "true"
         flex_connect {
@@ -27,9 +31,19 @@ resource "dnacenter_wireless_profile" "example" {
           local_to_vlan       = 0
         }
         interface_name = "management"
-        name           = "Test22"
+        name           = "BTest22"
         type           = "string"
       }
+       ssid_details {
+        enable_fabric = "true"
+        flex_connect {
+          enable_flex_connect = "false"
+          local_to_vlan       = 0
+        }
+        interface_name = "management"
+        name           = "new2"
+        type           = "eduroam"
+      }
       ssid_details {
         enable_fabric = "true"
         flex_connect {
@@ -37,14 +51,25 @@ resource "dnacenter_wireless_profile" "example" {
           local_to_vlan       = 0
         }
         interface_name = "management"
-        name           = "Test222"
-        type           = "string2"
+        name           = "ATest222"
+        type           = "eduroam"
       }
+      ssid_details {
+        enable_fabric = "true"
+        flex_connect {
+          enable_flex_connect = "false"
+          local_to_vlan       = 0
+        }
+        interface_name = "management"
+        name           = "new"
+        type           = "eduroam"
+      }
+      
     }
-    #wireless_profile_name = "string"
   }
 }
 
-output "dnacenter_wireless_profile_example" {
-  value = dnacenter_wireless_profile.example
-}
+
+# output "dnacenter_wireless_profile_example" {
+#   value = dnacenter_wireless_profile.example
+# }

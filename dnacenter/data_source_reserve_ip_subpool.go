@@ -321,6 +321,37 @@ func flattenNetworkSettingsGetReserveIPSubpoolItems(items *[]dnacentersdkgo.Resp
 	return respItems
 }
 
+func flattenNetworkSettingsGetReserveIPSubpoolParameters(items *dnacentersdkgo.RequestNetworkSettingsReserveIPSubpool) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	respItem := make(map[string]interface{})
+	respItem["name"] = items.Name
+	respItem["type"] = items.Type
+	respItem["ipv6_address_space"] = boolPtrToString(items.IPv6AddressSpace)
+	respItem["ipv4_global_pool"] = items.IPv4GlobalPool
+	respItem["ipv4_prefix"] = boolPtrToString(items.IPv4Prefix)
+	respItem["ipv4_prefix_length"] = interfaceToIntPtr(items.IPv4PrefixLength)
+	respItem["ipv4_subnet"] = items.IPv4Subnet
+	respItem["ipv4_gate_way"] = items.IPv4GateWay
+	respItem["ipv4_dhcp_servers"] = items.IPv4DhcpServers
+	respItem["ipv4_dns_servers"] = items.IPv4DNSServers
+	respItem["ipv6_global_pool"] = items.IPv6GlobalPool
+	respItem["ipv6_prefix"] = boolPtrToString(items.IPv6Prefix)
+	respItem["ipv6_prefix_length"] = items.IPv6PrefixLength
+	respItem["ipv6_subnet"] = items.IPv6Subnet
+	respItem["ipv6_gate_way"] = items.IPv6GateWay
+	respItem["ipv6_dhcp_servers"] = items.IPv6DhcpServers
+	respItem["ipv6_dns_servers"] = items.IPv6DNSServers
+	respItem["ipv4_total_host"] = interfaceToIntPtr(items.IPv4TotalHost)
+	respItem["ipv6_total_host"] = interfaceToIntPtr(items.IPv6TotalHost)
+	respItem["slaac_support"] = boolPtrToString(items.SLAacSupport)
+
+	respItems = append(respItems, respItem)
+	return respItems
+}
+
 func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPools(items *[]dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponseIPPools) []map[string]interface{} {
 	if items == nil {
 		return nil
