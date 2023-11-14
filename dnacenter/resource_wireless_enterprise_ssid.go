@@ -541,6 +541,7 @@ func resourceWirelessEnterpriseSSIDRead(ctx context.Context, d *schema.ResourceD
 			"session_time_out":                      request.SessionTimeOut,
 			"traffic_type":                          responseItemSSIDItem.TrafficType,
 			"protected_management_frame":            responseItemSSIDItem.ProtectedManagementFrame,
+			"ssid_name":                             request.Name,
 		}
 		// vItem1 := flattenWirelessGetEnterpriseSSIDItems(response1)
 		if err := d.Set("parameters", []map[string]interface{}{vParameters}); err != nil {
