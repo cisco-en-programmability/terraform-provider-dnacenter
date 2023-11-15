@@ -382,7 +382,6 @@ func resourceWirelessProfileRead(ctx context.Context, d *schema.ResourceData, m 
 
 		request1 := expandRequestWirelessProfileCreateWirelessProfile(ctx, "parameters.0", d)
 		*resp[0].ProfileDetails.SSIDDetails = *orderSSIDDetails(*request1.ProfileDetails.SSIDDetails, *resp[0].ProfileDetails.SSIDDetails)
-
 		vItem1 := flattenWirelessGetWirelessProfileItems(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
@@ -390,7 +389,7 @@ func resourceWirelessProfileRead(ctx context.Context, d *schema.ResourceData, m 
 				err))
 			return diags
 		}
-
+		vItem1[0]["profile_details"].([]map[string]interface{})[0]["sites"] = request1.ProfileDetails.Sites
 		if err := d.Set("parameters", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetWirelessProfile search response",
