@@ -34,16 +34,6 @@ resource "dnacenter_wireless_profile" "example" {
         name           = "BTest22"
         type           = "string"
       }
-       ssid_details {
-        enable_fabric = "true"
-        flex_connect {
-          enable_flex_connect = "false"
-          local_to_vlan       = 0
-        }
-        interface_name = "management"
-        name           = "new2"
-        type           = "eduroam"
-      }
       ssid_details {
         enable_fabric = "true"
         flex_connect {
@@ -54,7 +44,7 @@ resource "dnacenter_wireless_profile" "example" {
         name           = "ATest222"
         type           = "eduroam"
       }
-      ssid_details {
+       ssid_details {
         enable_fabric = "true"
         flex_connect {
           enable_flex_connect = "false"
@@ -62,9 +52,8 @@ resource "dnacenter_wireless_profile" "example" {
         }
         interface_name = "management"
         name           = "new"
-        type           = "eduroam"
+        type           = "string"
       }
-      
     }
   }
 }
