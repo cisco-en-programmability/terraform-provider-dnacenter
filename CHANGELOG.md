@@ -1,3 +1,8 @@
+## 1.1.27-beta (November 20, 2023)
+BUGFIXES:
+*  Resource `dnacenter_reserve_ip_subpool` does not detect changes made outside terraform - updating parameter can be updated. #217
+*  `dnacenter_wireless_profiles` does not properly read or synchronizes to state - sites are not mapped with GET API. #233
+
 ## 1.1.26-beta (November 14, 2023)
 BUGFIXES:
 *  Resource `dnacenter_reserve_ip_subpool` does not detect changes made outside terraform #217
