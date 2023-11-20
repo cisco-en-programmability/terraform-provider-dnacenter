@@ -332,7 +332,7 @@ func flattenNetworkSettingsGetReserveIPSubpoolParameters(items *dnacentersdkgo.R
 	respItem["ipv6_address_space"] = boolPtrToString(items.IPv6AddressSpace)
 	respItem["ipv4_global_pool"] = items.IPv4GlobalPool
 	respItem["ipv4_prefix"] = boolPtrToString(items.IPv4Prefix)
-	respItem["ipv4_prefix_length"] = interfaceToIntPtr(items.IPv4PrefixLength)
+	respItem["ipv4_prefix_length"] = items.IPv4PrefixLength
 	respItem["ipv4_subnet"] = items.IPv4Subnet
 	respItem["ipv4_gate_way"] = items.IPv4GateWay
 	respItem["ipv4_dhcp_servers"] = items.IPv4DhcpServers
@@ -349,6 +349,30 @@ func flattenNetworkSettingsGetReserveIPSubpoolParameters(items *dnacentersdkgo.R
 	respItem["slaac_support"] = boolPtrToString(items.SLAacSupport)
 
 	respItems = append(respItems, respItem)
+	return respItems
+}
+
+func flattenNetworkSettingsGetReserveIPSubpoolParametersDhcpServers(items []string) []interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []interface{}
+	for _, item := range items {
+		respItem := item
+		respItems = append(respItems, responseInterfaceToString(respItem))
+	}
+	return respItems
+}
+
+func flattenNetworkSettingsGetReserveIPSubpoolParametersDnsServers(items []string) []interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []interface{}
+	for _, item := range items {
+		respItem := item
+		respItems = append(respItems, responseInterfaceToString(respItem))
+	}
 	return respItems
 }
 
@@ -384,12 +408,12 @@ func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPools(items *[]dnacentersdk
 	return respItems
 }
 
-func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsDhcpServerIPs(items *[]dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponseIPPoolsDhcpServerIPs) []interface{} {
+func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsDhcpServerIPs(items []string) []interface{} {
 	if items == nil {
 		return nil
 	}
 	var respItems []interface{}
-	for _, item := range *items {
+	for _, item := range items {
 		respItem := item
 		respItems = append(respItems, responseInterfaceToString(respItem))
 	}
@@ -406,12 +430,12 @@ func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsClientOptions(item *dn
 
 }
 
-func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsDNSServerIPs(items *[]dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponseIPPoolsDNSServerIPs) []interface{} {
+func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsDNSServerIPs(items []string) []interface{} {
 	if items == nil {
 		return nil
 	}
 	var respItems []interface{}
-	for _, item := range *items {
+	for _, item := range items {
 		respItem := item
 		respItems = append(respItems, responseInterfaceToString(respItem))
 	}

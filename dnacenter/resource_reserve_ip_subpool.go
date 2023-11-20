@@ -538,6 +538,7 @@ func resourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 		request1 := expandRequestReserveIPSubpoolReserveIPSubpool(ctx, "parameters.0", d)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 		updatedParameters := updateReserveIpPoolParameters(request1, response1)
 
 		vParameters := flattenNetworkSettingsGetReserveIPSubpoolParameters(updatedParameters)
@@ -869,22 +870,26 @@ func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacent
 }
 
 func updateReserveIpPoolParameters(request *dnacentersdkgo.RequestNetworkSettingsReserveIPSubpool, response *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponse) *dnacentersdkgo.RequestNetworkSettingsReserveIPSubpool {
+	log.Printf("IPPOOLREQUEST %s", responseInterfaceToString(request))
 	for _, v := range *response.IPPools {
-		// log.Printf("IPPOOL %s", responseInterfaceToString(v))
+		log.Printf("IPPOOL %s", responseInterfaceToString(v))
+		log.Printf("IPPOOL Dhcp %s", responseInterfaceToString(v.DhcpServerIPs))
 		if v.IPv6 != nil && *v.IPv6 {
 			if v.IPPoolName == request.Name {
 				request.Name = v.IPPoolName
-				request.IPv6DhcpServers = interfaceToSliceString(v.DhcpServerIPs)
-				request.IPv6DNSServers = interfaceToSliceString(v.DNSServerIPs)
+				request.IPv6DhcpServers = v.DhcpServerIPs
+				request.IPv6DNSServers = v.DNSServerIPs
 			}
 			// request.SLAacSupport      =
 		} else {
 			if v.IPPoolName == request.Name {
 				request.Name = v.IPPoolName
-				request.IPv4DhcpServers = interfaceToSliceString(v.DhcpServerIPs)
-				request.IPv4DNSServers = interfaceToSliceString(v.DNSServerIPs)
+				request.IPv4DhcpServers = v.DhcpServerIPs
+				request.IPv4DNSServers = v.DNSServerIPs
 			}
 		}
 	}
+
+	log.Printf("IPPOOLREQUEST %s", responseInterfaceToString(request))
 	return request
 }
