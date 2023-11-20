@@ -3,6 +3,7 @@ package dnacenter
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"strconv"
 )
 
@@ -91,9 +92,27 @@ func getResourceItem(item interface{}) *map[string]interface{} {
 	return &vvItem
 }
 
+func sliceInterfaceToSliceString(v []interface{}) []string {
+	newValue := []string{}
+	for _, v2 := range v {
+		value, ok := v2.([]interface{})
+		if !ok {
+			log.Print("sliceInterfaceToSliceString: Nil")
+			return nil
+		}
+
+		for _, i := range value {
+			newValue = append(newValue, interfaceToString(i))
+		}
+	}
+	return newValue
+}
+
 func interfaceToSliceString(v interface{}) []string {
 	value, ok := v.([]interface{})
+	log.Printf("interfaceToSliceString interface: %s", responseInterfaceToSliceString(v))
 	if !ok {
+		log.Print("interfaceToSliceString: Nil")
 		return nil
 	}
 	newValue := []string{}
