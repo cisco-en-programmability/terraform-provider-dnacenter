@@ -1,3 +1,7 @@
+## 1.1.28-beta (November 21, 2023)
+BUGFIXES:
+*  Resource `dnacenter_reserve_ip_subpool` does not detect changes made outside terraform - update request fixed. #217
+
 ## 1.1.27-beta (November 20, 2023)
 BUGFIXES:
 *  Resource `dnacenter_reserve_ip_subpool` does not detect changes made outside terraform - updating parameter can be updated. #217
