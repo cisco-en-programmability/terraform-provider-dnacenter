@@ -788,6 +788,10 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_address_space")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_address_space")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_address_space")))) {
 		request.IPv6AddressSpace = interfaceToBoolPtr(v)
+		if request.IPv6AddressSpace == nil {
+			defaultBool := false
+			request.IPv6AddressSpace = &defaultBool
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_dhcp_servers")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_dhcp_servers")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_dhcp_servers")))) {
 		request.IPv4DhcpServers = interfaceToSliceString(v)
@@ -803,6 +807,11 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_prefix_length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) {
 		request.IPv6PrefixLength = interfaceToIntPtr(v)
+		if request.IPv6PrefixLength != nil {
+			if *request.IPv6PrefixLength == 0 {
+				request.IPv6PrefixLength = nil
+			}
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_subnet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_subnet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_subnet")))) {
 		request.IPv6Subnet = interfaceToString(v)
@@ -818,13 +827,18 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_total_host")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_total_host")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_total_host")))) {
 		request.IPv6TotalHost = interfaceToIntPtr(v)
+		if request.IPv6TotalHost != nil {
+			if *request.IPv6TotalHost == 0 {
+				request.IPv6TotalHost = nil
+			}
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".slaac_support")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".slaac_support")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".slaac_support")))) {
 		request.SLAacSupport = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_gate_way")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_gate_way")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_gate_way")))) {
-		request.IPv4GateWay = interfaceToString(v)
-	}
+	// if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_gate_way")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_gate_way")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_gate_way")))) {
+	// 	request.IPv4GateWay = interfaceToString(v)
+	// }
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
