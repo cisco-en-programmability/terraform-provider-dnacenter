@@ -481,7 +481,7 @@ func resourceNetworkCreateDelete(ctx context.Context, d *schema.ResourceData, m 
 
 func expandRequestNetworkCreateCreateNetwork(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateNetwork {
 	request := dnacentersdkgo.RequestNetworkSettingsCreateNetwork{}
-	request.Settings = expandRequestNetworkCreateCreateNetworkSettings(ctx, key, d)
+	request.Settings = expandRequestNetworkCreateCreateNetworkSettings(ctx, fixKeyAccess(key+".settings.0"), d)
 	return &request
 }
 
