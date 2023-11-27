@@ -1,3 +1,7 @@
+## 1.1.29-beta (November 27, 2023)
+BUGFIXES:
+*  Resource `dnacenter_network_create` payload bug fixed. #243
+
 ## 1.1.28-beta (November 21, 2023)
 BUGFIXES:
 *  Resource `dnacenter_reserve_ip_subpool` does not detect changes made outside terraform - update request fixed. #217
