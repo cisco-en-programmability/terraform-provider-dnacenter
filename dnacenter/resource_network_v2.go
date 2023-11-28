@@ -561,7 +561,7 @@ func resourceNetworkV2Delete(ctx context.Context, d *schema.ResourceData, m inte
 }
 func expandRequestNetworkV2CreateNetworkV2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateNetworkV2 {
 	request := dnacentersdkgo.RequestNetworkSettingsCreateNetworkV2{}
-	request.Settings = expandRequestNetworkV2CreateNetworkV2Settings(ctx, key, d)
+	request.Settings = expandRequestNetworkV2CreateNetworkV2Settings(ctx, fixKeyAccess(key+".settings.0"), d)
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -727,7 +727,7 @@ func expandRequestNetworkV2CreateNetworkV2SettingsClientAndEndpointAAA(ctx conte
 
 func expandRequestNetworkV2UpdateNetworkV2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsUpdateNetworkV2 {
 	request := dnacentersdkgo.RequestNetworkSettingsUpdateNetworkV2{}
-	request.Settings = expandRequestNetworkV2UpdateNetworkV2Settings(ctx, key, d)
+	request.Settings = expandRequestNetworkV2UpdateNetworkV2Settings(ctx, fixKeyAccess(key+".settings.0"), d)
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

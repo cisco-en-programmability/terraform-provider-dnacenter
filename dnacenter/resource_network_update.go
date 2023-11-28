@@ -466,7 +466,7 @@ func resourceNetworkUpdateDelete(ctx context.Context, d *schema.ResourceData, m 
 
 func expandRequestNetworkUpdateUpdateNetwork(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsUpdateNetwork {
 	request := dnacentersdkgo.RequestNetworkSettingsUpdateNetwork{}
-	request.Settings = expandRequestNetworkUpdateUpdateNetworkSettings(ctx, key, d)
+	request.Settings = expandRequestNetworkUpdateUpdateNetworkSettings(ctx, fixKeyAccess(key+".settings.0"), d)
 	return &request
 }
 
