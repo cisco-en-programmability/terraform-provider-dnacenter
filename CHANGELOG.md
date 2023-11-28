@@ -1,3 +1,8 @@
+## 1.1.30-beta (November 28, 2023)
+BUGFIXES:
+*  Resource `dnacenter_network_update` payload bug fixed. #243
+*  Resource `dnacenter_network_v2` payload bug fixed. #243
+
 ## 1.1.29-beta (November 27, 2023)
 BUGFIXES:
 *  Resource `dnacenter_network_create` payload bug fixed. #243
