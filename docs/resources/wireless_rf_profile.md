@@ -63,7 +63,6 @@ resource "dnacenter_wireless_rf_profile" "example" {
       radio_channels       = "string"
       rx_sop_threshold     = "string"
     }
-    rf_profile_name = "string"
   }
 }
 

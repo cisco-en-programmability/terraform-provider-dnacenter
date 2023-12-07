@@ -159,7 +159,7 @@ func flattenNetworkSettingsGetNetworkV2Items(items *[]dnacentersdkgo.ResponseNet
 		respItem["type"] = item.Type
 		respItem["key"] = item.Key
 		respItem["version"] = item.Version
-		respItem["value"] = item.Value
+		respItem["value"] = interfaceToString(item.Value)
 		respItem["group_uuid"] = item.GroupUUID
 		respItem["inherited_group_uuid"] = item.InheritedGroupUUID
 		respItem["inherited_group_name"] = item.InheritedGroupName
