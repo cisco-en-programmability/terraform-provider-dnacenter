@@ -87,11 +87,8 @@ server settings.
 						},
 						"value": &schema.Schema{
 							Description: `Value`,
-							Type:        schema.TypeList,
+							Type:        schema.TypeString,
 							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 						"version": &schema.Schema{
 							Description: `Version`,
@@ -496,12 +493,14 @@ func resourceNetworkV2Update(ctx context.Context, d *schema.ResourceData, m inte
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vvSiteID := resourceMap["site_id"]
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] ID used for update operation %s", "vvID")
+		log.Printf("[DEBUG] ID used for update operation %s", vvSiteID)
 		request1 := expandRequestNetworkV2UpdateNetworkV2(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		response1, restyResp1, err := client.NetworkSettings.UpdateNetworkV2("vvSiteID", request1)
+		response1, restyResp1, err := client.NetworkSettings.UpdateNetworkV2(vvSiteID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
