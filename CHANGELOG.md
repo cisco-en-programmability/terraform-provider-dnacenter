@@ -1,3 +1,9 @@
+## 1.1.31-beta (December 07, 2023)
+BUGFIXES:
+*  dnacenter_wireless_rf_profile does not properly read or synchronizes to state -> Documentation Bug and Idempotency implemented acorrding Debugs detailed.
+    `rf_profile_name` attributte removed because it's the same `name` - Issue #234
+*  Provider crashes when creating resource dnacenter_network_v2, fixed - documentation and API bug, `value` is a paramater with multiple different type of answers. Updating Go MOD and Go SUM. [go: upgraded github.com/cisco-en-programmability/dnacenter-go-sdk/v5 v5.0.20 => v5.0.24] - Issue #246
+
 ## 1.1.30-beta (November 28, 2023)
 BUGFIXES:
 *  Resource `dnacenter_network_update` payload bug fixed. #243
