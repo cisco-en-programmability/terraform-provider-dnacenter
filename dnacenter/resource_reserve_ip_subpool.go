@@ -256,6 +256,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `Gateway ip address details, example: 175.175.0.1
 `,
 							Type:     schema.TypeString,
+							ForceNew: true,
 							Optional: true,
 							Computed: true,
 						},
@@ -263,6 +264,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `IP v4 Global pool address with cidr, example: 175.175.0.0/16
 `,
 							Type:     schema.TypeString,
+							ForceNew: true,
 							Optional: true,
 							Computed: true,
 						},
@@ -272,6 +274,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							ForceNew:     true,
 							Optional:     true,
 							Computed:     true,
 						},
@@ -279,6 +282,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `The ipv4 prefix length is required when ipv4prefix value is true.
 `,
 							Type:     schema.TypeInt,
+							ForceNew: true,
 							Optional: true,
 							Computed: true,
 						},
@@ -286,6 +290,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `IPv4 Subnet address, example: 175.175.0.0
 `,
 							Type:     schema.TypeString,
+							ForceNew: true,
 							Optional: true,
 							Computed: true,
 						},
@@ -293,6 +298,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `IPv4 total host is required when ipv4prefix value is false.
 `,
 							Type:     schema.TypeInt,
+							ForceNew: true,
 							Optional: true,
 							Computed: true,
 						},
@@ -302,6 +308,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							ForceNew:     true,
 							Optional:     true,
 							Computed:     true,
 						},
@@ -329,6 +336,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `Gateway ip address details, example: 2001:db8:85a3:0:100::1
 `,
 							Type:     schema.TypeString,
+							ForceNew: true,
 							Optional: true,
 							Computed: true,
 						},
@@ -336,6 +344,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `IPv6 Global pool address with cidr this is required when Ipv6AddressSpace value is true, example: 2001:db8:85a3::/64
 `,
 							Type:     schema.TypeString,
+							ForceNew: true,
 							Optional: true,
 							Computed: true,
 						},
@@ -345,6 +354,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							ForceNew:     true,
 							Optional:     true,
 							Computed:     true,
 						},
@@ -352,6 +362,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `IPv6 prefix length is required when the ipv6prefix value is true
 `,
 							Type:     schema.TypeInt,
+							ForceNew: true,
 							Optional: true,
 							Computed: true,
 						},
@@ -359,6 +370,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `IPv6 Subnet address, example :2001:db8:85a3:0:100::
 `,
 							Type:     schema.TypeString,
+							ForceNew: true,
 							Optional: true,
 							Computed: true,
 						},
@@ -366,6 +378,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `IPv6 total host is required when ipv6prefix value is false.
 `,
 							Type:     schema.TypeInt,
+							ForceNew: true,
 							Optional: true,
 							Computed: true,
 						},
@@ -380,6 +393,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `siteId path parameter. Site id of site to update sub pool.
 `,
 							Type:     schema.TypeString,
+							ForceNew: true,
 							Optional: true,
 						},
 						"slaac_support": &schema.Schema{
@@ -387,6 +401,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							ForceNew:     true,
 							Optional:     true,
 							Computed:     true,
 						},
@@ -394,6 +409,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Description: `Type of the reserve ip sub pool
 `,
 							Type:     schema.TypeString,
+							ForceNew: true,
 							Optional: true,
 							Computed: true,
 						},
