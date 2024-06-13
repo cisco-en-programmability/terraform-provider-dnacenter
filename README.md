@@ -25,7 +25,7 @@ The following table shows the supported versions.
 | 2.2.3.3                  | 0.3.0-beta                             |
 | 2.2.3.3                  | 0.3.0                                  |
 | 2.3.3.0                  | 1.0.19-beta                            |
-| 2.3.5.3                  | 1.1.31-beta                            |
+| 2.3.5.3                  | 1.1.32-beta                            |
 
 If your SDK, Terraform provider is older please consider updating it first.
 
@@ -66,7 +66,7 @@ terraform {
   required_providers {
     dnacenter = {
       source = "cisco-en-programmability/dnacenter"
-      version = "1.1.31-beta"
+      version = "1.1.32-beta"
     }
   }
 }

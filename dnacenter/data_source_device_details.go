@@ -281,7 +281,7 @@ func dataSourceDeviceDetails() *schema.Resource {
 
 						"timestamp": &schema.Schema{
 							Description: `Timestamp`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 
