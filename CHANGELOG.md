@@ -1,3 +1,7 @@
+## 1.1.32-beta (June 13, 2024)
+BUGFIXES:
+* Data source `device_details` fixed. Change `timestamp` attribute from `string` to `int`.
+
 ## 1.1.31-beta (December 07, 2023)
 BUGFIXES:
 *  dnacenter_wireless_rf_profile does not properly read or synchronizes to state -> Documentation Bug and Idempotency implemented acorrding Debugs detailed.
