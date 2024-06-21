@@ -49,3 +49,6 @@ vendor/
 
 # Log files
 *.log
+
+# Shell
+.sh
