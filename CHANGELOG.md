@@ -1,3 +1,9 @@
+## 1.1.33-beta (June 26, 2024)
+BUGFIXES:
+* Resource `pnp_devoce` pagination bug fixed. #254
+* Resource `reserve_ip_subpool` import bug fix. #265
+* Resource `discovery` pagination bug fixed. #267
+
 ## 1.1.32-beta (June 13, 2024)
 BUGFIXES:
 * Data source `device_details` fixed. Change `timestamp` attribute from `string` to `int`.
