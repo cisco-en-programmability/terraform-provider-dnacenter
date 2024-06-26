@@ -885,6 +885,9 @@ func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacent
 
 func updateReserveIpPoolParameters(request *dnacentersdkgo.RequestNetworkSettingsReserveIPSubpool, response *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponse) *dnacentersdkgo.RequestNetworkSettingsReserveIPSubpool {
 	log.Printf("IPPOOLREQUEST %s", responseInterfaceToString(request))
+	if request == nil {
+		request = &dnacentersdkgo.RequestNetworkSettingsReserveIPSubpool{}
+	}
 	for _, v := range *response.IPPools {
 		log.Printf("IPPOOL %s", responseInterfaceToString(v))
 		log.Printf("IPPOOL Dhcp %s", responseInterfaceToString(v.DhcpServerIPs))
@@ -894,7 +897,6 @@ func updateReserveIpPoolParameters(request *dnacentersdkgo.RequestNetworkSetting
 				request.IPv6DhcpServers = v.DhcpServerIPs
 				request.IPv6DNSServers = v.DNSServerIPs
 			}
-			// request.SLAacSupport      =
 		} else {
 			if v.IPPoolName == request.Name {
 				request.Name = v.IPPoolName

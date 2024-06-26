@@ -1,1 +1,1 @@
-terraform import dnacenter_reserve_ip_subpool.example "id:=string"
+terraform import dnacenter_reserve_ip_subpool.example "name:=string\\site_id:=string"
