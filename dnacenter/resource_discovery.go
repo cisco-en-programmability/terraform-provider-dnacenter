@@ -1379,17 +1379,29 @@ func searchDiscovery(m interface{}, vName string) (*dnacentersdkgo.ResponseDisco
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseDiscoveryGetDiscoveriesByRangeResponse
-	if vName != "" {
-		totalDiscovery, _, err := client.Discovery.GetCountOfAllDiscoveryJobs()
-		if err != nil || totalDiscovery == nil {
-			return foundItem, err
-		}
+	if vName == "" {
+		return foundItem, err
+	}
+	totalDiscovery, _, err := client.Discovery.GetCountOfAllDiscoveryJobs()
+	if err != nil || totalDiscovery == nil {
+		return foundItem, err
+	}
+	if totalDiscovery.Response == nil || *totalDiscovery.Response < 1 {
+		return foundItem, err
+	}
 
-		if err != nil || totalDiscovery.Response == nil || *totalDiscovery.Response < 1 {
-			return foundItem, err
+	totalRecords := *totalDiscovery.Response
+	const recordsToReturn = 500
+	startIndex := 1
+	for {
+		if totalRecords <= 0 {
+			break
 		}
-
-		response, _, err := client.Discovery.GetDiscoveriesByRange(1, *totalDiscovery.Response)
+		records := recordsToReturn
+		if totalRecords < recordsToReturn {
+			records = totalRecords
+		}
+		response, _, err := client.Discovery.GetDiscoveriesByRange(startIndex, records)
 		if err != nil || response == nil {
 			return foundItem, err
 		}
@@ -1399,6 +1411,9 @@ func searchDiscovery(m interface{}, vName string) (*dnacentersdkgo.ResponseDisco
 				return &item, err
 			}
 		}
+
+		totalRecords -= records
+		startIndex += records
 	}
 	return foundItem, err
 }
