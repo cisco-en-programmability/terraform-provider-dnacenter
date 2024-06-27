@@ -128,7 +128,7 @@ func dataSourceNetworkDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 		}
 
 		d.SetId(getUnixTimeString())
-		return diags
+
 		vItemID2 := flattenDevicesGetDeviceCount2ItemID(response2)
 		if err := d.Set("item_id", vItemID2); err != nil {
 			diags = append(diags, diagError(
