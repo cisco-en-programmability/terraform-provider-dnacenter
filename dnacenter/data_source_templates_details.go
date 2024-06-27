@@ -1403,7 +1403,7 @@ func dataSourceTemplatesDetailsRead(ctx context.Context, d *schema.ResourceData,
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenConfigurationTemplatesGetTemplatesDetailsItem(response1)
+		vItem1 := flattenConfigurationTemplatesGetTemplatesDetailsItem(&response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTemplatesDetails response",
@@ -1418,42 +1418,44 @@ func dataSourceTemplatesDetailsRead(ctx context.Context, d *schema.ResourceData,
 	return diags
 }
 
-func flattenConfigurationTemplatesGetTemplatesDetailsItem(item *dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetails) []map[string]interface{} {
+func flattenConfigurationTemplatesGetTemplatesDetailsItem(item *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
-	respItem := make(map[string]interface{})
-	respItem["author"] = item.Author
-	respItem["composite"] = boolPtrToString(item.Composite)
-	respItem["containing_templates"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplates(item.ContainingTemplates)
-	respItem["create_time"] = item.CreateTime
-	respItem["custom_params_order"] = boolPtrToString(item.CustomParamsOrder)
-	respItem["description"] = item.Description
-	respItem["device_types"] = flattenConfigurationTemplatesGetTemplatesDetailsItemDeviceTypes(item.DeviceTypes)
-	respItem["failure_policy"] = item.FailurePolicy
-	respItem["id"] = item.ID
-	respItem["language"] = item.Language
-	respItem["last_update_time"] = item.LastUpdateTime
-	respItem["latest_version_time"] = item.LatestVersionTime
-	respItem["name"] = item.Name
-	respItem["parent_template_id"] = item.ParentTemplateID
-	respItem["project_associated"] = boolPtrToString(item.ProjectAssociated)
-	respItem["project_id"] = item.ProjectID
-	respItem["project_name"] = item.ProjectName
-	respItem["rollback_template_content"] = item.RollbackTemplateContent
-	respItem["rollback_template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemRollbackTemplateParams(item.RollbackTemplateParams)
-	respItem["software_type"] = item.SoftwareType
-	respItem["software_variant"] = item.SoftwareVariant
-	respItem["software_version"] = item.SoftwareVersion
-	respItem["tags"] = flattenConfigurationTemplatesGetTemplatesDetailsItemTags(item.Tags)
-	respItem["template_content"] = item.TemplateContent
-	respItem["template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemTemplateParams(item.TemplateParams)
-	respItem["validation_errors"] = flattenConfigurationTemplatesGetTemplatesDetailsItemValidationErrors(item.ValidationErrors)
-	respItem["version"] = item.Version
-	respItem["versions_info"] = flattenConfigurationTemplatesGetTemplatesDetailsItemVersionsInfo(item.VersionsInfo)
-	return []map[string]interface{}{
-		respItem,
+	var respItems []map[string]interface{}
+	for _, item := range *item {
+		respItem := make(map[string]interface{})
+		respItem["author"] = item.Author
+		respItem["composite"] = boolPtrToString(item.Composite)
+		respItem["containing_templates"] = flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplates(item.ContainingTemplates)
+		respItem["create_time"] = item.CreateTime
+		respItem["custom_params_order"] = boolPtrToString(item.CustomParamsOrder)
+		respItem["description"] = item.Description
+		respItem["device_types"] = flattenConfigurationTemplatesGetTemplatesDetailsItemDeviceTypes(item.DeviceTypes)
+		respItem["failure_policy"] = item.FailurePolicy
+		respItem["id"] = item.ID
+		respItem["language"] = item.Language
+		respItem["last_update_time"] = item.LastUpdateTime
+		respItem["latest_version_time"] = item.LatestVersionTime
+		respItem["name"] = item.Name
+		respItem["parent_template_id"] = item.ParentTemplateID
+		respItem["project_associated"] = boolPtrToString(item.ProjectAssociated)
+		respItem["project_id"] = item.ProjectID
+		respItem["project_name"] = item.ProjectName
+		respItem["rollback_template_content"] = item.RollbackTemplateContent
+		respItem["rollback_template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemRollbackTemplateParams(item.RollbackTemplateParams)
+		respItem["software_type"] = item.SoftwareType
+		respItem["software_variant"] = item.SoftwareVariant
+		respItem["software_version"] = item.SoftwareVersion
+		respItem["tags"] = flattenConfigurationTemplatesGetTemplatesDetailsItemTags(item.Tags)
+		respItem["template_content"] = item.TemplateContent
+		respItem["template_params"] = flattenConfigurationTemplatesGetTemplatesDetailsItemTemplateParams(item.TemplateParams)
+		respItem["validation_errors"] = flattenConfigurationTemplatesGetTemplatesDetailsItemValidationErrors(item.ValidationErrors)
+		respItem["version"] = item.Version
+		respItem["versions_info"] = flattenConfigurationTemplatesGetTemplatesDetailsItemVersionsInfo(item.VersionsInfo)
+		respItems = append(respItems, respItem)
 	}
+	return respItems
 }
 
 func flattenConfigurationTemplatesGetTemplatesDetailsItemContainingTemplates(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetTemplatesDetailsContainingTemplates) []map[string]interface{} {
