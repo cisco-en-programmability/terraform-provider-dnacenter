@@ -2958,12 +2958,15 @@ func resourcePnpDeviceCreate(ctx context.Context, d *schema.ResourceData, m inte
 			if _, ok := d.GetOk("parameters.0.device_info.0"); ok {
 				if v, ok := d.GetOk("parameters.0.device_info.0.name"); ok {
 					vName = interfaceToString(v)
+				} else if v, ok := d.GetOk("parameters.0.device_info.0.serial_number"); ok {
+					vName = interfaceToString(v)
 				}
 			}
 		}
 	}
-	var vvName string
-	vvName = vName
+	log.Printf("[DEBUG] vName: %s", vName)
+	log.Printf("[DEBUG] vID: %s", vID)
+	vvName := vName
 	vvID := interfaceToString(vID)
 	if okID && vvID != "" {
 		getResponse2, _, err := client.DeviceOnboardingPnp.GetDeviceByID(vvID)
@@ -6173,19 +6176,24 @@ func searchDeviceOnboardingPnpGetDeviceList2(m interface{}, queryParams dnacente
 	client := m.(*dnacentersdkgo.Client)
 	var err error
 	var foundItem *dnacentersdkgo.ResponseItemDeviceOnboardingPnpGetDeviceList2
-	nResponse, _, err := client.DeviceOnboardingPnp.GetDeviceList2(nil)
-	if nResponse == nil || err != nil {
-		return foundItem, err
-	}
-	maxPageSize := len(*nResponse)
-	for _, item := range *nResponse {
-		if item.DeviceInfo != nil && vName == item.DeviceInfo.Name {
-			foundItem = &item
+	queryParams.Offset = 0
+	for {
+		log.Println("[DEBUG] INSIDE THE LOOP")
+		nResponse, _, err := client.DeviceOnboardingPnp.GetDeviceList2(&queryParams)
+		if err != nil {
 			return foundItem, err
 		}
+		if nResponse == nil || len(*nResponse) == 0 {
+			break
+		}
+		for _, item := range *nResponse {
+			if item.DeviceInfo != nil && vName == item.DeviceInfo.Name {
+				foundItem = &item
+				return foundItem, err
+			}
+		}
+		queryParams.Offset += len(*nResponse)
+		queryParams.Limit = len(*nResponse)
 	}
-	queryParams.Limit = maxPageSize
-	queryParams.Offset = maxPageSize
-	nResponse, _, err = client.DeviceOnboardingPnp.GetDeviceList2(&queryParams)
 	return foundItem, err
 }

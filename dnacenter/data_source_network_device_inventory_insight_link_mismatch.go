@@ -346,7 +346,7 @@ func dataSourceNetworkDeviceInventoryInsightLinkMismatchRead(ctx context.Context
 	return diags
 }
 
-func flattenDevicesInventoryInsightDeviceLinkMismatchApIItems(items *[]dnacentersdkgo.ResponseDevicesInventoryInsightDeviceLinkMismatchAPIResponse) []map[string]interface{} {
+func flattenDevicesInventoryInsightDeviceLinkMismatchApIItems(items *[]dnacentersdkgo.ResponseDevicesInventoryInsightDeviceLinkMismatchApIResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
