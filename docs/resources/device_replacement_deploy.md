@@ -12,16 +12,15 @@ description: |-
 It performs create operation on Device Replacement.
 
 - API to trigger RMA workflow that will replace faulty device with replacement device with same configuration and images
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_device_replacement_deploy" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     faulty_device_serial_number      = "string"
@@ -52,8 +51,8 @@ output "dnacenter_device_replacement_deploy_example" {
 
 Optional:
 
-- `faulty_device_serial_number` (String)
-- `replacement_device_serial_number` (String)
+- `faulty_device_serial_number` (String) Faulty device serial number
+- `replacement_device_serial_number` (String) Replacement device serial number
 
 
 <a id="nestedatt--item"></a>
@@ -63,5 +62,3 @@ Read-Only:
 
 - `task_id` (String)
 - `url` (String)
-
-

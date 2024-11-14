@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourceLicenseDevice() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Licenses.
 
-- Get detail of all smart accounts.
+- Retrieve details of all smart accounts.
 `,
 
 		ReadContext: dataSourceLicenseDeviceRead,
@@ -78,14 +78,14 @@ func dataSourceLicenseDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing SmartAccountDetails", err,
+				"Failure when executing 2 SmartAccountDetails", err,
 				"Failure at SmartAccountDetails, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenLicensesDeviceSmartAccountDetailsItems(response1.Response)
+		vItems1 := flattenLicensesSmartAccountDetailsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting SmartAccountDetails response",
@@ -98,20 +98,4 @@ func dataSourceLicenseDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	return diags
-}
-
-func flattenLicensesDeviceSmartAccountDetailsItems(items *[]dnacentersdkgo.ResponseLicensesSmartAccountDetailsResponse) []map[string]interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["name"] = item.Name
-		respItem["id"] = item.ID
-		respItem["domain"] = item.Domain
-		respItem["is_active_smart_account"] = boolPtrToString(item.IsActiveSmartAccount)
-		respItems = append(respItems, respItem)
-	}
-	return respItems
 }

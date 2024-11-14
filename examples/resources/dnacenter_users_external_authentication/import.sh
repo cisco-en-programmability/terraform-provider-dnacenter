@@ -1,0 +1,1 @@
+terraform import dnacenter_users_external_authentication.example "id:=string"

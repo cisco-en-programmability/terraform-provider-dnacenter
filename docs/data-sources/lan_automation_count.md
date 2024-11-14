@@ -39,5 +39,3 @@ output "dnacenter_lan_automation_count_example" {
 Read-Only:
 
 - `session_count` (String)
-
-

@@ -82,5 +82,3 @@ Read-Only:
 - `count` (Number)
 - `max_timestamp` (Number)
 - `min_timestamp` (Number)
-
-

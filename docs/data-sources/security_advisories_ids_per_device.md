@@ -4,14 +4,14 @@ page_title: "dnacenter_security_advisories_ids_per_device Data Source - terrafor
 subcategory: ""
 description: |-
   It performs read operation on Security Advisories.
-  Retrieves list of advisory IDs for a device
+  Retrieves advisory device details for a device
 ---
 
 # dnacenter_security_advisories_ids_per_device (Data Source)
 
 It performs read operation on Security Advisories.
 
-- Retrieves list of advisory IDs for a device
+- Retrieves advisory device details for a device
 
 ## Example Usage
 
@@ -22,7 +22,7 @@ data "dnacenter_security_advisories_ids_per_device" "example" {
 }
 
 output "dnacenter_security_advisories_ids_per_device_example" {
-  value = data.dnacenter_security_advisories_ids_per_device.example.items
+  value = data.dnacenter_security_advisories_ids_per_device.example.item
 }
 ```
 
@@ -36,14 +36,17 @@ output "dnacenter_security_advisories_ids_per_device_example" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
-<a id="nestedatt--items"></a>
-### Nested Schema for `items`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
 - `advisory_ids` (List of String)
+- `comments` (String)
 - `device_id` (String)
-
-
+- `hidden_advisory_count` (Number)
+- `last_scan_time` (Number)
+- `scan_mode` (String)
+- `scan_status` (String)

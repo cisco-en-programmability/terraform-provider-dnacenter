@@ -4,14 +4,14 @@ page_title: "dnacenter_users_external_servers Data Source - terraform-provider-d
 subcategory: ""
 description: |-
   It performs read operation on User and Roles.
-  Get external users authentication servers
+  Get external users authentication servers.
 ---
 
 # dnacenter_users_external_servers (Data Source)
 
 It performs read operation on User and Roles.
 
-- Get external users authentication servers
+- Get external users authentication servers.
 
 ## Example Usage
 
@@ -31,7 +31,7 @@ output "dnacenter_users_external_servers_example" {
 
 ### Required
 
-- `invoke_source` (String) invokeSource query parameter. The source that invokes this API
+- `invoke_source` (String) invokeSource query parameter. The source that invokes this API. The value of this query parameter must be set to "external".
 
 ### Read-Only
 
@@ -60,5 +60,3 @@ Read-Only:
 - `server_ip` (String)
 - `shared_secret` (String)
 - `socket_timeout` (Number)
-
-

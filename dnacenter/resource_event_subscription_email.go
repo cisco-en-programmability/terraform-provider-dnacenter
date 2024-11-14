@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -354,7 +354,7 @@ func resourceEventSubscriptionEmail() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"instance_id": &schema.Schema{
-													Description: `(From Get Email Subscription Details --> pick InstanceId)
+													Description: `(From Get Email Subscription Details --> pick InstanceId if available)
 `,
 													Type:     schema.TypeString,
 													Optional: true,
@@ -511,8 +511,10 @@ func resourceEventSubscriptionEmailRead(ctx context.Context, d *schema.ResourceD
 		items := []dnacentersdkgo.ResponseItemEventManagementGetEmailEventSubscriptions{
 			*item1,
 		}
+		var finalItem dnacentersdkgo.ResponseEventManagementGetEmailEventSubscriptions
+		finalItem = items
 		// Review flatten function used
-		vItem1 := flattenEventManagementGetEmailEventSubscriptionsItems2(&items)
+		vItem1 := flattenEventManagementGetEmailEventSubscriptionsItems(&finalItem)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetEmailEventSubscriptions search response",
@@ -533,7 +535,7 @@ func resourceEventSubscriptionEmailUpdate(ctx context.Context, d *schema.Resourc
 
 	vvID := resourceMap["id"]
 	if d.HasChange("parameters") {
-		request1 := expandRequestEventSubscriptionEmailUpdateEmailEventSubscription(ctx, "parameters", d)
+		request1 := expandRequestEventSubscriptionEmailUpdateEmailEventSubscription(ctx, "parameters.0", d)
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
@@ -973,6 +975,9 @@ func searchEventManagementGetEmailEventSubscriptions(m interface{}, queryParams 
 			queryParams.Limit = float64(maxPageSize)
 			queryParams.Offset += float64(maxPageSize)
 			nResponse, _, err = client.EventManagement.GetEmailEventSubscriptions(&queryParams)
+			if nResponse == nil {
+				break
+			}
 		}
 		return nil, err
 	} else if queryParams.Name != "" {

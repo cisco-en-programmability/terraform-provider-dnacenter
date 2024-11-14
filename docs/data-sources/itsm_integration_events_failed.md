@@ -65,5 +65,3 @@ Read-Only:
 - `error_description` (String)
 - `event_status` (String)
 - `response_received_from_itsmsystem` (String)
-
-

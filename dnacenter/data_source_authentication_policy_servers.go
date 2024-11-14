@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -33,7 +33,7 @@ func dataSourceAuthenticationPolicyServers() *schema.Resource {
 				Optional: true,
 			},
 			"state": &schema.Schema{
-				Description: `state query parameter. Valid values are: INPROGRESS, ACTIVE, DELETED, RBAC-FAILURE, FAILED
+				Description: `state query parameter. Valid values are: ACTIVE, INACTIVE, RBAC_SUCCESS, RBAC_FAILURE, DELETED, FAILED, INPROGRESS
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -48,14 +48,14 @@ func dataSourceAuthenticationPolicyServers() *schema.Resource {
 						"accounting_port": &schema.Schema{
 							Description: `Accounting port of RADIUS server (Default: 1813)
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"authentication_port": &schema.Schema{
 							Description: `Authentication port of RADIUS server (Default: 1812) 
 `,
-							Type:     schema.TypeString,
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
@@ -234,6 +234,14 @@ func dataSourceAuthenticationPolicyServers() *schema.Resource {
 							Computed: true,
 						},
 
+						"multi_dnac_enabled": &schema.Schema{
+							Description: `Internal use only
+`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"port": &schema.Schema{
 							Description: `Port of TACACS server (Default: 49)
 `,
@@ -252,6 +260,13 @@ func dataSourceAuthenticationPolicyServers() *schema.Resource {
 							Description: `If pxgrid enabled, value will be true otherwise false
 `,
 							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"rbac_uuid": &schema.Schema{
+							Description: `Internal use only
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -334,7 +349,7 @@ func dataSourceAuthenticationPolicyServersRead(ctx context.Context, d *schema.Re
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAuthenticationAndPolicyServers", err,
+				"Failure when executing 2 GetAuthenticationAndPolicyServers", err,
 				"Failure at GetAuthenticationAndPolicyServers, unexpected response", ""))
 			return diags
 		}
@@ -382,6 +397,8 @@ func flattenSystemSettingsGetAuthenticationAndPolicyServersItems(items *[]dnacen
 		respItem["use_dnac_cert_for_pxgrid"] = boolPtrToString(item.UseDnacCertForPxgrid)
 		respItem["ise_enabled"] = boolPtrToString(item.IseEnabled)
 		respItem["pxgrid_enabled"] = boolPtrToString(item.PxgridEnabled)
+		respItem["rbac_uuid"] = item.RbacUUID
+		respItem["multi_dnac_enabled"] = boolPtrToString(item.MultiDnacEnabled)
 		respItems = append(respItems, respItem)
 	}
 	return respItems

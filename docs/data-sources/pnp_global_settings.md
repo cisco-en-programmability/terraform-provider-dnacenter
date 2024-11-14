@@ -45,7 +45,6 @@ Read-Only:
 - `sava_mapping_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--sava_mapping_list))
 - `task_time_outs` (List of Object) (see [below for nested schema](#nestedobjatt--item--task_time_outs))
 - `tenant_id` (String)
-- `type_id` (String)
 - `version` (Number)
 
 <a id="nestedobjatt--item--aaa_credentials"></a>
@@ -130,5 +129,3 @@ Read-Only:
 - `config_time_out` (Number)
 - `general_time_out` (Number)
 - `image_download_time_out` (Number)
-
-

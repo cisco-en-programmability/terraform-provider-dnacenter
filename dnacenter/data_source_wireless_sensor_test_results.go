@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,7 +39,7 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 				Optional: true,
 			},
 			"test_failure_by": &schema.Schema{
-				Description: `testFailureBy query parameter. Obtain failure statistics group by "area", "building", or "floor"
+				Description: `testFailureBy query parameter. Obtain failure statistics group by "area", "building", or "floor" (case insensitive)
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -58,27 +58,31 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"error_code": &schema.Schema{
-										Description: `Error Code`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `The error code
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"error_title": &schema.Schema{
-										Description: `Error Title`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `The error title
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"test_category": &schema.Schema{
-										Description: `Test Category`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `The test category
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"test_type": &schema.Schema{
-										Description: `Test Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `The test type
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -103,15 +107,17 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"fail_count": &schema.Schema{
-																Description: `Fail Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total failed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 
 															"pass_count": &schema.Schema{
-																Description: `Pass Count`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
+																Description: `Total passed test count
+`,
+																Type:     schema.TypeFloat,
+																Computed: true,
 															},
 														},
 													},
@@ -124,15 +130,17 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"fail_count": &schema.Schema{
-																Description: `Fail Count`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
+																Description: `Total failed test count
+`,
+																Type:     schema.TypeFloat,
+																Computed: true,
 															},
 
 															"pass_count": &schema.Schema{
-																Description: `Pass Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total passed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 														},
 													},
@@ -145,15 +153,17 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"fail_count": &schema.Schema{
-																Description: `Fail Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total failed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 
 															"pass_count": &schema.Schema{
-																Description: `Pass Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total passed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 														},
 													},
@@ -175,15 +185,17 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"fail_count": &schema.Schema{
-																Description: `Fail Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total failed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 
 															"pass_count": &schema.Schema{
-																Description: `Pass Count`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
+																Description: `Total passed test count
+`,
+																Type:     schema.TypeFloat,
+																Computed: true,
 															},
 														},
 													},
@@ -205,15 +217,17 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"fail_count": &schema.Schema{
-																Description: `Fail Count`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
+																Description: `Total failed test count
+`,
+																Type:     schema.TypeFloat,
+																Computed: true,
 															},
 
 															"pass_count": &schema.Schema{
-																Description: `Pass Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total passed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 														},
 													},
@@ -235,15 +249,17 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"fail_count": &schema.Schema{
-																Description: `Fail Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total failed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 
 															"pass_count": &schema.Schema{
-																Description: `Pass Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total passed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 														},
 													},
@@ -256,15 +272,17 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"fail_count": &schema.Schema{
-																Description: `Fail Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total failed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 
 															"pass_count": &schema.Schema{
-																Description: `Pass Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total passed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 														},
 													},
@@ -277,15 +295,17 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"fail_count": &schema.Schema{
-																Description: `Fail Count`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
+																Description: `Total failed test count
+`,
+																Type:     schema.TypeFloat,
+																Computed: true,
 															},
 
 															"pass_count": &schema.Schema{
-																Description: `Pass Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total passed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 														},
 													},
@@ -307,15 +327,17 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"fail_count": &schema.Schema{
-																Description: `Fail Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total failed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 
 															"pass_count": &schema.Schema{
-																Description: `Pass Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total passed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 														},
 													},
@@ -337,15 +359,17 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"fail_count": &schema.Schema{
-																Description: `Fail Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total failed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 
 															"pass_count": &schema.Schema{
-																Description: `Pass Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total passed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 														},
 													},
@@ -358,15 +382,17 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"fail_count": &schema.Schema{
-																Description: `Fail Count`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
+																Description: `Total failed test count
+`,
+																Type:     schema.TypeFloat,
+																Computed: true,
 															},
 
 															"pass_count": &schema.Schema{
-																Description: `Pass Count`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `Total passed test count
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 														},
 													},
@@ -376,9 +402,10 @@ func dataSourceWirelessSensorTestResults() *schema.Resource {
 									},
 
 									"total_test_count": &schema.Schema{
-										Description: `Total Test Count`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `Total test count
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 								},
 							},
@@ -424,14 +451,14 @@ func dataSourceWirelessSensorTestResultsRead(ctx context.Context, d *schema.Reso
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing SensorTestResults", err,
+				"Failure when executing 2 SensorTestResults", err,
 				"Failure at SensorTestResults, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenWirelessSensorTestResultsItem(response1)
+		vItem1 := flattenWirelessSensorTestResultsItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting SensorTestResults response",
@@ -446,7 +473,7 @@ func dataSourceWirelessSensorTestResultsRead(ctx context.Context, d *schema.Reso
 	return diags
 }
 
-func flattenWirelessSensorTestResultsItem(item *dnacentersdkgo.ResponseWirelessSensorTestResults) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItem(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -458,7 +485,7 @@ func flattenWirelessSensorTestResultsItem(item *dnacentersdkgo.ResponseWirelessS
 	}
 }
 
-func flattenWirelessSensorTestResultsItemSummary(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummary) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummary(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummary) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -477,7 +504,7 @@ func flattenWirelessSensorTestResultsItemSummary(item *dnacentersdkgo.ResponseWi
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryOnBoarding(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryOnBoarding) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryOnBoarding(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryOnBoarding) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -492,7 +519,7 @@ func flattenWirelessSensorTestResultsItemSummaryOnBoarding(item *dnacentersdkgo.
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryOnBoardingAuth(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryOnBoardingAuth) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryOnBoardingAuth(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryOnBoardingAuth) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -506,7 +533,7 @@ func flattenWirelessSensorTestResultsItemSummaryOnBoardingAuth(item *dnacentersd
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryOnBoardingDHCP(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryOnBoardingDHCP) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryOnBoardingDHCP(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryOnBoardingDHCP) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -520,7 +547,7 @@ func flattenWirelessSensorTestResultsItemSummaryOnBoardingDHCP(item *dnacentersd
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryOnBoardingAssoc(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryOnBoardingAssoc) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryOnBoardingAssoc(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryOnBoardingAssoc) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -534,7 +561,7 @@ func flattenWirelessSensorTestResultsItemSummaryOnBoardingAssoc(item *dnacenters
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryPERfORMAncE(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryPERfORMAncE) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryPERfORMAncE(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryPERfORMAncE) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -547,7 +574,7 @@ func flattenWirelessSensorTestResultsItemSummaryPERfORMAncE(item *dnacentersdkgo
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryPERfORMAncEIPSLASENDER(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryPERfORMAncEIPSLASENDER) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryPERfORMAncEIPSLASENDER(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryPERfORMAncEIPSLASENDER) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -561,7 +588,7 @@ func flattenWirelessSensorTestResultsItemSummaryPERfORMAncEIPSLASENDER(item *dna
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryNETWORKSERVICES(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryNETWORKSERVICES) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryNETWORKSERVICES(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryNETWORKSERVICES) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -574,7 +601,7 @@ func flattenWirelessSensorTestResultsItemSummaryNETWORKSERVICES(item *dnacenters
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryNETWORKSERVICESDNS(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryNETWORKSERVICESDNS) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryNETWORKSERVICESDNS(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryNETWORKSERVICESDNS) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -588,7 +615,7 @@ func flattenWirelessSensorTestResultsItemSummaryNETWORKSERVICESDNS(item *dnacent
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITY(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryApPCONNECTIVITY) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITY(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryApPCONNECTIVITY) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -603,7 +630,7 @@ func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITY(item *dnacenters
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITYHOSTREACHABILITY(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryApPCONNECTIVITYHOSTREACHABILITY) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITYHOSTREACHABILITY(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryApPCONNECTIVITYHOSTREACHABILITY) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -617,7 +644,7 @@ func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITYHOSTREACHABILITY(
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITYWebServer(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryApPCONNECTIVITYWebServer) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITYWebServer(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryApPCONNECTIVITYWebServer) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -631,7 +658,7 @@ func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITYWebServer(item *d
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITYFileTransfer(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryApPCONNECTIVITYFileTransfer) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITYFileTransfer(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryApPCONNECTIVITYFileTransfer) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -645,7 +672,7 @@ func flattenWirelessSensorTestResultsItemSummaryApPCONNECTIVITYFileTransfer(item
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryRfASSESSMENT(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryRfASSESSMENT) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryRfASSESSMENT(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryRfASSESSMENT) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -659,7 +686,7 @@ func flattenWirelessSensorTestResultsItemSummaryRfASSESSMENT(item *dnacentersdkg
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryRfASSESSMENTDATARATE(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryRfASSESSMENTDATARATE) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryRfASSESSMENTDATARATE(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryRfASSESSMENTDATARATE) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -673,7 +700,7 @@ func flattenWirelessSensorTestResultsItemSummaryRfASSESSMENTDATARATE(item *dnace
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryRfASSESSMENTSNR(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryRfASSESSMENTSNR) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryRfASSESSMENTSNR(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryRfASSESSMENTSNR) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -687,7 +714,7 @@ func flattenWirelessSensorTestResultsItemSummaryRfASSESSMENTSNR(item *dnacenters
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryEmail(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryEmail) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryEmail(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryEmail) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -700,7 +727,7 @@ func flattenWirelessSensorTestResultsItemSummaryEmail(item *dnacentersdkgo.Respo
 
 }
 
-func flattenWirelessSensorTestResultsItemSummaryEmailMailServer(item *dnacentersdkgo.ResponseWirelessSensorTestResultsSummaryEmailMailServer) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemSummaryEmailMailServer(item *dnacentersdkgo.ResponseWirelessSensorTestResultsResponseSummaryEmailMailServer) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -714,7 +741,7 @@ func flattenWirelessSensorTestResultsItemSummaryEmailMailServer(item *dnacenters
 
 }
 
-func flattenWirelessSensorTestResultsItemFailureStats(items *[]dnacentersdkgo.ResponseWirelessSensorTestResultsFailureStats) []map[string]interface{} {
+func flattenWirelessSensorTestResultsItemFailureStats(items *[]dnacentersdkgo.ResponseWirelessSensorTestResultsResponseFailureStats) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

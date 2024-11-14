@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,6 +39,13 @@ func dataSourceSdaVirtualNetworkV2() *schema.Resource {
 							Computed: true,
 						},
 
+						"execution_id": &schema.Schema{
+							Description: `Execution Id
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"is_guest_virtual_network": &schema.Schema{
 							Description: `Guest Virtual Network
 `,
@@ -66,6 +73,13 @@ func dataSourceSdaVirtualNetworkV2() *schema.Resource {
 
 						"v_manage_vpn_id": &schema.Schema{
 							Description: `vManage vpn id for SD-WAN
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"virtual_network_context_id": &schema.Schema{
+							Description: `Virtual Network Context Id for Global Virtual Network
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -104,7 +118,7 @@ func dataSourceSdaVirtualNetworkV2Read(ctx context.Context, d *schema.ResourceDa
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetVirtualNetworkWithScalableGroups", err,
+				"Failure when executing 2 GetVirtualNetworkWithScalableGroups", err,
 				"Failure at GetVirtualNetworkWithScalableGroups, unexpected response", ""))
 			return diags
 		}
@@ -135,8 +149,10 @@ func flattenSdaGetVirtualNetworkWithScalableGroupsItem(item *dnacentersdkgo.Resp
 	respItem["is_guest_virtual_network"] = boolPtrToString(item.IsGuestVirtualNetwork)
 	respItem["scalable_group_names"] = item.ScalableGroupNames
 	respItem["v_manage_vpn_id"] = item.VManageVpnID
+	respItem["virtual_network_context_id"] = item.VirtualNetworkContextID
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
+	respItem["execution_id"] = item.ExecutionID
 	return []map[string]interface{}{
 		respItem,
 	}

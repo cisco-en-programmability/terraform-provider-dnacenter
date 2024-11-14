@@ -57,6 +57,8 @@ Read-Only:
 
 - `artifact_id` (String)
 - `cisco_dna_event_link` (String)
+- `deprecated` (String)
+- `deprecation_message` (String)
 - `description` (String)
 - `domain` (String)
 - `event_payload` (List of Object) (see [below for nested schema](#nestedobjatt--items--event_payload))
@@ -94,5 +96,3 @@ Read-Only:
 
 - `device_ip` (String)
 - `message` (String)
-
-

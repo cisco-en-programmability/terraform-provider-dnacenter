@@ -4,11 +4,12 @@ page_title: "dnacenter_pnp_device_site_claim Resource - terraform-provider-dnace
 subcategory: ""
 description: |-
   It performs create operation on Device Onboarding (PnP).
-  Claim a device based on DNA-C Site-based design process. Some required parameters differ based on device platform:
+  Claim a device based on Catalyst Center Site-based design process. Some required parameters differ based on device
+  platform:
   Default/StackSwitch: imageInfo, configInfo.
   AccessPoints: rfProfile.
   Sensors: sensorProfile.
-  CatalystWLC/MobilityExpress/EWC: staticIP, subnetMask, gateway. vlanID and ipInterfaceName are also allowed for Catalyst
+  CatalystWLC/MobilityExpress/EWC: staticIP, subnetMask, gateway. vlanId and ipInterfaceName are also allowed for Catalyst
   9800 WLCs.
 ---
 
@@ -16,22 +17,22 @@ description: |-
 
 It performs create operation on Device Onboarding (PnP).
 
-- Claim a device based on DNA-C Site-based design process. Some required parameters differ based on device platform:
+- Claim a device based on Catalyst Center Site-based design process. Some required parameters differ based on device
+platform:
 Default/StackSwitch: imageInfo, configInfo.
 AccessPoints: rfProfile.
 Sensors: sensorProfile.
-CatalystWLC/MobilityExpress/EWC: staticIP, subnetMask, gateway. vlanID and ipInterfaceName are also allowed for Catalyst
+CatalystWLC/MobilityExpress/EWC: staticIP, subnetMask, gateway. vlanId and ipInterfaceName are also allowed for Catalyst
 9800 WLCs.
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_pnp_device_site_claim" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     config_info {
@@ -45,19 +46,20 @@ resource "dnacenter_pnp_device_site_claim" "example" {
     }
     device_id = "string"
     gateway   = "string"
+    hostname  = "string"
     image_info {
 
       image_id = "string"
       skip     = "false"
     }
-    interface_name = "string"
-    rf_profile     = "string"
-    sensor_profile = "string"
-    site_id        = "string"
-    static_ip      = "string"
-    subnet_mask    = "string"
-    type           = "string"
-    vlan_id        = "string"
+    ip_interface_name = "string"
+    rf_profile        = "string"
+    sensor_profile    = "string"
+    site_id           = "string"
+    static_ip         = "string"
+    subnet_mask       = "string"
+    type              = "string"
+    vlan_id           = "string"
   }
 }
 
@@ -87,8 +89,9 @@ Optional:
 - `config_info` (Block List) (see [below for nested schema](#nestedblock--parameters--config_info))
 - `device_id` (String) Device Id
 - `gateway` (String) for CatalystWLC/MobilityExpress
+- `hostname` (String) hostname to configure on Device.
 - `image_info` (Block List) (see [below for nested schema](#nestedblock--parameters--image_info))
-- `interface_name` (String) for Catalyst 9800 WLC
+- `ip_interface_name` (String) for Catalyst 9800 WLC
 - `rf_profile` (String) for Access Points
 - `sensor_profile` (String) for Sensors
 - `site_id` (String) Site Id
@@ -132,5 +135,3 @@ Read-Only:
 
 - `response` (String)
 - `version` (String)
-
-

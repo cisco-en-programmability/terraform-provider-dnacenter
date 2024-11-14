@@ -22,6 +22,197 @@ It manages create, read, update and delete operations on Configuration Templates
 ```terraform
 resource "dnacenter_configuration_template" "example" {
   provider = dnacenter
+  item {
+
+
+
+    containing_templates {
+
+
+
+      device_types {
+
+
+
+
+      }
+
+
+
+
+      rollback_template_params {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        range {
+
+
+
+
+        }
+
+        selection {
+
+
+
+
+
+        }
+      }
+      tags {
+
+
+
+      }
+
+      template_params {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        range {
+
+
+
+
+        }
+
+        selection {
+
+
+
+
+
+        }
+      }
+
+    }
+
+
+
+    device_types {
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+    rollback_template_params {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      range {
+
+
+
+
+      }
+
+      selection {
+
+
+
+
+
+      }
+    }
+
+
+
+    tags {
+
+
+
+    }
+
+    template_params {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      range {
+
+
+
+
+      }
+
+      selection {
+
+
+
+
+
+      }
+    }
+    validation_errors {
+
+
+
+
+
+    }
+
+  }
   parameters {
 
     author    = "string"
@@ -69,7 +260,7 @@ resource "dnacenter_configuration_template" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = "string"
+          selection_values        = "------"
         }
       }
       tags {
@@ -107,7 +298,7 @@ resource "dnacenter_configuration_template" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = ""
+          selection_values        = "------"
         }
       }
       version = "string"
@@ -160,7 +351,7 @@ resource "dnacenter_configuration_template" "example" {
         default_selected_values = ["string"]
         id                      = "string"
         selection_type          = "string"
-        selection_values        = "string"
+        selection_values        = "------"
       }
     }
     software_type    = "string"
@@ -202,13 +393,13 @@ resource "dnacenter_configuration_template" "example" {
         default_selected_values = ["string"]
         id                      = "string"
         selection_type          = "string"
-        selection_values        = "string"
+        selection_values        = "------"
       }
     }
     validation_errors {
 
-      rollback_template_errors = "string"
-      template_errors          = "string"
+      rollback_template_errors = "------"
+      template_errors          = "------"
       template_id              = "string"
       template_version         = "string"
     }
@@ -262,7 +453,6 @@ Optional:
 - `software_version` (String) Applicable device software version
 - `tags` (Block List) (see [below for nested schema](#nestedblock--parameters--tags))
 - `template_content` (String) Template content
-- `template_id` (String) templateId path parameter. templateId(UUID) of template to be deleted
 - `template_params` (Block List) (see [below for nested schema](#nestedblock--parameters--template_params))
 - `validation_errors` (Block List) (see [below for nested schema](#nestedblock--parameters--validation_errors))
 - `version` (String) Current version of template

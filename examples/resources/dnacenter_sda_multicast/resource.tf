@@ -1,7 +1,6 @@
 
 resource "dnacenter_sda_multicast" "example" {
   provider = dnacenter
-
   parameters {
 
     multicast_method = "string"

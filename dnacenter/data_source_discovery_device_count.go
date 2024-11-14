@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -40,6 +40,8 @@ Discoveries by range" API.
 					Schema: map[string]*schema.Schema{
 
 						"response": &schema.Schema{
+							Description: `The count of network devices discovered in the given discovery
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
@@ -79,7 +81,7 @@ func dataSourceDiscoveryDeviceCountRead(ctx context.Context, d *schema.ResourceD
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDevicesDiscoveredByID", err,
+				"Failure when executing 2 GetDevicesDiscoveredByID", err,
 				"Failure at GetDevicesDiscoveredByID, unexpected response", ""))
 			return diags
 		}

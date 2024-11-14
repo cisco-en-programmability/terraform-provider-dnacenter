@@ -53,7 +53,7 @@ output "dnacenter_discovery_jobs_example" {
 Read-Only:
 
 - `attribute_info` (String)
-- `cli_status` (String)
+- `clistatus` (String)
 - `discovery_status` (String)
 - `end_time` (String)
 - `http_status` (String)
@@ -68,5 +68,3 @@ Read-Only:
 - `snmp_status` (String)
 - `start_time` (String)
 - `task_id` (String)
-
-

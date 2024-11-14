@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -33,109 +33,125 @@ func dataSourceSensor() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"backhaul_type": &schema.Schema{
-							Description: `Backhaul Type`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Backhall type: WIRED, WIRELESS
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"ethernet_mac_address": &schema.Schema{
-							Description: `Ethernet Mac Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Sensor device's ethernet MAC address
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"ip_address": &schema.Schema{
-							Description: `Ip Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-
-						"is_led_enabled": &schema.Schema{
-							Description: `Is L E D Enabled`,
-							// Type:        schema.TypeBool,
+							Description: `IP Address
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"last_seen": &schema.Schema{
-							Description: `Last Seen`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Last seen timestamp
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"led": &schema.Schema{
+							Description: `Is LED Enabled
+`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"location": &schema.Schema{
-							Description: `Location`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Site name in hierarchy form
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `The sensor device name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"radio_mac_address": &schema.Schema{
-							Description: `Radio Mac Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Sensor device's radio MAC address
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"serial_number": &schema.Schema{
-							Description: `Serial Number`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Serial number
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
-						"ssh_config": &schema.Schema{
+						"ssh": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"enable_password": &schema.Schema{
-										Description: `Enable Password`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Enable password
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"ssh_password": &schema.Schema{
-										Description: `Ssh Password`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `SSH password
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"ssh_state": &schema.Schema{
-										Description: `Ssh State`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `SSH state
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"ssh_user_name": &schema.Schema{
-										Description: `Ssh User Name`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `SSH user name
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
 						},
 
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Status of sensor device (REACHABLE, UNREACHABLE, DELETED, RUNNING, IDLE, UCLAIMED)
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"type": &schema.Schema{
-							Description: `Type`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Type
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"version": &schema.Schema{
-							Description: `Version`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Sensor version
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -166,7 +182,7 @@ func dataSourceSensorRead(ctx context.Context, d *schema.ResourceData, m interfa
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing Sensors", err,
+				"Failure when executing 2 Sensors", err,
 				"Failure at Sensors, unexpected response", ""))
 			return diags
 		}
@@ -206,14 +222,14 @@ func flattenSensorsSensorsItems(items *[]dnacentersdkgo.ResponseSensorsSensorsRe
 		respItem["version"] = item.Version
 		respItem["last_seen"] = item.LastSeen
 		respItem["type"] = item.Type
-		respItem["ssh_config"] = flattenSensorsSensorsItemsSSHConfig(item.SSHConfig)
-		respItem["is_led_enabled"] = boolPtrToString(item.IsLEDEnabled)
+		respItem["ssh"] = flattenSensorsSensorsItemsSSH(item.SSH)
+		respItem["led"] = boolPtrToString(item.Led)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenSensorsSensorsItemsSSHConfig(item *dnacentersdkgo.ResponseSensorsSensorsResponseSSHConfig) []map[string]interface{} {
+func flattenSensorsSensorsItemsSSH(item *dnacentersdkgo.ResponseSensorsSensorsResponseSSH) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

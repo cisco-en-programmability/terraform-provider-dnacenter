@@ -2,13 +2,12 @@ package dnacenter
 
 import (
 	"context"
-	"errors"
 	"reflect"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -130,7 +129,7 @@ func resourceSdaFabricSiteCreate(ctx context.Context, d *schema.ResourceData, m 
 	queryParamImport := dnacentersdkgo.GetSiteFromSdaFabricQueryParams{}
 	queryParamImport.SiteNameHierarchy = vvSiteNameHierarchy
 	item2, _, err := client.Sda.GetSiteFromSdaFabric(&queryParamImport)
-	if err == nil && item2 != nil {
+	if err != nil || item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["site_name_hierarchy"] = item2.SiteNameHierarchy
 		d.SetId(joinResourceID(resourceMap))
@@ -161,7 +160,7 @@ func resourceSdaFabricSiteCreate(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -174,7 +173,7 @@ func resourceSdaFabricSiteCreate(ctx context.Context, d *schema.ResourceData, m 
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing AddSiteInSdaFabric", err))
@@ -215,6 +214,8 @@ func resourceSdaFabricSiteRead(ctx context.Context, d *schema.ResourceData, m in
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 
+		// has_unknown_response: None
+
 		response1, restyResp1, err := client.Sda.GetSiteFromSdaFabric(&queryParams1)
 
 		if err != nil || response1 == nil {
@@ -242,13 +243,7 @@ func resourceSdaFabricSiteRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceSdaFabricSiteUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	err := errors.New("Update not possible in this resource")
-	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SdaFabricSiteUpdate", err, "Update method is not supported",
-		"Failure at SdaFabricSiteUpdate, unexpected response", ""))
-
-	return diags
+	return resourceSdaFabricSiteRead(ctx, d, m)
 }
 
 func resourceSdaFabricSiteDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -294,7 +289,7 @@ func resourceSdaFabricSiteDelete(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -307,7 +302,7 @@ func resourceSdaFabricSiteDelete(ctx context.Context, d *schema.ResourceData, m 
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeleteSiteFromSdaFabric", err))

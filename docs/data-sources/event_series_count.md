@@ -60,5 +60,3 @@ output "dnacenter_event_series_count_example" {
 Read-Only:
 
 - `response` (String)
-
-

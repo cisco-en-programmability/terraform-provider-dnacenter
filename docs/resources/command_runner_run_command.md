@@ -12,16 +12,15 @@ description: |-
 It performs create operation on Command Runner.
 
 - Submit request for read-only CLIs
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_command_runner_run_command" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     commands     = ["string"]
@@ -55,11 +54,11 @@ output "dnacenter_command_runner_run_command_example" {
 
 Optional:
 
-- `commands` (List of String)
-- `description` (String)
-- `device_uuids` (List of String)
-- `name` (String)
-- `timeout` (Number)
+- `commands` (List of String) Commands to be executed
+- `description` (String) Describe the details about the command request
+- `device_uuids` (List of String) Device Id of the device
+- `name` (String) Name of the the request like getshowrun , deviceinterfacestatusCli.
+- `timeout` (Number) The timeout value in unit of second. If no timeout provided wait till 300sec
 
 
 <a id="nestedatt--item"></a>
@@ -69,5 +68,3 @@ Read-Only:
 
 - `task_id` (String)
 - `url` (String)
-
-

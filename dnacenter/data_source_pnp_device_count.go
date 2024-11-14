@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -20,15 +20,6 @@ func dataSourcePnpDeviceCount() *schema.Resource {
 
 		ReadContext: dataSourcePnpDeviceCountRead,
 		Schema: map[string]*schema.Schema{
-			"cm_state": &schema.Schema{
-				Description: `cmState query parameter. Device Connection Manager State
-`,
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
 			"last_contact": &schema.Schema{
 				Description: `lastContact query parameter. Device Has Contacted lastContact > 0
 `,
@@ -55,24 +46,6 @@ func dataSourcePnpDeviceCount() *schema.Resource {
 			},
 			"pid": &schema.Schema{
 				Description: `pid query parameter. Device ProductId
-`,
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"project_id": &schema.Schema{
-				Description: `projectId query parameter. Device Project Id
-`,
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"project_name": &schema.Schema{
-				Description: `projectName query parameter. Device Project Name
 `,
 				Type:     schema.TypeList,
 				Optional: true,
@@ -169,13 +142,10 @@ func dataSourcePnpDeviceCountRead(ctx context.Context, d *schema.ResourceData, m
 	vSerialNumber, okSerialNumber := d.GetOk("serial_number")
 	vState, okState := d.GetOk("state")
 	vOnbState, okOnbState := d.GetOk("onb_state")
-	vCmState, okCmState := d.GetOk("cm_state")
 	vName, okName := d.GetOk("name")
 	vPid, okPid := d.GetOk("pid")
 	vSource, okSource := d.GetOk("source")
-	vProjectID, okProjectID := d.GetOk("project_id")
 	vWorkflowID, okWorkflowID := d.GetOk("workflow_id")
-	vProjectName, okProjectName := d.GetOk("project_name")
 	vWorkflowName, okWorkflowName := d.GetOk("workflow_name")
 	vSmartAccountID, okSmartAccountID := d.GetOk("smart_account_id")
 	vVirtualAccountID, okVirtualAccountID := d.GetOk("virtual_account_id")
@@ -195,9 +165,6 @@ func dataSourcePnpDeviceCountRead(ctx context.Context, d *schema.ResourceData, m
 		if okOnbState {
 			queryParams1.OnbState = interfaceToSliceString(vOnbState)
 		}
-		if okCmState {
-			queryParams1.CmState = interfaceToSliceString(vCmState)
-		}
 		if okName {
 			queryParams1.Name = interfaceToSliceString(vName)
 		}
@@ -207,14 +174,8 @@ func dataSourcePnpDeviceCountRead(ctx context.Context, d *schema.ResourceData, m
 		if okSource {
 			queryParams1.Source = interfaceToSliceString(vSource)
 		}
-		if okProjectID {
-			queryParams1.ProjectID = interfaceToSliceString(vProjectID)
-		}
 		if okWorkflowID {
 			queryParams1.WorkflowID = interfaceToSliceString(vWorkflowID)
-		}
-		if okProjectName {
-			queryParams1.ProjectName = interfaceToSliceString(vProjectName)
 		}
 		if okWorkflowName {
 			queryParams1.WorkflowName = interfaceToSliceString(vWorkflowName)
@@ -236,7 +197,7 @@ func dataSourcePnpDeviceCountRead(ctx context.Context, d *schema.ResourceData, m
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceCount", err,
+				"Failure when executing 2 GetDeviceCount", err,
 				"Failure at GetDeviceCount, unexpected response", ""))
 			return diags
 		}

@@ -21,18 +21,18 @@ It performs read operation on Path Trace.
 data "dnacenter_path_trace" "example" {
   provider         = dnacenter
   dest_ip          = "string"
-  dest_port        = "string"
-  gt_create_time   = "string"
-  last_update_time = "string"
+  dest_port        = 1.0
+  gt_create_time   = 1.0
+  last_update_time = 1.0
   limit            = 1
-  lt_create_time   = "string"
+  lt_create_time   = 1.0
   offset           = 1
   order            = "string"
   periodic_refresh = "false"
   protocol         = "string"
   sort_by          = "string"
   source_ip        = "string"
-  source_port      = "string"
+  source_port      = 1.0
   status           = "string"
   task_id          = "string"
 }
@@ -56,20 +56,20 @@ output "dnacenter_path_trace_example" {
 
 ### Optional
 
-- `dest_ip` (String) destIP query parameter. Destination IP adress
-- `dest_port` (String) destPort query parameter. Destination port
+- `dest_ip` (String) destIP query parameter. Destination IP address
+- `dest_port` (Number) destPort query parameter. Destination port
 - `flow_analysis_id` (String) flowAnalysisId path parameter. Flow analysis request id
-- `gt_create_time` (String) gtCreateTime query parameter. Analyses requested after this time
-- `last_update_time` (String) lastUpdateTime query parameter. Last update time
+- `gt_create_time` (Number) gtCreateTime query parameter. Analyses requested after this time
+- `last_update_time` (Number) lastUpdateTime query parameter. Last update time
 - `limit` (Number) limit query parameter. Number of resources returned
-- `lt_create_time` (String) ltCreateTime query parameter. Analyses requested before this time
+- `lt_create_time` (Number) ltCreateTime query parameter. Analyses requested before this time
 - `offset` (Number) offset query parameter. Start index of resources returned (1-based)
 - `order` (String) order query parameter. Order by this field
 - `periodic_refresh` (Boolean) periodicRefresh query parameter. Is analysis periodically refreshed?
 - `protocol` (String) protocol query parameter.
 - `sort_by` (String) sortBy query parameter. Sort by this field
 - `source_ip` (String) sourceIP query parameter. Source IP address
-- `source_port` (String) sourcePort query parameter. Source port
+- `source_port` (Number) sourcePort query parameter. Source port
 - `status` (String) status query parameter.
 - `task_id` (String) taskId query parameter. Task ID
 
@@ -1464,6 +1464,7 @@ Read-Only:
 - `inclusions` (List of String)
 - `last_update_time` (Number)
 - `periodic_refresh` (String)
+- `previous_flow_analysis_id` (String)
 - `protocol` (String)
 - `source_ip` (String)
 - `source_port` (String)
@@ -1485,9 +1486,8 @@ Read-Only:
 - `inclusions` (List of String)
 - `last_update_time` (Number)
 - `periodic_refresh` (String)
+- `previous_flow_analysis_id` (String)
 - `protocol` (String)
 - `source_ip` (String)
 - `source_port` (String)
 - `status` (String)
-
-

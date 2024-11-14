@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -70,6 +70,16 @@ func resourcePnpDeviceClaim() *schema.Resource {
 				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"authorization_needed": &schema.Schema{
+							Description: `Flag to enable/disable PnP device authorization. (true means enable)
+`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							ForceNew:     true,
+							Computed:     true,
+						},
 						"config_file_url": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -208,26 +218,20 @@ func resourcePnpDeviceClaimCreate(ctx context.Context, d *schema.ResourceData, m
 
 	request1 := expandRequestPnpDeviceClaimClaimDevice(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.DeviceOnboardingPnp.ClaimDevice(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.DeviceOnboardingPnp.ClaimDevice(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing ClaimDevice", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	//REVIEW: '- Analizar como se puede comprobar la ejecucion.'
-	//Analizar verificacion.
 
 	vItem1 := flattenDeviceOnboardingPnpClaimDeviceItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
@@ -239,6 +243,8 @@ func resourcePnpDeviceClaimCreate(ctx context.Context, d *schema.ResourceData, m
 
 	d.SetId(getUnixTimeString())
 	return diags
+
+	//REVIEW: '- Analizar como se puede comprobar la ejecucion.'
 
 }
 func resourcePnpDeviceClaimRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -282,6 +288,9 @@ func expandRequestPnpDeviceClaimClaimDevice(ctx context.Context, key string, d *
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".workflow_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".workflow_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".workflow_id")))) {
 		request.WorkflowID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".authorization_needed")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".authorization_needed")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".authorization_needed")))) {
+		request.AuthorizationNeeded = interfaceToBoolPtr(v)
 	}
 	return &request
 }

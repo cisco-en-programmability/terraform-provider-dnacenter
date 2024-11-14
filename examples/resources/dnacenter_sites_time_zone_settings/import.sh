@@ -1,0 +1,1 @@
+terraform import dnacenter_sites_time_zone_settings.example "id:=string"

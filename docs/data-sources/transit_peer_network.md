@@ -47,6 +47,7 @@ Read-Only:
 - `ip_transit_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--ip_transit_settings))
 - `sda_transit_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--sda_transit_settings))
 - `status` (String)
+- `transit_peer_network_id` (String)
 - `transit_peer_network_name` (String)
 - `transit_peer_network_type` (String)
 
@@ -73,5 +74,3 @@ Read-Only:
 
 - `device_management_ip_address` (String)
 - `site_name_hierarchy` (String)
-
-

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -24,7 +24,7 @@ func dataSourceNetworkV2() *schema.Resource {
 				Description: `siteId query parameter. Site Id to get the network settings associated with the site.
 `,
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 
 			"items": &schema.Schema{
@@ -106,16 +106,14 @@ func dataSourceNetworkV2Read(ctx context.Context, d *schema.ResourceData, m inte
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-	vSiteID, okSiteID := d.GetOk("site_id")
+	vSiteID := d.Get("site_id")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetNetworkV2")
 		queryParams1 := dnacentersdkgo.GetNetworkV2QueryParams{}
 
-		if okSiteID {
-			queryParams1.SiteID = vSiteID.(string)
-		}
+		queryParams1.SiteID = vSiteID.(string)
 
 		response1, restyResp1, err := client.NetworkSettings.GetNetworkV2(&queryParams1)
 
@@ -124,7 +122,7 @@ func dataSourceNetworkV2Read(ctx context.Context, d *schema.ResourceData, m inte
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkV2", err,
+				"Failure when executing 2 GetNetworkV2", err,
 				"Failure at GetNetworkV2, unexpected response", ""))
 			return diags
 		}
@@ -159,7 +157,7 @@ func flattenNetworkSettingsGetNetworkV2Items(items *[]dnacentersdkgo.ResponseNet
 		respItem["type"] = item.Type
 		respItem["key"] = item.Key
 		respItem["version"] = item.Version
-		respItem["value"] = interfaceToString(item.Value)
+		respItem["value"] = item.Value
 		respItem["group_uuid"] = item.GroupUUID
 		respItem["inherited_group_uuid"] = item.InheritedGroupUUID
 		respItem["inherited_group_name"] = item.InheritedGroupName

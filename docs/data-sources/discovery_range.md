@@ -4,14 +4,14 @@ page_title: "dnacenter_discovery_range Data Source - terraform-provider-dnacente
 subcategory: ""
 description: |-
   It performs read operation on Discovery.
-  Returns the discovery by specified range
+  Returns the discoveries by specified range
 ---
 
 # dnacenter_discovery_range (Data Source)
 
 It performs read operation on Discovery.
 
-- Returns the discovery by specified range
+- Returns the discoveries by specified range
 
 ## Example Usage
 
@@ -32,8 +32,8 @@ output "dnacenter_discovery_range_example" {
 
 ### Required
 
-- `records_to_return` (Number) recordsToReturn path parameter. Number of records to return
-- `start_index` (Number) startIndex path parameter. Start index
+- `records_to_return` (Number) recordsToReturn path parameter. Number of records to fetch from the starting index
+- `start_index` (Number) startIndex path parameter. Starting index for the records
 
 ### Read-Only
 
@@ -114,5 +114,3 @@ Read-Only:
 - `port` (Number)
 - `secure` (String)
 - `username` (String)
-
-

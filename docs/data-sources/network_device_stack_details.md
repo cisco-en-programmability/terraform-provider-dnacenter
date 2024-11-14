@@ -131,5 +131,3 @@ Read-Only:
 
 - `dad_enabled` (String)
 - `dad_interface_name` (String)
-
-

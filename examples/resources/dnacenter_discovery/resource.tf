@@ -1,6 +1,7 @@
 
 resource "dnacenter_discovery" "example" {
   provider = dnacenter
+
   parameters {
 
     attribute_info            = "string"

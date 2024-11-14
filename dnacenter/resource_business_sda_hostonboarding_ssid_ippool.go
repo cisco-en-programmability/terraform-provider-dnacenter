@@ -2,13 +2,12 @@ package dnacenter
 
 import (
 	"context"
-	"errors"
 	"reflect"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,9 +17,9 @@ func resourceBusinessSdaHostonboardingSSIDIPpool() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and update operations on Fabric Wireless.
 
-- Add SSID to IP Pool Mapping.
+- Add SSID to IP Pool Mapping
 
-- Update SSID to IP Pool Mapping.
+- Update SSID to IP Pool Mapping
 `,
 
 		CreateContext: resourceBusinessSdaHostonboardingSSIDIPpoolCreate,
@@ -90,7 +89,7 @@ func resourceBusinessSdaHostonboardingSSIDIPpool() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-							Default:  "",
+							Computed: true,
 						},
 						"ssid_names": &schema.Schema{
 							Description: `List of SSIDs
@@ -107,7 +106,7 @@ func resourceBusinessSdaHostonboardingSSIDIPpool() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-							Default:  "",
+							Computed: true,
 						},
 					},
 				},
@@ -133,65 +132,14 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolCreate(ctx context.Context, d *s
 	queryParamImport.VLANName = vvVLANName
 	queryParamImport.SiteNameHierarchy = vvSiteNameHierarchy
 	item2, _, err := client.FabricWireless.GetSSIDToIPPoolMapping(&queryParamImport)
-	if err == nil && item2 != nil {
+	if err != nil || item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["vlan_name"] = item2.VLANName
 		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
-		request2 := expandRequestBusinessSdaHostonboardingSSIDIPpoolUpdateSSIDToIPPoolMapping(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] update request => %s", responseInterfaceToString(*request2))
-		response3, restyResp3, err := client.FabricWireless.UpdateSSIDToIPPoolMapping(request2)
-		if err != nil || response3 == nil {
-			if restyResp3 != nil {
-				log.Printf("[DEBUG] resty response for update operation => %v", restyResp3.String())
-				diags = append(diags, diagErrorWithAltAndResponse(
-					"Failure when executing UpdateSSIDToIPPoolMapping", err, restyResp3.String(),
-					"Failure at UpdateSSIDToIPPoolMapping, unexpected response", ""))
-				return diags
-			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing UpdateSSIDToIPPoolMapping", err,
-				"Failure at UpdateSSIDToIPPoolMapping, unexpected response", ""))
-			return diags
-		}
-
-		executionId2 := response3.ExecutionID
-		log.Printf("[DEBUG] executionId2 => %s", executionId2)
-		if executionId2 != "" {
-			time.Sleep(5 * time.Second)
-			response4, restyResp4, err := client.Task.GetBusinessAPIExecutionDetails(executionId2)
-			if err != nil || response4 == nil {
-				if restyResp4 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp4.String())
-				}
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetExecutionByID", err,
-					"Failure at GetExecutionByID, unexpected response", ""))
-				return diags
-			}
-			for statusIsPending(response4.Status) {
-				time.Sleep(10 * time.Second)
-				response4, restyResp4, err = client.Task.GetBusinessAPIExecutionDetails(executionId2)
-				if err != nil || response4 == nil {
-					if restyResp4 != nil {
-						log.Printf("[DEBUG] Retrieved error response %s", restyResp4.String())
-					}
-					diags = append(diags, diagErrorWithAlt(
-						"Failure when executing GetExecutionByID", err,
-						"Failure at GetExecutionByID, unexpected response", ""))
-					return diags
-				}
-			}
-			if statusIsFailure(response4.Status) {
-				log.Printf("[DEBUG] Error %s", response4.BapiError)
-				diags = append(diags, diagError(
-					"Failure when executing Loading resource", err))
-				return diags
-			}
-		}
 		d.SetId(joinResourceID(resourceMap))
 		return resourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx, d, m)
 	}
-	resp1, restyResp1, err := client.FabricWireless.AddSSIDToIPPoolMapping(request1, nil)
+	resp1, restyResp1, err := client.FabricWireless.AddSSIDToIPPoolMapping(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
@@ -202,9 +150,6 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolCreate(ctx context.Context, d *s
 			"Failure when executing AddSSIDToIPPoolMapping", err))
 		return diags
 	}
-
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*resp1))
-
 	executionId := resp1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
@@ -215,16 +160,16 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolCreate(ctx context.Context, d *s
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetBusinessAPIExecutionDetails", err,
-				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
+				"Failure when executing GetExecutionByID", err,
+				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -232,17 +177,26 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolCreate(ctx context.Context, d *s
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
-			bapiError := response2.BapiError
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing AddSSIDToIPPoolMapping", err,
-				"Failure at AddSSIDToIPPoolMapping execution", bapiError))
+		if response2.Status == "FAILURE" {
+			log.Printf("[DEBUG] Error %s", response2.BapiError)
+			diags = append(diags, diagError(
+				"Failure when executing AddSSIDToIPPoolMapping", err))
 			return diags
 		}
 	}
+	queryParamValidate := dnacentersdkgo.GetSSIDToIPPoolMappingQueryParams{}
+	queryParamValidate.VLANName = vvVLANName
+	queryParamValidate.SiteNameHierarchy = vvSiteNameHierarchy
+	item3, _, err := client.FabricWireless.GetSSIDToIPPoolMapping(&queryParamValidate)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing AddSSIDToIPPoolMapping", err,
+			"Failure at AddSSIDToIPPoolMapping, unexpected response", ""))
+		return diags
+	}
 
 	resourceMap := make(map[string]string)
-	resourceMap["vlan_name"] = vvVLANName
+	resourceMap["vlan_name"] = item3.VLANName
 	resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 
 	d.SetId(joinResourceID(resourceMap))
@@ -270,6 +224,8 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx context.Context, d *sch
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 
+		// has_unknown_response: None
+
 		response1, restyResp1, err := client.FabricWireless.GetSSIDToIPPoolMapping(&queryParams1)
 
 		if err != nil || response1 == nil {
@@ -279,8 +235,8 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolRead(ctx context.Context, d *sch
 			d.SetId("")
 			return diags
 		}
-		log.Printf("[DEBUG] Retrieved resty response %s", restyResp1.String())
-		log.Printf("[DEBUG] Retrieved response %v", responseInterfaceToString(*response1))
+
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenFabricWirelessGetSSIDToIPPoolMappingItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
@@ -333,7 +289,7 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolUpdate(ctx context.Context, d *s
 					"Failure at GetExecutionByID, unexpected response", ""))
 				return diags
 			}
-			for statusIsPending(response2.Status) {
+			for response2.Status == "IN_PROGRESS" {
 				time.Sleep(10 * time.Second)
 				response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 				if err != nil || response2 == nil {
@@ -346,7 +302,7 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolUpdate(ctx context.Context, d *s
 					return diags
 				}
 			}
-			if statusIsFailure(response2.Status) {
+			if response2.Status == "FAILURE" {
 				log.Printf("[DEBUG] Error %s", response2.BapiError)
 				diags = append(diags, diagError(
 					"Failure when executing UpdateSSIDToIPPoolMapping", err))
@@ -361,11 +317,8 @@ func resourceBusinessSdaHostonboardingSSIDIPpoolUpdate(ctx context.Context, d *s
 
 func resourceBusinessSdaHostonboardingSSIDIPpoolDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	err := errors.New("Delete not possible in this resource")
-	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing BusinessSdaHostonboardingSSIDIPpoolDelete", err, "Delete method is not supported",
-		"Failure at BusinessSdaHostonboardingSSIDIPpoolDelete, unexpected response", ""))
-
+	// NOTE: Unable to delete BusinessSdaHostonboardingSSIDIPpool on Dna Center
+	//       Returning empty diags to delete it on Terraform
 	return diags
 }
 func expandRequestBusinessSdaHostonboardingSSIDIPpoolAddSSIDToIPPoolMapping(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestFabricWirelessAddSSIDToIPPoolMapping {

@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,8 +16,13 @@ import (
 
 func resourceLicenseDevice() *schema.Resource {
 	return &schema.Resource{
-		Description: `It manages create, read and delete operations on Licenses.
+		Description: `It manages create, read, update and delete operations on Licenses.
 
+- Deregister device(s) from CSSM(Cisco Smart Software Manager).
+
+- Register device(s) in CSSM(Cisco Smart Software Manager).
+
+- Transfer device(s) from one virtual account to another within same smart account.
 `,
 
 		CreateContext: resourceLicenseDeviceCreate,
@@ -45,22 +50,19 @@ func resourceLicenseDevice() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"id": &schema.Schema{
 							Description: `Id of smart account
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"is_active_smart_account": &schema.Schema{
 							Description: `Is active smart account
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"name": &schema.Schema{
 							Description: `Name of smart account
 `,
@@ -76,26 +78,28 @@ func resourceLicenseDevice() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+
+						"device_uuids": &schema.Schema{
+							Description: `Comma separated device ids
+`,
+							Type:     schema.TypeList,
+							Optional: true,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
 						"smart_account_id": &schema.Schema{
 							Description: `smart_account_id path parameter. Id of smart account
-			`,
+`,
 							Type:     schema.TypeString,
 							Required: true,
 						},
 						"virtual_account_name": &schema.Schema{
 							Description: `virtual_account_name path parameter. Name of target virtual account
-			`,
+`,
 							Type:     schema.TypeString,
 							Required: true,
-						},
-						"device_uuids": &schema.Schema{
-							Description: `Comma separated device ids
-			`,
-							Type:     schema.TypeList,
-							Optional: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 					},
 				},
@@ -112,7 +116,7 @@ func resourceLicenseDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 	vvSmartAccountID := interfaceToString(vSmartAccountID)
 	vVirtualAccountName := resourceItem["virtual_account_name"]
 	vvVirtualAccountName := interfaceToString(vVirtualAccountName)
-	request1 := expandRequestLicenseVirtualAccountChangeChangeVirtualAccount2(ctx, "parameters.0", d)
+	request1 := expandRequestLicenseDeviceChangeVirtualAccount(ctx, "parameters.0", d)
 	response1, err := searchLicensesSmartAccountDetails(m, vvVirtualAccountName, vvSmartAccountID)
 
 	if err != nil || response1 != nil {
@@ -123,7 +127,7 @@ func resourceLicenseDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 		return resourceLicenseDeviceRead(ctx, d, m)
 	}
 
-	response2, restyResp1, err := client.Licenses.ChangeVirtualAccount2(vvSmartAccountID, vvVirtualAccountName, request1)
+	response2, restyResp1, err := client.Licenses.ChangeVirtualAccount(vvSmartAccountID, vvVirtualAccountName, request1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -231,9 +235,9 @@ func resourceLicenseDeviceUpdate(ctx context.Context, d *schema.ResourceData, m 
 	}
 
 	if d.HasChange("parameters") {
-		request1 := expandRequestLicenseDeviceRegistration2DeviceRegistration2(ctx, "parameters.0", d)
+		request1 := expandRequestLicenseDeviceDeviceRegistration(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		response1, restyResp1, err := client.Licenses.DeviceRegistration2(vVirtualAccountName, request1)
+		response1, restyResp1, err := client.Licenses.DeviceRegistration(vVirtualAccountName, request1)
 
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -279,12 +283,12 @@ func resourceLicenseDeviceUpdate(ctx context.Context, d *schema.ResourceData, m 
 func resourceLicenseDeviceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 	client := m.(*dnacentersdkgo.Client)
-	// NOTE: Unable to delete LicenseDevice on Dna Center
+	// NOTE: Unable to delete LicenseDevice on Catalyst Center
 	//       Returning empty diags to delete it on Terraform
 	log.Printf("[DEBUG] Selected method 1: DeviceDeregistration2")
-	request1 := expandRequestLicenseDeviceDeregistration2DeviceDeregistration2(ctx, "parameters.0", d)
+	request1 := expandRequestLicenseDeviceDeregistrationDeviceDeregistration(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.Licenses.DeviceDeregistration2(request1)
+	response1, restyResp1, err := client.Licenses.DeviceDeregistration(request1)
 
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -327,32 +331,30 @@ func resourceLicenseDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 	d.SetId("")
 	return diags
 }
-
-func expandRequestLicenseVirtualAccountChangeChangeVirtualAccount2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesChangeVirtualAccount2 {
-	request := dnacentersdkgo.RequestLicensesChangeVirtualAccount2{}
+func expandRequestLicenseDeviceChangeVirtualAccount(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesChangeVirtualAccount {
+	request := dnacentersdkgo.RequestLicensesChangeVirtualAccount{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_uuids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_uuids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_uuids")))) {
 		request.DeviceUUIDs = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
-func expandRequestLicenseDeviceRegistration2DeviceRegistration2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesDeviceRegistration2 {
-	request := dnacentersdkgo.RequestLicensesDeviceRegistration2{}
+func expandRequestLicenseDeviceDeviceRegistration(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesDeviceRegistration {
+	request := dnacentersdkgo.RequestLicensesDeviceRegistration{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_uuids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_uuids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_uuids")))) {
 		request.DeviceUUIDs = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
-func expandRequestLicenseDeviceDeregistration2DeviceDeregistration2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesDeviceDeregistration2 {
-	request := dnacentersdkgo.RequestLicensesDeviceDeregistration2{}
+
+func expandRequestLicenseDeviceDeregistrationDeviceDeregistration(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestLicensesDeviceDeregistration {
+	request := dnacentersdkgo.RequestLicensesDeviceDeregistration{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_uuids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_uuids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_uuids")))) {
 		request.DeviceUUIDs = interfaceToSliceString(v)
 	}

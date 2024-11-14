@@ -16,12 +16,12 @@ resource "dnacenter_network_create" "global" {
     settings {
       dhcp_server = ["1.1.1.1"]
 
-      dns_server{
-        domain_name = "hola"
+      dns_server {
+        domain_name        = "hola"
         primary_ip_address = "1.1.1.1"
       }
-      message_of_theday{
-        banner_message="Have a good day"
+      message_of_theday {
+        banner_message = "Have a good day"
       }
     }
 

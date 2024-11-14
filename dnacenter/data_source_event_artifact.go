@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -77,6 +77,19 @@ func dataSourceEventArtifact() *schema.Resource {
 
 						"cisco_dna_event_link": &schema.Schema{
 							Description: `Cisco D N A Event Link`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"deprecated": &schema.Schema{
+							Description: `Deprecated`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"deprecation_message": &schema.Schema{
+							Description: `Deprecation Message`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -301,7 +314,7 @@ func dataSourceEventArtifactRead(ctx context.Context, d *schema.ResourceData, m 
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEventArtifacts", err,
+				"Failure when executing 2 GetEventArtifacts", err,
 				"Failure at GetEventArtifacts, unexpected response", ""))
 			return diags
 		}
@@ -337,6 +350,8 @@ func flattenEventManagementGetEventArtifactsItems(items *dnacentersdkgo.Response
 		respItem["description"] = item.Description
 		respItem["domain"] = item.Domain
 		respItem["sub_domain"] = item.SubDomain
+		respItem["deprecation_message"] = item.DeprecationMessage
+		respItem["deprecated"] = boolPtrToString(item.Deprecated)
 		respItem["tags"] = item.Tags
 		respItem["is_template_enabled"] = boolPtrToString(item.IsTemplateEnabled)
 		respItem["cisco_dna_event_link"] = item.CiscoDnaEventLink

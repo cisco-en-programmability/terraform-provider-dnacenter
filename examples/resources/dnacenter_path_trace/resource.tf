@@ -1,6 +1,7 @@
 
 resource "dnacenter_path_trace" "example" {
   provider = dnacenter
+
   parameters {
 
     control_path     = "false"

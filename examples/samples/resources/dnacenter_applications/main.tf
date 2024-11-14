@@ -18,9 +18,9 @@ resource "dnacenter_applications" "example" {
   parameters {
     payload {
 
-      application_set {
-        id_ref = "f6f5a7e8-18ea-4e58-ac00-3f5c6f97186b"
-      }
+      # application_set {
+      #   id_ref = "c4ba4891-af71-4fa2-824a-0d69acbdd4d4"
+      # }
       id   = "00a1043c-429c-4211-bc7c-cd172c54603d"
       name = "qmqp2"
       network_applications {
@@ -105,7 +105,7 @@ resource "dnacenter_applications" "example" {
           upper_port= 0
         }
       ]
-      application_set= {
+      application_set{
         id_ref= "f6f5a7e8-18ea-4e58-ac00-3f5c6f97186b"
       }
       */

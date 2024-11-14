@@ -5,5 +5,5 @@ data "dnacenter_security_advisories_per_device" "example" {
 }
 
 output "dnacenter_security_advisories_per_device_example" {
-  value = data.dnacenter_security_advisories_per_device.example.items
+  value = data.dnacenter_security_advisories_per_device.example.item
 }

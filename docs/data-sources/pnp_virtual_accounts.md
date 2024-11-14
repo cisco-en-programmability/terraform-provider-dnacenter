@@ -37,5 +37,3 @@ output "dnacenter_pnp_virtual_accounts_example" {
 
 - `id` (String) The ID of this resource.
 - `items` (List of String)
-
-

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourceNetworkDeviceCustomPrompt() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on System Settings.
 
-- Returns supported custom prompts by Cisco DNA Center
+- Returns supported custom prompts by Catalyst Center
 `,
 
 		ReadContext: dataSourceNetworkDeviceCustomPromptRead,
@@ -28,27 +28,31 @@ func dataSourceNetworkDeviceCustomPrompt() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"custom_password_prompt": &schema.Schema{
-							Description: `Custom Password`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Password for Custom Prompt
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"custom_username_prompt": &schema.Schema{
-							Description: `Custom Username`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Username for Custom Prompt
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"default_password_prompt": &schema.Schema{
-							Description: `Default Password`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Default Password for Custom Prompt
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"default_username_prompt": &schema.Schema{
-							Description: `Default Username`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Default Username for Custom Prompt
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -64,26 +68,26 @@ func dataSourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Reso
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: CustomPromptSupportGetAPI")
+		log.Printf("[DEBUG] Selected method: CustomPromptSupportGETAPI")
 
-		response1, restyResp1, err := client.SystemSettings.CustomPromptSupportGetAPI()
+		response1, restyResp1, err := client.SystemSettings.CustomPromptSupportGETAPI()
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing CustomPromptSupportGetAPI", err,
-				"Failure at CustomPromptSupportGetAPI, unexpected response", ""))
+				"Failure when executing 2 CustomPromptSupportGETAPI", err,
+				"Failure at CustomPromptSupportGETAPI, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenSystemSettingsCustomPromptSupportGetAPIItem(response1.Response)
+		vItem1 := flattenSystemSettingsCustomPromptSupportGETAPIItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting CustomPromptSupportGetAPI response",
+				"Failure when setting CustomPromptSupportGETAPI response",
 				err))
 			return diags
 		}
@@ -95,7 +99,7 @@ func dataSourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Reso
 	return diags
 }
 
-func flattenSystemSettingsCustomPromptSupportGetAPIItem(item *dnacentersdkgo.ResponseSystemSettingsCustomPromptSupportGETAPIResponse) []map[string]interface{} {
+func flattenSystemSettingsCustomPromptSupportGETAPIItem(item *dnacentersdkgo.ResponseSystemSettingsCustomPromptSupportGETAPIResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

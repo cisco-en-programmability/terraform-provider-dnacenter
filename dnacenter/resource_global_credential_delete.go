@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -80,6 +80,8 @@ func resourceGlobalCredentialDeleteCreate(ctx context.Context, d *schema.Resourc
 
 	vvGlobalCredentialID := vGlobalCredentialID.(string)
 
+	// has_unknown_response: None
+
 	response1, restyResp1, err := client.Discovery.DeleteGlobalCredentialsByID(vvGlobalCredentialID)
 
 	if err != nil || response1 == nil {
@@ -133,7 +135,6 @@ func resourceGlobalCredentialDeleteCreate(ctx context.Context, d *schema.Resourc
 			return diags
 		}
 	}
-
 	vItem1 := flattenDiscoveryDeleteGlobalCredentialsByIDItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -144,7 +145,6 @@ func resourceGlobalCredentialDeleteCreate(ctx context.Context, d *schema.Resourc
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceGlobalCredentialDeleteRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

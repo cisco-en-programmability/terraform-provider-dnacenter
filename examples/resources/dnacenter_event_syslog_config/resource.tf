@@ -8,7 +8,7 @@ resource "dnacenter_event_syslog_config" "example" {
     description = "string"
     host        = "string"
     name        = "string"
-    port        = "string"
+    port        = 1
     protocol    = "string"
   }
 }

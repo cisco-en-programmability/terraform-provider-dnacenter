@@ -74,7 +74,7 @@ Optional:
 
 Optional:
 
-- `autonomous_system_number` (String) Autonomous System Number  (e.g.,1-65535)
+- `autonomous_system_number` (String) Autonomous System Number
 - `routing_protocol_name` (String) Routing Protocol Name
 
 
@@ -105,6 +105,7 @@ Read-Only:
 - `ip_transit_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--ip_transit_settings))
 - `sda_transit_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--sda_transit_settings))
 - `status` (String)
+- `transit_peer_network_id` (String)
 - `transit_peer_network_name` (String)
 - `transit_peer_network_type` (String)
 

@@ -55,5 +55,3 @@ Read-Only:
 - `longitude` (String)
 - `name` (String)
 - `parent_id` (String)
-
-

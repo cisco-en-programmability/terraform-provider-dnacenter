@@ -12,22 +12,21 @@ description: |-
 It performs create operation on Network Settings.
 
 - API to assign Device Credential to a site.
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_credential_to_site_by_siteid_create_v2" "example" {
-  provider = dnacenter
+  provider = meraki
+  site_id  = "string"
   parameters {
 
     cli_id           = "string"
     http_read        = "string"
     http_write       = "string"
-    site_id          = "string"
     snmp_v2_read_id  = "string"
     snmp_v2_write_id = "string"
     snmp_v3_id       = "string"
@@ -76,5 +75,3 @@ Read-Only:
 
 - `task_id` (String)
 - `url` (String)
-
-

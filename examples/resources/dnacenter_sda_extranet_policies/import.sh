@@ -1,0 +1,1 @@
+terraform import dnacenter_sda_extranet_policies.example "id:=string"

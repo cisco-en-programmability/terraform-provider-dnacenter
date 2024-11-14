@@ -119,5 +119,3 @@ Read-Only:
 - `https_proxy_password` (String)
 - `https_proxy_username` (String)
 - `no_proxy` (List of String)
-
-

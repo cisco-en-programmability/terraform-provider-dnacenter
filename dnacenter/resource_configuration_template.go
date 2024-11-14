@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -1137,7 +1137,7 @@ func resourceConfigurationTemplate() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
-										Default:  "",
+										Computed: true,
 									},
 									"project_name": &schema.Schema{
 										Description: `Project name
@@ -1695,7 +1695,8 @@ func resourceConfigurationTemplate() *schema.Resource {
 							Description: `Project UUID
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Computed: true,
 						},
 						"project_name": &schema.Schema{
 							Description: `Project name
@@ -2275,7 +2276,6 @@ func resourceConfigurationTemplateCreate(ctx context.Context, d *schema.Resource
 			resourceMap["template_id"] = response2.ID
 			resourceMap["project_id"] = response2.ProjectID
 			d.SetId(joinResourceID(resourceMap))
-			log.Print("[DEBUG] 3")
 			return resourceConfigurationTemplateRead(ctx, d, m)
 		}
 	}

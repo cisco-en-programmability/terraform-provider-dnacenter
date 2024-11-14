@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -57,17 +57,20 @@ func resourceEventEmailConfigUpdate() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"from_email": &schema.Schema{
 							Description: `From Email`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"primary_smt_p_config": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -76,6 +79,7 @@ func resourceEventEmailConfigUpdate() *schema.Resource {
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 									"password": &schema.Schema{
 										Description: `Password`,
@@ -83,18 +87,28 @@ func resourceEventEmailConfigUpdate() *schema.Resource {
 										Optional:    true,
 										ForceNew:    true,
 										Sensitive:   true,
+										Computed:    true,
 									},
 									"port": &schema.Schema{
 										Description: `Port`,
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
+									},
+									"smtp_type": &schema.Schema{
+										Description: `smtpType`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										ForceNew:    true,
+										Computed:    true,
 									},
 									"user_name": &schema.Schema{
 										Description: `User Name`,
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 								},
 							},
@@ -103,6 +117,7 @@ func resourceEventEmailConfigUpdate() *schema.Resource {
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -111,6 +126,7 @@ func resourceEventEmailConfigUpdate() *schema.Resource {
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 									"password": &schema.Schema{
 										Description: `Password`,
@@ -118,18 +134,28 @@ func resourceEventEmailConfigUpdate() *schema.Resource {
 										Optional:    true,
 										ForceNew:    true,
 										Sensitive:   true,
+										Computed:    true,
 									},
 									"port": &schema.Schema{
 										Description: `Port`,
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
+									},
+									"smtp_type": &schema.Schema{
+										Description: `smtpType`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										ForceNew:    true,
+										Computed:    true,
 									},
 									"user_name": &schema.Schema{
 										Description: `User Name`,
 										Type:        schema.TypeString,
 										Optional:    true,
 										ForceNew:    true,
+										Computed:    true,
 									},
 								},
 							},
@@ -139,12 +165,14 @@ func resourceEventEmailConfigUpdate() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 						"to_email": &schema.Schema{
 							Description: `To Email`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -159,25 +187,20 @@ func resourceEventEmailConfigUpdateCreate(ctx context.Context, d *schema.Resourc
 
 	request1 := expandRequestEventEmailConfigUpdateUpdateEmailDestination(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.EventManagement.UpdateEmailDestination(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.EventManagement.UpdateEmailDestination(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing UpdateEmailDestination", err,
-			"Failure at UpdateEmailDestination, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing UpdateEmailDestination", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	//Analizar verificacion.
 
 	vItem1 := flattenEventManagementUpdateEmailDestinationItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
@@ -186,6 +209,7 @@ func resourceEventEmailConfigUpdateCreate(ctx context.Context, d *schema.Resourc
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 
@@ -240,6 +264,9 @@ func expandRequestEventEmailConfigUpdateUpdateEmailDestinationPrimarySmtpConfig(
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".smtp_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".smtp_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".smtp_type")))) {
+		request.SmtpType = interfaceToString(v)
+	}
 	return &request
 }
 
@@ -256,6 +283,9 @@ func expandRequestEventEmailConfigUpdateUpdateEmailDestinationSecondarySmtpConfi
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".smtp_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".smtp_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".smtp_type")))) {
+		request.SmtpType = interfaceToString(v)
 	}
 	return &request
 }

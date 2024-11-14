@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -22,11 +22,6 @@ func dataSourceTagCount() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"attribute_name": &schema.Schema{
 				Description: `attributeName query parameter.`,
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
-			"level": &schema.Schema{
-				Description: `level query parameter.`,
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -81,7 +76,6 @@ func dataSourceTagCountRead(ctx context.Context, d *schema.ResourceData, m inter
 	vName, okName := d.GetOk("name")
 	vNameSpace, okNameSpace := d.GetOk("name_space")
 	vAttributeName, okAttributeName := d.GetOk("attribute_name")
-	vLevel, okLevel := d.GetOk("level")
 	vSize, okSize := d.GetOk("size")
 	vSystemTag, okSystemTag := d.GetOk("system_tag")
 
@@ -99,9 +93,6 @@ func dataSourceTagCountRead(ctx context.Context, d *schema.ResourceData, m inter
 		if okAttributeName {
 			queryParams1.AttributeName = vAttributeName.(string)
 		}
-		if okLevel {
-			queryParams1.Level = vLevel.(string)
-		}
 		if okSize {
 			queryParams1.Size = vSize.(string)
 		}
@@ -116,7 +107,7 @@ func dataSourceTagCountRead(ctx context.Context, d *schema.ResourceData, m inter
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTagCount", err,
+				"Failure when executing 2 GetTagCount", err,
 				"Failure at GetTagCount, unexpected response", ""))
 			return diags
 		}

@@ -4,7 +4,7 @@ page_title: "dnacenter_network_device_custom_prompt Resource - terraform-provide
 subcategory: ""
 description: |-
   It manages create and read operations on System Settings.
-  Save custom prompt added by user in Cisco DNA Center. API will always override the existing prompts. User should
+  Save custom prompt added by user in Catalyst Center. API will always override the existing prompts. User should
   provide all the custom prompt in case of any update
 ---
 
@@ -12,7 +12,7 @@ description: |-
 
 It manages create and read operations on System Settings.
 
-- Save custom prompt added by user in Cisco DNA Center. API will always override the existing prompts. User should
+- Save custom prompt added by user in Catalyst Center. API will always override the existing prompts. User should
 provide all the custom prompt in case of any update
 
 ## Example Usage
@@ -20,6 +20,7 @@ provide all the custom prompt in case of any update
 ```terraform
 resource "dnacenter_network_device_custom_prompt" "example" {
   provider = dnacenter
+
   parameters {
 
     password_prompt = "******"
@@ -50,8 +51,8 @@ output "dnacenter_network_device_custom_prompt_example" {
 
 Optional:
 
-- `password_prompt` (String, Sensitive) Password Prompt
-- `username_prompt` (String) Username Prompt
+- `password_prompt` (String, Sensitive) Password for Custom Prompt
+- `username_prompt` (String) Username for Custom Prompt
 
 
 <a id="nestedatt--item"></a>

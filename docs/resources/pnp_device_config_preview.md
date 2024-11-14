@@ -12,16 +12,15 @@ description: |-
 It performs create operation on Device Onboarding (PnP).
 
 - Triggers a preview for site-based Day 0 Configuration
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_pnp_device_config_preview" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     device_id = "string"
@@ -73,5 +72,3 @@ Read-Only:
 - `site_id` (String)
 - `start_time` (Number)
 - `task_id` (String)
-
-

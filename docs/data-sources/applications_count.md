@@ -38,7 +38,5 @@ output "dnacenter_applications_count_example" {
 
 Read-Only:
 
-- `response` (Number)
+- `response` (String)
 - `version` (String)
-
-

@@ -4,14 +4,14 @@ page_title: "dnacenter_roles Data Source - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs read operation on User and Roles.
-  Get all roles for the Cisco DNA Center system
+  Get all roles for the Cisco DNA Center System.
 ---
 
 # dnacenter_roles (Data Source)
 
 It performs read operation on User and Roles.
 
-- Get all roles for the Cisco DNA Center system
+- Get all roles for the Cisco DNA Center System.
 
 ## Example Usage
 
@@ -31,7 +31,7 @@ output "dnacenter_roles_example" {
 
 ### Required
 
-- `invoke_source` (String) invokeSource header parameter. The source that invoke this API
+- `invoke_source` (String) invokeSource header parameter. The source that invokes this API. The value of this header must be set to "external".
 
 ### Read-Only
 
@@ -74,5 +74,3 @@ Read-Only:
 
 - `operations` (List of String)
 - `type` (String)
-
-

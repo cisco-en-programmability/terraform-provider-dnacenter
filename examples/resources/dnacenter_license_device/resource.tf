@@ -1,6 +1,7 @@
 
 resource "dnacenter_license_device" "example" {
   provider = dnacenter
+
   parameters {
 
     device_uuids         = ["string"]

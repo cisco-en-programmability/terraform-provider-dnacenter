@@ -58,5 +58,3 @@ Read-Only:
 
 - `id` (String)
 - `type` (String)
-
-

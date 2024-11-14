@@ -1,0 +1,1 @@
+terraform import dnacenter_floors_settings.example "id:=string"

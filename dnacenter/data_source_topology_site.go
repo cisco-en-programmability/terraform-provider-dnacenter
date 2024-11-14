@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,51 +34,71 @@ func dataSourceTopologySite() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"display_name": &schema.Schema{
+										Description: `Group id of the site
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"group_name_hierarchy": &schema.Schema{
+										Description: `Hierarchy of the site names from the root site to the current site. Each site name is separated by a '/'. Eg. 'Global/Site1/Building1/Floor1'
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"id": &schema.Schema{
+										Description: `Unique identifier of the site
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"latitude": &schema.Schema{
+										Description: `Latitude of the site
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"location_address": &schema.Schema{
+										Description: `Address of the site
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"location_country": &schema.Schema{
+										Description: `Country corresponding to the address of the site
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"location_type": &schema.Schema{
+										Description: `Type of site, eg. 'building', 'area' or 'floor'
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"longitude": &schema.Schema{
+										Description: `Longitude of the site
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"name": &schema.Schema{
+										Description: `Name of the site
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"parent_id": &schema.Schema{
+										Description: `Unique identifier of the parent site
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -108,7 +128,7 @@ func dataSourceTopologySiteRead(ctx context.Context, d *schema.ResourceData, m i
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSiteTopology", err,
+				"Failure when executing 2 GetSiteTopology", err,
 				"Failure at GetSiteTopology, unexpected response", ""))
 			return diags
 		}

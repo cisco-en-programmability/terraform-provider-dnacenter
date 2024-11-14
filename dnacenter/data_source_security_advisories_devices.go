@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,18 +34,20 @@ func dataSourceSecurityAdvisoriesDevices() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"response": &schema.Schema{
-							Description: `Response`,
-							Type:        schema.TypeList,
-							Computed:    true,
+							Description: `List of device IDs vulnerable to the advisory
+`,
+							Type:     schema.TypeList,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 
 						"version": &schema.Schema{
-							Description: `Version`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Version of the response
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -72,7 +74,7 @@ func dataSourceSecurityAdvisoriesDevicesRead(ctx context.Context, d *schema.Reso
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDevicesPerAdvisory", err,
+				"Failure when executing 2 GetDevicesPerAdvisory", err,
 				"Failure at GetDevicesPerAdvisory, unexpected response", ""))
 			return diags
 		}

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourceNetworkDeviceVLAN() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Devices.
 
-- Returns Device Interface VLANs
+- Returns Device Interface VLANs. If parameter value is null or empty, it won't return any value in response.
 `,
 
 		ReadContext: dataSourceNetworkDeviceVLANRead,
@@ -26,7 +26,7 @@ func dataSourceNetworkDeviceVLAN() *schema.Resource {
 				Required:    true,
 			},
 			"interface_type": &schema.Schema{
-				Description: `interfaceType query parameter. Vlan assocaited with sub-interface
+				Description: `interfaceType query parameter. Vlan associated with sub-interface. If no interfaceType mentioned it will return all types of Vlan interfaces. If interfaceType is selected but not specified then it will take default value.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -39,41 +39,57 @@ func dataSourceNetworkDeviceVLAN() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"interface_name": &schema.Schema{
+							Description: `Interface name
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"ip_address": &schema.Schema{
+							Description: `IP address
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"mask": &schema.Schema{
+							Description: `Mask IP
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"network_address": &schema.Schema{
+							Description: `Network addresses
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"number_of_ips": &schema.Schema{
+							Description: `Number of Ip addresses
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"prefix": &schema.Schema{
+							Description: `Prefix associated with the IP address
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"vlan_number": &schema.Schema{
+							Description: `Vlan Number
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"vlan_type": &schema.Schema{
+							Description: `[Deprecated] Description of the interface VLAN
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -108,7 +124,7 @@ func dataSourceNetworkDeviceVLANRead(ctx context.Context, d *schema.ResourceData
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceInterfaceVLANs", err,
+				"Failure when executing 2 GetDeviceInterfaceVLANs", err,
 				"Failure at GetDeviceInterfaceVLANs, unexpected response", ""))
 			return diags
 		}

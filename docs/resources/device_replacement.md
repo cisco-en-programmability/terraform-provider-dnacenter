@@ -20,24 +20,23 @@ It manages create, read and update operations on Device Replacement.
 ```terraform
 resource "dnacenter_device_replacement" "example" {
   provider = dnacenter
-  parameters {
-    payload {
 
-      creation_time                    = 1
-      family                           = "string"
-      faulty_device_id                 = "string"
-      faulty_device_name               = "string"
-      faulty_device_platform           = "string"
-      faulty_device_serial_number      = "string"
-      id                               = "string"
-      neighbour_device_id              = "string"
-      network_readiness_task_id        = "string"
-      replacement_device_platform      = "string"
-      replacement_device_serial_number = "string"
-      replacement_status               = "string"
-      replacement_time                 = 1
-      workflow_id                      = "string"
-    }
+  parameters {
+
+    creation_time                    = 1
+    family                           = "string"
+    faulty_device_id                 = "string"
+    faulty_device_name               = "string"
+    faulty_device_platform           = "string"
+    faulty_device_serial_number      = "string"
+    id                               = "string"
+    neighbour_device_id              = "string"
+    network_readiness_task_id        = "string"
+    replacement_device_platform      = "string"
+    replacement_device_serial_number = "string"
+    replacement_status               = "string"
+    replacement_time                 = 1
+    workflow_id                      = "string"
   }
 }
 
@@ -71,23 +70,20 @@ Optional:
 
 Optional:
 
-- `creation_time` (Number)
-- `family` (String)
-- `faulty_device_id` (String)
-- `faulty_device_name` (String)
-- `faulty_device_platform` (String)
-- `faulty_device_serial_number` (String)
-- `neighbour_device_id` (String)
-- `network_readiness_task_id` (String)
-- `replacement_device_platform` (String)
-- `replacement_device_serial_number` (String)
-- `replacement_status` (String)
-- `replacement_time` (Number)
-- `workflow_id` (String)
-
-Read-Only:
-
-- `id` (String) The ID of this resource.
+- `creation_time` (Number) Date and time of marking the device for replacement
+- `family` (String) Faulty device family
+- `faulty_device_id` (String) Unique identifier of the faulty device
+- `faulty_device_name` (String) Faulty device name
+- `faulty_device_platform` (String) Faulty device platform
+- `faulty_device_serial_number` (String) Faulty device serial number
+- `id` (String) Unique identifier of the device replacement resource
+- `neighbour_device_id` (String) Unique identifier of the neighbor device to create the DHCP server
+- `network_readiness_task_id` (String) Unique identifier of network readiness task
+- `replacement_device_platform` (String) Replacement device platform
+- `replacement_device_serial_number` (String) Replacement device serial number
+- `replacement_status` (String) Device replacement status. Use MARKED-FOR-REPLACEMENT to mark the device for replacement.
+- `replacement_time` (Number) Date and time of device replacement
+- `workflow_id` (String) Unique identifier of the device replacement workflow
 
 
 
@@ -105,10 +101,12 @@ Read-Only:
 - `id` (String)
 - `neighbour_device_id` (String)
 - `network_readiness_task_id` (String)
+- `readinesscheck_task_id` (String)
 - `replacement_device_platform` (String)
 - `replacement_device_serial_number` (String)
 - `replacement_status` (String)
 - `replacement_time` (Number)
+- `workflow_failed_step` (String)
 - `workflow_id` (String)
 
 ## Import

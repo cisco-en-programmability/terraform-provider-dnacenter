@@ -20,7 +20,7 @@ data "dnacenter_device_details" "example" {
   provider   = dnacenter
   identifier = "string"
   search_by  = "string"
-  timestamp  = "string"
+  timestamp  = 1.0
 }
 
 output "dnacenter_device_details_example" {
@@ -33,12 +33,12 @@ output "dnacenter_device_details_example" {
 
 ### Required
 
-- `identifier` (String) identifier query parameter. One of keywords : macAddress or uuid or nwDeviceName
-- `search_by` (String) searchBy query parameter. MAC Address or Device Name value or UUID of the network device
+- `identifier` (String) identifier query parameter. One of "macAddress", "nwDeviceName", "uuid" (case insensitive)
+- `search_by` (String) searchBy query parameter. MAC Address, device name, or UUID of the network device
 
 ### Optional
 
-- `timestamp` (String) timestamp query parameter. Epoch time(in milliseconds) when the device data is required
+- `timestamp` (Number) timestamp query parameter. UTC timestamp of device data in milliseconds
 
 ### Read-Only
 
@@ -50,28 +50,45 @@ output "dnacenter_device_details_example" {
 
 Read-Only:
 
+- `admin_state` (String)
 - `air_quality` (String)
 - `air_quality_score` (Number)
-- `client_count` (String)
+- `ap_group` (String)
+- `ap_type` (String)
+- `avg_temperature` (Number)
 - `collection_status` (String)
 - `communication_state` (String)
-- `cpu` (String)
+- `connected_time` (String)
+- `connectivity_status` (Number)
+- `cpu` (Number)
 - `cpu_score` (Number)
+- `device_group_hierarchy_id` (String)
 - `device_series` (String)
-- `free_mbuf` (String)
+- `ethernet_mac` (String)
+- `feature_flag_list` (List of String)
+- `flex_group` (String)
+- `free_mbuf` (Number)
 - `free_mbuf_score` (Number)
-- `free_timer` (String)
+- `free_timer` (Number)
 - `free_timer_score` (Number)
+- `ha_status` (String)
 - `halast_reset_reason` (String)
-- `haprimary_power_status` (String)
-- `hasecondary_power_status` (String)
+- `home_ap_enabled` (String)
+- `icap_capability` (String)
 - `interference` (String)
 - `interference_score` (Number)
+- `ip_addr_management_ip_addr` (String)
+- `last_boot_time` (Number)
+- `led_flash_enabled` (String)
+- `led_flash_seconds` (String)
 - `location` (String)
 - `mac_address` (String)
+- `maintenance_mode` (String)
 - `management_ip_addr` (String)
+- `max_temperature` (Number)
 - `memory` (String)
 - `memory_score` (Number)
+- `mode` (String)
 - `noise` (String)
 - `noise_score` (Number)
 - `nw_device_family` (String)
@@ -79,20 +96,39 @@ Read-Only:
 - `nw_device_name` (String)
 - `nw_device_role` (String)
 - `nw_device_type` (String)
+- `op_state` (String)
 - `os_type` (String)
 - `overall_health` (Number)
-- `packet_pool` (String)
+- `packet_pool` (Number)
 - `packet_pool_score` (Number)
 - `platform_id` (String)
+- `policy_tag_name` (String)
+- `power_calendar_profile` (String)
+- `power_mode` (String)
+- `power_profile` (String)
+- `power_save_mode` (String)
+- `power_save_mode_capable` (String)
+- `power_type` (String)
+- `protocol` (String)
 - `redundancy_mode` (String)
 - `redundancy_peer_state` (String)
+- `redundancy_peer_state_derived` (String)
 - `redundancy_state` (String)
-- `redundancy_unit` (String)
+- `redundancy_state_derived` (String)
+- `regulatory_domain` (String)
+- `reset_reason` (String)
+- `rf_tag_name` (String)
+- `ring_status` (String)
+- `serial_number` (String)
+- `site_hierarchy_graph_id` (String)
+- `site_tag_name` (String)
 - `software_version` (String)
-- `timestamp` (String)
+- `stack_type` (String)
+- `sub_mode` (String)
+- `tag_id_list` (List of String)
+- `timestamp` (Number)
+- `up_time` (String)
 - `utilization` (String)
 - `utilization_score` (Number)
-- `wqe` (String)
+- `wqe` (Number)
 - `wqe_score` (Number)
-
-

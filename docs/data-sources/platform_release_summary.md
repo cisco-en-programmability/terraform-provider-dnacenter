@@ -47,5 +47,3 @@ Read-Only:
 - `supported_direct_updates` (List of String)
 - `system_version` (String)
 - `tenant_id` (String)
-
-

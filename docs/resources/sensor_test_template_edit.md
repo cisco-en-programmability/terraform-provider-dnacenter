@@ -12,49 +12,247 @@ description: |-
 It performs update operation on Sensors.
 
 - Intent API to deploy, schedule, or edit and existing SENSOR test template
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_sensor_test_template_edit" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
+    id                 = "string"
+    action_in_progress = "string"
+    ap_coverage {
+
+      bands                 = "string"
+      number_of_aps_to_test = 1
+      rssi_threshold        = 1
+    }
+    connection      = "string"
+    encryption_mode = "string"
+    frequency {
+
+      unit  = "string"
+      value = 1
+    }
+    last_modified_time = 1
+    location           = "string"
     location_info_list {
 
-      all_sensors    = "false"
-      location_id    = "string"
-      location_type  = "string"
-      site_hierarchy = "string"
+      all_sensors            = "false"
+      custom_management_vlan = "false"
+      location_id            = "string"
+      location_type          = "string"
+      mac_address_list       = ["string"]
+      management_vlan        = "string"
+      site_hierarchy         = "string"
     }
-    schedule {
+    model_version            = 1
+    name                     = "string"
+    num_associated_sensor    = 1
+    num_neighbor_apthreshold = 1
+    profiles {
 
-      frequency {
+      auth_protocol           = "string"
+      auth_type               = "string"
+      certdownloadurl         = "string"
+      certfilename            = "string"
+      certpassphrase          = "string"
+      certstatus              = "string"
+      certxferprotocol        = "string"
+      device_type             = "string"
+      eap_method              = "string"
+      ext_web_auth            = "false"
+      ext_web_auth_access_url = "string"
+      ext_web_auth_html_tag {
 
-        unit  = "string"
-        value = 1
+        label = "string"
+        tag   = "string"
+        value = "string"
       }
-      schedule_range {
+      ext_web_auth_portal     = "string"
+      ext_web_auth_virtual_ip = "string"
+      location_vlan_list {
 
-        day = "string"
-        time_range {
+        location_id = "string"
+        vlans       = ["string"]
+      }
+      password      = "******"
+      password_type = "******"
+      profile_name  = "string"
+      psk           = "string"
+      qos_policy    = "string"
+      scep          = "false"
+      tests {
 
-          frequency {
+        config {
 
-            unit  = "string"
-            value = 1
-          }
-          from = "string"
-          to   = "string"
+          direction        = "string"
+          domains          = ["string"]
+          downlink_test    = "false"
+          end_port         = 1
+          exit_command     = "string"
+          final_prompt     = "string"
+          ndt_server       = "string"
+          ndt_server_path  = "string"
+          ndt_server_port  = "string"
+          num_packets      = 1
+          password         = "******"
+          password_prompt  = "******"
+          path_to_download = "string"
+          port             = 1
+          probe_type       = "string"
+          protocol         = "string"
+          proxy_password   = "string"
+          proxy_port       = "string"
+          proxy_server     = "string"
+          proxy_user_name  = "string"
+          server           = "string"
+          servers          = ["string"]
+          shared_secret    = "string"
+          start_port       = 1
+          transfer_type    = "string"
+          udp_bandwidth    = 1
+          uplink_test      = "false"
+          url              = "string"
+          user_name        = "string"
+          user_name_prompt = "string"
         }
+        name = "string"
       }
-      test_schedule_mode = "string"
+      username   = "string"
+      vlan       = "string"
+      white_list = "false"
     }
-    template_name = "string"
+    radio_as_sensor_removed = "false"
+    rssi_threshold          = 1
+    run_now                 = "string"
+    schedule_in_days        = 1
+    sensors {
+
+      all_sensor_addition       = "false"
+      assigned                  = "false"
+      config_updated            = "string"
+      host_name                 = "string"
+      i_perf_info               = ["string"]
+      id                        = "string"
+      ip_address                = "string"
+      location_id               = "string"
+      mac_address               = "string"
+      marked_for_uninstall      = "false"
+      name                      = "string"
+      run_now                   = "string"
+      sensor_type               = "string"
+      service_policy            = "string"
+      status                    = "string"
+      switch_mac                = "string"
+      switch_serial_number      = "string"
+      switch_uuid               = "string"
+      target_a_ps               = ["string"]
+      test_mac_addresses        = "------"
+      wired_application_message = "string"
+      wired_application_status  = "string"
+      xor_sensor                = "false"
+    }
+    show_wlc_upgrade_banner = "false"
+    site_hierarchy          = "string"
+    ssids {
+
+      auth_protocol           = "string"
+      auth_type               = "string"
+      bands                   = "string"
+      certdownloadurl         = "string"
+      certfilename            = "string"
+      certpassphrase          = "string"
+      certstatus              = "string"
+      certxferprotocol        = "string"
+      eap_method              = "string"
+      ext_web_auth            = "false"
+      ext_web_auth_access_url = "string"
+      ext_web_auth_html_tag {
+
+        label = "string"
+        tag   = "string"
+        value = "string"
+      }
+      ext_web_auth_portal          = "string"
+      ext_web_auth_virtual_ip      = "string"
+      id                           = 1
+      layer3web_auth_email_address = "string"
+      layer3web_authpassword       = "******"
+      layer3web_authsecurity       = "string"
+      layer3web_authuser_name      = "string"
+      num_aps                      = 1
+      num_sensors                  = 1
+      password                     = "******"
+      password_type                = "******"
+      profile_name                 = "string"
+      proxy_password               = "string"
+      proxy_port                   = "string"
+      proxy_server                 = "string"
+      proxy_user_name              = "string"
+      psk                          = "string"
+      qos_policy                   = "string"
+      scep                         = "false"
+      ssid                         = "string"
+      status                       = "string"
+      tests {
+
+        config {
+
+          direction        = "string"
+          domains          = ["string"]
+          downlink_test    = "false"
+          end_port         = 1
+          exit_command     = "string"
+          final_prompt     = "string"
+          ndt_server       = "string"
+          ndt_server_path  = "string"
+          ndt_server_port  = "string"
+          num_packets      = 1
+          password         = "******"
+          password_prompt  = "******"
+          path_to_download = "string"
+          port             = 1
+          probe_type       = "string"
+          protocol         = "string"
+          proxy_password   = "string"
+          proxy_port       = "string"
+          proxy_server     = "string"
+          proxy_user_name  = "string"
+          server           = "string"
+          servers          = ["string"]
+          shared_secret    = "string"
+          start_port       = 1
+          transfer_type    = "string"
+          udp_bandwidth    = 1
+          uplink_test      = "false"
+          url              = "string"
+          user_name        = "string"
+          user_name_prompt = "string"
+        }
+        name = "string"
+      }
+      third_party {
+
+        selected = "false"
+      }
+      username   = "string"
+      valid_from = 1
+      valid_to   = 1
+      white_list = "false"
+      wlan_id    = 1
+      wlc        = "string"
+    }
+    start_time         = 1
+    status             = "string"
+    template_name      = "string"
+    test_schedule_mode = "string"
+    version            = 1
+    wlans              = ["string"]
   }
 }
 
@@ -81,65 +279,304 @@ output "dnacenter_sensor_test_template_edit_example" {
 
 Optional:
 
+- `action_in_progress` (String) Indication of inprogress action
+- `ap_coverage` (Block List) (see [below for nested schema](#nestedblock--parameters--ap_coverage))
+- `connection` (String) connection type of test: WIRED, WIRELESS, BOTH
+- `encryption_mode` (String) Encryption mode
+- `frequency` (Block List) (see [below for nested schema](#nestedblock--parameters--frequency))
+- `id` (String) The sensor test template unique identifier, generated at test creation time
+- `last_modified_time` (Number) Last modify time
+- `location` (String) Location string
 - `location_info_list` (Block List) (see [below for nested schema](#nestedblock--parameters--location_info_list))
-- `schedule` (Block List) (see [below for nested schema](#nestedblock--parameters--schedule))
-- `template_name` (String) Template Name
+- `model_version` (Number) Test template object model version (must be 2)
+- `name` (String) The sensor test template name, which is the same as in 'templateName'
+- `num_associated_sensor` (Number) Number of associated sensor
+- `num_neighbor_apthreshold` (Number) Number of neighboring AP threshold
+- `profiles` (Block List) (see [below for nested schema](#nestedblock--parameters--profiles))
+- `radio_as_sensor_removed` (String) Radio as sensor removed
+- `rssi_threshold` (Number) RSSI threshold
+- `run_now` (String) Run now (YES, NO)
+- `schedule_in_days` (Number) Bit-wise value of scheduled test days
+- `sensors` (Block List) (see [below for nested schema](#nestedblock--parameters--sensors))
+- `show_wlc_upgrade_banner` (String) Show WLC upgrade banner
+- `site_hierarchy` (String) Site hierarchy
+- `ssids` (Block List) (see [below for nested schema](#nestedblock--parameters--ssids))
+- `start_time` (Number) Start time
+- `status` (String) Status of the test (RUNNING, NOTRUNNING)
+- `template_name` (String) The test template name that is to be edited
+- `test_schedule_mode` (String) Test schedule mode (ONDEMAND, DEDICATED, SCHEDULED, CONTINUOUS, RUNNOW)
+- `version` (Number) The sensor test template version (must be 2)
+- `wlans` (List of String) WLANs list
+
+<a id="nestedblock--parameters--ap_coverage"></a>
+### Nested Schema for `parameters.ap_coverage`
+
+Optional:
+
+- `bands` (String) The WIFI bands
+- `number_of_aps_to_test` (Number) Number of APs to test
+- `rssi_threshold` (Number) RSSI threshold
+
+
+<a id="nestedblock--parameters--frequency"></a>
+### Nested Schema for `parameters.frequency`
+
+Optional:
+
+- `unit` (String) Unit of the time value (NANOSECONDS, MICROSECONDS, MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS)
+- `value` (Number) Value of the unit
+
 
 <a id="nestedblock--parameters--location_info_list"></a>
 ### Nested Schema for `parameters.location_info_list`
 
 Optional:
 
-- `all_sensors` (String) All Sensors
-- `location_id` (String) Location Id
-- `location_type` (String) Location Type
-- `site_hierarchy` (String) Site Hierarchy
+- `all_sensors` (String) Use all sensors in the site for test
+- `custom_management_vlan` (String) Custom Management VLAN
+- `location_id` (String) Site UUID
+- `location_type` (String) Site type
+- `mac_address_list` (List of String) MAC addresses
+- `management_vlan` (String) Management VLAN
+- `site_hierarchy` (String) Site name hierarhy
 
 
-<a id="nestedblock--parameters--schedule"></a>
-### Nested Schema for `parameters.schedule`
-
-Optional:
-
-- `frequency` (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--frequency))
-- `schedule_range` (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--schedule_range))
-- `test_schedule_mode` (String) Test Schedule Mode
-
-<a id="nestedblock--parameters--schedule--frequency"></a>
-### Nested Schema for `parameters.schedule.frequency`
+<a id="nestedblock--parameters--profiles"></a>
+### Nested Schema for `parameters.profiles`
 
 Optional:
 
-- `unit` (String) Unit
-- `value` (Number) Value
+- `auth_protocol` (String) Auth protocol
+- `auth_type` (String) Authentication type: OPEN, WPA2_PSK, WPA2_EAP, WEB_AUTH, MAB, DOT1X, OTHER
+- `certdownloadurl` (String) Certificate download URL
+- `certfilename` (String) Auth certificate file name
+- `certpassphrase` (String) Certificate password phrase
+- `certstatus` (String) Certificate status: INACTIVE or ACTIVE
+- `certxferprotocol` (String) Certificate transfering protocol: HTTP or HTTPS
+- `device_type` (String) Device Type
+- `eap_method` (String) WPA2_EAP methods: EAP-FAST, PEAP-MSCHAPv2, EAP-TLS, PEAP-TLS, EAP-TTLS-MSCHAPv2, EAP-TTLS-PAP, EAP-TTLS-CHAP, EAP-FAST-GTC, EAP-PEAP-GTC
+- `ext_web_auth` (String) Indication of using external WEB Auth
+- `ext_web_auth_access_url` (String) External WEB Auth access URL
+- `ext_web_auth_html_tag` (Block List) (see [below for nested schema](#nestedblock--parameters--profiles--ext_web_auth_html_tag))
+- `ext_web_auth_portal` (String) External authentication portal
+- `ext_web_auth_virtual_ip` (String) External WEB Auth virtual IP
+- `location_vlan_list` (Block List) (see [below for nested schema](#nestedblock--parameters--profiles--location_vlan_list))
+- `password` (String, Sensitive) Password string for onboarding SSID
+- `password_type` (String, Sensitive) SSID password type: ASCII or HEX
+- `profile_name` (String) Profile name
+- `psk` (String) Password of SSID when passwordType is ASCII
+- `qos_policy` (String) QoS policy: PlATINUM, GOLD, SILVER, BRONZE
+- `scep` (String) Secure certificate enrollment protocol: true or false or null for not applicable
+- `tests` (Block List) (see [below for nested schema](#nestedblock--parameters--profiles--tests))
+- `username` (String) User name string for onboarding SSID
+- `vlan` (String) VLAN
+- `white_list` (String) Indication of being on allowed list
 
-
-<a id="nestedblock--parameters--schedule--schedule_range"></a>
-### Nested Schema for `parameters.schedule.schedule_range`
+<a id="nestedblock--parameters--profiles--ext_web_auth_html_tag"></a>
+### Nested Schema for `parameters.profiles.ext_web_auth_html_tag`
 
 Optional:
 
-- `day` (String) Day
-- `time_range` (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--schedule_range--time_range))
+- `label` (String) Label
+- `tag` (String) Tag
+- `value` (String) Value
 
-<a id="nestedblock--parameters--schedule--schedule_range--time_range"></a>
-### Nested Schema for `parameters.schedule.schedule_range.time_range`
 
-Optional:
-
-- `frequency` (Block List) (see [below for nested schema](#nestedblock--parameters--schedule--schedule_range--time_range--frequency))
-- `from` (String) From
-- `to` (String) To
-
-<a id="nestedblock--parameters--schedule--schedule_range--time_range--frequency"></a>
-### Nested Schema for `parameters.schedule.schedule_range.time_range.frequency`
+<a id="nestedblock--parameters--profiles--location_vlan_list"></a>
+### Nested Schema for `parameters.profiles.location_vlan_list`
 
 Optional:
 
-- `unit` (String) Unit
-- `value` (Number) Value
+- `location_id` (String) Site UUID
+- `vlans` (List of String) Array of VLANs
 
 
+<a id="nestedblock--parameters--profiles--tests"></a>
+### Nested Schema for `parameters.profiles.tests`
+
+Optional:
+
+- `config` (Block List) (see [below for nested schema](#nestedblock--parameters--profiles--tests--config))
+- `name` (String) Name of the test
+
+<a id="nestedblock--parameters--profiles--tests--config"></a>
+### Nested Schema for `parameters.profiles.tests.config`
+
+Optional:
+
+- `direction` (String) IPerf direction (UPLOAD, DOWNLOAD, BOTH)
+- `domains` (List of String) DNS domain name
+- `downlink_test` (String) Downlink test
+- `end_port` (Number) IPerf end port
+- `exit_command` (String) Exit command
+- `final_prompt` (String) Final prompt
+- `ndt_server` (String) NDT server
+- `ndt_server_path` (String) NDT server path
+- `ndt_server_port` (String) NDT server port
+- `num_packets` (Number) Number of packets
+- `password` (String, Sensitive) Password
+- `password_prompt` (String, Sensitive) Password prompt
+- `path_to_download` (String) File path for file transfer
+- `port` (Number) Radius or WEB server port
+- `probe_type` (String) Probe type
+- `protocol` (String) Protocol used by file transfer, IPerf, mail server, and radius (TCP, UDP, FTP, POP3, IMAP, CHAP, PAP)
+- `proxy_password` (String) Proxy password
+- `proxy_port` (String) Proxy port
+- `proxy_server` (String) Proxy server
+- `proxy_user_name` (String) Proxy user name
+- `server` (String) Ping, file transfer, mail, radius, ssh, or telnet server
+- `servers` (List of String) IPerf server list
+- `shared_secret` (String) Shared secret
+- `start_port` (Number) IPerf start port
+- `transfer_type` (String) File transfer type (UPLOAD, DOWNLOAD, BOTH)
+- `udp_bandwidth` (Number) IPerf UDP bandwidth
+- `uplink_test` (String) Uplink test
+- `url` (String) URL
+- `user_name` (String) User name
+- `user_name_prompt` (String) User name prompt
+
+
+
+
+<a id="nestedblock--parameters--sensors"></a>
+### Nested Schema for `parameters.sensors`
+
+Optional:
+
+- `all_sensor_addition` (String) Is all sensor addition
+- `assigned` (String) Is assigned
+- `config_updated` (String) Configuration updated: YES, NO
+- `host_name` (String) Host name
+- `i_perf_info` (List of String) A string-stringList iPerf information
+- `id` (String) Sensor ID
+- `ip_address` (String) IP address
+- `location_id` (String) Site UUID
+- `mac_address` (String) MAC address
+- `marked_for_uninstall` (String) Is marked for uninstall
+- `name` (String) Sensor name
+- `run_now` (String) Run now: YES, NO
+- `sensor_type` (String) Sensor type
+- `service_policy` (String) Service policy
+- `status` (String) Sensor device status: UP, DOWN, REBOOT
+- `switch_mac` (String) Switch MAC address
+- `switch_serial_number` (String) Switch serial number
+- `switch_uuid` (String) Switch device UUID
+- `target_a_ps` (List of String) Array of target APs
+- `test_mac_addresses` (String) A string-string test MAC address
+- `wired_application_message` (String) Wired application message
+- `wired_application_status` (String) Wired application status
+- `xor_sensor` (String) Is XOR sensor
+
+
+<a id="nestedblock--parameters--ssids"></a>
+### Nested Schema for `parameters.ssids`
+
+Optional:
+
+- `auth_protocol` (String) Auth protocol
+- `auth_type` (String) Authentication type: OPEN, WPA2_PSK, WPA2_EAP, WEB_AUTH, MAB, DOT1X, OTHER
+- `bands` (String) WIFI bands: 2.4GHz or 5GHz
+- `certdownloadurl` (String) Certificate download URL
+- `certfilename` (String) Auth certificate file name
+- `certpassphrase` (String) Certificate password phrase
+- `certstatus` (String) Certificate status: INACTIVE or ACTIVE
+- `certxferprotocol` (String) Certificate transfering protocol: HTTP or HTTPS
+- `eap_method` (String) WPA2_EAP methods: EAP-FAST, PEAP-MSCHAPv2, EAP-TLS, PEAP-TLS, EAP-TTLS-MSCHAPv2, EAP-TTLS-PAP, EAP-TTLS-CHAP, EAP-FAST-GTC, EAP-PEAP-GTC
+- `ext_web_auth` (String) Indication of using external WEB Auth
+- `ext_web_auth_access_url` (String) External WEB Auth access URL
+- `ext_web_auth_html_tag` (Block List) (see [below for nested schema](#nestedblock--parameters--ssids--ext_web_auth_html_tag))
+- `ext_web_auth_portal` (String) External authentication portal
+- `ext_web_auth_virtual_ip` (String) External WEB Auth virtual IP
+- `id` (Number) Identification number
+- `layer3web_auth_email_address` (String) Layer 3 WEB Auth email address
+- `layer3web_authpassword` (String, Sensitive) Layer 3 WEB Auth password
+- `layer3web_authsecurity` (String) Layer 3 WEB Auth security
+- `layer3web_authuser_name` (String) Layer 3 WEB Auth user name
+- `num_aps` (Number) Number of APs in the test
+- `num_sensors` (Number) Number of Sensors in the test
+- `password` (String, Sensitive) Password string for onboarding SSID
+- `password_type` (String, Sensitive) SSID password type: ASCII or HEX
+- `profile_name` (String) The SSID profile name string
+- `proxy_password` (String) Proxy server password
+- `proxy_port` (String) Proxy server port
+- `proxy_server` (String) Proxy server for onboarding SSID
+- `proxy_user_name` (String) Proxy server user name
+- `psk` (String) Password of SSID when passwordType is ASCII
+- `qos_policy` (String) QoS policy: PlATINUM, GOLD, SILVER, BRONZE
+- `scep` (String) Secure certificate enrollment protocol: true or false or null for not applicable
+- `ssid` (String) The SSID string
+- `status` (String) WLAN status: ENABLED or DISABLED
+- `tests` (Block List) (see [below for nested schema](#nestedblock--parameters--ssids--tests))
+- `third_party` (Block List) (see [below for nested schema](#nestedblock--parameters--ssids--third_party))
+- `username` (String) User name string for onboarding SSID
+- `valid_from` (Number) Valid From UTC timestamp
+- `valid_to` (Number) Valid To UTC timestamp
+- `white_list` (String) Indication of being on allowed list
+- `wlan_id` (Number) WLAN ID
+- `wlc` (String) WLC IP addres
+
+<a id="nestedblock--parameters--ssids--ext_web_auth_html_tag"></a>
+### Nested Schema for `parameters.ssids.ext_web_auth_html_tag`
+
+Optional:
+
+- `label` (String) Label
+- `tag` (String) Tag
+- `value` (String) Value
+
+
+<a id="nestedblock--parameters--ssids--tests"></a>
+### Nested Schema for `parameters.ssids.tests`
+
+Optional:
+
+- `config` (Block List) (see [below for nested schema](#nestedblock--parameters--ssids--tests--config))
+- `name` (String) Name of the test
+
+<a id="nestedblock--parameters--ssids--tests--config"></a>
+### Nested Schema for `parameters.ssids.tests.config`
+
+Optional:
+
+- `direction` (String) IPerf direction (UPLOAD, DOWNLOAD, BOTH)
+- `domains` (List of String) DNS domain name
+- `downlink_test` (String) Downlink test
+- `end_port` (Number) IPerf end port
+- `exit_command` (String) Exit command
+- `final_prompt` (String) Final prompt
+- `ndt_server` (String) NDT server
+- `ndt_server_path` (String) NDT server path
+- `ndt_server_port` (String) NDT server port
+- `num_packets` (Number) Number of packets
+- `password` (String, Sensitive) Password
+- `password_prompt` (String, Sensitive) Password prompt
+- `path_to_download` (String) File path for file transfer
+- `port` (Number) Radius or WEB server port
+- `probe_type` (String) Probe type
+- `protocol` (String) Protocol used by file transfer, IPerf, mail server, and radius (TCP, UDP, FTP, POP3, IMAP, CHAP, PAP)
+- `proxy_password` (String) Proxy password
+- `proxy_port` (String) Proxy port
+- `proxy_server` (String) Proxy server
+- `proxy_user_name` (String) Proxy user name
+- `server` (String) Ping, file transfer, mail, radius, ssh, or telnet server
+- `servers` (List of String) IPerf server list
+- `shared_secret` (String) Shared secret
+- `start_port` (Number) IPerf start port
+- `transfer_type` (String) File transfer type (UPLOAD, DOWNLOAD, BOTH)
+- `udp_bandwidth` (Number) IPerf UDP bandwidth
+- `uplink_test` (String) Uplink test
+- `url` (String) URL
+- `user_name` (String) User name
+- `user_name_prompt` (String) User name prompt
+
+
+
+<a id="nestedblock--parameters--ssids--third_party"></a>
+### Nested Schema for `parameters.ssids.third_party`
+
+Optional:
+
+- `selected` (String) true: the SSID is third party
 
 
 
@@ -149,35 +586,31 @@ Optional:
 
 Read-Only:
 
+- `action_in_progress` (String)
 - `ap_coverage` (List of Object) (see [below for nested schema](#nestedobjatt--item--ap_coverage))
 - `connection` (String)
 - `encryption_mode` (String)
-- `frequency` (String)
+- `frequency` (List of Object) (see [below for nested schema](#nestedobjatt--item--frequency))
 - `id` (String)
 - `last_modified_time` (Number)
-- `legacy_test_suite` (String)
 - `location` (String)
 - `location_info_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--location_info_list))
 - `model_version` (Number)
 - `name` (String)
 - `num_associated_sensor` (Number)
 - `num_neighbor_apthreshold` (Number)
+- `profiles` (List of Object) (see [below for nested schema](#nestedobjatt--item--profiles))
 - `radio_as_sensor_removed` (String)
 - `rssi_threshold` (Number)
 - `run_now` (String)
-- `schedule` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule))
 - `schedule_in_days` (Number)
-- `sensors` (List of String)
+- `sensors` (List of Object) (see [below for nested schema](#nestedobjatt--item--sensors))
 - `show_wlc_upgrade_banner` (String)
 - `site_hierarchy` (String)
 - `ssids` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids))
 - `start_time` (Number)
 - `status` (String)
-- `tenant_id` (String)
-- `test_duration_estimate` (Number)
 - `test_schedule_mode` (String)
-- `test_template` (String)
-- `tests` (String)
 - `version` (Number)
 - `wlans` (List of String)
 
@@ -191,64 +624,154 @@ Read-Only:
 - `rssi_threshold` (Number)
 
 
+<a id="nestedobjatt--item--frequency"></a>
+### Nested Schema for `item.frequency`
+
+Read-Only:
+
+- `unit` (String)
+- `value` (Number)
+
+
 <a id="nestedobjatt--item--location_info_list"></a>
 ### Nested Schema for `item.location_info_list`
 
 Read-Only:
 
 - `all_sensors` (String)
+- `custom_management_vlan` (String)
 - `location_id` (String)
 - `location_type` (String)
 - `mac_address_list` (List of String)
+- `management_vlan` (String)
 - `site_hierarchy` (String)
 
 
-<a id="nestedobjatt--item--schedule"></a>
-### Nested Schema for `item.schedule`
+<a id="nestedobjatt--item--profiles"></a>
+### Nested Schema for `item.profiles`
 
 Read-Only:
 
-- `frequency` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--frequency))
-- `schedule_range` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range))
-- `start_time` (Number)
-- `test_schedule_mode` (String)
+- `auth_protocol` (String)
+- `auth_type` (String)
+- `certdownloadurl` (String)
+- `certfilename` (String)
+- `certpassphrase` (String)
+- `certstatus` (String)
+- `certxferprotocol` (String)
+- `device_type` (String)
+- `eap_method` (String)
+- `ext_web_auth` (String)
+- `ext_web_auth_access_url` (String)
+- `ext_web_auth_html_tag` (List of Object) (see [below for nested schema](#nestedobjatt--item--profiles--ext_web_auth_html_tag))
+- `ext_web_auth_portal` (String)
+- `ext_web_auth_virtual_ip` (String)
+- `location_vlan_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--profiles--location_vlan_list))
+- `password` (String)
+- `password_type` (String)
+- `profile_name` (String)
+- `psk` (String)
+- `qos_policy` (String)
+- `scep` (String)
+- `tests` (List of Object) (see [below for nested schema](#nestedobjatt--item--profiles--tests))
+- `username` (String)
+- `vlan` (String)
+- `white_list` (String)
 
-<a id="nestedobjatt--item--schedule--frequency"></a>
-### Nested Schema for `item.schedule.frequency`
-
-Read-Only:
-
-- `unit` (String)
-- `value` (Number)
-
-
-<a id="nestedobjatt--item--schedule--schedule_range"></a>
-### Nested Schema for `item.schedule.schedule_range`
-
-Read-Only:
-
-- `day` (String)
-- `time_range` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range--time_range))
-
-<a id="nestedobjatt--item--schedule--schedule_range--time_range"></a>
-### Nested Schema for `item.schedule.schedule_range.time_range`
-
-Read-Only:
-
-- `frequency` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range--time_range--frequency))
-- `from` (String)
-- `to` (String)
-
-<a id="nestedobjatt--item--schedule--schedule_range--time_range--frequency"></a>
-### Nested Schema for `item.schedule.schedule_range.time_range.frequency`
+<a id="nestedobjatt--item--profiles--ext_web_auth_html_tag"></a>
+### Nested Schema for `item.profiles.ext_web_auth_html_tag`
 
 Read-Only:
 
-- `unit` (String)
-- `value` (Number)
+- `label` (String)
+- `tag` (String)
+- `value` (String)
+
+
+<a id="nestedobjatt--item--profiles--location_vlan_list"></a>
+### Nested Schema for `item.profiles.location_vlan_list`
+
+Read-Only:
+
+- `location_id` (String)
+- `vlans` (List of String)
+
+
+<a id="nestedobjatt--item--profiles--tests"></a>
+### Nested Schema for `item.profiles.tests`
+
+Read-Only:
+
+- `config` (List of Object) (see [below for nested schema](#nestedobjatt--item--profiles--tests--config))
+- `name` (String)
+
+<a id="nestedobjatt--item--profiles--tests--config"></a>
+### Nested Schema for `item.profiles.tests.name`
+
+Read-Only:
+
+- `direction` (String)
+- `domains` (List of String)
+- `downlink_test` (String)
+- `end_port` (Number)
+- `exit_command` (String)
+- `final_prompt` (String)
+- `ndt_server` (String)
+- `ndt_server_path` (String)
+- `ndt_server_port` (String)
+- `num_packets` (Number)
+- `password` (String)
+- `password_prompt` (String)
+- `path_to_download` (String)
+- `port` (Number)
+- `probe_type` (String)
+- `protocol` (String)
+- `proxy_password` (String)
+- `proxy_port` (String)
+- `proxy_server` (String)
+- `proxy_user_name` (String)
+- `server` (String)
+- `servers` (List of String)
+- `shared_secret` (String)
+- `start_port` (Number)
+- `transfer_type` (String)
+- `udp_bandwidth` (Number)
+- `uplink_test` (String)
+- `url` (String)
+- `user_name` (String)
+- `user_name_prompt` (String)
 
 
 
+
+<a id="nestedobjatt--item--sensors"></a>
+### Nested Schema for `item.sensors`
+
+Read-Only:
+
+- `all_sensor_addition` (String)
+- `assigned` (String)
+- `config_updated` (String)
+- `host_name` (String)
+- `i_perf_info` (List of String)
+- `id` (String)
+- `ip_address` (String)
+- `location_id` (String)
+- `mac_address` (String)
+- `marked_for_uninstall` (String)
+- `name` (String)
+- `run_now` (String)
+- `sensor_type` (String)
+- `service_policy` (String)
+- `status` (String)
+- `switch_mac` (String)
+- `switch_serial_number` (String)
+- `switch_uuid` (String)
+- `target_a_ps` (List of String)
+- `test_mac_addresses` (String)
+- `wired_application_message` (String)
+- `wired_application_status` (String)
+- `xor_sensor` (String)
 
 
 <a id="nestedobjatt--item--ssids"></a>
@@ -258,7 +781,6 @@ Read-Only:
 
 - `auth_protocol` (String)
 - `auth_type` (String)
-- `auth_type_rcvd` (String)
 - `bands` (String)
 - `certdownloadurl` (String)
 - `certfilename` (String)
@@ -268,18 +790,23 @@ Read-Only:
 - `eap_method` (String)
 - `ext_web_auth` (String)
 - `ext_web_auth_access_url` (String)
-- `ext_web_auth_html_tag` (List of String)
+- `ext_web_auth_html_tag` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids--ext_web_auth_html_tag))
 - `ext_web_auth_portal` (String)
 - `ext_web_auth_virtual_ip` (String)
 - `id` (Number)
-- `layer3web_auth_email_address` (List of String)
-- `layer3web_authpassword` (List of String)
-- `layer3web_authsecurity` (List of String)
-- `layer3web_authuser_name` (List of String)
+- `layer3web_auth_email_address` (String)
+- `layer3web_authpassword` (String)
+- `layer3web_authsecurity` (String)
+- `layer3web_authuser_name` (String)
 - `num_aps` (Number)
 - `num_sensors` (Number)
 - `password` (String)
+- `password_type` (String)
 - `profile_name` (String)
+- `proxy_password` (String)
+- `proxy_port` (String)
+- `proxy_server` (String)
+- `proxy_user_name` (String)
 - `psk` (String)
 - `qos_policy` (String)
 - `scep` (String)
@@ -294,13 +821,60 @@ Read-Only:
 - `wlan_id` (Number)
 - `wlc` (String)
 
+<a id="nestedobjatt--item--ssids--ext_web_auth_html_tag"></a>
+### Nested Schema for `item.ssids.ext_web_auth_html_tag`
+
+Read-Only:
+
+- `label` (String)
+- `tag` (String)
+- `value` (String)
+
+
 <a id="nestedobjatt--item--ssids--tests"></a>
 ### Nested Schema for `item.ssids.tests`
 
 Read-Only:
 
-- `config` (List of String)
+- `config` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids--tests--config))
 - `name` (String)
+
+<a id="nestedobjatt--item--ssids--tests--config"></a>
+### Nested Schema for `item.ssids.tests.name`
+
+Read-Only:
+
+- `direction` (String)
+- `domains` (List of String)
+- `downlink_test` (String)
+- `end_port` (Number)
+- `exit_command` (String)
+- `final_prompt` (String)
+- `ndt_server` (String)
+- `ndt_server_path` (String)
+- `ndt_server_port` (String)
+- `num_packets` (Number)
+- `password` (String)
+- `password_prompt` (String)
+- `path_to_download` (String)
+- `port` (Number)
+- `probe_type` (String)
+- `protocol` (String)
+- `proxy_password` (String)
+- `proxy_port` (String)
+- `proxy_server` (String)
+- `proxy_user_name` (String)
+- `server` (String)
+- `servers` (List of String)
+- `shared_secret` (String)
+- `start_port` (Number)
+- `transfer_type` (String)
+- `udp_bandwidth` (Number)
+- `uplink_test` (String)
+- `url` (String)
+- `user_name` (String)
+- `user_name_prompt` (String)
+
 
 
 <a id="nestedobjatt--item--ssids--third_party"></a>
@@ -309,5 +883,3 @@ Read-Only:
 Read-Only:
 
 - `selected` (String)
-
-

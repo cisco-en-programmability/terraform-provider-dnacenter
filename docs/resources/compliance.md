@@ -12,16 +12,15 @@ description: |-
 It performs create operation on Compliance.
 
 - Run compliance check for device(s).
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_compliance" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     categories   = ["string"]
@@ -53,9 +52,9 @@ output "dnacenter_compliance_example" {
 
 Optional:
 
-- `categories` (List of String)
-- `device_uuids` (List of String)
-- `trigger_full` (String)
+- `categories` (List of String) Category can have any value among 'INTENT'(mapped to compliance types: NETWORK_SETTINGS,NETWORK_PROFILE,WORKFLOW,FABRIC,APPLICATION_VISIBILITY), 'RUNNING_CONFIG' , 'IMAGE' , 'PSIRT' , 'EOX' , 'NETWORK_SETTINGS'
+- `device_uuids` (List of String) UUID of the device.
+- `trigger_full` (String) if it is true then compliance will be triggered for all categories. If it is false then compliance will be triggered for categories mentioned in categories section .
 
 
 <a id="nestedatt--item"></a>
@@ -65,5 +64,3 @@ Read-Only:
 
 - `task_id` (String)
 - `url` (String)
-
-

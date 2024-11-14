@@ -23,7 +23,7 @@ resource "dnacenter_wireless_profile" "example" {
       sites = ["Global/CR"]
 
 
-      
+
       ssid_details {
         enable_fabric = "true"
         flex_connect {
@@ -44,7 +44,7 @@ resource "dnacenter_wireless_profile" "example" {
         name           = "ATest222"
         type           = "eduroam"
       }
-       ssid_details {
+      ssid_details {
         enable_fabric = "true"
         flex_connect {
           enable_flex_connect = "false"

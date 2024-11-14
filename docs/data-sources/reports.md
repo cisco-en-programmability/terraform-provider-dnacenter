@@ -223,5 +223,3 @@ Read-Only:
 - `default` (String)
 - `format_type` (String)
 - `name` (String)
-
-

@@ -12,7 +12,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -164,11 +164,9 @@ func resourceImageDeviceActivationCreate(ctx context.Context, d *schema.Resource
 
 	headerParams1.ClientURL = vClientURL.(string)
 
-	response1, restyResp1, err := client.SoftwareImageManagementSwim.TriggerSoftwareImageActivation(request1, &headerParams1, &queryParams1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.SoftwareImageManagementSwim.TriggerSoftwareImageActivation(request1, &headerParams1, &queryParams1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -222,6 +220,9 @@ func resourceImageDeviceActivationCreate(ctx context.Context, d *schema.Resource
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenSoftwareImageManagementSwimTriggerSoftwareImageActivationItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -232,7 +233,6 @@ func resourceImageDeviceActivationCreate(ctx context.Context, d *schema.Resource
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceImageDeviceActivationRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

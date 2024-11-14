@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -56,7 +56,7 @@ func dataSourceTaskOperation() *schema.Resource {
 						},
 
 						"end_time": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
@@ -92,13 +92,16 @@ func dataSourceTaskOperation() *schema.Resource {
 						},
 
 						"last_update": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"operation_id_list": &schema.Schema{
-							Type:     schema.TypeString, //TEST,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"parent_id": &schema.Schema{
@@ -122,7 +125,7 @@ func dataSourceTaskOperation() *schema.Resource {
 						},
 
 						"start_time": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
@@ -164,7 +167,7 @@ func dataSourceTaskOperationRead(ctx context.Context, d *schema.ResourceData, m 
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTaskByOperationID", err,
+				"Failure when executing 2 GetTaskByOperationID", err,
 				"Failure at GetTaskByOperationID, unexpected response", ""))
 			return diags
 		}
@@ -203,7 +206,7 @@ func flattenTaskGetTaskByOperationIDItems(items *[]dnacentersdkgo.ResponseTaskGe
 		respItem["instance_tenant_id"] = item.InstanceTenantID
 		respItem["is_error"] = boolPtrToString(item.IsError)
 		respItem["last_update"] = item.LastUpdate
-		respItem["operation_id_list"] = flattenTaskGetTaskByOperationIDItemsOperationIDList(item.OperationIDList)
+		respItem["operation_id_list"] = item.OperationIDList
 		respItem["parent_id"] = item.ParentID
 		respItem["progress"] = item.Progress
 		respItem["root_id"] = item.RootID
@@ -214,14 +217,4 @@ func flattenTaskGetTaskByOperationIDItems(items *[]dnacentersdkgo.ResponseTaskGe
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenTaskGetTaskByOperationIDItemsOperationIDList(item *dnacentersdkgo.ResponseTaskGetTaskByOperationIDResponseOperationIDList) interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := *item
-
-	return responseInterfaceToString(respItem)
-
 }

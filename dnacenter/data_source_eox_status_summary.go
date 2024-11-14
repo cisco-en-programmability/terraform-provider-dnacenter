@@ -5,20 +5,20 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func dataSourceEoxStatusSummary() *schema.Resource {
+func dataSourceEoXStatusSummary() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on EoX.
 
 - Retrieves EoX summary for all devices in the network
 `,
 
-		ReadContext: dataSourceEoxStatusSummaryRead,
+		ReadContext: dataSourceEoXStatusSummaryRead,
 		Schema: map[string]*schema.Schema{
 
 			"item": &schema.Schema{
@@ -28,27 +28,31 @@ func dataSourceEoxStatusSummary() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"hardware_count": &schema.Schema{
-							Description: `Hardware Count`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Number of hardware EoX alerts detected on the network
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"module_count": &schema.Schema{
-							Description: `Module Count`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Number of module EoX alerts detected on the network
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"software_count": &schema.Schema{
-							Description: `Software Count`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Number of software EoX alerts detected on the network
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"total_count": &schema.Schema{
-							Description: `Total Count`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Total number of EoX alerts detected on the network. This is the sum of hardwareCount, softwareCount and moduleCount.
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 					},
 				},
@@ -57,7 +61,7 @@ func dataSourceEoxStatusSummary() *schema.Resource {
 	}
 }
 
-func dataSourceEoxStatusSummaryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceEoXStatusSummaryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
@@ -73,7 +77,7 @@ func dataSourceEoxStatusSummaryRead(ctx context.Context, d *schema.ResourceData,
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEoXSummary", err,
+				"Failure when executing 2 GetEoXSummary", err,
 				"Failure at GetEoXSummary, unexpected response", ""))
 			return diags
 		}

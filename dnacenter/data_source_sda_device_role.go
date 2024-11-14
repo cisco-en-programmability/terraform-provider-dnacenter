@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,24 +34,27 @@ func dataSourceSdaDeviceRole() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Device role successfully retrieved from sda fabric.
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"roles": &schema.Schema{
-							Description: `Roles`,
-							Type:        schema.TypeList,
-							Computed:    true,
+							Description: `Assigned device roles. Possible roles are [Edge Node, Control Plane, Border Node, Extended Node, Wireless Controller, Transit Control Plane]    
+`,
+							Type:     schema.TypeList,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Status indicates if API failed or passed.
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -80,14 +83,14 @@ func dataSourceSdaDeviceRoleRead(ctx context.Context, d *schema.ResourceData, m 
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceRoleInSdaFabric", err,
+				"Failure when executing 2 GetDeviceRoleInSdaFabric", err,
 				"Failure at GetDeviceRoleInSdaFabric, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenSdaGetDeviceRoleInSdaFabricItem(response1.Response)
+		vItem1 := flattenSdaGetDeviceRoleInSdaFabricItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceRoleInSdaFabric response",
@@ -102,14 +105,14 @@ func dataSourceSdaDeviceRoleRead(ctx context.Context, d *schema.ResourceData, m 
 	return diags
 }
 
-func flattenSdaGetDeviceRoleInSdaFabricItem(item *dnacentersdkgo.ResponseSdaGetDeviceRoleInSdaFabricResponse) []map[string]interface{} {
+func flattenSdaGetDeviceRoleInSdaFabricItem(item *dnacentersdkgo.ResponseSdaGetDeviceRoleInSdaFabric) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
+	respItem["roles"] = item.Roles
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
-	respItem["roles"] = item.Roles
 	return []map[string]interface{}{
 		respItem,
 	}

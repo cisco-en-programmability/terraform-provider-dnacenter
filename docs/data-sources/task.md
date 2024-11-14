@@ -92,7 +92,7 @@ Read-Only:
 - `instance_tenant_id` (String)
 - `is_error` (String)
 - `last_update` (Number)
-- `operation_id_list` (String)
+- `operation_id_list` (List of String)
 - `parent_id` (String)
 - `progress` (String)
 - `root_id` (String)
@@ -116,8 +116,8 @@ Read-Only:
 - `id` (String)
 - `instance_tenant_id` (String)
 - `is_error` (String)
-- `last_update` (String)
-- `operation_id_list` (String)
+- `last_update` (Number)
+- `operation_id_list` (List of String)
 - `parent_id` (String)
 - `progress` (String)
 - `root_id` (String)
@@ -125,5 +125,3 @@ Read-Only:
 - `start_time` (Number)
 - `username` (String)
 - `version` (Number)
-
-

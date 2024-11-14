@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,7 +18,7 @@ func resourceNetworkDeviceCustomPrompt() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create and read operations on System Settings.
 
-- Save custom prompt added by user in Cisco DNA Center. API will always override the existing prompts. User should
+- Save custom prompt added by user in Catalyst Center. API will always override the existing prompts. User should
 provide all the custom prompt in case of any update
 `,
 
@@ -42,24 +42,28 @@ provide all the custom prompt in case of any update
 					Schema: map[string]*schema.Schema{
 
 						"custom_password_prompt": &schema.Schema{
-							Description: `Custom Password`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Password for Custom Prompt
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"custom_username_prompt": &schema.Schema{
-							Description: `Custom Username`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Username for Custom Prompt
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"default_password_prompt": &schema.Schema{
-							Description: `Default Password`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Default Password for Custom Prompt
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"default_username_prompt": &schema.Schema{
-							Description: `Default Username`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Default Username for Custom Prompt
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -72,17 +76,19 @@ provide all the custom prompt in case of any update
 					Schema: map[string]*schema.Schema{
 
 						"password_prompt": &schema.Schema{
-							Description: `Password Prompt`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							Sensitive:   true,
-							Default:     "",
+							Description: `Password for Custom Prompt
+`,
+							Type:      schema.TypeString,
+							Optional:  true,
+							Sensitive: true,
+							Default:   "",
 						},
 						"username_prompt": &schema.Schema{
-							Description: `Username Prompt`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							Default:     "",
+							Description: `Username for Custom Prompt
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							Default:  "",
 						},
 					},
 				},
@@ -97,7 +103,7 @@ func resourceNetworkDeviceCustomPromptCreate(ctx context.Context, d *schema.Reso
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestNetworkDeviceCustomPromptCustomPromptPostAPI(ctx, "parameters.0", d)
+	request1 := expandRequestNetworkDeviceCustomPromptCustomPromptPOSTAPI(ctx, "parameters.0", d)
 	vPasswordPrompt := resourceItem["password_prompt"]
 
 	vvPasswordPrompt := interfaceToString(vPasswordPrompt)
@@ -108,20 +114,20 @@ func resourceNetworkDeviceCustomPromptCreate(ctx context.Context, d *schema.Reso
 
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	resp1, restyResp1, err := client.SystemSettings.CustomPromptPostAPI(request1)
+	resp1, restyResp1, err := client.SystemSettings.CustomPromptPOSTAPI(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
-				"Failure when executing CustomPromptPostAPI", err, restyResp1.String()))
+				"Failure when executing CustomPromptPOSTAPI", err, restyResp1.String()))
 			return diags
 		}
 		diags = append(diags, diagError(
-			"Failure when executing CustomPromptPostAPI", err))
+			"Failure when executing CustomPromptPOSTAPI", err))
 		return diags
 	}
 	if resp1.Response == nil {
 		diags = append(diags, diagError(
-			"Failure when executing CustomPromptPostAPI", err))
+			"Failure when executing CustomPromptPOSTAPI", err))
 		return diags
 	}
 	taskId := resp1.Response.TaskID
@@ -143,7 +149,7 @@ func resourceNetworkDeviceCustomPromptCreate(ctx context.Context, d *schema.Reso
 			errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
 			err1 := errors.New(errorMsg)
 			diags = append(diags, diagError(
-				"Failure when executing CustomPromptPostAPI", err1))
+				"Failure when executing CustomPromptPOSTAPI", err1))
 			return diags
 		}
 	}
@@ -165,9 +171,9 @@ func resourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: CustomPromptSupportGetAPI")
+		log.Printf("[DEBUG] Selected method: CustomPromptSupportGETAPI")
 
-		response1, restyResp1, err := client.SystemSettings.CustomPromptSupportGetAPI()
+		response1, restyResp1, err := client.SystemSettings.CustomPromptSupportGETAPI()
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -179,10 +185,10 @@ func resourceNetworkDeviceCustomPromptRead(ctx context.Context, d *schema.Resour
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenSystemSettingsCustomPromptSupportGetAPIItem(response1.Response)
+		vItem1 := flattenSystemSettingsCustomPromptSupportGETAPIItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting CustomPromptSupportGetAPI response",
+				"Failure when setting CustomPromptSupportGETAPI response",
 				err))
 			return diags
 		}
@@ -212,8 +218,8 @@ func resourceNetworkDeviceCustomPromptDelete(ctx context.Context, d *schema.Reso
 
 	return diags
 }
-func expandRequestNetworkDeviceCustomPromptCustomPromptPostAPI(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSystemSettingsCustomPromptPostAPI {
-	request := dnacentersdkgo.RequestSystemSettingsCustomPromptPostAPI{}
+func expandRequestNetworkDeviceCustomPromptCustomPromptPOSTAPI(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSystemSettingsCustomPromptPOSTAPI {
+	request := dnacentersdkgo.RequestSystemSettingsCustomPromptPOSTAPI{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username_prompt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username_prompt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username_prompt")))) {
 		request.UsernamePrompt = interfaceToString(v)
 	}

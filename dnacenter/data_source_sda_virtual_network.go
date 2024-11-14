@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -44,6 +44,13 @@ func dataSourceSdaVirtualNetwork() *schema.Resource {
 							Computed: true,
 						},
 
+						"execution_id": &schema.Schema{
+							Description: `Execution Id
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"fabric_name": &schema.Schema{
 							Description: `Fabric Name
 `,
@@ -54,6 +61,7 @@ func dataSourceSdaVirtualNetwork() *schema.Resource {
 						"is_default_vn": &schema.Schema{
 							Description: `Default VN
 `,
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -61,6 +69,7 @@ func dataSourceSdaVirtualNetwork() *schema.Resource {
 						"is_infra_vn": &schema.Schema{
 							Description: `Infra VN
 `,
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -74,6 +83,20 @@ func dataSourceSdaVirtualNetwork() *schema.Resource {
 
 						"status": &schema.Schema{
 							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"virtual_network_context_id": &schema.Schema{
+							Description: `Virtual Network Context Id
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"virtual_network_id": &schema.Schema{
+							Description: `Virtual Network Id
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -115,7 +138,7 @@ func dataSourceSdaVirtualNetworkRead(ctx context.Context, d *schema.ResourceData
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetVnFromSdaFabric", err,
+				"Failure when executing 2 GetVnFromSdaFabric", err,
 				"Failure at GetVnFromSdaFabric, unexpected response", ""))
 			return diags
 		}
@@ -147,8 +170,11 @@ func flattenSdaGetVnFromSdaFabricItem(item *dnacentersdkgo.ResponseSdaGetVnFromS
 	respItem["fabric_name"] = item.FabricName
 	respItem["is_infra_vn"] = boolPtrToString(item.IsInfraVn)
 	respItem["is_default_vn"] = boolPtrToString(item.IsDefaultVn)
+	respItem["virtual_network_context_id"] = item.VirtualNetworkContextID
+	respItem["virtual_network_id"] = item.VirtualNetworkID
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
+	respItem["execution_id"] = item.ExecutionID
 	return []map[string]interface{}{
 		respItem,
 	}

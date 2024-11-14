@@ -16,16 +16,17 @@ It performs delete operation on Device Onboarding (PnP).
 - Deregisters the specified smart account & virtual account info and the associated device information from the PnP
 System & database. The devices associated with the deregistered virtual account are removed from the PnP database as
 well. The response payload contains the deregistered smart & virtual account information
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_pnp_virtual_account_deregister" "example" {
-  provider = dnacenter
+  provider = meraki
+  domain   = "string"
+  name     = "string"
 }
 
 output "dnacenter_pnp_virtual_account_deregister_example" {
@@ -66,12 +67,9 @@ Read-Only:
 - `last_sync` (Number)
 - `profile` (List of Object) (see [below for nested schema](#nestedobjatt--item--profile))
 - `smart_account_id` (String)
-- `sync_result` (List of Object) (see [below for nested schema](#nestedobjatt--item--sync_result))
-- `sync_result_str` (String)
 - `sync_start_time` (Number)
 - `sync_status` (String)
 - `tenant_id` (String)
-- `token` (String)
 - `virtual_account_id` (String)
 
 <a id="nestedobjatt--item--profile"></a>
@@ -81,28 +79,10 @@ Read-Only:
 
 - `address_fqdn` (String)
 - `address_ip_v4` (String)
+- `address_ip_v6` (String)
 - `cert` (String)
 - `make_default` (String)
 - `name` (String)
 - `port` (Number)
 - `profile_id` (String)
 - `proxy` (String)
-
-
-<a id="nestedobjatt--item--sync_result"></a>
-### Nested Schema for `item.sync_result`
-
-Read-Only:
-
-- `sync_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--sync_result--sync_list))
-- `sync_msg` (String)
-
-<a id="nestedobjatt--item--sync_result--sync_list"></a>
-### Nested Schema for `item.sync_result.sync_list`
-
-Read-Only:
-
-- `device_sn_list` (List of String)
-- `sync_type` (String)
-
-

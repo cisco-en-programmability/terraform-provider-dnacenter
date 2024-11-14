@@ -6,5 +6,5 @@ data "dnacenter_sda_fabric_authentication_profile" "example" {
 }
 
 output "dnacenter_sda_fabric_authentication_profile_example" {
-  value = data.dnacenter_sda_fabric_authentication_profile.example.items
+  value = data.dnacenter_sda_fabric_authentication_profile.example.item
 }

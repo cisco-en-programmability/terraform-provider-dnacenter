@@ -3,9 +3,8 @@ resource "dnacenter_application_sets" "example" {
   provider = dnacenter
 
   parameters {
-    payload {
-      name = "string"
-    }
+
+    name = "string"
   }
 }
 

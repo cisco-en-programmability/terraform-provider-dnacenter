@@ -22,6 +22,855 @@ get results and follow progress.
 ```terraform
 resource "dnacenter_path_trace" "example" {
   provider = dnacenter
+  item {
+
+    detailed_status {
+
+
+
+    }
+
+    network_elements {
+
+      accuracy_list {
+
+
+
+      }
+      detailed_status {
+
+
+
+      }
+      device_statistics {
+
+        cpu_statistics {
+
+
+
+
+
+        }
+        memory_statistics {
+
+
+
+
+        }
+      }
+
+
+      egress_physical_interface {
+
+        acl_analysis {
+
+
+          matching_aces {
+
+
+            matching_ports {
+
+              ports {
+
+
+
+              }
+
+            }
+
+          }
+
+        }
+
+        interface_statistics {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+        path_overlay_info {
+
+
+
+
+
+
+
+
+          vxlan_info {
+
+
+
+          }
+        }
+        qos_statistics {
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+      }
+      egress_virtual_interface {
+
+        acl_analysis {
+
+
+          matching_aces {
+
+
+            matching_ports {
+
+              ports {
+
+
+
+              }
+
+            }
+
+          }
+
+        }
+
+        interface_statistics {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+        path_overlay_info {
+
+
+
+
+
+
+
+
+          vxlan_info {
+
+
+
+          }
+        }
+        qos_statistics {
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+      }
+      flex_connect {
+
+
+
+        egress_acl_analysis {
+
+
+          matching_aces {
+
+
+            matching_ports {
+
+              ports {
+
+
+
+              }
+
+            }
+
+          }
+
+        }
+        ingress_acl_analysis {
+
+
+          matching_aces {
+
+
+            matching_ports {
+
+              ports {
+
+
+
+              }
+
+            }
+
+          }
+
+        }
+
+
+      }
+
+      ingress_physical_interface {
+
+        acl_analysis {
+
+
+          matching_aces {
+
+
+            matching_ports {
+
+              ports {
+
+
+
+              }
+
+            }
+
+          }
+
+        }
+
+        interface_statistics {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+        path_overlay_info {
+
+
+
+
+
+
+
+
+          vxlan_info {
+
+
+
+          }
+        }
+        qos_statistics {
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+      }
+      ingress_virtual_interface {
+
+        acl_analysis {
+
+
+          matching_aces {
+
+
+            matching_ports {
+
+              ports {
+
+
+
+              }
+
+            }
+
+          }
+
+        }
+
+        interface_statistics {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+        path_overlay_info {
+
+
+
+
+
+
+
+
+          vxlan_info {
+
+
+
+          }
+        }
+        qos_statistics {
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+      }
+
+
+
+
+
+      perf_mon_statistics {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      }
+
+
+
+
+
+    }
+    network_elements_info {
+
+      accuracy_list {
+
+
+
+      }
+      detailed_status {
+
+
+
+      }
+      device_statistics {
+
+        cpu_statistics {
+
+
+
+
+
+        }
+        memory_statistics {
+
+
+
+
+        }
+      }
+
+
+      egress_interface {
+
+        physical_interface {
+
+          acl_analysis {
+
+
+            matching_aces {
+
+
+              matching_ports {
+
+                ports {
+
+
+
+                }
+
+              }
+
+            }
+
+          }
+
+          interface_statistics {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          }
+
+
+
+          path_overlay_info {
+
+
+
+
+
+
+
+
+            vxlan_info {
+
+
+
+            }
+          }
+          qos_statistics {
+
+
+
+
+
+
+
+
+
+
+
+          }
+
+
+
+
+        }
+        virtual_interface {
+
+          acl_analysis {
+
+
+            matching_aces {
+
+
+              matching_ports {
+
+                ports {
+
+
+
+                }
+
+              }
+
+            }
+
+          }
+
+          interface_statistics {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          }
+
+
+
+          path_overlay_info {
+
+
+
+
+
+
+
+
+            vxlan_info {
+
+
+
+            }
+          }
+          qos_statistics {
+
+
+
+
+
+
+
+
+
+
+
+          }
+
+
+
+
+        }
+      }
+      flex_connect {
+
+
+
+        egress_acl_analysis {
+
+
+          matching_aces {
+
+
+            matching_ports {
+
+              ports {
+
+
+
+              }
+
+            }
+
+          }
+
+        }
+        ingress_acl_analysis {
+
+
+          matching_aces {
+
+
+            matching_ports {
+
+              ports {
+
+
+
+              }
+
+            }
+
+          }
+
+        }
+
+
+      }
+
+      ingress_interface {
+
+        physical_interface {
+
+          acl_analysis {
+
+
+            matching_aces {
+
+
+              matching_ports {
+
+                ports {
+
+
+
+                }
+
+              }
+
+            }
+
+          }
+
+          interface_statistics {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          }
+
+
+
+          path_overlay_info {
+
+
+
+
+
+
+
+
+            vxlan_info {
+
+
+
+            }
+          }
+          qos_statistics {
+
+
+
+
+
+
+
+
+
+
+
+          }
+
+
+
+
+        }
+        virtual_interface {
+
+          acl_analysis {
+
+
+            matching_aces {
+
+
+              matching_ports {
+
+                ports {
+
+
+
+                }
+
+              }
+
+            }
+
+          }
+
+          interface_statistics {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          }
+
+
+
+          path_overlay_info {
+
+
+
+
+
+
+
+
+            vxlan_info {
+
+
+
+            }
+          }
+          qos_statistics {
+
+
+
+
+
+
+
+
+
+
+
+          }
+
+
+
+
+        }
+      }
+
+
+
+
+
+      perf_monitor_statistics {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      }
+
+
+
+
+
+    }
+
+    request {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+  }
   parameters {
 
     control_path     = "false"
@@ -65,12 +914,12 @@ Optional:
 
 - `control_path` (String) Control path tracing
 - `dest_ip` (String) Destination IP address
-- `dest_port` (String) Destination Port
+- `dest_port` (String) Destination Port, range: 1-65535
 - `inclusions` (List of String) Subset of {INTERFACE-STATS, QOS-STATS, DEVICE-STATS, PERFORMANCE-STATS, ACL-TRACE}
 - `periodic_refresh` (String) Periodic refresh of path for every 30 sec
-- `protocol` (String) Protocol
+- `protocol` (String) Protocol - one of [TCP, UDP] - checks both when left blank
 - `source_ip` (String) Source IP address
-- `source_port` (String) Source Port
+- `source_port` (String) Source Port, range: 1-65535
 
 
 <a id="nestedatt--item"></a>
@@ -1458,6 +2307,7 @@ Read-Only:
 - `inclusions` (List of String)
 - `last_update_time` (Number)
 - `periodic_refresh` (String)
+- `previous_flow_analysis_id` (String)
 - `protocol` (String)
 - `source_ip` (String)
 - `source_port` (String)

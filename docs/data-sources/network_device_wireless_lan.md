@@ -54,5 +54,3 @@ Read-Only:
 - `netconf_enabled` (String)
 - `wireless_license_info` (String)
 - `wireless_package_installed` (String)
-
-

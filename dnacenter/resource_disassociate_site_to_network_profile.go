@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -92,6 +92,8 @@ func resourceDisassociateSiteToNetworkProfileCreate(ctx context.Context, d *sche
 	vvNetworkProfileID := vNetworkProfileID.(string)
 	vvSiteID := vSiteID.(string)
 
+	// has_unknown_response: None
+
 	response1, restyResp1, err := client.SiteDesign.Disassociate(vvNetworkProfileID, vvSiteID)
 
 	if err != nil || response1 == nil {
@@ -145,7 +147,6 @@ func resourceDisassociateSiteToNetworkProfileCreate(ctx context.Context, d *sche
 			return diags
 		}
 	}
-
 	vItem1 := flattenSiteDesignDisassociateItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -156,7 +157,6 @@ func resourceDisassociateSiteToNetworkProfileCreate(ctx context.Context, d *sche
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceDisassociateSiteToNetworkProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

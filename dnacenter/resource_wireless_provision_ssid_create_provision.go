@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -121,6 +121,17 @@ sites
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"auth_key_mgmt": &schema.Schema{
+										Description: `Takes string inputs for the AKMs that should be set true. Possible AKM values : dot1x,dot1x_ft, dot1x_sha, psk, psk_ft, psk_sha, owe, sae, sae_ft
+`,
+										Type:     schema.TypeList,
+										Optional: true,
+										ForceNew: true,
+										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
 									"enable_broadcast_ssi_d": &schema.Schema{
 										Description: `Enable Broadcast SSID
 `,
@@ -159,6 +170,24 @@ sites
 										ForceNew: true,
 										Computed: true,
 									},
+									"ghz24_policy": &schema.Schema{
+										Description: `2.4 GHz Policy
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+										Computed: true,
+									},
+									"ghz6_policy_client_steering": &schema.Schema{
+										Description: `6 Ghz Client Steering
+`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										ForceNew:     true,
+										Computed:     true,
+									},
 									"name": &schema.Schema{
 										Description: `SSID Name
 `,
@@ -182,6 +211,36 @@ sites
 										Optional: true,
 										ForceNew: true,
 										Computed: true,
+									},
+									"rsn_cipher_suite_ccmp256": &schema.Schema{
+										Description: `Rsn Cipher Suite Ccmp256
+`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										ForceNew:     true,
+										Computed:     true,
+									},
+									"rsn_cipher_suite_gcmp128": &schema.Schema{
+										Description: `Rsn Cipher Suite  Gcmp128
+`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										ForceNew:     true,
+										Computed:     true,
+									},
+									"rsn_cipher_suite_gcmp256": &schema.Schema{
+										Description: `Rsn Cipher Suite Gcmp256
+`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										ForceNew:     true,
+										Computed:     true,
 									},
 									"security_level": &schema.Schema{
 										Description: `Security Level(For guest SSID OPEN/WEB_AUTH, For Enterprise SSID ENTERPRISE/PERSONAL/OPEN)
@@ -218,14 +277,6 @@ sites
 							ForceNew: true,
 							Computed: true,
 						},
-						"persistbapioutput": &schema.Schema{
-							Description:  `Device Name`,
-							Type:         schema.TypeString,
-							Optional:     true,
-							ForceNew:     true,
-							Default:      "false",
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-						},
 					},
 				},
 			},
@@ -247,19 +298,16 @@ func resourceWirelessProvisionSSIDCreateProvisionCreate(ctx context.Context, d *
 
 	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
-	response1, restyResp1, err := client.Wireless.CreateAndProvisionSSID(request1, &headerParams1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.Wireless.CreateAndProvisionSSID(request1, &headerParams1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing CreateAndProvisionSSID", err))
 		return diags
 	}
 
@@ -279,7 +327,7 @@ func resourceWirelessProvisionSSIDCreateProvisionCreate(ctx context.Context, d *
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -292,7 +340,7 @@ func resourceWirelessProvisionSSIDCreateProvisionCreate(ctx context.Context, d *
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing CreateAndProvisionSSID", err,
@@ -301,6 +349,9 @@ func resourceWirelessProvisionSSIDCreateProvisionCreate(ctx context.Context, d *
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenWirelessCreateAndProvisionSSIDItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -311,7 +362,6 @@ func resourceWirelessProvisionSSIDCreateProvisionCreate(ctx context.Context, d *
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceWirelessProvisionSSIDCreateProvisionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
@@ -377,6 +427,24 @@ func expandRequestWirelessProvisionSSIDCreateProvisionCreateAndProvisionSSIDSSID
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".web_auth_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".web_auth_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".web_auth_url")))) {
 		request.WebAuthURL = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auth_key_mgmt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auth_key_mgmt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auth_key_mgmt")))) {
+		request.AuthKeyMgmt = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rsn_cipher_suite_gcmp256")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp256")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp256")))) {
+		request.RsnCipherSuiteGcmp256 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rsn_cipher_suite_gcmp128")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp128")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp128")))) {
+		request.RsnCipherSuiteGcmp128 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rsn_cipher_suite_ccmp256")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rsn_cipher_suite_ccmp256")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rsn_cipher_suite_ccmp256")))) {
+		request.RsnCipherSuiteCcmp256 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ghz6_policy_client_steering")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ghz6_policy_client_steering")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ghz6_policy_client_steering")))) {
+		request.Ghz6PolicyClientSteering = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ghz24_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ghz24_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ghz24_policy")))) {
+		request.Ghz24Policy = interfaceToString(v)
 	}
 	return &request
 }

@@ -70,5 +70,3 @@ Read-Only:
 - `status` (String)
 - `sub_domain` (String)
 - `timestamp` (String)
-
-

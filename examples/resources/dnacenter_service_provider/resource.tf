@@ -1,6 +1,7 @@
 
 resource "dnacenter_service_provider" "example" {
   provider = dnacenter
+
   parameters {
 
     settings {

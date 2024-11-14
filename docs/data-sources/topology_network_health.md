@@ -20,7 +20,7 @@ given point of time
 ```terraform
 data "dnacenter_topology_network_health" "example" {
   provider  = dnacenter
-  timestamp = "string"
+  timestamp = 1.0
 }
 
 output "dnacenter_topology_network_health_example" {
@@ -33,7 +33,7 @@ output "dnacenter_topology_network_health_example" {
 
 ### Optional
 
-- `timestamp` (String) timestamp query parameter. Epoch time(in milliseconds) when the Network health data is required
+- `timestamp` (Number) timestamp query parameter. UTC timestamp of network health data in milliseconds
 
 ### Read-Only
 
@@ -50,9 +50,9 @@ Read-Only:
 - `fair_count` (Number)
 - `good_count` (Number)
 - `health_score` (Number)
+- `maintenance_mode_count` (Number)
+- `no_health_count` (Number)
 - `time` (String)
 - `timein_millis` (Number)
 - `total_count` (Number)
 - `unmon_count` (Number)
-
-

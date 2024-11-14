@@ -53,7 +53,7 @@ Read-Only:
 - `auth_model_id` (String)
 - `avg_update_frequency` (Number)
 - `boot_date_time` (String)
-- `cli_status` (String)
+- `clistatus` (String)
 - `duplicate_device_id` (String)
 - `error_code` (String)
 - `error_description` (String)
@@ -95,5 +95,3 @@ Read-Only:
 - `up_time` (String)
 - `vendor` (String)
 - `wlc_ap_device_status` (String)
-
-

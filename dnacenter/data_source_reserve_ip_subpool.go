@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -20,20 +20,38 @@ func dataSourceReserveIPSubpool() *schema.Resource {
 
 		ReadContext: dataSourceReserveIPSubpoolRead,
 		Schema: map[string]*schema.Schema{
-			"limit": &schema.Schema{
-				Description: `limit query parameter. No of Global Pools to be retrieved
+			"group_name": &schema.Schema{
+				Description: `groupName query parameter. Name of the group
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"ignore_inherited_groups": &schema.Schema{
+				Description: `ignoreInheritedGroups query parameter. Ignores pools inherited from parent site. Either siteId or ignoreInheritedGroups must be passed. They can also be used together.
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"limit": &schema.Schema{
+				Description: `limit query parameter. Number of reserve pools to be retrieved. Default is 25 if not specified. Maximum allowed limit is 500.
+`,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
-				Description: `offset query parameter. offset/starting row
+				Description: `offset query parameter. offset/starting row. Indexed from 1.
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
+				Optional: true,
+			},
+			"pool_usage": &schema.Schema{
+				Description: `poolUsage query parameter. Can take values empty, partially-full or empty-partially-full
+`,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"site_id": &schema.Schema{
-				Description: `siteId query parameter. site id to get the reserve ip associated with the site
+				Description: `siteId query parameter. site id of site from which to retrieve associated reserve pools. Either siteId (per site queries) or ignoreInheritedGroups must be used. They can also be used together. 
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -257,6 +275,9 @@ func dataSourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData,
 	vSiteID, okSiteID := d.GetOk("site_id")
 	vOffset, okOffset := d.GetOk("offset")
 	vLimit, okLimit := d.GetOk("limit")
+	vIgnoreInheritedGroups, okIgnoreInheritedGroups := d.GetOk("ignore_inherited_groups")
+	vPoolUsage, okPoolUsage := d.GetOk("pool_usage")
+	vGroupName, okGroupName := d.GetOk("group_name")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -267,10 +288,19 @@ func dataSourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData,
 			queryParams1.SiteID = vSiteID.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
+		}
+		if okIgnoreInheritedGroups {
+			queryParams1.IgnoreInheritedGroups = vIgnoreInheritedGroups.(string)
+		}
+		if okPoolUsage {
+			queryParams1.PoolUsage = vPoolUsage.(string)
+		}
+		if okGroupName {
+			queryParams1.GroupName = vGroupName.(string)
 		}
 
 		response1, restyResp1, err := client.NetworkSettings.GetReserveIPSubpool(&queryParams1)
@@ -280,7 +310,7 @@ func dataSourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData,
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetReserveIPSubpool", err,
+				"Failure when executing 2 GetReserveIPSubpool", err,
 				"Failure at GetReserveIPSubpool, unexpected response", ""))
 			return diags
 		}
@@ -320,7 +350,6 @@ func flattenNetworkSettingsGetReserveIPSubpoolItems(items *[]dnacentersdkgo.Resp
 	}
 	return respItems
 }
-
 func flattenNetworkSettingsGetReserveIPSubpoolParameters(items *dnacentersdkgo.RequestNetworkSettingsReserveIPSubpool) []map[string]interface{} {
 	if items == nil {
 		return nil
@@ -375,7 +404,6 @@ func flattenNetworkSettingsGetReserveIPSubpoolParametersDnsServers(items []strin
 	}
 	return respItems
 }
-
 func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPools(items *[]dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponseIPPools) []map[string]interface{} {
 	if items == nil {
 		return nil
@@ -408,12 +436,12 @@ func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPools(items *[]dnacentersdk
 	return respItems
 }
 
-func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsDhcpServerIPs(items []string) []interface{} {
+func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsDhcpServerIPs(items *[]dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponseIPPoolsDhcpServerIPs) []interface{} {
 	if items == nil {
 		return nil
 	}
 	var respItems []interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := item
 		respItems = append(respItems, responseInterfaceToString(respItem))
 	}
@@ -430,12 +458,12 @@ func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsClientOptions(item *dn
 
 }
 
-func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsDNSServerIPs(items []string) []interface{} {
+func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPoolsDNSServerIPs(items *[]dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponseIPPoolsDNSServerIPs) []interface{} {
 	if items == nil {
 		return nil
 	}
 	var respItems []interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := item
 		respItems = append(respItems, responseInterfaceToString(respItem))
 	}

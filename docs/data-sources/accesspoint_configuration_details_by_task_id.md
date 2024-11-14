@@ -77,5 +77,3 @@ Read-Only:
 - `long_type` (String)
 - `type` (String)
 - `url` (String)
-
-

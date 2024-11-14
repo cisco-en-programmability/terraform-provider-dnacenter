@@ -71,5 +71,3 @@ Read-Only:
 - `auth_password` (String)
 - `auth_user_name` (String)
 - `url` (String)
-
-

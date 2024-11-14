@@ -1,10 +1,10 @@
 
 resource "dnacenter_disassociate_site_to_network_profile" "example" {
-  provider = dnacenter
+  provider           = dnacenter
+  network_profile_id = "string"
+  site_id            = "string"
   parameters {
 
-    network_profile_id = "string"
-    site_id            = "string"
   }
 }
 

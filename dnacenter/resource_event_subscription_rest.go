@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -538,6 +538,7 @@ func resourceEventSubscriptionRestRead(ctx context.Context, d *schema.ResourceDa
 
 		vItem1 := flattenEventManagementGetRestWebhookEventSubscriptionsItems(item)
 		if err := d.Set("item", vItem1); err != nil {
+
 			diags = append(diags, diagError(
 				"Failure when setting GetRestWebhookEventSubscriptions search response",
 				err))
@@ -594,6 +595,9 @@ func resourceEventSubscriptionRestUpdate(ctx context.Context, d *schema.Resource
 				"Failure at UpdateRestWebhookEventSubscription, unexpected response", ""))
 			return diags
 		}
+
+		//TODO REVIEW
+
 	}
 
 	return resourceEventSubscriptionRestRead(ctx, d, m)

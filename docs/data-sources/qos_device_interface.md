@@ -86,5 +86,3 @@ Read-Only:
 - `label` (String)
 - `role` (String)
 - `upload_bw` (Number)
-
-

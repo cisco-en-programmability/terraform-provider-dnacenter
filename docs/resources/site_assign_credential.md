@@ -12,26 +12,24 @@ description: |-
 It performs create operation on NetworkSettings.
 
 - Assign Device Credential to a site.
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_site_assign_credential" "example" {
-  provider = dnacenter
+  provider = meraki
+  site_id  = "string"
   parameters {
 
-    cli_id            = "string"
-    http_read         = "string"
-    http_write        = "string"
-    site_id           = "string"
-    snmp_v2_read_id   = "string"
-    snmp_v2_write_id  = "string"
-    snmp_v3_id        = "string"
-    persistbapioutput = "false"
+    cli_id           = "string"
+    http_read        = "string"
+    http_write       = "string"
+    snmp_v2_read_id  = "string"
+    snmp_v2_write_id = "string"
+    snmp_v3_id       = "string"
   }
 }
 
@@ -65,7 +63,6 @@ Optional:
 - `cli_id` (String) Cli Id
 - `http_read` (String) Http Read
 - `http_write` (String) Http Write
-- `persistbapioutput` (String) Name of the profile to create site profile profile( eg: profile-1)
 - `snmp_v2_read_id` (String) Snmp V2 Read Id
 - `snmp_v2_write_id` (String) Snmp V2 Write Id
 - `snmp_v3_id` (String) Snmp V3 Id
@@ -79,5 +76,3 @@ Read-Only:
 - `execution_id` (String)
 - `execution_status_url` (String)
 - `message` (String)
-
-

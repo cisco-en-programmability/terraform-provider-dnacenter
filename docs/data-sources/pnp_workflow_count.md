@@ -44,5 +44,3 @@ output "dnacenter_pnp_workflow_count_example" {
 Read-Only:
 
 - `response` (Number)
-
-

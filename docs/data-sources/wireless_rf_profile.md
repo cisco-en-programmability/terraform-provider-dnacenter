@@ -22,7 +22,7 @@ data "dnacenter_wireless_rf_profile" "example" {
 }
 
 output "dnacenter_wireless_rf_profile_example" {
-  value = data.dnacenter_wireless_rf_profile.example.items
+  value = data.dnacenter_wireless_rf_profile.example.item
 }
 ```
 
@@ -36,42 +36,65 @@ output "dnacenter_wireless_rf_profile_example" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
-<a id="nestedatt--items"></a>
-### Nested Schema for `items`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
-- `a_radio_channels` (String)
-- `b_radio_channels` (String)
-- `c_radio_channels` (String)
 - `channel_width` (String)
-- `data_rates_a` (String)
-- `data_rates_b` (String)
-- `data_rates_c` (String)
 - `default_rf_profile` (String)
-- `enable_a_radio_type` (String)
-- `enable_b_radio_type` (String)
 - `enable_brown_field` (String)
-- `enable_c_radio_type` (String)
 - `enable_custom` (String)
-- `mandatory_data_rates_a` (String)
-- `mandatory_data_rates_b` (String)
-- `mandatory_data_rates_c` (String)
-- `max_power_level_a` (String)
-- `max_power_level_b` (String)
-- `min_power_level_a` (String)
-- `min_power_level_b` (String)
-- `min_power_level_c` (String)
+- `enable_radio_type_a` (String)
+- `enable_radio_type_b` (String)
+- `enable_radio_type_c` (String)
 - `name` (String)
-- `parent_profile_a` (String)
-- `parent_profile_b` (String)
-- `power_threshold_v1_a` (Number)
-- `power_threshold_v1_b` (Number)
-- `power_threshold_v1_c` (Number)
-- `rx_sop_threshold_a` (String)
-- `rx_sop_threshold_b` (String)
-- `rx_sop_threshold_c` (String)
+- `radio_type_a_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type_a_properties))
+- `radio_type_b_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type_b_properties))
+- `radio_type_c_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type_c_properties))
+
+<a id="nestedobjatt--item--radio_type_a_properties"></a>
+### Nested Schema for `item.radio_type_a_properties`
+
+Read-Only:
+
+- `data_rates` (String)
+- `mandatory_data_rates` (String)
+- `max_power_level` (Number)
+- `min_power_level` (Number)
+- `parent_profile` (String)
+- `power_threshold_v1` (Number)
+- `radio_channels` (String)
+- `rx_sop_threshold` (String)
 
 
+<a id="nestedobjatt--item--radio_type_b_properties"></a>
+### Nested Schema for `item.radio_type_b_properties`
+
+Read-Only:
+
+- `data_rates` (String)
+- `mandatory_data_rates` (String)
+- `max_power_level` (Number)
+- `min_power_level` (Number)
+- `parent_profile` (String)
+- `power_threshold_v1` (Number)
+- `radio_channels` (String)
+- `rx_sop_threshold` (String)
+
+
+<a id="nestedobjatt--item--radio_type_c_properties"></a>
+### Nested Schema for `item.radio_type_c_properties`
+
+Read-Only:
+
+- `data_rates` (String)
+- `mandatory_data_rates` (String)
+- `max_power_level` (Number)
+- `min_power_level` (Number)
+- `parent_profile` (String)
+- `power_threshold_v1` (Number)
+- `radio_channels` (String)
+- `rx_sop_threshold` (String)

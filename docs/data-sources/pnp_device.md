@@ -4,16 +4,16 @@ page_title: "dnacenter_pnp_device Data Source - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs read operation on Device Onboarding (PnP).
-  Returns list of devices based on filter crieteria. If a limit is not specified, it will default to return 50 devices.
-  Pagination and sorting are also supported by this endpointReturns device details specified by device id
+  Returns list of devices from Plug & Play based on filter criteria. Returns 50 devices by default. This endpoint
+  supports Pagination and Sorting.Returns device details specified by device id
 ---
 
 # dnacenter_pnp_device (Data Source)
 
 It performs read operation on Device Onboarding (PnP).
 
-- Returns list of devices based on filter crieteria. If a limit is not specified, it will default to return 50 devices.
-Pagination and sorting are also supported by this endpoint
+- Returns list of devices from Plug & Play based on filter criteria. Returns 50 devices by default. This endpoint
+supports Pagination and Sorting.
 
 - Returns device details specified by device id
 
@@ -22,7 +22,6 @@ Pagination and sorting are also supported by this endpoint
 ```terraform
 data "dnacenter_pnp_device" "example" {
   provider           = dnacenter
-  cm_state           = ["string"]
   hostname           = "string"
   last_contact       = "false"
   limit              = 1
@@ -31,8 +30,6 @@ data "dnacenter_pnp_device" "example" {
   offset             = 1
   onb_state          = ["string"]
   pid                = ["string"]
-  project_id         = ["string"]
-  project_name       = ["string"]
   serial_number      = ["string"]
   site_name          = "string"
   smart_account_id   = ["string"]
@@ -64,7 +61,6 @@ output "dnacenter_pnp_device_example" {
 
 ### Optional
 
-- `cm_state` (List of String) cmState query parameter. Device Connection Manager State
 - `hostname` (String) hostname query parameter. Device Hostname
 - `id` (String) id path parameter.
 - `last_contact` (Boolean) lastContact query parameter. Device Has Contacted lastContact > 0
@@ -74,8 +70,6 @@ output "dnacenter_pnp_device_example" {
 - `offset` (Number) offset query parameter. Index of first result
 - `onb_state` (List of String) onbState query parameter. Device Onboarding State
 - `pid` (List of String) pid query parameter. Device ProductId
-- `project_id` (List of String) projectId query parameter. Device Project Id
-- `project_name` (List of String) projectName query parameter. Device Project Name
 - `serial_number` (List of String) serialNumber query parameter. Device Serial Number
 - `site_name` (String) siteName query parameter. Device Site Name
 - `smart_account_id` (List of String) smartAccountId query parameter. Device Smart Account
@@ -573,7 +567,6 @@ Read-Only:
 - `day_zero_config` (List of Object) (see [below for nested schema](#nestedobjatt--items--day_zero_config))
 - `day_zero_config_preview` (String)
 - `device_info` (List of Object) (see [below for nested schema](#nestedobjatt--items--device_info))
-- `id` (String)
 - `run_summary_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--run_summary_list))
 - `system_reset_workflow` (List of Object) (see [below for nested schema](#nestedobjatt--items--system_reset_workflow))
 - `system_workflow` (List of Object) (see [below for nested schema](#nestedobjatt--items--system_workflow))
@@ -1033,5 +1026,3 @@ Read-Only:
 
 - `key` (String)
 - `value` (String)
-
-

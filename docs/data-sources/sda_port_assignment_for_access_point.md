@@ -54,5 +54,3 @@ Read-Only:
 - `site_name_hierarchy` (String)
 - `status` (String)
 - `voice_ip_address_pool_name` (String)
-
-

@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,7 +18,7 @@ func resourceWirelessProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Wireless.
 
-- Delete the Wireless Profile from Cisco DNA Center whose name is provided.
+- Delete the Wireless Profile whose name is provided.
 
 - Updates the wireless Network Profile with updated details provided. All sites to be present in the network profile
 should be provided.
@@ -222,13 +222,6 @@ should be provided.
 													Optional: true,
 													Computed: true,
 												},
-												"type": &schema.Schema{
-													Description: `Ssid Type(enum: Enterprise/Guest)
-`,
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
-												},
 												"wlan_profile_name": &schema.Schema{
 													Description: `WLAN Profile Name 
 `,
@@ -241,6 +234,12 @@ should be provided.
 									},
 								},
 							},
+						},
+						"wireless_profile_name": &schema.Schema{
+							Description: `wirelessProfileName path parameter. Wireless Profile Name
+`,
+							Type:     schema.TypeString,
+							Required: true,
 						},
 					},
 				},
@@ -573,7 +572,7 @@ func resourceWirelessProfileDelete(ctx context.Context, d *schema.ResourceData, 
 }
 func expandRequestWirelessProfileCreateWirelessProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateWirelessProfile {
 	request := dnacentersdkgo.RequestWirelessCreateWirelessProfile{}
-	request.ProfileDetails = expandRequestWirelessProfileCreateWirelessProfileProfileDetails(ctx, key+".profile_details.0", d)
+	request.ProfileDetails = expandRequestWirelessProfileCreateWirelessProfileProfileDetails(ctx, key, d)
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -625,9 +624,6 @@ func expandRequestWirelessProfileCreateWirelessProfileProfileDetailsSSIDDetails(
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_fabric")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_fabric")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_fabric")))) {
 		request.EnableFabric = interfaceToBoolPtr(v)
 	}
@@ -665,7 +661,7 @@ func expandRequestWirelessProfileCreateWirelessProfileProfileDetailsSSIDDetailsF
 
 func expandRequestWirelessProfileUpdateWirelessProfile(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateWirelessProfile {
 	request := dnacentersdkgo.RequestWirelessUpdateWirelessProfile{}
-	request.ProfileDetails = expandRequestWirelessProfileUpdateWirelessProfileProfileDetails(ctx, key+".profile_details.0", d)
+	request.ProfileDetails = expandRequestWirelessProfileUpdateWirelessProfileProfileDetails(ctx, key, d)
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -716,9 +712,6 @@ func expandRequestWirelessProfileUpdateWirelessProfileProfileDetailsSSIDDetails(
 	request := dnacentersdkgo.RequestWirelessUpdateWirelessProfileProfileDetailsSSIDDetails{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_fabric")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_fabric")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_fabric")))) {
 		request.EnableFabric = interfaceToBoolPtr(v)

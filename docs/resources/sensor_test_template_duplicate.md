@@ -12,16 +12,15 @@ description: |-
 It performs update operation on Sensors.
 
 - Intent API to duplicate an existing SENSOR test template
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_sensor_test_template_duplicate" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     new_template_name = "string"
@@ -52,8 +51,8 @@ output "dnacenter_sensor_test_template_duplicate_example" {
 
 Optional:
 
-- `new_template_name` (String) New Template Name
-- `template_name` (String) Template Name
+- `new_template_name` (String) Destination test template name
+- `template_name` (String) Source test template name
 
 
 <a id="nestedatt--item"></a>
@@ -61,35 +60,31 @@ Optional:
 
 Read-Only:
 
+- `action_in_progress` (String)
 - `ap_coverage` (List of Object) (see [below for nested schema](#nestedobjatt--item--ap_coverage))
 - `connection` (String)
 - `encryption_mode` (String)
-- `frequency` (String)
+- `frequency` (List of Object) (see [below for nested schema](#nestedobjatt--item--frequency))
 - `id` (String)
 - `last_modified_time` (Number)
-- `legacy_test_suite` (String)
 - `location` (String)
 - `location_info_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--location_info_list))
 - `model_version` (Number)
 - `name` (String)
 - `num_associated_sensor` (Number)
 - `num_neighbor_apthreshold` (Number)
+- `profiles` (List of Object) (see [below for nested schema](#nestedobjatt--item--profiles))
 - `radio_as_sensor_removed` (String)
 - `rssi_threshold` (Number)
 - `run_now` (String)
-- `schedule` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule))
 - `schedule_in_days` (Number)
-- `sensors` (List of String)
+- `sensors` (List of Object) (see [below for nested schema](#nestedobjatt--item--sensors))
 - `show_wlc_upgrade_banner` (String)
 - `site_hierarchy` (String)
 - `ssids` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids))
 - `start_time` (Number)
 - `status` (String)
-- `tenant_id` (String)
-- `test_duration_estimate` (Number)
 - `test_schedule_mode` (String)
-- `test_template` (String)
-- `tests` (String)
 - `version` (Number)
 - `wlans` (List of String)
 
@@ -103,64 +98,154 @@ Read-Only:
 - `rssi_threshold` (Number)
 
 
+<a id="nestedobjatt--item--frequency"></a>
+### Nested Schema for `item.frequency`
+
+Read-Only:
+
+- `unit` (String)
+- `value` (Number)
+
+
 <a id="nestedobjatt--item--location_info_list"></a>
 ### Nested Schema for `item.location_info_list`
 
 Read-Only:
 
 - `all_sensors` (String)
+- `custom_management_vlan` (String)
 - `location_id` (String)
 - `location_type` (String)
 - `mac_address_list` (List of String)
+- `management_vlan` (String)
 - `site_hierarchy` (String)
 
 
-<a id="nestedobjatt--item--schedule"></a>
-### Nested Schema for `item.schedule`
+<a id="nestedobjatt--item--profiles"></a>
+### Nested Schema for `item.profiles`
 
 Read-Only:
 
-- `frequency` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--frequency))
-- `schedule_range` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range))
-- `start_time` (Number)
-- `test_schedule_mode` (String)
+- `auth_protocol` (String)
+- `auth_type` (String)
+- `certdownloadurl` (String)
+- `certfilename` (String)
+- `certpassphrase` (String)
+- `certstatus` (String)
+- `certxferprotocol` (String)
+- `device_type` (String)
+- `eap_method` (String)
+- `ext_web_auth` (String)
+- `ext_web_auth_access_url` (String)
+- `ext_web_auth_html_tag` (List of Object) (see [below for nested schema](#nestedobjatt--item--profiles--ext_web_auth_html_tag))
+- `ext_web_auth_portal` (String)
+- `ext_web_auth_virtual_ip` (String)
+- `location_vlan_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--profiles--location_vlan_list))
+- `password` (String)
+- `password_type` (String)
+- `profile_name` (String)
+- `psk` (String)
+- `qos_policy` (String)
+- `scep` (String)
+- `tests` (List of Object) (see [below for nested schema](#nestedobjatt--item--profiles--tests))
+- `username` (String)
+- `vlan` (String)
+- `white_list` (String)
 
-<a id="nestedobjatt--item--schedule--frequency"></a>
-### Nested Schema for `item.schedule.frequency`
-
-Read-Only:
-
-- `unit` (String)
-- `value` (Number)
-
-
-<a id="nestedobjatt--item--schedule--schedule_range"></a>
-### Nested Schema for `item.schedule.schedule_range`
-
-Read-Only:
-
-- `day` (String)
-- `time_range` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range--time_range))
-
-<a id="nestedobjatt--item--schedule--schedule_range--time_range"></a>
-### Nested Schema for `item.schedule.schedule_range.time_range`
-
-Read-Only:
-
-- `frequency` (List of Object) (see [below for nested schema](#nestedobjatt--item--schedule--schedule_range--time_range--frequency))
-- `from` (String)
-- `to` (String)
-
-<a id="nestedobjatt--item--schedule--schedule_range--time_range--frequency"></a>
-### Nested Schema for `item.schedule.schedule_range.time_range.frequency`
+<a id="nestedobjatt--item--profiles--ext_web_auth_html_tag"></a>
+### Nested Schema for `item.profiles.ext_web_auth_html_tag`
 
 Read-Only:
 
-- `unit` (String)
-- `value` (Number)
+- `label` (String)
+- `tag` (String)
+- `value` (String)
+
+
+<a id="nestedobjatt--item--profiles--location_vlan_list"></a>
+### Nested Schema for `item.profiles.location_vlan_list`
+
+Read-Only:
+
+- `location_id` (String)
+- `vlans` (List of String)
+
+
+<a id="nestedobjatt--item--profiles--tests"></a>
+### Nested Schema for `item.profiles.tests`
+
+Read-Only:
+
+- `config` (List of Object) (see [below for nested schema](#nestedobjatt--item--profiles--tests--config))
+- `name` (String)
+
+<a id="nestedobjatt--item--profiles--tests--config"></a>
+### Nested Schema for `item.profiles.tests.name`
+
+Read-Only:
+
+- `direction` (String)
+- `domains` (List of String)
+- `downlink_test` (String)
+- `end_port` (Number)
+- `exit_command` (String)
+- `final_prompt` (String)
+- `ndt_server` (String)
+- `ndt_server_path` (String)
+- `ndt_server_port` (String)
+- `num_packets` (Number)
+- `password` (String)
+- `password_prompt` (String)
+- `path_to_download` (String)
+- `port` (Number)
+- `probe_type` (String)
+- `protocol` (String)
+- `proxy_password` (String)
+- `proxy_port` (String)
+- `proxy_server` (String)
+- `proxy_user_name` (String)
+- `server` (String)
+- `servers` (List of String)
+- `shared_secret` (String)
+- `start_port` (Number)
+- `transfer_type` (String)
+- `udp_bandwidth` (Number)
+- `uplink_test` (String)
+- `url` (String)
+- `user_name` (String)
+- `user_name_prompt` (String)
 
 
 
+
+<a id="nestedobjatt--item--sensors"></a>
+### Nested Schema for `item.sensors`
+
+Read-Only:
+
+- `all_sensor_addition` (String)
+- `assigned` (String)
+- `config_updated` (String)
+- `host_name` (String)
+- `i_perf_info` (List of String)
+- `id` (String)
+- `ip_address` (String)
+- `location_id` (String)
+- `mac_address` (String)
+- `marked_for_uninstall` (String)
+- `name` (String)
+- `run_now` (String)
+- `sensor_type` (String)
+- `service_policy` (String)
+- `status` (String)
+- `switch_mac` (String)
+- `switch_serial_number` (String)
+- `switch_uuid` (String)
+- `target_a_ps` (List of String)
+- `test_mac_addresses` (String)
+- `wired_application_message` (String)
+- `wired_application_status` (String)
+- `xor_sensor` (String)
 
 
 <a id="nestedobjatt--item--ssids"></a>
@@ -170,7 +255,6 @@ Read-Only:
 
 - `auth_protocol` (String)
 - `auth_type` (String)
-- `auth_type_rcvd` (String)
 - `bands` (String)
 - `certdownloadurl` (String)
 - `certfilename` (String)
@@ -180,18 +264,23 @@ Read-Only:
 - `eap_method` (String)
 - `ext_web_auth` (String)
 - `ext_web_auth_access_url` (String)
-- `ext_web_auth_html_tag` (List of String)
+- `ext_web_auth_html_tag` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids--ext_web_auth_html_tag))
 - `ext_web_auth_portal` (String)
 - `ext_web_auth_virtual_ip` (String)
 - `id` (Number)
-- `layer3web_auth_email_address` (List of String)
-- `layer3web_authpassword` (List of String)
-- `layer3web_authsecurity` (List of String)
-- `layer3web_authuser_name` (List of String)
+- `layer3web_auth_email_address` (String)
+- `layer3web_authpassword` (String)
+- `layer3web_authsecurity` (String)
+- `layer3web_authuser_name` (String)
 - `num_aps` (Number)
 - `num_sensors` (Number)
 - `password` (String)
+- `password_type` (String)
 - `profile_name` (String)
+- `proxy_password` (String)
+- `proxy_port` (String)
+- `proxy_server` (String)
+- `proxy_user_name` (String)
 - `psk` (String)
 - `qos_policy` (String)
 - `scep` (String)
@@ -206,13 +295,60 @@ Read-Only:
 - `wlan_id` (Number)
 - `wlc` (String)
 
+<a id="nestedobjatt--item--ssids--ext_web_auth_html_tag"></a>
+### Nested Schema for `item.ssids.ext_web_auth_html_tag`
+
+Read-Only:
+
+- `label` (String)
+- `tag` (String)
+- `value` (String)
+
+
 <a id="nestedobjatt--item--ssids--tests"></a>
 ### Nested Schema for `item.ssids.tests`
 
 Read-Only:
 
-- `config` (List of String)
+- `config` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssids--tests--config))
 - `name` (String)
+
+<a id="nestedobjatt--item--ssids--tests--config"></a>
+### Nested Schema for `item.ssids.tests.name`
+
+Read-Only:
+
+- `direction` (String)
+- `domains` (List of String)
+- `downlink_test` (String)
+- `end_port` (Number)
+- `exit_command` (String)
+- `final_prompt` (String)
+- `ndt_server` (String)
+- `ndt_server_path` (String)
+- `ndt_server_port` (String)
+- `num_packets` (Number)
+- `password` (String)
+- `password_prompt` (String)
+- `path_to_download` (String)
+- `port` (Number)
+- `probe_type` (String)
+- `protocol` (String)
+- `proxy_password` (String)
+- `proxy_port` (String)
+- `proxy_server` (String)
+- `proxy_user_name` (String)
+- `server` (String)
+- `servers` (List of String)
+- `shared_secret` (String)
+- `start_port` (Number)
+- `transfer_type` (String)
+- `udp_bandwidth` (Number)
+- `uplink_test` (String)
+- `url` (String)
+- `user_name` (String)
+- `user_name_prompt` (String)
+
 
 
 <a id="nestedobjatt--item--ssids--third_party"></a>
@@ -221,5 +357,3 @@ Read-Only:
 Read-Only:
 
 - `selected` (String)
-
-

@@ -1,0 +1,1 @@
+terraform import dnacenter_network_devices_device_controllability_settings.example "id:=string"

@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -181,7 +181,7 @@ func resourceIntegrationSettingsInstancesItsm() *schema.Resource {
 							Computed: true,
 						},
 						"dyp_name": &schema.Schema{
-							Description: `It should be ServiceNowConnection
+							Description: `It can be ServiceNowConnection
 `,
 							Type:     schema.TypeString,
 							Optional: true,

@@ -1,7 +1,6 @@
 
 data "dnacenter_pnp_device" "example" {
   provider           = dnacenter
-  cm_state           = ["string"]
   hostname           = "string"
   last_contact       = "false"
   limit              = 1
@@ -10,8 +9,6 @@ data "dnacenter_pnp_device" "example" {
   offset             = 1
   onb_state          = ["string"]
   pid                = ["string"]
-  project_id         = ["string"]
-  project_name       = ["string"]
   serial_number      = ["string"]
   site_name          = "string"
   smart_account_id   = ["string"]

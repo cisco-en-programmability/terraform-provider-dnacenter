@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -298,9 +298,9 @@ func dataSourceNetworkDeviceInventoryInsightLinkMismatchRead(ctx context.Context
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: InventoryInsightDeviceLinkMismatchApI")
+		log.Printf("[DEBUG] Selected method: InventoryInsightDeviceLinkMismatchAPI")
 		vvSiteID := vSiteID.(string)
-		queryParams1 := dnacentersdkgo.InventoryInsightDeviceLinkMismatchApIQueryParams{}
+		queryParams1 := dnacentersdkgo.InventoryInsightDeviceLinkMismatchAPIQueryParams{}
 
 		if okOffset {
 			queryParams1.Offset = vOffset.(int)
@@ -317,24 +317,24 @@ func dataSourceNetworkDeviceInventoryInsightLinkMismatchRead(ctx context.Context
 			queryParams1.Order = vOrder.(string)
 		}
 
-		response1, restyResp1, err := client.Devices.InventoryInsightDeviceLinkMismatchApI(vvSiteID, &queryParams1)
+		response1, restyResp1, err := client.Devices.InventoryInsightDeviceLinkMismatchAPI(vvSiteID, &queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing InventoryInsightDeviceLinkMismatchApI", err,
-				"Failure at InventoryInsightDeviceLinkMismatchApI, unexpected response", ""))
+				"Failure when executing 2 InventoryInsightDeviceLinkMismatchAPI", err,
+				"Failure at InventoryInsightDeviceLinkMismatchAPI, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenDevicesInventoryInsightDeviceLinkMismatchApIItems(response1.Response)
+		vItems1 := flattenDevicesInventoryInsightDeviceLinkMismatchAPIItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting InventoryInsightDeviceLinkMismatchApI response",
+				"Failure when setting InventoryInsightDeviceLinkMismatchAPI response",
 				err))
 			return diags
 		}
@@ -346,7 +346,7 @@ func dataSourceNetworkDeviceInventoryInsightLinkMismatchRead(ctx context.Context
 	return diags
 }
 
-func flattenDevicesInventoryInsightDeviceLinkMismatchApIItems(items *[]dnacentersdkgo.ResponseDevicesInventoryInsightDeviceLinkMismatchApIResponse) []map[string]interface{} {
+func flattenDevicesInventoryInsightDeviceLinkMismatchAPIItems(items *[]dnacentersdkgo.ResponseDevicesInventoryInsightDeviceLinkMismatchAPIResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

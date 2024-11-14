@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -358,7 +358,7 @@ func dataSourceEventSubscriptionEmailRead(ctx context.Context, d *schema.Resourc
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEmailEventSubscriptions", err,
+				"Failure when executing 2 GetEmailEventSubscriptions", err,
 				"Failure at GetEmailEventSubscriptions, unexpected response", ""))
 			return diags
 		}
@@ -381,26 +381,6 @@ func dataSourceEventSubscriptionEmailRead(ctx context.Context, d *schema.Resourc
 }
 
 func flattenEventManagementGetEmailEventSubscriptionsItems(items *dnacentersdkgo.ResponseEventManagementGetEmailEventSubscriptions) []map[string]interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["version"] = item.Version
-		respItem["subscription_id"] = item.SubscriptionID
-		respItem["name"] = item.Name
-		respItem["description"] = item.Description
-		respItem["subscription_endpoints"] = flattenEventManagementGetEmailEventSubscriptionsItemsSubscriptionEndpoints(item.SubscriptionEndpoints)
-		respItem["filter"] = flattenEventManagementGetEmailEventSubscriptionsItemsFilter(item.Filter)
-		respItem["is_private"] = boolPtrToString(item.IsPrivate)
-		respItem["tenant_id"] = item.TenantID
-		respItems = append(respItems, respItem)
-	}
-	return respItems
-}
-
-func flattenEventManagementGetEmailEventSubscriptionsItems2(items *[]dnacentersdkgo.ResponseItemEventManagementGetEmailEventSubscriptions) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

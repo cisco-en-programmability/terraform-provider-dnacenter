@@ -1,11 +1,12 @@
 
 resource "dnacenter_interface_operation_create" "example" {
-  provider = dnacenter
+  provider        = dnacenter
+  deployment_mode = "string"
+  interface_uuid  = "string"
   parameters {
 
-    interface_uuid = "string"
-    operation      = "string"
-    payload        = "string"
+    operation = "string"
+    payload   = "string"
   }
 }
 

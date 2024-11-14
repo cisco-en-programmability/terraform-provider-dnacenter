@@ -20,6 +20,7 @@ It manages create, read and delete operations on Software Image Management (SWIM
 ```terraform
 resource "dnacenter_golden_tag_image" "example" {
   provider = dnacenter
+
   parameters {
 
     device_family_identifier = "string"

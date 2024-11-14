@@ -4,14 +4,14 @@ page_title: "dnacenter_event_artifact_count Data Source - terraform-provider-dna
 subcategory: ""
 description: |-
   It performs read operation on Event Management.
-  Get the count of registered event artifacts with provided eventIds or tags as mandatory
+  Get the count of registered event artifacts.
 ---
 
 # dnacenter_event_artifact_count (Data Source)
 
 It performs read operation on Event Management.
 
-- Get the count of registered event artifacts with provided eventIds or tags as mandatory
+- Get the count of registered event artifacts.
 
 ## Example Usage
 
@@ -39,5 +39,3 @@ output "dnacenter_event_artifact_count_example" {
 Read-Only:
 
 - `response` (Number)
-
-

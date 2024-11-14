@@ -1,6 +1,7 @@
 
 resource "dnacenter_network_update" "example" {
   provider = dnacenter
+  site_id  = "string"
   parameters {
 
     settings {
@@ -51,7 +52,6 @@ resource "dnacenter_network_update" "example" {
       }
       timezone = "string"
     }
-    site_id = "string"
   }
 }
 

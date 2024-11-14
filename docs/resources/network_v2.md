@@ -24,6 +24,7 @@ server settings.
 ```terraform
 resource "dnacenter_network_v2" "example" {
   provider = dnacenter
+
   parameters {
 
     settings {
@@ -101,7 +102,7 @@ output "dnacenter_network_v2_example" {
 
 Required:
 
-- `site_id` (String) siteId path parameter. Site Id to update the network settings which is associated with the site
+- `site_id` (String) siteId path parameter. Site Id to which site details to associate with the network settings.
 
 Optional:
 

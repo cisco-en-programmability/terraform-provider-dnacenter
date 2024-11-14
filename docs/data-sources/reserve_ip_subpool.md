@@ -17,10 +17,13 @@ It performs read operation on Network Settings.
 
 ```terraform
 data "dnacenter_reserve_ip_subpool" "example" {
-  provider = dnacenter
-  limit    = 1
-  offset   = 1
-  site_id  = "string"
+  provider                = dnacenter
+  group_name              = "string"
+  ignore_inherited_groups = "string"
+  limit                   = 1
+  offset                  = 1
+  pool_usage              = "string"
+  site_id                 = "string"
 }
 
 output "dnacenter_reserve_ip_subpool_example" {
@@ -33,9 +36,12 @@ output "dnacenter_reserve_ip_subpool_example" {
 
 ### Optional
 
-- `limit` (Number) limit query parameter. No of Global Pools to be retrieved
-- `offset` (Number) offset query parameter. offset/starting row
-- `site_id` (String) siteId query parameter. site id to get the reserve ip associated with the site
+- `group_name` (String) groupName query parameter. Name of the group
+- `ignore_inherited_groups` (String) ignoreInheritedGroups query parameter. Ignores pools inherited from parent site. Either siteId or ignoreInheritedGroups must be passed. They can also be used together.
+- `limit` (Number) limit query parameter. Number of reserve pools to be retrieved. Default is 25 if not specified. Maximum allowed limit is 500.
+- `offset` (Number) offset query parameter. offset/starting row. Indexed from 1.
+- `pool_usage` (String) poolUsage query parameter. Can take values empty, partially-full or empty-partially-full
+- `site_id` (String) siteId query parameter. site id of site from which to retrieve associated reserve pools. Either siteId (per site queries) or ignoreInheritedGroups must be used. They can also be used together.
 
 ### Read-Only
 
@@ -89,5 +95,3 @@ Read-Only:
 - `context_key` (String)
 - `context_value` (String)
 - `owner` (String)
-
-

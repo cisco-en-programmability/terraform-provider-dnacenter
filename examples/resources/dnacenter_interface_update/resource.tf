@@ -1,13 +1,14 @@
 
 resource "dnacenter_interface_update" "example" {
-  provider = dnacenter
+  provider        = dnacenter
+  deployment_mode = "string"
+  interface_uuid  = "string"
   parameters {
 
-    admin_status   = "string"
-    description    = "string"
-    interface_uuid = "string"
-    vlan_id        = 1
-    voice_vlan_id  = 1
+    admin_status  = "string"
+    description   = "string"
+    vlan_id       = 1
+    voice_vlan_id = 1
   }
 }
 

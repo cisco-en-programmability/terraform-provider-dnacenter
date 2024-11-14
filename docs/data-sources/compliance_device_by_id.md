@@ -31,7 +31,7 @@ output "dnacenter_compliance_device_by_id_example" {
 
 ### Required
 
-- `device_uuid` (String) deviceUuid path parameter.
+- `device_uuid` (String) deviceUuid path parameter. Device Id
 
 ### Read-Only
 
@@ -46,7 +46,4 @@ Read-Only:
 - `compliance_status` (String)
 - `device_uuid` (String)
 - `last_update_time` (Number)
-- `message` (String)
-- `schedule_time` (Number)
-
-
+- `schedule_time` (String)

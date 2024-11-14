@@ -1,6 +1,7 @@
 
 data "dnacenter_user" "example" {
   provider      = dnacenter
+  auth_source   = "string"
   invoke_source = "string"
 }
 

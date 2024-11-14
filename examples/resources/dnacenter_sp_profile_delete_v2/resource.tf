@@ -1,9 +1,9 @@
 
 resource "dnacenter_sp_profile_delete_v2" "example" {
-  provider = dnacenter
+  provider        = dnacenter
+  sp_profile_name = "string"
   parameters {
 
-    sp_profile_name = "string"
   }
 }
 

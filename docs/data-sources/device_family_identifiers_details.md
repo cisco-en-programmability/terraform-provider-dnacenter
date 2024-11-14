@@ -40,5 +40,3 @@ Read-Only:
 
 - `device_family` (String)
 - `device_family_identifier` (String)
-
-

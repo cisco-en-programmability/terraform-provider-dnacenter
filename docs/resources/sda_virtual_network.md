@@ -20,6 +20,7 @@ It manages create, read and delete operations on SDA.
 ```terraform
 resource "dnacenter_sda_virtual_network" "example" {
   provider = dnacenter
+
   parameters {
 
     site_name_hierarchy  = "string"
@@ -60,11 +61,14 @@ Optional:
 Read-Only:
 
 - `description` (String)
+- `execution_id` (String)
 - `fabric_name` (String)
 - `is_default_vn` (String)
 - `is_infra_vn` (String)
 - `site_name_hierarchy` (String)
 - `status` (String)
+- `virtual_network_context_id` (String)
+- `virtual_network_id` (String)
 - `virtual_network_name` (String)
 
 ## Import

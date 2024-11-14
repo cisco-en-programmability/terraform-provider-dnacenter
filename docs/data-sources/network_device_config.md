@@ -4,14 +4,16 @@ page_title: "dnacenter_network_device_config Data Source - terraform-provider-dn
 subcategory: ""
 description: |-
   It performs read operation on Devices.
-  Returns the config for all devicesReturns the device config by specified device ID
+  Returns the config for all devices. This data source has been deprecated and will not be available in a Cisco Catalyst
+  Center release after Nov 1st 2024 23:59:59 GMT.Returns the device config by specified device ID
 ---
 
 # dnacenter_network_device_config (Data Source)
 
 It performs read operation on Devices.
 
-- Returns the config for all devices
+- Returns the config for all devices. This data source has been deprecated and will not be available in a Cisco Catalyst
+Center release after Nov 1st 2024 23:59:59 GMT.
 
 - Returns the device config by specified device ID
 
@@ -74,5 +76,3 @@ Read-Only:
 - `running_config` (String)
 - `snmp` (String)
 - `version` (String)
-
-

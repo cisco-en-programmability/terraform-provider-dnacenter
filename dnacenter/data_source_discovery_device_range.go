@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -28,13 +28,13 @@ that can be retrieved is 500. Discovery ID can be obtained using the "Get Discov
 				Required: true,
 			},
 			"records_to_return": &schema.Schema{
-				Description: `recordsToReturn path parameter. Number of records to return
+				Description: `recordsToReturn path parameter. Number of records to fetch from the start index
 `,
 				Type:     schema.TypeInt,
 				Required: true,
 			},
 			"start_index": &schema.Schema{
-				Description: `startIndex path parameter. Start index
+				Description: `startIndex path parameter. Starting index for the records
 `,
 				Type:     schema.TypeInt,
 				Required: true,
@@ -52,231 +52,323 @@ that can be retrieved is 500. Discovery ID can be obtained using the "Get Discov
 					Schema: map[string]*schema.Schema{
 
 						"anchor_wlc_for_ap": &schema.Schema{
+							Description: `Connected WLC device for AP
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"auth_model_id": &schema.Schema{
+							Description: `Authentication model Id on device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"avg_update_frequency": &schema.Schema{
+							Description: `Frequency in which interface info gets updated
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"boot_date_time": &schema.Schema{
+							Description: `Device boot time
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
-						"cli_status": &schema.Schema{
+						"clistatus": &schema.Schema{
+							Description: `CLI status at the time of discovery
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"duplicate_device_id": &schema.Schema{
+							Description: `Identifier of the duplicate ip of the same device discovered
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"error_code": &schema.Schema{
+							Description: `Error code when inventory collection fails
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"error_description": &schema.Schema{
+							Description: `Error description when inventory collection fails
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"family": &schema.Schema{
+							Description: `Family of device as switch, router, wireless lan controller, accesspoints
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"hostname": &schema.Schema{
+							Description: `Device name
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"http_status": &schema.Schema{
+							Description: `HTTP(S) status at the time of discovery
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"id": &schema.Schema{
+							Description: `Unique identifier of network device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"image_name": &schema.Schema{
+							Description: `Image details on the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"ingress_queue_config": &schema.Schema{
+							Description: `Ingress queue config on device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"interface_count": &schema.Schema{
+							Description: `Number of interfaces on the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"inventory_collection_status": &schema.Schema{
+							Description: `Last known collection status of the device. Available values are : 'Deleting Device', 'Partial Collection Failure', 'Yet to Sync', 'Could Not Synchronize', 'Not Manageable', 'Managed', 'Incomplete', 'Unreachable', 'In Progress', 'Maintenance', 'Sync Disabled', 'Quarantined', 'Unassociated', 'Unknown'
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"inventory_reachability_status": &schema.Schema{
+							Description: `Last known reachability status of the device. Available values are : 'Reachable', 'Unreachable', 'PingReachable' and 'NOT-AVAILABLE’
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"last_updated": &schema.Schema{
+							Description: `Time when the network device info last got updated
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"line_card_count": &schema.Schema{
+							Description: `Number of linecards on the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"line_card_id": &schema.Schema{
+							Description: `IDs of linecards of the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"location": &schema.Schema{
+							Description: `Location ID that is associated with the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"location_name": &schema.Schema{
+							Description: `Name of the associated location
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"mac_address": &schema.Schema{
+							Description: `MAC address of device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"management_ip_address": &schema.Schema{
+							Description: `IP address of the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"memory_size": &schema.Schema{
+							Description: `Processor memory size
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"netconf_status": &schema.Schema{
+							Description: `NETCONF status at the time of discovery. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED'
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"num_updates": &schema.Schema{
+							Description: `Number of time network-device info got updated
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"ping_status": &schema.Schema{
+							Description: `Ping status at the time of discovery. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED'
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"platform_id": &schema.Schema{
+							Description: `Platform ID of device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"port_range": &schema.Schema{
+							Description: `Range of ports on device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"qos_status": &schema.Schema{
+							Description: `Qos status on device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"reachability_failure_reason": &schema.Schema{
+							Description: `Failure reason for unreachable devices
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"reachability_status": &schema.Schema{
+							Description: `Reachability status of a device as Success/Failure/Discarded
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"role": &schema.Schema{
+							Description: `Role of device as access, distribution, border router, core
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"role_source": &schema.Schema{
+							Description: `Role source as manual / auto
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"serial_number": &schema.Schema{
+							Description: `Serial number of device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"snmp_contact": &schema.Schema{
+							Description: `SNMP contact on device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"snmp_location": &schema.Schema{
+							Description: `SNMP location on device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"snmp_status": &schema.Schema{
+							Description: `SNMP status at the time of discovery
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"software_version": &schema.Schema{
+							Description: `Software version on the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"tag": &schema.Schema{
+							Description: `Tag ID that is associated with the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"tag_count": &schema.Schema{
+							Description: `Number of tags associated with the device
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"type": &schema.Schema{
+							Description: `Type of device as switch, router, wireless lan controller, accesspoints
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"up_time": &schema.Schema{
+							Description: `Time that shows for how long the device has been up
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"vendor": &schema.Schema{
+							Description: `Vendor information of the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"wlc_ap_device_status": &schema.Schema{
+							Description: `Collection status of AP devices
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -315,7 +407,7 @@ func dataSourceDiscoveryDeviceRangeRead(ctx context.Context, d *schema.ResourceD
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDiscoveredDevicesByRange", err,
+				"Failure when executing 2 GetDiscoveredDevicesByRange", err,
 				"Failure at GetDiscoveredDevicesByRange, unexpected response", ""))
 			return diags
 		}
@@ -348,7 +440,7 @@ func flattenDiscoveryGetDiscoveredDevicesByRangeItems(items *[]dnacentersdkgo.Re
 		respItem["auth_model_id"] = item.AuthModelID
 		respItem["avg_update_frequency"] = item.AvgUpdateFrequency
 		respItem["boot_date_time"] = item.BootDateTime
-		respItem["cli_status"] = item.CliStatus
+		respItem["clistatus"] = item.Clistatus
 		respItem["duplicate_device_id"] = item.DuplicateDeviceID
 		respItem["error_code"] = item.ErrorCode
 		respItem["error_description"] = item.ErrorDescription

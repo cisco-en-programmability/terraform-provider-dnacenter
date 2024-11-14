@@ -47,5 +47,3 @@ Read-Only:
 - `serialno` (String)
 - `slotno` (String)
 - `switchno` (String)
-
-

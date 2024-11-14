@@ -1,0 +1,1 @@
+terraform import dnacenter_provisioning_settings.example "id:=string"

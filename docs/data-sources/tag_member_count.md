@@ -19,7 +19,6 @@ It performs read operation on Tag.
 data "dnacenter_tag_member_count" "example" {
   provider                = dnacenter
   id                      = "string"
-  level                   = "string"
   member_association_type = "string"
   member_type             = "string"
 }
@@ -39,7 +38,6 @@ output "dnacenter_tag_member_count_example" {
 
 ### Optional
 
-- `level` (String) level query parameter.
 - `member_association_type` (String) memberAssociationType query parameter.
 
 ### Read-Only
@@ -53,5 +51,3 @@ Read-Only:
 
 - `response` (Number)
 - `version` (String)
-
-

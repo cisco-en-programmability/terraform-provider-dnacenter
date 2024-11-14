@@ -44,28 +44,28 @@ output "dnacenter_global_credential_snmpv2_read_community_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) Array of RequestDiscoveryCreateSNMPReadCommunity (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) Array of RequestDiscoveryCreateSNMPReadCommunity (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **comments** (String) Comments to identify the credential
-- **credential_type** (String) Credential type to identify the application that uses the credential
-- **description** (String) Name/Description of the credential
-- **id** (String) The ID of this resource.
-- **instance_uuid** (String)
-- **read_community** (String) SNMP read community
+- `comments` (String) Comments to identify the credential
+- `credential_type` (String) Credential type to identify the application that uses the credential
+- `description` (String) Name/Description of the credential
+- `instance_uuid` (String)
+- `read_community` (String) SNMP read community
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
 
 
 <a id="nestedatt--item"></a>
@@ -73,19 +73,19 @@ Optional:
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **netconf_port** (String)
-- **password** (String)
-- **port** (Number)
-- **read_community** (String)
-- **secure** (String)
-- **username** (String)
-- **write_community** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `netconf_port` (String)
+- `password` (String)
+- `port` (Number)
+- `read_community` (String)
+- `secure` (String)
+- `username` (String)
+- `write_community` (String)
 
 ## Import
 

@@ -70,5 +70,3 @@ Read-Only:
 - `start_time` (String)
 - `status` (String)
 - `target_type` (String)
-
-

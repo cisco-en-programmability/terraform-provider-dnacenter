@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,27 +34,31 @@ func dataSourceNetworkDeviceSupervisorCardDetails() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"partno": &schema.Schema{
-							Description: `Partno`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Part number of the supervisor card
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"serialno": &schema.Schema{
-							Description: `Serialno`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Serial number of the supervisor card
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"slotno": &schema.Schema{
-							Description: `Slotno`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Slot number of supervisor card
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"switchno": &schema.Schema{
-							Description: `Switchno`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Switch number of the supervisor card
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -81,7 +85,7 @@ func dataSourceNetworkDeviceSupervisorCardDetailsRead(ctx context.Context, d *sc
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSupervisorCardDetail", err,
+				"Failure when executing 2 GetSupervisorCardDetail", err,
 				"Failure at GetSupervisorCardDetail, unexpected response", ""))
 			return diags
 		}

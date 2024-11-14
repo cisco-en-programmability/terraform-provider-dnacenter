@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -106,7 +106,7 @@ func resourceGlobalCredentialCli() *schema.Resource {
 				},
 			},
 			"parameters": &schema.Schema{
-				Description: `Array of RequestDiscoveryCreateCLICredentials`,
+				Description: `Array of RequestDiscoveryCreateCliCredentials`,
 				Type:        schema.TypeList,
 				MaxItems:    1,
 				MinItems:    1,
@@ -346,7 +346,7 @@ func resourceGlobalCredentialCliUpdate(ctx context.Context, d *schema.ResourceDa
 
 func resourceGlobalCredentialCliDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete GlobalCredentialSNMPv2ReadCommunity on Dna Center
+	// NOTE: Unable to delete GlobalCredentialSNMPv2ReadCommunity on Catalyst Center
 	//       Returning empty diags to delete it on Terraform
 	// DeleteGlobalCredentialsByID
 	client := m.(*dnacentersdkgo.Client)

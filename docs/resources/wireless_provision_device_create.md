@@ -4,41 +4,37 @@ page_title: "dnacenter_wireless_provision_device_create Resource - terraform-pro
 subcategory: ""
 description: |-
   It performs create operation on Wireless.
-  Provision wireless devices
+  Provision wireless device
 ---
 
 # dnacenter_wireless_provision_device_create (Resource)
 
 It performs create operation on Wireless.
 
-- Provision wireless devices
-
+- Provision wireless device
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_wireless_provision_device_create" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
-    payload {
 
+    device_name = "string"
+    dynamic_interfaces {
 
-      device_name = "string"
-      dynamic_interfaces {
-
-        interface_gateway          = "string"
-        interface_ipaddress        = "string"
-        interface_name             = "string"
-        interface_netmask_in_cid_r = 1
-        lag_or_port_number         = 1
-        vlan_id                    = 1
-      }
-      managed_aplocations = ["string"]
-      site                = "string"
+      interface_gateway          = "string"
+      interface_ipaddress        = "string"
+      interface_name             = "string"
+      interface_netmask_in_cid_r = 1
+      lag_or_port_number         = 1
+      vlan_id                    = 1
     }
+    managed_aplocations = ["string"]
+    site                = "string"
   }
 }
 
@@ -65,7 +61,7 @@ output "dnacenter_wireless_provision_device_create_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestWirelessProvision (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestWirelessProvisionV1 (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
@@ -82,12 +78,12 @@ Optional:
 
 Optional:
 
-- `interface_gateway` (String) Interface Gateway
-- `interface_ipaddress` (String) Interface IP Address
-- `interface_name` (String) Interface Name
-- `interface_netmask_in_cid_r` (Number) Interface Netmask In CIDR
-- `lag_or_port_number` (Number) Lag Or Port Number
-- `vlan_id` (Number) VLAN ID
+- `interface_gateway` (String) Interface Gateway.  Required for AireOS.
+- `interface_ipaddress` (String) Interface IP Address. Required for AireOS.
+- `interface_name` (String) Interface Name. Required for both AireOS and EWLC.
+- `interface_netmask_in_cid_r` (Number) Interface Netmask In CIDR. Required for AireOS.
+- `lag_or_port_number` (Number) Lag Or Port Number.  Required for AireOS.
+- `vlan_id` (Number) VLAN ID. Required for both AireOS and EWLC.
 
 
 
@@ -98,15 +94,5 @@ Optional:
 Read-Only:
 
 - `execution_id` (String)
-- `execution_url` (String)
-- `provisioning_tasks` (List of Object) (see [below for nested schema](#nestedobjatt--item--provisioning_tasks))
-
-<a id="nestedobjatt--item--provisioning_tasks"></a>
-### Nested Schema for `item.provisioning_tasks`
-
-Read-Only:
-
-- `failed` (List of String)
-- `success` (List of String)
-
-
+- `execution_status_url` (String)
+- `message` (String)

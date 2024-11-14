@@ -4,14 +4,14 @@ page_title: "dnacenter_site Data Source - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs read operation on Sites.
-  Get site using siteNameHierarchy/siteId/type ,return all sites if these parameters are not given as input.
+  Get site(s) by site-name-hierarchy or siteId or type. List all sites if these parameters are not given as an input.
 ---
 
 # dnacenter_site (Data Source)
 
 It performs read operation on Sites.
 
-- Get site using siteNameHierarchy/siteId/type ,return all sites if these parameters are not given as input.
+- Get site(s) by site-name-hierarchy or siteId or type. List all sites if these parameters are not given as an input.
 
 ## Example Usage
 
@@ -35,11 +35,11 @@ output "dnacenter_site_example" {
 
 ### Optional
 
-- `limit` (Number) limit query parameter. Number of sites to be retrieved. The default value is 500
-- `name` (String) name query parameter. siteNameHierarchy (ex: global/groupName)
-- `offset` (Number) offset query parameter. offset/starting row. The default value is 1
-- `site_id` (String) siteId query parameter. Site id to which site details to retrieve.
-- `type` (String) type query parameter. type (ex: area, building, floor)
+- `limit` (Number) limit query parameter. Number of sites to be listed
+- `name` (String) name query parameter. Site name hierarchy (E.g Global/USA/CA)
+- `offset` (Number) offset query parameter. Offset/starting index for pagination. Indexed from 1.
+- `site_id` (String) siteId query parameter. Site Id
+- `type` (String) type query parameter. Site type (Ex: area, building, floor)
 
 ### Read-Only
 
@@ -58,5 +58,3 @@ Read-Only:
 - `parent_id` (String)
 - `site_hierarchy` (String)
 - `site_name_hierarchy` (String)
-
-

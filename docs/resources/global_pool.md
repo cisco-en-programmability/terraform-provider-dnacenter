@@ -22,6 +22,7 @@ It manages create, read, update and delete operations on Network Settings.
 ```terraform
 resource "dnacenter_global_pool" "example" {
   provider = dnacenter
+
   parameters {
 
     id = "string"
@@ -91,7 +92,7 @@ Optional:
 - `dns_server_ips` (List of String) Dns Server Ips
 - `gateway` (String) Gateway
 - `id` (String) Id
-- `ip_address_space` (String) Ip Address Space. Allowed values are IPv6 or IPv4.
+- `ip_address_space` (String) Ip Address Space
 - `ip_pool_cidr` (String) Ip Pool Cidr
 - `type` (String) Type
 
@@ -103,23 +104,29 @@ Optional:
 
 Read-Only:
 
+- `available_ip_address_count` (Number)
 - `client_options` (String)
 - `configure_external_dhcp` (String)
 - `context` (List of Object) (see [below for nested schema](#nestedobjatt--item--context))
 - `create_time` (Number)
+- `default_assigned_ip_address_count` (Number)
 - `dhcp_server_ips` (List of String)
 - `dns_server_ips` (List of String)
 - `gateways` (List of String)
+- `has_subpools` (String)
 - `id` (String)
 - `ip_pool_cidr` (String)
 - `ip_pool_name` (String)
+- `ip_pool_type` (String)
 - `ipv6` (String)
 - `last_update_time` (Number)
 - `overlapping` (String)
 - `owner` (String)
 - `parent_uuid` (String)
 - `shared` (String)
+- `total_assignable_ip_address_count` (Number)
 - `total_ip_address_count` (Number)
+- `unavailable_ip_address_count` (Number)
 - `used_ip_address_count` (Number)
 - `used_percentage` (String)
 

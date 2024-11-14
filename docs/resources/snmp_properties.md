@@ -18,6 +18,7 @@ It manages create and read operations on Discovery.
 ```terraform
 resource "dnacenter_snmp_properties" "example" {
   provider = dnacenter
+
   parameters {
 
     id                   = "string"
@@ -38,7 +39,7 @@ output "dnacenter_snmp_properties_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestDiscoveryCreateUpdateSNMPProperties (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestDiscoveryCreateUpdateSNMPPropertiesV1 (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
@@ -51,6 +52,13 @@ output "dnacenter_snmp_properties_example" {
 
 Optional:
 
+- `payload` (Block List) Array of RequestApplicationPolicyCreateApplication (see [below for nested schema](#nestedblock--parameters--payload))
+
+<a id="nestedblock--parameters--payload"></a>
+### Nested Schema for `parameters.payload`
+
+Optional:
+
 - `instance_tenant_id` (String)
 - `instance_uuid` (String)
 - `int_value` (Number)
@@ -59,6 +67,7 @@ Optional:
 Read-Only:
 
 - `id` (String) The ID of this resource.
+
 
 
 <a id="nestedatt--item"></a>

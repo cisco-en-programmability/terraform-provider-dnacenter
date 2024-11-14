@@ -2,13 +2,12 @@ package dnacenter
 
 import (
 	"context"
-	"errors"
 	"reflect"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -116,7 +115,7 @@ func resourceSdaPortAssignmentForAccessPoint() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-							Default:  "",
+							Computed: true,
 						},
 						"interface_description": &schema.Schema{
 							Description: `Details or note of interface port assignment
@@ -130,7 +129,7 @@ func resourceSdaPortAssignmentForAccessPoint() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-							Default:  "",
+							Computed: true,
 						},
 						"site_name_hierarchy": &schema.Schema{
 							Description: `Path of sda Fabric Site
@@ -163,7 +162,7 @@ func resourceSdaPortAssignmentForAccessPointCreate(ctx context.Context, d *schem
 	queryParamImport.DeviceManagementIPAddress = vvDeviceManagementIPAddress
 	queryParamImport.InterfaceName = vvInterfaceName
 	item2, _, err := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParamImport)
-	if err == nil && item2 != nil {
+	if err != nil || item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["device_management_ip_address"] = item2.DeviceManagementIPAddress
 		resourceMap["interface_name"] = item2.InterfaceName
@@ -195,7 +194,7 @@ func resourceSdaPortAssignmentForAccessPointCreate(ctx context.Context, d *schem
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -208,7 +207,7 @@ func resourceSdaPortAssignmentForAccessPointCreate(ctx context.Context, d *schem
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing AddPortAssignmentForAccessPointInSdaFabric", err))
@@ -255,6 +254,8 @@ func resourceSdaPortAssignmentForAccessPointRead(ctx context.Context, d *schema.
 
 		queryParams1.InterfaceName = vInterfaceName
 
+		// has_unknown_response: None
+
 		response1, restyResp1, err := client.Sda.GetPortAssignmentForAccessPointInSdaFabric(&queryParams1)
 
 		if err != nil || response1 == nil {
@@ -282,13 +283,7 @@ func resourceSdaPortAssignmentForAccessPointRead(ctx context.Context, d *schema.
 }
 
 func resourceSdaPortAssignmentForAccessPointUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	err := errors.New("Update not possible in this resource")
-	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SdaPortAssignmentForAccessPointUpdate", err, "Update method is not supported",
-		"Failure at SdaPortAssignmentForAccessPointUpdate, unexpected response", ""))
-
-	return diags
+	return resourceSdaPortAssignmentForAccessPointRead(ctx, d, m)
 }
 
 func resourceSdaPortAssignmentForAccessPointDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -338,7 +333,7 @@ func resourceSdaPortAssignmentForAccessPointDelete(ctx context.Context, d *schem
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -351,7 +346,7 @@ func resourceSdaPortAssignmentForAccessPointDelete(ctx context.Context, d *schem
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeletePortAssignmentForAccessPointInSdaFabric", err))

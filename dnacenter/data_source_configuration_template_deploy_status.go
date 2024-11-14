@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -206,14 +206,14 @@ func dataSourceConfigurationTemplateDeployStatusRead(ctx context.Context, d *sch
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing StatusOfTemplateDeployment", err,
+				"Failure when executing 2 StatusOfTemplateDeployment", err,
 				"Failure at StatusOfTemplateDeployment, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenConfigurationTemplatesStatusOfTemplateDeploymentStatusItem(response1)
+		vItem1 := flattenConfigurationTemplatesStatusOfTemplateDeploymentItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting StatusOfTemplateDeployment response",
@@ -226,47 +226,4 @@ func dataSourceConfigurationTemplateDeployStatusRead(ctx context.Context, d *sch
 
 	}
 	return diags
-}
-
-func flattenConfigurationTemplatesStatusOfTemplateDeploymentStatusItem(item *dnacentersdkgo.ResponseConfigurationTemplatesStatusOfTemplateDeployment) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["deployment_id"] = item.DeploymentID
-	respItem["deployment_name"] = item.DeploymentName
-	respItem["devices"] = flattenConfigurationTemplatesStatusOfTemplateDeploymentStatusItemDevices(item.Devices)
-	respItem["duration"] = item.Duration
-	respItem["end_time"] = item.EndTime
-	respItem["project_name"] = item.ProjectName
-	respItem["start_time"] = item.StartTime
-	respItem["status"] = item.Status
-	respItem["status_message"] = item.StatusMessage
-	respItem["template_name"] = item.TemplateName
-	respItem["template_version"] = item.TemplateVersion
-	return []map[string]interface{}{
-		respItem,
-	}
-}
-
-func flattenConfigurationTemplatesStatusOfTemplateDeploymentStatusItemDevices(items *[]dnacentersdkgo.ResponseConfigurationTemplatesStatusOfTemplateDeploymentDevices) []map[string]interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["detailed_status_message"] = item.DetailedStatusMessage
-		respItem["device_id"] = item.DeviceID
-		respItem["duration"] = item.Duration
-		respItem["end_time"] = item.EndTime
-		respItem["identifier"] = item.IDentifier
-		respItem["ip_address"] = item.IPAddress
-		respItem["name"] = item.Name
-		respItem["start_time"] = item.StartTime
-		respItem["status"] = item.Status
-		respItem["target_type"] = item.TargetType
-		respItems = append(respItems, respItem)
-	}
-	return respItems
 }

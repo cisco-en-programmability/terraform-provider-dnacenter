@@ -61,5 +61,3 @@ Read-Only:
 
 - `configure_dnac_ip` (String)
 - `ip_addresses` (List of String)
-
-

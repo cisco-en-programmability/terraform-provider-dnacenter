@@ -381,5 +381,3 @@ Read-Only:
 - `version` (String)
 - `version_comment` (String)
 - `version_time` (Number)
-
-

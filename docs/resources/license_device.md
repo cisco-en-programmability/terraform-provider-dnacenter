@@ -3,18 +3,26 @@
 page_title: "dnacenter_license_device Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
-  It manages create, read and delete operations on Licenses.
+  It manages create, read, update and delete operations on Licenses.
+  Deregister device(s) from CSSM(Cisco Smart Software Manager).Register device(s) in CSSM(Cisco Smart Software Manager).Transfer device(s) from one virtual account to another within same smart account.
 ---
 
 # dnacenter_license_device (Resource)
 
-It manages create, read and delete operations on Licenses.
+It manages create, read, update and delete operations on Licenses.
+
+- Deregister device(s) from CSSM(Cisco Smart Software Manager).
+
+- Register device(s) in CSSM(Cisco Smart Software Manager).
+
+- Transfer device(s) from one virtual account to another within same smart account.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_license_device" "example" {
   provider = dnacenter
+
   parameters {
 
     device_uuids         = ["string"]

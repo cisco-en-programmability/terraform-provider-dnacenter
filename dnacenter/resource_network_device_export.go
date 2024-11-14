@@ -11,7 +11,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -59,6 +59,8 @@ func resourceNetworkDeviceExport() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"device_uuids": &schema.Schema{
+							Description: `List of device uuids
+`,
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
@@ -67,19 +69,17 @@ func resourceNetworkDeviceExport() *schema.Resource {
 								Type: schema.TypeString,
 							},
 						},
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							ForceNew: true,
-							Computed: true,
-						},
 						"operation_enum": &schema.Schema{
+							Description: `0 to export Device Credential Details Or 1 to export Device Details
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
 							Computed: true,
 						},
 						"parameters": &schema.Schema{
+							Description: `List of device parameters that needs to be exported to file
+`,
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
@@ -89,6 +89,8 @@ func resourceNetworkDeviceExport() *schema.Resource {
 							},
 						},
 						"password": &schema.Schema{
+							Description: `Password is required when the operationEnum value is 0 
+`,
 							Type:      schema.TypeString,
 							Optional:  true,
 							ForceNew:  true,
@@ -108,11 +110,9 @@ func resourceNetworkDeviceExportCreate(ctx context.Context, d *schema.ResourceDa
 
 	request1 := expandRequestNetworkDeviceExportExportDeviceList(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.Devices.ExportDeviceList(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.Devices.ExportDeviceList(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -166,6 +166,9 @@ func resourceNetworkDeviceExportCreate(ctx context.Context, d *schema.ResourceDa
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenDevicesExportDeviceListItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -176,7 +179,6 @@ func resourceNetworkDeviceExportCreate(ctx context.Context, d *schema.ResourceDa
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceNetworkDeviceExportRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
@@ -195,9 +197,6 @@ func expandRequestNetworkDeviceExportExportDeviceList(ctx context.Context, key s
 	request := dnacentersdkgo.RequestDevicesExportDeviceList{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_uuids")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_uuids")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_uuids")))) {
 		request.DeviceUUIDs = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
-		request.ID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation_enum")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation_enum")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation_enum")))) {
 		request.OperationEnum = interfaceToString(v)

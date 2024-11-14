@@ -49,5 +49,3 @@ output "dnacenter_event_count_example" {
 Read-Only:
 
 - `response` (Number)
-
-

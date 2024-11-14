@@ -1,6 +1,7 @@
 
 resource "dnacenter_sda_port_assignment_for_user_device" "example" {
   provider = dnacenter
+
   parameters {
 
     authenticate_template_name   = "string"

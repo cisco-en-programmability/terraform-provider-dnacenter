@@ -1,0 +1,1 @@
+terraform import dnacenter_sites_telemetry_settings.example "id:=string"

@@ -12,16 +12,15 @@ description: |-
 It performs create operation on Fabric Wireless.
 
 - Add WLC to Fabric Domain
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_business_sda_wireless_controller_create" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     device_name         = "string"
@@ -52,8 +51,8 @@ output "dnacenter_business_sda_wireless_controller_create_example" {
 
 Optional:
 
-- `device_name` (String) EWLC Device Name
-- `site_name_hierarchy` (String) Site Name Hierarchy
+- `device_name` (String) WLC Device Name
+- `site_name_hierarchy` (String) Fabric Site Name Hierarchy
 
 
 <a id="nestedatt--item"></a>
@@ -64,5 +63,3 @@ Read-Only:
 - `execution_id` (String)
 - `execution_status_url` (String)
 - `message` (String)
-
-

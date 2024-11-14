@@ -123,5 +123,5 @@ Read-Only:
 - `length` (String)
 - `name` (String)
 - `parent_name` (String)
-- `rfmodel` (String)
+- `rf_model` (String)
 - `width` (String)

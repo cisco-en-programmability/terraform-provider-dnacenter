@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,9 +21,10 @@ func dataSourceNetworkDeviceMerakiOrganization() *schema.Resource {
 		ReadContext: dataSourceNetworkDeviceMerakiOrganizationRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Description: `id path parameter.`,
-				Type:        schema.TypeString,
-				Required:    true,
+				Description: `id path parameter. Device Id
+`,
+				Type:     schema.TypeString,
+				Required: true,
 			},
 
 			"items": &schema.Schema{
@@ -69,7 +70,7 @@ func dataSourceNetworkDeviceMerakiOrganizationRead(ctx context.Context, d *schem
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetOrganizationListForMeraki", err,
+				"Failure when executing 2 GetOrganizationListForMeraki", err,
 				"Failure at GetOrganizationListForMeraki, unexpected response", ""))
 			return diags
 		}

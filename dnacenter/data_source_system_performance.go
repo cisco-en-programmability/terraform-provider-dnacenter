@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,9 @@ func dataSourceSystemPerformance() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Health and Performance.
 
-- This data source gives the aggregated performance indicators. The data can be retrieved for the last 3 months.
+- Retrieves the aggregated metrics (total, average or maximum) of cluster key performance indicators (KPIs), such as CPU
+utilization, memory utilization or network rates recorded within a specified time period. The data will be available
+from the past 24 hours.
 `,
 
 		ReadContext: dataSourceSystemPerformanceRead,
@@ -182,8 +184,8 @@ func dataSourceSystemPerformanceRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: SystemPerformanceApI")
-		queryParams1 := dnacentersdkgo.SystemPerformanceApIQueryParams{}
+		log.Printf("[DEBUG] Selected method: SystemPerformanceAPI")
+		queryParams1 := dnacentersdkgo.SystemPerformanceAPIQueryParams{}
 
 		if okKpi {
 			queryParams1.Kpi = vKpi.(string)
@@ -198,24 +200,24 @@ func dataSourceSystemPerformanceRead(ctx context.Context, d *schema.ResourceData
 			queryParams1.EndTime = vEndTime.(float64)
 		}
 
-		response1, restyResp1, err := client.HealthAndPerformance.SystemPerformanceApI(&queryParams1)
+		response1, restyResp1, err := client.HealthAndPerformance.SystemPerformanceAPI(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing SystemPerformanceApI", err,
-				"Failure at SystemPerformanceApI, unexpected response", ""))
+				"Failure when executing 2 SystemPerformanceAPI", err,
+				"Failure at SystemPerformanceAPI, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenHealthAndPerformanceSystemPerformanceApIItem(response1)
+		vItem1 := flattenHealthAndPerformanceSystemPerformanceAPIItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting SystemPerformanceApI response",
+				"Failure when setting SystemPerformanceAPI response",
 				err))
 			return diags
 		}
@@ -227,28 +229,28 @@ func dataSourceSystemPerformanceRead(ctx context.Context, d *schema.ResourceData
 	return diags
 }
 
-func flattenHealthAndPerformanceSystemPerformanceApIItem(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceApI) []map[string]interface{} {
+func flattenHealthAndPerformanceSystemPerformanceAPIItem(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceAPI) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["host_name"] = item.HostName
 	respItem["version"] = item.Version
-	respItem["kpis"] = flattenHealthAndPerformanceSystemPerformanceApIItemKpis(item.Kpis)
+	respItem["kpis"] = flattenHealthAndPerformanceSystemPerformanceAPIItemKpis(item.Kpis)
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenHealthAndPerformanceSystemPerformanceApIItemKpis(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceAPIKpis) []map[string]interface{} {
+func flattenHealthAndPerformanceSystemPerformanceAPIItemKpis(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceAPIKpis) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["cpu"] = flattenHealthAndPerformanceSystemPerformanceApIItemKpisCPU(item.CPU)
-	respItem["memory"] = flattenHealthAndPerformanceSystemPerformanceApIItemKpisMemory(item.Memory)
-	respItem["network_tx_rate"] = flattenHealthAndPerformanceSystemPerformanceApIItemKpisNetworktxRate(item.NetworktxRate)
-	respItem["network_rx_rate"] = flattenHealthAndPerformanceSystemPerformanceApIItemKpisNetworkrxRate(item.NetworkrxRate)
+	respItem["cpu"] = flattenHealthAndPerformanceSystemPerformanceAPIItemKpisCPU(item.CPU)
+	respItem["memory"] = flattenHealthAndPerformanceSystemPerformanceAPIItemKpisMemory(item.Memory)
+	respItem["network_tx_rate"] = flattenHealthAndPerformanceSystemPerformanceAPIItemKpisNetworktxRate(item.NetworktxRate)
+	respItem["network_rx_rate"] = flattenHealthAndPerformanceSystemPerformanceAPIItemKpisNetworkrxRate(item.NetworkrxRate)
 
 	return []map[string]interface{}{
 		respItem,
@@ -256,21 +258,7 @@ func flattenHealthAndPerformanceSystemPerformanceApIItemKpis(item *dnacentersdkg
 
 }
 
-func flattenHealthAndPerformanceSystemPerformanceApIItemKpisCPU(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceAPIKpisCPU) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["units"] = item.Units
-	respItem["utilization"] = item.Utilization
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
-}
-
-func flattenHealthAndPerformanceSystemPerformanceApIItemKpisMemory(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceAPIKpisMemory) []map[string]interface{} {
+func flattenHealthAndPerformanceSystemPerformanceAPIItemKpisCPU(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceAPIKpisCPU) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -284,7 +272,7 @@ func flattenHealthAndPerformanceSystemPerformanceApIItemKpisMemory(item *dnacent
 
 }
 
-func flattenHealthAndPerformanceSystemPerformanceApIItemKpisNetworktxRate(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceAPIKpisNetworktxRate) []map[string]interface{} {
+func flattenHealthAndPerformanceSystemPerformanceAPIItemKpisMemory(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceAPIKpisMemory) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -298,7 +286,21 @@ func flattenHealthAndPerformanceSystemPerformanceApIItemKpisNetworktxRate(item *
 
 }
 
-func flattenHealthAndPerformanceSystemPerformanceApIItemKpisNetworkrxRate(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceAPIKpisNetworkrxRate) []map[string]interface{} {
+func flattenHealthAndPerformanceSystemPerformanceAPIItemKpisNetworktxRate(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceAPIKpisNetworktxRate) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["units"] = item.Units
+	respItem["utilization"] = item.Utilization
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenHealthAndPerformanceSystemPerformanceAPIItemKpisNetworkrxRate(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemPerformanceAPIKpisNetworkrxRate) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

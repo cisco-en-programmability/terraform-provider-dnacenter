@@ -21,63 +21,34 @@ resource "dnacenter_pnp_global_settings" "example" {
 
   parameters {
 
-    id = "string"
-    aaa_credentials {
-
-      password = "******"
-      username = "string"
-    }
-    accept_eula = "false"
+    accept_eula = "string"
     default_profile {
 
       cert           = "string"
       fqdn_addresses = ["string"]
       ip_addresses   = ["string"]
-      port           = 1
-      proxy          = "false"
+      port           = "string"
+      proxy          = "string"
     }
+    id = "string"
     sava_mapping_list {
 
-      auto_sync_period = 1
-      cco_user         = "string"
-      expiry           = 1
-      last_sync        = 1
+      cco_user = "string"
+      expiry   = "string"
       profile {
 
         address_fqdn  = "string"
         address_ip_v4 = "string"
         cert          = "string"
-        make_default  = "false"
+        make_default  = "string"
         name          = "string"
-        port          = 1
+        port          = "string"
         profile_id    = "string"
-        proxy         = "false"
+        proxy         = "string"
       }
-      smart_account_id = "string"
-      sync_result {
-
-        sync_list {
-
-          device_sn_list = ["string"]
-          sync_type      = "string"
-        }
-        sync_msg = "string"
-      }
-      sync_result_str    = "string"
-      sync_start_time    = 1
-      sync_status        = "string"
-      tenant_id          = "string"
-      token              = "string"
+      smart_account_id   = "string"
       virtual_account_id = "string"
     }
-    task_time_outs {
-
-      config_time_out         = 1
-      general_time_out        = 1
-      image_download_time_out = 1
-    }
-    tenant_id = "string"
-    version   = 1
   }
 }
 
@@ -104,37 +75,21 @@ output "dnacenter_pnp_global_settings_example" {
 
 Optional:
 
-- `aaa_credentials` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--aaa_credentials))
-- `accept_eula` (String)
+- `accept_eula` (String) Accept Eula
 - `default_profile` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--default_profile))
+- `id` (String) Id
 - `sava_mapping_list` (Block List) (see [below for nested schema](#nestedblock--parameters--sava_mapping_list))
-- `task_time_outs` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--task_time_outs))
-- `tenant_id` (String)
-- `version` (Number)
-
-Read-Only:
-
-- `id` (String) The ID of this resource.
-
-<a id="nestedblock--parameters--aaa_credentials"></a>
-### Nested Schema for `parameters.aaa_credentials`
-
-Optional:
-
-- `password` (String, Sensitive)
-- `username` (String)
-
 
 <a id="nestedblock--parameters--default_profile"></a>
 ### Nested Schema for `parameters.default_profile`
 
 Optional:
 
-- `cert` (String)
-- `fqdn_addresses` (List of String)
-- `ip_addresses` (List of String)
-- `port` (Number)
-- `proxy` (String)
+- `cert` (String) Cert
+- `fqdn_addresses` (List of String) Fqdn Addresses
+- `ip_addresses` (List of String) Ip Addresses
+- `port` (String) Port
+- `proxy` (String) Proxy
 
 
 <a id="nestedblock--parameters--sava_mapping_list"></a>
@@ -142,62 +97,26 @@ Optional:
 
 Optional:
 
-- `auto_sync_period` (Number)
-- `cco_user` (String)
-- `expiry` (Number)
-- `last_sync` (Number)
+- `cco_user` (String) Cco User
+- `expiry` (String) Expiry
 - `profile` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--sava_mapping_list--profile))
-- `smart_account_id` (String)
-- `sync_result` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--sava_mapping_list--sync_result))
-- `sync_result_str` (String)
-- `sync_start_time` (Number)
-- `sync_status` (String)
-- `tenant_id` (String)
-- `token` (String)
-- `virtual_account_id` (String)
+- `smart_account_id` (String) Smart Account Id
+- `virtual_account_id` (String) Virtual Account Id
 
 <a id="nestedblock--parameters--sava_mapping_list--profile"></a>
 ### Nested Schema for `parameters.sava_mapping_list.profile`
 
 Optional:
 
-- `address_fqdn` (String)
-- `address_ip_v4` (String)
-- `cert` (String)
-- `make_default` (String)
-- `name` (String)
-- `port` (Number)
-- `profile_id` (String)
-- `proxy` (String)
+- `address_fqdn` (String) Address Fqdn
+- `address_ip_v4` (String) Address Ip V4
+- `cert` (String) Cert
+- `make_default` (String) Make Default
+- `name` (String) Name
+- `port` (String) Port
+- `profile_id` (String) Profile Id
+- `proxy` (String) Proxy
 
-
-<a id="nestedblock--parameters--sava_mapping_list--sync_result"></a>
-### Nested Schema for `parameters.sava_mapping_list.sync_result`
-
-Optional:
-
-- `sync_list` (Block List) (see [below for nested schema](#nestedblock--parameters--sava_mapping_list--sync_result--sync_list))
-- `sync_msg` (String)
-
-<a id="nestedblock--parameters--sava_mapping_list--sync_result--sync_list"></a>
-### Nested Schema for `parameters.sava_mapping_list.sync_result.sync_list`
-
-Optional:
-
-- `device_sn_list` (List of String)
-- `sync_type` (String)
-
-
-
-
-<a id="nestedblock--parameters--task_time_outs"></a>
-### Nested Schema for `parameters.task_time_outs`
-
-Optional:
-
-- `config_time_out` (Number)
-- `general_time_out` (Number)
-- `image_download_time_out` (Number)
 
 
 
@@ -213,7 +132,6 @@ Read-Only:
 - `sava_mapping_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--sava_mapping_list))
 - `task_time_outs` (List of Object) (see [below for nested schema](#nestedobjatt--item--task_time_outs))
 - `tenant_id` (String)
-- `type_id` (String)
 - `version` (Number)
 
 <a id="nestedobjatt--item--aaa_credentials"></a>

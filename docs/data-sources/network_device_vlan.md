@@ -4,14 +4,14 @@ page_title: "dnacenter_network_device_vlan Data Source - terraform-provider-dnac
 subcategory: ""
 description: |-
   It performs read operation on Devices.
-  Returns Device Interface VLANs
+  Returns Device Interface VLANs. If parameter value is null or empty, it won't return any value in response.
 ---
 
 # dnacenter_network_device_vlan (Data Source)
 
 It performs read operation on Devices.
 
-- Returns Device Interface VLANs
+- Returns Device Interface VLANs. If parameter value is null or empty, it won't return any value in response.
 
 ## Example Usage
 
@@ -36,7 +36,7 @@ output "dnacenter_network_device_vlan_example" {
 
 ### Optional
 
-- `interface_type` (String) interfaceType query parameter. Vlan assocaited with sub-interface
+- `interface_type` (String) interfaceType query parameter. Vlan associated with sub-interface. If no interfaceType mentioned it will return all types of Vlan interfaces. If interfaceType is selected but not specified then it will take default value.
 
 ### Read-Only
 
@@ -55,5 +55,3 @@ Read-Only:
 - `prefix` (String)
 - `vlan_number` (Number)
 - `vlan_type` (String)
-
-

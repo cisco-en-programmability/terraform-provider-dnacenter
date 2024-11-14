@@ -1,14 +1,14 @@
-# Configure provider with your Cisco DNA Center SDK credentials
+# Configure provider with your Cisco Catalyst Center SDK credentials
 provider "dnacenter" {
-  # Cisco DNA Center user name
+  # Cisco Catalyst Center user name
   username = "admin"
   # it can be set using the environment variable DNAC_BASE_URL
 
-  # Cisco DNA Center password
+  # Cisco Catalyst Center password
   password = "admin123"
   # it can be set using the environment variable DNAC_USERNAME
 
-  # Cisco DNA Center base URL, FQDN or IP
+  # Cisco Catalyst Center base URL, FQDN or IP
   base_url = "https://172.168.196.2"
   # it can be set using the environment variable DNAC_PASSWORD
 

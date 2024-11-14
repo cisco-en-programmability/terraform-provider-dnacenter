@@ -4,14 +4,14 @@ page_title: "dnacenter_network_device_custom_prompt Data Source - terraform-prov
 subcategory: ""
 description: |-
   It performs read operation on System Settings.
-  Returns supported custom prompts by Cisco DNA Center
+  Returns supported custom prompts by Catalyst Center
 ---
 
 # dnacenter_network_device_custom_prompt (Data Source)
 
 It performs read operation on System Settings.
 
-- Returns supported custom prompts by Cisco DNA Center
+- Returns supported custom prompts by Catalyst Center
 
 ## Example Usage
 
@@ -42,5 +42,3 @@ Read-Only:
 - `custom_username_prompt` (String)
 - `default_password_prompt` (String)
 - `default_username_prompt` (String)
-
-

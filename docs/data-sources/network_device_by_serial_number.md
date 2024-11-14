@@ -4,14 +4,14 @@ page_title: "dnacenter_network_device_by_serial_number Data Source - terraform-p
 subcategory: ""
 description: |-
   It performs read operation on Devices.
-  Returns the network device if the given serial number matches with any of the serial numbers collected.
+  Returns the network device with given serial number
 ---
 
 # dnacenter_network_device_by_serial_number (Data Source)
 
 It performs read operation on Devices.
 
-- Returns the network device if the given serial number matches with any of the serial numbers collected.
+- Returns the network device with given serial number
 
 ## Example Usage
 
@@ -43,11 +43,15 @@ output "dnacenter_network_device_by_serial_number_example" {
 
 Read-Only:
 
+- `ap_ethernet_mac_address` (String)
 - `ap_manager_interface_ip` (String)
 - `associated_wlc_ip` (String)
 - `boot_date_time` (String)
 - `collection_interval` (String)
 - `collection_status` (String)
+- `description` (String)
+- `device_support_level` (String)
+- `dns_resolved_management_address` (String)
 - `error_code` (String)
 - `error_description` (String)
 - `family` (String)
@@ -57,6 +61,7 @@ Read-Only:
 - `instance_uuid` (String)
 - `interface_count` (String)
 - `inventory_status_detail` (String)
+- `last_device_resync_start_time` (String)
 - `last_update_time` (Number)
 - `last_updated` (String)
 - `line_card_count` (String)
@@ -64,11 +69,16 @@ Read-Only:
 - `location` (String)
 - `location_name` (String)
 - `mac_address` (String)
+- `managed_atleast_once` (String)
 - `management_ip_address` (String)
+- `management_state` (String)
 - `memory_size` (String)
+- `pending_sync_requests_count` (String)
 - `platform_id` (String)
 - `reachability_failure_reason` (String)
 - `reachability_status` (String)
+- `reasons_for_device_resync` (String)
+- `reasons_for_pending_sync_requests` (String)
 - `role` (String)
 - `role_source` (String)
 - `serial_number` (String)
@@ -81,6 +91,6 @@ Read-Only:
 - `tunnel_udp_port` (String)
 - `type` (String)
 - `up_time` (String)
+- `uptime_seconds` (Number)
+- `vendor` (String)
 - `waas_device_mode` (String)
-
-

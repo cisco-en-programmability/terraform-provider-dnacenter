@@ -65,5 +65,3 @@ Read-Only:
 
 - `device_id` (String)
 - `status` (String)
-
-

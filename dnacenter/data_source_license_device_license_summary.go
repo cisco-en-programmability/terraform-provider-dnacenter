@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,7 +21,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 		ReadContext: dataSourceLicenseDeviceLicenseSummaryRead,
 		Schema: map[string]*schema.Schema{
 			"device_type": &schema.Schema{
-				Description: `device_type query parameter. Type of device
+				Description: `device_type query parameter. Type of device. The valid values are Routers, Switches and Hubs, Wireless Controller
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -33,7 +33,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 				Optional: true,
 			},
 			"dna_level": &schema.Schema{
-				Description: `dna_level query parameter. Device Cisco DNA license level
+				Description: `dna_level query parameter. Device Cisco DNA license level. The valid values are Advantage, Essentials
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -56,7 +56,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 				Required: true,
 			},
 			"registration_status": &schema.Schema{
-				Description: `registration_status query parameter. Smart license registration status of device
+				Description: `registration_status query parameter. Smart license registration status of device. The valid values are Unknown, NA, Unregistered, Registered, Registration_expired, Reservation_in_progress, Registered_slr, Registered_plr, Registered_satellite
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -64,7 +64,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 			"smart_account_id": &schema.Schema{
 				Description: `smart_account_id query parameter. Id of smart account
 `,
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"sort_by": &schema.Schema{
@@ -358,8 +358,8 @@ func dataSourceLicenseDeviceLicenseSummaryRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: DeviceLicenseSummary2")
-		queryParams1 := dnacentersdkgo.DeviceLicenseSummary2QueryParams{}
+		log.Printf("[DEBUG] Selected method: DeviceLicenseSummary")
+		queryParams1 := dnacentersdkgo.DeviceLicenseSummaryQueryParams{}
 
 		queryParams1.PageNumber = vPageNumber.(float64)
 
@@ -383,30 +383,30 @@ func dataSourceLicenseDeviceLicenseSummaryRead(ctx context.Context, d *schema.Re
 			queryParams1.VirtualAccountName = vVirtualAccountName.(string)
 		}
 		if okSmartAccountID {
-			queryParams1.SmartAccountID = vSmartAccountID.(float64)
+			queryParams1.SmartAccountID = vSmartAccountID.(string)
 		}
 		if okDeviceUUID {
 			queryParams1.DeviceUUID = vDeviceUUID.(string)
 		}
 
-		response1, restyResp1, err := client.Licenses.DeviceLicenseSummary2(&queryParams1)
+		response1, restyResp1, err := client.Licenses.DeviceLicenseSummary(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing DeviceLicenseSummary2", err,
-				"Failure at DeviceLicenseSummary2, unexpected response", ""))
+				"Failure when executing 2 DeviceLicenseSummary", err,
+				"Failure at DeviceLicenseSummary, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenLicensesDeviceLicenseSummary2Items(response1.Response)
+		vItems1 := flattenLicensesDeviceLicenseSummaryItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting DeviceLicenseSummary2 response",
+				"Failure when setting DeviceLicenseSummary response",
 				err))
 			return diags
 		}
@@ -418,7 +418,7 @@ func dataSourceLicenseDeviceLicenseSummaryRead(ctx context.Context, d *schema.Re
 	return diags
 }
 
-func flattenLicensesDeviceLicenseSummary2Items(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseSummary2Response) []map[string]interface{} {
+func flattenLicensesDeviceLicenseSummaryItems(items *[]dnacentersdkgo.ResponseLicensesDeviceLicenseSummaryResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

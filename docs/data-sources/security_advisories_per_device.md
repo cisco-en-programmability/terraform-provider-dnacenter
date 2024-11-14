@@ -22,7 +22,7 @@ data "dnacenter_security_advisories_per_device" "example" {
 }
 
 output "dnacenter_security_advisories_per_device_example" {
-  value = data.dnacenter_security_advisories_per_device.example.items
+  value = data.dnacenter_security_advisories_per_device.example.item
 }
 ```
 
@@ -36,10 +36,10 @@ output "dnacenter_security_advisories_per_device_example" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
-<a id="nestedatt--items"></a>
-### Nested Schema for `items`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
@@ -49,8 +49,7 @@ Read-Only:
 - `default_detection_type` (String)
 - `detection_type` (String)
 - `device_count` (Number)
+- `fixed_versions` (String)
 - `hidden_device_count` (Number)
 - `publication_url` (String)
 - `sir` (String)
-
-

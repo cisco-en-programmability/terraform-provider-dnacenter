@@ -4,20 +4,21 @@ page_title: "dnacenter_user Data Source - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs read operation on User and Roles.
-  Get all users for the Cisco DNA Center system
+  Get all users for the Cisco DNA Center System.
 ---
 
 # dnacenter_user (Data Source)
 
 It performs read operation on User and Roles.
 
-- Get all users for the Cisco DNA Center system
+- Get all users for the Cisco DNA Center System.
 
 ## Example Usage
 
 ```terraform
 data "dnacenter_user" "example" {
   provider      = dnacenter
+  auth_source   = "string"
   invoke_source = "string"
 }
 
@@ -31,7 +32,11 @@ output "dnacenter_user_example" {
 
 ### Required
 
-- `invoke_source` (String) invokeSource query parameter. The source that invokes this API
+- `invoke_source` (String) invokeSource query parameter. The source that invokes this API. The value of this query parameter must be set to "external".
+
+### Optional
+
+- `auth_source` (String) authSource query parameter. The source that authenticates the user. The value of this query parameter can be set to "internal" or "external". If not provided, then all users will be returned in the response.
 
 ### Read-Only
 
@@ -58,5 +63,3 @@ Read-Only:
 - `role_list` (List of String)
 - `user_id` (String)
 - `username` (String)
-
-

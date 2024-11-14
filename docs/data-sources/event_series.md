@@ -97,5 +97,3 @@ Read-Only:
 
 - `device_id` (String)
 - `site_id` (String)
-
-

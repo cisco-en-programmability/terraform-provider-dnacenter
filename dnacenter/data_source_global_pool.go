@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,21 +15,21 @@ func dataSourceGlobalPool() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Settings.
 
-- API to get global pool.
+- API to get the global pool.
 `,
 
 		ReadContext: dataSourceGlobalPoolRead,
 		Schema: map[string]*schema.Schema{
 			"limit": &schema.Schema{
-				Description: `limit query parameter. No of Global Pools to be retrieved
+				Description: `limit query parameter. Number of Global Pools to be retrieved. Default is 25 if not specified.
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
-				Description: `offset query parameter. offset/starting row
+				Description: `offset query parameter. Offset/starting row. Indexed from 1. Default value of 1.
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 
@@ -40,8 +40,8 @@ func dataSourceGlobalPool() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"available_ip_address_count": &schema.Schema{
-							Description: `availableIpAddressCount`,
-							Type:        schema.TypeInt,
+							Description: `Available Ip Address Count`,
+							Type:        schema.TypeFloat,
 							Computed:    true,
 						},
 
@@ -92,7 +92,7 @@ func dataSourceGlobalPool() *schema.Resource {
 						},
 
 						"default_assigned_ip_address_count": &schema.Schema{
-							Description: `defaultAssignedIpAddressCount`,
+							Description: `Default Assigned Ip Address Count`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
@@ -125,7 +125,7 @@ func dataSourceGlobalPool() *schema.Resource {
 						},
 
 						"has_subpools": &schema.Schema{
-							Description: `hasSubpools`,
+							Description: `Has Subpools`,
 							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -195,7 +195,7 @@ func dataSourceGlobalPool() *schema.Resource {
 						},
 
 						"total_assignable_ip_address_count": &schema.Schema{
-							Description: `totalAssignableIpAddressCount`,
+							Description: `Total Assignable Ip Address Count`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
@@ -207,8 +207,8 @@ func dataSourceGlobalPool() *schema.Resource {
 						},
 
 						"unavailable_ip_address_count": &schema.Schema{
-							Description: `unavailableIpAddressCount`,
-							Type:        schema.TypeInt,
+							Description: `Unavailable Ip Address Count`,
+							Type:        schema.TypeFloat,
 							Computed:    true,
 						},
 
@@ -243,10 +243,10 @@ func dataSourceGlobalPoolRead(ctx context.Context, d *schema.ResourceData, m int
 		queryParams1 := dnacentersdkgo.GetGlobalPoolQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 
 		response1, restyResp1, err := client.NetworkSettings.GetGlobalPool(&queryParams1)
@@ -256,7 +256,7 @@ func dataSourceGlobalPoolRead(ctx context.Context, d *schema.ResourceData, m int
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGlobalPool", err,
+				"Failure when executing 2 GetGlobalPool", err,
 				"Failure at GetGlobalPool, unexpected response", ""))
 			return diags
 		}
@@ -299,17 +299,17 @@ func flattenNetworkSettingsGetGlobalPoolItems(items *[]dnacentersdkgo.ResponseNe
 		respItem["configure_external_dhcp"] = boolPtrToString(item.ConfigureExternalDhcp)
 		respItem["used_percentage"] = item.UsedPercentage
 		respItem["client_options"] = flattenNetworkSettingsGetGlobalPoolItemsClientOptions(item.ClientOptions)
+		respItem["ip_pool_type"] = item.IPPoolType
+		respItem["unavailable_ip_address_count"] = item.UnavailableIPAddressCount
+		respItem["available_ip_address_count"] = item.AvailableIPAddressCount
+		respItem["total_assignable_ip_address_count"] = item.TotalAssignableIPAddressCount
 		respItem["dns_server_ips"] = item.DNSServerIPs
+		respItem["has_subpools"] = boolPtrToString(item.HasSubpools)
+		respItem["default_assigned_ip_address_count"] = item.DefaultAssignedIPAddressCount
 		respItem["context"] = flattenNetworkSettingsGetGlobalPoolItemsContext(item.Context)
 		respItem["ipv6"] = boolPtrToString(item.IPv6)
 		respItem["id"] = item.ID
 		respItem["ip_pool_cidr"] = item.IPPoolCidr
-		respItem["ip_pool_type"] = item.IPPoolType
-		respItem["unavailable_ip_address_count"] = item.UnavailableIpAddressCount
-		respItem["available_ip_address_count"] = item.AvailableIpAddressCount
-		respItem["total_assignable_ip_address_count"] = item.TotalAssignableIpAddressCount
-		respItem["has_subpools"] = boolPtrToString(item.HasSubpools)
-		respItem["default_assigned_ip_address_count"] = item.DefaultAssignedIpAddressCount
 		respItems = append(respItems, respItem)
 	}
 	return respItems

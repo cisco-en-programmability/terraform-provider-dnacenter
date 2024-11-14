@@ -12,7 +12,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -88,7 +88,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"group_id": &schema.Schema{
-																Description: `Group id
+																Description: `The site(s) ID where the Application QoS Policy will be deployed.
 `,
 																Type:     schema.TypeList,
 																Optional: true,
@@ -329,7 +329,7 @@ func resourceAppPolicyIntentCreate() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"group_id": &schema.Schema{
-																Description: `Group id
+																Description: `The site(s) ID where the Application QoS Policy will be deployed.
 `,
 																Type:     schema.TypeList,
 																Optional: true,
@@ -603,11 +603,9 @@ func resourceAppPolicyIntentCreateCreate(ctx context.Context, d *schema.Resource
 
 	request1 := expandRequestAppPolicyIntentCreateApplicationPolicyIntent(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.ApplicationPolicy.ApplicationPolicyIntent(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.ApplicationPolicy.ApplicationPolicyIntent(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -668,10 +666,8 @@ func resourceAppPolicyIntentCreateCreate(ctx context.Context, d *schema.Resource
 			err))
 		return diags
 	}
-
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceAppPolicyIntentCreateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

@@ -1,0 +1,1 @@
+terraform import dnacenter_images_site_wise_product_names.example "image_id:=string"

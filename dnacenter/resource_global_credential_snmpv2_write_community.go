@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -351,7 +351,7 @@ func resourceGlobalCredentialSNMPv2WriteCommunityUpdate(ctx context.Context, d *
 }
 
 func resourceGlobalCredentialSNMPv2WriteCommunityDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	// NOTE: Unable to delete GlobalCredentialSNMPv2WriteCommunity on Dna Center
+	// NOTE: Unable to delete GlobalCredentialSNMPv2WriteCommunity on Catalyst Center
 	//       Returning empty diags to delete it on Terraform
 	client := m.(*dnacentersdkgo.Client)
 

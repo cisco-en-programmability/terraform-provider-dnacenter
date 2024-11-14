@@ -14,16 +14,15 @@ It performs create operation on Wireless.
 
 - Creates SSID, updates the SSID to the corresponding site profiles and provision it to the devices matching the given
 sites
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_wireless_provision_ssid_create_provision" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     enable_fabric = "false"
@@ -35,19 +34,24 @@ resource "dnacenter_wireless_provision_ssid_create_provision" "example" {
     managed_aplocations = ["string"]
     ssid_details {
 
-      enable_broadcast_ssi_d = "false"
-      enable_fast_lane       = "false"
-      enable_mac_filtering   = "false"
-      fast_transition        = "string"
-      name                   = "string"
-      passphrase             = "string"
-      radio_policy           = "string"
-      security_level         = "string"
-      traffic_type           = "string"
-      web_auth_url           = "string"
+      auth_key_mgmt               = ["string"]
+      enable_broadcast_ssi_d      = "false"
+      enable_fast_lane            = "false"
+      enable_mac_filtering        = "false"
+      fast_transition             = "string"
+      ghz24_policy                = "string"
+      ghz6_policy_client_steering = "false"
+      name                        = "string"
+      passphrase                  = "string"
+      radio_policy                = "string"
+      rsn_cipher_suite_ccmp256    = "false"
+      rsn_cipher_suite_gcmp128    = "false"
+      rsn_cipher_suite_gcmp256    = "false"
+      security_level              = "string"
+      traffic_type                = "string"
+      web_auth_url                = "string"
     }
-    ssid_type         = "string"
-    persistbapioutput = "false"
+    ssid_type = "string"
   }
 }
 
@@ -77,7 +81,6 @@ Optional:
 - `enable_fabric` (String) Enable SSID for Fabric
 - `flex_connect` (Block List) (see [below for nested schema](#nestedblock--parameters--flex_connect))
 - `managed_aplocations` (List of String) Managed AP Locations (Enter entire Site(s) hierarchy)
-- `persistbapioutput` (String) Device Name
 - `ssid_details` (Block List) (see [below for nested schema](#nestedblock--parameters--ssid_details))
 - `ssid_type` (String) SSID Type
 
@@ -95,13 +98,19 @@ Optional:
 
 Optional:
 
+- `auth_key_mgmt` (List of String) Takes string inputs for the AKMs that should be set true. Possible AKM values : dot1x,dot1x_ft, dot1x_sha, psk, psk_ft, psk_sha, owe, sae, sae_ft
 - `enable_broadcast_ssi_d` (String) Enable Broadcast SSID
 - `enable_fast_lane` (String) Enable Fast Lane
 - `enable_mac_filtering` (String) Enable MAC Filtering
 - `fast_transition` (String) Fast Transition
+- `ghz24_policy` (String) 2.4 GHz Policy
+- `ghz6_policy_client_steering` (String) 6 Ghz Client Steering
 - `name` (String) SSID Name
 - `passphrase` (String) Pass Phrase ( Only applicable for SSID with PERSONAL auth type )
 - `radio_policy` (String) Radio Policy
+- `rsn_cipher_suite_ccmp256` (String) Rsn Cipher Suite Ccmp256
+- `rsn_cipher_suite_gcmp128` (String) Rsn Cipher Suite  Gcmp128
+- `rsn_cipher_suite_gcmp256` (String) Rsn Cipher Suite Gcmp256
 - `security_level` (String) Security Level(For guest SSID OPEN/WEB_AUTH, For Enterprise SSID ENTERPRISE/PERSONAL/OPEN)
 - `traffic_type` (String) Traffic Type
 - `web_auth_url` (String) Web Auth URL
@@ -116,5 +125,3 @@ Read-Only:
 - `execution_id` (String)
 - `execution_status_url` (String)
 - `message` (String)
-
-

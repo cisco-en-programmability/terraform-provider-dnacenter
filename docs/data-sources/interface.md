@@ -43,127 +43,25 @@ output "dnacenter_interface_example" {
 
 Read-Only:
 
+- `interface_uuid` (String)
+- `operations` (List of Object) (see [below for nested schema](#nestedobjatt--item--operations))
 - `properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties))
-- `required` (List of String)
-- `type` (String)
+
+<a id="nestedobjatt--item--operations"></a>
+### Nested Schema for `item.operations`
+
+Read-Only:
+
+- `applicable` (String)
+- `failure_reason` (String)
+- `name` (String)
+
 
 <a id="nestedobjatt--item--properties"></a>
 ### Nested Schema for `item.properties`
 
 Read-Only:
 
-- `interface_uuid` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--interface_uuid))
-- `operations` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--operations))
-- `properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--properties))
-
-<a id="nestedobjatt--item--properties--interface_uuid"></a>
-### Nested Schema for `item.properties.interface_uuid`
-
-Read-Only:
-
-- `type` (String)
-
-
-<a id="nestedobjatt--item--properties--operations"></a>
-### Nested Schema for `item.properties.operations`
-
-Read-Only:
-
-- `items` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--operations--items))
-- `type` (String)
-
-<a id="nestedobjatt--item--properties--operations--items"></a>
-### Nested Schema for `item.properties.operations.type`
-
-Read-Only:
-
-- `properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--operations--type--properties))
-- `required` (List of String)
-- `type` (String)
-
-<a id="nestedobjatt--item--properties--operations--type--properties"></a>
-### Nested Schema for `item.properties.operations.type.properties`
-
-Read-Only:
-
-- `applicable` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--operations--type--properties--applicable))
-- `failure_reason` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--operations--type--properties--failure_reason))
-- `name` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--operations--type--properties--name))
-
-<a id="nestedobjatt--item--properties--operations--type--properties--applicable"></a>
-### Nested Schema for `item.properties.operations.type.properties.name`
-
-Read-Only:
-
-- `type` (String)
-
-
-<a id="nestedobjatt--item--properties--operations--type--properties--failure_reason"></a>
-### Nested Schema for `item.properties.operations.type.properties.name`
-
-Read-Only:
-
-- `type` (String)
-
-
-<a id="nestedobjatt--item--properties--operations--type--properties--name"></a>
-### Nested Schema for `item.properties.operations.type.properties.name`
-
-Read-Only:
-
-- `type` (String)
-
-
-
-
-
-<a id="nestedobjatt--item--properties--properties"></a>
-### Nested Schema for `item.properties.properties`
-
-Read-Only:
-
-- `items` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--properties--items))
-- `type` (String)
-
-<a id="nestedobjatt--item--properties--properties--items"></a>
-### Nested Schema for `item.properties.properties.type`
-
-Read-Only:
-
-- `properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--properties--type--properties))
-- `required` (List of String)
-- `type` (String)
-
-<a id="nestedobjatt--item--properties--properties--type--properties"></a>
-### Nested Schema for `item.properties.properties.type.properties`
-
-Read-Only:
-
-- `applicable` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--properties--type--properties--applicable))
-- `failure_reason` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--properties--type--properties--failure_reason))
-- `name` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--properties--type--properties--name))
-
-<a id="nestedobjatt--item--properties--properties--type--properties--applicable"></a>
-### Nested Schema for `item.properties.properties.type.properties.name`
-
-Read-Only:
-
-- `type` (String)
-
-
-<a id="nestedobjatt--item--properties--properties--type--properties--failure_reason"></a>
-### Nested Schema for `item.properties.properties.type.properties.name`
-
-Read-Only:
-
-- `type` (String)
-
-
-<a id="nestedobjatt--item--properties--properties--type--properties--name"></a>
-### Nested Schema for `item.properties.properties.type.properties.name`
-
-Read-Only:
-
-- `type` (String)
-
-
+- `applicable` (String)
+- `failure_reason` (String)
+- `name` (String)

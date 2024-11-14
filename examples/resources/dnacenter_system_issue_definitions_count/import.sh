@@ -1,0 +1,1 @@
+terraform import dnacenter_system_issue_definitions_count.example "id:=string"

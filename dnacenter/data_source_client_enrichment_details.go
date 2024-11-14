@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -866,6 +866,7 @@ func dataSourceClientEnrichmentDetailsRead(ctx context.Context, d *schema.Resour
 	vEntityType := d.Get("entity_type")
 	vEntityValue := d.Get("entity_value")
 	vIssueCategory := d.Get("issue_category")
+	vPersistbapioutput := d.Get("persistbapioutput")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -879,6 +880,8 @@ func dataSourceClientEnrichmentDetailsRead(ctx context.Context, d *schema.Resour
 
 		headerParams1.IssueCategory = vIssueCategory.(string)
 
+		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+
 		response1, restyResp1, err := client.Clients.GetClientEnrichmentDetails(&headerParams1)
 
 		if err != nil || response1 == nil {
@@ -886,7 +889,7 @@ func dataSourceClientEnrichmentDetailsRead(ctx context.Context, d *schema.Resour
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetClientEnrichmentDetails", err,
+				"Failure when executing 2 GetClientEnrichmentDetails", err,
 				"Failure at GetClientEnrichmentDetails, unexpected response", ""))
 			return diags
 		}

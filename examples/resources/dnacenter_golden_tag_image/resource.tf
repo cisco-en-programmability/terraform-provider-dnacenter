@@ -1,6 +1,7 @@
 
 resource "dnacenter_golden_tag_image" "example" {
   provider = dnacenter
+
   parameters {
 
     device_family_identifier = "string"

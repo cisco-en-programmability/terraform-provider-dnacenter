@@ -2,13 +2,12 @@ package dnacenter
 
 import (
 	"context"
-	"errors"
 	"reflect"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -48,6 +47,12 @@ func resourceSdaVirtualNetwork() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"execution_id": &schema.Schema{
+							Description: `Execution Id
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"fabric_name": &schema.Schema{
 							Description: `Fabric Name
 `,
@@ -57,12 +62,14 @@ func resourceSdaVirtualNetwork() *schema.Resource {
 						"is_default_vn": &schema.Schema{
 							Description: `Default VN
 `,
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"is_infra_vn": &schema.Schema{
 							Description: `Infra VN
 `,
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -74,6 +81,18 @@ func resourceSdaVirtualNetwork() *schema.Resource {
 						},
 						"status": &schema.Schema{
 							Description: `Status
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"virtual_network_context_id": &schema.Schema{
+							Description: `Virtual Network Context Id
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"virtual_network_id": &schema.Schema{
+							Description: `Virtual Network Id
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -99,14 +118,14 @@ func resourceSdaVirtualNetwork() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-							Default:  "",
+							Computed: true,
 						},
 						"virtual_network_name": &schema.Schema{
 							Description: `Virtual Network Name, that is created at Global level
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-							Default:  "",
+							Computed: true,
 						},
 					},
 				},
@@ -132,7 +151,7 @@ func resourceSdaVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData
 	queryParamImport.VirtualNetworkName = vvVirtualNetworkName
 	queryParamImport.SiteNameHierarchy = vvSiteNameHierarchy
 	item2, _, err := client.Sda.GetVnFromSdaFabric(&queryParamImport)
-	if err == nil && item2 != nil {
+	if err != nil || item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["virtual_network_name"] = item2.VirtualNetworkName
 		resourceMap["site_name_hierarchy"] = item2.SiteNameHierarchy
@@ -164,7 +183,7 @@ func resourceSdaVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -177,7 +196,7 @@ func resourceSdaVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing AddVnInFabric", err))
@@ -224,6 +243,8 @@ func resourceSdaVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, 
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 
+		// has_unknown_response: None
+
 		response1, restyResp1, err := client.Sda.GetVnFromSdaFabric(&queryParams1)
 
 		if err != nil || response1 == nil {
@@ -251,13 +272,7 @@ func resourceSdaVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceSdaVirtualNetworkUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	err := errors.New("Update not possible in this resource")
-	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SdaVirtualNetworkUpdate", err, "Update method is not supported",
-		"Failure at SdaVirtualNetworkUpdate, unexpected response", ""))
-
-	return diags
+	return resourceSdaVirtualNetworkRead(ctx, d, m)
 }
 
 func resourceSdaVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -307,7 +322,7 @@ func resourceSdaVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -320,7 +335,7 @@ func resourceSdaVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeleteVnFromSdaFabric", err))

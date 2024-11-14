@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -61,24 +61,18 @@ func resourceWirelessProvisionSSIDDeleteReprovision() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"managed_aplocations": &schema.Schema{
-							Description: `managedAPLocations path parameter.`,
-							Type:        schema.TypeString,
-							Required:    true,
-							ForceNew:    true,
+							Description: `managedAPLocations path parameter. List of managed AP locations (Site Hierarchies). This parameter needs to be encoded as per UTF-8 encoding
+`,
+							Type:     schema.TypeString,
+							Required: true,
+							ForceNew: true,
 						},
 						"ssid_name": &schema.Schema{
-							Description: `ssidName path parameter.`,
-							Type:        schema.TypeString,
-							Required:    true,
-							ForceNew:    true,
-						},
-						"persistbapioutput": &schema.Schema{
-							Description:  `Device Name`,
-							Type:         schema.TypeString,
-							Optional:     true,
-							ForceNew:     true,
-							Default:      "false",
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Description: `ssidName path parameter. SSID Name. This parameter needs to be encoded as per UTF-8 encoding.
+`,
+							Type:     schema.TypeString,
+							Required: true,
+							ForceNew: true,
 						},
 					},
 				},
@@ -105,6 +99,8 @@ func resourceWirelessProvisionSSIDDeleteReprovisionCreate(ctx context.Context, d
 	headerParams1 := dnacentersdkgo.DeleteSSIDAndProvisionItToDevicesHeaderParams{}
 
 	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+
+	// has_unknown_response: None
 
 	response1, restyResp1, err := client.Wireless.DeleteSSIDAndProvisionItToDevices(vvSSIDName, vvManagedApLocations, &headerParams1)
 
@@ -133,7 +129,7 @@ func resourceWirelessProvisionSSIDDeleteReprovisionCreate(ctx context.Context, d
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -146,7 +142,7 @@ func resourceWirelessProvisionSSIDDeleteReprovisionCreate(ctx context.Context, d
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing DeleteSSIDAndProvisionItToDevices", err,
@@ -154,7 +150,6 @@ func resourceWirelessProvisionSSIDDeleteReprovisionCreate(ctx context.Context, d
 			return diags
 		}
 	}
-
 	vItem1 := flattenWirelessDeleteSSIDAndProvisionItToDevicesItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -165,7 +160,6 @@ func resourceWirelessProvisionSSIDDeleteReprovisionCreate(ctx context.Context, d
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceWirelessProvisionSSIDDeleteReprovisionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

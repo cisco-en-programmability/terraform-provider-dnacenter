@@ -1,6 +1,7 @@
 
 resource "dnacenter_sda_fabric_site" "example" {
   provider = dnacenter
+
   parameters {
 
     fabric_name         = "string"

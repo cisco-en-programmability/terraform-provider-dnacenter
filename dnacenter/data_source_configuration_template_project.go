@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -2486,7 +2486,7 @@ func dataSourceConfigurationTemplateProjectRead(ctx context.Context, d *schema.R
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsAListOfProjects", err,
+				"Failure when executing 2 GetsAListOfProjects", err,
 				"Failure at GetsAListOfProjects, unexpected response", ""))
 			return diags
 		}
@@ -2516,7 +2516,7 @@ func dataSourceConfigurationTemplateProjectRead(ctx context.Context, d *schema.R
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsTheDetailsOfAGivenProject", err,
+				"Failure when executing 2 GetsTheDetailsOfAGivenProject", err,
 				"Failure at GetsTheDetailsOfAGivenProject, unexpected response", ""))
 			return diags
 		}

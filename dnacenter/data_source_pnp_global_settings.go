@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -26,12 +26,6 @@ func dataSourcePnpGlobalSettings() *schema.Resource {
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
-						"type_id": &schema.Schema{
-							Description: `Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
 
 						"aaa_credentials": &schema.Schema{
 							Type:     schema.TypeList,
@@ -348,7 +342,7 @@ func dataSourcePnpGlobalSettingsRead(ctx context.Context, d *schema.ResourceData
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetPnpGlobalSettings", err,
+				"Failure when executing 2 GetPnpGlobalSettings", err,
 				"Failure at GetPnpGlobalSettings, unexpected response", ""))
 			return diags
 		}
@@ -382,7 +376,6 @@ func flattenDeviceOnboardingPnpGetPnpGlobalSettingsItem(item *dnacentersdkgo.Res
 	respItem["default_profile"] = flattenDeviceOnboardingPnpGetPnpGlobalSettingsItemDefaultProfile(item.DefaultProfile)
 	respItem["accept_eula"] = boolPtrToString(item.AcceptEula)
 	respItem["id"] = item.ID
-	respItem["type_id"] = item.TypeID
 	respItem["version"] = item.Version
 	return []map[string]interface{}{
 		respItem,

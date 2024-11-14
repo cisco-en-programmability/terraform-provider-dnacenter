@@ -4,7 +4,6 @@ resource "dnacenter_network_device_export" "example" {
   parameters {
 
     device_uuids   = ["string"]
-    id             = "string"
     operation_enum = "string"
     parameters     = ["string"]
     password       = "******"

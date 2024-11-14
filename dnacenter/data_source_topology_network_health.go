@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -22,9 +22,9 @@ given point of time
 		ReadContext: dataSourceTopologyNetworkHealthRead,
 		Schema: map[string]*schema.Schema{
 			"timestamp": &schema.Schema{
-				Description: `timestamp query parameter. Epoch time(in milliseconds) when the Network health data is required
+				Description: `timestamp query parameter. UTC timestamp of network health data in milliseconds
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 
@@ -35,57 +35,80 @@ given point of time
 					Schema: map[string]*schema.Schema{
 
 						"bad_count": &schema.Schema{
-							Description: `Bad Count`,
-							Type:        schema.TypeFloat,
-							Computed:    true,
+							Description: `Total bad health count
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"entity": &schema.Schema{
-							Description: `Entity`,
-							Type:        schema.TypeString, //TEST,
-							Computed:    true,
+							Description: `Entity of the health data
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"fair_count": &schema.Schema{
-							Description: `Fair Count`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Total fair health count
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"good_count": &schema.Schema{
-							Description: `Good Count`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Total good health count
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"health_score": &schema.Schema{
-							Description: `Health Score`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Health score
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"maintenance_mode_count": &schema.Schema{
+							Description: `Total maintenance mode count
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"no_health_count": &schema.Schema{
+							Description: `Total no health count
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"time": &schema.Schema{
-							Description: `Time`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Date-time string
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"timein_millis": &schema.Schema{
-							Description: `Timein Millis`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `UTC time value of property 'time' in milliseconds
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"total_count": &schema.Schema{
-							Description: `Total Count`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Total health count
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"unmon_count": &schema.Schema{
-							Description: `Unmon Count`,
-							Type:        schema.TypeFloat,
-							Computed:    true,
+							Description: `Total no health count
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 					},
 				},
@@ -106,7 +129,7 @@ func dataSourceTopologyNetworkHealthRead(ctx context.Context, d *schema.Resource
 		queryParams1 := dnacentersdkgo.GetOverallNetworkHealthQueryParams{}
 
 		if okTimestamp {
-			queryParams1.Timestamp = vTimestamp.(string)
+			queryParams1.Timestamp = vTimestamp.(float64)
 		}
 
 		response1, restyResp1, err := client.Topology.GetOverallNetworkHealth(&queryParams1)
@@ -116,7 +139,7 @@ func dataSourceTopologyNetworkHealthRead(ctx context.Context, d *schema.Resource
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetOverallNetworkHealth", err,
+				"Failure when executing 2 GetOverallNetworkHealth", err,
 				"Failure at GetOverallNetworkHealth, unexpected response", ""))
 			return diags
 		}
@@ -149,22 +172,14 @@ func flattenTopologyGetOverallNetworkHealthItems(items *[]dnacentersdkgo.Respons
 		respItem["health_score"] = item.HealthScore
 		respItem["total_count"] = item.TotalCount
 		respItem["good_count"] = item.GoodCount
+		respItem["no_health_count"] = item.NoHealthCount
 		respItem["unmon_count"] = item.UnmonCount
 		respItem["fair_count"] = item.FairCount
 		respItem["bad_count"] = item.BadCount
-		respItem["entity"] = flattenTopologyGetOverallNetworkHealthItemsEntity(item.Entity)
+		respItem["maintenance_mode_count"] = item.MaintenanceModeCount
+		respItem["entity"] = item.Entity
 		respItem["timein_millis"] = item.TimeinMillis
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenTopologyGetOverallNetworkHealthItemsEntity(item *dnacentersdkgo.ResponseTopologyGetOverallNetworkHealthResponseEntity) interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := *item
-
-	return responseInterfaceToString(respItem)
-
 }

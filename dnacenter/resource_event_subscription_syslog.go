@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -522,7 +522,7 @@ func resourceEventSubscriptionSyslogUpdate(ctx context.Context, d *schema.Resour
 	var diags diag.Diagnostics
 
 	if d.HasChange("parameters") {
-		request1 := expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscription(ctx, "parameters", d)
+		request1 := expandRequestEventSubscriptionSyslogUpdateSyslogEventSubscription(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.EventManagement.UpdateSyslogEventSubscription(request1)
 		if err != nil || response1 == nil {
@@ -922,6 +922,9 @@ func searchEventManagementGetSyslogEventSubscriptions(m interface{}, queryParams
 			queryParams.Limit = float64(maxPageSize)
 			queryParams.Offset += float64(maxPageSize)
 			nResponse, _, err = client.EventManagement.GetSyslogEventSubscriptions(&queryParams)
+			if nResponse == nil {
+				break
+			}
 		}
 		return nil, err
 	} else if queryParams.Name != "" {

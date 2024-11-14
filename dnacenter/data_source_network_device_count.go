@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -29,27 +29,40 @@ location name
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-
-			"item_id": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"response": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-
-						"version": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-					},
+			"hostname": &schema.Schema{
+				Description: `hostname query parameter.`,
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"location_name": &schema.Schema{
+				Description: `locationName query parameter.`,
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"mac_address": &schema.Schema{
+				Description: `macAddress query parameter.`,
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"management_ip_address": &schema.Schema{
+				Description: `managementIpAddress query parameter.`,
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
 				},
 			},
 
-			"item_name": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -76,26 +89,30 @@ func dataSourceNetworkDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 
 	var diags diag.Diagnostics
 	vDeviceID, okDeviceID := d.GetOk("device_id")
+	vHostname, okHostname := d.GetOk("hostname")
+	vManagementIPAddress, okManagementIPAddress := d.GetOk("management_ip_address")
+	vMacAddress, okMacAddress := d.GetOk("mac_address")
+	vLocationName, okLocationName := d.GetOk("location_name")
 
 	method1 := []bool{okDeviceID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{}
+	method2 := []bool{okHostname, okManagementIPAddress, okMacAddress, okLocationName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetDeviceInterfaceCount2")
+		log.Printf("[DEBUG] Selected method: GetDeviceInterfaceCount")
 		vvDeviceID := vDeviceID.(string)
 
-		response1, restyResp1, err := client.Devices.GetDeviceInterfaceCount2(vvDeviceID)
+		response1, restyResp1, err := client.Devices.GetDeviceInterfaceCount(vvDeviceID)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceInterfaceCount2", err,
-				"Failure at GetDeviceInterfaceCount2, unexpected response", ""))
+				"Failure when executing 2 GetDeviceInterfaceCount", err,
+				"Failure at GetDeviceInterfaceCount, unexpected response", ""))
 			return diags
 		}
 
@@ -103,36 +120,40 @@ func dataSourceNetworkDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetDeviceCount2")
+		log.Printf("[DEBUG] Selected method: GetDeviceCountKnowYourNetwork")
+		queryParams2 := dnacentersdkgo.GetDeviceCountKnowYourNetworkQueryParams{}
 
-		response2, restyResp2, err := client.Devices.GetDeviceCount2()
+		if okHostname {
+			queryParams2.Hostname = interfaceToSliceString(vHostname)
+		}
+		if okManagementIPAddress {
+			queryParams2.ManagementIPAddress = interfaceToSliceString(vManagementIPAddress)
+		}
+		if okMacAddress {
+			queryParams2.MacAddress = interfaceToSliceString(vMacAddress)
+		}
+		if okLocationName {
+			queryParams2.LocationName = interfaceToSliceString(vLocationName)
+		}
+
+		response2, restyResp2, err := client.Devices.GetDeviceCountKnowYourNetwork(&queryParams2)
 
 		if err != nil || response2 == nil {
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceCount2", err,
-				"Failure at GetDeviceCount2, unexpected response", ""))
+				"Failure when executing 2 GetDeviceCountKnowYourNetwork", err,
+				"Failure at GetDeviceCountKnowYourNetwork, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
-		vItemName2 := flattenDevicesGetDeviceCount2ItemName(response2)
-		if err := d.Set("item_name", vItemName2); err != nil {
+		vItem2 := flattenDevicesGetDeviceCountKnowYourNetworkItem(response2)
+		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetDeviceCount2 response",
-				err))
-			return diags
-		}
-
-		d.SetId(getUnixTimeString())
-
-		vItemID2 := flattenDevicesGetDeviceCount2ItemID(response2)
-		if err := d.Set("item_id", vItemID2); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetDeviceCount2 response",
+				"Failure when setting GetDeviceCountKnowYourNetwork response",
 				err))
 			return diags
 		}
@@ -144,19 +165,7 @@ func dataSourceNetworkDeviceCountRead(ctx context.Context, d *schema.ResourceDat
 	return diags
 }
 
-func flattenDevicesGetDeviceCount2ItemName(item *dnacentersdkgo.ResponseDevicesGetDeviceCount2) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["response"] = item.Response
-	respItem["version"] = item.Version
-	return []map[string]interface{}{
-		respItem,
-	}
-}
-
-func flattenDevicesGetDeviceCount2ItemID(item *dnacentersdkgo.ResponseDevicesGetDeviceCount2) []map[string]interface{} {
+func flattenDevicesGetDeviceCountKnowYourNetworkItem(item *dnacentersdkgo.ResponseDevicesGetDeviceCountKnowYourNetwork) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

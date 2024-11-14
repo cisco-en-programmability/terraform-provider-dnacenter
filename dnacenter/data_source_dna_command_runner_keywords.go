@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -53,26 +53,26 @@ func dataSourceDnaCommandRunnerKeywordsRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetAllKeywordsOfCliSAcceptedByCommandRunner")
+		log.Printf("[DEBUG] Selected method: GetAllKeywordsOfClisAcceptedByCommandRunner")
 
-		response1, restyResp1, err := client.CommandRunner.GetAllKeywordsOfCliSAcceptedByCommandRunner()
+		response1, restyResp1, err := client.CommandRunner.GetAllKeywordsOfClisAcceptedByCommandRunner()
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAllKeywordsOfCliSAcceptedByCommandRunner", err,
-				"Failure at GetAllKeywordsOfCliSAcceptedByCommandRunner, unexpected response", ""))
+				"Failure when executing 2 GetAllKeywordsOfClisAcceptedByCommandRunner", err,
+				"Failure at GetAllKeywordsOfClisAcceptedByCommandRunner, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenCommandRunnerGetAllKeywordsOfCliSAcceptedByCommandRunnerItems(response1)
+		vItems1 := flattenCommandRunnerGetAllKeywordsOfClisAcceptedByCommandRunnerItems(response1)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAllKeywordsOfCliSAcceptedByCommandRunner response",
+				"Failure when setting GetAllKeywordsOfClisAcceptedByCommandRunner response",
 				err))
 			return diags
 		}
@@ -84,7 +84,7 @@ func dataSourceDnaCommandRunnerKeywordsRead(ctx context.Context, d *schema.Resou
 	return diags
 }
 
-func flattenCommandRunnerGetAllKeywordsOfCliSAcceptedByCommandRunnerItems(items *dnacentersdkgo.ResponseCommandRunnerGetAllKeywordsOfCliSAcceptedByCommandRunner) []map[string]interface{} {
+func flattenCommandRunnerGetAllKeywordsOfClisAcceptedByCommandRunnerItems(items *dnacentersdkgo.ResponseCommandRunnerGetAllKeywordsOfClisAcceptedByCommandRunner) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

@@ -151,5 +151,3 @@ Read-Only:
 
 - `default` (String)
 - `type` (String)
-
-

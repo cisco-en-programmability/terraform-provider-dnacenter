@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -69,7 +69,6 @@ func resourceConfigurationTemplateClone() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
-							Default:  "",
 						},
 						"template_id": &schema.Schema{
 							Description: `templateId path parameter. UUID of the template to clone it
@@ -101,6 +100,8 @@ func resourceConfigurationTemplateCloneCreate(ctx context.Context, d *schema.Res
 	vvTemplateID := vTemplateID.(string)
 	vvProjectID := vProjectID.(string)
 	queryParams1 := dnacentersdkgo.CreatesACloneOfTheGivenTemplateQueryParams{}
+
+	// has_unknown_response: None
 
 	response1, restyResp1, err := client.ConfigurationTemplates.CreatesACloneOfTheGivenTemplate(vvName, vvTemplateID, vvProjectID, &queryParams1)
 
@@ -155,7 +156,6 @@ func resourceConfigurationTemplateCloneCreate(ctx context.Context, d *schema.Res
 			return diags
 		}
 	}
-
 	vItem1 := flattenConfigurationTemplatesCreatesACloneOfTheGivenTemplateItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -166,7 +166,6 @@ func resourceConfigurationTemplateCloneCreate(ctx context.Context, d *schema.Res
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceConfigurationTemplateCloneRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

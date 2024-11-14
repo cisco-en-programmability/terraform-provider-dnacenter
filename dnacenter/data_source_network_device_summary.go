@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,16 +34,22 @@ func dataSourceNetworkDeviceSummary() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
+							Description: `Unique identifier of the network device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"role": &schema.Schema{
+							Description: `Role of device as access, distribution, border router, core
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"role_source": &schema.Schema{
+							Description: `Role source as manual / auto
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -72,7 +78,7 @@ func dataSourceNetworkDeviceSummaryRead(ctx context.Context, d *schema.ResourceD
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceSummary", err,
+				"Failure when executing 2 GetDeviceSummary", err,
 				"Failure at GetDeviceSummary, unexpected response", ""))
 			return diags
 		}

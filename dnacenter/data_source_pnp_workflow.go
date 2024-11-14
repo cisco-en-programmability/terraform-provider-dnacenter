@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -565,7 +565,7 @@ func dataSourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m in
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetWorkflows", err,
+				"Failure when executing 2 GetWorkflows", err,
 				"Failure at GetWorkflows, unexpected response", ""))
 			return diags
 		}
@@ -595,7 +595,7 @@ func dataSourcePnpWorkflowRead(ctx context.Context, d *schema.ResourceData, m in
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetWorkflowByID", err,
+				"Failure when executing 2 GetWorkflowByID", err,
 				"Failure at GetWorkflowByID, unexpected response", ""))
 			return diags
 		}

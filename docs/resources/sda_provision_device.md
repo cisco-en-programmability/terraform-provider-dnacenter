@@ -22,6 +22,7 @@ It manages create, read, update and delete operations on SDA.
 ```terraform
 resource "dnacenter_sda_provision_device" "example" {
   provider = dnacenter
+
   parameters {
 
     device_management_ip_address = "string"

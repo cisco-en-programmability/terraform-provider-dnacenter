@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -71,11 +71,6 @@ func resourcePnpDeviceImport() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"type_id": &schema.Schema{
-										Description: `_Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
 									"day_zero_config": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -1538,10 +1533,11 @@ func resourcePnpDeviceImport() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
+										Description: `Id`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										ForceNew:    true,
+										Computed:    true,
 									},
 									"device_info": &schema.Schema{
 										Type:     schema.TypeList,
@@ -1551,600 +1547,61 @@ func resourcePnpDeviceImport() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"aaa_credentials": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"password": &schema.Schema{
-																Type:      schema.TypeString,
-																Optional:  true,
-																ForceNew:  true,
-																Sensitive: true,
-																Computed:  true,
-															},
-															"username": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"added_on": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"addn_mac_addrs": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"agent_type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"auth_status": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"authenticated_sudi_serial_no": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"capabilities_supported": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"cm_state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
 												"description": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
+													Description: `Description`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 												},
 												"device_sudi_serial_nos": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
+													Description: `Device Sudi Serial Nos`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
-												},
-												"device_type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"features_supported": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"file_system_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"freespace": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"readable": &schema.Schema{
-																// Type:     schema.TypeBool,
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																ForceNew:     true,
-																Computed:     true,
-															},
-															"size": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"type": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"writeable": &schema.Schema{
-																// Type:     schema.TypeBool,
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																ForceNew:     true,
-																Computed:     true,
-															},
-														},
-													},
-												},
-												"first_contact": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
 												},
 												"hostname": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"http_headers": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"key": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"image_file": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"image_version": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"ip_interfaces": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"ipv4_address": &schema.Schema{
-																Type:     schema.TypeString, //TEST,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"ipv6_address_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-															},
-															"mac_address": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"status": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"last_contact": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"last_sync_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"last_update_on": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"location": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"address": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"altitude": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"latitude": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"longitude": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"site_id": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-														},
-													},
+													Description: `Hostname`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 												},
 												"mac_address": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"mode": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"neighbor_links": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"local_interface_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"local_mac_address": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"local_short_interface_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"remote_device_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"remote_interface_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"remote_mac_address": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"remote_platform": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"remote_short_interface_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"remote_version": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"onb_state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
+													Description: `Mac Address`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 												},
 												"pid": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"pnp_profile_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"created_by": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"discovery_created": &schema.Schema{
-																// Type:     schema.TypeBool,
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																ForceNew:     true,
-																Computed:     true,
-															},
-															"primary_endpoint": &schema.Schema{
-																Type:     schema.TypeList,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"certificate": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"fqdn": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"ipv4_address": &schema.Schema{
-																			Type:     schema.TypeString, //TEST,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"ipv6_address": &schema.Schema{
-																			Type:     schema.TypeString, //TEST,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"port": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"protocol": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-															"profile_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"secondary_endpoint": &schema.Schema{
-																Type:     schema.TypeList,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"certificate": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"fqdn": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"ipv4_address": &schema.Schema{
-																			Type:     schema.TypeString, //TEST,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"ipv6_address": &schema.Schema{
-																			Type:     schema.TypeString, //TEST,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"port": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"protocol": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-												"populate_inventory": &schema.Schema{
-													// Type:     schema.TypeBool,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													ForceNew:     true,
-													Computed:     true,
-												},
-												"pre_workflow_cli_ouputs": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"cli": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"cli_output": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"project_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"project_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"reload_requested": &schema.Schema{
-													// Type:     schema.TypeBool,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													ForceNew:     true,
-													Computed:     true,
+													Description: `Pid`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 												},
 												"serial_number": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
+													Description: `Serial Number`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 												},
-												"smart_account_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"source": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
+												"site_id": &schema.Schema{
+													Description: `Site Id`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 												},
 												"stack": &schema.Schema{
-													// Type:     schema.TypeBool,
+													Description: `Stack`,
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -2160,7 +1617,8 @@ func resourcePnpDeviceImport() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"is_full_ring": &schema.Schema{
-																// Type:     schema.TypeBool,
+																Description: `Is Full Ring`,
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -2176,88 +1634,102 @@ func resourcePnpDeviceImport() *schema.Resource {
 																	Schema: map[string]*schema.Schema{
 
 																		"hardware_version": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `Hardware Version`,
+																			Type:        schema.TypeString,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"license_level": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `License Level`,
+																			Type:        schema.TypeString,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"license_type": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `License Type`,
+																			Type:        schema.TypeString,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"mac_address": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `Mac Address`,
+																			Type:        schema.TypeString,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"pid": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `Pid`,
+																			Type:        schema.TypeString,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"priority": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `Priority`,
+																			Type:        schema.TypeFloat,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"role": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `Role`,
+																			Type:        schema.TypeString,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"serial_number": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `Serial Number`,
+																			Type:        schema.TypeString,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"software_version": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `Software Version`,
+																			Type:        schema.TypeString,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"stack_number": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `Stack Number`,
+																			Type:        schema.TypeFloat,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"state": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `State`,
+																			Type:        schema.TypeString,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																		"sudi_serial_number": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
+																			Description: `Sudi Serial Number`,
+																			Type:        schema.TypeString,
+																			Optional:    true,
+																			ForceNew:    true,
+																			Computed:    true,
 																		},
 																	},
 																},
 															},
 															"stack_ring_protocol": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
+																Description: `Stack Ring Protocol`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																ForceNew:    true,
+																Computed:    true,
 															},
 															"supports_stack_workflows": &schema.Schema{
-																// Type:     schema.TypeBool,
+																Description: `Supports Stack Workflows`,
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -2265,16 +1737,18 @@ func resourcePnpDeviceImport() *schema.Resource {
 																Computed:     true,
 															},
 															"total_member_count": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
+																Description: `Total Member Count`,
+																Type:        schema.TypeFloat,
+																Optional:    true,
+																ForceNew:    true,
+																Computed:    true,
 															},
 															"valid_license_levels": &schema.Schema{
-																Type:     schema.TypeList,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
+																Description: `Valid License Levels`,
+																Type:        schema.TypeList,
+																Optional:    true,
+																ForceNew:    true,
+																Computed:    true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -2282,944 +1756,48 @@ func resourcePnpDeviceImport() *schema.Resource {
 														},
 													},
 												},
-												"state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
 												"sudi_required": &schema.Schema{
-													// Type:     schema.TypeBool,
+													Description: `Is Sudi Required`,
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
 													Computed:     true,
 												},
-												"tags": &schema.Schema{
-													Type:     schema.TypeString, //TEST,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"user_sudi_serial_nos": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
+												"user_mic_numbers": &schema.Schema{
+													Description: `User Mic Numbers`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
 												},
-												"virtual_account_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
+												"user_sudi_serial_nos": &schema.Schema{
+													Description: `User Sudi Serial Nos`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"workflow_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
+													Description: `Workflow Id`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 												},
 												"workflow_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"run_summary_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"details": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"error_flag": &schema.Schema{
-													// Type:     schema.TypeBool,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													ForceNew:     true,
-													Computed:     true,
-												},
-												"history_task_info": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"addn_details": &schema.Schema{
-																Type:     schema.TypeList,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"key": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"value": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-															"name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"time_taken": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"type": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"end_time": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"output_str": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"start_time": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"state": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"time_taken": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-												"timestamp": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"system_reset_workflow": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"add_to_inventory": &schema.Schema{
-													// Type:     schema.TypeBool,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													ForceNew:     true,
-													Computed:     true,
-												},
-												"added_on": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"config_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"curr_task_idx": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"description": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"end_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"exec_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"image_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"instance_type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"lastupdate_on": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"start_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"tasks": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"curr_work_item_idx": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"end_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"start_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"state": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"task_seq_no": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"time_taken": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"type": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"end_time": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"output_str": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"start_time": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"state": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"time_taken": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-												"tenant_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"use_state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"version": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"system_workflow": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"add_to_inventory": &schema.Schema{
-													// Type:     schema.TypeBool,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													ForceNew:     true,
-													Computed:     true,
-												},
-												"added_on": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"config_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"curr_task_idx": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"description": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"end_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"exec_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"image_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"instance_type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"lastupdate_on": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"start_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"tasks": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"curr_work_item_idx": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"end_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"start_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"state": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"task_seq_no": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"time_taken": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"type": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"end_time": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"output_str": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"start_time": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"state": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"time_taken": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-												"tenant_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"use_state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"version": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"tenant_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
-									},
-									"version": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
-									},
-									"workflow": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"add_to_inventory": &schema.Schema{
-													// Type:     schema.TypeBool,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													ForceNew:     true,
-													Computed:     true,
-												},
-												"added_on": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"config_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"curr_task_idx": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"description": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"end_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"exec_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"image_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"instance_type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"lastupdate_on": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"start_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"tasks": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"curr_work_item_idx": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"end_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"start_time": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"state": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"task_seq_no": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"time_taken": &schema.Schema{
-																Type:     schema.TypeInt,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"type": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"work_item_list": &schema.Schema{
-																Type:     schema.TypeList,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"command": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"end_time": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"output_str": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"start_time": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"state": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"time_taken": &schema.Schema{
-																			Type:     schema.TypeInt,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-												"tenant_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"use_state": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"version": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"workflow_parameters": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"config_list": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"config_id": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-															},
-															"config_parameters": &schema.Schema{
-																Type:     schema.TypeList,
-																Optional: true,
-																ForceNew: true,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"key": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																		"value": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Optional: true,
-																			ForceNew: true,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-												"license_level": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"license_type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
-												},
-												"top_of_stack_serial_number": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													ForceNew: true,
-													Computed: true,
+													Description: `Workflow Name`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													ForceNew:    true,
+													Computed:    true,
 												},
 											},
 										},
@@ -3240,25 +1818,20 @@ func resourcePnpDeviceImportCreate(ctx context.Context, d *schema.ResourceData, 
 
 	request1 := expandRequestPnpDeviceImportImportDevicesInBulk(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.DeviceOnboardingPnp.ImportDevicesInBulk(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.DeviceOnboardingPnp.ImportDevicesInBulk(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing ImportDevicesInBulk", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	//Analizar verificacion.
 
 	vItem1 := flattenDeviceOnboardingPnpImportDevicesInBulkItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
@@ -3321,166 +1894,40 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItem(ctx context.Context, ke
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_info")))) {
 		request.DeviceInfo = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfo(ctx, key+".device_info.0", d)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".run_summary_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".run_summary_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".run_summary_list")))) {
-		request.RunSummaryList = expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListArray(ctx, key+".run_summary_list", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".system_reset_workflow")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".system_reset_workflow")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".system_reset_workflow")))) {
-		request.SystemResetWorkflow = expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflow(ctx, key+".system_reset_workflow.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".system_workflow")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".system_workflow")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".system_workflow")))) {
-		request.SystemWorkflow = expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflow(ctx, key+".system_workflow.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tenant_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tenant_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tenant_id")))) {
-		request.TenantID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
-		request.Version = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".workflow")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".workflow")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".workflow")))) {
-		request.Workflow = expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflow(ctx, key+".workflow.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".workflow_parameters")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".workflow_parameters")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".workflow_parameters")))) {
-		request.WorkflowParameters = expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParameters(ctx, key+".workflow_parameters.0", d)
-	}
 	return &request
 }
 
 func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfo {
 	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfo{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aaa_credentials")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aaa_credentials")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aaa_credentials")))) {
-		request.AAACredentials = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoAAACredentials(ctx, key+".aaa_credentials.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".added_on")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".added_on")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".added_on")))) {
-		request.AddedOn = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".addn_mac_addrs")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".addn_mac_addrs")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".addn_mac_addrs")))) {
-		request.AddnMacAddrs = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".agent_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".agent_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".agent_type")))) {
-		request.AgentType = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auth_status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auth_status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auth_status")))) {
-		request.AuthStatus = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".authenticated_sudi_serial_no")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".authenticated_sudi_serial_no")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".authenticated_sudi_serial_no")))) {
-		request.AuthenticatedSudiSerialNo = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".capabilities_supported")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".capabilities_supported")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".capabilities_supported")))) {
-		request.CapabilitiesSupported = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cm_state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cm_state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cm_state")))) {
-		request.CmState = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
-		request.Description = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_sudi_serial_nos")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_sudi_serial_nos")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_sudi_serial_nos")))) {
-		request.DeviceSudiSerialNos = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_type")))) {
-		request.DeviceType = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".features_supported")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".features_supported")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".features_supported")))) {
-		request.FeaturesSupported = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".file_system_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".file_system_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".file_system_list")))) {
-		request.FileSystemList = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoFileSystemListArray(ctx, key+".file_system_list", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".first_contact")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".first_contact")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".first_contact")))) {
-		request.FirstContact = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hostname")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hostname")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hostname")))) {
-		request.Hostname = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".http_headers")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".http_headers")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".http_headers")))) {
-		request.HTTPHeaders = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoHTTPHeadersArray(ctx, key+".http_headers", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_file")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_file")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_file")))) {
-		request.ImageFile = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_version")))) {
-		request.ImageVersion = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_interfaces")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_interfaces")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_interfaces")))) {
-		request.IPInterfaces = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfacesArray(ctx, key+".ip_interfaces", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".last_contact")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".last_contact")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".last_contact")))) {
-		request.LastContact = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".last_sync_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".last_sync_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".last_sync_time")))) {
-		request.LastSyncTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".last_update_on")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".last_update_on")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".last_update_on")))) {
-		request.LastUpdateOn = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".location")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".location")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".location")))) {
-		request.Location = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoLocation(ctx, key+".location.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_address")))) {
-		request.MacAddress = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mode")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mode")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mode")))) {
-		request.Mode = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".neighbor_links")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".neighbor_links")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".neighbor_links")))) {
-		request.NeighborLinks = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoNeighborLinksArray(ctx, key+".neighbor_links", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".onb_state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".onb_state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".onb_state")))) {
-		request.OnbState = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".pid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".pid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".pid")))) {
-		request.Pid = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".pnp_profile_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".pnp_profile_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".pnp_profile_list")))) {
-		request.PnpProfileList = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListArray(ctx, key+".pnp_profile_list", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".populate_inventory")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".populate_inventory")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".populate_inventory")))) {
-		request.PopulateInventory = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".pre_workflow_cli_ouputs")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".pre_workflow_cli_ouputs")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".pre_workflow_cli_ouputs")))) {
-		request.PreWorkflowCliOuputs = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPreWorkflowCliOuputsArray(ctx, key+".pre_workflow_cli_ouputs", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_id")))) {
-		request.ProjectID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".project_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".project_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".project_name")))) {
-		request.ProjectName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".reload_requested")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".reload_requested")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".reload_requested")))) {
-		request.ReloadRequested = interfaceToBoolPtr(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".serial_number")))) {
 		request.SerialNumber = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".smart_account_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".smart_account_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".smart_account_id")))) {
-		request.SmartAccountID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".source")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".source")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".source")))) {
-		request.Source = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".stack")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".stack")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".stack")))) {
 		request.Stack = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".stack_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".stack_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".stack_info")))) {
-		request.StackInfo = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoStackInfo(ctx, key+".stack_info.0", d)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_address")))) {
+		request.MacAddress = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".pid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".pid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".pid")))) {
+		request.Pid = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_id")))) {
+		request.SiteID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sudi_required")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sudi_required")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sudi_required")))) {
 		request.SudiRequired = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tags")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tags")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tags")))) {
-		request.Tags = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoTags(ctx, key+".tags.0", d)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_sudi_serial_nos")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_sudi_serial_nos")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_sudi_serial_nos")))) {
+		request.DeviceSudiSerialNos = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".user_mic_numbers")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".user_mic_numbers")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".user_mic_numbers")))) {
+		request.UserMicNumbers = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".user_sudi_serial_nos")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".user_sudi_serial_nos")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".user_sudi_serial_nos")))) {
 		request.UserSudiSerialNos = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".virtual_account_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".virtual_account_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".virtual_account_id")))) {
-		request.VirtualAccountID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".workflow_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".workflow_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".workflow_id")))) {
 		request.WorkflowID = interfaceToString(v)
@@ -3488,381 +1935,20 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfo(ctx context.C
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".workflow_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".workflow_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".workflow_name")))) {
 		request.WorkflowName = interfaceToString(v)
 	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoAAACredentials(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoAAACredentials {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoAAACredentials{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
-		request.Password = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username")))) {
-		request.Username = interfaceToString(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoFileSystemListArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoFileSystemList {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoFileSystemList{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoFileSystemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoFileSystemList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoFileSystemList {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoFileSystemList{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".freespace")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".freespace")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".freespace")))) {
-		request.Freespace = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".readable")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".readable")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".readable")))) {
-		request.Readable = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".size")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".size")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".size")))) {
-		request.Size = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".writeable")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".writeable")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".writeable")))) {
-		request.Writeable = interfaceToBoolPtr(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoHTTPHeadersArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoHTTPHeaders {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoHTTPHeaders{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoHTTPHeaders(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoHTTPHeaders(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoHTTPHeaders {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoHTTPHeaders{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
-		request.Key = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
-		request.Value = interfaceToString(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfacesArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoIPInterfaces {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoIPInterfaces{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfaces(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfaces(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoIPInterfaces {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoIPInterfaces{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_address")))) {
-		request.IPv4Address = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfacesIPv4Address(ctx, key+".ipv4_address.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_address_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_address_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_address_list")))) {
-		request.IPv6AddressList = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfacesIPv6AddressListArray(ctx, key+".ipv6_address_list", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_address")))) {
-		request.MacAddress = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".status")))) {
-		request.Status = interfaceToString(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfacesIPv4Address(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoIPInterfacesIPv4Address {
-	var request dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoIPInterfacesIPv4Address
-	request = d.Get(fixKeyAccess(key))
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfacesIPv6AddressListArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoIPInterfacesIPv6AddressList {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoIPInterfacesIPv6AddressList{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfacesIPv6AddressList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoIPInterfacesIPv6AddressList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoIPInterfacesIPv6AddressList {
-	var request dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoIPInterfacesIPv6AddressList
-	request = d.Get(fixKeyAccess(key))
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoLocation(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoLocation {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoLocation{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".address")))) {
-		request.Address = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".altitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".altitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".altitude")))) {
-		request.Altitude = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".latitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".latitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".latitude")))) {
-		request.Latitude = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".longitude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".longitude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".longitude")))) {
-		request.Longitude = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_id")))) {
-		request.SiteID = interfaceToString(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoNeighborLinksArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoNeighborLinks {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoNeighborLinks{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoNeighborLinks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoNeighborLinks(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoNeighborLinks {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoNeighborLinks{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".local_interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".local_interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".local_interface_name")))) {
-		request.LocalInterfaceName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".local_mac_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".local_mac_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".local_mac_address")))) {
-		request.LocalMacAddress = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".local_short_interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".local_short_interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".local_short_interface_name")))) {
-		request.LocalShortInterfaceName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remote_device_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remote_device_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remote_device_name")))) {
-		request.RemoteDeviceName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remote_interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remote_interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remote_interface_name")))) {
-		request.RemoteInterfaceName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remote_mac_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remote_mac_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remote_mac_address")))) {
-		request.RemoteMacAddress = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remote_platform")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remote_platform")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remote_platform")))) {
-		request.RemotePlatform = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remote_short_interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remote_short_interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remote_short_interface_name")))) {
-		request.RemoteShortInterfaceName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remote_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remote_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remote_version")))) {
-		request.RemoteVersion = interfaceToString(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileList {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileList{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileList {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileList{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".created_by")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".created_by")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".created_by")))) {
-		request.CreatedBy = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".discovery_created")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".discovery_created")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".discovery_created")))) {
-		request.DiscoveryCreated = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".primary_endpoint")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".primary_endpoint")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".primary_endpoint")))) {
-		request.PrimaryEndpoint = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListPrimaryEndpoint(ctx, key+".primary_endpoint.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".profile_name")))) {
-		request.ProfileName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".secondary_endpoint")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".secondary_endpoint")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".secondary_endpoint")))) {
-		request.SecondaryEndpoint = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListSecondaryEndpoint(ctx, key+".secondary_endpoint.0", d)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListPrimaryEndpoint(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListPrimaryEndpoint {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListPrimaryEndpoint{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate")))) {
-		request.Certificate = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fqdn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fqdn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fqdn")))) {
-		request.Fqdn = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_address")))) {
-		request.IPv4Address = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListPrimaryEndpointIPv4Address(ctx, key+".ipv4_address.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_address")))) {
-		request.IPv6Address = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListPrimaryEndpointIPv6Address(ctx, key+".ipv6_address.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".port")))) {
-		request.Port = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".protocol")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".protocol")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".protocol")))) {
-		request.Protocol = interfaceToString(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListPrimaryEndpointIPv4Address(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListPrimaryEndpointIPv4Address {
-	var request dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListPrimaryEndpointIPv4Address
-	request = d.Get(fixKeyAccess(key))
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListPrimaryEndpointIPv6Address(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListPrimaryEndpointIPv6Address {
-	var request dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListPrimaryEndpointIPv6Address
-	request = d.Get(fixKeyAccess(key))
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListSecondaryEndpoint(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListSecondaryEndpoint {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListSecondaryEndpoint{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate")))) {
-		request.Certificate = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fqdn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fqdn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fqdn")))) {
-		request.Fqdn = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_address")))) {
-		request.IPv4Address = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListSecondaryEndpointIPv4Address(ctx, key+".ipv4_address.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_address")))) {
-		request.IPv6Address = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListSecondaryEndpointIPv6Address(ctx, key+".ipv6_address.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".port")))) {
-		request.Port = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".protocol")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".protocol")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".protocol")))) {
-		request.Protocol = interfaceToString(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListSecondaryEndpointIPv4Address(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListSecondaryEndpointIPv4Address {
-	var request dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListSecondaryEndpointIPv4Address
-	request = d.Get(fixKeyAccess(key))
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPnpProfileListSecondaryEndpointIPv6Address(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListSecondaryEndpointIPv6Address {
-	var request dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPnpProfileListSecondaryEndpointIPv6Address
-	request = d.Get(fixKeyAccess(key))
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPreWorkflowCliOuputsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPreWorkflowCliOuputs {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPreWorkflowCliOuputs{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPreWorkflowCliOuputs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoPreWorkflowCliOuputs(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPreWorkflowCliOuputs {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoPreWorkflowCliOuputs{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cli")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cli")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cli")))) {
-		request.Cli = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cli_output")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cli_output")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cli_output")))) {
-		request.CliOutput = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hostname")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hostname")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hostname")))) {
+		request.Hostname = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".stack_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".stack_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".stack_info")))) {
+		request.StackInfo = expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoStackInfo(ctx, key+".stack_info.0", d)
 	}
 	return &request
 }
 
 func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoStackInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoStackInfo {
 	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoStackInfo{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".supports_stack_workflows")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".supports_stack_workflows")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".supports_stack_workflows")))) {
+		request.SupportsStackWorkflows = interfaceToBoolPtr(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_full_ring")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_full_ring")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_full_ring")))) {
 		request.IsFullRing = interfaceToBoolPtr(v)
 	}
@@ -3872,14 +1958,11 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoStackInfo(ctx 
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".stack_ring_protocol")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".stack_ring_protocol")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".stack_ring_protocol")))) {
 		request.StackRingProtocol = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".supports_stack_workflows")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".supports_stack_workflows")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".supports_stack_workflows")))) {
-		request.SupportsStackWorkflows = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".total_member_count")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".total_member_count")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".total_member_count")))) {
-		request.TotalMemberCount = interfaceToIntPtr(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".valid_license_levels")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".valid_license_levels")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".valid_license_levels")))) {
 		request.ValidLicenseLevels = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".total_member_count")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".total_member_count")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".total_member_count")))) {
+		request.TotalMemberCount = interfaceToFloat64Ptr(v)
 	}
 	return &request
 }
@@ -3906,14 +1989,14 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoStackInfoStack
 
 func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoStackInfoStackMemberList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoStackInfoStackMemberList {
 	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoStackInfoStackMemberList{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hardware_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hardware_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hardware_version")))) {
-		request.HardwareVersion = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".serial_number")))) {
+		request.SerialNumber = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".license_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".license_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".license_level")))) {
-		request.LicenseLevel = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
+		request.State = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".license_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".license_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".license_type")))) {
-		request.LicenseType = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".role")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".role")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".role")))) {
+		request.Role = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_address")))) {
 		request.MacAddress = interfaceToString(v)
@@ -3921,713 +2004,26 @@ func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoStackInfoStack
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".pid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".pid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".pid")))) {
 		request.Pid = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".priority")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".priority")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".priority")))) {
-		request.Priority = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".role")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".role")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".role")))) {
-		request.Role = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".serial_number")))) {
-		request.SerialNumber = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".software_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".software_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".software_version")))) {
-		request.SoftwareVersion = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".stack_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".stack_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".stack_number")))) {
-		request.StackNumber = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sudi_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sudi_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sudi_serial_number")))) {
-		request.SudiSerialNumber = interfaceToString(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemDeviceInfoTags(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoTags {
-	var request dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkDeviceInfoTags
-	request = d.Get(fixKeyAccess(key))
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryList {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryList{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryList {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryList{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".details")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".details")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".details")))) {
-		request.Details = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".error_flag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".error_flag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".error_flag")))) {
-		request.ErrorFlag = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".history_task_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".history_task_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".history_task_info")))) {
-		request.HistoryTaskInfo = expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfo(ctx, key+".history_task_info.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".timestamp")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".timestamp")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".timestamp")))) {
-		request.Timestamp = interfaceToIntPtr(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfo(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryListHistoryTaskInfo {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryListHistoryTaskInfo{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".addn_details")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".addn_details")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".addn_details")))) {
-		request.AddnDetails = expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfoAddnDetailsArray(ctx, key+".addn_details", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_taken")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_taken")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_taken")))) {
-		request.TimeTaken = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".work_item_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".work_item_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".work_item_list")))) {
-		request.WorkItemList = expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfoWorkItemListArray(ctx, key+".work_item_list", d)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfoAddnDetailsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryListHistoryTaskInfoAddnDetails {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryListHistoryTaskInfoAddnDetails{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfoAddnDetails(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfoAddnDetails(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryListHistoryTaskInfoAddnDetails {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryListHistoryTaskInfoAddnDetails{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
-		request.Key = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
-		request.Value = interfaceToString(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfoWorkItemListArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryListHistoryTaskInfoWorkItemList {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryListHistoryTaskInfoWorkItemList{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfoWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemRunSummaryListHistoryTaskInfoWorkItemList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryListHistoryTaskInfoWorkItemList {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkRunSummaryListHistoryTaskInfoWorkItemList{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".command")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".command")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".command")))) {
-		request.Command = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
-		request.EndTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".output_str")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".output_str")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".output_str")))) {
-		request.OutputStr = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
-		request.StartTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_taken")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_taken")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_taken")))) {
-		request.TimeTaken = interfaceToIntPtr(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflow(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemResetWorkflow {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemResetWorkflow{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
-		request.TypeID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".add_to_inventory")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".add_to_inventory")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".add_to_inventory")))) {
-		request.AddToInventory = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".added_on")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".added_on")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".added_on")))) {
-		request.AddedOn = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_id")))) {
-		request.ConfigID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".curr_task_idx")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".curr_task_idx")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".curr_task_idx")))) {
-		request.CurrTaskIDx = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
-		request.Description = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
-		request.EndTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".exec_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".exec_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".exec_time")))) {
-		request.ExecTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_id")))) {
-		request.ImageID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".instance_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".instance_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".instance_type")))) {
-		request.InstanceType = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".lastupdate_on")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".lastupdate_on")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".lastupdate_on")))) {
-		request.LastupdateOn = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
-		request.StartTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tasks")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tasks")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tasks")))) {
-		request.Tasks = expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasksArray(ctx, key+".tasks", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tenant_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tenant_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tenant_id")))) {
-		request.TenantID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_state")))) {
-		request.UseState = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
-		request.Version = interfaceToIntPtr(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasksArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemResetWorkflowTasks {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemResetWorkflowTasks{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasks(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemResetWorkflowTasks {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemResetWorkflowTasks{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".curr_work_item_idx")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".curr_work_item_idx")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".curr_work_item_idx")))) {
-		request.CurrWorkItemIDx = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
-		request.EndTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
-		request.StartTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".task_seq_no")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".task_seq_no")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".task_seq_no")))) {
-		request.TaskSeqNo = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_taken")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_taken")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_taken")))) {
-		request.TimeTaken = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".work_item_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".work_item_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".work_item_list")))) {
-		request.WorkItemList = expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasksWorkItemListArray(ctx, key+".work_item_list", d)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasksWorkItemListArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemResetWorkflowTasksWorkItemList {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemResetWorkflowTasksWorkItemList{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemResetWorkflowTasksWorkItemList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemResetWorkflowTasksWorkItemList {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemResetWorkflowTasksWorkItemList{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".command")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".command")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".command")))) {
-		request.Command = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
-		request.EndTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".output_str")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".output_str")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".output_str")))) {
-		request.OutputStr = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
-		request.StartTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_taken")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_taken")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_taken")))) {
-		request.TimeTaken = interfaceToIntPtr(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflow(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemWorkflow {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemWorkflow{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
-		request.TypeID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".add_to_inventory")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".add_to_inventory")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".add_to_inventory")))) {
-		request.AddToInventory = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".added_on")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".added_on")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".added_on")))) {
-		request.AddedOn = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_id")))) {
-		request.ConfigID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".curr_task_idx")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".curr_task_idx")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".curr_task_idx")))) {
-		request.CurrTaskIDx = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
-		request.Description = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
-		request.EndTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".exec_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".exec_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".exec_time")))) {
-		request.ExecTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_id")))) {
-		request.ImageID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".instance_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".instance_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".instance_type")))) {
-		request.InstanceType = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".lastupdate_on")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".lastupdate_on")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".lastupdate_on")))) {
-		request.LastupdateOn = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
-		request.StartTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tasks")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tasks")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tasks")))) {
-		request.Tasks = expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasksArray(ctx, key+".tasks", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tenant_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tenant_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tenant_id")))) {
-		request.TenantID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_state")))) {
-		request.UseState = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
-		request.Version = interfaceToIntPtr(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasksArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemWorkflowTasks {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemWorkflowTasks{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasks(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemWorkflowTasks {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemWorkflowTasks{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".curr_work_item_idx")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".curr_work_item_idx")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".curr_work_item_idx")))) {
-		request.CurrWorkItemIDx = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
-		request.EndTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
-		request.StartTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".task_seq_no")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".task_seq_no")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".task_seq_no")))) {
-		request.TaskSeqNo = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_taken")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_taken")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_taken")))) {
-		request.TimeTaken = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".work_item_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".work_item_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".work_item_list")))) {
-		request.WorkItemList = expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasksWorkItemListArray(ctx, key+".work_item_list", d)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasksWorkItemListArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemWorkflowTasksWorkItemList {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemWorkflowTasksWorkItemList{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemSystemWorkflowTasksWorkItemList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemWorkflowTasksWorkItemList {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkSystemWorkflowTasksWorkItemList{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".command")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".command")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".command")))) {
-		request.Command = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
-		request.EndTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".output_str")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".output_str")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".output_str")))) {
-		request.OutputStr = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
-		request.StartTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_taken")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_taken")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_taken")))) {
-		request.TimeTaken = interfaceToIntPtr(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflow(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflow {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflow{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
-		request.TypeID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".add_to_inventory")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".add_to_inventory")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".add_to_inventory")))) {
-		request.AddToInventory = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".added_on")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".added_on")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".added_on")))) {
-		request.AddedOn = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_id")))) {
-		request.ConfigID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".curr_task_idx")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".curr_task_idx")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".curr_task_idx")))) {
-		request.CurrTaskIDx = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
-		request.Description = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
-		request.EndTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".exec_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".exec_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".exec_time")))) {
-		request.ExecTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".image_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".image_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".image_id")))) {
-		request.ImageID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".instance_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".instance_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".instance_type")))) {
-		request.InstanceType = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".lastupdate_on")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".lastupdate_on")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".lastupdate_on")))) {
-		request.LastupdateOn = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
-		request.StartTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tasks")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tasks")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tasks")))) {
-		request.Tasks = expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasksArray(ctx, key+".tasks", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tenant_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tenant_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tenant_id")))) {
-		request.TenantID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_state")))) {
-		request.UseState = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
-		request.Version = interfaceToIntPtr(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasksArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowTasks {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowTasks{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasks(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasks(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowTasks {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowTasks{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".curr_work_item_idx")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".curr_work_item_idx")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".curr_work_item_idx")))) {
-		request.CurrWorkItemIDx = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
-		request.EndTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
-		request.StartTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".task_seq_no")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".task_seq_no")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".task_seq_no")))) {
-		request.TaskSeqNo = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_taken")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_taken")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_taken")))) {
-		request.TimeTaken = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".work_item_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".work_item_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".work_item_list")))) {
-		request.WorkItemList = expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasksWorkItemListArray(ctx, key+".work_item_list", d)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasksWorkItemListArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowTasksWorkItemList {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowTasksWorkItemList{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasksWorkItemList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowTasksWorkItemList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowTasksWorkItemList {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowTasksWorkItemList{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".command")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".command")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".command")))) {
-		request.Command = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
-		request.EndTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".output_str")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".output_str")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".output_str")))) {
-		request.OutputStr = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
-		request.StartTime = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state")))) {
-		request.State = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_taken")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_taken")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_taken")))) {
-		request.TimeTaken = interfaceToIntPtr(v)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParameters(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowParameters {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowParameters{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_list")))) {
-		request.ConfigList = expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfigListArray(ctx, key+".config_list", d)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".license_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".license_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".license_level")))) {
 		request.LicenseLevel = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".license_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".license_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".license_type")))) {
 		request.LicenseType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".top_of_stack_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".top_of_stack_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".top_of_stack_serial_number")))) {
-		request.TopOfStackSerialNumber = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sudi_serial_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sudi_serial_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sudi_serial_number")))) {
+		request.SudiSerialNumber = interfaceToString(v)
 	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfigListArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowParametersConfigList {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowParametersConfigList{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hardware_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hardware_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hardware_version")))) {
+		request.HardwareVersion = interfaceToString(v)
 	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".stack_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".stack_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".stack_number")))) {
+		request.StackNumber = interfaceToFloat64Ptr(v)
 	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfigList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".software_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".software_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".software_version")))) {
+		request.SoftwareVersion = interfaceToString(v)
 	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfigList(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowParametersConfigList {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowParametersConfigList{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_id")))) {
-		request.ConfigID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".config_parameters")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".config_parameters")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".config_parameters")))) {
-		request.ConfigParameters = expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfigListConfigParametersArray(ctx, key+".config_parameters", d)
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfigListConfigParametersArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowParametersConfigListConfigParameters {
-	request := []dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowParametersConfigListConfigParameters{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfigListConfigParameters(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestPnpDeviceImportImportDevicesInBulkItemWorkflowParametersConfigListConfigParameters(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowParametersConfigListConfigParameters {
-	request := dnacentersdkgo.RequestItemDeviceOnboardingPnpImportDevicesInBulkWorkflowParametersConfigListConfigParameters{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
-		request.Key = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
-		request.Value = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".priority")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".priority")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".priority")))) {
+		request.Priority = interfaceToFloat64Ptr(v)
 	}
 	return &request
 }
@@ -4651,7 +2047,6 @@ func flattenDeviceOnboardingPnpImportDevicesInBulkItemSuccessList(items *[]dnace
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["type_id"] = item.TypeID
 		respItem["id"] = item.ID
 		respItem["device_info"] = flattenDeviceOnboardingPnpImportDevicesInBulkItemSuccessListDeviceInfo(item.DeviceInfo)
 		respItem["system_reset_workflow"] = flattenDeviceOnboardingPnpImportDevicesInBulkItemSuccessListSystemResetWorkflow(item.SystemResetWorkflow)

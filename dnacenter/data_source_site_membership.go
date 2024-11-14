@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -29,13 +29,13 @@ func dataSourceSiteMembership() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of sites to be retrieved
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. offset/starting row
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"serial_number": &schema.Schema{
@@ -134,10 +134,10 @@ func dataSourceSiteMembershipRead(ctx context.Context, d *schema.ResourceData, m
 		queryParams1 := dnacentersdkgo.GetMembershipQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okDeviceFamily {
 			queryParams1.DeviceFamily = vDeviceFamily.(string)
@@ -153,7 +153,7 @@ func dataSourceSiteMembershipRead(ctx context.Context, d *schema.ResourceData, m
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetMembership", err,
+				"Failure when executing 2 GetMembership", err,
 				"Failure at GetMembership, unexpected response", ""))
 			return diags
 		}

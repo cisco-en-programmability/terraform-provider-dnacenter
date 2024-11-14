@@ -12,27 +12,23 @@ description: |-
 It performs create operation on Wireless.
 
 - Access Point Provision and ReProvision
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_wireless_provision_access_point" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
-    payload {
-      custom_ap_group_name   = "string"
-      custom_flex_group_name = ["string"]
-      device_name            = "string"
-      rf_profile             = "string"
-      site_id                = "string"
-      site_name_hierarchy    = "string"
-      type                   = "string"
-      persistbapioutput      = "false"
-    }
+
+    custom_ap_group_name   = "string"
+    custom_flex_group_name = ["string"]
+    device_name            = "string"
+    rf_profile             = "string"
+    site_name_hierarchy    = "string"
+    type                   = "string"
   }
 }
 
@@ -51,6 +47,7 @@ output "dnacenter_wireless_provision_access_point_example" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 - `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
@@ -58,11 +55,7 @@ output "dnacenter_wireless_provision_access_point_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestWirelessAPProvision (see [below for nested schema](#nestedblock--parameters--payload))
-
-Read-Only:
-
-- `items` (List of Object) (see [below for nested schema](#nestedatt--parameters--items))
+- `payload` (Block List) Array of RequestWirelessAPProvisionConnectivityV1 (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
@@ -72,20 +65,17 @@ Optional:
 - `custom_ap_group_name` (String) Custom AP group name
 - `custom_flex_group_name` (List of String) ["Custom flex group name"]
 - `device_name` (String) Device name
-- `persistbapioutput` (String) persistbapioutput
 - `rf_profile` (String) Radio frequency profile name
-- `site_id` (String) Site name hierarchy(ex: Global/...)
 - `site_name_hierarchy` (String) Site name hierarchy(ex: Global/...)
 - `type` (String) ApWirelessConfiguration
 
 
-<a id="nestedatt--parameters--items"></a>
-### Nested Schema for `parameters.items`
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
 - `execution_id` (String)
-- `execution_url` (String)
+- `execution_status_url` (String)
 - `message` (String)
-
-

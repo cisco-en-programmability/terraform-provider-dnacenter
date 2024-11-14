@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,13 +15,13 @@ func dataSourceRoles() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on User and Roles.
 
-- Get all roles for the Cisco DNA Center system
+- Get all roles for the Cisco DNA Center System.
 `,
 
 		ReadContext: dataSourceRolesRead,
 		Schema: map[string]*schema.Schema{
 			"invoke_source": &schema.Schema{
-				Description: `invokeSource header parameter. The source that invoke this API
+				Description: `invokeSource header parameter. The source that invokes this API. The value of this header must be set to "external".
 `,
 				Type:     schema.TypeString,
 				Required: true,
@@ -136,30 +136,30 @@ func dataSourceRolesRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetRolesApI")
+		log.Printf("[DEBUG] Selected method: GetRolesAPI")
 
-		headerParams1 := dnacentersdkgo.GetRolesApIHeaderParams{}
+		headerParams1 := dnacentersdkgo.GetRolesAPIHeaderParams{}
 
 		headerParams1.InvokeSource = vInvokeSource.(string)
 
-		response1, restyResp1, err := client.UserandRoles.GetRolesApI(&headerParams1)
+		response1, restyResp1, err := client.UserandRoles.GetRolesAPI(&headerParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetRolesApI", err,
-				"Failure at GetRolesApI, unexpected response", ""))
+				"Failure when executing 2 GetRolesAPI", err,
+				"Failure at GetRolesAPI, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenUserandRolesGetRolesApIItem(response1.Response)
+		vItem1 := flattenUserandRolesGetRolesAPIItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetRolesApI response",
+				"Failure when setting GetRolesAPI response",
 				err))
 			return diags
 		}
@@ -171,26 +171,26 @@ func dataSourceRolesRead(ctx context.Context, d *schema.ResourceData, m interfac
 	return diags
 }
 
-func flattenUserandRolesGetRolesApIItem(item *dnacentersdkgo.ResponseUserandRolesGetRolesAPIResponse) []map[string]interface{} {
+func flattenUserandRolesGetRolesAPIItem(item *dnacentersdkgo.ResponseUserandRolesGetRolesAPIResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["roles"] = flattenUserandRolesGetRolesApIItemRoles(item.Roles)
+	respItem["roles"] = flattenUserandRolesGetRolesAPIItemRoles(item.Roles)
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenUserandRolesGetRolesApIItemRoles(items *[]dnacentersdkgo.ResponseUserandRolesGetRolesAPIResponseRoles) []map[string]interface{} {
+func flattenUserandRolesGetRolesAPIItemRoles(items *[]dnacentersdkgo.ResponseUserandRolesGetRolesAPIResponseRoles) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["resource_types"] = flattenUserandRolesGetRolesApIItemRolesResourceTypes(item.ResourceTypes)
-		respItem["meta"] = flattenUserandRolesGetRolesApIItemRolesMeta(item.Meta)
+		respItem["resource_types"] = flattenUserandRolesGetRolesAPIItemRolesResourceTypes(item.ResourceTypes)
+		respItem["meta"] = flattenUserandRolesGetRolesAPIItemRolesMeta(item.Meta)
 		respItem["role_id"] = item.RoleID
 		respItem["name"] = item.Name
 		respItem["description"] = item.Description
@@ -200,7 +200,7 @@ func flattenUserandRolesGetRolesApIItemRoles(items *[]dnacentersdkgo.ResponseUse
 	return respItems
 }
 
-func flattenUserandRolesGetRolesApIItemRolesResourceTypes(items *[]dnacentersdkgo.ResponseUserandRolesGetRolesAPIResponseRolesResourceTypes) []map[string]interface{} {
+func flattenUserandRolesGetRolesAPIItemRolesResourceTypes(items *[]dnacentersdkgo.ResponseUserandRolesGetRolesAPIResponseRolesResourceTypes) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -214,7 +214,7 @@ func flattenUserandRolesGetRolesApIItemRolesResourceTypes(items *[]dnacentersdkg
 	return respItems
 }
 
-func flattenUserandRolesGetRolesApIItemRolesMeta(item *dnacentersdkgo.ResponseUserandRolesGetRolesAPIResponseRolesMeta) []map[string]interface{} {
+func flattenUserandRolesGetRolesAPIItemRolesMeta(item *dnacentersdkgo.ResponseUserandRolesGetRolesAPIResponseRolesMeta) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

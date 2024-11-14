@@ -122,5 +122,3 @@ Read-Only:
 - `profile_name` (String)
 - `shares` (Number)
 - `v_cpu` (Number)
-
-

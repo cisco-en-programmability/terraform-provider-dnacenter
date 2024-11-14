@@ -1,3 +1,277 @@
+## 1.2.0-beta (September 5, 2024)
+IMPROVEMENTS:
+* The provider has been updated with Catalyst Center API version `2.3.7.6`
+FEATURES:
+* **New Data Source:** `data_source_application_policy_application_set`
+* **New Data Source:** `data_source_application_policy_application_set_count`
+* **New Data Source:** `data_source_applications_count_v2`
+* **New Data Source:** `data_source_applications_v2`
+* **New Data Source:** `data_source_areas`
+* **New Data Source:** `data_source_assurance_events`
+* **New Data Source:** `data_source_assurance_events_child_events`
+* **New Data Source:** `data_source_assurance_events_count`
+* **New Data Source:** `data_source_assurance_get_sensor_test_results`
+* **New Data Source:** `data_source_assurance_issues`
+* **New Data Source:** `data_source_assurance_issues_count`
+* **New Data Source:** `data_source_buildings`
+* **New Data Source:** `data_source_clients`
+* **New Data Source:** `data_source_clients_count`
+* **New Data Source:** `data_source_custom_issue_definitions`
+* **New Data Source:** `data_source_custom_issue_definitions_count`
+* **New Data Source:** `data_source_diagnostic_validation_sets`
+* **New Data Source:** `data_source_diagnostic_validation_workflows`
+* **New Data Source:** `data_source_diagnostic_validation_workflows_count`
+* **New Data Source:** `data_source_dna_event_snmp_config`
+* **New Data Source:** `data_source_flexible_report_content`
+* **New Data Source:** `data_source_flexible_report_executions`
+* **New Data Source:** `data_source_flexible_report_schedule`
+* **New Data Source:** `data_source_flexible_report_schedules`
+* **New Data Source:** `data_source_floors`
+* **New Data Source:** `data_source_floors_settings`
+* **New Data Source:** `data_source_health_score_definitions`
+* **New Data Source:** `data_source_health_score_definitions_count`
+* **New Data Source:** `data_source_images`
+* **New Data Source:** `data_source_images_addon_images`
+* **New Data Source:** `data_source_images_addon_images_count`
+* **New Data Source:** `data_source_images_count`
+* **New Data Source:** `data_source_images_distribution_server_settings`
+* **New Data Source:** `data_source_images_site_wise_product_names`
+* **New Data Source:** `data_source_images_site_wise_product_names_count`
+* **New Data Source:** `data_source_integration_settings_itsm_instances`
+* **New Data Source:** `data_source_integration_settings_status`
+* **New Data Source:** `data_source_intent_custom_issue_definitions`
+* **New Data Source:** `data_source_interfaces`
+* **New Data Source:** `data_source_interfaces_count`
+* **New Data Source:** `data_source_interfaces_members_associations`
+* **New Data Source:** `data_source_interfaces_members_associations_count`
+* **New Data Source:** `data_source_ipam_server_setting`
+* **New Data Source:** `data_source_ise_integration_status`
+* **New Data Source:** `data_source_lan_automation_sessions`
+* **New Data Source:** `data_source_license_setting`
+* **New Data Source:** `data_source_maps_import_status`
+* **New Data Source:** `data_source_maps_supported_access_points`
+* **New Data Source:** `data_source_network_device_config_task`
+* **New Data Source:** `data_source_network_device_image_updates`
+* **New Data Source:** `data_source_network_device_image_updates_count`
+* **New Data Source:** `data_source_network_device_ip_address`
+* **New Data Source:** `data_source_network_devices`
+* **New Data Source:** `data_source_network_devices_assigned_to_site`
+* **New Data Source:** `data_source_network_devices_assigned_to_site_count`
+* **New Data Source:** `data_source_network_devices_assigned_to_site_id`
+* **New Data Source:** `data_source_network_devices_count`
+* **New Data Source:** `data_source_network_devices_device_controllability_settings`
+* **New Data Source:** `data_source_network_devices_members_associations`
+* **New Data Source:** `data_source_network_devices_members_associations_count`
+* **New Data Source:** `data_source_network_devices_network_profiles_for_sites`
+* **New Data Source:** `data_source_network_devices_network_profiles_for_sites_count`
+* **New Data Source:** `data_source_network_devices_not_assigned_to_site`
+* **New Data Source:** `data_source_network_devices_not_assigned_to_site_count`
+* **New Data Source:** `data_source_network_devices_resync_interval_settings_id`
+* **New Data Source:** `data_source_network_profiles_for_sites_site_assignments`
+* **New Data Source:** `data_source_network_profiles_for_sites_site_assignments_count`
+* **New Data Source:** `data_source_product_names`
+* **New Data Source:** `data_source_product_names_count`
+* **New Data Source:** `data_source_provisioning_settings`
+* **New Data Source:** `data_source_sda_anycast_gateways`
+* **New Data Source:** `data_source_sda_anycast_gateways_count`
+* **New Data Source:** `data_source_sda_authentication_profiles`
+* **New Data Source:** `data_source_sda_extranet_policies`
+* **New Data Source:** `data_source_sda_extranet_policies_count`
+* **New Data Source:** `data_source_sda_fabric_devices`
+* **New Data Source:** `data_source_sda_fabric_devices_count`
+* **New Data Source:** `data_source_sda_fabric_devices_layer2_handoffs`
+* **New Data Source:** `data_source_sda_fabric_devices_layer2_handoffs_count`
+* **New Data Source:** `data_source_sda_fabric_devices_layer2_handoffs_ip_transits`
+* **New Data Source:** `data_source_sda_fabric_devices_layer2_handoffs_ip_transits_count`
+* **New Data Source:** `data_source_sda_fabric_devices_layer2_handoffs_sda_transits`
+* **New Data Source:** `data_source_sda_fabric_devices_layer2_handoffs_sda_transits_count`
+* **New Data Source:** `data_source_sda_fabric_sites`
+* **New Data Source:** `data_source_sda_fabric_sites_count`
+* **New Data Source:** `data_source_sda_fabric_zones`
+* **New Data Source:** `data_source_sda_fabric_zones_count`
+* **New Data Source:** `data_source_sda_fabrics_vlan_to_ssids`
+* **New Data Source:** `data_source_sda_fabrics_vlan_to_ssids_count`
+* **New Data Source:** `data_source_sda_fabrics_vlan_to_ssids_fabric_id`
+* **New Data Source:** `data_source_sda_fabrics_vlan_to_ssids_fabric_id_count`
+* **New Data Source:** `data_source_sda_layer2_virtual_networks`
+* **New Data Source:** `data_source_sda_layer2_virtual_networks_count`
+* **New Data Source:** `data_source_sda_layer3_virtual_networks`
+* **New Data Source:** `data_source_sda_layer3_virtual_networks_count`
+* **New Data Source:** `data_source_sda_multicast_v1`
+* **New Data Source:** `data_source_sda_multicast_virtual_networks`
+* **New Data Source:** `data_source_sda_multicast_virtual_networks_count`
+* **New Data Source:** `data_source_sda_port_assignments`
+* **New Data Source:** `data_source_sda_port_assignments_count`
+* **New Data Source:** `data_source_sda_port_channels`
+* **New Data Source:** `data_source_sda_port_channels_count`
+* **New Data Source:** `data_source_sda_provision_devices`
+* **New Data Source:** `data_source_sda_provision_devices_count`
+* **New Data Source:** `data_source_sda_site_member_member`
+* **New Data Source:** `data_source_sda_transit_networks`
+* **New Data Source:** `data_source_sda_transit_networks_count`
+* **New Data Source:** `data_source_site_count_v2`
+* **New Data Source:** `data_source_site_health_summaries`
+* **New Data Source:** `data_source_site_health_summaries_count`
+* **New Data Source:** `data_source_site_health_summaries_summary_analytics`
+* **New Data Source:** `data_source_site_v2`
+* **New Data Source:** `data_source_site_wise_product_names`
+* **New Data Source:** `data_source_site_wise_product_names_count`
+* **New Data Source:** `data_source_sites`
+* **New Data Source:** `data_source_sites_aaa_settings`
+* **New Data Source:** `data_source_sites_banner_settings`
+* **New Data Source:** `data_source_sites_count`
+* **New Data Source:** `data_source_sites_device_credentials`
+* **New Data Source:** `data_source_sites_device_credentials_status`
+* **New Data Source:** `data_source_sites_dhcp_settings`
+* **New Data Source:** `data_source_sites_dns_settings`
+* **New Data Source:** `data_source_sites_image_distribution_settings`
+* **New Data Source:** `data_source_sites_ntp_settings`
+* **New Data Source:** `data_source_sites_profile_assignments`
+* **New Data Source:** `data_source_sites_profile_assignments_count`
+* **New Data Source:** `data_source_sites_telemetry_settings`
+* **New Data Source:** `data_source_sites_time_zone_settings`
+* **New Data Source:** `data_source_sites_wireless_settings_ssids`
+* **New Data Source:** `data_source_sites_wireless_settings_ssids_count`
+* **New Data Source:** `data_source_system_issue_definitions`
+* **New Data Source:** `data_source_system_issue_definitions_count`
+* **New Data Source:** `data_source_tasks`
+* **New Data Source:** `data_source_tasks_count`
+* **New Data Source:** `data_source_tasks_detail`
+* **New Data Source:** `data_source_users_external_authentication`
+* **New Data Source:** `data_source_users_external_servers_aaa_attribute`
+* **New Data Source:** `data_source_wireless_access_points_factory_reset_request_status`
+* **New Data Source:** `data_source_wireless_controllers_anchor_managed_ap_locations`
+* **New Data Source:** `data_source_wireless_controllers_managed_ap_locations_count`
+* **New Data Source:** `data_source_wireless_controllers_primary_managed_ap_locations`
+* **New Data Source:** `data_source_wireless_controllers_secondary_managed_ap_locations`
+* **New Data Source:** `data_source_wireless_controllers_ssid_details`
+* **New Data Source:** `data_source_wireless_controllers_ssid_details_count`
+* **New Data Source:** `data_source_wireless_controllers_wireless_mobility_groups`
+* **New Data Source:** `data_source_wireless_controllers_wireless_mobility_groups_count`
+* **New Data Source:** `data_source_wireless_profiles`
+* **New Data Source:** `data_source_wireless_profiles_count`
+* **New Data Source:** `data_source_wireless_settings_dot11be_profiles`
+* **New Data Source:** `data_source_wireless_settings_dot11be_profiles_count`
+* **New Data Source:** `data_source_wireless_settings_interfaces`
+* **New Data Source:** `data_source_wireless_settings_interfaces_count`
+* **New Data Source:** `data_source_wireless_settings_rf_profiles`
+* **New Data Source:** `data_source_wireless_settings_rf_profiles_count`
+* **New Resource** `resource_application_policy_application_set`
+* **New Resource** `resource_applications_v2`
+* **New Resource** `resource_assign_to_site_apply`
+* **New Resource** `resource_assurance_events_query`
+* **New Resource** `resource_assurance_events_query_count`
+* **New Resource** `resource_assurance_issues_ignore`
+* **New Resource** `resource_assurance_issues_query`
+* **New Resource** `resource_assurance_issues_query_count`
+* **New Resource** `resource_assurance_issues_resolve`
+* **New Resource** `resource_assurance_issues_summary_analytics`
+* **New Resource** `resource_assurance_issues_top_n_analytics`
+* **New Resource** `resource_assurance_issues_trend_analytics`
+* **New Resource** `resource_assurance_issues_update`
+* **New Resource** `resource_clients_query`
+* **New Resource** `resource_clients_query_count`
+* **New Resource** `resource_clients_summary_analytics`
+* **New Resource** `resource_clients_top_n_analytics`
+* **New Resource** `resource_clients_trend_analytics`
+* **New Resource** `resource_clients_trend_analytics_id`
+* **New Resource** `resource_custom_issue_definitions`
+* **New Resource** `resource_diagnostic_validation_workflows`
+* **New Resource** `resource_event_snmp_config_create`
+* **New Resource** `resource_event_snmp_config_update`
+* **New Resource** `resource_flexible_report_execute`
+* **New Resource** `resource_flexible_report_schedule`
+* **New Resource** `resource_floors_settings`
+* **New Resource** `resource_floors_upload_image`
+* **New Resource** `resource_health_score_definitions`
+* **New Resource** `resource_images_distribution_server_settings`
+* **New Resource** `resource_images_download`
+* **New Resource** `resource_images_site_wise_product_names`
+* **New Resource** `resource_integrate_ise`
+* **New Resource** `resource_interfaces_members_associations_query`
+* **New Resource** `resource_interfaces_query`
+* **New Resource** `resource_interfaces_query_count`
+* **New Resource** `resource_ipam_server_setting`
+* **New Resource** `resource_lan_automation_update_device`
+* **New Resource** `resource_lan_automation_update_v2`
+* **New Resource** `resource_lan_automation_v2`
+* **New Resource** `resource_license_setting`
+* **New Resource** `resource_maps_export`
+* **New Resource** `resource_maps_import`
+* **New Resource** `resource_maps_import_perform`
+* **New Resource** `resource_maps_import_start`
+* **New Resource** `resource_network_device_config_write_memory`
+* **New Resource** `resource_network_device_management_address_update`
+* **New Resource** `resource_network_devices_device_controllability_settings`
+* **New Resource** `resource_network_devices_interfaces_query`
+* **New Resource** `resource_network_devices_issues_remediation_provision`
+* **New Resource** `resource_network_devices_members_associations_query`
+* **New Resource** `resource_network_devices_network_profiles_for_sites`
+* **New Resource** `resource_network_devices_query`
+* **New Resource** `resource_network_devices_query_count`
+* **New Resource** `resource_network_devices_resync_interval_settings`
+* **New Resource** `resource_network_devices_resync_interval_settings_id`
+* **New Resource** `resource_network_devices_resync_interval_settings_override`
+* **New Resource** `resource_network_devices_summary_analytics`
+* **New Resource** `resource_network_devices_trend_analytics`
+* **New Resource** `resource_network_devices_trend_analytics_id`
+* **New Resource** `resource_network_devices_unassign_from_site_apply`
+* **New Resource** `resource_network_profiles_for_sites_site_assignments`
+* **New Resource** `resource_network_profiles_for_sites_site_assignments_bulk_create`
+* **New Resource** `resource_network_profiles_for_sites_site_assignments_bulk_delete`
+* **New Resource** `resource_provisioning_settings`
+* **New Resource** `resource_sda_anycast_gateways_create`
+* **New Resource** `resource_sda_anycast_gateways_delete`
+* **New Resource** `resource_sda_anycast_gateways_update`
+* **New Resource** `resource_sda_authentication_profiles`
+* **New Resource** `resource_sda_extranet_policies`
+* **New Resource** `resource_sda_fabric_devices`
+* **New Resource** `resource_sda_fabric_devices_layer2_handoffs`
+* **New Resource** `resource_sda_fabric_devices_layer2_handoffs_ip_transits`
+* **New Resource** `resource_sda_fabric_devices_layer2_handoffs_sda_transits_create`
+* **New Resource** `resource_sda_fabric_devices_layer2_handoffs_sda_transits_delete`
+* **New Resource** `resource_sda_fabric_devices_layer2_handoffs_sda_transits_update`
+* **New Resource** `resource_sda_fabric_sites`
+* **New Resource** `resource_sda_fabric_zones`
+* **New Resource** `resource_sda_fabrics_vlan_to_ssids_fabric_id`
+* **New Resource** `resource_sda_layer2_virtual_networks`
+* **New Resource** `resource_sda_layer3_virtual_networks`
+* **New Resource** `resource_sda_multicast_v1_update`
+* **New Resource** `resource_sda_multicast_virtual_networks`
+* **New Resource** `resource_sda_port_assignments`
+* **New Resource** `resource_sda_port_channels`
+* **New Resource** `resource_sda_provision_devices`
+* **New Resource** `resource_sda_transit_networks`
+* **New Resource** `resource_site_health_summaries_summary_analytics_create`
+* **New Resource** `resource_sites_aaa_settings`
+* **New Resource** `resource_sites_banner_settings`
+* **New Resource** `resource_sites_bulk`
+* **New Resource** `resource_sites_device_credentials`
+* **New Resource** `resource_sites_device_credentials_apply`
+* **New Resource** `resource_sites_dhcp_settings`
+* **New Resource** `resource_sites_dns_settings`
+* **New Resource** `resource_sites_image_distribution_settings`
+* **New Resource** `resource_sites_ntp_settings`
+* **New Resource** `resource_sites_telemetry_settings`
+* **New Resource** `resource_sites_time_zone_settings`
+* **New Resource** `resource_sites_wireless_settings_ssids`
+* **New Resource** `resource_system_issue_definitions`
+* **New Resource** `resource_telemetry_settings_apply`
+* **New Resource** `resource_trusted_certificates_import`
+* **New Resource** `resource_users_external_authentication_create`
+* **New Resource** `resource_users_external_servers_aaa_attribute`
+* **New Resource** `resource_wireless_access_points_factory_reset_request_provision`
+* **New Resource** `resource_wireless_access_points_provision`
+* **New Resource** `resource_wireless_accesspoint_configuration_create`
+* **New Resource** `resource_wireless_controllers_assign_managed_ap_locations`
+* **New Resource** `resource_wireless_controllers_provision`
+* **New Resource** `resource_wireless_controllers_wireless_mobility_groups_mobility_provision`
+* **New Resource** `resource_wireless_controllers_wireless_mobility_groups_mobility_reset`
+* **New Resource** `resource_wireless_profiles`
+* **New Resource** `resource_wireless_settings_dot11be_profiles`
+* **New Resource** `resource_wireless_settings_interfaces`
+* **New Resource** `resource_wireless_settings_rf_profiles`
+
 ## 1.1.33-beta (June 26, 2024)
 BUGFIXES:
 * Resource `pnp_devoce` pagination bug fixed. #254
@@ -226,14 +500,14 @@ BUGFIXES:
 
 ## 1.1.6-beta (May 09, 2023)
 BUGFIXES:
-* Updating Registry documentation, supports 2.3.5.3 DNA Center API Version.
+* Updating Registry documentation, supports 2.3.5.3 Catalyst Center API Version.
 
 ## 1.1.5-beta (May 09, 2023)
 FEATURES:
 **New Resource:** `resourceConfigurationTemplateVersion`
 
 BUGFIXES:
-* Updating README, supports 2.3.5.3 DNA Center API Version.
+* Updating README, supports 2.3.5.3 Catalyst Center API Version.
 
 ## 1.1.4-beta (May 09, 2023)
 BUGFIXES:
@@ -274,7 +548,7 @@ BUGFIXES:
   - `dnacenter_golden_tag_image_details`
 * `dnacenter_site` documentation issues fixed.
 ## 1.1.0-beta (April 12, 2023)
-`dnacenter-go-sdk` version changes from `github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk` to `github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk`.(Cisco DNA Center's v2.3.5.3 API)
+`dnacenter-go-sdk` version changes from `github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk` to `github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk`.(Cisco Catalyst Center's v2.3.5.3 API)
 FEATURES:
 * **New Data Source:** `data_source_accesspoint_configuration_details_by_task_id`
 * **New Data Source:** `data_source_authentication_policy_servers`
@@ -449,7 +723,7 @@ REMOVED:
 ## 1.0.0-beta (June 17, 2022)
 
 NOTES:
-`dnacenter-go-sdk` version changes from `github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk` to `github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk`.(Cisco DNA Center's v2.3.3.0 API)
+`dnacenter-go-sdk` version changes from `github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk` to `github.com/cisco-en-programmability/dnacenter-go-sdk/v4/sdk`.(Cisco Catalyst Center's v2.3.3.0 API)
 
 FEATURES: 
 * **New Data Source:** `data_source_buildings_planned_access_points`
@@ -507,7 +781,7 @@ BREAKING CHANGES:
 ## 0.3.0 (June 16, 2022)
 
 NOTES: 
-Stable version with `github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk` (Cisco DNA Center 2.2.3.3 API)
+Stable version with `github.com/cisco-en-programmability/dnacenter-go-sdk/v3/sdk` (Cisco Catalyst Center 2.2.3.3 API)
 
 ## 0.3.0-beta (April 04, 2022)
 
@@ -691,7 +965,7 @@ IMPROVEMENTS:
 
 ## 0.1.0-alpha (January 27, 2022)
 
-* New Release, supports Cisco DNA Center API 2.2.3.3.
+* New Release, supports Cisco Catalyst Center API 2.2.3.3.
 
 BREAKING CHANGES:
 * Drop or renamed previous data sources and resources.
@@ -1065,7 +1339,7 @@ BUG FIXES:
 
 ## 0.0.3 (February 01, 2021)
 
-* Initial Release, supports Cisco DNA Center API 2.1.1.
+* Initial Release, supports Cisco Catalyst Center API 2.1.1.
 
 FEATURES:
 * **New Data Source:** `dna_application_set`

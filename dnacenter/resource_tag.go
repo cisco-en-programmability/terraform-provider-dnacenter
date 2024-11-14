@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -67,24 +67,11 @@ func resourceTag() *schema.Resource {
 
 												"items": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"operation": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														}}},
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
 												"name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
@@ -138,6 +125,8 @@ func resourceTag() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
+							Description: `description of the tag.
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -150,6 +139,8 @@ func resourceTag() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"member_type": &schema.Schema{
+										Description: `memberType of the tag (e.g. networkdevice, interface)
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -160,44 +151,43 @@ func resourceTag() *schema.Resource {
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
+
 												"items": &schema.Schema{
+													Description: `items details,multiple rules can be defined by items(e.g. "items": [{"operation": "ILIKE", "name": "managementIpAddress", "value": "%10%"}, {"operation": "ILIKE", "name": "hostname", "value": "%NA%"} ])
+`,
 													Type:     schema.TypeList,
 													Optional: true,
 													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"name": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
-															},
-															"operation": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
-															},
-															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
-															},
-														}}},
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
 												"name": &schema.Schema{
+													Description: `name of the parameter (e.g. for interface:portName,adminStatus,speed,status,description. for networkdevice:family,series,hostname,managementIpAddress,groupNameHierarchy,softwareVersion)
+`,
 													Type:     schema.TypeString,
+													Optional: true,
 													Computed: true,
 												},
 												"operation": &schema.Schema{
+													Description: `opeartion used in the rules (e.g. OR,IN,EQ,LIKE,ILIKE,AND)
+`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"value": &schema.Schema{
+													Description: `value of the parameter (e.g. for portName:1/0/1,for adminStatus,status:up/down, for speed: any integer value, for description: any valid string, for family:switches, for series:C3650, for managementIpAddress:10.197.124.90, groupNameHierarchy:Global, softwareVersion: 16.9.1)
+`,
 													Type:     schema.TypeString,
+													Optional: true,
 													Computed: true,
 												},
 												"values": &schema.Schema{
+													Description: `values of the parameter,Only one of the value or values can be used for the given parameter. (for managementIpAddress e.g. ["10.197.124.90","10.197.124.91"])
+`,
 													Type:     schema.TypeList,
+													Optional: true,
 													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
@@ -210,22 +200,30 @@ func resourceTag() *schema.Resource {
 							},
 						},
 						"id": &schema.Schema{
+							Description: `instanceUuid generated for the tag.
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"instance_tenant_id": &schema.Schema{
+							Description: `instanceTenantId generated for the tag.
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"name": &schema.Schema{
+							Description: `name of the tag.
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"system_tag": &schema.Schema{
-							// Type:     schema.TypeBool,
+							Description: `true for system created tags, false for user defined tags
+`,
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -678,62 +676,24 @@ func expandRequestTagCreateTagDynamicRules(ctx context.Context, key string, d *s
 
 func expandRequestTagCreateTagDynamicRulesRules(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagCreateTagDynamicRulesRules {
 	request := dnacentersdkgo.RequestTagCreateTagDynamicRulesRules{}
-	// if v, ok := d.GetOkExists(fixKeyAccess(key + ".values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".values")))) {
-	// 	request.Values = interfaceToSliceString(v)
-	// }
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".values")))) {
+		request.Values = interfaceToSliceString(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".items")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".items")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".items")))) {
-		request.Items = expandRequestTagCreateTagDynamicRulesRulesItemArray(ctx, key+".items", d)
+		request.Items = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation")))) {
 		request.Operation = interfaceToString(v)
 	}
-	// if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-	// 	request.Name = interfaceToString(v)
-	// }
-	// if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
-	// 	request.Value = interfaceToString(v)
-	// }
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestTagCreateTagDynamicRulesRulesItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems {
-	request := []dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestTagCreateTagDynamicRulesRulesItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestTagCreateTagDynamicRulesRulesItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems {
-	request := dnacentersdkgo.RequestTagCreateTagDynamicRulesRulesItems{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation")))) {
-		request.Operation = interfaceToString(v)
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
 	}
-
 	return &request
 }
 
@@ -799,13 +759,14 @@ func expandRequestTagUpdateTagDynamicRules(ctx context.Context, key string, d *s
 	}
 	return &request
 }
+
 func expandRequestTagUpdateTagDynamicRulesRules(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagUpdateTagDynamicRulesRules {
 	request := dnacentersdkgo.RequestTagUpdateTagDynamicRulesRules{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".values")))) {
 		request.Values = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".items")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".items")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".items")))) {
-		request.Items = expandRequestTagUpdateTagDynamicRulesRulesItemArray(ctx, key+".items", d)
+		request.Items = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation")))) {
 		request.Operation = interfaceToString(v)
@@ -819,44 +780,6 @@ func expandRequestTagUpdateTagDynamicRulesRules(ctx context.Context, key string,
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-	return &request
-}
-
-func expandRequestTagUpdateTagDynamicRulesRulesItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems {
-	request := []dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestTagUpdateTagDynamicRulesRulesItems(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestTagUpdateTagDynamicRulesRulesItems(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems {
-	request := dnacentersdkgo.RequestTagUpdateTagDynamicRulesRulesItems{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
-		request.Value = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation")))) {
-		request.Operation = interfaceToString(v)
-	}
-
 	return &request
 }
 

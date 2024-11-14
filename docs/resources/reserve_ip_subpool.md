@@ -23,31 +23,6 @@ It manages create, read, update and delete operations on Network Settings.
 resource "dnacenter_reserve_ip_subpool" "example" {
   provider = dnacenter
 
-  parameters {
-
-    id                 = "string"
-    ipv4_dhcp_servers  = ["string"]
-    ipv4_dns_servers   = ["string"]
-    ipv4_gate_way      = "string"
-    ipv4_global_pool   = "string"
-    ipv4_prefix        = "false"
-    ipv4_prefix_length = 1
-    ipv4_subnet        = "string"
-    ipv4_total_host    = 1
-    ipv6_address_space = "false"
-    ipv6_dhcp_servers  = ["string"]
-    ipv6_dns_servers   = ["string"]
-    ipv6_gate_way      = "string"
-    ipv6_global_pool   = "string"
-    ipv6_prefix        = "false"
-    ipv6_prefix_length = 1
-    ipv6_subnet        = "string"
-    ipv6_total_host    = 1
-    name               = "string"
-    site_id            = "string"
-    slaac_support      = "false"
-    type               = "string"
-  }
 }
 
 output "dnacenter_reserve_ip_subpool_example" {
@@ -71,31 +46,28 @@ output "dnacenter_reserve_ip_subpool_example" {
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
-Required:
-
-- `id` (String) id path parameter. Id of reserve ip subpool to be deleted.
-- `site_id` (String) siteId path parameter. Site id of site to update sub pool.
-
 Optional:
 
-- `ipv4_dhcp_servers` (List of String) IPv4 input for dhcp server ip example: 1.1.1.1
-- `ipv4_dns_servers` (List of String) IPv4 input for dns server ip example: 4.4.4.4
+- `id` (String) id path parameter. Id of reserve ip subpool to be deleted.
+- `ipv4_dhcp_servers` (List of String) IPv4 input for dhcp server ip example: ["1.1.1.1"]
+- `ipv4_dns_servers` (List of String) IPv4 input for dns server ip example: ["4.4.4.4"]
 - `ipv4_gate_way` (String) Gateway ip address details, example: 175.175.0.1
 - `ipv4_global_pool` (String) IP v4 Global pool address with cidr, example: 175.175.0.0/16
 - `ipv4_prefix` (String) IPv4 prefix value is true, the ip4 prefix length input field is enabled , if it is false ipv4 total Host input is enable
 - `ipv4_prefix_length` (Number) The ipv4 prefix length is required when ipv4prefix value is true.
-- `ipv4_subnet` (String) IPv4 Subnet address, example: 175.175.0.0
+- `ipv4_subnet` (String) IPv4 Subnet address, example: 175.175.0.0. Either ipv4Subnet or ipv4TotalHost needs to be passed if creating IPv4 subpool.
 - `ipv4_total_host` (Number) IPv4 total host is required when ipv4prefix value is false.
-- `ipv6_address_space` (String) If the value is false only ipv4 input are required, otherwise both ipv6 and ipv4 are required
-- `ipv6_dhcp_servers` (List of String) IPv6 format dhcp server as input example : 2001:db8::1234
-- `ipv6_dns_servers` (List of String) IPv6 format dns server input example: 2001:db8::1234
+- `ipv6_address_space` (String) If the value is omitted or false only ipv4 input are required, otherwise both ipv6 and ipv4 are required
+- `ipv6_dhcp_servers` (List of String) IPv6 format dhcp server as input example : ["2001:db8::1234"]
+- `ipv6_dns_servers` (List of String) IPv6 format dns server input example: ["2001:db8::1234"]
 - `ipv6_gate_way` (String) Gateway ip address details, example: 2001:db8:85a3:0:100::1
 - `ipv6_global_pool` (String) IPv6 Global pool address with cidr this is required when Ipv6AddressSpace value is true, example: 2001:db8:85a3::/64
 - `ipv6_prefix` (String) Ipv6 prefix value is true, the ip6 prefix length input field is enabled , if it is false ipv6 total Host input is enable
 - `ipv6_prefix_length` (Number) IPv6 prefix length is required when the ipv6prefix value is true
-- `ipv6_subnet` (String) IPv6 Subnet address, example :2001:db8:85a3:0:100::
+- `ipv6_subnet` (String) IPv6 Subnet address, example :2001:db8:85a3:0:100::. Either ipv6Subnet or ipv6TotalHost needs to be passed if creating IPv6 subpool.
 - `ipv6_total_host` (Number) IPv6 total host is required when ipv6prefix value is false.
 - `name` (String) Name of the reserve ip sub pool
+- `site_id` (String) siteId path parameter. Site id to reserve the ip sub pool.
 - `slaac_support` (String) Slaac Support
 - `type` (String) Type of the reserve ip sub pool
 

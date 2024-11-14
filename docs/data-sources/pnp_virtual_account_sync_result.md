@@ -4,14 +4,14 @@ page_title: "dnacenter_pnp_virtual_account_sync_result Data Source - terraform-p
 subcategory: ""
 description: |-
   It performs read operation on Device Onboarding (PnP).
-  Returns the summary of devices synced from the given smart account & virtual account with PnP
+  Returns the summary of devices synced from the given smart account & virtual account with PnP (Deprecated)
 ---
 
 # dnacenter_pnp_virtual_account_sync_result (Data Source)
 
 It performs read operation on Device Onboarding (PnP).
 
-- Returns the summary of devices synced from the given smart account & virtual account with PnP
+- Returns the summary of devices synced from the given smart account & virtual account with PnP (Deprecated)
 
 ## Example Usage
 
@@ -89,5 +89,3 @@ Read-Only:
 
 - `device_sn_list` (List of String)
 - `sync_type` (String)
-
-

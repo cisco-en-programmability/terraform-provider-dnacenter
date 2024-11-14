@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -19,11 +19,12 @@ func resourcePnpDeviceSiteClaim() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Device Onboarding (PnP).
 
-- Claim a device based on DNA-C Site-based design process. Some required parameters differ based on device platform:
+- Claim a device based on Catalyst Center Site-based design process. Some required parameters differ based on device
+platform:
 Default/StackSwitch: imageInfo, configInfo.
 AccessPoints: rfProfile.
 Sensors: sensorProfile.
-CatalystWLC/MobilityExpress/EWC: staticIP, subnetMask, gateway. vlanID and ipInterfaceName are also allowed for Catalyst
+CatalystWLC/MobilityExpress/EWC: staticIP, subnetMask, gateway. vlanId and ipInterfaceName are also allowed for Catalyst
 9800 WLCs.
 `,
 
@@ -118,6 +119,14 @@ CatalystWLC/MobilityExpress/EWC: staticIP, subnetMask, gateway. vlanID and ipInt
 							ForceNew: true,
 							Computed: true,
 						},
+						"hostname": &schema.Schema{
+							Description: `hostname to configure on Device.
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+							Computed: true,
+						},
 						"image_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
@@ -145,7 +154,7 @@ CatalystWLC/MobilityExpress/EWC: staticIP, subnetMask, gateway. vlanID and ipInt
 								},
 							},
 						},
-						"interface_name": &schema.Schema{
+						"ip_interface_name": &schema.Schema{
 							Description: `for Catalyst 9800 WLC
 `,
 							Type:     schema.TypeString,
@@ -220,25 +229,20 @@ func resourcePnpDeviceSiteClaimCreate(ctx context.Context, d *schema.ResourceDat
 
 	request1 := expandRequestPnpDeviceSiteClaimClaimADeviceToASite(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.DeviceOnboardingPnp.ClaimADeviceToASite(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.DeviceOnboardingPnp.ClaimADeviceToASite(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing ClaimADeviceToASite", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	//Analizar verificacion.
 
 	vItem1 := flattenDeviceOnboardingPnpClaimADeviceToASiteItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
@@ -297,11 +301,14 @@ func expandRequestPnpDeviceSiteClaimClaimADeviceToASite(ctx context.Context, key
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan_id")))) {
 		request.VLANID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".interface_name")))) {
-		request.InterfaceName = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_interface_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_interface_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_interface_name")))) {
+		request.IPInterfaceName = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sensor_profile")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sensor_profile")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sensor_profile")))) {
 		request.SensorProfile = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hostname")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hostname")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hostname")))) {
+		request.Hostname = interfaceToString(v)
 	}
 	return &request
 }

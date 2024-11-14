@@ -3,8 +3,9 @@ resource "dnacenter_pnp_device_claim" "example" {
   provider = dnacenter
   parameters {
 
-    config_file_url = "string"
-    config_id       = "string"
+    authorization_needed = "false"
+    config_file_url      = "string"
+    config_id            = "string"
     device_claim_list {
 
       config_list {

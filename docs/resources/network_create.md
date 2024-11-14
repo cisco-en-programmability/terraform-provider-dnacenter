@@ -14,16 +14,16 @@ It performs create operation on Network Settings.
 
 - API to create a network for DHCP,  Syslog, SNMP, NTP, Network AAA, Client and EndPoint AAA, and/or DNS center server
 settings.
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_network_create" "example" {
-  provider = dnacenter
+  provider = meraki
+  site_id  = "string"
   parameters {
 
     settings {
@@ -74,8 +74,6 @@ resource "dnacenter_network_create" "example" {
       }
       timezone = "string"
     }
-    site_id           = "string"
-    persistbapioutput = "false"
   }
 }
 
@@ -106,7 +104,6 @@ Required:
 
 Optional:
 
-- `persistbapioutput` (String) siteId path parameter. Site id to which site details to associate with the network settings.
 - `settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings))
 
 <a id="nestedblock--parameters--settings"></a>
@@ -205,5 +202,3 @@ Read-Only:
 - `execution_id` (String)
 - `execution_status_url` (String)
 - `message` (String)
-
-

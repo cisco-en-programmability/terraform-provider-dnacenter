@@ -24,22 +24,22 @@ WAN, to associate WAN interfaces with specific SP Profile and to be able to defi
 ```terraform
 resource "dnacenter_qos_device_interface" "example" {
   provider = dnacenter
-  parameters {
-    payload {
-      excluded_interfaces = ["string"]
-      id                  = "string"
-      name                = "string"
-      network_device_id   = "string"
-      qos_device_interface_info {
 
-        dmvpn_remote_sites_bw = [1]
-        instance_id           = 1
-        interface_id          = "string"
-        interface_name        = "string"
-        label                 = "string"
-        role                  = "string"
-        upload_bw             = 1
-      }
+  parameters {
+
+    excluded_interfaces = ["string"]
+    id                  = "string"
+    name                = "string"
+    network_device_id   = "string"
+    qos_device_interface_info {
+
+      dmvpn_remote_sites_bw = [1]
+      instance_id           = 1
+      interface_id          = "string"
+      interface_name        = "string"
+      label                 = "string"
+      role                  = "string"
+      upload_bw             = 1
     }
   }
 }
@@ -67,10 +67,10 @@ output "dnacenter_qos_device_interface_example" {
 
 Optional:
 
-- `parameters` (Block List) Array of RequestApplicationPolicyCreateQosDeviceInterfaceInfo (see [below for nested schema](#nestedblock--parameters--parameters))
+- `payload` (Block List) Array of RequestApplicationPolicyCreateApplication (see [below for nested schema](#nestedblock--parameters--payload))
 
-<a id="nestedblock--parameters--parameters"></a>
-### Nested Schema for `parameters.parameters`
+<a id="nestedblock--parameters--payload"></a>
+### Nested Schema for `parameters.payload`
 
 Optional:
 
@@ -78,10 +78,10 @@ Optional:
 - `id` (String) Id of Qos device info
 - `name` (String) Device name
 - `network_device_id` (String) Network device id
-- `qos_device_interface_info` (Block List) (see [below for nested schema](#nestedblock--parameters--parameters--qos_device_interface_info))
+- `qos_device_interface_info` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--qos_device_interface_info))
 
-<a id="nestedblock--parameters--parameters--qos_device_interface_info"></a>
-### Nested Schema for `parameters.parameters.qos_device_interface_info`
+<a id="nestedblock--parameters--payload--qos_device_interface_info"></a>
+### Nested Schema for `parameters.payload.qos_device_interface_info`
 
 Optional:
 

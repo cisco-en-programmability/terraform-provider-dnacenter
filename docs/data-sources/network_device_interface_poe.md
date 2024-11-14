@@ -56,5 +56,3 @@ Read-Only:
 - `max_port_power` (String)
 - `oper_status` (String)
 - `port_power_drawn` (String)
-
-

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -22,37 +22,37 @@ additional value added services.
 		ReadContext: dataSourceDeviceHealthRead,
 		Schema: map[string]*schema.Schema{
 			"device_role": &schema.Schema{
-				Description: `deviceRole query parameter. The device role (One of CORE, ACCESS, DISTRIBUTION, ROUTER, WLC, AP)
+				Description: `deviceRole query parameter. CORE, ACCESS, DISTRIBUTION, ROUTER, WLC, or AP (case insensitive)
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"end_time": &schema.Schema{
-				Description: `endTime query parameter. UTC epoch time in miliseconds
+				Description: `endTime query parameter. UTC epoch time in milliseconds
 `,
 				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"health": &schema.Schema{
-				Description: `health query parameter. The device overall health (One of POOR, FAIR, GOOD)
+				Description: `health query parameter. DNAC health catagory: POOR, FAIR, or GOOD (case insensitive)
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"limit": &schema.Schema{
-				Description: `limit query parameter. Max number of device entries in the response (default to 50.  Max at 1000)
+				Description: `limit query parameter. Max number of device entries in the response (default to 50. Max at 500)
 `,
 				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
-				Description: `offset query parameter. The offset of the first device in the returned data
+				Description: `offset query parameter. The offset of the first device in the returned data (Mutiple of 'limit' + 1)
 `,
 				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"site_id": &schema.Schema{
-				Description: `siteId query parameter. Assurance site UUID value
+				Description: `siteId query parameter. DNAC site UUID
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -99,6 +99,65 @@ additional value added services.
 										Type:        schema.TypeInt,
 										Computed:    true,
 									},
+
+									"radio2": &schema.Schema{
+										Description: `Radio2`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"radio3": &schema.Schema{
+										Description: `Radio3`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
+						"ap_count": &schema.Schema{
+							Description: `Number of AP count
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"avg_temperature": &schema.Schema{
+							Description: `Average device (switch) temperature
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
+						},
+
+						"band": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"radio0": &schema.Schema{
+										Description: `Radio0`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"radio1": &schema.Schema{
+										Description: `Radio1`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"radio2": &schema.Schema{
+										Description: `Radio2`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"radio3": &schema.Schema{
+										Description: `Radio3`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
 								},
 							},
 						},
@@ -111,7 +170,7 @@ additional value added services.
 
 									"ghz24": &schema.Schema{
 										Description: `Ghz24`,
-										Type:        schema.TypeFloat,
+										Type:        schema.TypeInt,
 										Computed:    true,
 									},
 
@@ -123,7 +182,7 @@ additional value added services.
 
 									"radio0": &schema.Schema{
 										Description: `Radio0`,
-										Type:        schema.TypeFloat,
+										Type:        schema.TypeInt,
 										Computed:    true,
 									},
 
@@ -132,44 +191,104 @@ additional value added services.
 										Type:        schema.TypeInt,
 										Computed:    true,
 									},
+
+									"radio2": &schema.Schema{
+										Description: `Radio2`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"radio3": &schema.Schema{
+										Description: `Radio3`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
 								},
 							},
 						},
 
 						"cpu_health": &schema.Schema{
-							Description: `Cpu Health`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Device CPU health score
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"cpu_ulitilization": &schema.Schema{
-							Description: `Cpu Ulitilization`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Device's CPU utilization
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
+						},
+
+						"cpu_utilization": &schema.Schema{
+							Description: `Device's CPU utilization
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
 						},
 
 						"device_family": &schema.Schema{
-							Description: `Device Family`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Device family
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"device_type": &schema.Schema{
-							Description: `Device Type`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Device type
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"free_memory_buffer": &schema.Schema{
+							Description: `Device free memory
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
+						},
+
+						"free_memory_buffer_health": &schema.Schema{
+							Description: `Device free memory buffer health
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"free_timer": &schema.Schema{
+							Description: `Device free timer
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
+						},
+
+						"free_timer_score": &schema.Schema{
+							Description: `Device free timer health score
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"inter_device_link_avail_fabric": &schema.Schema{
+							Description: `Device uplink health
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"inter_device_link_avail_health": &schema.Schema{
-							Description: `Inter Device Link Avail Health`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Device connectivity status
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"interface_link_err_health": &schema.Schema{
-							Description: `Interface Link Err Health`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Device (AP) error health score
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"interference_health": &schema.Schema{
@@ -201,56 +320,83 @@ additional value added services.
 										Type:        schema.TypeInt,
 										Computed:    true,
 									},
+
+									"radio2": &schema.Schema{
+										Description: `Radio2`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"radio3": &schema.Schema{
+										Description: `Radio3`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
 								},
 							},
 						},
 
 						"ip_address": &schema.Schema{
-							Description: `Ip Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Management IP address of the device
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"issue_count": &schema.Schema{
-							Description: `Issue Count`,
-							Type:        schema.TypeFloat,
-							Computed:    true,
+							Description: `Number of issues
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"location": &schema.Schema{
-							Description: `Location`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Site location in which this device is assigned to
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"mac_address": &schema.Schema{
-							Description: `Mac Address`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `MAC address of the device
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"max_temperature": &schema.Schema{
+							Description: `Max device (switch) temperature
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
 						},
 
 						"memory_utilization": &schema.Schema{
-							Description: `Memory Utilization`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Device memory utilization
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
 						},
 
 						"memory_utilization_health": &schema.Schema{
-							Description: `Memory Utilization Health`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Device memory utilization health score
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"model": &schema.Schema{
-							Description: `Model`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Device model string
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Device name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"noise_health": &schema.Schema{
@@ -259,8 +405,20 @@ additional value added services.
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"ghz24": &schema.Schema{
+										Description: `Ghz24`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
 									"ghz50": &schema.Schema{
 										Description: `Ghz50`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"radio0": &schema.Schema{
+										Description: `Radio0`,
 										Type:        schema.TypeInt,
 										Computed:    true,
 									},
@@ -270,26 +428,55 @@ additional value added services.
 										Type:        schema.TypeInt,
 										Computed:    true,
 									},
+
+									"radio2": &schema.Schema{
+										Description: `Radio2`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"radio3": &schema.Schema{
+										Description: `Radio3`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
 								},
 							},
 						},
 
 						"os_version": &schema.Schema{
-							Description: `Os Version`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Device OS version string
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"overall_health": &schema.Schema{
-							Description: `Overall Health`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Overall health score
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"packet_pool": &schema.Schema{
+							Description: `Device packet pool
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"packet_pool_health": &schema.Schema{
+							Description: `Device packet pool
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"reachability_health": &schema.Schema{
-							Description: `Reachability Health`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Device reachability in the network
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"utilization_health": &schema.Schema{
@@ -321,8 +508,48 @@ additional value added services.
 										Type:        schema.TypeInt,
 										Computed:    true,
 									},
+
+									"radio2": &schema.Schema{
+										Description: `Radio2`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"radio3": &schema.Schema{
+										Description: `Radio3`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
 								},
 							},
+						},
+
+						"uuid": &schema.Schema{
+							Description: `Device UUID
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"wan_link_utilization": &schema.Schema{
+							Description: `WLAN link utilization
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
+						},
+
+						"wqe_pools": &schema.Schema{
+							Description: `Device WQE pool
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
+						},
+
+						"wqe_pools_health": &schema.Schema{
+							Description: `Device WQE pool health
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 					},
 				},
@@ -377,7 +604,7 @@ func dataSourceDeviceHealthRead(ctx context.Context, d *schema.ResourceData, m i
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing Devices", err,
+				"Failure when executing 2 Devices", err,
 				"Failure at Devices, unexpected response", ""))
 			return diags
 		}
@@ -406,40 +633,94 @@ func flattenDevicesDevicesItems(items *[]dnacentersdkgo.ResponseDevicesDevicesRe
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["name"] = item.Name
-		respItem["model"] = item.Model
-		respItem["os_version"] = item.OsVersion
-		respItem["ip_address"] = item.IPAddress
-		respItem["overall_health"] = item.OverallHealth
-		respItem["issue_count"] = item.IssueCount
-		respItem["location"] = item.Location
-		respItem["device_family"] = item.DeviceFamily
 		respItem["device_type"] = item.DeviceType
-		respItem["mac_address"] = item.MacAddress
-		respItem["interface_link_err_health"] = item.InterfaceLinkErrHealth
-		respItem["cpu_ulitilization"] = item.CPUUlitilization
+		respItem["cpu_utilization"] = item.CPUUtilization
+		respItem["overall_health"] = item.OverallHealth
+		respItem["utilization_health"] = flattenDevicesDevicesItemsUtilizationHealth(item.UtilizationHealth)
+		respItem["air_quality_health"] = flattenDevicesDevicesItemsAirQualityHealth(item.AirQualityHealth)
+		respItem["ip_address"] = item.IPAddress
 		respItem["cpu_health"] = item.CPUHealth
-		respItem["memory_utilization_health"] = item.MemoryUtilizationHealth
+		respItem["device_family"] = item.DeviceFamily
+		respItem["issue_count"] = item.IssueCount
+		respItem["mac_address"] = item.MacAddress
+		respItem["noise_health"] = flattenDevicesDevicesItemsNoiseHealth(item.NoiseHealth)
+		respItem["os_version"] = item.OsVersion
+		respItem["name"] = item.Name
+		respItem["interface_link_err_health"] = item.InterfaceLinkErrHealth
 		respItem["memory_utilization"] = item.MemoryUtilization
 		respItem["inter_device_link_avail_health"] = item.InterDeviceLinkAvailHealth
-		respItem["reachability_health"] = item.ReachabilityHealth
-		respItem["client_count"] = flattenDevicesDevicesItemsClientCount(item.ClientCount)
 		respItem["interference_health"] = flattenDevicesDevicesItemsInterferenceHealth(item.InterferenceHealth)
-		respItem["noise_health"] = flattenDevicesDevicesItemsNoiseHealth(item.NoiseHealth)
-		respItem["air_quality_health"] = flattenDevicesDevicesItemsAirQualityHealth(item.AirQualityHealth)
-		respItem["utilization_health"] = flattenDevicesDevicesItemsUtilizationHealth(item.UtilizationHealth)
+		respItem["model"] = item.Model
+		respItem["location"] = item.Location
+		respItem["reachability_health"] = item.ReachabilityHealth
+		respItem["band"] = flattenDevicesDevicesItemsBand(item.Band)
+		respItem["memory_utilization_health"] = item.MemoryUtilizationHealth
+		respItem["client_count"] = flattenDevicesDevicesItemsClientCount(item.ClientCount)
+		respItem["avg_temperature"] = item.AvgTemperature
+		respItem["max_temperature"] = item.MaxTemperature
+		respItem["inter_device_link_avail_fabric"] = item.InterDeviceLinkAvailFabric
+		respItem["ap_count"] = item.ApCount
+		respItem["free_timer_score"] = item.FreeTimerScore
+		respItem["free_timer"] = item.FreeTimer
+		respItem["packet_pool_health"] = item.PacketPoolHealth
+		respItem["packet_pool"] = item.PacketPool
+		respItem["free_memory_buffer_health"] = item.FreeMemoryBufferHealth
+		respItem["free_memory_buffer"] = item.FreeMemoryBuffer
+		respItem["wqe_pools_health"] = item.WqePoolsHealth
+		respItem["wqe_pools"] = item.WqePools
+		respItem["wan_link_utilization"] = item.WanLinkUtilization
+		respItem["cpu_ulitilization"] = item.CPUUlitilization
+		respItem["uuid"] = item.UUID
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenDevicesDevicesItemsClientCount(item *dnacentersdkgo.ResponseDevicesDevicesResponseClientCount) []map[string]interface{} {
+func flattenDevicesDevicesItemsUtilizationHealth(item *dnacentersdkgo.ResponseDevicesDevicesResponseUtilizationHealth) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["radio0"] = item.Radio0
 	respItem["radio1"] = item.Radio1
+	respItem["radio2"] = item.Radio2
+	respItem["radio3"] = item.Radio3
+	respItem["ghz24"] = item.Ghz24
+	respItem["ghz50"] = item.Ghz50
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenDevicesDevicesItemsAirQualityHealth(item *dnacentersdkgo.ResponseDevicesDevicesResponseAirQualityHealth) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["radio0"] = item.Radio0
+	respItem["radio1"] = item.Radio1
+	respItem["radio2"] = item.Radio2
+	respItem["radio3"] = item.Radio3
+	respItem["ghz24"] = item.Ghz24
+	respItem["ghz50"] = item.Ghz50
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenDevicesDevicesItemsNoiseHealth(item *dnacentersdkgo.ResponseDevicesDevicesResponseNoiseHealth) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["radio0"] = item.Radio0
+	respItem["radio1"] = item.Radio1
+	respItem["radio2"] = item.Radio2
+	respItem["radio3"] = item.Radio3
 	respItem["ghz24"] = item.Ghz24
 	respItem["ghz50"] = item.Ghz50
 
@@ -456,6 +737,8 @@ func flattenDevicesDevicesItemsInterferenceHealth(item *dnacentersdkgo.ResponseD
 	respItem := make(map[string]interface{})
 	respItem["radio0"] = item.Radio0
 	respItem["radio1"] = item.Radio1
+	respItem["radio2"] = item.Radio2
+	respItem["radio3"] = item.Radio3
 	respItem["ghz24"] = item.Ghz24
 	respItem["ghz50"] = item.Ghz50
 
@@ -465,13 +748,15 @@ func flattenDevicesDevicesItemsInterferenceHealth(item *dnacentersdkgo.ResponseD
 
 }
 
-func flattenDevicesDevicesItemsNoiseHealth(item *dnacentersdkgo.ResponseDevicesDevicesResponseNoiseHealth) []map[string]interface{} {
+func flattenDevicesDevicesItemsBand(item *dnacentersdkgo.ResponseDevicesDevicesResponseBand) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
+	respItem["radio0"] = item.Radio0
 	respItem["radio1"] = item.Radio1
-	respItem["ghz50"] = item.Ghz50
+	respItem["radio2"] = item.Radio2
+	respItem["radio3"] = item.Radio3
 
 	return []map[string]interface{}{
 		respItem,
@@ -479,29 +764,15 @@ func flattenDevicesDevicesItemsNoiseHealth(item *dnacentersdkgo.ResponseDevicesD
 
 }
 
-func flattenDevicesDevicesItemsAirQualityHealth(item *dnacentersdkgo.ResponseDevicesDevicesResponseAirQualityHealth) []map[string]interface{} {
+func flattenDevicesDevicesItemsClientCount(item *dnacentersdkgo.ResponseDevicesDevicesResponseClientCount) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["radio0"] = item.Radio0
 	respItem["radio1"] = item.Radio1
-	respItem["ghz24"] = item.Ghz24
-	respItem["ghz50"] = item.Ghz50
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
-}
-
-func flattenDevicesDevicesItemsUtilizationHealth(item *dnacentersdkgo.ResponseDevicesDevicesResponseUtilizationHealth) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["radio0"] = item.Radio0
-	respItem["radio1"] = item.Radio1
+	respItem["radio2"] = item.Radio2
+	respItem["radio3"] = item.Radio3
 	respItem["ghz24"] = item.Ghz24
 	respItem["ghz50"] = item.Ghz50
 

@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -481,7 +481,7 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 
 												"instance_id": &schema.Schema{
 													Description: `Instance id
-									`,
+`,
 													Type:     schema.TypeInt,
 													Optional: true,
 													Computed: true,
@@ -495,14 +495,14 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 
 															"instance_id": &schema.Schema{
 																Description: `Instance id
-									`,
+`,
 																Type:     schema.TypeInt,
 																Optional: true,
 																Computed: true,
 															},
 															"interface_speed": &schema.Schema{
 																Description: `Interface speed
-									`,
+`,
 																Type:     schema.TypeString,
 																Optional: true,
 																Computed: true,
@@ -516,21 +516,21 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 
 																		"bandwidth_percentage": &schema.Schema{
 																			Description: `Bandwidth percentage
-									`,
+`,
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			Computed: true,
 																		},
 																		"instance_id": &schema.Schema{
 																			Description: `Instance id
-									`,
+`,
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			Computed: true,
 																		},
 																		"traffic_class": &schema.Schema{
 																			Description: `Traffic Class
-									`,
+`,
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			Computed: true,
@@ -543,7 +543,7 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 												},
 												"is_common_between_all_interface_speeds": &schema.Schema{
 													Description: `Is common between all interface speeds
-									`,
+`,
 													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
@@ -559,21 +559,21 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 
 															"dscp": &schema.Schema{
 																Description: `Dscp value
-									`,
+`,
 																Type:     schema.TypeString,
 																Optional: true,
 																Computed: true,
 															},
 															"instance_id": &schema.Schema{
 																Description: `Instance id
-									`,
+`,
 																Type:     schema.TypeInt,
 																Optional: true,
 																Computed: true,
 															},
 															"traffic_class": &schema.Schema{
 																Description: `Traffic Class
-									`,
+`,
 																Type:     schema.TypeString,
 																Optional: true,
 																Computed: true,
@@ -582,8 +582,8 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 													},
 												},
 												"type": &schema.Schema{
-													Description: `Type
-									`,
+													Description: `The allowed clause types are: BANDWIDTH, DSCP_CUSTOMIZATION
+`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -593,21 +593,21 @@ func resourceAppPolicyQueuingProfile() *schema.Resource {
 									},
 									"description": &schema.Schema{
 										Description: `Free test description
-									`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"id": &schema.Schema{
 										Description: `Id of Queueing profile
-									`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Default:  "",
 									},
 									"name": &schema.Schema{
 										Description: `Queueing profile name
-									`,
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Default:  "",

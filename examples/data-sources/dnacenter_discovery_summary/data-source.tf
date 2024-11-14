@@ -1,7 +1,7 @@
 
 data "dnacenter_discovery_summary" "example" {
   provider       = dnacenter
-  cli_status     = ["string"]
+  clistatus      = ["string"]
   http_status    = ["string"]
   id             = "string"
   ip_address     = ["string"]

@@ -46,8 +46,8 @@ output "dnacenter_global_credential_example" {
 
 - `credential_sub_type` (String) credentialSubType query parameter. Credential type as CLI / SNMPV2_READ_COMMUNITY / SNMPV2_WRITE_COMMUNITY / SNMPV3 / HTTP_WRITE / HTTP_READ / NETCONF
 - `id` (String) id path parameter. Global Credential ID
-- `order` (String) order query parameter.
-- `sort_by` (String) sortBy query parameter.
+- `order` (String) order query parameter. Order of sorting. 'asc' or 'des'
+- `sort_by` (String) sortBy query parameter. Field to sort the results by. Sorts by 'instanceId' if no value is provided
 
 ### Read-Only
 
@@ -68,18 +68,22 @@ Read-Only:
 
 Read-Only:
 
+- `auth_password` (String)
+- `auth_type` (String)
 - `comments` (String)
 - `credential_type` (String)
 - `description` (String)
+- `enable_password` (String)
 - `id` (String)
 - `instance_tenant_id` (String)
 - `instance_uuid` (String)
 - `netconf_port` (String)
 - `password` (String)
 - `port` (Number)
+- `privacy_password` (String)
+- `privacy_type` (String)
 - `read_community` (String)
 - `secure` (String)
+- `snmp_mode` (String)
 - `username` (String)
 - `write_community` (String)
-
-

@@ -37,7 +37,7 @@ resource "dnacenter_reserve_ip_subpool" "example" {
     name    = "devhf_SVG_medtek_vlan855"
     site_id = "e1c84cd3-81ce-4094-840c-6d485feec6d6"
     /*slaac_support      = "false"*/
-    type               = "Generic"
+    type = "Generic"
   }
 }
 

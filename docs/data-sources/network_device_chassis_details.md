@@ -57,5 +57,3 @@ Read-Only:
 - `part_number` (String)
 - `serial_number` (String)
 - `vendor_equipment_type` (String)
-
-

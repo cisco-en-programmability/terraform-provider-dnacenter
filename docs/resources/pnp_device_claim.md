@@ -12,20 +12,20 @@ description: |-
 It performs create operation on Device Onboarding (PnP).
 
 - Claims one of more devices with specified workflow
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_pnp_device_claim" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
-    config_file_url = "string"
-    config_id       = "string"
+    authorization_needed = "false"
+    config_file_url      = "string"
+    config_id            = "string"
     device_claim_list {
 
       config_list {
@@ -74,6 +74,7 @@ output "dnacenter_pnp_device_claim_example" {
 
 Optional:
 
+- `authorization_needed` (String) Flag to enable/disable PnP device authorization. (true means enable)
 - `config_file_url` (String)
 - `config_id` (String)
 - `device_claim_list` (Block List) (see [below for nested schema](#nestedblock--parameters--device_claim_list))
@@ -124,5 +125,3 @@ Read-Only:
 - `json_response` (String)
 - `message` (String)
 - `status_code` (Number)
-
-

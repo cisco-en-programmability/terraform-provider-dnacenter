@@ -1,0 +1,1 @@
+terraform import dnacenter_custom_issue_definitions.example "id:=string"

@@ -86,5 +86,3 @@ Read-Only:
 - `start_time` (Number)
 - `state` (String)
 - `time_taken` (Number)
-
-

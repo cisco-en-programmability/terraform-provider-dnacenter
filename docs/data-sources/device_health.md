@@ -39,12 +39,12 @@ output "dnacenter_device_health_example" {
 
 ### Optional
 
-- `device_role` (String) deviceRole query parameter. The device role (One of CORE, ACCESS, DISTRIBUTION, ROUTER, WLC, AP)
-- `end_time` (Number) endTime query parameter. UTC epoch time in miliseconds
-- `health` (String) health query parameter. The device overall health (One of POOR, FAIR, GOOD)
-- `limit` (Number) limit query parameter. Max number of device entries in the response (default to 50.  Max at 1000)
-- `offset` (Number) offset query parameter. The offset of the first device in the returned data
-- `site_id` (String) siteId query parameter. Assurance site UUID value
+- `device_role` (String) deviceRole query parameter. CORE, ACCESS, DISTRIBUTION, ROUTER, WLC, or AP (case insensitive)
+- `end_time` (Number) endTime query parameter. UTC epoch time in milliseconds
+- `health` (String) health query parameter. DNAC health catagory: POOR, FAIR, or GOOD (case insensitive)
+- `limit` (Number) limit query parameter. Max number of device entries in the response (default to 50. Max at 500)
+- `offset` (Number) offset query parameter. The offset of the first device in the returned data (Mutiple of 'limit' + 1)
+- `site_id` (String) siteId query parameter. DNAC site UUID
 - `start_time` (Number) startTime query parameter. UTC epoch time in milliseconds
 
 ### Read-Only
@@ -58,11 +58,20 @@ output "dnacenter_device_health_example" {
 Read-Only:
 
 - `air_quality_health` (List of Object) (see [below for nested schema](#nestedobjatt--items--air_quality_health))
+- `ap_count` (Number)
+- `avg_temperature` (Number)
+- `band` (List of Object) (see [below for nested schema](#nestedobjatt--items--band))
 - `client_count` (List of Object) (see [below for nested schema](#nestedobjatt--items--client_count))
 - `cpu_health` (Number)
 - `cpu_ulitilization` (Number)
+- `cpu_utilization` (Number)
 - `device_family` (String)
 - `device_type` (String)
+- `free_memory_buffer` (Number)
+- `free_memory_buffer_health` (Number)
+- `free_timer` (Number)
+- `free_timer_score` (Number)
+- `inter_device_link_avail_fabric` (Number)
 - `inter_device_link_avail_health` (Number)
 - `interface_link_err_health` (Number)
 - `interference_health` (List of Object) (see [below for nested schema](#nestedobjatt--items--interference_health))
@@ -70,6 +79,7 @@ Read-Only:
 - `issue_count` (Number)
 - `location` (String)
 - `mac_address` (String)
+- `max_temperature` (Number)
 - `memory_utilization` (Number)
 - `memory_utilization_health` (Number)
 - `model` (String)
@@ -77,8 +87,14 @@ Read-Only:
 - `noise_health` (List of Object) (see [below for nested schema](#nestedobjatt--items--noise_health))
 - `os_version` (String)
 - `overall_health` (Number)
+- `packet_pool` (Number)
+- `packet_pool_health` (Number)
 - `reachability_health` (String)
 - `utilization_health` (List of Object) (see [below for nested schema](#nestedobjatt--items--utilization_health))
+- `uuid` (String)
+- `wan_link_utilization` (Number)
+- `wqe_pools` (Number)
+- `wqe_pools_health` (Number)
 
 <a id="nestedobjatt--items--air_quality_health"></a>
 ### Nested Schema for `items.air_quality_health`
@@ -89,6 +105,19 @@ Read-Only:
 - `ghz50` (Number)
 - `radio0` (Number)
 - `radio1` (Number)
+- `radio2` (Number)
+- `radio3` (Number)
+
+
+<a id="nestedobjatt--items--band"></a>
+### Nested Schema for `items.band`
+
+Read-Only:
+
+- `radio0` (String)
+- `radio1` (String)
+- `radio2` (String)
+- `radio3` (Number)
 
 
 <a id="nestedobjatt--items--client_count"></a>
@@ -100,6 +129,8 @@ Read-Only:
 - `ghz50` (Number)
 - `radio0` (Number)
 - `radio1` (Number)
+- `radio2` (Number)
+- `radio3` (Number)
 
 
 <a id="nestedobjatt--items--interference_health"></a>
@@ -111,6 +142,8 @@ Read-Only:
 - `ghz50` (Number)
 - `radio0` (Number)
 - `radio1` (Number)
+- `radio2` (Number)
+- `radio3` (Number)
 
 
 <a id="nestedobjatt--items--noise_health"></a>
@@ -118,8 +151,12 @@ Read-Only:
 
 Read-Only:
 
+- `ghz24` (Number)
 - `ghz50` (Number)
+- `radio0` (Number)
 - `radio1` (Number)
+- `radio2` (Number)
+- `radio3` (Number)
 
 
 <a id="nestedobjatt--items--utilization_health"></a>
@@ -131,5 +168,5 @@ Read-Only:
 - `ghz50` (Number)
 - `radio0` (Number)
 - `radio1` (Number)
-
-
+- `radio2` (Number)
+- `radio3` (Number)

@@ -46,5 +46,3 @@ Read-Only:
 - `description` (String)
 - `roles` (List of String)
 - `status` (String)
-
-

@@ -1,0 +1,1 @@
+terraform import dnacenter_flexible_report_schedule.example "report_id:=string"

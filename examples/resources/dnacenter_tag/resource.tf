@@ -9,12 +9,12 @@ resource "dnacenter_tag" "example" {
 
       member_type = "string"
       rules {
+
+        items     = ["string"]
+        name      = "string"
         operation = "string"
-        items {
-          name      = "string"
-          operation = "string"
-          value     = "string"
-        }
+        value     = "string"
+        values    = ["string"]
       }
     }
     id                 = "string"

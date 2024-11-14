@@ -55,5 +55,3 @@ Read-Only:
 - `sftp_server_list` (List of String)
 - `sha1_checksum` (String)
 - `task_id` (String)
-
-

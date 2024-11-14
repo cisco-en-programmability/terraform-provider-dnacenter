@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,23 +21,25 @@ func dataSourcePlannedAccessPoints() *schema.Resource {
 		ReadContext: dataSourcePlannedAccessPointsRead,
 		Schema: map[string]*schema.Schema{
 			"floor_id": &schema.Schema{
-				Description: `floorId path parameter. Floor Id
+				Description: `floorId path parameter. The instance UUID of the floor hierarchy element
 `,
 				Type:     schema.TypeString,
 				Required: true,
 			},
 			"limit": &schema.Schema{
-				Description: `limit query parameter.`,
-				Type:        schema.TypeFloat,
-				Optional:    true,
+				Description: `limit query parameter. The page size limit for the response, e.g. limit=100 will return a maximum of 100 records
+`,
+				Type:     schema.TypeFloat,
+				Optional: true,
 			},
 			"offset": &schema.Schema{
-				Description: `offset query parameter.`,
-				Type:        schema.TypeFloat,
-				Optional:    true,
+				Description: `offset query parameter. The page offset for the response. E.g. if limit=100, offset=0 will return first 100 records, offset=1 will return next 100 records, etc.
+`,
+				Type:     schema.TypeFloat,
+				Optional: true,
 			},
 			"radios": &schema.Schema{
-				Description: `radios query parameter. inlcude planned radio details
+				Description: `radios query parameter. Whether to include the planned radio details of the planned access points
 `,
 				Type:     schema.TypeBool,
 				Optional: true,
@@ -56,73 +58,107 @@ func dataSourcePlannedAccessPoints() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"create_date": &schema.Schema{
-										Description: `Create Date`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `Created date of the planned access point
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
 									},
 
 									"domain": &schema.Schema{
-										Description: `Domain`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Service domain to which the planned access point belongs
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"heirarchy_name": &schema.Schema{
-										Description: `Heirarchy Name`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Hierarchy name of the planned access point
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `Unique id of the planned access point
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
 									},
 
 									"instance_uuid": &schema.Schema{
-										Description: `Instance Uuid`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance uuid of the planned access point
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
-									"macaddress": &schema.Schema{
-										Description: `Macaddress`,
-										Type:        schema.TypeString, //TEST,
-										Computed:    true,
+									"mac_address": &schema.Schema{
+										Description: `MAC address of the planned access point
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"name": &schema.Schema{
-										Description: `Name`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Display name of the planned access point
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"source": &schema.Schema{
-										Description: `Source`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Source of the data used to create the planned access point
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"type_string": &schema.Schema{
-										Description: `Type String`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Type string representation of the planned access point
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
 						},
 
 						"is_sensor": &schema.Schema{
-							Description: `Is Sensor`,
+							Description: `Determines if the planned access point is sensor or not
+`,
 							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"location": &schema.Schema{
-							Description: `Location`,
-							Type:        schema.TypeString, //TEST,
-							Computed:    true,
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"altitude": &schema.Schema{
+										Description: `Altitude of the planned access point's location
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
+									},
+
+									"lattitude": &schema.Schema{
+										Description: `Latitude of the planned access point's location
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
+									},
+
+									"longtitude": &schema.Schema{
+										Description: `Longitude of the planned access point's location
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
+									},
+								},
+							},
 						},
 
 						"position": &schema.Schema{
@@ -132,30 +168,34 @@ func dataSourcePlannedAccessPoints() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"x": &schema.Schema{
-										Description: `X`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `x-coordinate of the planned access point on the map, 0,0 point being the top-left corner
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
 									},
 
 									"y": &schema.Schema{
-										Description: `Y`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `y-coordinate of the planned access point on the map, 0,0 point being the top-left corner
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
 									},
 
 									"z": &schema.Schema{
-										Description: `Z`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `z-coordinate, or height, of the planned access point on the map
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
 									},
 								},
 							},
 						},
 
 						"radio_count": &schema.Schema{
-							Description: `Radio Count`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Number of radios of the planned access point
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"radios": &schema.Schema{
@@ -171,39 +211,45 @@ func dataSourcePlannedAccessPoints() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"azimuth_angle": &schema.Schema{
-													Description: `Azimuth Angle`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
+													Description: `Azimuth angle of the antenna
+`,
+													Type:     schema.TypeFloat,
+													Computed: true,
 												},
 
 												"elevation_angle": &schema.Schema{
-													Description: `Elevation Angle`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
+													Description: `Elevation angle of the antenna
+`,
+													Type:     schema.TypeFloat,
+													Computed: true,
 												},
 
 												"gain": &schema.Schema{
-													Description: `Gain`,
-													Type:        schema.TypeFloat,
-													Computed:    true,
+													Description: `Gain of the antenna
+`,
+													Type:     schema.TypeFloat,
+													Computed: true,
 												},
 
 												"mode": &schema.Schema{
-													Description: `Mode`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Description: `Mode of the antenna associated with this radio
+`,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"name": &schema.Schema{
-													Description: `Name`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Description: `Name of the antenna
+`,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"type": &schema.Schema{
-													Description: `Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Description: `Type of the antenna associated with this radio
+`,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -216,58 +262,74 @@ func dataSourcePlannedAccessPoints() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"channel": &schema.Schema{
-													Description: `Channel`,
-													Type:        schema.TypeString, //TEST,
-													Computed:    true,
+													Description: `Channel in which the radio operates
+`,
+													Type:     schema.TypeFloat,
+													Computed: true,
 												},
 
 												"channel_string": &schema.Schema{
-													Description: `Channel String`,
-													Type:        schema.TypeString, //TEST,
-													Computed:    true,
+													Description: `Channel string representation
+`,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"id": &schema.Schema{
-													Description: `Id`,
-													Type:        schema.TypeInt,
-													Computed:    true,
+													Description: `Id of the radio
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
 												},
 
 												"if_mode": &schema.Schema{
-													Description: `If Mode`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Description: `IF mode of the radio
+`,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"if_type_string": &schema.Schema{
-													Description: `If Type String`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Description: `String representation of native band
+`,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"if_type_subband": &schema.Schema{
-													Description: `If Type Subband`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Description: `Sub band type of the radio
+`,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"instance_uuid": &schema.Schema{
-													Description: `Instance Uuid`,
-													Type:        schema.TypeString,
-													Computed:    true,
+													Description: `Instance Uuid of the radio
+`,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 
 												"slot_id": &schema.Schema{
-													Description: `Slot Id`,
-													Type:        schema.TypeInt,
-													Computed:    true,
+													Description: `Slot number in which the radio resides in the parent access point
+`,
+													Type:     schema.TypeFloat,
+													Computed: true,
+												},
+
+												"tx_power_level": &schema.Schema{
+													Description: `Tx Power at which this radio operates (in dBm)
+`,
+													Type:     schema.TypeFloat,
+													Computed: true,
 												},
 											},
 										},
 									},
 
 									"is_sensor": &schema.Schema{
-										Description: `Is Sensor`,
+										Description: `Determines if it is sensor or not
+`,
 										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -314,7 +376,7 @@ func dataSourcePlannedAccessPointsRead(ctx context.Context, d *schema.ResourceDa
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetPlannedAccessPointsForFloor", err,
+				"Failure when executing 2 GetPlannedAccessPointsForFloor", err,
 				"Failure at GetPlannedAccessPointsForFloor, unexpected response", ""))
 			return diags
 		}
@@ -367,7 +429,7 @@ func flattenDevicesGetPlannedAccessPointsForFloorItemsAttributes(item *dnacenter
 	respItem["heirarchy_name"] = item.HeirarchyName
 	respItem["source"] = item.Source
 	respItem["create_date"] = item.CreateDate
-	respItem["macaddress"] = flattenDevicesGetPlannedAccessPointsForFloorItemsAttributesMacaddress(item.Macaddress)
+	respItem["mac_address"] = item.MacAddress
 
 	return []map[string]interface{}{
 		respItem,
@@ -375,23 +437,18 @@ func flattenDevicesGetPlannedAccessPointsForFloorItemsAttributes(item *dnacenter
 
 }
 
-func flattenDevicesGetPlannedAccessPointsForFloorItemsAttributesMacaddress(item *dnacentersdkgo.ResponseDevicesGetPlannedAccessPointsForFloorResponseAttributesMacaddress) interface{} {
+func flattenDevicesGetPlannedAccessPointsForFloorItemsLocation(item *dnacentersdkgo.ResponseDevicesGetPlannedAccessPointsForFloorResponseLocation) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
-	respItem := *item
+	respItem := make(map[string]interface{})
+	respItem["altitude"] = item.Altitude
+	respItem["lattitude"] = item.Lattitude
+	respItem["longtitude"] = item.Longtitude
 
-	return responseInterfaceToString(respItem)
-
-}
-
-func flattenDevicesGetPlannedAccessPointsForFloorItemsLocation(item *dnacentersdkgo.ResponseDevicesGetPlannedAccessPointsForFloorResponseLocation) interface{} {
-	if item == nil {
-		return nil
+	return []map[string]interface{}{
+		respItem,
 	}
-	respItem := *item
-
-	return responseInterfaceToString(respItem)
 
 }
 
@@ -435,33 +492,14 @@ func flattenDevicesGetPlannedAccessPointsForFloorItemsRadiosAttributes(item *dna
 	respItem["slot_id"] = item.SlotID
 	respItem["if_type_string"] = item.IfTypeString
 	respItem["if_type_subband"] = item.IfTypeSubband
-	respItem["channel"] = flattenDevicesGetPlannedAccessPointsForFloorItemsRadiosAttributesChannel(item.Channel)
-	respItem["channel_string"] = flattenDevicesGetPlannedAccessPointsForFloorItemsRadiosAttributesChannelString(item.ChannelString)
+	respItem["channel"] = item.Channel
+	respItem["channel_string"] = item.ChannelString
 	respItem["if_mode"] = item.IfMode
+	respItem["tx_power_level"] = item.TxPowerLevel
 
 	return []map[string]interface{}{
 		respItem,
 	}
-
-}
-
-func flattenDevicesGetPlannedAccessPointsForFloorItemsRadiosAttributesChannel(item *dnacentersdkgo.ResponseDevicesGetPlannedAccessPointsForFloorResponseRadiosAttributesChannel) interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := *item
-
-	return responseInterfaceToString(respItem)
-
-}
-
-func flattenDevicesGetPlannedAccessPointsForFloorItemsRadiosAttributesChannelString(item *dnacentersdkgo.ResponseDevicesGetPlannedAccessPointsForFloorResponseRadiosAttributesChannelString) interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := *item
-
-	return responseInterfaceToString(respItem)
 
 }
 

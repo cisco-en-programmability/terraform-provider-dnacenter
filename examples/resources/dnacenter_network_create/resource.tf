@@ -1,6 +1,7 @@
 
 resource "dnacenter_network_create" "example" {
   provider = dnacenter
+  site_id  = "string"
   parameters {
 
     settings {
@@ -51,8 +52,6 @@ resource "dnacenter_network_create" "example" {
       }
       timezone = "string"
     }
-    site_id           = "string"
-    persistbapioutput = "false"
   }
 }
 

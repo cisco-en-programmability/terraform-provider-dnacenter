@@ -1,0 +1,1 @@
+terraform import dnacenter_diagnostic_validation_workflows.example "id:=string"

@@ -8,7 +8,7 @@ data "dnacenter_license_device_license_summary" "example" {
   order                = "string"
   page_number          = 1.0
   registration_status  = "string"
-  smart_account_id     = 1.0
+  smart_account_id     = "string"
   sort_by              = "string"
   virtual_account_name = "string"
 }

@@ -10,6 +10,7 @@ resource "dnacenter_event_email_config_create" "example" {
       host_name = "string"
       password  = "******"
       port      = "string"
+      smtp_type = "string"
       user_name = "string"
     }
     secondary_smt_p_config {
@@ -17,6 +18,7 @@ resource "dnacenter_event_email_config_create" "example" {
       host_name = "string"
       password  = "******"
       port      = "string"
+      smtp_type = "string"
       user_name = "string"
     }
     subject  = "string"

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,7 +21,7 @@ func dataSourceNetworkDevicePoe() *schema.Resource {
 		ReadContext: dataSourceNetworkDevicePoeRead,
 		Schema: map[string]*schema.Schema{
 			"device_uuid": &schema.Schema{
-				Description: `deviceUuid path parameter. uuid of the device
+				Description: `deviceUuid path parameter. UUID of the device
 `,
 				Type:     schema.TypeString,
 				Required: true,
@@ -34,21 +34,24 @@ func dataSourceNetworkDevicePoe() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"power_allocated": &schema.Schema{
-							Description: `Power Allocated`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Total power available on the switch on all interfaces combined in Watts
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"power_consumed": &schema.Schema{
-							Description: `Power Consumed`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Total power being currently drawn by all interfaces combined in Watts
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"power_remaining": &schema.Schema{
-							Description: `Power Remaining`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Total power remaining in Watts (powerConsumed - powerAllocated)
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -75,7 +78,7 @@ func dataSourceNetworkDevicePoeRead(ctx context.Context, d *schema.ResourceData,
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing PoeDetails", err,
+				"Failure when executing 2 PoeDetails", err,
 				"Failure at PoeDetails, unexpected response", ""))
 			return diags
 		}

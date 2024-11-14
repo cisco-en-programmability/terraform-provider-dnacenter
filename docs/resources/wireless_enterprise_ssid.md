@@ -25,8 +25,12 @@ resource "dnacenter_wireless_enterprise_ssid" "example" {
 
   parameters {
 
+    aaa_override                          = "false"
+    auth_key_mgmt                         = ["string"]
     basic_service_set_client_idle_timeout = 1
     client_exclusion_timeout              = 1
+    client_rate_limit                     = 1.0
+    coverage_hole_detection_enable        = "false"
     enable_basic_service_set_max_idle     = "false"
     enable_broadcast_ssi_d                = "false"
     enable_client_exclusion               = "false"
@@ -36,16 +40,29 @@ resource "dnacenter_wireless_enterprise_ssid" "example" {
     enable_neighbor_list                  = "false"
     enable_session_time_out               = "false"
     fast_transition                       = "string"
+    ghz24_policy                          = "string"
+    ghz6_policy_client_steering           = "false"
     mfp_client_protection                 = "string"
-    name                                  = "string"
-    nas_options                           = ["string"]
-    passphrase                            = "string"
-    radio_policy                          = "string"
-    security_level                        = "string"
-    session_time_out                      = 1
-    ssid_name                             = "string"
-    traffic_type                          = "string"
-    protected_management_frame            = "string"
+    multi_psk_settings {
+
+      passphrase      = "string"
+      passphrase_type = "string"
+      priority        = 1
+    }
+    name                       = "string"
+    nas_options                = ["string"]
+    passphrase                 = "string"
+    policy_profile_name        = "string"
+    profile_name               = "string"
+    protected_management_frame = "string"
+    radio_policy               = "string"
+    rsn_cipher_suite_ccmp256   = "false"
+    rsn_cipher_suite_gcmp128   = "false"
+    rsn_cipher_suite_gcmp256   = "false"
+    security_level             = "string"
+    session_time_out           = 1
+    ssid_name                  = "string"
+    traffic_type               = "string"
   }
 }
 
@@ -72,8 +89,12 @@ output "dnacenter_wireless_enterprise_ssid_example" {
 
 Optional:
 
+- `aaa_override` (String) Aaa Override
+- `auth_key_mgmt` (List of String) Takes string inputs for the AKMs that should be set true. Possible AKM values : dot1x,dot1x_ft, dot1x_sha, psk, psk_ft, psk_sha, owe, sae, sae_ft
 - `basic_service_set_client_idle_timeout` (Number) Basic Service Set Client Idle Timeout
 - `client_exclusion_timeout` (Number) Client Exclusion Timeout
+- `client_rate_limit` (Number) Client Rate Limit (in bits per second)
+- `coverage_hole_detection_enable` (String) Coverage Hole Detection Enable
 - `enable_basic_service_set_max_idle` (String) Enable Basic Service Set Max Idle
 - `enable_broadcast_ssi_d` (String) Enable Broadcase SSID
 - `enable_client_exclusion` (String) Enable Client Exclusion
@@ -83,16 +104,34 @@ Optional:
 - `enable_neighbor_list` (String) Enable Neighbor List
 - `enable_session_time_out` (String) Enable Session Timeout
 - `fast_transition` (String) Fast Transition
+- `ghz24_policy` (String) Ghz24 Policy
+- `ghz6_policy_client_steering` (String) Ghz6 Policy Client Steering
 - `mfp_client_protection` (String) Management Frame Protection Client
+- `multi_psk_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--multi_psk_settings))
 - `name` (String) SSID NAME
 - `nas_options` (List of String) Nas Options
 - `passphrase` (String) Passphrase
-- `protected_management_frame` (String) Protected Management Frame
-- `radio_policy` (String) Radio Policy Enum (enum: Triple band operation (2.4GHz, 5GHz and 6GHz), Triple band operation with band select, 5GHz only, 2.4GHz only, 6GHz only)
+- `policy_profile_name` (String) Policy Profile Name
+- `profile_name` (String) Profile Name
+- `protected_management_frame` (String) (Required applicable for Security Type WPA3_PERSONAL, WPA3_ENTERPRISE, OPEN_SECURED) and (Optional, Required Applicable for Security Type WPA2_WPA3_PERSONAL and WPA2_WPA3_ENTERPRISE)
+- `radio_policy` (String) Radio Policy Enum
+- `rsn_cipher_suite_ccmp256` (String) Rsn Cipher Suite Ccmp256
+- `rsn_cipher_suite_gcmp128` (String) Rsn Cipher Suite Gcmp 128
+- `rsn_cipher_suite_gcmp256` (String) Rsn Cipher Suite Gcmp256
 - `security_level` (String) Security Level
 - `session_time_out` (Number) Session Time Out
 - `ssid_name` (String) ssidName path parameter. Enter the SSID name to be deleted
 - `traffic_type` (String) Traffic Type Enum (voicedata or data )
+
+<a id="nestedblock--parameters--multi_psk_settings"></a>
+### Nested Schema for `parameters.multi_psk_settings`
+
+Optional:
+
+- `passphrase` (String) Passphrase
+- `passphrase_type` (String) Passphrase Type
+- `priority` (Number) Priority
+
 
 
 <a id="nestedatt--item"></a>
@@ -114,14 +153,22 @@ Read-Only:
 
 - `aaa_override` (String)
 - `auth_server` (String)
+- `basic_service_set_client_idle_timeout` (Number)
+- `client_exclusion_timeout` (Number)
 - `client_rate_limit` (Number)
 - `coverage_hole_detection_enable` (String)
+- `enable_basic_service_set_max_idle` (String)
 - `enable_broadcast_ssi_d` (String)
+- `enable_client_exclusion` (String)
+- `enable_directed_multicast_service` (String)
 - `enable_fast_lane` (String)
 - `enable_mac_filtering` (String)
+- `enable_neighbor_list` (String)
+- `enable_session_time_out` (String)
 - `fast_transition` (String)
 - `is_enabled` (String)
 - `is_fabric` (String)
+- `mfp_client_protection` (String)
 - `multi_psk_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssid_details--multi_psk_settings))
 - `name` (String)
 - `nas_options` (List of String)
@@ -129,6 +176,7 @@ Read-Only:
 - `protected_management_frame` (String)
 - `radio_policy` (String)
 - `security_level` (String)
+- `session_time_out` (Number)
 - `traffic_type` (String)
 - `wlan_type` (String)
 

@@ -87,5 +87,3 @@ Read-Only:
 - `start_port_pep_id` (String)
 - `start_port_speed` (String)
 - `type` (String)
-
-

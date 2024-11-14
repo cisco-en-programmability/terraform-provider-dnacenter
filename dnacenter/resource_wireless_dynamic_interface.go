@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,9 +17,9 @@ func resourceWirelessDynamicInterface() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and delete operations on Wireless.
 
-- API to create or update an dynamic interface
-
 - Delete a dynamic interface
+
+- API to create or update an dynamic interface
 `,
 
 		CreateContext: resourceWirelessDynamicInterfaceCreate,
@@ -108,7 +108,7 @@ func resourceWirelessDynamicInterfaceCreate(ctx context.Context, d *schema.Resou
 		d.SetId(joinResourceID(resourceMap))
 		return resourceWirelessDynamicInterfaceRead(ctx, d, m)
 	}
-	resp1, restyResp1, err := client.Wireless.CreateUpdateDynamicInterface(request1, nil)
+	resp1, restyResp1, err := client.Wireless.CreateUpdateDynamicInterface(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
@@ -119,8 +119,7 @@ func resourceWirelessDynamicInterfaceCreate(ctx context.Context, d *schema.Resou
 			"Failure when executing CreateUpdateDynamicInterface", err))
 		return diags
 	}
-	resp1Array := *resp1
-	item := resp1Array[0]
+	item := *resp1
 	executionId := item.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
@@ -239,7 +238,7 @@ func resourceWirelessDynamicInterfaceUpdate(ctx context.Context, d *schema.Resou
 	}
 
 	if d.HasChange("parameters") {
-		resp1, restyResp1, err := client.Wireless.CreateUpdateDynamicInterface(request1, nil)
+		resp1, restyResp1, err := client.Wireless.CreateUpdateDynamicInterface(request1)
 		if err != nil || resp1 == nil {
 			if restyResp1 != nil {
 				diags = append(diags, diagErrorWithResponse(
@@ -250,8 +249,8 @@ func resourceWirelessDynamicInterfaceUpdate(ctx context.Context, d *schema.Resou
 				"Failure when executing CreateUpdateDynamicInterface", err))
 			return diags
 		}
-		resp1Array := *resp1
-		item := resp1Array[0]
+
+		item := *resp1
 		executionId := item.ExecutionID
 		log.Printf("[DEBUG] ExecutionID => %s", executionId)
 		if executionId != "" {
@@ -321,7 +320,10 @@ func resourceWirelessDynamicInterfaceDelete(ctx context.Context, d *schema.Resou
 
 		vvInterfaceName = queryParams1.InterfaceName
 	}
-	restyResp1, err := client.Wireless.DeleteDynamicInterface(vvInterfaceName, nil)
+
+	_, restyResp1, err := client.Wireless.DeleteDynamicInterface(nil, &dnacentersdkgo.DeleteDynamicInterfaceQueryParams{
+		InterfaceName: vvInterfaceName,
+	})
 	if err != nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -353,7 +355,6 @@ func expandRequestWirelessDynamicInterfaceCreateUpdateDynamicInterface(ctx conte
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 

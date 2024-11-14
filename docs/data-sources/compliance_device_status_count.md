@@ -31,7 +31,7 @@ output "dnacenter_compliance_device_status_count_example" {
 
 ### Optional
 
-- `compliance_status` (String) complianceStatus query parameter. Compliance status can have value among 'COMPLIANT', 'NON_COMPLIANT', 'IN_PROGRESS', 'NOT_AVAILABLE', 'NOT_APPLICABLE', 'ERROR'
+- `compliance_status` (String) complianceStatus query parameter. Specify "Compliance status(es)" separated by commas. The Compliance status can be 'COMPLIANT', 'NON_COMPLIANT', 'IN_PROGRESS', 'NOT_AVAILABLE', 'NOT_APPLICABLE', 'ERROR'.
 
 ### Read-Only
 
@@ -45,5 +45,3 @@ Read-Only:
 
 - `response` (Number)
 - `version` (String)
-
-

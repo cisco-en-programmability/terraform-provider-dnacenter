@@ -1,7 +1,7 @@
 
 # terraform-provider-dnacenter
 
-terraform-provider-dnacenter is a Terraform Provider for [Cisco DNA Center](https://developer.cisco.com/docs/dna-center/)
+terraform-provider-dnacenter is a Terraform Provider for [Cisco Catalyst Center](https://developer.cisco.com/docs/dna-center/)
 
 ## Requirements
 
@@ -10,22 +10,23 @@ terraform-provider-dnacenter is a Terraform Provider for [Cisco DNA Center](http
 
 ## Introduction
 
-The terraform-provider-dnacenter provides a Terraform provider for managing and automating your Cisco DNA Center environment. It consists of a set of resources and data-sources for performing tasks related to DNA Center.
+The terraform-provider-dnacenter provides a Terraform provider for managing and automating your Cisco Catalyst Center environment. It consists of a set of resources and data-sources for performing tasks related to Catalyst Center.
 
-This collection has been tested and supports Cisco DNA Center 2.3.5.3.
+This collection has been tested and supports Cisco Catalyst Center 2.3.5.3.
 
-Other versions of this collection have support for previous Cisco DNA Center versions. The recommended versions are listed below on the [Compatibility matrix](#compatibility-matrix).
+Other versions of this collection have support for previous Cisco Catalyst Center versions. The recommended versions are listed below on the [Compatibility matrix](#compatibility-matrix).
 
 ## Compatibility matrix
 The following table shows the supported versions.
 
-| Cisco DNA Center version | Terraform "dnacenter" provider version |
+| Cisco Catalyst Center version | Terraform "dnacenter" provider version |
 |--------------------------|----------------------------------------|
 | 2.1.1                    | 0.0.4                                  |
 | 2.2.3.3                  | 0.3.0-beta                             |
 | 2.2.3.3                  | 0.3.0                                  |
 | 2.3.3.0                  | 1.0.19-beta                            |
 | 2.3.5.3                  | 1.1.33-beta                            |
+| 2.3.7.6                  | 1.2.0-beta                             |
 
 If your SDK, Terraform provider is older please consider updating it first.
 
@@ -71,17 +72,17 @@ terraform {
   }
 }
 
-# Configure provider with your Cisco DNA Center SDK credentials
+# Configure provider with your Cisco Catalyst Center SDK credentials
 provider "dnacenter" {
-  # Cisco DNA Center user name
+  # Cisco Catalyst Center user name
   username = "admin"
   # it can be set using the environment variable DNAC_BASE_URL
 
-  # Cisco DNA Center password
+  # Cisco Catalyst Center password
   password = "admin123"
   # it can be set using the environment variable DNAC_USERNAME
 
-  # Cisco DNA Center base URL, FQDN or IP
+  # Cisco Catalyst Center base URL, FQDN or IP
   base_url = "https://172.168.196.2"
   # it can be set using the environment variable DNAC_PASSWORD
 
@@ -151,19 +152,19 @@ $ make testacc
 
 In the [docs directory](./docs/) you can find the documentation source for this 1.0.19-beta version.
 
-You can find the documentation online for the previously released versions at [Terraform Registry - Cisco DNA Center provider](https://registry.terraform.io/providers/cisco-en-programmability/dnacenter/latest/docs).
+You can find the documentation online for the previously released versions at [Terraform Registry - Cisco Catalyst Center provider](https://registry.terraform.io/providers/cisco-en-programmability/dnacenter/latest/docs).
 
 # Contributing
 
 Ongoing development efforts and contributions to this provider are tracked as issues in this repository.
 
-We welcome community contributions to this project. If you find problems, need an enhancement or need a new data-source or resource, please open an issue or create a PR against the [Terraform Provider for Cisco DNA Center repository](https://github.com/cisco-en-programmability/terraform-provider-dnacenter/issues).
+We welcome community contributions to this project. If you find problems, need an enhancement or need a new data-source or resource, please open an issue or create a PR against the [Terraform Provider for Cisco Catalyst Center repository](https://github.com/cisco-en-programmability/terraform-provider-dnacenter/issues).
 
 # Change log
 
 All notable changes to this project will be documented in the [CHANGELOG](./CHANGELOG.md) file.
 
-The development team may make additional changes as the library evolves with the Cisco DNA Center.
+The development team may make additional changes as the library evolves with the Cisco Catalyst Center.
 
 **NOTE**: Consider reviewing the Changelog to review the new features of the 1.0.19-beta version.
 

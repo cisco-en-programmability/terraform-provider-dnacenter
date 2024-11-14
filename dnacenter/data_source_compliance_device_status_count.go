@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,7 +21,7 @@ func dataSourceComplianceDeviceStatusCount() *schema.Resource {
 		ReadContext: dataSourceComplianceDeviceStatusCountRead,
 		Schema: map[string]*schema.Schema{
 			"compliance_status": &schema.Schema{
-				Description: `complianceStatus query parameter. Compliance status can have value among 'COMPLIANT', 'NON_COMPLIANT', 'IN_PROGRESS', 'NOT_AVAILABLE', 'NOT_APPLICABLE', 'ERROR'
+				Description: `complianceStatus query parameter. Specify "Compliance status(es)" separated by commas. The Compliance status can be 'COMPLIANT', 'NON_COMPLIANT', 'IN_PROGRESS', 'NOT_AVAILABLE', 'NOT_APPLICABLE', 'ERROR'.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -34,15 +34,17 @@ func dataSourceComplianceDeviceStatusCount() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"response": &schema.Schema{
-							Description: `Response`,
-							Type:        schema.TypeFloat,
-							Computed:    true,
+							Description: `Returns count of compliant status
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
 						},
 
 						"version": &schema.Schema{
-							Description: `Version`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Version of the API.
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -73,7 +75,7 @@ func dataSourceComplianceDeviceStatusCountRead(ctx context.Context, d *schema.Re
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetComplianceStatusCount", err,
+				"Failure when executing 2 GetComplianceStatusCount", err,
 				"Failure at GetComplianceStatusCount, unexpected response", ""))
 			return diags
 		}

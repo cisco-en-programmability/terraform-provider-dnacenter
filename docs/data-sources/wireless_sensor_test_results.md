@@ -37,7 +37,7 @@ output "dnacenter_wireless_sensor_test_results_example" {
 - `end_time` (Number) endTime query parameter. The epoch time in milliseconds
 - `site_id` (String) siteId query parameter. Assurance site UUID
 - `start_time` (Number) startTime query parameter. The epoch time in milliseconds
-- `test_failure_by` (String) testFailureBy query parameter. Obtain failure statistics group by "area", "building", or "floor"
+- `test_failure_by` (String) testFailureBy query parameter. Obtain failure statistics group by "area", "building", or "floor" (case insensitive)
 
 ### Read-Only
 
@@ -225,5 +225,3 @@ Read-Only:
 
 - `fail_count` (Number)
 - `pass_count` (Number)
-
-

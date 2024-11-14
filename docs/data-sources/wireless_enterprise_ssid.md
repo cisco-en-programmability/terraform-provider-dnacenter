@@ -4,14 +4,14 @@ page_title: "dnacenter_wireless_enterprise_ssid Data Source - terraform-provider
 subcategory: ""
 description: |-
   It performs read operation on Wireless.
-  Gets either one or all the enterprise SSID
+  Get Enterprise SSID
 ---
 
 # dnacenter_wireless_enterprise_ssid (Data Source)
 
 It performs read operation on Wireless.
 
-- Gets either one or all the enterprise SSID
+- Get Enterprise SSID
 
 ## Example Usage
 
@@ -57,14 +57,22 @@ Read-Only:
 
 - `aaa_override` (String)
 - `auth_server` (String)
+- `basic_service_set_client_idle_timeout` (Number)
+- `client_exclusion_timeout` (Number)
 - `client_rate_limit` (Number)
 - `coverage_hole_detection_enable` (String)
+- `enable_basic_service_set_max_idle` (String)
 - `enable_broadcast_ssi_d` (String)
+- `enable_client_exclusion` (String)
+- `enable_directed_multicast_service` (String)
 - `enable_fast_lane` (String)
 - `enable_mac_filtering` (String)
+- `enable_neighbor_list` (String)
+- `enable_session_time_out` (String)
 - `fast_transition` (String)
 - `is_enabled` (String)
 - `is_fabric` (String)
+- `mfp_client_protection` (String)
 - `multi_psk_settings` (List of Object) (see [below for nested schema](#nestedobjatt--items--ssid_details--multi_psk_settings))
 - `name` (String)
 - `nas_options` (List of String)
@@ -72,6 +80,7 @@ Read-Only:
 - `protected_management_frame` (String)
 - `radio_policy` (String)
 - `security_level` (String)
+- `session_time_out` (Number)
 - `traffic_type` (String)
 - `wlan_type` (String)
 
@@ -83,5 +92,3 @@ Read-Only:
 - `passphrase` (String)
 - `passphrase_type` (String)
 - `priority` (Number)
-
-

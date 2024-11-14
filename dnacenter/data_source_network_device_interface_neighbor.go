@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -40,24 +40,27 @@ func dataSourceNetworkDeviceInterfaceNeighbor() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"capabilities": &schema.Schema{
-							Description: `Capabilities`,
-							Type:        schema.TypeList,
-							Computed:    true,
+							Description: `Info about capabilities of the connected device
+`,
+							Type:     schema.TypeList,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 
 						"neighbor_device": &schema.Schema{
-							Description: `Neighbor Device`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Info about the devices connected to the interface
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"neighbor_port": &schema.Schema{
-							Description: `Neighbor Port`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Info about the connected interface
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -86,7 +89,7 @@ func dataSourceNetworkDeviceInterfaceNeighborRead(ctx context.Context, d *schema
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetConnectedDeviceDetail", err,
+				"Failure when executing 2 GetConnectedDeviceDetail", err,
 				"Failure at GetConnectedDeviceDetail, unexpected response", ""))
 			return diags
 		}

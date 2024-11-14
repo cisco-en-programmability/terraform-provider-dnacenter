@@ -1,9 +1,9 @@
 
 resource "dnacenter_global_credential_delete" "example" {
-  provider = dnacenter
+  provider             = dnacenter
+  global_credential_id = "string"
   parameters {
 
-    global_credential_id = "string"
   }
 }
 

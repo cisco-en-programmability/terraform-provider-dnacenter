@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -61,8 +61,8 @@ func dataSourceSystemHealthCountRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: SystemHealthCountApI")
-		queryParams1 := dnacentersdkgo.SystemHealthCountApIQueryParams{}
+		log.Printf("[DEBUG] Selected method: SystemHealthCountAPI")
+		queryParams1 := dnacentersdkgo.SystemHealthCountAPIQueryParams{}
 
 		if okDomain {
 			queryParams1.Domain = vDomain.(string)
@@ -71,24 +71,24 @@ func dataSourceSystemHealthCountRead(ctx context.Context, d *schema.ResourceData
 			queryParams1.Subdomain = vSubdomain.(string)
 		}
 
-		response1, restyResp1, err := client.HealthAndPerformance.SystemHealthCountApI(&queryParams1)
+		response1, restyResp1, err := client.HealthAndPerformance.SystemHealthCountAPI(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing SystemHealthCountApI", err,
-				"Failure at SystemHealthCountApI, unexpected response", ""))
+				"Failure when executing 2 SystemHealthCountAPI", err,
+				"Failure at SystemHealthCountAPI, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenHealthAndPerformanceSystemHealthCountApIItem(response1)
+		vItem1 := flattenHealthAndPerformanceSystemHealthCountAPIItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting SystemHealthCountApI response",
+				"Failure when setting SystemHealthCountAPI response",
 				err))
 			return diags
 		}
@@ -100,7 +100,7 @@ func dataSourceSystemHealthCountRead(ctx context.Context, d *schema.ResourceData
 	return diags
 }
 
-func flattenHealthAndPerformanceSystemHealthCountApIItem(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemHealthCountApI) []map[string]interface{} {
+func flattenHealthAndPerformanceSystemHealthCountAPIItem(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemHealthCountAPI) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

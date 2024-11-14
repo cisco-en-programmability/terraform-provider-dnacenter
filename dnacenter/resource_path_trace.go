@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -3126,31 +3126,45 @@ get results and follow progress.
 								Schema: map[string]*schema.Schema{
 
 									"control_path": &schema.Schema{
-										// Type:     schema.TypeBool,
+										Description: `Control path tracing
+`,
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"create_time": &schema.Schema{
+										Description: `Timestamp when the Path Trace request was first received
+`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 									"dest_ip": &schema.Schema{
+										Description: `IP Address of the destination device
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"dest_port": &schema.Schema{
+										Description: `Port on the destination device
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"failure_reason": &schema.Schema{
+										Description: `Reason for failure
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"id": &schema.Schema{
+										Description: `Unique ID for the Path Trace request
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"inclusions": &schema.Schema{
+										Description: `Subset of {INTERFACE-STATS, QOS-STATS, DEVICE-STATS, PERFORMANCE-STATS, ACL-TRACE}
+`,
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Schema{
@@ -3158,27 +3172,45 @@ get results and follow progress.
 										},
 									},
 									"last_update_time": &schema.Schema{
+										Description: `Last timestamp when the path trace response was updated
+`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 									"periodic_refresh": &schema.Schema{
-										// Type:     schema.TypeBool,
+										Description: `Re-run the Path Trace every 30 seconds
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"previous_flow_analysis_id": &schema.Schema{
+										Description: `When periodicRefresh is true, this field holds the original Path Trace request ID
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"protocol": &schema.Schema{
+										Description: `One of TCP/UDP or either (null)
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"source_ip": &schema.Schema{
+										Description: `IP Address of the source device
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"source_port": &schema.Schema{
+										Description: `Port on the source device
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"status": &schema.Schema{
+										Description: `One of {SUCCESS, INPROGRESS, FAILED, SCHEDULED, PENDING, COMPLETED}
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -3212,7 +3244,7 @@ get results and follow progress.
 							Computed: true,
 						},
 						"dest_port": &schema.Schema{
-							Description: `Destination Port
+							Description: `Destination Port, range: 1-65535
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -3244,7 +3276,7 @@ get results and follow progress.
 							Computed:     true,
 						},
 						"protocol": &schema.Schema{
-							Description: `Protocol
+							Description: `Protocol - one of [TCP, UDP] - checks both when left blank
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -3258,7 +3290,7 @@ get results and follow progress.
 							Computed: true,
 						},
 						"source_port": &schema.Schema{
-							Description: `Source Port
+							Description: `Source Port, range: 1-65535
 `,
 							Type:     schema.TypeString,
 							Optional: true,

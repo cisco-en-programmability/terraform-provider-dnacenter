@@ -80,5 +80,3 @@ Read-Only:
 - `protocol` (String)
 - `tenant_id` (String)
 - `version` (String)
-
-

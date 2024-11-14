@@ -33,7 +33,7 @@ output "dnacenter_sda_virtual_network_ip_pool_example" {
 
 ### Required
 
-- `ip_pool_name` (String) ipPoolName query parameter.
+- `ip_pool_name` (String) ipPoolName query parameter. ipPoolName. Note: Use vlanName as a value for this parameter if same ip pool is assigned to multiple virtual networks (e.g.. ipPoolName=vlan1021)
 - `site_name_hierarchy` (String) siteNameHierarchy query parameter.
 - `virtual_network_name` (String) virtualNetworkName query parameter.
 
@@ -56,5 +56,3 @@ Read-Only:
 - `status` (String)
 - `traffic_type` (String)
 - `virtual_network_name` (String)
-
-

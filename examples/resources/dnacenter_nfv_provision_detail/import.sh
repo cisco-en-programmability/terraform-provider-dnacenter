@@ -1,1 +1,0 @@
-terraform import dnacenter_nfv_provision_detail.example "id:=string"

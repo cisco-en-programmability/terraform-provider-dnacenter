@@ -1,13 +1,10 @@
 
 data "dnacenter_pnp_device_count" "example" {
   provider           = dnacenter
-  cm_state           = ["string"]
   last_contact       = "false"
   name               = ["string"]
   onb_state          = ["string"]
   pid                = ["string"]
-  project_id         = ["string"]
-  project_name       = ["string"]
   serial_number      = ["string"]
   smart_account_id   = ["string"]
   source             = ["string"]

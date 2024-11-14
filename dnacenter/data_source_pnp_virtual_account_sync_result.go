@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourcePnpVirtualAccountSyncResult() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Onboarding (PnP).
 
-- Returns the summary of devices synced from the given smart account & virtual account with PnP
+- Returns the summary of devices synced from the given smart account & virtual account with PnP (Deprecated)
 `,
 
 		ReadContext: dataSourcePnpVirtualAccountSyncResultRead,
@@ -229,7 +229,7 @@ func dataSourcePnpVirtualAccountSyncResultRead(ctx context.Context, d *schema.Re
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSyncResultForVirtualAccount", err,
+				"Failure when executing 2 GetSyncResultForVirtualAccount", err,
 				"Failure at GetSyncResultForVirtualAccount, unexpected response", ""))
 			return diags
 		}
