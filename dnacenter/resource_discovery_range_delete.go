@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -57,14 +57,14 @@ func resourceDiscoveryRangeDelete() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"records_to_delete": &schema.Schema{
-							Description: `recordsToDelete path parameter. Number of records to delete
+							Description: `recordsToDelete path parameter. Number of records to delete from the starting index
 `,
 							Type:     schema.TypeInt,
 							Required: true,
 							ForceNew: true,
 						},
 						"start_index": &schema.Schema{
-							Description: `startIndex path parameter. Start index
+							Description: `startIndex path parameter. Starting index for the records
 `,
 							Type:     schema.TypeInt,
 							Required: true,
@@ -89,6 +89,8 @@ func resourceDiscoveryRangeDeleteCreate(ctx context.Context, d *schema.ResourceD
 
 	vvStartIndex := vStartIndex.(int)
 	vvRecordsToDelete := vRecordsToDelete.(int)
+
+	// has_unknown_response: None
 
 	response1, restyResp1, err := client.Discovery.DeleteDiscoveryBySpecifiedRange(vvStartIndex, vvRecordsToDelete)
 
@@ -143,7 +145,6 @@ func resourceDiscoveryRangeDeleteCreate(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 	}
-
 	vItem1 := flattenDiscoveryDeleteDiscoveryBySpecifiedRangeItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -154,7 +155,6 @@ func resourceDiscoveryRangeDeleteCreate(ctx context.Context, d *schema.ResourceD
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceDiscoveryRangeDeleteRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

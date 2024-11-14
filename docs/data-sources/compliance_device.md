@@ -20,8 +20,6 @@ data "dnacenter_compliance_device" "example" {
   provider          = dnacenter
   compliance_status = "string"
   device_uuid       = "string"
-  limit             = 1
-  offset            = 1
 }
 
 output "dnacenter_compliance_device_example" {
@@ -34,10 +32,8 @@ output "dnacenter_compliance_device_example" {
 
 ### Optional
 
-- `compliance_status` (String) complianceStatus query parameter. Compliance status can be have value among 'COMPLIANT','NON_COMPLIANT','IN_PROGRESS', 'ERROR'
-- `device_uuid` (String) deviceUuid query parameter. Comma separated deviceUuids
-- `limit` (Number) limit query parameter. Number of records to be retrieved
-- `offset` (Number) offset query parameter. offset/starting row
+- `compliance_status` (String) complianceStatus query parameter. Specify "Compliance status(es)" separated by commas. The Compliance status can be 'COMPLIANT', 'NON_COMPLIANT', 'IN_PROGRESS', 'NOT_AVAILABLE', 'NOT_APPLICABLE', 'ERROR'.
+- `device_uuid` (String) deviceUuid query parameter. Comma separated 'Device Ids'
 
 ### Read-Only
 
@@ -54,5 +50,3 @@ Read-Only:
 - `last_update_time` (Number)
 - `message` (String)
 - `schedule_time` (Number)
-
-

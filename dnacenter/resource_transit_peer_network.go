@@ -2,14 +2,13 @@ package dnacenter
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"reflect"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -106,6 +105,12 @@ func resourceTransitPeerNetwork() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"transit_peer_network_id": &schema.Schema{
+							Description: `Transit Peer Network Id
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"transit_peer_network_name": &schema.Schema{
 							Description: `Transit Peer Network Name
 `,
@@ -136,7 +141,7 @@ func resourceTransitPeerNetwork() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"autonomous_system_number": &schema.Schema{
-										Description: `Autonomous System Number  (e.g.,1-65535)
+										Description: `Autonomous System Number
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -221,7 +226,7 @@ func resourceTransitPeerNetworkCreate(ctx context.Context, d *schema.ResourceDat
 	queryParamImport := dnacentersdkgo.GetTransitPeerNetworkInfoQueryParams{}
 	queryParamImport.TransitPeerNetworkName = vvTransitPeerNetworkName
 	item2, _, err := client.Sda.GetTransitPeerNetworkInfo(&queryParamImport)
-	if err == nil && item2 != nil {
+	if err != nil || item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["transit_peer_network_name"] = item2.TransitPeerNetworkName
 		d.SetId(joinResourceID(resourceMap))
@@ -252,7 +257,7 @@ func resourceTransitPeerNetworkCreate(ctx context.Context, d *schema.ResourceDat
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -265,7 +270,7 @@ func resourceTransitPeerNetworkCreate(ctx context.Context, d *schema.ResourceDat
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing AddTransitPeerNetwork", err))
@@ -306,6 +311,8 @@ func resourceTransitPeerNetworkRead(ctx context.Context, d *schema.ResourceData,
 
 		queryParams1.TransitPeerNetworkName = vTransitPeerNetworkName
 
+		// has_unknown_response: None
+
 		response1, restyResp1, err := client.Sda.GetTransitPeerNetworkInfo(&queryParams1)
 
 		if err != nil || response1 == nil {
@@ -333,13 +340,7 @@ func resourceTransitPeerNetworkRead(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceTransitPeerNetworkUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	err := errors.New("Update not possible in this resource")
-	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing TransitPeerNetworkUpdate", err, "Update method is not supported",
-		"Failure at TransitPeerNetworkUpdate, unexpected response", ""))
-
-	return diags
+	return resourceTransitPeerNetworkRead(ctx, d, m)
 }
 
 func resourceTransitPeerNetworkDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -385,7 +386,7 @@ func resourceTransitPeerNetworkDelete(ctx context.Context, d *schema.ResourceDat
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -398,7 +399,7 @@ func resourceTransitPeerNetworkDelete(ctx context.Context, d *schema.ResourceDat
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeleteTransitPeerNetwork", err))

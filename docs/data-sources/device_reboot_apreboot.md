@@ -54,5 +54,3 @@ Read-Only:
 - `ap_name` (String)
 - `failure_reason` (String)
 - `reboot_status` (String)
-
-

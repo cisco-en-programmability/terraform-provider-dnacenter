@@ -34,13 +34,13 @@ output "dnacenter_planned_access_points_example" {
 
 ### Required
 
-- `floor_id` (String) floorId path parameter. Floor Id
+- `floor_id` (String) floorId path parameter. The instance UUID of the floor hierarchy element
 
 ### Optional
 
-- `limit` (Number) limit query parameter.
-- `offset` (Number) offset query parameter.
-- `radios` (Boolean) radios query parameter. inlcude planned radio details
+- `limit` (Number) limit query parameter. The page size limit for the response, e.g. limit=100 will return a maximum of 100 records
+- `offset` (Number) offset query parameter. The page offset for the response. E.g. if limit=100, offset=0 will return first 100 records, offset=1 will return next 100 records, etc.
+- `radios` (Boolean) radios query parameter. Whether to include the planned radio details of the planned access points
 
 ### Read-Only
 
@@ -54,7 +54,7 @@ Read-Only:
 
 - `attributes` (List of Object) (see [below for nested schema](#nestedobjatt--items--attributes))
 - `is_sensor` (String)
-- `location` (String)
+- `location` (List of Object) (see [below for nested schema](#nestedobjatt--items--location))
 - `position` (List of Object) (see [below for nested schema](#nestedobjatt--items--position))
 - `radio_count` (Number)
 - `radios` (List of Object) (see [below for nested schema](#nestedobjatt--items--radios))
@@ -69,10 +69,20 @@ Read-Only:
 - `heirarchy_name` (String)
 - `id` (Number)
 - `instance_uuid` (String)
-- `macaddress` (String)
+- `mac_address` (String)
 - `name` (String)
 - `source` (String)
 - `type_string` (String)
+
+
+<a id="nestedobjatt--items--location"></a>
+### Nested Schema for `items.location`
+
+Read-Only:
+
+- `altitude` (Number)
+- `lattitude` (Number)
+- `longtitude` (Number)
 
 
 <a id="nestedobjatt--items--position"></a>
@@ -112,7 +122,7 @@ Read-Only:
 
 Read-Only:
 
-- `channel` (String)
+- `channel` (Number)
 - `channel_string` (String)
 - `id` (Number)
 - `if_mode` (String)
@@ -120,5 +130,4 @@ Read-Only:
 - `if_type_subband` (String)
 - `instance_uuid` (String)
 - `slot_id` (Number)
-
-
+- `tx_power_level` (Number)

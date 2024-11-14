@@ -12,16 +12,15 @@ description: |-
 It performs create operation on Event Management.
 
 - Create Email Destination
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_event_email_config_create" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     email_config_id = "string"
@@ -31,6 +30,7 @@ resource "dnacenter_event_email_config_create" "example" {
       host_name = "string"
       password  = "******"
       port      = "string"
+      smtp_type = "string"
       user_name = "string"
     }
     secondary_smt_p_config {
@@ -38,6 +38,7 @@ resource "dnacenter_event_email_config_create" "example" {
       host_name = "string"
       password  = "******"
       port      = "string"
+      smtp_type = "string"
       user_name = "string"
     }
     subject  = "string"
@@ -83,6 +84,7 @@ Optional:
 - `host_name` (String) Host Name
 - `password` (String, Sensitive) Password
 - `port` (String) Port
+- `smtp_type` (String) smtpType
 - `user_name` (String) User Name
 
 
@@ -94,6 +96,7 @@ Optional:
 - `host_name` (String) Host Name
 - `password` (String, Sensitive) Password
 - `port` (String) Port
+- `smtp_type` (String) smtpType
 - `user_name` (String) User Name
 
 
@@ -104,5 +107,3 @@ Optional:
 Read-Only:
 
 - `status_uri` (String)
-
-

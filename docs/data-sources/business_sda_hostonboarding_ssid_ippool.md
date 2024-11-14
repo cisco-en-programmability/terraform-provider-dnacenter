@@ -55,5 +55,3 @@ Read-Only:
 
 - `name` (String)
 - `scalable_group_name` (String)
-
-

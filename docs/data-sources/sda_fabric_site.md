@@ -49,5 +49,3 @@ Read-Only:
 - `fabric_type` (String)
 - `site_name_hierarchy` (String)
 - `status` (String)
-
-

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -75,7 +75,7 @@ func dataSourceWirelessDynamicInterfaceRead(ctx context.Context, d *schema.Resou
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDynamicInterface", err,
+				"Failure when executing 2 GetDynamicInterface", err,
 				"Failure at GetDynamicInterface, unexpected response", ""))
 			return diags
 		}

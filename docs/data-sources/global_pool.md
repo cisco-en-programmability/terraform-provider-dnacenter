@@ -4,14 +4,14 @@ page_title: "dnacenter_global_pool Data Source - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs read operation on Network Settings.
-  API to get global pool.
+  API to get the global pool.
 ---
 
 # dnacenter_global_pool (Data Source)
 
 It performs read operation on Network Settings.
 
-- API to get global pool.
+- API to get the global pool.
 
 ## Example Usage
 
@@ -32,8 +32,8 @@ output "dnacenter_global_pool_example" {
 
 ### Optional
 
-- `limit` (Number) limit query parameter. No of Global Pools to be retrieved
-- `offset` (Number) offset query parameter. offset/starting row
+- `limit` (Number) limit query parameter. Number of Global Pools to be retrieved. Default is 25 if not specified.
+- `offset` (Number) offset query parameter. Offset/starting row. Indexed from 1. Default value of 1.
 
 ### Read-Only
 
@@ -45,24 +45,30 @@ output "dnacenter_global_pool_example" {
 
 Read-Only:
 
+- `available_ip_address_count` (Number)
 - `client_options` (String)
 - `configure_external_dhcp` (String)
 - `context` (List of Object) (see [below for nested schema](#nestedobjatt--items--context))
-- `create_time` (String)
+- `create_time` (Number)
+- `default_assigned_ip_address_count` (Number)
 - `dhcp_server_ips` (List of String)
 - `dns_server_ips` (List of String)
 - `gateways` (List of String)
+- `has_subpools` (String)
 - `id` (String)
 - `ip_pool_cidr` (String)
 - `ip_pool_name` (String)
+- `ip_pool_type` (String)
 - `ipv6` (String)
-- `last_update_time` (String)
+- `last_update_time` (Number)
 - `overlapping` (String)
 - `owner` (String)
 - `parent_uuid` (String)
 - `shared` (String)
-- `total_ip_address_count` (String)
-- `used_ip_address_count` (String)
+- `total_assignable_ip_address_count` (Number)
+- `total_ip_address_count` (Number)
+- `unavailable_ip_address_count` (Number)
+- `used_ip_address_count` (Number)
 - `used_percentage` (String)
 
 <a id="nestedobjatt--items--context"></a>
@@ -73,5 +79,3 @@ Read-Only:
 - `context_key` (String)
 - `context_value` (String)
 - `owner` (String)
-
-

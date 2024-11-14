@@ -11,7 +11,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -40,14 +40,16 @@ func resourceCompliance() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"task_id": &schema.Schema{
-							Description: `Task Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Task id.
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"url": &schema.Schema{
-							Description: `Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Additional url for task id.
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -61,6 +63,8 @@ func resourceCompliance() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"categories": &schema.Schema{
+							Description: `Category can have any value among 'INTENT'(mapped to compliance types: NETWORK_SETTINGS,NETWORK_PROFILE,WORKFLOW,FABRIC,APPLICATION_VISIBILITY), 'RUNNING_CONFIG' , 'IMAGE' , 'PSIRT' , 'EOX' , 'NETWORK_SETTINGS'
+`,
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
@@ -70,6 +74,8 @@ func resourceCompliance() *schema.Resource {
 							},
 						},
 						"device_uuids": &schema.Schema{
+							Description: `UUID of the device.
+`,
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
@@ -79,7 +85,9 @@ func resourceCompliance() *schema.Resource {
 							},
 						},
 						"trigger_full": &schema.Schema{
-							// Type:     schema.TypeBool,
+							Description: `if it is true then compliance will be triggered for all categories. If it is false then compliance will be triggered for categories mentioned in categories section .
+`,
+							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -99,11 +107,9 @@ func resourceComplianceCreate(ctx context.Context, d *schema.ResourceData, m int
 
 	request1 := expandRequestComplianceRunCompliance(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.Compliance.RunCompliance(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.Compliance.RunCompliance(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -157,6 +163,9 @@ func resourceComplianceCreate(ctx context.Context, d *schema.ResourceData, m int
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenComplianceRunComplianceItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -167,7 +176,6 @@ func resourceComplianceCreate(ctx context.Context, d *schema.ResourceData, m int
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceComplianceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

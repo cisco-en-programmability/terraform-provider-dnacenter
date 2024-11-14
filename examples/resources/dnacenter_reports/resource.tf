@@ -1,13 +1,15 @@
 
 resource "dnacenter_reports" "example" {
   provider = dnacenter
+
   parameters {
 
-    deliveries = ["string"]
-    name       = "string"
-    report_id  = "string"
-    schedule   = "string"
-    tags       = ["string"]
+    data_category = "string"
+    deliveries    = ["string"]
+    name          = "string"
+    report_id     = "string"
+    schedule      = "string"
+    tags          = ["string"]
     view {
 
       field_groups {

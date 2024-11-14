@@ -17,7 +17,7 @@ terraform {
 #  type = string
 #}
 
-# Configure provider with your Cisco DNA Center SDK credentials
+# Configure provider with your Cisco Catalyst Center SDK credentials
 
 
 resource "dnacenter_area" "test_area_1" {

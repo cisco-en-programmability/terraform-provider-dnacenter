@@ -2,11 +2,12 @@ package dnacenter
 
 import (
 	"context"
-	"log"
 
 	"reflect"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	"log"
+
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -118,22 +119,24 @@ execution id, to receive the suggested actions commands output.
 func resourceExecuteSuggestedActionsCommandsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
-	//review new resource
+
 	request1 := expandRequestExecuteSuggestedActionsCommandsExecuteSuggestedActionsCommands(ctx, "parameters.0", d)
+
+	// has_unknown_response: None
+
 	response1, restyResp1, err := client.Issues.ExecuteSuggestedActionsCommands(request1)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		d.SetId("")
+		diags = append(diags, diagError(
+			"Failure when executing ExecuteSuggestedActionsCommands", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
 	vItems1 := flattenIssuesExecuteSuggestedActionsCommandsItems(response1)
 	if err := d.Set("items", vItems1); err != nil {
 		diags = append(diags, diagError(
@@ -144,8 +147,6 @@ func resourceExecuteSuggestedActionsCommandsCreate(ctx context.Context, d *schem
 
 	d.SetId(getUnixTimeString())
 	return diags
-
-	//Analizar verificacion.
 
 }
 func resourceExecuteSuggestedActionsCommandsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

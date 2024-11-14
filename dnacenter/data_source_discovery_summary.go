@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,24 +15,26 @@ func dataSourceDiscoverySummary() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Discovery.
 
-- Returns the network devices from a discovery job based on given filters. Discovery ID can be obtained using the "Get
-Discoveries by range" API.
+- Returns the devices discovered in the given discovery based on given filters. Discovery ID can be obtained using the
+"Get Discoveries by range" API.
 `,
 
 		ReadContext: dataSourceDiscoverySummaryRead,
 		Schema: map[string]*schema.Schema{
-			"cli_status": &schema.Schema{
-				Description: `cliStatus query parameter.`,
-				Type:        schema.TypeList,
-				Optional:    true,
+			"clistatus": &schema.Schema{
+				Description: `cliStatus query parameter. CLI status for the IP during the job run. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED'
+`,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
 			},
 			"http_status": &schema.Schema{
-				Description: `httpStatus query parameter.`,
-				Type:        schema.TypeList,
-				Optional:    true,
+				Description: `httpStatus query parameter. HTTP staus for the IP during the job run. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED'
+`,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -44,46 +46,52 @@ Discoveries by range" API.
 				Required: true,
 			},
 			"ip_address": &schema.Schema{
-				Description: `ipAddress query parameter.`,
-				Type:        schema.TypeList,
-				Optional:    true,
+				Description: `ipAddress query parameter. IP Address of the device
+`,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
 			},
 			"netconf_status": &schema.Schema{
-				Description: `netconfStatus query parameter.`,
-				Type:        schema.TypeList,
-				Optional:    true,
+				Description: `netconfStatus query parameter. NETCONF status for the IP during the job run. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED'
+`,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
 			},
 			"ping_status": &schema.Schema{
-				Description: `pingStatus query parameter.`,
-				Type:        schema.TypeList,
-				Optional:    true,
+				Description: `pingStatus query parameter. Ping status for the IP during the job run. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED'
+`,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
 			},
 			"snmp_status": &schema.Schema{
-				Description: `snmpStatus query parameter.`,
-				Type:        schema.TypeList,
-				Optional:    true,
+				Description: `snmpStatus query parameter. SNMP status for the IP during the job run. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED'
+`,
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
 			},
 			"sort_by": &schema.Schema{
-				Description: `sortBy query parameter.`,
-				Type:        schema.TypeString,
-				Optional:    true,
+				Description: `sortBy query parameter. Sort by field. Available values are pingStatus, cliStatus,snmpStatus, httpStatus and netconfStatus
+`,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"sort_order": &schema.Schema{
-				Description: `sortOrder query parameter.`,
-				Type:        schema.TypeString,
-				Optional:    true,
+				Description: `sortOrder query parameter. Order of sorting based on sortBy. Available values are 'asc' and 'des'
+`,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"task_id": &schema.Schema{
 				Description: `taskId query parameter.`,
@@ -98,6 +106,8 @@ Discoveries by range" API.
 					Schema: map[string]*schema.Schema{
 
 						"response": &schema.Schema{
+							Description: `The number of network devices from the discovery job based on the given filters
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
@@ -124,7 +134,7 @@ func dataSourceDiscoverySummaryRead(ctx context.Context, d *schema.ResourceData,
 	vIPAddress, okIPAddress := d.GetOk("ip_address")
 	vPingStatus, okPingStatus := d.GetOk("ping_status")
 	vSNMPStatus, okSNMPStatus := d.GetOk("snmp_status")
-	vCliStatus, okCliStatus := d.GetOk("cli_status")
+	vClistatus, okClistatus := d.GetOk("clistatus")
 	vNetconfStatus, okNetconfStatus := d.GetOk("netconf_status")
 	vHTTPStatus, okHTTPStatus := d.GetOk("http_status")
 
@@ -152,8 +162,8 @@ func dataSourceDiscoverySummaryRead(ctx context.Context, d *schema.ResourceData,
 		if okSNMPStatus {
 			queryParams1.SNMPStatus = interfaceToSliceString(vSNMPStatus)
 		}
-		if okCliStatus {
-			queryParams1.CliStatus = interfaceToSliceString(vCliStatus)
+		if okClistatus {
+			queryParams1.Clistatus = interfaceToSliceString(vClistatus)
 		}
 		if okNetconfStatus {
 			queryParams1.NetconfStatus = interfaceToSliceString(vNetconfStatus)
@@ -169,7 +179,7 @@ func dataSourceDiscoverySummaryRead(ctx context.Context, d *schema.ResourceData,
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkDevicesFromDiscovery", err,
+				"Failure when executing 2 GetNetworkDevicesFromDiscovery", err,
 				"Failure at GetNetworkDevicesFromDiscovery, unexpected response", ""))
 			return diags
 		}

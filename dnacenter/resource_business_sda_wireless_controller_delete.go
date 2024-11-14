@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -67,15 +67,6 @@ func resourceBusinessSdaWirelessControllerDelete() *schema.Resource {
 							Required: true,
 							ForceNew: true,
 						},
-						"persistbapioutput": &schema.Schema{
-							Description: `deviceIPAddress query parameter. Device Management IP Address
-`,
-							Type:         schema.TypeString,
-							Optional:     true,
-							ForceNew:     true,
-							Default:      "false",
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-						},
 					},
 				},
 			},
@@ -99,6 +90,8 @@ func resourceBusinessSdaWirelessControllerDeleteCreate(ctx context.Context, d *s
 	queryParams1.DeviceIPAddress = vDeviceIPAddress.(string)
 
 	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+
+	// has_unknown_response: None
 
 	response1, restyResp1, err := client.FabricWireless.RemoveWLCFromFabricDomain(&headerParams1, &queryParams1)
 
@@ -127,7 +120,7 @@ func resourceBusinessSdaWirelessControllerDeleteCreate(ctx context.Context, d *s
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -140,7 +133,7 @@ func resourceBusinessSdaWirelessControllerDeleteCreate(ctx context.Context, d *s
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing RemoveWLCFromFabricDomain", err,
@@ -148,7 +141,6 @@ func resourceBusinessSdaWirelessControllerDeleteCreate(ctx context.Context, d *s
 			return diags
 		}
 	}
-
 	vItem1 := flattenFabricWirelessRemoveWLCFromFabricDomainItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(

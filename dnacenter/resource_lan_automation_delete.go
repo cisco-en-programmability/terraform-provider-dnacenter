@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -86,6 +86,8 @@ func resourceLanAutomationDeleteCreate(ctx context.Context, d *schema.ResourceDa
 
 	vvID := vID.(string)
 
+	// has_unknown_response: None
+
 	response1, restyResp1, err := client.LanAutomation.LanAutomationStop(vvID)
 
 	if err != nil || response1 == nil {
@@ -99,8 +101,6 @@ func resourceLanAutomationDeleteCreate(ctx context.Context, d *schema.ResourceDa
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	//Analizar verificacion.
-
 	vItem1 := flattenLanAutomationLanAutomationStopItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -111,6 +111,8 @@ func resourceLanAutomationDeleteCreate(ctx context.Context, d *schema.ResourceDa
 
 	d.SetId(getUnixTimeString())
 	return diags
+
+	//Analizar verificacion.
 
 }
 func resourceLanAutomationDeleteRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

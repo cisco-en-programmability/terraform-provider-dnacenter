@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -127,7 +127,7 @@ func resourceLanAutomationCreate() *schema.Resource {
 										ForceNew: true,
 										Computed: true,
 									},
-									"multicast_enabled": &schema.Schema{
+									"mulitcast_enabled": &schema.Schema{
 										Description: `To enable underlay native multicast.
 `,
 										// Type:        schema.TypeBool,
@@ -190,25 +190,20 @@ func resourceLanAutomationCreateCreate(ctx context.Context, d *schema.ResourceDa
 
 	request1 := expandRequestLanAutomationCreateLanAutomationStart(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.LanAutomation.LanAutomationStart(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.LanAutomation.LanAutomationStart(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing LanAutomationStart", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	//Analizar verificacion.
 
 	vItem1 := flattenLanAutomationLanAutomationStartItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
@@ -281,7 +276,7 @@ func expandRequestLanAutomationCreateLanAutomationStartItem(ctx context.Context,
 		request.IPPools = expandRequestLanAutomationCreateLanAutomationStartItemIPPoolsArray(ctx, key+".ip_pools", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mulitcast_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mulitcast_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mulitcast_enabled")))) {
-		request.MulticastEnabled = interfaceToBoolPtr(v)
+		request.MulitcastEnabled = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".host_name_prefix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".host_name_prefix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".host_name_prefix")))) {
 		request.HostNamePrefix = interfaceToString(v)

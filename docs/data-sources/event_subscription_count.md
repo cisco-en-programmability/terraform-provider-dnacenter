@@ -44,5 +44,3 @@ output "dnacenter_event_subscription_count_example" {
 Read-Only:
 
 - `response` (Number)
-
-

@@ -1,6 +1,7 @@
 
 resource "dnacenter_network_device_custom_prompt" "example" {
   provider = dnacenter
+
   parameters {
 
     password_prompt = "******"

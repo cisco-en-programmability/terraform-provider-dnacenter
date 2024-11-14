@@ -46,5 +46,3 @@ Read-Only:
 - `api_status` (String)
 - `error_message` (String)
 - `status_message` (String)
-
-

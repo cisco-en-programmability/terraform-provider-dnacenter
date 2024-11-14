@@ -55,7 +55,7 @@ Read-Only:
 - `host_name` (String)
 - `password` (String)
 - `port` (String)
-- `security` (String)
+- `smtp_type` (String)
 - `user_name` (String)
 
 
@@ -67,7 +67,5 @@ Read-Only:
 - `host_name` (String)
 - `password` (String)
 - `port` (String)
-- `security` (String)
+- `smtp_type` (String)
 - `user_name` (String)
-
-

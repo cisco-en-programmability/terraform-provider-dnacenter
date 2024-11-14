@@ -1,0 +1,1 @@
+terraform import dnacenter_sda_port_channels.example "id:=string"

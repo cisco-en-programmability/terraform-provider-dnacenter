@@ -4,14 +4,14 @@ page_title: "dnacenter_role_permissions Data Source - terraform-provider-dnacent
 subcategory: ""
 description: |-
   It performs read operation on User and Roles.
-  Get permissions for a role from Cisco DNA Center System
+  Get permissions for a role from Cisco DNA Center System.
 ---
 
 # dnacenter_role_permissions (Data Source)
 
 It performs read operation on User and Roles.
 
-- Get permissions for a role from Cisco DNA Center System
+- Get permissions for a role from Cisco DNA Center System.
 
 ## Example Usage
 
@@ -49,5 +49,3 @@ Read-Only:
 - `description` (String)
 - `display_name` (String)
 - `type` (String)
-
-

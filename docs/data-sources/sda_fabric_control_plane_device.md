@@ -50,5 +50,3 @@ Read-Only:
 - `route_distribution_protocol` (String)
 - `site_name_hierarchy` (String)
 - `status` (String)
-
-

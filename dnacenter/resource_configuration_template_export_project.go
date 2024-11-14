@@ -11,7 +11,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -81,18 +81,16 @@ func resourceConfigurationTemplateExportProjectCreate(ctx context.Context, d *sc
 
 	request1 := expandRequestConfigurationTemplateExportProjectExportsTheProjectsForAGivenCriteria(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.ConfigurationTemplates.ExportsTheProjectsForAGivenCriteria(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.ConfigurationTemplates.ExportsTheProjectsForAGivenCriteria(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when executing ExportProjects", err))
+			"Failure when executing ExportsTheProjectsForAGivenCriteria", err))
 		return diags
 	}
 
@@ -139,6 +137,9 @@ func resourceConfigurationTemplateExportProjectCreate(ctx context.Context, d *sc
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenConfigurationTemplatesExportsTheProjectsForAGivenCriteriaItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(

@@ -52,5 +52,3 @@ Read-Only:
 - `name` (String)
 - `serial_number` (String)
 - `tenant_id` (String)
-
-

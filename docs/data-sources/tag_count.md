@@ -19,7 +19,6 @@ It performs read operation on Tag.
 data "dnacenter_tag_count" "example" {
   provider       = dnacenter
   attribute_name = "string"
-  level          = "string"
   name           = "string"
   name_space     = "string"
   size           = "string"
@@ -37,7 +36,6 @@ output "dnacenter_tag_count_example" {
 ### Optional
 
 - `attribute_name` (String) attributeName query parameter.
-- `level` (String) level query parameter.
 - `name` (String) name query parameter.
 - `name_space` (String) nameSpace query parameter.
 - `size` (String) size query parameter. size in kilobytes(KB)
@@ -55,5 +53,3 @@ Read-Only:
 
 - `response` (Number)
 - `version` (String)
-
-

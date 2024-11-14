@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -169,8 +169,11 @@ func dataSourceTask() *schema.Resource {
 						},
 
 						"operation_id_list": &schema.Schema{
-							Type:     schema.TypeString, //TEST,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"parent_id": &schema.Schema{
@@ -264,13 +267,16 @@ func dataSourceTask() *schema.Resource {
 						},
 
 						"last_update": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"operation_id_list": &schema.Schema{
-							Type:     schema.TypeString, //TEST,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 
 						"parent_id": &schema.Schema{
@@ -341,8 +347,8 @@ func dataSourceTaskRead(ctx context.Context, d *schema.ResourceData, m interface
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetTasks")
-		queryParams1 := dnacentersdkgo.GetTasksQueryParams{}
+		log.Printf("[DEBUG] Selected method: GetTasksOperationalTasks")
+		queryParams1 := dnacentersdkgo.GetTasksOperationalTasksQueryParams{}
 
 		if okStartTime {
 			queryParams1.StartTime = vStartTime.(string)
@@ -387,24 +393,24 @@ func dataSourceTaskRead(ctx context.Context, d *schema.ResourceData, m interface
 			queryParams1.Order = vOrder.(string)
 		}
 
-		response1, restyResp1, err := client.Task.GetTasks(&queryParams1)
+		response1, restyResp1, err := client.Task.GetTasksOperationalTasks(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTasks", err,
-				"Failure at GetTasks, unexpected response", ""))
+				"Failure when executing 2 GetTasksOperationalTasks", err,
+				"Failure at GetTasksOperationalTasks, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenTaskGetTasksItems(response1.Response)
+		vItems1 := flattenTaskGetTasksOperationalTasksItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetTasks response",
+				"Failure when setting GetTasksOperationalTasks response",
 				err))
 			return diags
 		}
@@ -424,7 +430,7 @@ func dataSourceTaskRead(ctx context.Context, d *schema.ResourceData, m interface
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTaskByID", err,
+				"Failure when executing 2 GetTaskByID", err,
 				"Failure at GetTaskByID, unexpected response", ""))
 			return diags
 		}
@@ -446,7 +452,7 @@ func dataSourceTaskRead(ctx context.Context, d *schema.ResourceData, m interface
 	return diags
 }
 
-func flattenTaskGetTasksItems(items *[]dnacentersdkgo.ResponseTaskGetTasksResponse) []map[string]interface{} {
+func flattenTaskGetTasksOperationalTasksItems(items *[]dnacentersdkgo.ResponseTaskGetTasksOperationalTasksResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -463,7 +469,7 @@ func flattenTaskGetTasksItems(items *[]dnacentersdkgo.ResponseTaskGetTasksRespon
 		respItem["instance_tenant_id"] = item.InstanceTenantID
 		respItem["is_error"] = boolPtrToString(item.IsError)
 		respItem["last_update"] = item.LastUpdate
-		respItem["operation_id_list"] = flattenTaskGetTasksItemsOperationIDList(item.OperationIDList)
+		respItem["operation_id_list"] = item.OperationIDList
 		respItem["parent_id"] = item.ParentID
 		respItem["progress"] = item.Progress
 		respItem["root_id"] = item.RootID
@@ -474,16 +480,6 @@ func flattenTaskGetTasksItems(items *[]dnacentersdkgo.ResponseTaskGetTasksRespon
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenTaskGetTasksItemsOperationIDList(item *dnacentersdkgo.ResponseTaskGetTasksResponseOperationIDList) interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := *item
-
-	return responseInterfaceToString(respItem)
-
 }
 
 func flattenTaskGetTaskByIDItem(item *dnacentersdkgo.ResponseTaskGetTaskByIDResponse) []map[string]interface{} {
@@ -501,7 +497,7 @@ func flattenTaskGetTaskByIDItem(item *dnacentersdkgo.ResponseTaskGetTaskByIDResp
 	respItem["instance_tenant_id"] = item.InstanceTenantID
 	respItem["is_error"] = boolPtrToString(item.IsError)
 	respItem["last_update"] = item.LastUpdate
-	respItem["operation_id_list"] = flattenTaskGetTaskByIDItemOperationIDList(item.OperationIDList)
+	respItem["operation_id_list"] = item.OperationIDList
 	respItem["parent_id"] = item.ParentID
 	respItem["progress"] = item.Progress
 	respItem["root_id"] = item.RootID
@@ -512,14 +508,4 @@ func flattenTaskGetTaskByIDItem(item *dnacentersdkgo.ResponseTaskGetTaskByIDResp
 	return []map[string]interface{}{
 		respItem,
 	}
-}
-
-func flattenTaskGetTaskByIDItemOperationIDList(item *dnacentersdkgo.ResponseTaskGetTaskByIDResponseOperationIDList) interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := *item
-
-	return responseInterfaceToString(respItem)
-
 }

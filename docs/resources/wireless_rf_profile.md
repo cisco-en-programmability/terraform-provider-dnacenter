@@ -4,7 +4,7 @@ page_title: "dnacenter_wireless_rf_profile Resource - terraform-provider-dnacent
 subcategory: ""
 description: |-
   It manages create, read and delete operations on Wireless.
-  Create or Update RF profileDelete RF profile(s)
+  Create or Update RF profileDelete RF profile
 ---
 
 # dnacenter_wireless_rf_profile (Resource)
@@ -13,13 +13,14 @@ It manages create, read and delete operations on Wireless.
 
 - Create or Update RF profile
 
-- Delete RF profile(s)
+- Delete RF profile
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_wireless_rf_profile" "example" {
   provider = dnacenter
+
   parameters {
 
     channel_width       = "string"
@@ -63,6 +64,7 @@ resource "dnacenter_wireless_rf_profile" "example" {
       radio_channels       = "string"
       rx_sop_threshold     = "string"
     }
+    rf_profile_name = "string"
   }
 }
 
@@ -110,14 +112,14 @@ Optional:
 
 Optional:
 
-- `data_rates` (String) Data Rates
-- `mandatory_data_rates` (String) Mandatory Data Rates
-- `max_power_level` (Number) Max Power Level
-- `min_power_level` (Number) Rx Sop Threshold
-- `parent_profile` (String) Parent Profile
-- `power_threshold_v1` (Number) Power Threshold V1
-- `radio_channels` (String) Radio Channels
-- `rx_sop_threshold` (String) Rx Sop Threshold
+- `data_rates` (String) Data Rates (Default : "6,9,12,18,24,36,48,54")
+- `mandatory_data_rates` (String) Mandatory Data Rates (Default: "6,12,24")
+- `max_power_level` (Number) Max Power Level  (Default: 30)
+- `min_power_level` (Number) Rx Sop Threshold  (Default: -10)
+- `parent_profile` (String) Parent Profile (Default : CUSTOM)
+- `power_threshold_v1` (Number) Power Threshold V1 ( (Default: -70)
+- `radio_channels` (String) Radio Channels (Default : "36,40,44,48,52,56,60,64,149,153,157,161")
+- `rx_sop_threshold` (String) Rx Sop Threshold  (Default: "AUTO")
 
 
 <a id="nestedblock--parameters--radio_type_b_properties"></a>
@@ -125,14 +127,14 @@ Optional:
 
 Optional:
 
-- `data_rates` (String) Data Rates
-- `mandatory_data_rates` (String) Mandatory Data Rates
-- `max_power_level` (Number) Max Power Level
-- `min_power_level` (Number) Min Power Level
-- `parent_profile` (String) Parent Profile
-- `power_threshold_v1` (Number) Power Threshold V1
-- `radio_channels` (String) Radio Channels
-- `rx_sop_threshold` (String) Rx Sop Threshold
+- `data_rates` (String) Data Rates  (Default: "9,11,12,18,24,36,48,54")
+- `mandatory_data_rates` (String) Mandatory Data Rates  (Default: "12")
+- `max_power_level` (Number) Max Power Level  (Default: 30)
+- `min_power_level` (Number) Min Power Level  (Default: -10)
+- `parent_profile` (String) Parent Profile (Default : CUSTOM)
+- `power_threshold_v1` (Number) Power Threshold V1  (Default: -70)
+- `radio_channels` (String) Radio Channels (Default : "9,11,12,18,24,36,48,54")
+- `rx_sop_threshold` (String) Rx Sop Threshold (Default: "AUTO")
 
 
 <a id="nestedblock--parameters--radio_type_c_properties"></a>
@@ -140,14 +142,14 @@ Optional:
 
 Optional:
 
-- `data_rates` (String) Data Rates
-- `mandatory_data_rates` (String) Mandatory Data Rates
-- `max_power_level` (Number) Max Power Level
-- `min_power_level` (Number) Min Power Level
-- `parent_profile` (String) Parent Profile
-- `power_threshold_v1` (Number) Power Threshold V1
-- `radio_channels` (String) Radio Channels
-- `rx_sop_threshold` (String) Rx Sop Threshold
+- `data_rates` (String) Data Rates  (Default: "6,9,12,18,24,36,48,54")
+- `mandatory_data_rates` (String) Mandatory Data Rates  (Default: "6,12,24")
+- `max_power_level` (Number) Max Power Level  (Default: 30)
+- `min_power_level` (Number) Min Power Level  (Default: -10)
+- `parent_profile` (String) Parent Profile (Default : CUSTOM)
+- `power_threshold_v1` (Number) Power Threshold V1  (Default: -70)
+- `radio_channels` (String) Radio Channels (Default : "5,21,37,53,69,85,101,117,133,149,165,181,197,213,229")
+- `rx_sop_threshold` (String) Rx Sop Threshold  (Default: "AUTO")
 
 
 
@@ -156,36 +158,61 @@ Optional:
 
 Read-Only:
 
-- `a_radio_channels` (String)
-- `b_radio_channels` (String)
-- `c_radio_channels` (String)
 - `channel_width` (String)
-- `data_rates_a` (String)
-- `data_rates_b` (String)
-- `data_rates_c` (String)
 - `default_rf_profile` (String)
-- `enable_a_radio_type` (String)
-- `enable_b_radio_type` (String)
 - `enable_brown_field` (String)
-- `enable_c_radio_type` (String)
 - `enable_custom` (String)
-- `mandatory_data_rates_a` (String)
-- `mandatory_data_rates_b` (String)
-- `mandatory_data_rates_c` (String)
-- `max_power_level_a` (String)
-- `max_power_level_b` (String)
-- `min_power_level_a` (String)
-- `min_power_level_b` (String)
-- `min_power_level_c` (String)
+- `enable_radio_type_a` (String)
+- `enable_radio_type_b` (String)
+- `enable_radio_type_c` (String)
 - `name` (String)
-- `parent_profile_a` (String)
-- `parent_profile_b` (String)
-- `power_threshold_v1_a` (Number)
-- `power_threshold_v1_b` (Number)
-- `power_threshold_v1_c` (Number)
-- `rx_sop_threshold_a` (String)
-- `rx_sop_threshold_b` (String)
-- `rx_sop_threshold_c` (String)
+- `radio_type_a_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type_a_properties))
+- `radio_type_b_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type_b_properties))
+- `radio_type_c_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type_c_properties))
+
+<a id="nestedobjatt--item--radio_type_a_properties"></a>
+### Nested Schema for `item.radio_type_a_properties`
+
+Read-Only:
+
+- `data_rates` (String)
+- `mandatory_data_rates` (String)
+- `max_power_level` (Number)
+- `min_power_level` (Number)
+- `parent_profile` (String)
+- `power_threshold_v1` (Number)
+- `radio_channels` (String)
+- `rx_sop_threshold` (String)
+
+
+<a id="nestedobjatt--item--radio_type_b_properties"></a>
+### Nested Schema for `item.radio_type_b_properties`
+
+Read-Only:
+
+- `data_rates` (String)
+- `mandatory_data_rates` (String)
+- `max_power_level` (Number)
+- `min_power_level` (Number)
+- `parent_profile` (String)
+- `power_threshold_v1` (Number)
+- `radio_channels` (String)
+- `rx_sop_threshold` (String)
+
+
+<a id="nestedobjatt--item--radio_type_c_properties"></a>
+### Nested Schema for `item.radio_type_c_properties`
+
+Read-Only:
+
+- `data_rates` (String)
+- `mandatory_data_rates` (String)
+- `max_power_level` (Number)
+- `min_power_level` (Number)
+- `parent_profile` (String)
+- `power_threshold_v1` (Number)
+- `radio_channels` (String)
+- `rx_sop_threshold` (String)
 
 ## Import
 

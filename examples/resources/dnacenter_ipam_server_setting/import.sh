@@ -1,0 +1,1 @@
+terraform import dnacenter_ipam_server_setting.example "id:=string"

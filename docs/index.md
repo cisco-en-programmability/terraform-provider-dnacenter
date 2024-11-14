@@ -8,27 +8,27 @@ description: |-
 
 # dnacenter Provider
 
-The Cisco DNA Center provider is used to interact with Cisco DNA Center APIs (2.3.5.3). The provider needs to be configured with the proper credentials before it can be used.
+The Cisco Catalyst Center provider is used to interact with Cisco Catalyst Center APIs (2.3.7.6). The provider needs to be configured with the proper credentials before it can be used.
 
 Use the navigation to the left to read about the available resources.
 
 
 ## Example Usage
 
-The DNA Center SDK client could be generated with the following parameters:
+The Catalyst Center SDK client could be generated with the following parameters:
 
 ```terraform
-# Configure provider with your Cisco DNA Center SDK credentials
+# Configure provider with your Cisco Catalyst Center SDK credentials
 provider "dnacenter" {
-  # Cisco DNA Center user name
+  # Cisco Catalyst Center user name
   username = "admin"
   # it can be set using the environment variable DNAC_BASE_URL
 
-  # Cisco DNA Center password
+  # Cisco Catalyst Center password
   password = "admin123"
   # it can be set using the environment variable DNAC_USERNAME
 
-  # Cisco DNA Center base URL, FQDN or IP
+  # Cisco Catalyst Center base URL, FQDN or IP
   base_url = "https://172.168.196.2"
   # it can be set using the environment variable DNAC_PASSWORD
 
@@ -47,8 +47,8 @@ provider "dnacenter" {
 
 ### Optional
 
-- **base_url** (String) Cisco DNA Center base URL, FQDN or IP. If not set, it uses the DNAC_BASE_URL environment variable.
-- **debug** (String) Flag for Cisco DNA Center to enable debugging. If not set, it uses the DNAC_DEBUG environment variable; defaults to `false`.
-- **password** (String, Sensitive) Cisco DNA Center password to authenticate. If not set, it uses the DNAC_PASSWORD environment variable.
+- **base_url** (String) Cisco Catalyst Center base URL, FQDN or IP. If not set, it uses the DNAC_BASE_URL environment variable.
+- **debug** (String) Flag for Cisco Catalyst Center to enable debugging. If not set, it uses the DNAC_DEBUG environment variable; defaults to `false`.
+- **password** (String, Sensitive) Cisco Catalyst Center password to authenticate. If not set, it uses the DNAC_PASSWORD environment variable.
 - **ssl_verify** (String, Sensitive) Flag to enable or disable SSL certificate verification. If not set, it uses the DNAC_SSL_VERIFY environment variable; defaults to `true`.
-- **username** (String, Sensitive) Cisco DNA Center username to authenticate. If not set, it uses the DNAC_USERNAME environment variable.
+- **username** (String, Sensitive) Cisco Catalyst Center username to authenticate. If not set, it uses the DNAC_USERNAME environment variable.

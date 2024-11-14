@@ -20,6 +20,7 @@ It manages create, read and delete operations on SDA.
 ```terraform
 resource "dnacenter_sda_virtual_network_ip_pool" "example" {
   provider = dnacenter
+
   parameters {
 
     auto_generate_vlan_name  = "false"
@@ -65,7 +66,7 @@ output "dnacenter_sda_virtual_network_ip_pool_example" {
 Optional:
 
 - `auto_generate_vlan_name` (String) It will auto generate vlanName, if vlanName is empty(applicable for L3  and INFRA_VN)
-- `ip_pool_name` (String) Ip Pool Name, that is reserved to Fabric Site for (applicable for L3 and INFRA_VN)
+- `ip_pool_name` (String) Ip Pool Name, that is reserved to Fabric Site (Required for L3 and INFRA_VN)
 - `is_bridge_mode_vm` (String) Bridge Mode Vm enablement flag (applicable for L3 and L2 and default value is False )
 - `is_common_pool` (String) Common Pool enablement flag(applicable for L3 and L2 and default value is False )
 - `is_ip_directed_broadcast` (String) Ip Directed Broadcast enablement flag(applicable for L3 and default value is False )

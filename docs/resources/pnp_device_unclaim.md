@@ -4,24 +4,23 @@ page_title: "dnacenter_pnp_device_unclaim Resource - terraform-provider-dnacente
 subcategory: ""
 description: |-
   It performs create operation on Device Onboarding (PnP).
-  Un-Claims one of more devices with specified workflow
+  Un-Claims one of more devices with specified workflow (Deprecated).
 ---
 
 # dnacenter_pnp_device_unclaim (Resource)
 
 It performs create operation on Device Onboarding (PnP).
 
-- Un-Claims one of more devices with specified workflow
-
+- Un-Claims one of more devices with specified workflow (Deprecated).
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_pnp_device_unclaim" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     device_id_list = ["string"]
@@ -63,5 +62,3 @@ Read-Only:
 - `json_response` (String)
 - `message` (String)
 - `status_code` (Number)
-
-

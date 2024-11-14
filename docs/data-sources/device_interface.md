@@ -61,6 +61,7 @@ output "dnacenter_device_interface_example" {
 
 Read-Only:
 
+- `addresses` (List of Object) (see [below for nested schema](#nestedobjatt--item--addresses))
 - `admin_status` (String)
 - `class_name` (String)
 - `description` (String)
@@ -74,11 +75,15 @@ Read-Only:
 - `ipv4_address` (String)
 - `ipv4_mask` (String)
 - `isis_support` (String)
+- `last_incoming_packet_time` (Number)
+- `last_outgoing_packet_time` (Number)
 - `last_updated` (String)
 - `mac_address` (String)
 - `mapped_physical_interface_id` (String)
 - `mapped_physical_interface_name` (String)
 - `media_type` (String)
+- `mtu` (String)
+- `name` (String)
 - `native_vlan_id` (String)
 - `ospf_support` (String)
 - `pid` (String)
@@ -91,6 +96,41 @@ Read-Only:
 - `status` (String)
 - `vlan_id` (String)
 - `voice_vlan` (String)
+
+<a id="nestedobjatt--item--addresses"></a>
+### Nested Schema for `item.addresses`
+
+Read-Only:
+
+- `address` (List of Object) (see [below for nested schema](#nestedobjatt--item--addresses--address))
+- `type` (String)
+
+<a id="nestedobjatt--item--addresses--address"></a>
+### Nested Schema for `item.addresses.address`
+
+Read-Only:
+
+- `ip_address` (List of Object) (see [below for nested schema](#nestedobjatt--item--addresses--address--ip_address))
+- `ip_mask` (List of Object) (see [below for nested schema](#nestedobjatt--item--addresses--address--ip_mask))
+- `is_inverse_mask` (String)
+
+<a id="nestedobjatt--item--addresses--address--ip_address"></a>
+### Nested Schema for `item.addresses.address.is_inverse_mask`
+
+Read-Only:
+
+- `address` (String)
+
+
+<a id="nestedobjatt--item--addresses--address--ip_mask"></a>
+### Nested Schema for `item.addresses.address.is_inverse_mask`
+
+Read-Only:
+
+- `address` (String)
+
+
+
 
 
 <a id="nestedatt--items"></a>
@@ -98,6 +138,7 @@ Read-Only:
 
 Read-Only:
 
+- `addresses` (List of Object) (see [below for nested schema](#nestedobjatt--items--addresses))
 - `admin_status` (String)
 - `class_name` (String)
 - `description` (String)
@@ -111,11 +152,15 @@ Read-Only:
 - `ipv4_address` (String)
 - `ipv4_mask` (String)
 - `isis_support` (String)
+- `last_incoming_packet_time` (Number)
+- `last_outgoing_packet_time` (Number)
 - `last_updated` (String)
 - `mac_address` (String)
 - `mapped_physical_interface_id` (String)
 - `mapped_physical_interface_name` (String)
 - `media_type` (String)
+- `mtu` (String)
+- `name` (String)
 - `native_vlan_id` (String)
 - `ospf_support` (String)
 - `pid` (String)
@@ -129,4 +174,34 @@ Read-Only:
 - `vlan_id` (String)
 - `voice_vlan` (String)
 
+<a id="nestedobjatt--items--addresses"></a>
+### Nested Schema for `items.addresses`
 
+Read-Only:
+
+- `address` (List of Object) (see [below for nested schema](#nestedobjatt--items--addresses--address))
+- `type` (String)
+
+<a id="nestedobjatt--items--addresses--address"></a>
+### Nested Schema for `items.addresses.address`
+
+Read-Only:
+
+- `ip_address` (List of Object) (see [below for nested schema](#nestedobjatt--items--addresses--address--ip_address))
+- `ip_mask` (List of Object) (see [below for nested schema](#nestedobjatt--items--addresses--address--ip_mask))
+- `is_inverse_mask` (String)
+
+<a id="nestedobjatt--items--addresses--address--ip_address"></a>
+### Nested Schema for `items.addresses.address.is_inverse_mask`
+
+Read-Only:
+
+- `address` (String)
+
+
+<a id="nestedobjatt--items--addresses--address--ip_mask"></a>
+### Nested Schema for `items.addresses.address.is_inverse_mask`
+
+Read-Only:
+
+- `address` (String)

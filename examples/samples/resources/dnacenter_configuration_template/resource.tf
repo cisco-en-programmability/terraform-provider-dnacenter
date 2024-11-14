@@ -26,7 +26,7 @@ provider "dnacenter" {
 resource "dnacenter_configuration_template" "example" {
   provider = dnacenter
   parameters {
-    project_id       = "2128b364-8751-45f5-95cb-f5ecaa2e9085"
+    project_id       = "e9df8f19-0cf2-4514-9703-cc049ca902e6"
     template_content = "if a > b \n hola22"
     language         = "JINJA"
     name             = "Saludo Terraform"

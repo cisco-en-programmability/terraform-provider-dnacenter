@@ -14,28 +14,25 @@ It performs create operation on Software Image Management (SWIM).
 
 - Fetches a software image from remote file system (using URL for HTTP/FTP) and uploads to DNA Center. Supported image
 files extensions are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_swim_image_url" "example" {
-  provider = dnacenter
+  provider        = meraki
+  schedule_at     = "string"
+  schedule_desc   = "string"
+  schedule_origin = "string"
   parameters {
-    schedule_at     = "string"
-    schedule_desc   = "string"
-    schedule_origin = "string"
-    payload {
 
-      application_type = "string"
-      image_family     = "string"
-      source_url       = "string"
-      third_party      = "false"
-      vendor           = "string"
-    }
+    application_type = "string"
+    image_family     = "string"
+    source_url       = "string"
+    third_party      = "false"
+    vendor           = "string"
   }
 }
 
@@ -62,7 +59,7 @@ output "dnacenter_swim_image_url_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestSoftwareImageManagementSwimImportSoftwareImageViaURL (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestSoftwareImageManagementSwimImportSoftwareImageViaURLV1 (see [below for nested schema](#nestedblock--parameters--payload))
 - `schedule_at` (String) scheduleAt query parameter. Epoch Time (The number of milli-seconds since January 1 1970 UTC) at which the distribution should be scheduled (Optional)
 - `schedule_desc` (String) scheduleDesc query parameter. Custom Description (Optional)
 - `schedule_origin` (String) scheduleOrigin query parameter. Originator of this call (Optional)
@@ -87,5 +84,3 @@ Read-Only:
 
 - `task_id` (String)
 - `url` (String)
-
-

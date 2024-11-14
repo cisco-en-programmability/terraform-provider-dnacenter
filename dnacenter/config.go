@@ -3,14 +3,14 @@ package dnacenter
 import (
 	"context"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // Config is the configuration structure used to instantiate a
-// new Cisco DNA Center client.
+// new Cisco Catalyst Center client.
 type Config struct {
 	BaseURL   string
 	Username  string
@@ -19,7 +19,7 @@ type Config struct {
 	SSLVerify string
 }
 
-// NewClient returns a new Cisco DNA Center client.
+// NewClient returns a new Cisco Catalyst Center client.
 func (c *Config) NewClient() (*dnacentersdkgo.Client, error) {
 	client, err := dnacentersdkgo.NewClientWithOptions(c.BaseURL,
 		c.Username, c.Password,

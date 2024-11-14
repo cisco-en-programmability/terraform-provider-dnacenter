@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,37 +16,37 @@ func dataSourceSite() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Sites.
 
-- Get site using siteNameHierarchy/siteId/type ,return all sites if these parameters are not given as input.
+- Get site(s) by site-name-hierarchy or siteId or type. List all sites if these parameters are not given as an input.
 `,
 
 		ReadContext: dataSourceSiteRead,
 		Schema: map[string]*schema.Schema{
 			"limit": &schema.Schema{
-				Description: `limit query parameter. Number of sites to be retrieved. The default value is 500
+				Description: `limit query parameter. Number of sites to be listed
 `,
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"name": &schema.Schema{
-				Description: `name query parameter. siteNameHierarchy (ex: global/groupName)
+				Description: `name query parameter. Site name hierarchy (E.g Global/USA/CA)
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
-				Description: `offset query parameter. offset/starting row. The default value is 1
+				Description: `offset query parameter. Offset/starting index for pagination. Indexed from 1.
 `,
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
 			"site_id": &schema.Schema{
-				Description: `siteId query parameter. Site id to which site details to retrieve.
+				Description: `siteId query parameter. Site Id
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"type": &schema.Schema{
-				Description: `type query parameter. type (ex: area, building, floor)
+				Description: `type query parameter. Site type (Ex: area, building, floor)
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -59,93 +59,11 @@ func dataSourceSite() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"additional_info": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"attributes": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-												"country": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"address": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"latitude": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"addressinheritedfrom": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"longitude": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"offsetx": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"offsety": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"length": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"width": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"height": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"rfmodel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"floorindex": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"parent_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"floor_number": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"rf_model": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-
-									"name_space": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
+							Description: `Additional Info`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
 							},
 						},
 
@@ -229,14 +147,14 @@ func dataSourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSite", err,
+				"Failure when executing 2 GetSite", err,
 				"Failure at GetSite, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenSitesGetSiteItems(response1.Response, nil)
+		vItems1 := flattenSitesGetSiteItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSite response",
@@ -251,7 +169,7 @@ func dataSourceSiteRead(ctx context.Context, d *schema.ResourceData, m interface
 	return diags
 }
 
-func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteResponse, parameters []interface{}) []map[string]interface{} {
+func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -260,57 +178,15 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItem := make(map[string]interface{})
 		respItem["parent_id"] = item.ParentID
 		respItem["name"] = item.Name
-		respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo, parameters)
+		respItem["additional_info"] = item.AdditionalInfo
 		respItem["site_hierarchy"] = item.SiteHierarchy
 		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 		respItem["instance_tenant_id"] = item.InstanceTenantID
 		respItem["id"] = item.ID
-		//respItem["latitude"] = item.
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
-
-func flattenSitesGetFloorItems(items *[]dnacentersdkgo.ResponseSitesGetFloorResponse) []map[string]interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["parent_id"] = item.ParentID
-		respItem["name"] = item.Name
-		respItem["additional_info"] = flattenSitesGetFloorItemsAdditionalInfo(item.AdditionalInfo)
-		respItem["site_hierarchy"] = item.SiteHierarchy
-		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
-		respItem["instance_tenant_id"] = item.InstanceTenantID
-		respItem["id"] = item.ID
-		//respItem["latitude"] = item.
-		respItems = append(respItems, respItem)
-	}
-	return respItems
-}
-
-func flattenSitesGetAreaItems(items *[]dnacentersdkgo.ResponseSitesGetAreaResponse, parameters []interface{}) []map[string]interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["parent_id"] = item.ParentID
-		respItem["name"] = item.Name
-		respItem["additional_info"] = flattenSitesGetAreaItemsAdditionalInfo(item.AdditionalInfo, parameters)
-		respItem["site_hierarchy"] = item.SiteHierarchy
-		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
-		respItem["instance_tenant_id"] = item.InstanceTenantID
-		respItem["id"] = item.ID
-		//respItem["latitude"] = item.
-		respItems = append(respItems, respItem)
-	}
-	return respItems
-}
-
 func flattenSitesGetSiteParams(items *[]dnacentersdkgo.ResponseSitesGetSiteResponse, parameters []interface{}) map[string]interface{} {
 	respParams := make(map[string]interface{})
 	buildings := make([]map[string]interface{}, 0)

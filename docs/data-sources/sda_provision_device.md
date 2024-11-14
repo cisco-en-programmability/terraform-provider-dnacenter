@@ -47,5 +47,3 @@ Read-Only:
 - `device_management_ip_address` (String)
 - `site_name_hierarchy` (String)
 - `status` (String)
-
-

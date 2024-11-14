@@ -4,14 +4,16 @@ page_title: "dnacenter_device_credential Data Source - terraform-provider-dnacen
 subcategory: ""
 description: |-
   It performs read operation on Network Settings.
-  API to get device credential details.
+  API to get device credential details. This data source has been deprecated and will not be available in a Cisco DNA
+  Center release after August 1st 2024 23:59:59 GMT. Please refer new Intent API : Get All Global Credentials V2
 ---
 
 # dnacenter_device_credential (Data Source)
 
 It performs read operation on Network Settings.
 
-- API to get device credential details.
+- API to get device credential details. This data source has been deprecated and will not be available in a Cisco DNA
+Center release after August 1st 2024 23:59:59 GMT. Please refer new Intent API : Get All Global Credentials V2
 
 ## Example Usage
 
@@ -145,5 +147,3 @@ Read-Only:
 - `privacy_type` (String)
 - `snmp_mode` (String)
 - `username` (String)
-
-

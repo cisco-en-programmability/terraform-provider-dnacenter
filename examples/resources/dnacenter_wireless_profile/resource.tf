@@ -19,7 +19,6 @@ resource "dnacenter_wireless_profile" "example" {
         interface_name      = "string"
         name                = "string"
         policy_profile_name = "string"
-        type                = "string"
         wlan_profile_name   = "string"
       }
     }

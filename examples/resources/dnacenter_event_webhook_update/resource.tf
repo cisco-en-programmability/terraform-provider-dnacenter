@@ -11,11 +11,12 @@ resource "dnacenter_event_webhook_update" "example" {
       name          = "string"
       value         = "string"
     }
-    method     = "string"
-    name       = "string"
-    trust_cert = "false"
-    url        = "string"
-    webhook_id = "string"
+    is_proxy_route = "false"
+    method         = "string"
+    name           = "string"
+    trust_cert     = "false"
+    url            = "string"
+    webhook_id     = "string"
   }
 }
 

@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -68,6 +68,12 @@ func resourceSdaFabricAuthenticationProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"execution_id": &schema.Schema{
+							Description: `Execution Id
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"number_of_hosts": &schema.Schema{
 							Description: `Number Of Hosts
 `,
@@ -99,83 +105,54 @@ func resourceSdaFabricAuthenticationProfile() *schema.Resource {
 			"parameters": &schema.Schema{
 				Description: `Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabric`,
 				Type:        schema.TypeList,
-				Required:    true,
-				MaxItems:    1,
-				MinItems:    1,
+				Optional:    true,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"payload": &schema.Schema{
-							Description: `Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabric`,
-							Type:        schema.TypeList,
-							Required:    true,
-							MinItems:    1,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
 
-									"authenticate_template_name": &schema.Schema{
-										Description: `Authenticate Template Name
+						"authenticate_template_name": &schema.Schema{
+							Description: `Authenticate Template Name
 `,
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: diffSupressOptional(),
-										Computed:         true,
-									},
-									"authentication_order": &schema.Schema{
-										Description: `Authentication Order
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"authentication_order": &schema.Schema{
+							Description: `Authentication Order
 `,
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: diffSupressOptional(),
-										Computed:         true,
-									},
-									"dot1x_to_mab_fallback_timeout": &schema.Schema{
-										Description: `Dot1x To MabFallback Timeout( Allowed range is [3-120])
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"dot1x_to_mab_fallback_timeout": &schema.Schema{
+							Description: `Dot1x To MabFallback Timeout( Allowed range is [3-120])
 `,
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: diffSupressOptional(),
-										Computed:         true,
-									},
-									"number_of_hosts": &schema.Schema{
-										Description: `Number Of Hosts
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"number_of_hosts": &schema.Schema{
+							Description: `Number Of Hosts
 `,
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: diffSupressOptional(),
-										Computed:         true,
-									},
-									"site_name_hierarchy": &schema.Schema{
-										Description: `Path of sda Fabric Site
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"site_name_hierarchy": &schema.Schema{
+							Description: `Path of sda Fabric Site
 `,
-										Type:             schema.TypeString,
-										Optional:         true,
-										DiffSuppressFunc: diffSupressOptional(),
-										Computed:         true,
-									},
-									"wake_on_lan": &schema.Schema{
-										Description: `Wake On Lan
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"wake_on_lan": &schema.Schema{
+							Description: `Wake On Lan
 `,
-
-										Type:             schema.TypeString,
-										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:         true,
-										DiffSuppressFunc: diffSupressOptional(),
-										Computed:         true,
-									},
-									"description": &schema.Schema{
-										Description: `Authenticate Template info reterieved successfully in sda fabric site
-			`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"status": &schema.Schema{
-										Description: `Status
-			`,
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -189,63 +166,52 @@ func resourceSdaFabricAuthenticationProfileCreate(ctx context.Context, d *schema
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestSdaFabricAuthenticationProfileAddDefaultAuthenticationTemplateInSdaFabric(ctx, "parameters", d)
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	request1 := expandRequestSdaFabricAuthenticationProfileAddDefaultAuthenticationTemplateInSdaFabric(ctx, "parameters.0", d)
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
 	vSiteNameHierarchy := resourceItem["site_name_hierarchy"]
 	vvSiteNameHierarchy := interfaceToString(vSiteNameHierarchy)
-	vAuthenticateTemplateName := resourceItem["authenticate_template_name"]
-	vvAuthenticateTemplateName := interfaceToString(vAuthenticateTemplateName)
-
-	queryParams1 := dnacentersdkgo.GetDefaultAuthenticationProfileFromSdaFabricQueryParams{}
-	queryParams1.SiteNameHierarchy = vvSiteNameHierarchy
-	queryParams1.AuthenticateTemplateName = vvAuthenticateTemplateName
-	getResponse2, _, err := client.Sda.GetDefaultAuthenticationProfileFromSdaFabric(&queryParams1)
-
-	if err == nil && getResponse2 != nil {
-		response2 := *getResponse2
+	queryParamImport := dnacentersdkgo.GetDefaultAuthenticationProfileFromSdaFabricQueryParams{}
+	queryParamImport.SiteNameHierarchy = vvSiteNameHierarchy
+	item2, _, err := client.Sda.GetDefaultAuthenticationProfileFromSdaFabric(&queryParamImport)
+	if err != nil || item2 != nil {
 		resourceMap := make(map[string]string)
-		resourceMap["site_name_hierarchy"] = response2.SiteNameHierarchy
-		resourceMap["authenticate_template_name"] = vvAuthenticateTemplateName
+		resourceMap["site_name_hierarchy"] = item2.SiteNameHierarchy
 		d.SetId(joinResourceID(resourceMap))
 		return resourceSdaFabricAuthenticationProfileRead(ctx, d, m)
 	}
-
-	response1, restyResp1, err := client.Sda.AddDefaultAuthenticationTemplateInSdaFabric(request1)
-	if err != nil || response1 == nil {
+	resp1, restyResp1, err := client.Sda.AddDefaultAuthenticationTemplateInSdaFabric(request1)
+	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
-				"Failure when executing DeployAuthenticationTemplateInSdaFabric", err, restyResp1.String()))
+				"Failure when executing AddDefaultAuthenticationTemplateInSdaFabric", err, restyResp1.String()))
 			return diags
 		}
 		diags = append(diags, diagError(
-			"Failure when executing DeployAuthenticationTemplateInSdaFabric", err))
+			"Failure when executing AddDefaultAuthenticationTemplateInSdaFabric", err))
 		return diags
 	}
-
-	executionId := response1.ExecutionID
+	executionId := resp1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -253,17 +219,26 @@ func resourceSdaFabricAuthenticationProfileCreate(ctx context.Context, d *schema
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
-				"Failure when executing DeployAuthenticationTemplateInSdaFabric", err))
+				"Failure when executing AddDefaultAuthenticationTemplateInSdaFabric", err))
 			return diags
 		}
 	}
+	queryParamValidate := dnacentersdkgo.GetDefaultAuthenticationProfileFromSdaFabricQueryParams{}
+	queryParamValidate.SiteNameHierarchy = vvSiteNameHierarchy
+	item3, _, err := client.Sda.GetDefaultAuthenticationProfileFromSdaFabric(&queryParamValidate)
+	if err != nil || item3 == nil {
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing AddDefaultAuthenticationTemplateInSdaFabric", err,
+			"Failure at AddDefaultAuthenticationTemplateInSdaFabric, unexpected response", ""))
+		return diags
+	}
 
 	resourceMap := make(map[string]string)
-	resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
-	resourceMap["authenticate_template_name"] = vvAuthenticateTemplateName
+	resourceMap["site_name_hierarchy"] = item3.SiteNameHierarchy
+
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSdaFabricAuthenticationProfileRead(ctx, d, m)
 }
@@ -275,27 +250,21 @@ func resourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema.R
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
+
 	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
-	vAuthenticateTemplateName := resourceMap["authenticate_template_name"]
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDefaultAuthenticationProfileFromSdaFabric")
+		log.Printf("[DEBUG] Selected method: GetDefaultAuthenticationProfileFromSdaFabric")
 		queryParams1 := dnacentersdkgo.GetDefaultAuthenticationProfileFromSdaFabricQueryParams{}
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 
-		queryParams1.AuthenticateTemplateName = vAuthenticateTemplateName
+		// has_unknown_response: None
 
-		response1, restyResp1, _ := client.Sda.GetDefaultAuthenticationProfileFromSdaFabric(&queryParams1)
+		response1, restyResp1, err := client.Sda.GetDefaultAuthenticationProfileFromSdaFabric(&queryParams1)
 
-		/*		if err != nil {
-				diags = append(diags, diagErrorWithAlt(
-					"Failure when executing GetDefaultAuthenticationProfileFromSdaFabric", err,
-					"Failure at GetDefaultAuthenticationProfileFromSdaFabric, unexpected response", ""))
-				return diags
-			}*/
-		if response1 == nil {
+		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -313,14 +282,6 @@ func resourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema.R
 			return diags
 		}
 
-		vItem2 := flattenSdaGetDefaultAuthenticationProfileFromSdaFabricPayload(response1)
-
-		if err := d.Set("parameters", vItem2); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetDefaultAuthenticationProfileFromSdaFabric response",
-				err))
-			return diags
-		}
 		return diags
 
 	}
@@ -332,35 +293,9 @@ func resourceSdaFabricAuthenticationProfileUpdate(ctx context.Context, d *schema
 
 	var diags diag.Diagnostics
 
-	resourceID := d.Id()
-	resourceMap := separateResourceID(resourceID)
-	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
-	vAuthenticateTemplateName := resourceMap["authenticate_template_name"]
-
-	queryParams1 := dnacentersdkgo.GetDefaultAuthenticationProfileFromSdaFabricQueryParams{}
-	queryParams1.SiteNameHierarchy = vSiteNameHierarchy
-	queryParams1.AuthenticateTemplateName = vAuthenticateTemplateName
-	item, restyResp1, err := client.Sda.GetDefaultAuthenticationProfileFromSdaFabric(&queryParams1)
-
-	if err != nil || item == nil {
-		if restyResp1 != nil {
-			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetDefaultAuthenticationProfileFromSdaFabric", err,
-			"Failure at GetDefaultAuthenticationProfileFromSdaFabric, unexpected response", ""))
-		return diags
-	}
-	response2 := *item
-	// response2 := responseArray[0]
-	vvName := response2.SiteNameHierarchy
-	// NOTE: Consider adding getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %s", vvName)
-		request1 := expandRequestSdaFabricAuthenticationProfileUpdateDefaultAuthenticationProfileInSdaFabric(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
+		request1 := expandRequestSdaFabricAuthenticationProfileUpdateDefaultAuthenticationProfileInSdaFabric(ctx, "parameters", d)
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Sda.UpdateDefaultAuthenticationProfileInSdaFabric(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -375,26 +310,27 @@ func resourceSdaFabricAuthenticationProfileUpdate(ctx context.Context, d *schema
 				"Failure at UpdateDefaultAuthenticationProfileInSdaFabric, unexpected response", ""))
 			return diags
 		}
+
 		executionId := response1.ExecutionID
 		log.Printf("[DEBUG] ExecutionID => %s", executionId)
 		if executionId != "" {
 			time.Sleep(5 * time.Second)
-			response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
 					"Failure at GetExecutionByID, unexpected response", ""))
 				return diags
 			}
-			for statusIsPending(response2.Status) {
+			for response2.Status == "IN_PROGRESS" {
 				time.Sleep(10 * time.Second)
-				response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+				response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 				if err != nil || response2 == nil {
-					if restyResp1 != nil {
-						log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+					if restyResp2 != nil {
+						log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 					}
 					diags = append(diags, diagErrorWithAlt(
 						"Failure when executing GetExecutionByID", err,
@@ -402,13 +338,14 @@ func resourceSdaFabricAuthenticationProfileUpdate(ctx context.Context, d *schema
 					return diags
 				}
 			}
-			if statusIsFailure(response2.Status) {
+			if response2.Status == "FAILURE" {
 				log.Printf("[DEBUG] Error %s", response2.BapiError)
 				diags = append(diags, diagError(
 					"Failure when executing UpdateDefaultAuthenticationProfileInSdaFabric", err))
 				return diags
 			}
 		}
+
 	}
 
 	return resourceSdaFabricAuthenticationProfileRead(ctx, d, m)
@@ -422,29 +359,13 @@ func resourceSdaFabricAuthenticationProfileDelete(ctx context.Context, d *schema
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vSiteNameHierarchy := resourceMap["site_name_hierarchy"]
-	vAuthenticateTemplateName := resourceMap["authenticate_template_name"]
 
-	queryParams1 := dnacentersdkgo.GetDefaultAuthenticationProfileFromSdaFabricQueryParams{}
-	queryParams1.SiteNameHierarchy = vSiteNameHierarchy
-	queryParams1.AuthenticateTemplateName = vAuthenticateTemplateName
-	item, restyResp1, err := client.Sda.GetDefaultAuthenticationProfileFromSdaFabric(&queryParams1)
+	queryParamDelete := dnacentersdkgo.DeleteDefaultAuthenticationProfileFromSdaFabricQueryParams{}
 
-	if err != nil || item == nil {
-		if restyResp1 != nil {
-			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-		}
-		d.SetId("")
-		return diags
-	}
+	vvSiteNameHierarchy := resourceMap["site_name_hierarchy"]
+	queryParamDelete.SiteNameHierarchy = vvSiteNameHierarchy
 
-	response2 := *item
-	// response2 := responseArray[0]
-	vvName := response2.SiteNameHierarchy
-
-	queryParams2 := dnacentersdkgo.DeleteDefaultAuthenticationProfileFromSdaFabricQueryParams{}
-	queryParams2.SiteNameHierarchy = vvName
-	response1, restyResp1, err := client.Sda.DeleteDefaultAuthenticationProfileFromSdaFabric(&queryParams2)
+	response1, restyResp1, err := client.Sda.DeleteDefaultAuthenticationProfileFromSdaFabric(&queryParamDelete)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -463,22 +384,22 @@ func resourceSdaFabricAuthenticationProfileDelete(ctx context.Context, d *schema
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
 		time.Sleep(5 * time.Second)
-		response2, restyResp1, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
+		response2, restyResp2, err := client.Task.GetBusinessAPIExecutionDetails(executionId)
 		if err != nil || response2 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExecutionByID", err,
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
-			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
+			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
-				if restyResp1 != nil {
-					log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+				if restyResp2 != nil {
+					log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 				}
 				diags = append(diags, diagErrorWithAlt(
 					"Failure when executing GetExecutionByID", err,
@@ -486,13 +407,14 @@ func resourceSdaFabricAuthenticationProfileDelete(ctx context.Context, d *schema
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeleteDefaultAuthenticationProfileFromSdaFabric", err))
 			return diags
 		}
 	}
+
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.
 	d.SetId("")

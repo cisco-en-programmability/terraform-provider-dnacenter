@@ -2,36 +2,33 @@ package dnacenter
 
 import (
 	"context"
-	"errors"
 	"io"
 	"os"
+
+	"errors"
+
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceSwimImageFile() *schema.Resource {
 	return &schema.Resource{
-		Description: `It manages create and read operations on Software Image Management (SWIM).
+		Description: `It performs create operation on Software Image Management (SWIM).
 
 - Fetches a software image from local file system and uploads to DNA Center. Supported software image files extensions
-are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2.
-Upload the file to the **file** form data field
+are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2
 `,
 
 		CreateContext: resourceSwimImageFileCreate,
 		ReadContext:   resourceSwimImageFileRead,
-		UpdateContext: resourceSwimImageFileUpdate,
 		DeleteContext: resourceSwimImageFileDelete,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -43,177 +40,11 @@ Upload the file to the **file** form data field
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"applicable_devices_for_image": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"mdf_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"product_id": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-
-									"product_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-
-						"application_type": &schema.Schema{
+						"task_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
-						"created_time": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"extended_attributes": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"family": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"feature": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"file_service_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"file_size": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"image_integrity_status": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"image_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"image_series": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-
-						"image_source": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"image_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"image_uuid": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"import_source_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"is_tagged_golden": &schema.Schema{
-
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"md5_checksum": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"profile_info": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"extended_attributes": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"memory": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-
-									"product_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"profile_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"shares": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-
-									"v_cpu": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-								},
-							},
-						},
-
-						"sha_check_sum": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"vendor": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"version": &schema.Schema{
+						"url": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -225,41 +56,48 @@ Upload the file to the **file** form data field
 				Required: true,
 				MaxItems: 1,
 				MinItems: 1,
+				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"file_name": &schema.Schema{
 							Description: `File name.`,
 							Type:        schema.TypeString,
 							Required:    true,
+							ForceNew:    true,
 						},
 						"file_path": &schema.Schema{
 							Description: `File absolute path.`,
 							Type:        schema.TypeString,
 							Required:    true,
+							ForceNew:    true,
 						},
 						"is_third_party": &schema.Schema{
 							Description: `isThirdParty query parameter. Third party Image check
-			`,
+`,
 							Type:     schema.TypeBool,
 							Optional: true,
+							ForceNew: true,
 						},
 						"third_party_application_type": &schema.Schema{
 							Description: `thirdPartyApplicationType query parameter. Third Party Application Type
-			`,
+`,
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
 						"third_party_image_family": &schema.Schema{
 							Description: `thirdPartyImageFamily query parameter. Third Party image family
-			`,
+`,
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
 						"third_party_vendor": &schema.Schema{
 							Description: `thirdPartyVendor query parameter. Third Party Vendor
-			`,
+`,
 							Type:     schema.TypeString,
 							Optional: true,
+							ForceNew: true,
 						},
 					},
 				},
@@ -398,7 +236,6 @@ func resourceSwimImageFileCreate(ctx context.Context, d *schema.ResourceData, m 
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSwimImageFileRead(ctx, d, m)
 }
-
 func resourceSwimImageFileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
 
@@ -435,7 +272,7 @@ func resourceSwimImageFileRead(ctx context.Context, d *schema.ResourceData, m in
 		vItem1 := flattenSoftwareImageManagementSwimGetSoftwareImageDetailsItems(&items)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetSoftwareImageDetails search response",
+				"Failure when setting ImportLocalSoftwareImage response",
 				err))
 			return diags
 		}
@@ -444,17 +281,9 @@ func resourceSwimImageFileRead(ctx context.Context, d *schema.ResourceData, m in
 	return diags
 }
 
-func resourceSwimImageFileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	err := errors.New("Update not possible in this resource")
-	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SwimImageFileUpdate", err, "Update method is not supported",
-		"Failure at SwimImageFileUpdate, unexpected response", ""))
-
-	return diags
-}
-
 func resourceSwimImageFileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	//client := m.(*dnacentersdkgo.Client)
+
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(

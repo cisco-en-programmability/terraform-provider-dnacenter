@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,13 +15,13 @@ func dataSourceSiteCount() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Sites.
 
-- API to get site count
+- Get the site count of the specified site's sub-hierarchy (inclusive of the provided site)
 `,
 
 		ReadContext: dataSourceSiteCountRead,
 		Schema: map[string]*schema.Schema{
 			"site_id": &schema.Schema{
-				Description: `siteId query parameter. Site id to retrieve site count.
+				Description: `siteId query parameter. Site instance UUID
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -73,7 +73,7 @@ func dataSourceSiteCountRead(ctx context.Context, d *schema.ResourceData, m inte
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSiteCount", err,
+				"Failure when executing 2 GetSiteCount", err,
 				"Failure at GetSiteCount, unexpected response", ""))
 			return diags
 		}

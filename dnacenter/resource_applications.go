@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -176,12 +176,12 @@ func resourceApplications() *schema.Resource {
 									},
 									"popularity": &schema.Schema{
 										Description: `Popularity`,
-										Type:        schema.TypeInt,
+										Type:        schema.TypeString,
 										Computed:    true,
 									},
 									"rank": &schema.Schema{
 										Description: `Rank`,
-										Type:        schema.TypeInt,
+										Type:        schema.TypeString,
 										Computed:    true,
 									},
 									"server_name": &schema.Schema{
@@ -220,7 +220,7 @@ func resourceApplications() *schema.Resource {
 									},
 									"lower_port": &schema.Schema{
 										Description: `Lower Port`,
-										Type:        schema.TypeInt,
+										Type:        schema.TypeString,
 										Computed:    true,
 									},
 									"ports": &schema.Schema{
@@ -235,7 +235,7 @@ func resourceApplications() *schema.Resource {
 									},
 									"upper_port": &schema.Schema{
 										Description: `Upper Port`,
-										Type:        schema.TypeInt,
+										Type:        schema.TypeString,
 										Computed:    true,
 									},
 								},
@@ -455,6 +455,7 @@ func resourceApplications() *schema.Resource {
 													Description: `Upper Port`,
 													Type:        schema.TypeString,
 													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
@@ -565,10 +566,12 @@ func resourceApplicationsRead(ctx context.Context, d *schema.ResourceData, m int
 			return diags
 		}
 		// Review flatten function used
-		items := []dnacentersdkgo.ResponseApplicationPolicyGetApplicationsResponse{
+		items := []dnacentersdkgo.ResponseItemApplicationPolicyGetApplications{
 			*item1,
 		}
-		vItem1 := flattenApplicationPolicyGetApplicationsItems(&items)
+		var items2 dnacentersdkgo.ResponseApplicationPolicyGetApplications
+		items2 = items
+		vItem1 := flattenApplicationPolicyGetApplicationsItems(&items2)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetApplications search response",
@@ -654,12 +657,11 @@ func resourceApplicationsDelete(ctx context.Context, d *schema.ResourceData, m i
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 
-	queryParamDelete := dnacentersdkgo.DeleteApplicationQueryParams{}
-
 	vvID := resourceMap["id"]
-	queryParamDelete.ID = vvID
 
-	response1, restyResp1, err := client.ApplicationPolicy.DeleteApplication(&queryParamDelete)
+	response1, restyResp1, err := client.ApplicationPolicy.DeleteApplication(&dnacentersdkgo.DeleteApplicationQueryParams{
+		ID: vvID,
+	})
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
@@ -669,8 +671,8 @@ func resourceApplicationsDelete(ctx context.Context, d *schema.ResourceData, m i
 			return diags
 		}
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeleteApplication", err,
-			"Failure at DeleteApplication, unexpected response", ""))
+			"Failure when executing DeleteApplication2", err,
+			"Failure at DeleteApplication2, unexpected response", ""))
 		return diags
 	}
 
@@ -1150,44 +1152,48 @@ func expandRequestApplicationsEditApplicationItemApplicationSet(ctx context.Cont
 	return &request
 }
 
-func searchApplicationPolicyGetApplications(m interface{}, queryParams dnacentersdkgo.GetApplicationsQueryParams, vID string) (*dnacentersdkgo.ResponseApplicationPolicyGetApplicationsResponse, error) {
+func searchApplicationPolicyGetApplications(m interface{}, queryParams dnacentersdkgo.GetApplicationsQueryParams, vID string) (*dnacentersdkgo.ResponseItemApplicationPolicyGetApplications, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseApplicationPolicyGetApplicationsResponse
+
 	var ite *dnacentersdkgo.ResponseApplicationPolicyGetApplications
 	if vID != "" {
 		queryParams.Offset = 1
 		nResponse, _, err := client.ApplicationPolicy.GetApplications(nil)
-		maxPageSize := len(*nResponse.Response)
-		for len(*nResponse.Response) > 0 {
+		if err != nil {
+			return nil, err
+		}
+		maxPageSize := len(*nResponse)
+		for len(*nResponse) > 0 {
 
-			for _, item := range *nResponse.Response {
+			for _, item := range *nResponse {
 				if vID == item.ID {
-					foundItem = &item
-					return foundItem, err
+					return &item, err
 				}
 			}
 			queryParams.Limit = float64(maxPageSize)
 			queryParams.Offset += float64(maxPageSize)
 			nResponse, _, err = client.ApplicationPolicy.GetApplications(&queryParams)
+			if nResponse == nil {
+				break
+			}
 		}
 		return nil, err
 	} else if queryParams.Name != "" {
 		ite, _, err = client.ApplicationPolicy.GetApplications(&queryParams)
 		if err != nil || ite == nil {
-			return foundItem, err
+			return nil, err
 		}
-		itemsCopy := *ite.Response
+		itemsCopy := *ite
 		if itemsCopy == nil {
-			return foundItem, err
+			return nil, err
 		}
 		for _, item := range itemsCopy {
 			if item.Name == queryParams.Name {
-				foundItem = &item
-				return foundItem, err
+				return &item, err
 			}
 		}
-		return foundItem, err
+		return nil, err
 	}
-	return foundItem, err
+	return nil, err
 }

@@ -22,7 +22,7 @@ data "dnacenter_license_device_license_details" "example" {
 }
 
 output "dnacenter_license_device_license_details_example" {
-  value = data.dnacenter_license_device_license_details.example.items
+  value = data.dnacenter_license_device_license_details.example.item
 }
 ```
 
@@ -36,15 +36,15 @@ output "dnacenter_license_device_license_details_example" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
-<a id="nestedatt--items"></a>
-### Nested Schema for `items`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
-- `access_points` (List of Object) (see [below for nested schema](#nestedobjatt--items--access_points))
-- `chassis_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--chassis_details))
+- `access_points` (List of Object) (see [below for nested schema](#nestedobjatt--item--access_points))
+- `chassis_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--chassis_details))
 - `device_name` (String)
 - `device_type` (String)
 - `device_uuid` (String)
@@ -62,12 +62,12 @@ Read-Only:
 - `site` (String)
 - `sntc_status` (String)
 - `software_version` (String)
-- `stacked_devices` (List of Object) (see [below for nested schema](#nestedobjatt--items--stacked_devices))
+- `stacked_devices` (List of Object) (see [below for nested schema](#nestedobjatt--item--stacked_devices))
 - `udi` (String)
 - `virtual_account_name` (String)
 
-<a id="nestedobjatt--items--access_points"></a>
-### Nested Schema for `items.access_points`
+<a id="nestedobjatt--item--access_points"></a>
+### Nested Schema for `item.access_points`
 
 Read-Only:
 
@@ -75,29 +75,29 @@ Read-Only:
 - `count` (String)
 
 
-<a id="nestedobjatt--items--chassis_details"></a>
-### Nested Schema for `items.chassis_details`
+<a id="nestedobjatt--item--chassis_details"></a>
+### Nested Schema for `item.chassis_details`
 
 Read-Only:
 
 - `board_serial_number` (String)
-- `modules` (List of Object) (see [below for nested schema](#nestedobjatt--items--chassis_details--modules))
+- `modules` (List of Object) (see [below for nested schema](#nestedobjatt--item--chassis_details--modules))
 - `port` (Number)
-- `supervisor_cards` (List of Object) (see [below for nested schema](#nestedobjatt--items--chassis_details--supervisor_cards))
+- `supervisor_cards` (List of Object) (see [below for nested schema](#nestedobjatt--item--chassis_details--supervisor_cards))
 
-<a id="nestedobjatt--items--chassis_details--modules"></a>
-### Nested Schema for `items.chassis_details.modules`
+<a id="nestedobjatt--item--chassis_details--modules"></a>
+### Nested Schema for `item.chassis_details.modules`
 
 Read-Only:
 
-- `id` (String)
+- `id` (Number)
 - `module_name` (String)
 - `module_type` (String)
 - `serial_number` (String)
 
 
-<a id="nestedobjatt--items--chassis_details--supervisor_cards"></a>
-### Nested Schema for `items.chassis_details.supervisor_cards`
+<a id="nestedobjatt--item--chassis_details--supervisor_cards"></a>
+### Nested Schema for `item.chassis_details.supervisor_cards`
 
 Read-Only:
 
@@ -107,14 +107,12 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--items--stacked_devices"></a>
-### Nested Schema for `items.stacked_devices`
+<a id="nestedobjatt--item--stacked_devices"></a>
+### Nested Schema for `item.stacked_devices`
 
 Read-Only:
 
-- `id` (String)
+- `id` (Number)
 - `mac_address` (String)
 - `role` (String)
 - `serial_number` (String)
-
-

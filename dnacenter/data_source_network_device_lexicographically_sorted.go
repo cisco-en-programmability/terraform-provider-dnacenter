@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -55,7 +55,7 @@ device management IP addresses that match fully or partially the provided attrib
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"mac_address": &schema.Schema{
@@ -70,7 +70,7 @@ device management IP addresses that match fully or partially the provided attrib
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeFloat,
+				Type:        schema.TypeInt,
 				Optional:    true,
 			},
 			"platform_id": &schema.Schema{
@@ -134,23 +134,16 @@ device management IP addresses that match fully or partially the provided attrib
 				Optional:    true,
 			},
 
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"response": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-
-						"version": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+						"object": &schema.Schema{
+							Description: `object`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -252,28 +245,25 @@ func dataSourceNetworkDeviceLexicographicallySortedRead(ctx context.Context, d *
 			queryParams1.AssociatedWlcIP = vAssociatedWlcIP.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
+			queryParams1.Offset = vOffset.(int)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
+			queryParams1.Limit = vLimit.(int)
 		}
 
-		response1, restyResp1, err := client.Devices.GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute(&queryParams1)
+		response1, err := client.Devices.GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute(&queryParams1)
 
 		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute", err,
+				"Failure when executing 2 GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute", err,
 				"Failure at GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenDevicesGetDeviceValuesThatMatchFullyOrPartiallyAnAttributeItems(response1)
-		if err := d.Set("items", vItems1); err != nil {
+		vItem1 := response1.String()
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute response",
 				err))
@@ -285,16 +275,4 @@ func dataSourceNetworkDeviceLexicographicallySortedRead(ctx context.Context, d *
 
 	}
 	return diags
-}
-
-func flattenDevicesGetDeviceValuesThatMatchFullyOrPartiallyAnAttributeItems(items *dnacentersdkgo.ResponseDevicesGetDeviceValuesThatMatchFullyOrPartiallyAnAttribute) []map[string]interface{} {
-	if items == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["response"] = items.Response
-	respItem["version"] = items.Version
-	return []map[string]interface{}{
-		respItem,
-	}
 }

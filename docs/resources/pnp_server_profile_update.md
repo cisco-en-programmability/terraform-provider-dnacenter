@@ -14,48 +14,31 @@ It performs update operation on Device Onboarding (PnP).
 
 - Updates the PnP Server profile in a registered Virtual Account in the PnP database. The response payload returns the
 updated smart & virtual account info
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_pnp_server_profile_update" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
-    auto_sync_period = 1
-    cco_user         = "string"
-    expiry           = 1
-    last_sync        = 1
+    cco_user = "string"
     profile {
 
       address_fqdn  = "string"
       address_ip_v4 = "string"
+      address_ip_v6 = "string"
       cert          = "string"
       make_default  = "false"
       name          = "string"
-      port          = 1
+      port          = 9090
       profile_id    = "string"
       proxy         = "false"
     }
-    smart_account_id = "string"
-    sync_result {
-
-      sync_list {
-
-        device_sn_list = ["string"]
-        sync_type      = "string"
-      }
-      sync_msg = "string"
-    }
-    sync_result_str    = "string"
-    sync_start_time    = 1
-    sync_status        = "string"
-    tenant_id          = "string"
-    token              = "string"
+    smart_account_id   = "string"
     virtual_account_id = "string"
   }
 }
@@ -83,51 +66,25 @@ output "dnacenter_pnp_server_profile_update_example" {
 
 Optional:
 
-- `auto_sync_period` (Number)
-- `cco_user` (String)
-- `expiry` (Number)
-- `last_sync` (Number)
+- `cco_user` (String) Cco User
 - `profile` (Block List) (see [below for nested schema](#nestedblock--parameters--profile))
-- `smart_account_id` (String)
-- `sync_result` (Block List) (see [below for nested schema](#nestedblock--parameters--sync_result))
-- `sync_result_str` (String)
-- `sync_start_time` (Number)
-- `sync_status` (String)
-- `tenant_id` (String)
-- `token` (String)
-- `virtual_account_id` (String)
+- `smart_account_id` (String) Smart Account Id
+- `virtual_account_id` (String) Virtual Account Id
 
 <a id="nestedblock--parameters--profile"></a>
 ### Nested Schema for `parameters.profile`
 
 Optional:
 
-- `address_fqdn` (String)
-- `address_ip_v4` (String)
-- `cert` (String)
-- `make_default` (String)
-- `name` (String)
-- `port` (Number)
-- `profile_id` (String)
-- `proxy` (String)
-
-
-<a id="nestedblock--parameters--sync_result"></a>
-### Nested Schema for `parameters.sync_result`
-
-Optional:
-
-- `sync_list` (Block List) (see [below for nested schema](#nestedblock--parameters--sync_result--sync_list))
-- `sync_msg` (String)
-
-<a id="nestedblock--parameters--sync_result--sync_list"></a>
-### Nested Schema for `parameters.sync_result.sync_list`
-
-Optional:
-
-- `device_sn_list` (List of String)
-- `sync_type` (String)
-
+- `address_fqdn` (String) Required when cluster is configured with fully qualified domain name (FQDN)
+- `address_ip_v4` (String) Required when cluster is configured with IPv4
+- `address_ip_v6` (String) Required when cluster is configured with IPv6
+- `cert` (String) Cert
+- `make_default` (String) Make Default
+- `name` (String) Name
+- `port` (Number) Port
+- `profile_id` (String) Profile Id
+- `proxy` (String) Proxy
 
 
 
@@ -180,5 +137,3 @@ Read-Only:
 
 - `device_sn_list` (List of String)
 - `sync_type` (String)
-
-

@@ -126,5 +126,3 @@ Read-Only:
 - `port` (Number)
 - `tenant_id` (String)
 - `version` (String)
-
-

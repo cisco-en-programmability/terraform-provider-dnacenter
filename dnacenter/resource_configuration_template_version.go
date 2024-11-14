@@ -11,7 +11,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -97,7 +97,8 @@ func resourceConfigurationTemplateVersionCreate(ctx context.Context, d *schema.R
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		d.SetId("")
+		diags = append(diags, diagError(
+			"Failure when executing VersionTemplate", err))
 		return diags
 	}
 

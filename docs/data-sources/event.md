@@ -69,5 +69,3 @@ Read-Only:
 - `tags` (List of String)
 - `type` (String)
 - `version` (String)
-
-

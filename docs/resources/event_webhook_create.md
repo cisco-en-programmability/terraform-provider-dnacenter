@@ -12,16 +12,15 @@ description: |-
 It performs create operation on Event Management.
 
 - Create Webhook Destination
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_event_webhook_create" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     description = "string"
@@ -32,11 +31,12 @@ resource "dnacenter_event_webhook_create" "example" {
       name          = "string"
       value         = "string"
     }
-    method     = "string"
-    name       = "string"
-    trust_cert = "false"
-    url        = "string"
-    webhook_id = "string"
+    is_proxy_route = "false"
+    method         = "string"
+    name           = "string"
+    trust_cert     = "false"
+    url            = "string"
+    webhook_id     = "string"
   }
 }
 
@@ -65,6 +65,7 @@ Optional:
 
 - `description` (String) Description
 - `headers` (Block List) (see [below for nested schema](#nestedblock--parameters--headers))
+- `is_proxy_route` (String) Is Proxy Route
 - `method` (String) Method
 - `name` (String) Name
 - `trust_cert` (String) Trust Cert
@@ -98,5 +99,3 @@ Read-Only:
 Read-Only:
 
 - `errors` (List of String)
-
-

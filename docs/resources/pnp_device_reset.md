@@ -12,16 +12,15 @@ description: |-
 It performs create operation on Device Onboarding (PnP).
 
 - Recovers a device from a Workflow Execution Error state
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_pnp_device_reset" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     device_reset_list {
@@ -112,5 +111,3 @@ Read-Only:
 - `json_response` (String)
 - `message` (String)
 - `status_code` (Number)
-
-

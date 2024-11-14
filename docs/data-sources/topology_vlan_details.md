@@ -4,14 +4,14 @@ page_title: "dnacenter_topology_vlan_details Data Source - terraform-provider-dn
 subcategory: ""
 description: |-
   It performs read operation on Topology.
-  Returns the list of VLAN names
+  Returns the list of VLAN names that are involved in a loop as identified by the Spanning Tree Protocol
 ---
 
 # dnacenter_topology_vlan_details (Data Source)
 
 It performs read operation on Topology.
 
-- Returns the list of VLAN names
+- Returns the list of VLAN names that are involved in a loop as identified by the Spanning Tree Protocol
 
 ## Example Usage
 
@@ -40,5 +40,3 @@ Read-Only:
 
 - `response` (List of String)
 - `version` (String)
-
-

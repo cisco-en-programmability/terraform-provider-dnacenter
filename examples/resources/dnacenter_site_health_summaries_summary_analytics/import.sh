@@ -1,0 +1,1 @@
+terraform import dnacenter_site_health_summaries_summary_analytics.example "id:=string"

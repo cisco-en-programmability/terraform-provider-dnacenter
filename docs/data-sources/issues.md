@@ -40,12 +40,12 @@ output "dnacenter_issues_example" {
 
 ### Optional
 
-- `ai_driven` (String) aiDriven query parameter. The issue's AI driven value (Yes or No)(Use only when macAddress and deviceId are not provided)
+- `ai_driven` (String) aiDriven query parameter. The issue's AI driven value: YES or NO (case insensitive) (Use only when macAddress and deviceId are not provided)
 - `device_id` (String) deviceId query parameter. Assurance UUID value of the device in the issue content
 - `end_time` (Number) endTime query parameter. Ending epoch time in milliseconds of query time window
-- `issue_status` (String) issueStatus query parameter. The issue's status value (One of ACTIVE, IGNORED, RESOLVED)
+- `issue_status` (String) issueStatus query parameter. The issue's status value: ACTIVE, IGNORED, RESOLVED (case insensitive)
 - `mac_address` (String) macAddress query parameter. Client's device MAC address of the issue (format xx:xx:xx:xx:xx:xx)
-- `priority` (String) priority query parameter. The issue's priority value (One of P1, P2, P3, or P4)(Use only when macAddress and deviceId are not provided)
+- `priority` (String) priority query parameter. The issue's priority value: P1, P2, P3, or P4 (case insensitive) (Use only when macAddress and deviceId are not provided)
 - `site_id` (String) siteId query parameter. Assurance UUID value of the site in the issue content
 - `start_time` (Number) startTime query parameter. Starting epoch time in milliseconds of query time window
 
@@ -71,5 +71,3 @@ Read-Only:
 - `priority` (String)
 - `site_id` (String)
 - `status` (String)
-
-

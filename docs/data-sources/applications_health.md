@@ -92,5 +92,3 @@ Read-Only:
 - `timestamp` (Number)
 - `traffic_class` (String)
 - `usage_bytes` (Number)
-
-

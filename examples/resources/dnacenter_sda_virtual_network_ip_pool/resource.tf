@@ -1,6 +1,7 @@
 
 resource "dnacenter_sda_virtual_network_ip_pool" "example" {
   provider = dnacenter
+
   parameters {
 
     auto_generate_vlan_name  = "false"

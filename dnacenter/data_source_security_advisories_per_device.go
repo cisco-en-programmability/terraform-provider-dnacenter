@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -27,67 +27,83 @@ func dataSourceSecurityAdvisoriesPerDevice() *schema.Resource {
 				Required: true,
 			},
 
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"advisory_id": &schema.Schema{
-							Description: `Advisory Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Id of the advisory
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"cves": &schema.Schema{
-							Description: `Cves`,
-							Type:        schema.TypeList,
-							Computed:    true,
+							Description: `CVE (Common Vulnerabilities and Exposures) IDs of the advisory
+`,
+							Type:     schema.TypeList,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 
 						"default_config_match_pattern": &schema.Schema{
-							Description: `Default Config Match Pattern`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Regular expression used by the system to detect the advisory
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"default_detection_type": &schema.Schema{
-							Description: `Default Detection Type`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Original criteria for advisory detection
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"detection_type": &schema.Schema{
-							Description: `Detection Type`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Criteria for advisory detection
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"device_count": &schema.Schema{
-							Description: `Device Count`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Number of devices vulnerable to the advisory
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"fixed_versions": &schema.Schema{
+							Description: `Map where each key is a vulnerable version and the value is a list of versions in which the advisory has been fixed
+`,
+							Type:     schema.TypeString, //TEST,
+							Computed: true,
 						},
 
 						"hidden_device_count": &schema.Schema{
-							Description: `Hidden Device Count`,
-							Type:        schema.TypeFloat,
-							Computed:    true,
+							Description: `Number of devices vulnerable to the advisory but were suppressed by the user
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"publication_url": &schema.Schema{
-							Description: `Publication Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `CISCO publication URL for the advisory
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"sir": &schema.Schema{
-							Description: `Sir`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Security Impact Rating of the advisory
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -114,15 +130,15 @@ func dataSourceSecurityAdvisoriesPerDeviceRead(ctx context.Context, d *schema.Re
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAdvisoriesPerDevice", err,
+				"Failure when executing 2 GetAdvisoriesPerDevice", err,
 				"Failure at GetAdvisoriesPerDevice, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenSecurityAdvisoriesGetAdvisoriesPerDeviceItems(response1.Response)
-		if err := d.Set("items", vItems1); err != nil {
+		vItem1 := flattenSecurityAdvisoriesGetAdvisoriesPerDeviceItem(response1.Response)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetAdvisoriesPerDevice response",
 				err))
@@ -136,23 +152,32 @@ func dataSourceSecurityAdvisoriesPerDeviceRead(ctx context.Context, d *schema.Re
 	return diags
 }
 
-func flattenSecurityAdvisoriesGetAdvisoriesPerDeviceItems(items *[]dnacentersdkgo.ResponseSecurityAdvisoriesGetAdvisoriesPerDeviceResponse) []map[string]interface{} {
-	if items == nil {
+func flattenSecurityAdvisoriesGetAdvisoriesPerDeviceItem(item *dnacentersdkgo.ResponseSecurityAdvisoriesGetAdvisoriesPerDeviceResponse) []map[string]interface{} {
+	if item == nil {
 		return nil
 	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["advisory_id"] = item.AdvisoryID
-		respItem["device_count"] = item.DeviceCount
-		respItem["hidden_device_count"] = item.HiddenDeviceCount
-		respItem["cves"] = item.Cves
-		respItem["publication_url"] = item.PublicationURL
-		respItem["sir"] = item.Sir
-		respItem["detection_type"] = item.DetectionType
-		respItem["default_detection_type"] = item.DefaultDetectionType
-		respItem["default_config_match_pattern"] = item.DefaultConfigMatchPattern
-		respItems = append(respItems, respItem)
+	respItem := make(map[string]interface{})
+	respItem["advisory_id"] = item.AdvisoryID
+	respItem["device_count"] = item.DeviceCount
+	respItem["hidden_device_count"] = item.HiddenDeviceCount
+	respItem["cves"] = item.Cves
+	respItem["publication_url"] = item.PublicationURL
+	respItem["sir"] = item.Sir
+	respItem["detection_type"] = item.DetectionType
+	respItem["default_detection_type"] = item.DefaultDetectionType
+	respItem["default_config_match_pattern"] = item.DefaultConfigMatchPattern
+	respItem["fixed_versions"] = flattenSecurityAdvisoriesGetAdvisoriesPerDeviceItemFixedVersions(item.FixedVersions)
+	return []map[string]interface{}{
+		respItem,
 	}
-	return respItems
+}
+
+func flattenSecurityAdvisoriesGetAdvisoriesPerDeviceItemFixedVersions(item *dnacentersdkgo.ResponseSecurityAdvisoriesGetAdvisoriesPerDeviceResponseFixedVersions) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
 }

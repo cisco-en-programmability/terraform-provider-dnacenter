@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -27,7 +27,7 @@ func dataSourceWirelessRfProfile() *schema.Resource {
 				Optional: true,
 			},
 
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -102,56 +102,56 @@ func dataSourceWirelessRfProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"data_rates": &schema.Schema{
-										Description: `Data Rates
+										Description: `Data Rates (Default : "6,9,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"mandatory_data_rates": &schema.Schema{
-										Description: `Mandatory Data Rates
+										Description: `Mandatory Data Rates (Default: "6,12,24")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"max_power_level": &schema.Schema{
-										Description: `Max Power Level
+										Description: `Max Power Level  (Default: 30)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
 
 									"min_power_level": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold  (Default: -10)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
 
 									"parent_profile": &schema.Schema{
-										Description: `Parent Profile
+										Description: `Parent Profile (Default : CUSTOM)
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"power_threshold_v1": &schema.Schema{
-										Description: `Power Threshold V1
+										Description: `Power Threshold  ( (Default: -70)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
 
 									"radio_channels": &schema.Schema{
-										Description: `Radio Channels
+										Description: `Radio Channels (Default : "36,40,44,48,52,56,60,64,149,153,157,161")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"rx_sop_threshold": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold  (Default: "AUTO")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -167,56 +167,56 @@ func dataSourceWirelessRfProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"data_rates": &schema.Schema{
-										Description: `Data Rates
+										Description: `Data Rates  (Default: "9,11,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"mandatory_data_rates": &schema.Schema{
-										Description: `Mandatory Data Rates
+										Description: `Mandatory Data Rates  (Default: "12")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"max_power_level": &schema.Schema{
-										Description: `Max Power Level
+										Description: `Max Power Level  (Default: 30)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
 
 									"min_power_level": &schema.Schema{
-										Description: `Min Power Level
+										Description: `Min Power Level  (Default: -10)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
 
 									"parent_profile": &schema.Schema{
-										Description: `Parent Profile
+										Description: `Parent Profile (Default : CUSTOM)
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"power_threshold_v1": &schema.Schema{
-										Description: `Power Threshold V1
+										Description: `Power Threshold   (Default: -70)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
 
 									"radio_channels": &schema.Schema{
-										Description: `Radio Channels
+										Description: `Radio Channels (Default : "9,11,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"rx_sop_threshold": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold (Default: "AUTO")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -232,56 +232,56 @@ func dataSourceWirelessRfProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"data_rates": &schema.Schema{
-										Description: `Data Rates
+										Description: `Data Rates  (Default: "6,9,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"mandatory_data_rates": &schema.Schema{
-										Description: `Mandatory Data Rates
+										Description: `Mandatory Data Rates  (Default: "6,12,24")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"max_power_level": &schema.Schema{
-										Description: `Max Power Level
+										Description: `Max Power Level  (Default: 30)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
 
 									"min_power_level": &schema.Schema{
-										Description: `Min Power Level
+										Description: `Min Power Level  (Default: -10)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
 
 									"parent_profile": &schema.Schema{
-										Description: `Parent Profile
+										Description: `Parent Profile (Default : CUSTOM)
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"power_threshold_v1": &schema.Schema{
-										Description: `Power Threshold V1
+										Description: `Power Threshold   (Default: -70)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
 
 									"radio_channels": &schema.Schema{
-										Description: `Radio Channels
+										Description: `Radio Channels (Default : "5,21,37,53,69,85,101,117,133,149,165,181,197,213,229")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"rx_sop_threshold": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold  (Default: "AUTO")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -318,15 +318,15 @@ func dataSourceWirelessRfProfileRead(ctx context.Context, d *schema.ResourceData
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing RetrieveRfProfiles", err,
+				"Failure when executing 2 RetrieveRfProfiles", err,
 				"Failure at RetrieveRfProfiles, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenWirelessRetrieveRfProfilesItem(response1.Response)
-		if err := d.Set("items", vItem1); err != nil {
+		vItem1 := flattenWirelessRetrieveRfProfilesItem(response1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting RetrieveRfProfiles response",
 				err))
@@ -340,31 +340,28 @@ func dataSourceWirelessRfProfileRead(ctx context.Context, d *schema.ResourceData
 	return diags
 }
 
-func flattenWirelessRetrieveRfProfilesItem(items *[]dnacentersdkgo.ResponseWirelessRetrieveRfProfilesResponse) []map[string]interface{} {
-	if items == nil {
+func flattenWirelessRetrieveRfProfilesItem(item *dnacentersdkgo.ResponseWirelessRetrieveRfProfiles) []map[string]interface{} {
+	if item == nil {
 		return nil
 	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["name"] = item.Name
-		respItem["default_rf_profile"] = boolPtrToString(item.DefaultRfProfile)
-		respItem["enable_radio_type_a"] = boolPtrToString(item.EnableRadioTypeA)
-		respItem["enable_radio_type_b"] = boolPtrToString(item.EnableRadioTypeB)
-		respItem["channel_width"] = item.ChannelWidth
-		respItem["enable_custom"] = boolPtrToString(item.EnableCustom)
-		respItem["enable_brown_field"] = boolPtrToString(item.EnableBrownField)
-		respItem["radio_type_a_properties"] = flattenWirelessRetrieveRfProfilesItemRadioTypeAProperties(item.RadioTypeAProperties)
-		respItem["radio_type_b_properties"] = flattenWirelessRetrieveRfProfilesItemRadioTypeBProperties(item.RadioTypeBProperties)
-		respItem["radio_type_c_properties"] = flattenWirelessRetrieveRfProfilesItemRadioTypeCProperties(item.RadioTypeCProperties)
-		respItem["enable_radio_type_c"] = boolPtrToString(item.EnableRadioTypeC)
-		respItems = append(respItems, respItem)
+	respItem := make(map[string]interface{})
+	respItem["name"] = item.Name
+	respItem["default_rf_profile"] = boolPtrToString(item.DefaultRfProfile)
+	respItem["enable_radio_type_a"] = boolPtrToString(item.EnableRadioTypeA)
+	respItem["enable_radio_type_b"] = boolPtrToString(item.EnableRadioTypeB)
+	respItem["channel_width"] = item.ChannelWidth
+	respItem["enable_custom"] = boolPtrToString(item.EnableCustom)
+	respItem["enable_brown_field"] = boolPtrToString(item.EnableBrownField)
+	respItem["radio_type_a_properties"] = flattenWirelessRetrieveRfProfilesItemRadioTypeAProperties(item.RadioTypeAProperties)
+	respItem["radio_type_b_properties"] = flattenWirelessRetrieveRfProfilesItemRadioTypeBProperties(item.RadioTypeBProperties)
+	respItem["radio_type_c_properties"] = flattenWirelessRetrieveRfProfilesItemRadioTypeCProperties(item.RadioTypeCProperties)
+	respItem["enable_radio_type_c"] = boolPtrToString(item.EnableRadioTypeC)
+	return []map[string]interface{}{
+		respItem,
 	}
-
-	return respItems
 }
 
-func flattenWirelessRetrieveRfProfilesItemRadioTypeAProperties(item *dnacentersdkgo.ResponseWirelessRetrieveRfProfilesResponseRadioTypeAProperties) []map[string]interface{} {
+func flattenWirelessRetrieveRfProfilesItemRadioTypeAProperties(item *dnacentersdkgo.ResponseWirelessRetrieveRfProfilesRadioTypeAProperties) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -373,7 +370,7 @@ func flattenWirelessRetrieveRfProfilesItemRadioTypeAProperties(item *dnacentersd
 	respItem["radio_channels"] = item.RadioChannels
 	respItem["data_rates"] = item.DataRates
 	respItem["mandatory_data_rates"] = item.MandatoryDataRates
-	respItem["power_threshold_v1"] = item.PowerThresholdV1
+	respItem["power_threshold_v1"] = item.PowerThreshold
 	respItem["rx_sop_threshold"] = item.RxSopThreshold
 	respItem["min_power_level"] = item.MinPowerLevel
 	respItem["max_power_level"] = item.MaxPowerLevel
@@ -384,7 +381,7 @@ func flattenWirelessRetrieveRfProfilesItemRadioTypeAProperties(item *dnacentersd
 
 }
 
-func flattenWirelessRetrieveRfProfilesItemRadioTypeBProperties(item *dnacentersdkgo.ResponseWirelessRetrieveRfProfilesResponseRadioTypeBProperties) []map[string]interface{} {
+func flattenWirelessRetrieveRfProfilesItemRadioTypeBProperties(item *dnacentersdkgo.ResponseWirelessRetrieveRfProfilesRadioTypeBProperties) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -393,7 +390,7 @@ func flattenWirelessRetrieveRfProfilesItemRadioTypeBProperties(item *dnacentersd
 	respItem["radio_channels"] = item.RadioChannels
 	respItem["data_rates"] = item.DataRates
 	respItem["mandatory_data_rates"] = item.MandatoryDataRates
-	respItem["power_threshold_v1"] = item.PowerThresholdV1
+	respItem["power_threshold_v1"] = item.PowerThreshold
 	respItem["rx_sop_threshold"] = item.RxSopThreshold
 	respItem["min_power_level"] = item.MinPowerLevel
 	respItem["max_power_level"] = item.MaxPowerLevel
@@ -404,7 +401,7 @@ func flattenWirelessRetrieveRfProfilesItemRadioTypeBProperties(item *dnacentersd
 
 }
 
-func flattenWirelessRetrieveRfProfilesItemRadioTypeCProperties(item *dnacentersdkgo.ResponseWirelessRetrieveRfProfilesResponseRadioTypeCProperties) []map[string]interface{} {
+func flattenWirelessRetrieveRfProfilesItemRadioTypeCProperties(item *dnacentersdkgo.ResponseWirelessRetrieveRfProfilesRadioTypeCProperties) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -416,7 +413,7 @@ func flattenWirelessRetrieveRfProfilesItemRadioTypeCProperties(item *dnacentersd
 	respItem["rx_sop_threshold"] = item.RxSopThreshold
 	respItem["min_power_level"] = item.MinPowerLevel
 	respItem["max_power_level"] = item.MaxPowerLevel
-	respItem["power_threshold_v1"] = item.PowerThresholdV1
+	respItem["power_threshold_v1"] = item.PowerThreshold
 
 	return []map[string]interface{}{
 		respItem,

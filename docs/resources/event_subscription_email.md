@@ -22,41 +22,38 @@ resource "dnacenter_event_subscription_email" "example" {
   provider = dnacenter
 
   parameters {
-    payload {
 
+    description = "string"
+    filter {
 
-      description = "string"
-      filter {
+      categories = ["string"]
+      domains_subdomains {
 
-        categories = ["string"]
-        domains_subdomains {
-
-          domain      = "string"
-          sub_domains = ["string"]
-        }
-        event_ids  = ["string"]
-        severities = [1]
-        site_ids   = ["string"]
-        sources    = ["string"]
-        types      = ["string"]
+        domain      = "string"
+        sub_domains = ["string"]
       }
-      name = "string"
-      subscription_endpoints {
-
-        instance_id = "string"
-        subscription_details {
-
-          connector_type     = "string"
-          description        = "string"
-          from_email_address = "string"
-          name               = "string"
-          subject            = "string"
-          to_email_addresses = ["string"]
-        }
-      }
-      subscription_id = "string"
-      version         = "string"
+      event_ids  = ["string"]
+      severities = [1]
+      site_ids   = ["string"]
+      sources    = ["string"]
+      types      = ["string"]
     }
+    name = "string"
+    subscription_endpoints {
+
+      instance_id = "string"
+      subscription_details {
+
+        connector_type     = "string"
+        description        = "string"
+        from_email_address = "string"
+        name               = "string"
+        subject            = "string"
+        to_email_addresses = ["string"]
+      }
+    }
+    subscription_id = "string"
+    version         = "string"
   }
 }
 
@@ -70,7 +67,7 @@ output "dnacenter_event_subscription_email_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestEventManagementCreateEmailEventSubscription (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestEventManagementCreateEmailEventSubscriptionV1 (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
@@ -125,7 +122,7 @@ Optional:
 
 Optional:
 
-- `instance_id` (String) (From Get Email Subscription Details --> pick InstanceId)
+- `instance_id` (String) (From Get Email Subscription Details --> pick InstanceId if available)
 - `subscription_details` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--subscription_endpoints--subscription_details))
 
 <a id="nestedblock--parameters--payload--subscription_endpoints--subscription_details"></a>

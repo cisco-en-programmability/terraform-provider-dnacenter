@@ -46,19 +46,19 @@ Read-Only:
 - `backhaul_type` (String)
 - `ethernet_mac_address` (String)
 - `ip_address` (String)
-- `is_led_enabled` (String)
 - `last_seen` (Number)
+- `led` (String)
 - `location` (String)
 - `name` (String)
 - `radio_mac_address` (String)
 - `serial_number` (String)
-- `ssh_config` (List of Object) (see [below for nested schema](#nestedobjatt--items--ssh_config))
+- `ssh` (List of Object) (see [below for nested schema](#nestedobjatt--items--ssh))
 - `status` (String)
 - `type` (String)
 - `version` (String)
 
-<a id="nestedobjatt--items--ssh_config"></a>
-### Nested Schema for `items.ssh_config`
+<a id="nestedobjatt--items--ssh"></a>
+### Nested Schema for `items.ssh`
 
 Read-Only:
 
@@ -66,5 +66,3 @@ Read-Only:
 - `ssh_password` (String)
 - `ssh_state` (String)
 - `ssh_user_name` (String)
-
-

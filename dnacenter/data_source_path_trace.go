@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -23,7 +23,7 @@ func dataSourcePathTrace() *schema.Resource {
 		ReadContext: dataSourcePathTraceRead,
 		Schema: map[string]*schema.Schema{
 			"dest_ip": &schema.Schema{
-				Description: `destIP query parameter. Destination IP adress
+				Description: `destIP query parameter. Destination IP address
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -31,7 +31,7 @@ func dataSourcePathTrace() *schema.Resource {
 			"dest_port": &schema.Schema{
 				Description: `destPort query parameter. Destination port
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"flow_analysis_id": &schema.Schema{
@@ -43,31 +43,31 @@ func dataSourcePathTrace() *schema.Resource {
 			"gt_create_time": &schema.Schema{
 				Description: `gtCreateTime query parameter. Analyses requested after this time
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"last_update_time": &schema.Schema{
 				Description: `lastUpdateTime query parameter. Last update time
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of resources returned
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"lt_create_time": &schema.Schema{
 				Description: `ltCreateTime query parameter. Analyses requested before this time
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Start index of resources returned (1-based)
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"order": &schema.Schema{
@@ -102,7 +102,7 @@ func dataSourcePathTrace() *schema.Resource {
 			"source_port": &schema.Schema{
 				Description: `sourcePort query parameter. Source port
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"status": &schema.Schema{
@@ -3714,37 +3714,51 @@ func dataSourcePathTrace() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"control_path": &schema.Schema{
-										// Type:     schema.TypeBool,
+										Description: `Control path tracing
+`,
+										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"create_time": &schema.Schema{
+										Description: `Timestamp when the Path Trace request was first received
+`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 
 									"dest_ip": &schema.Schema{
+										Description: `IP Address of the destination device
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"dest_port": &schema.Schema{
+										Description: `Port on the destination device
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"failure_reason": &schema.Schema{
+										Description: `Reason for failure
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"id": &schema.Schema{
+										Description: `Unique ID for the Path Trace request
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"inclusions": &schema.Schema{
+										Description: `Subset of {INTERFACE-STATS, QOS-STATS, DEVICE-STATS, PERFORMANCE-STATS, ACL-TRACE}
+`,
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Schema{
@@ -3753,32 +3767,51 @@ func dataSourcePathTrace() *schema.Resource {
 									},
 
 									"last_update_time": &schema.Schema{
+										Description: `Last timestamp when the path trace response was updated
+`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 
 									"periodic_refresh": &schema.Schema{
-										// Type:     schema.TypeBool,
+										Description: `Re-run the Path Trace every 30 seconds
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"previous_flow_analysis_id": &schema.Schema{
+										Description: `When periodicRefresh is true, this field holds the original Path Trace request ID
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"protocol": &schema.Schema{
+										Description: `One of TCP/UDP or either (null)
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"source_ip": &schema.Schema{
+										Description: `IP Address of the source device
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"source_port": &schema.Schema{
+										Description: `Port on the source device
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"status": &schema.Schema{
+										Description: `One of {SUCCESS, INPROGRESS, FAILED, SCHEDULED, PENDING, COMPLETED}
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -3796,37 +3829,51 @@ func dataSourcePathTrace() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"control_path": &schema.Schema{
-							// Type:     schema.TypeBool,
+							Description: `Control path tracing
+`,
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"create_time": &schema.Schema{
+							Description: `Timestamp when the Path Trace request was first received
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"dest_ip": &schema.Schema{
+							Description: `IP Address of the destination device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"dest_port": &schema.Schema{
+							Description: `Port on the destination device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"failure_reason": &schema.Schema{
+							Description: `Reason for failure
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"id": &schema.Schema{
+							Description: `Unique ID for the Path Trace request
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"inclusions": &schema.Schema{
+							Description: `Subset of {INTERFACE-STATS, QOS-STATS, DEVICE-STATS, PERFORMANCE-STATS, ACL-TRACE}
+`,
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Schema{
@@ -3835,32 +3882,51 @@ func dataSourcePathTrace() *schema.Resource {
 						},
 
 						"last_update_time": &schema.Schema{
+							Description: `Last timestamp when the path trace response was updated
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"periodic_refresh": &schema.Schema{
-							// Type:     schema.TypeBool,
+							Description: `Re-run the Path Trace every 30 seconds
+`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"previous_flow_analysis_id": &schema.Schema{
+							Description: `When periodicRefresh is true, this field holds the original Path Trace request ID
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"protocol": &schema.Schema{
+							Description: `One of TCP/UDP or either (null)
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"source_ip": &schema.Schema{
+							Description: `IP Address of the source device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"source_port": &schema.Schema{
+							Description: `Port on the source device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"status": &schema.Schema{
+							Description: `One of {SUCCESS, INPROGRESS, FAILED, SCHEDULED, PENDING, COMPLETED}
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -3899,8 +3965,8 @@ func dataSourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: RetrivesAllPreviousPathtracesSummary")
-		queryParams1 := dnacentersdkgo.RetrivesAllPreviousPathtracesSummaryQueryParams{}
+		log.Printf("[DEBUG] Selected method: RetrievesAllPreviousPathtracesSummary")
+		queryParams1 := dnacentersdkgo.RetrievesAllPreviousPathtracesSummaryQueryParams{}
 
 		if okPeriodicRefresh {
 			queryParams1.PeriodicRefresh = vPeriodicRefresh.(bool)
@@ -3912,16 +3978,16 @@ func dataSourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m inte
 			queryParams1.DestIP = vDestIP.(string)
 		}
 		if okSourcePort {
-			queryParams1.SourcePort = vSourcePort.(string)
+			queryParams1.SourcePort = vSourcePort.(float64)
 		}
 		if okDestPort {
-			queryParams1.DestPort = vDestPort.(string)
+			queryParams1.DestPort = vDestPort.(float64)
 		}
 		if okGtCreateTime {
-			queryParams1.GtCreateTime = vGtCreateTime.(string)
+			queryParams1.GtCreateTime = vGtCreateTime.(float64)
 		}
 		if okLtCreateTime {
-			queryParams1.LtCreateTime = vLtCreateTime.(string)
+			queryParams1.LtCreateTime = vLtCreateTime.(float64)
 		}
 		if okProtocol {
 			queryParams1.Protocol = vProtocol.(string)
@@ -3933,13 +3999,13 @@ func dataSourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m inte
 			queryParams1.TaskID = vTaskID.(string)
 		}
 		if okLastUpdateTime {
-			queryParams1.LastUpdateTime = vLastUpdateTime.(string)
+			queryParams1.LastUpdateTime = vLastUpdateTime.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okOrder {
 			queryParams1.Order = vOrder.(string)
@@ -3948,24 +4014,24 @@ func dataSourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m inte
 			queryParams1.SortBy = vSortBy.(string)
 		}
 
-		response1, restyResp1, err := client.PathTrace.RetrivesAllPreviousPathtracesSummary(&queryParams1)
+		response1, restyResp1, err := client.PathTrace.RetrievesAllPreviousPathtracesSummary(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing RetrivesAllPreviousPathtracesSummary", err,
-				"Failure at RetrivesAllPreviousPathtracesSummary, unexpected response", ""))
+				"Failure when executing 2 RetrievesAllPreviousPathtracesSummary", err,
+				"Failure at RetrievesAllPreviousPathtracesSummary, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenPathTraceRetrivesAllPreviousPathtracesSummaryItems(response1.Response)
+		vItems1 := flattenPathTraceRetrievesAllPreviousPathtracesSummaryItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting RetrivesAllPreviousPathtracesSummary response",
+				"Failure when setting RetrievesAllPreviousPathtracesSummary response",
 				err))
 			return diags
 		}
@@ -3985,7 +4051,7 @@ func dataSourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m inte
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing RetrievesPreviousPathtrace", err,
+				"Failure when executing 2 RetrievesPreviousPathtrace", err,
 				"Failure at RetrievesPreviousPathtrace, unexpected response", ""))
 			return diags
 		}
@@ -4007,7 +4073,7 @@ func dataSourcePathTraceRead(ctx context.Context, d *schema.ResourceData, m inte
 	return diags
 }
 
-func flattenPathTraceRetrivesAllPreviousPathtracesSummaryItems(items *[]dnacentersdkgo.ResponsePathTraceRetrivesAllPreviousPathtracesSummaryResponse) []map[string]interface{} {
+func flattenPathTraceRetrievesAllPreviousPathtracesSummaryItems(items *[]dnacentersdkgo.ResponsePathTraceRetrievesAllPreviousPathtracesSummaryResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -4027,6 +4093,7 @@ func flattenPathTraceRetrivesAllPreviousPathtracesSummaryItems(items *[]dnacente
 		respItem["source_ip"] = item.SourceIP
 		respItem["source_port"] = item.SourcePort
 		respItem["status"] = item.Status
+		respItem["previous_flow_analysis_id"] = item.PreviousFlowAnalysisID
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -5960,6 +6027,7 @@ func flattenPathTraceRetrievesPreviousPathtraceItemRequest(item *dnacentersdkgo.
 	respItem["source_ip"] = item.SourceIP
 	respItem["source_port"] = item.SourcePort
 	respItem["status"] = item.Status
+	respItem["previous_flow_analysis_id"] = item.PreviousFlowAnalysisID
 
 	return []map[string]interface{}{
 		respItem,

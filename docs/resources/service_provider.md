@@ -22,6 +22,7 @@ It manages create, read, update and delete operations on Network Settings.
 ```terraform
 resource "dnacenter_service_provider" "example" {
   provider = dnacenter
+
   parameters {
 
     settings {
@@ -101,7 +102,7 @@ Read-Only:
 - `namespace` (String)
 - `type` (String)
 - `value` (List of Object) (see [below for nested schema](#nestedobjatt--item--value))
-- `version` (String)
+- `version` (Number)
 
 <a id="nestedobjatt--item--value"></a>
 ### Nested Schema for `item.value`

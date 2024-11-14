@@ -2,14 +2,13 @@ package dnacenter
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"reflect"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -241,7 +240,7 @@ func resourceSdaMulticastCreate(ctx context.Context, d *schema.ResourceData, m i
 	queryParamImport := dnacentersdkgo.GetMulticastDetailsFromSdaFabricQueryParams{}
 	queryParamImport.SiteNameHierarchy = vvSiteNameHierarchy
 	item2, _, err := client.Sda.GetMulticastDetailsFromSdaFabric(&queryParamImport)
-	if err == nil && item2 != nil {
+	if err != nil || item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["site_name_hierarchy"] = vvSiteNameHierarchy
 		d.SetId(joinResourceID(resourceMap))
@@ -272,7 +271,7 @@ func resourceSdaMulticastCreate(ctx context.Context, d *schema.ResourceData, m i
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -285,7 +284,7 @@ func resourceSdaMulticastCreate(ctx context.Context, d *schema.ResourceData, m i
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing AddMulticastInSdaFabric", err))
@@ -326,6 +325,8 @@ func resourceSdaMulticastRead(ctx context.Context, d *schema.ResourceData, m int
 
 		queryParams1.SiteNameHierarchy = vSiteNameHierarchy
 
+		// has_unknown_response: None
+
 		response1, restyResp1, err := client.Sda.GetMulticastDetailsFromSdaFabric(&queryParams1)
 
 		if err != nil || response1 == nil {
@@ -353,13 +354,7 @@ func resourceSdaMulticastRead(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceSdaMulticastUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	err := errors.New("Update not possible in this resource")
-	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SdaMulticastUpdate", err, "Update method is not supported",
-		"Failure at SdaMulticastUpdate, unexpected response", ""))
-
-	return diags
+	return resourceSdaMulticastRead(ctx, d, m)
 }
 
 func resourceSdaMulticastDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -405,7 +400,7 @@ func resourceSdaMulticastDelete(ctx context.Context, d *schema.ResourceData, m i
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -418,7 +413,7 @@ func resourceSdaMulticastDelete(ctx context.Context, d *schema.ResourceData, m i
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeleteMulticastFromSdaFabric", err))

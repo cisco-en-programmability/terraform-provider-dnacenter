@@ -72,5 +72,3 @@ Read-Only:
 
 - `enable_flex_connect` (String)
 - `local_to_vlan` (Number)
-
-

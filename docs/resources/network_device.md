@@ -4,20 +4,23 @@ page_title: "dnacenter_network_device Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It manages read and delete operations on Devices.
-  Deletes the network device for the given Id
+  This resource allows any network device that is not currently provisioned to be removed from the inventory. Important:
+  Devices currently provisioned cannot be deleted. To delete a provisioned device, the device must be first deprovisioned.
 ---
 
 # dnacenter_network_device (Resource)
 
 It manages read and delete operations on Devices.
 
-- Deletes the network device for the given Id
+- This resource allows any network device that is not currently provisioned to be removed from the inventory. Important:
+Devices currently provisioned cannot be deleted. To delete a provisioned device, the device must be first deprovisioned.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_network_device" "example" {
   provider = dnacenter
+
   parameters {
 
     id = "string"
@@ -55,11 +58,15 @@ Required:
 
 Read-Only:
 
+- `ap_ethernet_mac_address` (String)
 - `ap_manager_interface_ip` (String)
 - `associated_wlc_ip` (String)
 - `boot_date_time` (String)
 - `collection_interval` (String)
 - `collection_status` (String)
+- `description` (String)
+- `device_support_level` (String)
+- `dns_resolved_management_address` (String)
 - `error_code` (String)
 - `error_description` (String)
 - `family` (String)
@@ -69,6 +76,7 @@ Read-Only:
 - `instance_uuid` (String)
 - `interface_count` (String)
 - `inventory_status_detail` (String)
+- `last_device_resync_start_time` (String)
 - `last_update_time` (Number)
 - `last_updated` (String)
 - `line_card_count` (String)
@@ -76,11 +84,16 @@ Read-Only:
 - `location` (String)
 - `location_name` (String)
 - `mac_address` (String)
+- `managed_atleast_once` (String)
 - `management_ip_address` (String)
+- `management_state` (String)
 - `memory_size` (String)
+- `pending_sync_requests_count` (String)
 - `platform_id` (String)
 - `reachability_failure_reason` (String)
 - `reachability_status` (String)
+- `reasons_for_device_resync` (String)
+- `reasons_for_pending_sync_requests` (String)
 - `role` (String)
 - `role_source` (String)
 - `serial_number` (String)
@@ -93,6 +106,8 @@ Read-Only:
 - `tunnel_udp_port` (String)
 - `type` (String)
 - `up_time` (String)
+- `uptime_seconds` (Number)
+- `vendor` (String)
 - `waas_device_mode` (String)
 
 ## Import

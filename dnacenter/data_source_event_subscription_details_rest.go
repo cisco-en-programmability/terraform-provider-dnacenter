@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -62,6 +62,18 @@ func dataSourceEventSubscriptionDetailsRest() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"body": &schema.Schema{
+							Description: `Body`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"connect_timeout": &schema.Schema{
+							Description: `Connect Timeout`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
 						"connector_type": &schema.Schema{
 							Description: `Connector Type`,
 							Type:        schema.TypeString,
@@ -113,6 +125,12 @@ func dataSourceEventSubscriptionDetailsRest() *schema.Resource {
 							Computed:    true,
 						},
 
+						"namespace": &schema.Schema{
+							Description: `Namespace`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
 						"path_params": &schema.Schema{
 							Description: `Path Params`,
 							Type:        schema.TypeList,
@@ -120,6 +138,13 @@ func dataSourceEventSubscriptionDetailsRest() *schema.Resource {
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
+						},
+
+						"proxy_route": &schema.Schema{
+							Description: `Proxy Route`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"query_params": &schema.Schema{
@@ -131,10 +156,29 @@ func dataSourceEventSubscriptionDetailsRest() *schema.Resource {
 							},
 						},
 
-						"trust_cert": &schema.Schema{
-							Description: `Trust Cert`,
+						"read_timeout": &schema.Schema{
+							Description: `Read Timeout`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"service_name": &schema.Schema{
+							Description: `Service Name`,
 							Type:        schema.TypeString,
 							Computed:    true,
+						},
+
+						"service_port": &schema.Schema{
+							Description: `Service Port`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"trust_cert": &schema.Schema{
+							Description: `Trust Cert`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"url": &schema.Schema{
@@ -191,7 +235,7 @@ func dataSourceEventSubscriptionDetailsRestRead(ctx context.Context, d *schema.R
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetRestWebhookSubscriptionDetails", err,
+				"Failure when executing 2 GetRestWebhookSubscriptionDetails", err,
 				"Failure at GetRestWebhookSubscriptionDetails, unexpected response", ""))
 			return diags
 		}
@@ -226,10 +270,17 @@ func flattenEventManagementGetRestWebhookSubscriptionDetailsItems(items *dnacent
 		respItem["connector_type"] = item.ConnectorType
 		respItem["url"] = item.URL
 		respItem["method"] = item.Method
-		respItem["trust_cert"] = item.TrustCert
+		respItem["trust_cert"] = boolPtrToString(item.TrustCert)
 		respItem["headers"] = flattenEventManagementGetRestWebhookSubscriptionDetailsItemsHeaders(item.Headers)
 		respItem["query_params"] = item.QueryParams
 		respItem["path_params"] = item.PathParams
+		respItem["body"] = item.Body
+		respItem["connect_timeout"] = item.ConnectTimeout
+		respItem["read_timeout"] = item.ReadTimeout
+		respItem["service_name"] = item.ServiceName
+		respItem["service_port"] = item.ServicePort
+		respItem["namespace"] = item.Namespace
+		respItem["proxy_route"] = boolPtrToString(item.ProxyRoute)
 		respItems = append(respItems, respItem)
 	}
 	return respItems

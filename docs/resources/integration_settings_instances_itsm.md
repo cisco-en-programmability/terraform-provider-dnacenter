@@ -70,7 +70,7 @@ Optional:
 
 - `data` (Block List) (see [below for nested schema](#nestedblock--parameters--data))
 - `description` (String) Description of the setting instance
-- `dyp_name` (String) It should be ServiceNowConnection
+- `dyp_name` (String) It can be ServiceNowConnection
 - `name` (String) Name of the setting instance
 
 <a id="nestedblock--parameters--data"></a>

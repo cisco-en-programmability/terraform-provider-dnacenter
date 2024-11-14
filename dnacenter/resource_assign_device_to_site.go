@@ -10,7 +10,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -65,7 +65,7 @@ func resourceAssignDeviceToSite() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"site_id": &schema.Schema{
-							Description: `siteId path parameter. Site id to which site the device to assign
+							Description: `siteId path parameter. Site Id where device(s) needs to be assigned
 `,
 							Type:     schema.TypeString,
 							Required: true,
@@ -80,7 +80,7 @@ func resourceAssignDeviceToSite() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"ip": &schema.Schema{
-										Description: `Device ip (eg: 10.104.240.64)
+										Description: `Device IP. It can be either IPv4 or IPv6. IPV4 e.g., 10.104.240.64. IPV6 e.g., 2001:420:284:2004:4:181:500:183
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -105,30 +105,33 @@ func resourceAssignDeviceToSiteCreate(ctx context.Context, d *schema.ResourceDat
 
 	vSiteID := resourceItem["site_id"]
 
+	vRunsync := resourceItem["runsync"]
+
+	vTimeout := resourceItem["timeout"]
+
+	vPersistbapioutput := resourceItem["persistbapioutput"]
+
 	vvSiteID := vSiteID.(string)
 	request1 := expandRequestAssignDeviceToSiteAssignDevicesToSite(ctx, "parameters.0", d)
 
 	headerParams1 := dnacentersdkgo.AssignDevicesToSiteHeaderParams{}
 
-	headerParams1.Runsync = "false"
+	headerParams1.Runsync = vRunsync.(string)
 
-	headerParams1.Persistbapioutput = "false"
+	headerParams1.Timeout = vTimeout.(string)
 
-	headerParams1.Runsynctimeout = "false"
+	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+
+	// has_unknown_response: None
 
 	response1, restyResp1, err := client.Sites.AssignDevicesToSite(vvSiteID, request1, &headerParams1)
-
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing AssignDevicesToSite", err,
-			"Failure at AssignDevicesToSite execution", err.Error()))
+		diags = append(diags, diagError(
+			"Failure when executing AssignDevicesToSite", err))
 		return diags
 	}
 
@@ -148,7 +151,7 @@ func resourceAssignDeviceToSiteCreate(ctx context.Context, d *schema.ResourceDat
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -161,7 +164,7 @@ func resourceAssignDeviceToSiteCreate(ctx context.Context, d *schema.ResourceDat
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing AssignDevicesToSite", err,
@@ -180,7 +183,6 @@ func resourceAssignDeviceToSiteCreate(ctx context.Context, d *schema.ResourceDat
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceAssignDeviceToSiteRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

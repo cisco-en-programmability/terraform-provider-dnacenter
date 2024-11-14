@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -20,7 +20,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Wireless.
 
-- Provision wireless devices
+- Provision wireless device
 `,
 
 		CreateContext: resourceWirelessProvisionDeviceCreateCreate,
@@ -38,39 +38,22 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"execution_id": &schema.Schema{
-							Description: `Execution Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"execution_url": &schema.Schema{
-							Description: `Execution Url`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"provisioning_tasks": &schema.Schema{
-							Type:     schema.TypeList,
+							Description: `Execution Id
+`,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"failed": &schema.Schema{
-										Description: `Failed`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"success": &schema.Schema{
-										Description: `Success`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-								},
-							},
+						},
+						"execution_status_url": &schema.Schema{
+							Description: `Execution Status Url
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"message": &schema.Schema{
+							Description: `Message
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -109,7 +92,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"interface_gateway": &schema.Schema{
-													Description: `Interface Gateway
+													Description: `Interface Gateway.  Required for AireOS.
 `,
 													Type:     schema.TypeString,
 													Optional: true,
@@ -117,7 +100,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 													Computed: true,
 												},
 												"interface_ipaddress": &schema.Schema{
-													Description: `Interface IP Address
+													Description: `Interface IP Address. Required for AireOS.
 `,
 													Type:     schema.TypeString,
 													Optional: true,
@@ -125,7 +108,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 													Computed: true,
 												},
 												"interface_name": &schema.Schema{
-													Description: `Interface Name
+													Description: `Interface Name. Required for both AireOS and EWLC.
 `,
 													Type:     schema.TypeString,
 													Optional: true,
@@ -133,7 +116,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 													Computed: true,
 												},
 												"interface_netmask_in_cid_r": &schema.Schema{
-													Description: `Interface Netmask In CIDR
+													Description: `Interface Netmask In CIDR. Required for AireOS.
 `,
 													Type:     schema.TypeInt,
 													Optional: true,
@@ -141,7 +124,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 													Computed: true,
 												},
 												"lag_or_port_number": &schema.Schema{
-													Description: `Lag Or Port Number
+													Description: `Lag Or Port Number.  Required for AireOS.
 `,
 													Type:     schema.TypeInt,
 													Optional: true,
@@ -149,7 +132,7 @@ func resourceWirelessProvisionDeviceCreate() *schema.Resource {
 													Computed: true,
 												},
 												"vlan_id": &schema.Schema{
-													Description: `VLAN ID
+													Description: `VLAN ID. Required for both AireOS and EWLC.
 `,
 													Type:     schema.TypeInt,
 													Optional: true,
@@ -194,19 +177,16 @@ func resourceWirelessProvisionDeviceCreateCreate(ctx context.Context, d *schema.
 
 	request1 := expandRequestWirelessProvisionDeviceCreateProvision(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.Wireless.Provision(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.Wireless.Provision(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing Provision", err))
 		return diags
 	}
 
@@ -226,7 +206,7 @@ func resourceWirelessProvisionDeviceCreateCreate(ctx context.Context, d *schema.
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -239,7 +219,7 @@ func resourceWirelessProvisionDeviceCreateCreate(ctx context.Context, d *schema.
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing Provision", err,
@@ -248,6 +228,9 @@ func resourceWirelessProvisionDeviceCreateCreate(ctx context.Context, d *schema.
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenWirelessProvisionItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -258,7 +241,6 @@ func resourceWirelessProvisionDeviceCreateCreate(ctx context.Context, d *schema.
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceWirelessProvisionDeviceCreateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
@@ -367,23 +349,9 @@ func flattenWirelessProvisionItem(item *dnacentersdkgo.ResponseWirelessProvision
 	}
 	respItem := make(map[string]interface{})
 	respItem["execution_id"] = item.ExecutionID
-	respItem["execution_url"] = item.ExecutionURL
-	respItem["provisioning_tasks"] = flattenWirelessProvisionItemProvisioningTasks(item.ProvisioningTasks)
+	respItem["execution_status_url"] = item.ExecutionStatusURL
+	respItem["message"] = item.Message
 	return []map[string]interface{}{
 		respItem,
 	}
-}
-
-func flattenWirelessProvisionItemProvisioningTasks(item *dnacentersdkgo.ResponseWirelessProvisionProvisioningTasks) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["success"] = item.Success
-	respItem["failed"] = item.Failed
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
 }

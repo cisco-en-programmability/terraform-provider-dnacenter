@@ -14,19 +14,20 @@ resource "dnacenter_pnp_device_site_claim" "example" {
     }
     device_id = "string"
     gateway   = "string"
+    hostname  = "string"
     image_info {
 
       image_id = "string"
       skip     = "false"
     }
-    interface_name = "string"
-    rf_profile     = "string"
-    sensor_profile = "string"
-    site_id        = "string"
-    static_ip      = "string"
-    subnet_mask    = "string"
-    type           = "string"
-    vlan_id        = "string"
+    ip_interface_name = "string"
+    rf_profile        = "string"
+    sensor_profile    = "string"
+    site_id           = "string"
+    static_ip         = "string"
+    subnet_mask       = "string"
+    type              = "string"
+    vlan_id           = "string"
   }
 }
 

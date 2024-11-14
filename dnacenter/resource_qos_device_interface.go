@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -300,8 +300,8 @@ WAN, to associate WAN interfaces with specific SP Profile and to be able to defi
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"parameters": &schema.Schema{
-							Description: `Array of RequestApplicationPolicyCreateQosDeviceInterfaceInfo`,
+						"payload": &schema.Schema{
+							Description: `Array of RequestApplicationPolicyCreateApplication`,
 							Type:        schema.TypeList,
 							Optional:    true,
 							Computed:    true,
@@ -398,7 +398,10 @@ WAN, to associate WAN interfaces with specific SP Profile and to be able to defi
 													Optional: true,
 													Computed: true,
 												},
-											}}}},
+											},
+										},
+									},
+								},
 							},
 						},
 					},
@@ -537,7 +540,7 @@ func resourceQosDeviceInterfaceUpdate(ctx context.Context, d *schema.ResourceDat
 	resourceMap := separateResourceID(resourceID)
 	vID := resourceMap["id"]
 	if d.HasChange("parameters") {
-		request1 := expandRequestQosDeviceInterfaceUpdateQosDeviceInterfaceInfo(ctx, "parameters", d)
+		request1 := expandRequestQosDeviceInterfaceUpdateQosDeviceInterfaceInfo(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		if request1 != nil && len(*request1) > 0 {
 			req := *request1

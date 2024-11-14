@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -47,135 +47,157 @@ about the device and neighbor topology
 								Schema: map[string]*schema.Schema{
 
 									"ap_manager_interface_ip": &schema.Schema{
-										Description: `Ap Manager Interface Ip`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `IP address of WLC on AP manager interface
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"associated_wlc_ip": &schema.Schema{
-										Description: `Associated Wlc Ip`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Associated WLC IP address of the AP device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"boot_date_time": &schema.Schema{
-										Description: `Boot Date Time`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device's last boot UTC timestamp
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"collection_interval": &schema.Schema{
-										Description: `Collection Interval`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Re sync Interval of the device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"collection_status": &schema.Schema{
-										Description: `Collection Status`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device's telemetry data collection status for DNAC
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"error_code": &schema.Schema{
-										Description: `Error Code`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Inventory status error code
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"error_description": &schema.Schema{
-										Description: `Error Description`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Inventory status description
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"family": &schema.Schema{
-										Description: `Family`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device Family
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"hostname": &schema.Schema{
-										Description: `Hostname`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device Hostname
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device's UUID
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"instance_uuid": &schema.Schema{
-										Description: `Instance Uuid`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Uuid of the device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"interface_count": &schema.Schema{
-										Description: `Interface Count`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Number of interfaces on the device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"inventory_status_detail": &schema.Schema{
-										Description: `Inventory Status Detail`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Status detail of inventory sync
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"last_update_time": &schema.Schema{
-										Description: `Last Update Time`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `Time in epoch when the network device info last got updated
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"last_updated": &schema.Schema{
-										Description: `Last Updated`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Time when the network device info last got updated
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"line_card_count": &schema.Schema{
-										Description: `Line Card Count`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Number of linecards on the device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"line_card_id": &schema.Schema{
-										Description: `Line Card Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `IDs of linecards of the device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"location": &schema.Schema{
-										Description: `Location`,
-										Type:        schema.TypeString, //TEST,
-										Computed:    true,
+										Description: `Device location - Site hierarchy
+`,
+										Type:     schema.TypeString, //TEST,
+										Computed: true,
 									},
 
 									"location_name": &schema.Schema{
-										Description: `Location Name`,
-										Type:        schema.TypeString, //TEST,
-										Computed:    true,
+										Description: `[Deprecated] Name of the associated location
+`,
+										Type:     schema.TypeString, //TEST,
+										Computed: true,
 									},
 
 									"mac_address": &schema.Schema{
-										Description: `Mac Address`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device MAC address
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"management_ip_address": &schema.Schema{
-										Description: `Management Ip Address`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device Management Ip Address
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"memory_size": &schema.Schema{
-										Description: `Memory Size`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Processor memory size
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"neighbor_topology": &schema.Schema{
@@ -191,42 +213,48 @@ about the device and neighbor topology
 														Schema: map[string]*schema.Schema{
 
 															"id": &schema.Schema{
-																Description: `Id`,
-																Type:        schema.TypeString, //TEST,
-																Computed:    true,
+																Description: `Id of the node
+`,
+																Type:     schema.TypeString, //TEST,
+																Computed: true,
 															},
 
 															"label": &schema.Schema{
-																Description: `Label`,
-																Type:        schema.TypeList,
-																Computed:    true,
+																Description: `The details of the edge
+`,
+																Type:     schema.TypeList,
+																Computed: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
 															},
 
 															"link_status": &schema.Schema{
-																Description: `Link Status`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `The status of the link (up/down)
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"port_utilization": &schema.Schema{
-																Description: `Port Utilization`,
-																Type:        schema.TypeString, //TEST,
-																Computed:    true,
+																Description: `Number of clients
+`,
+																Type:     schema.TypeString, //TEST,
+																Computed: true,
 															},
 
 															"source": &schema.Schema{
-																Description: `Source`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `Edge line starting node
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"target": &schema.Schema{
-																Description: `Target`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `End node of the edge line
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -239,111 +267,129 @@ about the device and neighbor topology
 														Schema: map[string]*schema.Schema{
 
 															"clients": &schema.Schema{
-																Description: `Clients`,
-																Type:        schema.TypeString, //TEST,
-																Computed:    true,
+																Description: `Number of clients
+`,
+																Type:     schema.TypeString, //TEST,
+																Computed: true,
 															},
 
 															"connected_device": &schema.Schema{
-																Description: `Connected Device`,
-																Type:        schema.TypeString, //TEST,
-																Computed:    true,
+																Description: `The connected device to show the connected switch to wlc
+`,
+																Type:     schema.TypeString, //TEST,
+																Computed: true,
 															},
 
 															"count": &schema.Schema{
-																Description: `Count`,
-																Type:        schema.TypeString, //TEST,
-																Computed:    true,
+																Description: `The number of group nodes (for ap sepecifically)
+`,
+																Type:     schema.TypeString, //TEST,
+																Computed: true,
 															},
 
 															"description": &schema.Schema{
-																Description: `Description`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `Description of the Node
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"device_type": &schema.Schema{
-																Description: `Device Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `Device type of the node, like switch, AP, WCL,GateWay
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"fabric_group": &schema.Schema{
-																Description: `Fabric Group`,
-																Type:        schema.TypeString, //TEST,
-																Computed:    true,
+																Description: `Fabric device group name
+`,
+																Type:     schema.TypeString, //TEST,
+																Computed: true,
 															},
 
 															"family": &schema.Schema{
-																Description: `Family`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `Device Family of the Node
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"health_score": &schema.Schema{
-																Description: `Health Score`,
-																Type:        schema.TypeInt,
-																Computed:    true,
+																Description: `The total health score of the node
+`,
+																Type:     schema.TypeInt,
+																Computed: true,
 															},
 
 															"id": &schema.Schema{
-																Description: `Id`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `Id of the Node
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"ip": &schema.Schema{
-																Description: `Ip`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `IP Address of the Node
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"level": &schema.Schema{
-																Description: `Level`,
-																Type:        schema.TypeFloat,
-																Computed:    true,
+																Description: `The level index to be used by UI widget (starts from 0)
+`,
+																Type:     schema.TypeFloat,
+																Computed: true,
 															},
 
 															"name": &schema.Schema{
-																Description: `Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `Hostname of the Node
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"node_type": &schema.Schema{
-																Description: `Node Type`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `Type of the Node
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"platform_id": &schema.Schema{
-																Description: `Platform Id`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `Type of platform
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"radio_frequency": &schema.Schema{
-																Description: `Radio Frequency`,
-																Type:        schema.TypeString, //TEST,
-																Computed:    true,
+																Description: `Frequency of wireless radio channel
+`,
+																Type:     schema.TypeString, //TEST,
+																Computed: true,
 															},
 
 															"role": &schema.Schema{
-																Description: `Role`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `Role of the Node
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"software_version": &schema.Schema{
-																Description: `Software Version`,
-																Type:        schema.TypeString,
-																Computed:    true,
+																Description: `Software Version of the Node
+`,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 
 															"user_id": &schema.Schema{
-																Description: `User Id`,
-																Type:        schema.TypeString, //TEST,
-																Computed:    true,
+																Description: `User Id of the Node
+`,
+																Type:     schema.TypeString, //TEST,
+																Computed: true,
 															},
 														},
 													},
@@ -353,93 +399,108 @@ about the device and neighbor topology
 									},
 
 									"platform_id": &schema.Schema{
-										Description: `Platform Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device's platform ID
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"reachability_failure_reason": &schema.Schema{
-										Description: `Reachability Failure Reason`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Failure reason for unreachable devices
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"reachability_status": &schema.Schema{
-										Description: `Reachability Status`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Reachability Status of the Device(Reachable/Unreachable)
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"role": &schema.Schema{
-										Description: `Role`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device role
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"role_source": &schema.Schema{
-										Description: `Role Source`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Role source as manual / auto
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"serial_number": &schema.Schema{
-										Description: `Serial Number`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device Serial Number
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"series": &schema.Schema{
-										Description: `Series`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device Series
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"snmp_contact": &schema.Schema{
-										Description: `Snmp Contact`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `SNMP contact on device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"snmp_location": &schema.Schema{
-										Description: `Snmp Location`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `SNMP location on device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"software_version": &schema.Schema{
-										Description: `Software Version`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device Software Version
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"tag_count": &schema.Schema{
-										Description: `Tag Count`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Number of tags associated with the device
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"tunnel_udp_port": &schema.Schema{
-										Description: `Tunnel Udp Port`,
-										Type:        schema.TypeString, //TEST,
-										Computed:    true,
+										Description: `Mobility protocol port is stored as tunneludpport for WLC
+`,
+										Type:     schema.TypeString, //TEST,
+										Computed: true,
 									},
 
 									"type": &schema.Schema{
-										Description: `Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device Type
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"up_time": &schema.Schema{
-										Description: `Up Time`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Device's uptime
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 
 									"waas_device_mode": &schema.Schema{
-										Description: `Waas Device Mode`,
-										Type:        schema.TypeString, //TEST,
-										Computed:    true,
+										Description: `WAAS device mode
+`,
+										Type:     schema.TypeString, //TEST,
+										Computed: true,
 									},
 								},
 							},
@@ -457,6 +518,7 @@ func dataSourceDeviceEnrichmentDetailsRead(ctx context.Context, d *schema.Resour
 	var diags diag.Diagnostics
 	vEntityType := d.Get("entity_type")
 	vEntityValue := d.Get("entity_value")
+	vPersistbapioutput := d.Get("persistbapioutput")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -468,6 +530,8 @@ func dataSourceDeviceEnrichmentDetailsRead(ctx context.Context, d *schema.Resour
 
 		headerParams1.EntityValue = vEntityValue.(string)
 
+		headerParams1.Persistbapioutput = vPersistbapioutput.(string)
+
 		response1, restyResp1, err := client.Devices.GetDeviceEnrichmentDetails(&headerParams1)
 
 		if err != nil || response1 == nil {
@@ -475,7 +539,7 @@ func dataSourceDeviceEnrichmentDetailsRead(ctx context.Context, d *schema.Resour
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceEnrichmentDetails", err,
+				"Failure when executing 2 GetDeviceEnrichmentDetails", err,
 				"Failure at GetDeviceEnrichmentDetails, unexpected response", ""))
 			return diags
 		}

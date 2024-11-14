@@ -1,11 +1,10 @@
 
 resource "dnacenter_wireless_provision_ssid_delete_reprovision" "example" {
-  provider = dnacenter
+  provider            = dnacenter
+  managed_aplocations = "string"
+  ssid_name           = "string"
   parameters {
 
-    managed_aplocations = "string"
-    ssid_name           = "string"
-    persistbapioutput   = "false"
   }
 }
 

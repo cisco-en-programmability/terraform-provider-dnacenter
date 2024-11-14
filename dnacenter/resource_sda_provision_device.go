@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -82,7 +82,7 @@ func resourceSdaProvisionDevice() *schema.Resource {
 `,
 							Type:     schema.TypeString,
 							Optional: true,
-							Default:  "",
+							Computed: true,
 						},
 						"site_name_hierarchy": &schema.Schema{
 							Description: `Site Name Hierarchy for device location(only building / floor level) 
@@ -112,7 +112,7 @@ func resourceSdaProvisionDeviceCreate(ctx context.Context, d *schema.ResourceDat
 	queryParamImport := dnacentersdkgo.GetProvisionedWiredDeviceQueryParams{}
 	queryParamImport.DeviceManagementIPAddress = vvDeviceManagementIPAddress
 	item2, _, err := client.Sda.GetProvisionedWiredDevice(&queryParamImport)
-	if err == nil && item2 != nil {
+	if err != nil || item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["device_management_ip_address"] = item2.DeviceManagementIPAddress
 		d.SetId(joinResourceID(resourceMap))
@@ -143,7 +143,7 @@ func resourceSdaProvisionDeviceCreate(ctx context.Context, d *schema.ResourceDat
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -156,7 +156,7 @@ func resourceSdaProvisionDeviceCreate(ctx context.Context, d *schema.ResourceDat
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing ProvisionWiredDevice", err))
@@ -196,6 +196,8 @@ func resourceSdaProvisionDeviceRead(ctx context.Context, d *schema.ResourceData,
 		queryParams1 := dnacentersdkgo.GetProvisionedWiredDeviceQueryParams{}
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
+
+		// has_unknown_response: None
 
 		response1, restyResp1, err := client.Sda.GetProvisionedWiredDevice(&queryParams1)
 
@@ -260,7 +262,7 @@ func resourceSdaProvisionDeviceUpdate(ctx context.Context, d *schema.ResourceDat
 					"Failure at GetExecutionByID, unexpected response", ""))
 				return diags
 			}
-			for statusIsPending(response2.Status) {
+			for response2.Status == "IN_PROGRESS" {
 				time.Sleep(10 * time.Second)
 				response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 				if err != nil || response2 == nil {
@@ -273,7 +275,7 @@ func resourceSdaProvisionDeviceUpdate(ctx context.Context, d *schema.ResourceDat
 					return diags
 				}
 			}
-			if statusIsFailure(response2.Status) {
+			if response2.Status == "FAILURE" {
 				log.Printf("[DEBUG] Error %s", response2.BapiError)
 				diags = append(diags, diagError(
 					"Failure when executing ReProvisionWiredDevice", err))
@@ -329,7 +331,7 @@ func resourceSdaProvisionDeviceDelete(ctx context.Context, d *schema.ResourceDat
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -342,7 +344,7 @@ func resourceSdaProvisionDeviceDelete(ctx context.Context, d *schema.ResourceDat
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeleteProvisionedWiredDevice", err))

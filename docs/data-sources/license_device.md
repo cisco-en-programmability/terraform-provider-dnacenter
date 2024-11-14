@@ -4,14 +4,14 @@ page_title: "dnacenter_license_device Data Source - terraform-provider-dnacenter
 subcategory: ""
 description: |-
   It performs read operation on Licenses.
-  Get detail of all smart accounts.
+  Retrieve details of all smart accounts.
 ---
 
 # dnacenter_license_device (Data Source)
 
 It performs read operation on Licenses.
 
-- Get detail of all smart accounts.
+- Retrieve details of all smart accounts.
 
 ## Example Usage
 
@@ -42,5 +42,3 @@ Read-Only:
 - `id` (String)
 - `is_active_smart_account` (String)
 - `name` (String)
-
-

@@ -45,5 +45,3 @@ Read-Only:
 
 - `interface_name` (String)
 - `vlan_id` (Number)
-
-

@@ -2,13 +2,14 @@ package dnacenter
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"fmt"
 	"reflect"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	"log"
+
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -38,19 +39,19 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 
 						"execution_id": &schema.Schema{
 							Description: `Execution Id
-		`,
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"execution_url": &schema.Schema{
-							Description: `Execution URL
-		`,
+						"execution_status_url": &schema.Schema{
+							Description: `Execution Status URL
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"message": &schema.Schema{
-							Description: `Response
-		`,
+							Description: `Message
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -65,39 +66,8 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"items": &schema.Schema{
-							Type:     schema.TypeList,
-							ForceNew: true,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"execution_id": &schema.Schema{
-										Description: `Execution Id
-`,
-										Type:     schema.TypeString,
-										ForceNew: true,
-										Computed: true,
-									},
-									"execution_url": &schema.Schema{
-										Description: `Execution URL
-`,
-										Type:     schema.TypeString,
-										ForceNew: true,
-										Computed: true,
-									},
-									"message": &schema.Schema{
-										Description: `Response
-`,
-										Type:     schema.TypeString,
-										ForceNew: true,
-										Computed: true,
-									},
-								},
-							},
-						},
 						"payload": &schema.Schema{
-							Description: `Array of RequestWirelessAPProvision`,
+							Description: `Array of RequestWirelessAPProvisionConnectivity`,
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
@@ -140,14 +110,6 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 										ForceNew: true,
 										Computed: true,
 									},
-									"site_id": &schema.Schema{
-										Description: `Site name hierarchy(ex: Global/...)
-`,
-										Type:     schema.TypeString,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
-									},
 									"site_name_hierarchy": &schema.Schema{
 										Description: `Site name hierarchy(ex: Global/...)
 `,
@@ -164,15 +126,6 @@ func resourceWirelessProvisionAccessPoint() *schema.Resource {
 										ForceNew: true,
 										Computed: true,
 									},
-									"persistbapioutput": &schema.Schema{
-										Description: `persistbapioutput
-`,
-										Type:         schema.TypeString,
-										Optional:     true,
-										ForceNew:     true,
-										Default:      "false",
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-									},
 								},
 							},
 						},
@@ -187,32 +140,31 @@ func resourceWirelessProvisionAccessPointCreate(ctx context.Context, d *schema.R
 	client := m.(*dnacentersdkgo.Client)
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("parameters.0.payload"))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vPersistbapioutput := resourceItem["persistbapioutput"]
 
-	request1 := expandRequestWirelessProvisionAccessPointApProvision(ctx, "parameters.0", d)
+	request1 := expandRequestWirelessProvisionAccessPointApProvisionConnectivity(ctx, "parameters.0", d)
 
-	headerParams1 := dnacentersdkgo.ApProvisionHeaderParams{}
+	headerParams1 := dnacentersdkgo.ApProvisionConnectivityHeaderParams{}
 
 	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
-	response1, restyResp1, err := client.Wireless.ApProvision(request1, &headerParams1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.Wireless.ApProvisionConnectivity(request1, &headerParams1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ApProvision", err,
-			"Failure at ApProvision, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing ApProvisionConnectivity", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
 	executionId := response1.ExecutionID
 	log.Printf("[DEBUG] ExecutionID => %s", executionId)
 	if executionId != "" {
@@ -227,7 +179,7 @@ func resourceWirelessProvisionAccessPointCreate(ctx context.Context, d *schema.R
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -240,25 +192,28 @@ func resourceWirelessProvisionAccessPointCreate(ctx context.Context, d *schema.R
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing APProvision", err,
-				"Failure at APProvision execution", bapiError))
+				"Failure when executing APProvisionConnectivity", err,
+				"Failure at APProvisionConnectivity execution", bapiError))
 			return diags
 		}
 	}
 
-	vItem1 := flattenWirelessApProvisionItem(response1)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+	vItem1 := flattenWirelessApProvisionConnectivityItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
-			"Failure when setting ApProvision response",
+			"Failure when setting ApProvisionConnectivity response",
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceWirelessProvisionAccessPointRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
@@ -273,16 +228,16 @@ func resourceWirelessProvisionAccessPointDelete(ctx context.Context, d *schema.R
 	return diags
 }
 
-func expandRequestWirelessProvisionAccessPointApProvision(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessApProvision {
-	request := dnacentersdkgo.RequestWirelessApProvision{}
-	if v := expandRequestWirelessProvisionAccessPointApProvisionItemArray(ctx, key+".payload", d); v != nil {
+func expandRequestWirelessProvisionAccessPointApProvisionConnectivity(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessApProvisionConnectivity {
+	request := dnacentersdkgo.RequestWirelessApProvisionConnectivity{}
+	if v := expandRequestWirelessProvisionAccessPointApProvisionConnectivityItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	return &request
 }
 
-func expandRequestWirelessProvisionAccessPointApProvisionItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemWirelessApProvision {
-	request := []dnacentersdkgo.RequestItemWirelessApProvision{}
+func expandRequestWirelessProvisionAccessPointApProvisionConnectivityItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemWirelessApProvisionConnectivity {
+	request := []dnacentersdkgo.RequestItemWirelessApProvisionConnectivity{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -293,7 +248,7 @@ func expandRequestWirelessProvisionAccessPointApProvisionItemArray(ctx context.C
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestWirelessProvisionAccessPointApProvisionItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestWirelessProvisionAccessPointApProvisionConnectivityItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
@@ -301,13 +256,10 @@ func expandRequestWirelessProvisionAccessPointApProvisionItemArray(ctx context.C
 	return &request
 }
 
-func expandRequestWirelessProvisionAccessPointApProvisionItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemWirelessApProvision {
-	request := dnacentersdkgo.RequestItemWirelessApProvision{}
+func expandRequestWirelessProvisionAccessPointApProvisionConnectivityItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemWirelessApProvisionConnectivity {
+	request := dnacentersdkgo.RequestItemWirelessApProvisionConnectivity{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rf_profile")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rf_profile")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rf_profile")))) {
 		request.RfProfile = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".site_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".site_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".site_id")))) {
-		request.SiteID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_name")))) {
 		request.DeviceName = interfaceToString(v)
@@ -327,13 +279,13 @@ func expandRequestWirelessProvisionAccessPointApProvisionItem(ctx context.Contex
 	return &request
 }
 
-func flattenWirelessApProvisionItem(item *dnacentersdkgo.ResponseWirelessApProvision) []map[string]interface{} {
+func flattenWirelessApProvisionConnectivityItem(item *dnacentersdkgo.ResponseWirelessApProvisionConnectivity) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["execution_id"] = item.ExecutionID
-	respItem["execution_url"] = item.ExecutionURL
+	respItem["execution_status_url"] = item.ExecutionStatusURL
 	respItem["message"] = item.Message
 	return []map[string]interface{}{
 		respItem,

@@ -22,53 +22,44 @@ It manages create, read, update and delete operations on Application Policy.
 ```terraform
 resource "dnacenter_applications" "example" {
   provider = dnacenter
+
+
   parameters {
-    payload {
 
-      application_set {
+    application_set {
 
-        id_ref = "string"
-      }
-      id = "string"
-      indicative_network_identity {
+      id_ref = "string"
+    }
+    id   = "string"
+    name = "string"
+    network_applications {
 
-        display_name = "string"
-        id           = "string"
-        lower_port   = 1
-        ports        = "string"
-        protocol     = "string"
-        upper_port   = 1
-      }
-      name = "string"
-      network_applications {
+      app_protocol         = "string"
+      application_sub_type = "string"
+      application_type     = "string"
+      category_id          = "string"
+      display_name         = "string"
+      dscp                 = "string"
+      engine_id            = "string"
+      help_string          = "string"
+      id                   = "string"
+      ignore_conflict      = "string"
+      long_description     = "string"
+      name                 = "string"
+      popularity           = "string"
+      rank                 = "string"
+      server_name          = "string"
+      traffic_class        = "string"
+      url                  = "string"
+    }
+    network_identity {
 
-        app_protocol         = "string"
-        application_sub_type = "string"
-        application_type     = "string"
-        category_id          = "string"
-        display_name         = "string"
-        dscp                 = "string"
-        engine_id            = "string"
-        help_string          = "string"
-        id                   = "string"
-        ignore_conflict      = "string"
-        long_description     = "string"
-        name                 = "string"
-        popularity           = "string"
-        rank                 = "string"
-        server_name          = "string"
-        traffic_class        = "string"
-        url                  = "string"
-      }
-      network_identity {
-
-        display_name = "string"
-        id           = "string"
-        lower_port   = "string"
-        ports        = "string"
-        protocol     = "string"
-        upper_port   = "string"
-      }
+      display_name = "string"
+      id           = "string"
+      lower_port   = "string"
+      ports        = "string"
+      protocol     = "string"
+      upper_port   = "string"
     }
   }
 }
@@ -83,7 +74,7 @@ output "dnacenter_applications_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestApplicationPolicyCreateApplication (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestApplicationPolicyCreateApplicationV1 (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
@@ -96,7 +87,7 @@ output "dnacenter_applications_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestApplicationPolicyCreateApplication (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestApplicationPolicyCreateApplicationV1 (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
@@ -220,8 +211,8 @@ Read-Only:
 - `ignore_conflict` (String)
 - `long_description` (String)
 - `name` (String)
-- `popularity` (Number)
-- `rank` (Number)
+- `popularity` (String)
+- `rank` (String)
 - `server_name` (String)
 - `traffic_class` (String)
 - `url` (String)
@@ -234,10 +225,10 @@ Read-Only:
 
 - `display_name` (String)
 - `id` (String)
-- `lower_port` (Number)
+- `lower_port` (String)
 - `ports` (String)
 - `protocol` (String)
-- `upper_port` (Number)
+- `upper_port` (String)
 
 ## Import
 

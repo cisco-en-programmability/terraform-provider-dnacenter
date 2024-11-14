@@ -31,7 +31,7 @@ output "dnacenter_network_device_poe_example" {
 
 ### Required
 
-- `device_uuid` (String) deviceUuid path parameter. uuid of the device
+- `device_uuid` (String) deviceUuid path parameter. UUID of the device
 
 ### Read-Only
 
@@ -46,5 +46,3 @@ Read-Only:
 - `power_allocated` (String)
 - `power_consumed` (String)
 - `power_remaining` (String)
-
-

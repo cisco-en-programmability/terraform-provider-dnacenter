@@ -11,7 +11,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -66,6 +66,8 @@ func resourceGlobalCredentialUpdate() *schema.Resource {
 							ForceNew: true,
 						},
 						"site_uuids": &schema.Schema{
+							Description: `List of siteUuids where credential is to be updated
+`,
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
@@ -92,11 +94,9 @@ func resourceGlobalCredentialUpdateCreate(ctx context.Context, d *schema.Resourc
 	vvGlobalCredentialID := vGlobalCredentialID.(string)
 	request1 := expandRequestGlobalCredentialUpdateUpdateGlobalCredentials(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.Discovery.UpdateGlobalCredentials(vvGlobalCredentialID, request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.Discovery.UpdateGlobalCredentials(vvGlobalCredentialID, request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -150,6 +150,9 @@ func resourceGlobalCredentialUpdateCreate(ctx context.Context, d *schema.Resourc
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenDiscoveryUpdateGlobalCredentialsItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -160,7 +163,6 @@ func resourceGlobalCredentialUpdateCreate(ctx context.Context, d *schema.Resourc
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceGlobalCredentialUpdateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

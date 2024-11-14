@@ -1,0 +1,1 @@
+terraform import dnacenter_sites_dhcp_settings.example "id:=string"

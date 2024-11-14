@@ -1,5 +1,7 @@
+
 resource "dnacenter_configuration_template" "example" {
   provider = dnacenter
+
   parameters {
 
     author    = "string"
@@ -85,7 +87,7 @@ resource "dnacenter_configuration_template" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = ""
+          selection_values        = "string"
         }
       }
       version = "string"

@@ -37,8 +37,8 @@ output "dnacenter_discovery_device_range_example" {
 ### Required
 
 - `id` (String) id path parameter. Discovery ID
-- `records_to_return` (Number) recordsToReturn path parameter. Number of records to return
-- `start_index` (Number) startIndex path parameter. Start index
+- `records_to_return` (Number) recordsToReturn path parameter. Number of records to fetch from the start index
+- `start_index` (Number) startIndex path parameter. Starting index for the records
 
 ### Optional
 
@@ -57,7 +57,7 @@ Read-Only:
 - `auth_model_id` (String)
 - `avg_update_frequency` (Number)
 - `boot_date_time` (String)
-- `cli_status` (String)
+- `clistatus` (String)
 - `duplicate_device_id` (String)
 - `error_code` (String)
 - `error_description` (String)
@@ -99,5 +99,3 @@ Read-Only:
 - `up_time` (String)
 - `vendor` (String)
 - `wlc_ap_device_status` (String)
-
-

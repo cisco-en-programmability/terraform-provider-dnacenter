@@ -79,5 +79,3 @@ Read-Only:
 - `description` (String)
 - `name` (String)
 - `view_group_id` (String)
-
-

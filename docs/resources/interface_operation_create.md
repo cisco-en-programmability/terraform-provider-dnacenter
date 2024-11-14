@@ -14,21 +14,21 @@ It performs create operation on Devices.
 
 - Clear mac-address on an individual port. In request body, operation needs to be specified as 'ClearMacAddress'. In the
 future more possible operations will be added to this API
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_interface_operation_create" "example" {
-  provider = dnacenter
+  provider        = meraki
+  deployment_mode = "string"
+  interface_uuid  = "string"
   parameters {
 
-    interface_uuid = "string"
-    operation      = "string"
-    payload        = "string"
+    operation = "string"
+    payload   = "------"
   }
 }
 
@@ -60,8 +60,8 @@ Required:
 Optional:
 
 - `deployment_mode` (String) deploymentMode query parameter. Preview/Deploy ['Preview' means the configuration is not pushed to the device. 'Deploy' makes the configuration pushed to the device]
-- `operation` (String) Operation
-- `payload` (String) Payload
+- `operation` (String) Operation needs to be specified as 'ClearMacAddress'.
+- `payload` (String) Payload is not applicable
 
 
 <a id="nestedatt--item"></a>
@@ -71,5 +71,3 @@ Read-Only:
 
 - `task_id` (String)
 - `url` (String)
-
-

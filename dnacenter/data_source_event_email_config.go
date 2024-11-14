@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -65,8 +65,8 @@ func dataSourceEventEmailConfig() *schema.Resource {
 										Computed:    true,
 									},
 
-									"security": &schema.Schema{
-										Description: `Security`,
+									"smtp_type": &schema.Schema{
+										Description: `smtpType`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
@@ -105,8 +105,8 @@ func dataSourceEventEmailConfig() *schema.Resource {
 										Computed:    true,
 									},
 
-									"security": &schema.Schema{
-										Description: `Security`,
+									"smtp_type": &schema.Schema{
+										Description: `smtpType`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
@@ -166,7 +166,7 @@ func dataSourceEventEmailConfigRead(ctx context.Context, d *schema.ResourceData,
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEmailDestination", err,
+				"Failure when executing 2 GetEmailDestination", err,
 				"Failure at GetEmailDestination, unexpected response", ""))
 			return diags
 		}
@@ -217,7 +217,7 @@ func flattenEventManagementGetEmailDestinationItemsPrimarySmtpConfig(item *dnace
 	respItem["port"] = item.Port
 	respItem["user_name"] = item.UserName
 	respItem["password"] = item.Password
-	respItem["security"] = item.Security
+	respItem["smtp_type"] = item.SmtpType
 
 	return []map[string]interface{}{
 		respItem,
@@ -234,7 +234,7 @@ func flattenEventManagementGetEmailDestinationItemsSecondarySmtpConfig(item *dna
 	respItem["port"] = item.Port
 	respItem["user_name"] = item.UserName
 	respItem["password"] = item.Password
-	respItem["security"] = item.Security
+	respItem["smtp_type"] = item.SmtpType
 
 	return []map[string]interface{}{
 		respItem,

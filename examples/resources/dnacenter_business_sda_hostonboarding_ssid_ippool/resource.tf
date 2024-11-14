@@ -1,6 +1,7 @@
 
 resource "dnacenter_business_sda_hostonboarding_ssid_ippool" "example" {
   provider = dnacenter
+
   parameters {
 
     scalable_group_name = "string"

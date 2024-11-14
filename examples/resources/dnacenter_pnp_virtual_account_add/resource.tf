@@ -11,6 +11,7 @@ resource "dnacenter_pnp_virtual_account_add" "example" {
 
       address_fqdn  = "string"
       address_ip_v4 = "string"
+      address_ip_v6 = "string"
       cert          = "string"
       make_default  = "false"
       name          = "string"

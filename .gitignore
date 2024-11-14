@@ -52,3 +52,5 @@ vendor/
 
 # Shell
 .sh
+
+env.sh

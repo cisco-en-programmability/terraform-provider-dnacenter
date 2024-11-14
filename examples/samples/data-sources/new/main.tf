@@ -14,7 +14,7 @@ data "dnacenter_device_details" "example" {
   provider   = dnacenter
   identifier = "uuid"
   search_by  = "57d9e4e4-e655-4512-a137-8f8c90e59ab1"
-#   timestamp  = "string"
+  #   timestamp  = "string"
 }
 
 output "dnacenter_device_details_example" {

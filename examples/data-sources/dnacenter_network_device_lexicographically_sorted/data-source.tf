@@ -26,5 +26,5 @@ data "dnacenter_network_device_lexicographically_sorted" "example" {
 }
 
 output "dnacenter_network_device_lexicographically_sorted_example" {
-  value = data.dnacenter_network_device_lexicographically_sorted.example.items
+  value = data.dnacenter_network_device_lexicographically_sorted.example.item
 }

@@ -26,16 +26,7 @@ data "dnacenter_network_device_count" "example" {
 }
 
 output "dnacenter_network_device_count_example" {
-  value = data.dnacenter_network_device_count.example.item_name
-}
-
-data "dnacenter_network_device_count" "example" {
-  provider  = dnacenter
-  device_id = "string"
-}
-
-output "dnacenter_network_device_count_example" {
-  value = data.dnacenter_network_device_count.example.item_id
+  value = data.dnacenter_network_device_count.example.item
 }
 ```
 
@@ -45,28 +36,20 @@ output "dnacenter_network_device_count_example" {
 ### Optional
 
 - `device_id` (String) deviceId path parameter. Device ID
+- `hostname` (List of String) hostname query parameter.
+- `location_name` (List of String) locationName query parameter.
+- `mac_address` (List of String) macAddress query parameter.
+- `management_ip_address` (List of String) managementIpAddress query parameter.
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
-<a id="nestedatt--item_id"></a>
-### Nested Schema for `item_id`
-
-Read-Only:
-
-- `response` (Number)
-- `version` (String)
-
-
-<a id="nestedatt--item_name"></a>
-### Nested Schema for `item_name`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
 - `response` (Number)
 - `version` (String)
-
-

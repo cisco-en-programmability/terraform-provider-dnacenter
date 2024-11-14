@@ -15,7 +15,6 @@ resource "dnacenter_configuration_template_project" "example" {
       id   = "string"
       name = "string"
     }
-    templates = "string"
   }
 }
 

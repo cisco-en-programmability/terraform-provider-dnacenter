@@ -1,6 +1,7 @@
 
 resource "dnacenter_sda_virtual_network_v2" "example" {
   provider = dnacenter
+
   parameters {
 
     is_guest_virtual_network = "false"

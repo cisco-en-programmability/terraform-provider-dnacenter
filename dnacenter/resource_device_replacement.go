@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -44,58 +44,98 @@ func resourceDeviceReplacement() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"creation_time": &schema.Schema{
+							Description: `Date and time of marking the device for replacement
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 						"family": &schema.Schema{
+							Description: `Faulty device family
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"faulty_device_id": &schema.Schema{
+							Description: `Unique identifier of the faulty device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"faulty_device_name": &schema.Schema{
+							Description: `Faulty device name
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"faulty_device_platform": &schema.Schema{
+							Description: `Faulty device platform
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"faulty_device_serial_number": &schema.Schema{
+							Description: `Faulty device serial number
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"id": &schema.Schema{
+							Description: `Unique identifier of the device replacement resource
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"neighbour_device_id": &schema.Schema{
+							Description: `Unique identifier of the neighbor device to create the DHCP server
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"network_readiness_task_id": &schema.Schema{
+							Description: `Unique identifier of network readiness task
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"readinesscheck_task_id": &schema.Schema{
+							Description: `Unique identifier of the readiness check task for the replacement device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"replacement_device_platform": &schema.Schema{
+							Description: `Replacement device platform
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"replacement_device_serial_number": &schema.Schema{
+							Description: `Replacement device serial number
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"replacement_status": &schema.Schema{
+							Description: `Device Replacement status
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"replacement_time": &schema.Schema{
+							Description: `Date and time of device replacement
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"workflow_failed_step": &schema.Schema{
+							Description: `Step in which the device replacement failed
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"workflow_id": &schema.Schema{
+							Description: `Unique identifier of the device replacement workflow
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -118,71 +158,99 @@ func resourceDeviceReplacement() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"creation_time": &schema.Schema{
+										Description: `Date and time of marking the device for replacement
+`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										Computed: true,
 									},
 									"family": &schema.Schema{
+										Description: `Faulty device family
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"faulty_device_id": &schema.Schema{
+										Description: `Unique identifier of the faulty device
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Default:  "",
 									},
 									"faulty_device_name": &schema.Schema{
+										Description: `Faulty device name
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Default:  "",
 									},
 									"faulty_device_platform": &schema.Schema{
+										Description: `Faulty device platform
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"faulty_device_serial_number": &schema.Schema{
+										Description: `Faulty device serial number
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"id": &schema.Schema{
+										Description: `Unique identifier of the device replacement resource
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"neighbour_device_id": &schema.Schema{
+										Description: `Unique identifier of the neighbor device to create the DHCP server
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"network_readiness_task_id": &schema.Schema{
+										Description: `Unique identifier of network readiness task
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"replacement_device_platform": &schema.Schema{
+										Description: `Replacement device platform
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"replacement_device_serial_number": &schema.Schema{
+										Description: `Replacement device serial number
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Default:  "",
 									},
 									"replacement_status": &schema.Schema{
+										Description: `Device replacement status. Use MARKED-FOR-REPLACEMENT to mark the device for replacement.
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"replacement_time": &schema.Schema{
+										Description: `Date and time of device replacement
+`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										Computed: true,
 									},
 									"workflow_id": &schema.Schema{
+										Description: `Unique identifier of the device replacement workflow
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -347,7 +415,7 @@ func resourceDeviceReplacementUpdate(ctx context.Context, d *schema.ResourceData
 		queryParams1.ReplacementDeviceSerialNumber = vReplacementDeviceSerialNumber
 	}
 	if d.HasChange("parameters") {
-		request1 := expandRequestDeviceReplacementUnmarkDeviceForReplacement(ctx, "parameters", d)
+		request1 := expandRequestDeviceReplacementUnmarkDeviceForReplacement(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		if request1 != nil && len(*request1) > 0 {
 			req := *request1
@@ -405,11 +473,8 @@ func resourceDeviceReplacementUpdate(ctx context.Context, d *schema.ResourceData
 
 func resourceDeviceReplacementDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	err := errors.New("Delete not possible in this resource")
-	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing DeviceReplacementDelete", err, "Delete method is not supported",
-		"Failure at DeviceReplacementDelete, unexpected response", ""))
-
+	// NOTE: Unable to delete DeviceReplacement on Dna Center
+	//       Returning empty diags to delete it on Terraform
 	return diags
 }
 func expandRequestDeviceReplacementMarkDeviceForReplacement(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDeviceReplacementMarkDeviceForReplacement {
@@ -600,6 +665,9 @@ func searchDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetails
 			queryParams.Limit = maxPageSize
 			queryParams.Offset += maxPageSize
 			nResponse, _, err = client.DeviceReplacement.ReturnListOfReplacementDevicesWithReplacementDetails(&queryParams)
+			if nResponse == nil || nResponse.Response == nil {
+				break
+			}
 		}
 		return nil, err
 	} else if queryParams.FaultyDeviceName != "" {

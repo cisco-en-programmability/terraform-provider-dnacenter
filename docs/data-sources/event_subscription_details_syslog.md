@@ -70,5 +70,3 @@ Read-Only:
 - `name` (String)
 - `port` (String)
 - `protocol` (String)
-
-

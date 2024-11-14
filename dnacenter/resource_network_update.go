@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -385,19 +385,16 @@ func resourceNetworkUpdateCreate(ctx context.Context, d *schema.ResourceData, m 
 	vvSiteID := vSiteID.(string)
 	request1 := expandRequestNetworkUpdateUpdateNetwork(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.NetworkSettings.UpdateNetwork(vvSiteID, request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.NetworkSettings.UpdateNetwork(vvSiteID, request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing UpdateNetwork", err))
 		return diags
 	}
 
@@ -417,7 +414,7 @@ func resourceNetworkUpdateCreate(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -430,7 +427,7 @@ func resourceNetworkUpdateCreate(ctx context.Context, d *schema.ResourceData, m 
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing UpdateNetwork", err,
@@ -439,6 +436,9 @@ func resourceNetworkUpdateCreate(ctx context.Context, d *schema.ResourceData, m 
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenNetworkSettingsUpdateNetworkItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -449,7 +449,6 @@ func resourceNetworkUpdateCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceNetworkUpdateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
@@ -466,7 +465,7 @@ func resourceNetworkUpdateDelete(ctx context.Context, d *schema.ResourceData, m 
 
 func expandRequestNetworkUpdateUpdateNetwork(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsUpdateNetwork {
 	request := dnacentersdkgo.RequestNetworkSettingsUpdateNetwork{}
-	request.Settings = expandRequestNetworkUpdateUpdateNetworkSettings(ctx, fixKeyAccess(key+".settings.0"), d)
+	request.Settings = expandRequestNetworkUpdateUpdateNetworkSettings(ctx, key, d)
 	return &request
 }
 

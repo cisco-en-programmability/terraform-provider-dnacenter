@@ -1,9 +1,11 @@
 
 resource "dnacenter_file_import" "example" {
-  provider = dnacenter
+  provider   = dnacenter
+  file_name  = "string"
+  file_path  = "string"
+  name_space = "string"
   parameters {
 
-    name_space = "string"
   }
 }
 

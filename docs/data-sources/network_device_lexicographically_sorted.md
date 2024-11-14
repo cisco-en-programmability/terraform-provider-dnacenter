@@ -49,7 +49,7 @@ data "dnacenter_network_device_lexicographically_sorted" "example" {
 }
 
 output "dnacenter_network_device_lexicographically_sorted_example" {
-  value = data.dnacenter_network_device_lexicographically_sorted.example.items
+  value = data.dnacenter_network_device_lexicographically_sorted.example.item
 }
 ```
 
@@ -84,14 +84,11 @@ output "dnacenter_network_device_lexicographically_sorted_example" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
-<a id="nestedatt--items"></a>
-### Nested Schema for `items`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
-- `response` (List of String)
-- `version` (String)
-
-
+- `object` (String)

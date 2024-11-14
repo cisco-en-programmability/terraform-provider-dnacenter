@@ -4,14 +4,16 @@ page_title: "dnacenter_network_device_equipment Data Source - terraform-provider
 subcategory: ""
 description: |-
   It performs read operation on Devices.
-  Return PowerSupply/ Fan details for the Given device
+  Return all types of equipment details like PowerSupply, Fan, Chassis, Backplane, Module, PROCESSOR, Other and SFP for
+  the Given device.
 ---
 
 # dnacenter_network_device_equipment (Data Source)
 
 It performs read operation on Devices.
 
-- Return PowerSupply/ Fan details for the Given device
+- Return all types of equipment details like PowerSupply, Fan, Chassis, Backplane, Module, PROCESSOR, Other and SFP for
+the Given device.
 
 ## Example Usage
 
@@ -50,10 +52,9 @@ Read-Only:
 
 - `description` (String)
 - `instance_uuid` (String)
+- `manufacturer` (String)
 - `name` (String)
 - `operational_state_code` (String)
 - `product_id` (String)
 - `serial_number` (String)
 - `vendor_equipment_type` (String)
-
-

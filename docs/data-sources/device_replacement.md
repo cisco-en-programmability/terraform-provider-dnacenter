@@ -76,10 +76,10 @@ Read-Only:
 - `id` (String)
 - `neighbour_device_id` (String)
 - `network_readiness_task_id` (String)
+- `readinesscheck_task_id` (String)
 - `replacement_device_platform` (String)
 - `replacement_device_serial_number` (String)
 - `replacement_status` (String)
 - `replacement_time` (Number)
+- `workflow_failed_step` (String)
 - `workflow_id` (String)
-
-

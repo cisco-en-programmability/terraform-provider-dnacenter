@@ -59,5 +59,3 @@ Read-Only:
 - `execution_id` (String)
 - `execution_status_url` (String)
 - `message` (String)
-
-

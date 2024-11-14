@@ -35,7 +35,7 @@ output "dnacenter_authentication_policy_servers_example" {
 
 - `is_ise_enabled` (Boolean) isIseEnabled query parameter. Valid values are : true, false
 - `role` (String) role query parameter. Authentication and Policy Server Role (Example: primary, secondary)
-- `state` (String) state query parameter. Valid values are: INPROGRESS, ACTIVE, DELETED, RBAC-FAILURE, FAILED
+- `state` (String) state query parameter. Valid values are: ACTIVE, INACTIVE, RBAC_SUCCESS, RBAC_FAILURE, DELETED, FAILED, INPROGRESS
 
 ### Read-Only
 
@@ -47,8 +47,8 @@ output "dnacenter_authentication_policy_servers_example" {
 
 Read-Only:
 
-- `accounting_port` (String)
-- `authentication_port` (String)
+- `accounting_port` (Number)
+- `authentication_port` (Number)
 - `cisco_ise_dtos` (List of Object) (see [below for nested schema](#nestedobjatt--items--cisco_ise_dtos))
 - `encryption_key` (String)
 - `encryption_scheme` (String)
@@ -57,9 +57,11 @@ Read-Only:
 - `is_ise_enabled` (String)
 - `ise_enabled` (String)
 - `message_key` (String)
+- `multi_dnac_enabled` (String)
 - `port` (Number)
 - `protocol` (String)
 - `pxgrid_enabled` (String)
+- `rbac_uuid` (String)
 - `retries` (Number)
 - `role` (String)
 - `shared_secret` (String)
@@ -100,5 +102,3 @@ Read-Only:
 Read-Only:
 
 - `external_ip_address` (String)
-
-

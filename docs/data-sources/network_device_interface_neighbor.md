@@ -48,5 +48,3 @@ Read-Only:
 - `capabilities` (List of String)
 - `neighbor_device` (String)
 - `neighbor_port` (String)
-
-

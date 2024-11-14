@@ -22,37 +22,35 @@ It manages create, read, update and delete operations on Application Policy.
 ```terraform
 resource "dnacenter_app_policy_queuing_profile" "example" {
   provider = dnacenter
+
   parameters {
-    payload {
 
+    clause {
 
-      clause {
+      instance_id = 1
+      interface_speed_bandwidth_clauses {
 
-        instance_id = 1
-        interface_speed_bandwidth_clauses {
+        instance_id     = 1
+        interface_speed = "string"
+        tc_bandwidth_settings {
 
-          instance_id     = 1
-          interface_speed = "string"
-          tc_bandwidth_settings {
-
-            bandwidth_percentage = 1
-            instance_id          = 1
-            traffic_class        = "string"
-          }
+          bandwidth_percentage = 1
+          instance_id          = 1
+          traffic_class        = "string"
         }
-        is_common_between_all_interface_speeds = "false"
-        tc_dscp_settings {
-
-          dscp          = "string"
-          instance_id   = 1
-          traffic_class = "string"
-        }
-        type = "string"
       }
-      description = "string"
-      id          = "string"
-      name        = "string"
+      is_common_between_all_interface_speeds = "false"
+      tc_dscp_settings {
+
+        dscp          = "string"
+        instance_id   = 1
+        traffic_class = "string"
+      }
+      type = "string"
     }
+    description = "string"
+    id          = "string"
+    name        = "string"
   }
 }
 
@@ -66,7 +64,7 @@ output "dnacenter_app_policy_queuing_profile_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestApplicationPolicyCreateApplicationPolicyQueuingProfile (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestApplicationPolicyCreateApplicationPolicyQueuingProfileV1 (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
@@ -100,7 +98,7 @@ Optional:
 - `interface_speed_bandwidth_clauses` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--clause--interface_speed_bandwidth_clauses))
 - `is_common_between_all_interface_speeds` (String) Is common between all interface speeds
 - `tc_dscp_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--clause--tc_dscp_settings))
-- `type` (String) Type
+- `type` (String) The allowed clause types are: BANDWIDTH, DSCP_CUSTOMIZATION
 
 <a id="nestedblock--parameters--payload--clause--interface_speed_bandwidth_clauses"></a>
 ### Nested Schema for `parameters.payload.clause.interface_speed_bandwidth_clauses`

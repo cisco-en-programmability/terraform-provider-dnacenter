@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -51,42 +51,30 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"description": &schema.Schema{
 							Description: `Description of project
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"id": &schema.Schema{
 							Description: `UUID of project
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
-						"is_deletable": &schema.Schema{
-							Description: `Is deletable`,
-
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
 						"last_update_time": &schema.Schema{
 							Description: `Update time of project
 `,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
-
 						"name": &schema.Schema{
 							Description: `Name of project
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"tags": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -99,7 +87,6 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"name": &schema.Schema{
 										Description: `Name of tag
 `,
@@ -109,7 +96,6 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 								},
 							},
 						},
-
 						"templates": &schema.Schema{
 							Description: `List of templates within the project
 `,
@@ -1292,7 +1278,8 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 							Description: `Name of project
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Computed: true,
 						},
 						"project_id": &schema.Schema{
 							Description: `projectId path parameter. projectId(UUID) of project to be deleted
@@ -1317,6 +1304,7 @@ func resourceConfigurationTemplateProject() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -2590,11 +2578,8 @@ func resourceConfigurationTemplateProjectUpdate(ctx context.Context, d *schema.R
 	}
 
 	if d.HasChange("parameters") {
-		//log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestConfigurationTemplateProjectUpdateProject(ctx, "parameters.0", d)
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		if request1 != nil && request1.ID == "" {
 			request1.ID = vProjectID
 		}
@@ -2612,6 +2597,7 @@ func resourceConfigurationTemplateProjectUpdate(ctx context.Context, d *schema.R
 				"Failure at UpdateProject, unexpected response", ""))
 			return diags
 		}
+
 		if response1.Response == nil {
 			diags = append(diags, diagError(
 				"Failure when executing UpdateProject", err))
@@ -2633,13 +2619,14 @@ func resourceConfigurationTemplateProjectUpdate(ctx context.Context, d *schema.R
 			}
 			if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
 				log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
+				errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
 				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing UdpateConfigurationTemplateProject", err1))
+					"Failure when executing UpdateProject", err1))
 				return diags
 			}
 		}
+
 	}
 
 	return resourceConfigurationTemplateProjectRead(ctx, d, m)

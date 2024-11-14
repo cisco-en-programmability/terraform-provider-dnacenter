@@ -16,16 +16,15 @@ It performs create operation on Device Onboarding (PnP).
 - Registers a Smart Account, Virtual Account and the relevant server profile info with the PnP System & database. The
 devices present in the registered virtual account are synced with the PnP database as well. The response payload returns
 the new profile
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_pnp_virtual_account_add" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
     auto_sync_period = 1
@@ -36,6 +35,7 @@ resource "dnacenter_pnp_virtual_account_add" "example" {
 
       address_fqdn  = "string"
       address_ip_v4 = "string"
+      address_ip_v6 = "string"
       cert          = "string"
       make_default  = "false"
       name          = "string"
@@ -92,11 +92,11 @@ Optional:
 - `profile` (Block List) (see [below for nested schema](#nestedblock--parameters--profile))
 - `smart_account_id` (String)
 - `sync_result` (Block List) (see [below for nested schema](#nestedblock--parameters--sync_result))
-- `sync_result_str` (String)
+- `sync_result_str` (String) Represent internal state and SHOULD not be used or relied upon. (Deprecated)
 - `sync_start_time` (Number)
-- `sync_status` (String)
-- `tenant_id` (String)
-- `token` (String)
+- `sync_status` (String) Represent internal state and SHOULD not be used or relied upon. (Deprecated)
+- `tenant_id` (String) Represent internal state and SHOULD not be used or relied upon. (Deprecated)
+- `token` (String) Represent internal state and SHOULD not be used or relied upon. (Deprecated)
 - `virtual_account_id` (String)
 
 <a id="nestedblock--parameters--profile"></a>
@@ -104,8 +104,9 @@ Optional:
 
 Optional:
 
-- `address_fqdn` (String)
-- `address_ip_v4` (String)
+- `address_fqdn` (String) Required when cluster is configured with fully qualified domain name (FQDN)
+- `address_ip_v4` (String) Required when cluster is configured with IPv4
+- `address_ip_v6` (String) Required when cluster is configured with IPv6
 - `cert` (String)
 - `make_default` (String)
 - `name` (String)
@@ -144,12 +145,9 @@ Read-Only:
 - `last_sync` (Number)
 - `profile` (List of Object) (see [below for nested schema](#nestedobjatt--item--profile))
 - `smart_account_id` (String)
-- `sync_result` (List of Object) (see [below for nested schema](#nestedobjatt--item--sync_result))
-- `sync_result_str` (String)
 - `sync_start_time` (Number)
 - `sync_status` (String)
 - `tenant_id` (String)
-- `token` (String)
 - `virtual_account_id` (String)
 
 <a id="nestedobjatt--item--profile"></a>
@@ -165,22 +163,3 @@ Read-Only:
 - `port` (Number)
 - `profile_id` (String)
 - `proxy` (String)
-
-
-<a id="nestedobjatt--item--sync_result"></a>
-### Nested Schema for `item.sync_result`
-
-Read-Only:
-
-- `sync_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--sync_result--sync_list))
-- `sync_msg` (String)
-
-<a id="nestedobjatt--item--sync_result--sync_list"></a>
-### Nested Schema for `item.sync_result.sync_list`
-
-Read-Only:
-
-- `device_sn_list` (List of String)
-- `sync_type` (String)
-
-

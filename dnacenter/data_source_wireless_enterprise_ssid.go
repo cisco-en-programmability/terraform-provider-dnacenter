@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Wireless.
 
-- Gets either one or all the enterprise SSID
+- Get Enterprise SSID
 `,
 
 		ReadContext: dataSourceWirelessEnterpriseSSIDRead,
@@ -82,6 +82,20 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 										Computed: true,
 									},
 
+									"basic_service_set_client_idle_timeout": &schema.Schema{
+										Description: `Basic Service Set ClientIdle Timeout
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
+									},
+
+									"client_exclusion_timeout": &schema.Schema{
+										Description: `Client Exclusion Timeout
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
+									},
+
 									"client_rate_limit": &schema.Schema{
 										Description: `Client Rate Limit. (in bits per second)
 `,
@@ -97,8 +111,32 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 										Computed: true,
 									},
 
+									"enable_basic_service_set_max_idle": &schema.Schema{
+										Description: `Enable Basic Service Set Max Idle
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
 									"enable_broadcast_ssi_d": &schema.Schema{
 										Description: `Enable Broadcast SSID
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"enable_client_exclusion": &schema.Schema{
+										Description: `Enable Client Exclusion
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"enable_directed_multicast_service": &schema.Schema{
+										Description: `Enable Directed MulticastService
 `,
 										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
@@ -115,6 +153,22 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 
 									"enable_mac_filtering": &schema.Schema{
 										Description: `Enable MAC Filtering
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"enable_neighbor_list": &schema.Schema{
+										Description: `Enable NeighborList
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"enable_session_time_out": &schema.Schema{
+										Description: `Enable Session Time Out
 `,
 										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
@@ -140,6 +194,13 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 										Description: `Is Fabric
 `,
 										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"mfp_client_protection": &schema.Schema{
+										Description: `Mfp Client Protection
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -216,6 +277,13 @@ func dataSourceWirelessEnterpriseSSID() *schema.Resource {
 										Computed: true,
 									},
 
+									"session_time_out": &schema.Schema{
+										Description: `sessionTimeOut
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
+									},
+
 									"traffic_type": &schema.Schema{
 										Description: `Traffic Type
 `,
@@ -268,7 +336,7 @@ func dataSourceWirelessEnterpriseSSIDRead(ctx context.Context, d *schema.Resourc
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEnterpriseSSID", err,
+				"Failure when executing 2 GetEnterpriseSSID", err,
 				"Failure at GetEnterpriseSSID, unexpected response", ""))
 			return diags
 		}
@@ -334,37 +402,15 @@ func flattenWirelessGetEnterpriseSSIDItemsSSIDDetails(items *[]dnacentersdkgo.Re
 		respItem["protected_management_frame"] = item.ProtectedManagementFrame
 		respItem["multi_psk_settings"] = flattenWirelessGetEnterpriseSSIDItemsSSIDDetailsMultipSKSettings(item.MultipSKSettings)
 		respItem["client_rate_limit"] = item.ClientRateLimit
-		respItems = append(respItems, respItem)
-	}
-	return respItems
-}
-
-func flattenWirelessGetEnterpriseSSIDParamsSSIDDetails(items *[]dnacentersdkgo.ResponseItemWirelessGetEnterpriseSSIDSSIDDetails) []map[string]interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["name"] = item.Name
-		respItem["wlan_type"] = item.WLANType
-		respItem["enable_fast_lane"] = boolPtrToString(item.EnableFastLane)
-		respItem["security_level"] = item.SecurityLevel
-		respItem["auth_server"] = item.AuthServer
-		respItem["passphrase"] = item.Passphrase
-		respItem["traffic_type"] = item.TrafficType
-		respItem["enable_mac_filtering"] = boolPtrToString(item.EnableMacFiltering)
-		respItem["is_enabled"] = boolPtrToString(item.IsEnabled)
-		respItem["is_fabric"] = boolPtrToString(item.IsFabric)
-		respItem["fast_transition"] = item.FastTransition
-		respItem["radio_policy"] = item.RadioPolicy
-		respItem["enable_broadcast_ssi_d"] = boolPtrToString(item.EnableBroadcastSSID)
-		respItem["nas_options"] = item.NasOptions
-		respItem["aaa_override"] = boolPtrToString(item.AAAOverride)
-		respItem["coverage_hole_detection_enable"] = boolPtrToString(item.CoverageHoleDetectionEnable)
-		respItem["protected_management_frame"] = item.ProtectedManagementFrame
-		respItem["multi_psk_settings"] = flattenWirelessGetEnterpriseSSIDItemsSSIDDetailsMultipSKSettings(item.MultipSKSettings)
-		respItem["client_rate_limit"] = item.ClientRateLimit
+		respItem["enable_session_time_out"] = boolPtrToString(item.EnableSessionTimeOut)
+		respItem["session_time_out"] = item.SessionTimeOut
+		respItem["enable_client_exclusion"] = boolPtrToString(item.EnableClientExclusion)
+		respItem["client_exclusion_timeout"] = item.ClientExclusionTimeout
+		respItem["enable_basic_service_set_max_idle"] = boolPtrToString(item.EnableBasicServiceSetMaxIDle)
+		respItem["basic_service_set_client_idle_timeout"] = item.BasicServiceSetClientIDleTimeout
+		respItem["enable_directed_multicast_service"] = boolPtrToString(item.EnableDirectedMulticastService)
+		respItem["enable_neighbor_list"] = boolPtrToString(item.EnableNeighborList)
+		respItem["mfp_client_protection"] = item.MfpClientProtection
 		respItems = append(respItems, respItem)
 	}
 	return respItems

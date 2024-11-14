@@ -44,6 +44,7 @@ output "dnacenter_business_sda_virtual_network_summary_example" {
 Read-Only:
 
 - `description` (String)
+- `execution_id` (String)
 - `status` (String)
 - `virtual_network_count` (Number)
 - `virtual_network_summary` (List of Object) (see [below for nested schema](#nestedobjatt--item--virtual_network_summary))
@@ -53,7 +54,9 @@ Read-Only:
 
 Read-Only:
 
+- `layer3_instance` (Number)
 - `site_name_hierarchy` (String)
+- `virtual_network_context_id` (String)
+- `virtual_network_id` (String)
 - `virtual_network_name` (String)
-
-
+- `virtual_network_status` (String)

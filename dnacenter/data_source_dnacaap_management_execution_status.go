@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,7 +34,7 @@ func dataSourceDnacaapManagementExecutionStatus() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"bapi_error": &schema.Schema{
-							Description: `Bapi Error
+							Description: `Business API error message
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -134,7 +134,7 @@ func dataSourceDnacaapManagementExecutionStatusRead(ctx context.Context, d *sche
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetBusinessAPIExecutionDetails", err,
+				"Failure when executing 2 GetBusinessAPIExecutionDetails", err,
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
@@ -170,8 +170,8 @@ func flattenTaskGetBusinessAPIExecutionDetailsItem(item *dnacentersdkgo.Response
 	respItem["end_time_epoch"] = item.EndTimeEpoch
 	respItem["time_duration"] = item.TimeDuration
 	respItem["status"] = item.Status
-	respItem["bapi_error"] = item.BapiError
 	respItem["runtime_instance_id"] = item.RuntimeInstanceID
+	respItem["bapi_error"] = item.BapiError
 	return []map[string]interface{}{
 		respItem,
 	}

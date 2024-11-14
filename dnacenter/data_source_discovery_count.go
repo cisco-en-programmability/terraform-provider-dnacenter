@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -28,6 +28,8 @@ func dataSourceDiscoveryCount() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"response": &schema.Schema{
+							Description: `The count of all available discovery jobs
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
@@ -59,7 +61,7 @@ func dataSourceDiscoveryCountRead(ctx context.Context, d *schema.ResourceData, m
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetCountOfAllDiscoveryJobs", err,
+				"Failure when executing 2 GetCountOfAllDiscoveryJobs", err,
 				"Failure at GetCountOfAllDiscoveryJobs, unexpected response", ""))
 			return diags
 		}

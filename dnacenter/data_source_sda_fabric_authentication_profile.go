@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -60,6 +60,13 @@ func dataSourceSdaFabricAuthenticationProfile() *schema.Resource {
 
 						"dot1x_to_mab_fallback_timeout": &schema.Schema{
 							Description: `Dot1x To Mab Fallback Timeout
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"execution_id": &schema.Schema{
+							Description: `Execution Id
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -125,7 +132,7 @@ func dataSourceSdaFabricAuthenticationProfileRead(ctx context.Context, d *schema
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDefaultAuthenticationProfileFromSdaFabric", err,
+				"Failure when executing 2 GetDefaultAuthenticationProfileFromSdaFabric", err,
 				"Failure at GetDefaultAuthenticationProfileFromSdaFabric, unexpected response", ""))
 			return diags
 		}
@@ -156,21 +163,11 @@ func flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItem(item *dnacenters
 	respItem["authenticate_template_name"] = item.AuthenticateTemplateName
 	respItem["authentication_order"] = item.AuthenticationOrder
 	respItem["dot1x_to_mab_fallback_timeout"] = item.Dot1XToMabFallbackTimeout
-	respItem["wake_on_lan"] = interfaceToString(item.WakeOnLan)
+	respItem["wake_on_lan"] = boolPtrToString(item.WakeOnLan)
 	respItem["number_of_hosts"] = item.NumberOfHosts
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
-	return []map[string]interface{}{
-		respItem,
-	}
-}
-
-func flattenSdaGetDefaultAuthenticationProfileFromSdaFabricPayload(item *dnacentersdkgo.ResponseSdaGetDefaultAuthenticationProfileFromSdaFabric) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["payload"] = flattenSdaGetDefaultAuthenticationProfileFromSdaFabricItem(item)
+	respItem["execution_id"] = item.ExecutionID
 	return []map[string]interface{}{
 		respItem,
 	}

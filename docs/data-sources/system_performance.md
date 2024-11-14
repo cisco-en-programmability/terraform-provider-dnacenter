@@ -4,14 +4,18 @@ page_title: "dnacenter_system_performance Data Source - terraform-provider-dnace
 subcategory: ""
 description: |-
   It performs read operation on Health and Performance.
-  This data source gives the aggregated performance indicators. The data can be retrieved for the last 3 months.
+  Retrieves the aggregated metrics (total, average or maximum) of cluster key performance indicators (KPIs), such as CPU
+  utilization, memory utilization or network rates recorded within a specified time period. The data will be available
+  from the past 24 hours.
 ---
 
 # dnacenter_system_performance (Data Source)
 
 It performs read operation on Health and Performance.
 
-- This data source gives the aggregated performance indicators. The data can be retrieved for the last 3 months.
+- Retrieves the aggregated metrics (total, average or maximum) of cluster key performance indicators (KPIs), such as CPU
+utilization, memory utilization or network rates recorded within a specified time period. The data will be available
+from the past 24 hours.
 
 ## Example Usage
 
@@ -97,5 +101,3 @@ Read-Only:
 
 - `units` (String)
 - `utilization` (String)
-
-

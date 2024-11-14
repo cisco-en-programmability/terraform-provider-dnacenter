@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -41,26 +41,36 @@ required to be provided as query parameters.
 					Schema: map[string]*schema.Schema{
 
 						"mac_address": &schema.Schema{
+							Description: `MAC address of device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"model_number": &schema.Schema{
+							Description: `Model number of the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"name": &schema.Schema{
+							Description: `Name of the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"serial_number": &schema.Schema{
+							Description: `Serial Number of the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"tenant_id": &schema.Schema{
+							Description: `Tenant Id of the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -97,7 +107,7 @@ func dataSourceNetworkDeviceRegisterForWsaRead(ctx context.Context, d *schema.Re
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDevicesRegisteredForWsaNotification", err,
+				"Failure when executing 2 GetDevicesRegisteredForWsaNotification", err,
 				"Failure at GetDevicesRegisteredForWsaNotification, unexpected response", ""))
 			return diags
 		}

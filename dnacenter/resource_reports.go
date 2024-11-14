@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -132,16 +132,13 @@ required to configure a report.
 						"report_was_executed": &schema.Schema{
 							Description: `true if atleast one execution has started
 `,
-
+							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"schedule": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 						"tags": &schema.Schema{
 							Description: `array of tags for report
@@ -233,11 +230,8 @@ required to configure a report.
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type.
 `,
-													Type:     schema.TypeList,
+													Type:     schema.TypeString, //TEST,
 													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
 												},
 											},
 										},
@@ -251,7 +245,7 @@ required to configure a report.
 												"default": &schema.Schema{
 													Description: `true, if the format type is considered default
 `,
-
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -314,11 +308,19 @@ required to configure a report.
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"data_category": &schema.Schema{
+							Description: `category of viewgroup for the report
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"deliveries": &schema.Schema{
 							Description: `Array of available delivery channels
 `,
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -328,6 +330,7 @@ required to configure a report.
 `,
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"report_id": &schema.Schema{
 							Description: `reportId path parameter. reportId of report
@@ -336,18 +339,16 @@ required to configure a report.
 							Required: true,
 						},
 						"schedule": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeString, //TEST,
 							Optional: true,
-							MaxItems: 1,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
+							Computed: true,
 						},
 						"tags": &schema.Schema{
 							Description: `array of tags for report
 `,
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -428,12 +429,9 @@ required to configure a report.
 												"value": &schema.Schema{
 													Description: `value of filter. data type is based on the filter type. Use the filter definitions from the view to fetch the options for a filter.
 `,
-													Type:     schema.TypeList,
+													Type:     schema.TypeString, //TEST,
 													Optional: true,
-													MaxItems: 1,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
+													Computed: true,
 												},
 											},
 										},
@@ -714,6 +712,9 @@ func expandRequestReportsCreateOrScheduleAReport(ctx context.Context, key string
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".view_group_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".view_group_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".view_group_version")))) {
 		request.ViewGroupVersion = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data_category")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data_category")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data_category")))) {
+		request.DataCategory = interfaceToString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -935,6 +936,7 @@ func searchReportsGetListOfScheduledReports(m interface{}, queryParams *dnacente
 	ite, _, err = client.Reports.GetListOfScheduledReports(nil)
 	if err != nil {
 		return foundItem, err
+
 	}
 	items := ite
 	if items == nil {

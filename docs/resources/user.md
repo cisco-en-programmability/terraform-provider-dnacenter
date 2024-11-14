@@ -4,22 +4,23 @@ page_title: "dnacenter_user Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It manages create, read and update operations on User and Roles.
-  Add a new user for Cisco DNA Center systemUpdate a user for Cisco DNA Center system
+  Add a new user for Cisco DNA Center System.Update a user for Cisco DNA Center System.
 ---
 
 # dnacenter_user (Resource)
 
 It manages create, read and update operations on User and Roles.
 
-- Add a new user for Cisco DNA Center system
+- Add a new user for Cisco DNA Center System.
 
-- Update a user for Cisco DNA Center system
+- Update a user for Cisco DNA Center System.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_user" "example" {
   provider = dnacenter
+
   parameters {
 
     email      = "string"

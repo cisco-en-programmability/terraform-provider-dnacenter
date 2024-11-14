@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,27 +21,15 @@ func dataSourceComplianceDevice() *schema.Resource {
 		ReadContext: dataSourceComplianceDeviceRead,
 		Schema: map[string]*schema.Schema{
 			"compliance_status": &schema.Schema{
-				Description: `complianceStatus query parameter. Compliance status can be have value among 'COMPLIANT','NON_COMPLIANT','IN_PROGRESS', 'ERROR'
+				Description: `complianceStatus query parameter. Specify "Compliance status(es)" separated by commas. The Compliance status can be 'COMPLIANT', 'NON_COMPLIANT', 'IN_PROGRESS', 'NOT_AVAILABLE', 'NOT_APPLICABLE', 'ERROR'.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"device_uuid": &schema.Schema{
-				Description: `deviceUuid query parameter. Comma separated deviceUuids
+				Description: `deviceUuid query parameter. Comma separated 'Device Ids'
 `,
 				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"limit": &schema.Schema{
-				Description: `limit query parameter. Number of records to be retrieved
-`,
-				Type:     schema.TypeFloat,
-				Optional: true,
-			},
-			"offset": &schema.Schema{
-				Description: `offset query parameter. offset/starting row
-`,
-				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 
@@ -52,33 +40,38 @@ func dataSourceComplianceDevice() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"compliance_status": &schema.Schema{
-							Description: `Compliance Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Current compliance status for the compliance type that will be one of COMPLIANT, NON_COMPLIANT, ERROR, IN_PROGRESS, NOT_APPLICABLE, NOT_AVAILABLE, COMPLIANT_WARNING, REMEDIATION_IN_PROGRESS, or ABORTED.
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"device_uuid": &schema.Schema{
-							Description: `Device Uuid`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `UUID of the device.
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"last_update_time": &schema.Schema{
-							Description: `Last Update Time`,
-							Type:        schema.TypeFloat,
-							Computed:    true,
+							Description: `Timestamp when the latest compliance checks ran.
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
 						},
 
 						"message": &schema.Schema{
-							Description: `Message`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Additional message of compliance status for the compliance type.
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"schedule_time": &schema.Schema{
-							Description: `Schedule Time`,
-							Type:        schema.TypeFloat,
-							Computed:    true,
+							Description: `Timestamp when compliance is scheduled to run.
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
 						},
 					},
 				},
@@ -93,8 +86,6 @@ func dataSourceComplianceDeviceRead(ctx context.Context, d *schema.ResourceData,
 	var diags diag.Diagnostics
 	vComplianceStatus, okComplianceStatus := d.GetOk("compliance_status")
 	vDeviceUUID, okDeviceUUID := d.GetOk("device_uuid")
-	vOffset, okOffset := d.GetOk("offset")
-	vLimit, okLimit := d.GetOk("limit")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -107,12 +98,6 @@ func dataSourceComplianceDeviceRead(ctx context.Context, d *schema.ResourceData,
 		if okDeviceUUID {
 			queryParams1.DeviceUUID = vDeviceUUID.(string)
 		}
-		if okOffset {
-			queryParams1.Offset = vOffset.(float64)
-		}
-		if okLimit {
-			queryParams1.Limit = vLimit.(float64)
-		}
 
 		response1, restyResp1, err := client.Compliance.GetComplianceStatus(&queryParams1)
 
@@ -121,7 +106,7 @@ func dataSourceComplianceDeviceRead(ctx context.Context, d *schema.ResourceData,
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetComplianceStatus", err,
+				"Failure when executing 2 GetComplianceStatus", err,
 				"Failure at GetComplianceStatus, unexpected response", ""))
 			return diags
 		}

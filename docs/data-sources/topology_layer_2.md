@@ -78,8 +78,10 @@ Read-Only:
 
 - `acl_applied` (String)
 - `additional_info` (String)
+- `connected_device_id` (String)
 - `custom_param` (List of Object) (see [below for nested schema](#nestedobjatt--item--nodes--custom_param))
 - `data_path_id` (String)
+- `device_series` (String)
 - `device_type` (String)
 - `family` (String)
 - `fixed` (String)
@@ -112,5 +114,3 @@ Read-Only:
 - `parent_node_id` (String)
 - `x` (Number)
 - `y` (Number)
-
-

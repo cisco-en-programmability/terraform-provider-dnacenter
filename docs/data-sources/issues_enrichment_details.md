@@ -75,5 +75,3 @@ Read-Only:
 
 - `message` (String)
 - `steps` (List of String)
-
-

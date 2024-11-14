@@ -18,7 +18,6 @@ It performs read operation on File.
 ```terraform
 data "dnacenter_file" "example" {
   provider = dnacenter
-  dirpath  = "string"
   file_id  = "string"
 }
 
@@ -38,5 +37,3 @@ output "dnacenter_file_example" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-
-

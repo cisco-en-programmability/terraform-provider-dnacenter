@@ -7,11 +7,11 @@ import (
 
 	"time"
 
-	"fmt"
+	"reflect"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -90,18 +90,16 @@ func resourceNetworkDeviceSyncCreate(ctx context.Context, d *schema.ResourceData
 	request1 := expandRequestNetworkDeviceSyncSyncDevices(ctx, "parameters.0", d)
 	queryParams1 := dnacentersdkgo.SyncDevicesQueryParams{}
 
-	response1, restyResp1, err := client.Devices.SyncDevices(request1, &queryParams1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.Devices.SyncDevices(request1, &queryParams1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when executing SyncDevicesUsingForcesync", err))
+			"Failure when executing SyncDevices", err))
 		return diags
 	}
 
@@ -148,6 +146,9 @@ func resourceNetworkDeviceSyncCreate(ctx context.Context, d *schema.ResourceData
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenDevicesSyncDevicesItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -175,35 +176,9 @@ func resourceNetworkDeviceSyncDelete(ctx context.Context, d *schema.ResourceData
 
 func expandRequestNetworkDeviceSyncSyncDevices(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDevicesSyncDevices {
 	request := dnacentersdkgo.RequestDevicesSyncDevices{}
-	if v := expandRequestNetworkDeviceSyncSyncDevicesItemArray(ctx, key+".payload", d); v != nil {
-		request = *v
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".payload")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".payload")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".payload")))) {
+		request = interfaceToSliceString(v)
 	}
-	return &request
-}
-
-func expandRequestNetworkDeviceSyncSyncDevicesItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemDevicesSyncDevices {
-	request := []dnacentersdkgo.RequestItemDevicesSyncDevices{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestNetworkDeviceSyncSyncDevicesItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	return &request
-}
-
-func expandRequestNetworkDeviceSyncSyncDevicesItem(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemDevicesSyncDevices {
-	var request dnacentersdkgo.RequestItemDevicesSyncDevices
-	request = d.Get(fixKeyAccess(key))
 	return &request
 }
 

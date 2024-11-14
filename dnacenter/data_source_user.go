@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,13 +15,19 @@ func dataSourceUser() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on User and Roles.
 
-- Get all users for the Cisco DNA Center system
+- Get all users for the Cisco DNA Center System.
 `,
 
 		ReadContext: dataSourceUserRead,
 		Schema: map[string]*schema.Schema{
+			"auth_source": &schema.Schema{
+				Description: `authSource query parameter. The source that authenticates the user. The value of this query parameter can be set to "internal" or "external". If not provided, then all users will be returned in the response.
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"invoke_source": &schema.Schema{
-				Description: `invokeSource query parameter. The source that invokes this API
+				Description: `invokeSource query parameter. The source that invokes this API. The value of this query parameter must be set to "external".
 `,
 				Type:     schema.TypeString,
 				Required: true,
@@ -106,32 +112,37 @@ func dataSourceUserRead(ctx context.Context, d *schema.ResourceData, m interface
 
 	var diags diag.Diagnostics
 	vInvokeSource := d.Get("invoke_source")
+	vAuthSource, okAuthSource := d.GetOk("auth_source")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetUsersApI")
-		queryParams1 := dnacentersdkgo.GetUsersApIQueryParams{}
+		log.Printf("[DEBUG] Selected method: GetUsersAPI")
+		queryParams1 := dnacentersdkgo.GetUsersAPIQueryParams{}
 
 		queryParams1.InvokeSource = vInvokeSource.(string)
 
-		response1, restyResp1, err := client.UserandRoles.GetUsersApI(&queryParams1)
+		if okAuthSource {
+			queryParams1.AuthSource = vAuthSource.(string)
+		}
+
+		response1, restyResp1, err := client.UserandRoles.GetUsersAPI(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetUsersApI", err,
-				"Failure at GetUsersApI, unexpected response", ""))
+				"Failure when executing 2 GetUsersAPI", err,
+				"Failure at GetUsersAPI, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenUserandRolesGetUsersApIItem(response1.Response)
+		vItem1 := flattenUserandRolesGetUsersAPIItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetUsersApI response",
+				"Failure when setting GetUsersAPI response",
 				err))
 			return diags
 		}
@@ -143,18 +154,18 @@ func dataSourceUserRead(ctx context.Context, d *schema.ResourceData, m interface
 	return diags
 }
 
-func flattenUserandRolesGetUsersApIItem(item *dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponse) []map[string]interface{} {
+func flattenUserandRolesGetUsersAPIItem(item *dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["users"] = flattenUserandRolesGetUsersApIItemUsers(item.Users)
+	respItem["users"] = flattenUserandRolesGetUsersAPIItemUsers(item.Users)
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenUserandRolesGetUsersApIItemUsers(items *[]dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers) []map[string]interface{} {
+func flattenUserandRolesGetUsersAPIItemUsers(items *[]dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

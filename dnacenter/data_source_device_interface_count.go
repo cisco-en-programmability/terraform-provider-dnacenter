@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -50,26 +50,26 @@ func dataSourceDeviceInterfaceCountRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetDeviceInterfaceCount")
+		log.Printf("[DEBUG] Selected method: GetDeviceInterfaceCountForMultipleDevices")
 
-		response1, restyResp1, err := client.Devices.GetDeviceInterfaceCount()
+		response1, restyResp1, err := client.Devices.GetDeviceInterfaceCountForMultipleDevices()
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceInterfaceCount", err,
-				"Failure at GetDeviceInterfaceCount, unexpected response", ""))
+				"Failure when executing 2 GetDeviceInterfaceCountForMultipleDevices", err,
+				"Failure at GetDeviceInterfaceCountForMultipleDevices, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenDevicesGetDeviceInterfaceCountItem(response1)
+		vItem1 := flattenDevicesGetDeviceInterfaceCountForMultipleDevicesItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetDeviceInterfaceCount response",
+				"Failure when setting GetDeviceInterfaceCountForMultipleDevices response",
 				err))
 			return diags
 		}
@@ -81,7 +81,7 @@ func dataSourceDeviceInterfaceCountRead(ctx context.Context, d *schema.ResourceD
 	return diags
 }
 
-func flattenDevicesGetDeviceInterfaceCountItem(item *dnacentersdkgo.ResponseDevicesGetDeviceInterfaceCount) []map[string]interface{} {
+func flattenDevicesGetDeviceInterfaceCountForMultipleDevicesItem(item *dnacentersdkgo.ResponseDevicesGetDeviceInterfaceCountForMultipleDevices) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

@@ -54,5 +54,3 @@ Read-Only:
 - `model` (String)
 - `purchased_dna_license_count` (String)
 - `virtual_account_name` (String)
-
-

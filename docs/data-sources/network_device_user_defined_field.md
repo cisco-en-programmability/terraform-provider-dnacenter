@@ -5,7 +5,7 @@ subcategory: ""
 description: |-
   It performs read operation on Devices.
   Gets existing global User Defined Fields. If no input is given, it fetches ALL the Global UDFs. Filter/search is
-  supported either by UDF Id(s) or by UDF name(s), but not both.
+  supported by UDF Id(s) or UDF name(s) or both.
 ---
 
 # dnacenter_network_device_user_defined_field (Data Source)
@@ -13,7 +13,7 @@ description: |-
 It performs read operation on Devices.
 
 - Gets existing global User Defined Fields. If no input is given, it fetches ALL the Global UDFs. Filter/search is
-supported either by UDF Id(s) or by UDF name(s), but not both.
+supported by UDF Id(s) or UDF name(s) or both.
 
 ## Example Usage
 
@@ -49,5 +49,3 @@ Read-Only:
 - `description` (String)
 - `id` (String)
 - `name` (String)
-
-

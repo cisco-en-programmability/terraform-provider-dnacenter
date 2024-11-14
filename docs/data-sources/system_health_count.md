@@ -46,5 +46,3 @@ output "dnacenter_system_health_count_example" {
 Read-Only:
 
 - `count` (Number)
-
-

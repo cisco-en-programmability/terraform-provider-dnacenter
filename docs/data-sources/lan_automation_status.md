@@ -61,8 +61,11 @@ Read-Only:
 - `creation_time` (String)
 - `discovered_device_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--discovered_device_list))
 - `discovered_device_site_name_hierarchy` (String)
+- `discovery_devices` (List of String)
+- `discovery_level` (Number)
+- `discovery_timeout` (Number)
 - `id` (String)
-- `ip_pool_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--ip_pool_list))
+- `ip_pools` (List of Object) (see [below for nested schema](#nestedobjatt--item--ip_pools))
 - `multicast_enabled` (String)
 - `peer_device_managment_ipaddress` (String)
 - `primary_device_interface_names` (List of String)
@@ -81,8 +84,8 @@ Read-Only:
 - `state` (String)
 
 
-<a id="nestedobjatt--item--ip_pool_list"></a>
-### Nested Schema for `item.ip_pool_list`
+<a id="nestedobjatt--item--ip_pools"></a>
+### Nested Schema for `item.ip_pools`
 
 Read-Only:
 
@@ -100,8 +103,11 @@ Read-Only:
 - `creation_time` (String)
 - `discovered_device_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--discovered_device_list))
 - `discovered_device_site_name_hierarchy` (String)
+- `discovery_devices` (List of String)
+- `discovery_level` (Number)
+- `discovery_timeout` (Number)
 - `id` (String)
-- `ip_pool_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--ip_pool_list))
+- `ip_pools` (List of Object) (see [below for nested schema](#nestedobjatt--items--ip_pools))
 - `multicast_enabled` (String)
 - `peer_device_managment_ipaddress` (String)
 - `primary_device_interface_names` (List of String)
@@ -120,12 +126,10 @@ Read-Only:
 - `state` (String)
 
 
-<a id="nestedobjatt--items--ip_pool_list"></a>
-### Nested Schema for `items.ip_pool_list`
+<a id="nestedobjatt--items--ip_pools"></a>
+### Nested Schema for `items.ip_pools`
 
 Read-Only:
 
 - `ip_pool_name` (String)
 - `ip_pool_role` (String)
-
-

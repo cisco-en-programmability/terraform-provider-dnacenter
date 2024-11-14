@@ -2,13 +2,12 @@ package dnacenter
 
 import (
 	"context"
-	"errors"
 	"reflect"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -129,7 +128,7 @@ func resourceSdaFabricEdgeDeviceCreate(ctx context.Context, d *schema.ResourceDa
 	queryParamImport := dnacentersdkgo.GetEdgeDeviceFromSdaFabricQueryParams{}
 	queryParamImport.DeviceManagementIPAddress = vvDeviceManagementIPAddress
 	item2, _, err := client.Sda.GetEdgeDeviceFromSdaFabric(&queryParamImport)
-	if err == nil && item2 != nil {
+	if err != nil || item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["device_management_ip_address"] = item2.DeviceManagementIPAddress
 		d.SetId(joinResourceID(resourceMap))
@@ -160,7 +159,7 @@ func resourceSdaFabricEdgeDeviceCreate(ctx context.Context, d *schema.ResourceDa
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -173,7 +172,7 @@ func resourceSdaFabricEdgeDeviceCreate(ctx context.Context, d *schema.ResourceDa
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing AddEdgeDeviceInSdaFabric", err))
@@ -214,6 +213,8 @@ func resourceSdaFabricEdgeDeviceRead(ctx context.Context, d *schema.ResourceData
 
 		queryParams1.DeviceManagementIPAddress = vDeviceManagementIPAddress
 
+		// has_unknown_response: None
+
 		response1, restyResp1, err := client.Sda.GetEdgeDeviceFromSdaFabric(&queryParams1)
 
 		if err != nil || response1 == nil {
@@ -241,13 +242,7 @@ func resourceSdaFabricEdgeDeviceRead(ctx context.Context, d *schema.ResourceData
 }
 
 func resourceSdaFabricEdgeDeviceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	err := errors.New("Update not possible in this resource")
-	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing SdaFabricEdgeDeviceUpdate", err, "Update method is not supported",
-		"Failure at SdaFabricEdgeDeviceUpdate, unexpected response", ""))
-
-	return diags
+	return resourceSdaFabricEdgeDeviceRead(ctx, d, m)
 }
 
 func resourceSdaFabricEdgeDeviceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -293,7 +288,7 @@ func resourceSdaFabricEdgeDeviceDelete(ctx context.Context, d *schema.ResourceDa
 				"Failure at GetExecutionByID, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp2, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -306,7 +301,7 @@ func resourceSdaFabricEdgeDeviceDelete(ctx context.Context, d *schema.ResourceDa
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			log.Printf("[DEBUG] Error %s", response2.BapiError)
 			diags = append(diags, diagError(
 				"Failure when executing DeleteEdgeDeviceFromSdaFabric", err))

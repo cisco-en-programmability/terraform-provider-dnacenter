@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -122,6 +122,15 @@ func resourceEventWebhookUpdate() *schema.Resource {
 								},
 							},
 						},
+						"is_proxy_route": &schema.Schema{
+							Description: `Is Proxy Route`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							ForceNew:     true,
+							Computed:     true,
+						},
 						"method": &schema.Schema{
 							Description: `Method`,
 							Type:        schema.TypeString,
@@ -173,25 +182,20 @@ func resourceEventWebhookUpdateCreate(ctx context.Context, d *schema.ResourceDat
 
 	request1 := expandRequestEventWebhookUpdateUpdateWebhookDestination(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.EventManagement.UpdateWebhookDestination(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.EventManagement.UpdateWebhookDestination(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing UpdateWebhookDestination", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	//Analizar verificacion.
 
 	vItem1 := flattenEventManagementUpdateWebhookDestinationItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
@@ -240,6 +244,9 @@ func expandRequestEventWebhookUpdateUpdateWebhookDestination(ctx context.Context
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".headers")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".headers")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".headers")))) {
 		request.Headers = expandRequestEventWebhookUpdateUpdateWebhookDestinationHeadersArray(ctx, key+".headers", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_proxy_route")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_proxy_route")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_proxy_route")))) {
+		request.IsProxyRoute = interfaceToBoolPtr(v)
 	}
 	return &request
 }

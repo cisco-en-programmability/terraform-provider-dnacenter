@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,13 +15,13 @@ func dataSourceUsersExternalServers() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on User and Roles.
 
-- Get external users authentication servers
+- Get external users authentication servers.
 `,
 
 		ReadContext: dataSourceUsersExternalServersRead,
 		Schema: map[string]*schema.Schema{
 			"invoke_source": &schema.Schema{
-				Description: `invokeSource query parameter. The source that invokes this API
+				Description: `invokeSource query parameter. The source that invokes this API. The value of this query parameter must be set to "external".
 `,
 				Type:     schema.TypeString,
 				Required: true,
@@ -120,29 +120,29 @@ func dataSourceUsersExternalServersRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetExternalAuthenticationServersApI")
-		queryParams1 := dnacentersdkgo.GetExternalAuthenticationServersApIQueryParams{}
+		log.Printf("[DEBUG] Selected method: GetExternalAuthenticationServersAPI")
+		queryParams1 := dnacentersdkgo.GetExternalAuthenticationServersAPIQueryParams{}
 
 		queryParams1.InvokeSource = vInvokeSource.(string)
 
-		response1, restyResp1, err := client.UserandRoles.GetExternalAuthenticationServersApI(&queryParams1)
+		response1, restyResp1, err := client.UserandRoles.GetExternalAuthenticationServersAPI(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExternalAuthenticationServersApI", err,
-				"Failure at GetExternalAuthenticationServersApI, unexpected response", ""))
+				"Failure when executing 2 GetExternalAuthenticationServersAPI", err,
+				"Failure at GetExternalAuthenticationServersAPI, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenUserandRolesGetExternalAuthenticationServersApIItem(response1.Response)
+		vItem1 := flattenUserandRolesGetExternalAuthenticationServersAPIItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetExternalAuthenticationServersApI response",
+				"Failure when setting GetExternalAuthenticationServersAPI response",
 				err))
 			return diags
 		}
@@ -154,18 +154,18 @@ func dataSourceUsersExternalServersRead(ctx context.Context, d *schema.ResourceD
 	return diags
 }
 
-func flattenUserandRolesGetExternalAuthenticationServersApIItem(item *dnacentersdkgo.ResponseUserandRolesGetExternalAuthenticationServersAPIResponse) []map[string]interface{} {
+func flattenUserandRolesGetExternalAuthenticationServersAPIItem(item *dnacentersdkgo.ResponseUserandRolesGetExternalAuthenticationServersAPIResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["aaa_servers"] = flattenUserandRolesGetExternalAuthenticationServersApIItemAAAServers(item.AAAServers)
+	respItem["aaa_servers"] = flattenUserandRolesGetExternalAuthenticationServersAPIItemAAAServers(item.AAAServers)
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenUserandRolesGetExternalAuthenticationServersApIItemAAAServers(items *[]dnacentersdkgo.ResponseUserandRolesGetExternalAuthenticationServersAPIResponseAAAServers) []map[string]interface{} {
+func flattenUserandRolesGetExternalAuthenticationServersAPIItemAAAServers(items *[]dnacentersdkgo.ResponseUserandRolesGetExternalAuthenticationServersAPIResponseAAAServers) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

@@ -142,5 +142,3 @@ Read-Only:
 - `privacy_type` (String)
 - `snmp_mode` (String)
 - `username` (String)
-
-

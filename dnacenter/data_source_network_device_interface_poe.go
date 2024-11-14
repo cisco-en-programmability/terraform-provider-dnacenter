@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -41,39 +41,45 @@ which is optional and returns information for that particular interfaces where(o
 					Schema: map[string]*schema.Schema{
 
 						"admin_status": &schema.Schema{
-							Description: `Admin Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Administration Status. Possible values: AUTO, STATIC, NEVER
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"allocated_power": &schema.Schema{
-							Description: `Allocated Power`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Power (in Watts) allocated for a given interface 
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"interface_name": &schema.Schema{
-							Description: `Interface Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Name of the interface
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"max_port_power": &schema.Schema{
-							Description: `Max Port Power`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Maximum power (in Watts) that port can hold
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"oper_status": &schema.Schema{
-							Description: `Oper Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Operational Status. Possible values: ON, OFF, FAULTY, POWER_DENY
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"port_power_drawn": &schema.Schema{
-							Description: `Port Power Drawn`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Power (in Watts) that the port has drawn so far
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -106,7 +112,7 @@ func dataSourceNetworkDeviceInterfacePoeRead(ctx context.Context, d *schema.Reso
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing ReturnsPoeInterfaceDetailsForTheDevice", err,
+				"Failure when executing 2 ReturnsPoeInterfaceDetailsForTheDevice", err,
 				"Failure at ReturnsPoeInterfaceDetailsForTheDevice, unexpected response", ""))
 			return diags
 		}

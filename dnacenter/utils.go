@@ -106,14 +106,12 @@ func joinResourceID(result_params map[string]string) string {
 	ID := ""
 	params := []string{}
 	for key, value := range result_params {
-		log.Printf("[DEBUG] Retrieved error keys %s", key)
 		if value != "" {
 			params = append(params, fmt.Sprintf("%s%s%s", key, PARAM_VALUE_SEPARATOR, value))
 		}
 	}
 	sort.Strings(params) // Sort params
 	ID = strings.Join(params, PARAMS_SEPARATOR)
-	log.Printf("[DEBUG] Retrieved error keys %s", ID)
 	return ID
 }
 

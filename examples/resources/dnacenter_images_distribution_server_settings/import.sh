@@ -1,0 +1,1 @@
+terraform import dnacenter_images_distribution_server_settings.example "id:=string"

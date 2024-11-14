@@ -45,5 +45,3 @@ Read-Only:
 - `id` (String)
 - `role` (String)
 - `role_source` (String)
-
-

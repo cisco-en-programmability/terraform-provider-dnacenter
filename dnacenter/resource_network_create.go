@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -367,15 +367,6 @@ settings.
 								},
 							},
 						},
-						"persistbapioutput": &schema.Schema{
-							Description: `siteId path parameter. Site id to which site details to associate with the network settings.
-`,
-							Type:         schema.TypeString,
-							Optional:     true,
-							ForceNew:     true,
-							Default:      "false",
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-						},
 					},
 				},
 			},
@@ -400,19 +391,16 @@ func resourceNetworkCreateCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	headerParams1.Persistbapioutput = vPersistbapioutput.(string)
 
-	response1, restyResp1, err := client.NetworkSettings.CreateNetwork(vvSiteID, request1, &headerParams1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.NetworkSettings.CreateNetwork(vvSiteID, request1, &headerParams1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing CreateNetwork", err))
 		return diags
 	}
 
@@ -432,7 +420,7 @@ func resourceNetworkCreateCreate(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -445,7 +433,7 @@ func resourceNetworkCreateCreate(ctx context.Context, d *schema.ResourceData, m 
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing CreateNetwork", err,
@@ -454,6 +442,9 @@ func resourceNetworkCreateCreate(ctx context.Context, d *schema.ResourceData, m 
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenNetworkSettingsCreateNetworkItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -464,7 +455,6 @@ func resourceNetworkCreateCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceNetworkCreateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
@@ -481,7 +471,7 @@ func resourceNetworkCreateDelete(ctx context.Context, d *schema.ResourceData, m 
 
 func expandRequestNetworkCreateCreateNetwork(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateNetwork {
 	request := dnacentersdkgo.RequestNetworkSettingsCreateNetwork{}
-	request.Settings = expandRequestNetworkCreateCreateNetworkSettings(ctx, fixKeyAccess(key+".settings.0"), d)
+	request.Settings = expandRequestNetworkCreateCreateNetworkSettings(ctx, key, d)
 	return &request
 }
 

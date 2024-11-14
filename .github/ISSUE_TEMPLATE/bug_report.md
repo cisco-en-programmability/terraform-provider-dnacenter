@@ -22,9 +22,9 @@ A clear and concise description of what you expected to happen.
 Please provide an screenshot of the successful API call with cuRL, Postman, etc.
 
 **Environment (please complete the following information):**
-* Cisco DNA Center version and patch: 
+* Cisco Catalyst Center version and patch: 
 * Terraform version:
-* Cisco DNA Center provider version:
+* Cisco Catalyst Center provider version:
 * OS Version: 
 
 **Additional context**

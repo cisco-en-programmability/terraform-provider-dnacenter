@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -206,10 +206,10 @@ func resourceTagMembershipUpdate(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdatesTagMembership")
-		request1 := expandRequestTagMembershipUpdatesTagMembership(ctx, "parameters.0", d)
+		log.Printf("[DEBUG] Selected method 1: UpdateTagMembership")
+		request1 := expandRequestTagMembershipUpdateTagMembership(ctx, "parameters.0", d)
 
-		response1, restyResp1, err := client.Tag.UpdatesTagMembership(request1)
+		response1, restyResp1, err := client.Tag.UpdateTagMembership(request1)
 
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -220,8 +220,8 @@ func resourceTagMembershipUpdate(ctx context.Context, d *schema.ResourceData, m 
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing UpdatesTagMembership", err,
-				"Failure at UpdatesTagMembership, unexpected response", ""))
+				"Failure when executing UpdateTagMembership", err,
+				"Failure at UpdateTagMembership, unexpected response", ""))
 			return diags
 		}
 		if response1.Response == nil {
@@ -248,7 +248,7 @@ func resourceTagMembershipUpdate(ctx context.Context, d *schema.ResourceData, m 
 				errorMsg := response2.Response.Progress + "\nFailure Reason: " + response2.Response.FailureReason
 				err1 := errors.New(errorMsg)
 				diags = append(diags, diagError(
-					"Failure when executing UpdatesTagMembership", err1))
+					"Failure when executing UpdateTagMembership", err1))
 				return diags
 			}
 		}
@@ -329,8 +329,8 @@ func expandRequestTagMemberCreateAddMembersToTheTag(ctx context.Context, key str
 	return &request
 }
 
-func expandRequestTagMembershipUpdatesTagMembership(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagUpdatesTagMembership {
-	request := dnacentersdkgo.RequestTagUpdatesTagMembership{}
+func expandRequestTagMembershipUpdateTagMembership(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestTagUpdateTagMembership {
+	request := dnacentersdkgo.RequestTagUpdateTagMembership{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tag_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tag_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tag_id")))) {
 		if v2, ok := d.GetOkExists(fixKeyAccess(key + ".member_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_id")))) {
 			x := make(map[string][]string)

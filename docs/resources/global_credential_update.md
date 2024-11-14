@@ -12,20 +12,19 @@ description: |-
 It performs update operation on Discovery.
 
 - Update global credential for network devices in site(s)
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_global_credential_update" "example" {
-  provider = dnacenter
+  provider             = meraki
+  global_credential_id = "string"
   parameters {
 
-    global_credential_id = "string"
-    site_uuids           = ["string"]
+    site_uuids = ["string"]
   }
 }
 
@@ -56,7 +55,7 @@ Required:
 
 Optional:
 
-- `site_uuids` (List of String)
+- `site_uuids` (List of String) List of siteUuids where credential is to be updated
 
 
 <a id="nestedatt--item"></a>
@@ -66,5 +65,3 @@ Read-Only:
 
 - `task_id` (String)
 - `url` (String)
-
-

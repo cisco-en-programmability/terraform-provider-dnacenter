@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -102,6 +102,13 @@ func dataSourceTransitPeerNetwork() *schema.Resource {
 							Computed: true,
 						},
 
+						"transit_peer_network_id": &schema.Schema{
+							Description: `Transit Peer Network Id
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"transit_peer_network_name": &schema.Schema{
 							Description: `Transit Peer Network Name
 `,
@@ -142,7 +149,7 @@ func dataSourceTransitPeerNetworkRead(ctx context.Context, d *schema.ResourceDat
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTransitPeerNetworkInfo", err,
+				"Failure when executing 2 GetTransitPeerNetworkInfo", err,
 				"Failure at GetTransitPeerNetworkInfo, unexpected response", ""))
 			return diags
 		}
@@ -175,6 +182,7 @@ func flattenSdaGetTransitPeerNetworkInfoItem(item *dnacentersdkgo.ResponseSdaGet
 	respItem["sda_transit_settings"] = flattenSdaGetTransitPeerNetworkInfoItemSdaTransitSettings(item.SdaTransitSettings)
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
+	respItem["transit_peer_network_id"] = item.TransitPeerNetworkID
 	return []map[string]interface{}{
 		respItem,
 	}

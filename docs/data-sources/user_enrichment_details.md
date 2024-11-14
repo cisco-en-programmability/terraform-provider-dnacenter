@@ -179,5 +179,3 @@ Read-Only:
 - `max_auth_duration` (String)
 - `max_dhcp_duration` (String)
 - `max_run_duration` (String)
-
-

@@ -1,0 +1,1 @@
+terraform import dnacenter_network_profiles_for_sites_site_assignments.example "profile_id:=string"

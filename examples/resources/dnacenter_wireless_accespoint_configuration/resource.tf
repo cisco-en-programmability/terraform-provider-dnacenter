@@ -4,7 +4,6 @@ resource "dnacenter_wireless_accespoint_configuration" "example" {
   parameters {
 
     admin_status = "false"
-    ap_height    = 1.0
     ap_list {
 
       ap_name     = "string"
@@ -13,7 +12,6 @@ resource "dnacenter_wireless_accespoint_configuration" "example" {
     }
     ap_mode                        = 1
     configure_admin_status         = "false"
-    configure_ap_height            = "false"
     configure_ap_mode              = "false"
     configure_failover_priority    = "false"
     configure_hacontroller         = "false"
@@ -21,6 +19,7 @@ resource "dnacenter_wireless_accespoint_configuration" "example" {
     configure_led_status           = "false"
     configure_location             = "false"
     failover_priority              = 1
+    is_assigned_site_as_location   = "false"
     led_brightness_level           = 1
     led_status                     = "false"
     location                       = "string"
@@ -33,9 +32,6 @@ resource "dnacenter_wireless_accespoint_configuration" "example" {
 
       admin_status                    = "false"
       antenna_cable_name              = "string"
-      antenna_degree                  = 1
-      antenna_elev_angle_degree       = 1
-      antenna_elev_angle_sign         = 1
       antenna_gain                    = 1
       antenna_pattern_name            = "string"
       cable_loss                      = 1.0
@@ -45,12 +41,10 @@ resource "dnacenter_wireless_accespoint_configuration" "example" {
       clean_air_si                    = 1
       configure_admin_status          = "false"
       configure_antenna_cable         = "false"
-      configure_antenna_degree        = "false"
       configure_antenna_pattern_name  = "false"
       configure_channel               = "false"
       configure_channel_width         = "false"
       configure_clean_air_si          = "false"
-      configure_elev_angle_degree     = "false"
       configure_power                 = "false"
       configure_radio_role_assignment = "false"
       power_assignment_mode           = 1

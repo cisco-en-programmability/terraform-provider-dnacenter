@@ -1,0 +1,1 @@
+terraform import dnacenter_health_score_definitions.example "id:=string"

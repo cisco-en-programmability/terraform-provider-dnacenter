@@ -1,6 +1,7 @@
 
 resource "dnacenter_user" "example" {
   provider = dnacenter
+
   parameters {
 
     email      = "string"

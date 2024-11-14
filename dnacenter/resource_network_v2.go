@@ -8,13 +8,12 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-// Hablar sobre separarlo
 func resourceNetworkV2() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and update operations on Network Settings.
@@ -87,8 +86,11 @@ server settings.
 						},
 						"value": &schema.Schema{
 							Description: `Value`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"version": &schema.Schema{
 							Description: `Version`,
@@ -370,7 +372,7 @@ server settings.
 							},
 						},
 						"site_id": &schema.Schema{
-							Description: `siteId path parameter. Site Id to update the network settings which is associated with the site
+							Description: `siteId path parameter. Site Id to which site details to associate with the network settings.
 `,
 							Type:     schema.TypeString,
 							Required: true,
@@ -560,7 +562,7 @@ func resourceNetworkV2Delete(ctx context.Context, d *schema.ResourceData, m inte
 }
 func expandRequestNetworkV2CreateNetworkV2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsCreateNetworkV2 {
 	request := dnacentersdkgo.RequestNetworkSettingsCreateNetworkV2{}
-	request.Settings = expandRequestNetworkV2CreateNetworkV2Settings(ctx, fixKeyAccess(key+".settings.0"), d)
+	request.Settings = expandRequestNetworkV2CreateNetworkV2Settings(ctx, key, d)
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -726,7 +728,7 @@ func expandRequestNetworkV2CreateNetworkV2SettingsClientAndEndpointAAA(ctx conte
 
 func expandRequestNetworkV2UpdateNetworkV2(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestNetworkSettingsUpdateNetworkV2 {
 	request := dnacentersdkgo.RequestNetworkSettingsUpdateNetworkV2{}
-	request.Settings = expandRequestNetworkV2UpdateNetworkV2Settings(ctx, fixKeyAccess(key+".settings.0"), d)
+	request.Settings = expandRequestNetworkV2UpdateNetworkV2Settings(ctx, key, d)
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

@@ -14,23 +14,23 @@ It performs update operation on Devices.
 
 - Add/Update Interface description, VLAN membership, Voice VLAN and change Interface admin status ('UP'/'DOWN') from
 Request body.
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_interface_update" "example" {
-  provider = dnacenter
+  provider        = meraki
+  deployment_mode = "string"
+  interface_uuid  = "string"
   parameters {
 
-    admin_status   = "string"
-    description    = "string"
-    interface_uuid = "string"
-    vlan_id        = 1
-    voice_vlan_id  = 1
+    admin_status  = "string"
+    description   = "string"
+    vlan_id       = 1
+    voice_vlan_id = 1
   }
 }
 
@@ -61,11 +61,11 @@ Required:
 
 Optional:
 
-- `admin_status` (String) Admin Status
+- `admin_status` (String) Admin status as ('UP'/'DOWN')
 - `deployment_mode` (String) deploymentMode query parameter. Preview/Deploy ['Preview' means the configuration is not pushed to the device. 'Deploy' makes the configuration pushed to the device]
-- `description` (String) Description
-- `vlan_id` (Number) Vlan Id
-- `voice_vlan_id` (Number) Voice Vlan Id
+- `description` (String) Description for the Interface
+- `vlan_id` (Number) VLAN Id to be Updated
+- `voice_vlan_id` (Number) Voice Vlan Id to be Updated
 
 
 <a id="nestedatt--item"></a>
@@ -99,5 +99,3 @@ Read-Only:
 Read-Only:
 
 - `type` (String)
-
-

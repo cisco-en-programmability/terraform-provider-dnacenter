@@ -1,6 +1,7 @@
 
 resource "dnacenter_network_device_list" "example" {
   provider = dnacenter
+
   parameters {
 
     cli_transport           = "string"

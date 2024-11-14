@@ -42,5 +42,3 @@ Read-Only:
 - `module_count` (Number)
 - `software_count` (Number)
 - `total_count` (Number)
-
-

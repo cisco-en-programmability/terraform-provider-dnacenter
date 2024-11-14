@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourceSecurityAdvisoriesIDsPerDevice() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Security Advisories.
 
-- Retrieves list of advisory IDs for a device
+- Retrieves advisory device details for a device
 `,
 
 		ReadContext: dataSourceSecurityAdvisoriesIDsPerDeviceRead,
@@ -27,25 +27,62 @@ func dataSourceSecurityAdvisoriesIDsPerDevice() *schema.Resource {
 				Required: true,
 			},
 
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"advisory_ids": &schema.Schema{
-							Description: `Advisory Ids`,
-							Type:        schema.TypeList,
-							Computed:    true,
+							Description: `Advisories detected on the network device
+`,
+							Type:     schema.TypeList,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 
+						"comments": &schema.Schema{
+							Description: `More details about the scan status. Ie:- if the scan status is failed, comments will give the reason for failure
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"device_id": &schema.Schema{
-							Description: `Device Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Network device ID
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"hidden_advisory_count": &schema.Schema{
+							Description: `Number of advisories detected on the network device that were suppressed by the user
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"last_scan_time": &schema.Schema{
+							Description: `Time at which the network device was scanned. The representation is unix time.
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"scan_mode": &schema.Schema{
+							Description: `Criteria on which the network device was scanned
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"scan_status": &schema.Schema{
+							Description: `Status of the scan performed on the network device
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -62,27 +99,27 @@ func dataSourceSecurityAdvisoriesIDsPerDeviceRead(ctx context.Context, d *schema
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetAdvisoryIDsPerDevice")
+		log.Printf("[DEBUG] Selected method: GetAdvisoryDeviceDetail")
 		vvDeviceID := vDeviceID.(string)
 
-		response1, restyResp1, err := client.SecurityAdvisories.GetAdvisoryIDsPerDevice(vvDeviceID)
+		response1, restyResp1, err := client.SecurityAdvisories.GetAdvisoryDeviceDetail(vvDeviceID)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAdvisoryIDsPerDevice", err,
-				"Failure at GetAdvisoryIDsPerDevice, unexpected response", ""))
+				"Failure when executing 2 GetAdvisoryDeviceDetail", err,
+				"Failure at GetAdvisoryDeviceDetail, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenSecurityAdvisoriesGetAdvisoryIDsPerDeviceItems(response1.Response)
-		if err := d.Set("items", vItems1); err != nil {
+		vItem1 := flattenSecurityAdvisoriesGetAdvisoryDeviceDetailItem(response1.Response)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAdvisoryIDsPerDevice response",
+				"Failure when setting GetAdvisoryDeviceDetail response",
 				err))
 			return diags
 		}
@@ -94,16 +131,19 @@ func dataSourceSecurityAdvisoriesIDsPerDeviceRead(ctx context.Context, d *schema
 	return diags
 }
 
-func flattenSecurityAdvisoriesGetAdvisoryIDsPerDeviceItems(items *[]dnacentersdkgo.ResponseSecurityAdvisoriesGetAdvisoryIDsPerDeviceResponse) []map[string]interface{} {
-	if items == nil {
+func flattenSecurityAdvisoriesGetAdvisoryDeviceDetailItem(item *dnacentersdkgo.ResponseSecurityAdvisoriesGetAdvisoryDeviceDetailResponse) []map[string]interface{} {
+	if item == nil {
 		return nil
 	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["device_id"] = item.DeviceID
-		respItem["advisory_ids"] = item.AdvisoryIDs
-		respItems = append(respItems, respItem)
+	respItem := make(map[string]interface{})
+	respItem["device_id"] = item.DeviceID
+	respItem["advisory_ids"] = item.AdvisoryIDs
+	respItem["hidden_advisory_count"] = item.HiddenAdvisoryCount
+	respItem["scan_mode"] = item.ScanMode
+	respItem["scan_status"] = item.ScanStatus
+	respItem["comments"] = item.Comments
+	respItem["last_scan_time"] = item.LastScanTime
+	return []map[string]interface{}{
+		respItem,
 	}
-	return respItems
 }

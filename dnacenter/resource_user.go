@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,9 +17,9 @@ func resourceUser() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and update operations on User and Roles.
 
-- Add a new user for Cisco DNA Center system
+- Add a new user for Cisco DNA Center System.
 
-- Update a user for Cisco DNA Center system
+- Update a user for Cisco DNA Center System.
 `,
 
 		CreateContext: resourceUserCreate,
@@ -165,55 +165,52 @@ func resourceUserCreate(ctx context.Context, d *schema.ResourceData, m interface
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestUserAddUserApI(ctx, "parameters.0", d)
+	request1 := expandRequestUserAddUserAPI(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vInvokeSource := resourceItem["invoke_source"]
 	vvInvokeSource := interfaceToString(vInvokeSource)
-	queryParamImport := dnacentersdkgo.GetUsersApIQueryParams{}
+	queryParamImport := dnacentersdkgo.GetUsersAPIQueryParams{}
 	queryParamImport.InvokeSource = vvInvokeSource
-	_, item2, err := searchUserGetUserApi(m, queryParamImport, request1.Username)
-
+	item2, _, err := client.UserandRoles.GetUsersAPI(&queryParamImport)
 	if err == nil && item2 != nil {
 		resourceMap := make(map[string]string)
 		resourceMap["invoke_source"] = vvInvokeSource
-		resourceMap["id"] = item2.UserID
 		d.SetId(joinResourceID(resourceMap))
 		return resourceUserRead(ctx, d, m)
 	}
-	resp1, restyResp1, err := client.UserandRoles.AddUserApI(request1)
+	resp1, restyResp1, err := client.UserandRoles.AddUserAPI(request1)
 	if err != nil || resp1 == nil {
 		if restyResp1 != nil {
 			diags = append(diags, diagErrorWithResponse(
-				"Failure when executing AddUserApI", err, restyResp1.String()))
+				"Failure when executing AddUserAPI", err, restyResp1.String()))
 			return diags
 		}
 		diags = append(diags, diagError(
-			"Failure when executing AddUserApI", err))
+			"Failure when executing AddUserAPI", err))
 		return diags
 	}
 	// TODO REVIEW
-	queryParamValidate := dnacentersdkgo.GetUsersApIQueryParams{}
+	queryParamValidate := dnacentersdkgo.GetUsersAPIQueryParams{}
 	queryParamValidate.InvokeSource = vvInvokeSource
-	//item3, _, err := client.UserandRoles.GetUsersApI(&queryParamValidate)
-	_, item3, err := searchUserGetUserApi(m, queryParamValidate, request1.Username)
+	item3, _, err := client.UserandRoles.GetUsersAPI(&queryParamValidate)
 	if err != nil || item3 == nil {
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing AddUserApI", err,
-			"Failure at AddUserApI, unexpected response", ""))
+			"Failure when executing AddUserAPI", err,
+			"Failure at AddUserAPI, unexpected response", ""))
 		return diags
 	}
 
 	resourceMap := make(map[string]string)
 	resourceMap["invoke_source"] = vvInvokeSource
-	resourceMap["id"] = item3.UserID
 
 	d.SetId(joinResourceID(resourceMap))
 	return resourceUserRead(ctx, d, m)
 }
 
 func resourceUserRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	//client := m.(*dnacentersdkgo.Client)
+	client := m.(*dnacentersdkgo.Client)
+
 	var diags diag.Diagnostics
 
 	resourceID := d.Id()
@@ -223,30 +220,27 @@ func resourceUserRead(ctx context.Context, d *schema.ResourceData, m interface{}
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetUsersApI")
-		queryParams1 := dnacentersdkgo.GetUsersApIQueryParams{}
-		request1 := expandRequestUserAddUserApI(ctx, "parameters.0", d)
+		log.Printf("[DEBUG] Selected method: GetUsersAPI")
+		queryParams1 := dnacentersdkgo.GetUsersAPIQueryParams{}
+
 		queryParams1.InvokeSource = vInvokeSource
-		//response1, restyResp1, err := client.UserandRoles.GetUsersApI(&queryParams1)
-		response1, item1, err := searchUserGetUserApi(m, queryParams1, request1.Username)
-		if err != nil || item1 == nil {
-			d.SetId("")
-			return diags
-		}
-		/*if err != nil || response1 == nil {
+
+		response1, restyResp1, err := client.UserandRoles.GetUsersAPI(&queryParams1)
+
+		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			d.SetId("")
 			return diags
-		}*/
+		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenUserandRolesGetUsersApIItem(response1.Response)
+		vItem1 := flattenUserandRolesGetUsersAPIItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetUsersApI response",
+				"Failure when setting GetUsersAPI response",
 				err))
 			return diags
 		}
@@ -263,20 +257,20 @@ func resourceUserUpdate(ctx context.Context, d *schema.ResourceData, m interface
 	var diags diag.Diagnostics
 
 	if d.HasChange("parameters") {
-		request1 := expandRequestUserUpdateUserApI(ctx, "parameters.0", d)
+		request1 := expandRequestUserUpdateUserAPI(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		response1, restyResp1, err := client.UserandRoles.UpdateUserApI(request1)
+		response1, restyResp1, err := client.UserandRoles.UpdateUserAPI(request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
-					"Failure when executing UpdateUserApI", err, restyResp1.String(),
-					"Failure at UpdateUserApI, unexpected response", ""))
+					"Failure when executing UpdateUserAPI", err, restyResp1.String(),
+					"Failure at UpdateUserAPI, unexpected response", ""))
 				return diags
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing UpdateUserApI", err,
-				"Failure at UpdateUserApI, unexpected response", ""))
+				"Failure when executing UpdateUserAPI", err,
+				"Failure at UpdateUserAPI, unexpected response", ""))
 			return diags
 		}
 
@@ -291,13 +285,12 @@ func resourceUserDelete(ctx context.Context, d *schema.ResourceData, m interface
 	var diags diag.Diagnostics
 	err := errors.New("Delete not possible in this resource")
 	diags = append(diags, diagErrorWithAltAndResponse(
-		"Failure when executing UserDelete", err, "Delete method is not supported",
+		"Failure when executing User", err, "Delete method is not supported",
 		"Failure at UserDelete, unexpected response", ""))
-
 	return diags
 }
-func expandRequestUserAddUserApI(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestUserandRolesAddUserApI {
-	request := dnacentersdkgo.RequestUserandRolesAddUserApI{}
+func expandRequestUserAddUserAPI(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestUserandRolesAddUserAPI {
+	request := dnacentersdkgo.RequestUserandRolesAddUserAPI{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".first_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".first_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".first_name")))) {
 		request.FirstName = interfaceToString(v)
 	}
@@ -322,8 +315,8 @@ func expandRequestUserAddUserApI(ctx context.Context, key string, d *schema.Reso
 	return &request
 }
 
-func expandRequestUserUpdateUserApI(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestUserandRolesUpdateUserApI {
-	request := dnacentersdkgo.RequestUserandRolesUpdateUserApI{}
+func expandRequestUserUpdateUserAPI(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestUserandRolesUpdateUserAPI {
+	request := dnacentersdkgo.RequestUserandRolesUpdateUserAPI{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".first_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".first_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".first_name")))) {
 		request.FirstName = interfaceToString(v)
 	}
@@ -346,40 +339,4 @@ func expandRequestUserUpdateUserApI(ctx context.Context, key string, d *schema.R
 		return nil
 	}
 	return &request
-}
-
-func searchUserGetUserApi(m interface{}, queryParams dnacentersdkgo.GetUsersApIQueryParams, username string) (*dnacentersdkgo.ResponseUserandRolesGetUsersApI, *dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers, error) {
-	client := m.(*dnacentersdkgo.Client)
-	var err error
-	var foundItem *dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers
-	ite, _, err := client.UserandRoles.GetUsersApI(&queryParams)
-	if err != nil {
-		return ite, foundItem, err
-	}
-
-	if ite == nil {
-		return ite, foundItem, err
-	}
-
-	if ite.Response == nil {
-		return ite, foundItem, err
-	}
-
-	if ite.Response.Users == nil {
-		return ite, foundItem, err
-	}
-
-	items := ite.Response.Users
-
-	itemsCopy := *items
-	for _, item := range itemsCopy {
-		// Call get by _ method and set value to foundItem and return
-		if item.Username == username {
-			var getItem *dnacentersdkgo.ResponseUserandRolesGetUsersAPIResponseUsers
-			getItem = &item
-			foundItem = getItem
-			return ite, foundItem, err
-		}
-	}
-	return ite, foundItem, err
 }

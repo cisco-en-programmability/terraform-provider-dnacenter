@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -37,7 +37,7 @@ well. The response payload contains the deregistered smart & virtual account inf
 
 						"auto_sync_period": &schema.Schema{
 							Description: `Auto Sync Period`,
-							Type:        schema.TypeFloat,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 						"cco_user": &schema.Schema{
@@ -71,6 +71,11 @@ well. The response payload contains the deregistered smart & virtual account inf
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
+									"address_ip_v6": &schema.Schema{
+										Description: `Address Ip V6`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
 									"cert": &schema.Schema{
 										Description: `Cert`,
 										Type:        schema.TypeString,
@@ -89,7 +94,7 @@ well. The response payload contains the deregistered smart & virtual account inf
 									},
 									"port": &schema.Schema{
 										Description: `Port`,
-										Type:        schema.TypeFloat,
+										Type:        schema.TypeInt,
 										Computed:    true,
 									},
 									"profile_id": &schema.Schema{
@@ -111,47 +116,6 @@ well. The response payload contains the deregistered smart & virtual account inf
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-						"sync_result": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"sync_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"device_sn_list": &schema.Schema{
-													Description: `Device Sn List`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"sync_type": &schema.Schema{
-													Description: `Sync Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
-									},
-									"sync_msg": &schema.Schema{
-										Description: `Sync Msg`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-								},
-							},
-						},
-						"sync_result_str": &schema.Schema{
-							Description: `Sync Result Str`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
 						"sync_start_time": &schema.Schema{
 							Description: `Sync Start Time`,
 							Type:        schema.TypeFloat,
@@ -164,11 +128,6 @@ well. The response payload contains the deregistered smart & virtual account inf
 						},
 						"tenant_id": &schema.Schema{
 							Description: `Tenant Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"token": &schema.Schema{
-							Description: `Token`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -225,6 +184,8 @@ func resourcePnpVirtualAccountDeregisterCreate(ctx context.Context, d *schema.Re
 
 	queryParams1.Name = vName.(string)
 
+	// has_unknown_response: None
+
 	response1, restyResp1, err := client.DeviceOnboardingPnp.DeregisterVirtualAccount(&queryParams1)
 
 	if err != nil || response1 == nil {
@@ -238,8 +199,6 @@ func resourcePnpVirtualAccountDeregisterCreate(ctx context.Context, d *schema.Re
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	//Analizar verificacion.
-
 	vItem1 := flattenDeviceOnboardingPnpDeregisterVirtualAccountItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -250,6 +209,8 @@ func resourcePnpVirtualAccountDeregisterCreate(ctx context.Context, d *schema.Re
 
 	d.SetId(getUnixTimeString())
 	return diags
+
+	//Analizar verificacion.
 
 }
 func resourcePnpVirtualAccountDeregisterRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -270,19 +231,16 @@ func flattenDeviceOnboardingPnpDeregisterVirtualAccountItem(item *dnacentersdkgo
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["virtual_account_id"] = item.VirtualAccountID
-	respItem["auto_sync_period"] = item.AutoSyncPeriod
-	respItem["sync_result_str"] = item.SyncResultStr
-	respItem["profile"] = flattenDeviceOnboardingPnpDeregisterVirtualAccountItemProfile(item.Profile)
-	respItem["cco_user"] = item.CcoUser
-	respItem["sync_result"] = flattenDeviceOnboardingPnpDeregisterVirtualAccountItemSyncResult(item.SyncResult)
-	respItem["token"] = item.Token
-	respItem["sync_start_time"] = item.SyncStartTime
-	respItem["last_sync"] = item.LastSync
-	respItem["tenant_id"] = item.TenantID
 	respItem["smart_account_id"] = item.SmartAccountID
+	respItem["virtual_account_id"] = item.VirtualAccountID
+	respItem["last_sync"] = item.LastSync
+	respItem["cco_user"] = item.CcoUser
 	respItem["expiry"] = item.Expiry
+	respItem["auto_sync_period"] = item.AutoSyncPeriod
+	respItem["profile"] = flattenDeviceOnboardingPnpDeregisterVirtualAccountItemProfile(item.Profile)
 	respItem["sync_status"] = item.SyncStatus
+	respItem["sync_start_time"] = item.SyncStartTime
+	respItem["tenant_id"] = item.TenantID
 	return []map[string]interface{}{
 		respItem,
 	}
@@ -293,45 +251,18 @@ func flattenDeviceOnboardingPnpDeregisterVirtualAccountItemProfile(item *dnacent
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["proxy"] = boolPtrToString(item.Proxy)
-	respItem["make_default"] = boolPtrToString(item.MakeDefault)
-	respItem["port"] = item.Port
-	respItem["profile_id"] = item.ProfileID
 	respItem["name"] = item.Name
+	respItem["profile_id"] = item.ProfileID
+	respItem["make_default"] = boolPtrToString(item.MakeDefault)
 	respItem["address_ip_v4"] = item.AddressIPV4
-	respItem["cert"] = item.Cert
+	respItem["address_ip_v6"] = item.AddressIPV6
 	respItem["address_fqdn"] = item.AddressFqdn
+	respItem["port"] = item.Port
+	respItem["cert"] = item.Cert
+	respItem["proxy"] = boolPtrToString(item.Proxy)
 
 	return []map[string]interface{}{
 		respItem,
 	}
 
-}
-
-func flattenDeviceOnboardingPnpDeregisterVirtualAccountItemSyncResult(item *dnacentersdkgo.ResponseDeviceOnboardingPnpDeregisterVirtualAccountSyncResult) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["sync_list"] = flattenDeviceOnboardingPnpDeregisterVirtualAccountItemSyncResultSyncList(item.SyncList)
-	respItem["sync_msg"] = item.SyncMsg
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
-}
-
-func flattenDeviceOnboardingPnpDeregisterVirtualAccountItemSyncResultSyncList(items *[]dnacentersdkgo.ResponseDeviceOnboardingPnpDeregisterVirtualAccountSyncResultSyncList) []map[string]interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["sync_type"] = item.SyncType
-		respItem["device_sn_list"] = item.DeviceSnList
-		respItems = append(respItems, respItem)
-	}
-	return respItems
 }

@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -59,7 +59,7 @@ func resourceSpProfileDeleteV2() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"sp_profile_name": &schema.Schema{
-							Description: `spProfileName path parameter. sp profile name
+							Description: `spProfileName path parameter. SP profile name
 `,
 							Type:     schema.TypeString,
 							Required: true,
@@ -81,6 +81,8 @@ func resourceSpProfileDeleteV2Create(ctx context.Context, d *schema.ResourceData
 	vSpProfileName := resourceItem["sp_profile_name"]
 
 	vvSpProfileName := vSpProfileName.(string)
+
+	// has_unknown_response: None
 
 	response1, restyResp1, err := client.NetworkSettings.DeleteSpProfileV2(vvSpProfileName)
 
@@ -135,7 +137,6 @@ func resourceSpProfileDeleteV2Create(ctx context.Context, d *schema.ResourceData
 			return diags
 		}
 	}
-
 	vItem1 := flattenNetworkSettingsDeleteSpProfileV2Item(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -146,7 +147,6 @@ func resourceSpProfileDeleteV2Create(ctx context.Context, d *schema.ResourceData
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceSpProfileDeleteV2Read(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

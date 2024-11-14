@@ -4,22 +4,23 @@ page_title: "dnacenter_business_sda_hostonboarding_ssid_ippool Resource - terraf
 subcategory: ""
 description: |-
   It manages create, read and update operations on Fabric Wireless.
-  Add SSID to IP Pool Mapping.Update SSID to IP Pool Mapping.
+  Add SSID to IP Pool MappingUpdate SSID to IP Pool Mapping
 ---
 
 # dnacenter_business_sda_hostonboarding_ssid_ippool (Resource)
 
 It manages create, read and update operations on Fabric Wireless.
 
-- Add SSID to IP Pool Mapping.
+- Add SSID to IP Pool Mapping
 
-- Update SSID to IP Pool Mapping.
+- Update SSID to IP Pool Mapping
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_business_sda_hostonboarding_ssid_ippool" "example" {
   provider = dnacenter
+
   parameters {
 
     scalable_group_name = "string"

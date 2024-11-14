@@ -23,7 +23,7 @@ data "dnacenter_sda_fabric_authentication_profile" "example" {
 }
 
 output "dnacenter_sda_fabric_authentication_profile_example" {
-  value = data.dnacenter_sda_fabric_authentication_profile.example.items
+  value = data.dnacenter_sda_fabric_authentication_profile.example.item
 }
 ```
 
@@ -41,10 +41,10 @@ output "dnacenter_sda_fabric_authentication_profile_example" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
-<a id="nestedatt--items"></a>
-### Nested Schema for `items`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
@@ -52,9 +52,8 @@ Read-Only:
 - `authentication_order` (String)
 - `description` (String)
 - `dot1x_to_mab_fallback_timeout` (String)
+- `execution_id` (String)
 - `number_of_hosts` (String)
 - `site_name_hierarchy` (String)
 - `status` (String)
 - `wake_on_lan` (String)
-
-

@@ -1,0 +1,1 @@
+terraform import dnacenter_sda_anycast_gateways.example "id:=string"

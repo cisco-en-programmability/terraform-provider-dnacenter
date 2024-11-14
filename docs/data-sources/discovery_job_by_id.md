@@ -40,9 +40,9 @@ output "dnacenter_discovery_job_by_id_example" {
 
 ### Optional
 
-- `ip_address` (String) ipAddress query parameter.
-- `limit` (Number) limit query parameter.
-- `offset` (Number) offset query parameter.
+- `ip_address` (String) ipAddress query parameter. Filter records based on IP address
+- `limit` (Number) limit query parameter. Number of records to fetch from the starting index
+- `offset` (Number) offset query parameter. Starting index for the records
 
 ### Read-Only
 
@@ -54,7 +54,7 @@ output "dnacenter_discovery_job_by_id_example" {
 Read-Only:
 
 - `attribute_info` (String)
-- `cli_status` (String)
+- `clistatus` (String)
 - `discovery_status` (String)
 - `end_time` (String)
 - `http_status` (String)
@@ -69,5 +69,3 @@ Read-Only:
 - `snmp_status` (String)
 - `start_time` (String)
 - `task_id` (String)
-
-

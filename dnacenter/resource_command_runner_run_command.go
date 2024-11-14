@@ -11,7 +11,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -59,6 +59,8 @@ func resourceCommandRunnerRunCommand() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"commands": &schema.Schema{
+							Description: `Commands to be executed
+`,
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
@@ -68,12 +70,16 @@ func resourceCommandRunnerRunCommand() *schema.Resource {
 							},
 						},
 						"description": &schema.Schema{
+							Description: `Describe the details about the command request
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
 							Computed: true,
 						},
 						"device_uuids": &schema.Schema{
+							Description: `Device Id of the device
+`,
 							Type:     schema.TypeList,
 							Optional: true,
 							ForceNew: true,
@@ -83,12 +89,16 @@ func resourceCommandRunnerRunCommand() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
+							Description: `Name of the the request like getshowrun , deviceinterfacestatusCli.
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
 							Computed: true,
 						},
 						"timeout": &schema.Schema{
+							Description: `The timeout value in unit of second. If no timeout provided wait till 300sec
+`,
 							Type:     schema.TypeInt,
 							Optional: true,
 							ForceNew: true,
@@ -107,28 +117,21 @@ func resourceCommandRunnerRunCommandCreate(ctx context.Context, d *schema.Resour
 
 	request1 := expandRequestCommandRunnerRunCommandRunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.CommandRunner.RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.CommandRunner.RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when executing RunReadOnlyCommandsOnDevices", err))
+			"Failure when executing RunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfiguration", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	if response1.Response == nil {
-		diags = append(diags, diagError(
-			"Failure when executing RunReadOnlyCommandsOnDevices", err))
-		return diags
-	}
 	taskId := response1.Response.TaskID
 	log.Printf("[DEBUG] TASKID => %s", taskId)
 	if taskId != "" {
@@ -165,6 +168,9 @@ func resourceCommandRunnerRunCommandCreate(ctx context.Context, d *schema.Resour
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenCommandRunnerRunReadOnlyCommandsOnDevicesToGetTheirRealTimeConfigurationItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(

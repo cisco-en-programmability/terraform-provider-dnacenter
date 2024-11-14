@@ -132,5 +132,3 @@ Read-Only:
 - `instance_updated_on` (Number)
 - `instance_version` (Number)
 - `traffic_class` (String)
-
-

@@ -1,1 +1,0 @@
-terraform import dnacenter_deploy_template.example "deployment_id:=string"

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -28,19 +28,22 @@ Discovery ID can be obtained using the "Get Discoveries by range" API.
 				Required: true,
 			},
 			"ip_address": &schema.Schema{
-				Description: `ipAddress query parameter.`,
-				Type:        schema.TypeString,
-				Optional:    true,
+				Description: `ipAddress query parameter. Filter records based on IP address
+`,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"limit": &schema.Schema{
-				Description: `limit query parameter.`,
-				Type:        schema.TypeInt,
-				Optional:    true,
+				Description: `limit query parameter. Number of records to fetch from the starting index
+`,
+				Type:     schema.TypeInt,
+				Optional: true,
 			},
 			"offset": &schema.Schema{
-				Description: `offset query parameter.`,
-				Type:        schema.TypeInt,
-				Optional:    true,
+				Description: `offset query parameter. Starting index for the records
+`,
+				Type:     schema.TypeInt,
+				Optional: true,
 			},
 
 			"items": &schema.Schema{
@@ -50,81 +53,113 @@ Discovery ID can be obtained using the "Get Discoveries by range" API.
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
+							Description: `Deprecated
+`,
 							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
-						"cli_status": &schema.Schema{
+						"clistatus": &schema.Schema{
+							Description: `CLI status for the IP during the job run. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED'
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"discovery_status": &schema.Schema{
+							Description: `Status of the discovery. Available options are: MANAGED_DEVICES, UNMANAGED_DEVICES, DISCARDED_DEVICES
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"end_time": &schema.Schema{
+							Description: `End time for the discovery job
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"http_status": &schema.Schema{
+							Description: `HTTP status for the IP during the job run. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED'
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"id": &schema.Schema{
+							Description: `Discovery Id
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"inventory_collection_status": &schema.Schema{
+							Description: `Last known inventory collection status of the device. Available values are 'MANAGED', 'ABORTED', 'FAILED', 'PARTIAL COLLECTION FAILURE' and 'NOT-AVAILABLE'
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"inventory_reachability_status": &schema.Schema{
+							Description: `Last known reachability status of the device. Available values are : 'Reachable', 'Unreachable', 'PingReachable' and 'NOT-AVAILABLE'
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"ip_address": &schema.Schema{
+							Description: `IP Address of the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"job_status": &schema.Schema{
+							Description: `Status of the job
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"name": &schema.Schema{
+							Description: `Discovery name
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"netconf_status": &schema.Schema{
+							Description: `NETCONF status for the IP during the job run. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED'
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"ping_status": &schema.Schema{
+							Description: `Ping status for the IP during the job run. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"snmp_status": &schema.Schema{
+							Description: `SNMP status for the IP during the job run. Available values are 'SUCCESS', 'FAILURE', 'NOT-PROVIDED' and 'NOT-VALIDATED'
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"start_time": &schema.Schema{
+							Description: `Discovery job start time
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"task_id": &schema.Schema{
+							Description: `Discovery job task id
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -167,7 +202,7 @@ func dataSourceDiscoveryJobByIDRead(ctx context.Context, d *schema.ResourceData,
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetListOfDiscoveriesByDiscoveryID", err,
+				"Failure when executing 2 GetListOfDiscoveriesByDiscoveryID", err,
 				"Failure at GetListOfDiscoveriesByDiscoveryID, unexpected response", ""))
 			return diags
 		}
@@ -197,7 +232,7 @@ func flattenDiscoveryGetListOfDiscoveriesByDiscoveryIDItems(items *[]dnacentersd
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["attribute_info"] = flattenDiscoveryGetListOfDiscoveriesByDiscoveryIDItemsAttributeInfo(item.AttributeInfo)
-		respItem["cli_status"] = item.CliStatus
+		respItem["clistatus"] = item.Clistatus
 		respItem["discovery_status"] = item.DiscoveryStatus
 		respItem["end_time"] = item.EndTime
 		respItem["http_status"] = item.HTTPStatus

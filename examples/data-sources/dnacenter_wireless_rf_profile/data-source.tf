@@ -5,5 +5,5 @@ data "dnacenter_wireless_rf_profile" "example" {
 }
 
 output "dnacenter_wireless_rf_profile_example" {
-  value = data.dnacenter_wireless_rf_profile.example.items
+  value = data.dnacenter_wireless_rf_profile.example.item
 }

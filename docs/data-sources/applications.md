@@ -49,7 +49,6 @@ Read-Only:
 
 - `application_set` (List of Object) (see [below for nested schema](#nestedobjatt--items--application_set))
 - `id` (String)
-- `indicative_network_identity` (List of Object) (see [below for nested schema](#nestedobjatt--items--indicative_network_identity))
 - `name` (String)
 - `network_applications` (List of Object) (see [below for nested schema](#nestedobjatt--items--network_applications))
 - `network_identity` (List of Object) (see [below for nested schema](#nestedobjatt--items--network_identity))
@@ -60,19 +59,6 @@ Read-Only:
 Read-Only:
 
 - `id_ref` (String)
-
-
-<a id="nestedobjatt--items--indicative_network_identity"></a>
-### Nested Schema for `items.indicative_network_identity`
-
-Read-Only:
-
-- `display_name` (String)
-- `id` (String)
-- `lower_port` (Number)
-- `ports` (String)
-- `protocol` (String)
-- `upper_port` (Number)
 
 
 <a id="nestedobjatt--items--network_applications"></a>
@@ -92,8 +78,8 @@ Read-Only:
 - `ignore_conflict` (String)
 - `long_description` (String)
 - `name` (String)
-- `popularity` (Number)
-- `rank` (Number)
+- `popularity` (String)
+- `rank` (String)
 - `server_name` (String)
 - `traffic_class` (String)
 - `url` (String)
@@ -106,9 +92,7 @@ Read-Only:
 
 - `display_name` (String)
 - `id` (String)
-- `lower_port` (Number)
+- `lower_port` (String)
 - `ports` (String)
 - `protocol` (String)
-- `upper_port` (Number)
-
-
+- `upper_port` (String)

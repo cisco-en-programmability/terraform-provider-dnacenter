@@ -13,18 +13,20 @@ It performs delete operation on Discovery.
 
 - Deletes global credential for the given ID
 
+
+
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_global_credential_delete" "example" {
-  provider = dnacenter
+  provider             = dnacenter
+  global_credential_id = "string"
   parameters {
 
-    global_credential_id = "string"
   }
 }
 
@@ -61,5 +63,3 @@ Read-Only:
 
 - `task_id` (String)
 - `url` (String)
-
-

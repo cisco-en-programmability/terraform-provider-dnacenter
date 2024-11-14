@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -51,7 +51,7 @@ func dataSourceTag() *schema.Resource {
 			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 			"name": &schema.Schema{
@@ -62,7 +62,7 @@ func dataSourceTag() *schema.Resource {
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter.`,
-				Type:        schema.TypeInt,
+				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 			"order": &schema.Schema{
@@ -118,8 +118,11 @@ func dataSourceTag() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"items": &schema.Schema{
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"name": &schema.Schema{
@@ -204,8 +207,11 @@ func dataSourceTag() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"items": &schema.Schema{
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 
 												"name": &schema.Schema{
@@ -304,10 +310,10 @@ func dataSourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{
 			queryParams1.Level = vLevel.(string)
 		}
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okSize {
 			queryParams1.Size = vSize.(string)
@@ -332,7 +338,7 @@ func dataSourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTag", err,
+				"Failure when executing 2 GetTag", err,
 				"Failure at GetTag, unexpected response", ""))
 			return diags
 		}
@@ -362,7 +368,7 @@ func dataSourceTagRead(ctx context.Context, d *schema.ResourceData, m interface{
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTagByID", err,
+				"Failure when executing 2 GetTagByID", err,
 				"Failure at GetTagByID, unexpected response", ""))
 			return diags
 		}
@@ -469,7 +475,7 @@ func flattenTagGetTagByIDItemDynamicRulesRules(item *dnacentersdkgo.ResponseTagG
 	}
 	respItem := make(map[string]interface{})
 	respItem["values"] = item.Values
-	respItem["items"] = flattenTagGetTagByIDItemDynamicRulesRulesItems(item.Items)
+	respItem["items"] = item.Items
 	respItem["operation"] = item.Operation
 	respItem["name"] = item.Name
 	respItem["value"] = item.Value
@@ -478,19 +484,4 @@ func flattenTagGetTagByIDItemDynamicRulesRules(item *dnacentersdkgo.ResponseTagG
 		respItem,
 	}
 
-}
-
-func flattenTagGetTagByIDItemDynamicRulesRulesItems(items *[]dnacentersdkgo.ResponseTagGetTagByIDResponseDynamicRulesRulesItems) []map[string]interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["name"] = item.Name
-		respItem["operation"] = item.Operation
-		respItem["value"] = item.Value
-		respItems = append(respItems, respItem)
-	}
-	return respItems
 }

@@ -40,5 +40,3 @@ Read-Only:
 
 - `name` (String)
 - `version` (String)
-
-

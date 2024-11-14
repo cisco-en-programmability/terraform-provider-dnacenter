@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -54,50 +54,59 @@ Request Body for more information.
 								Schema: map[string]*schema.Schema{
 
 									"comments": &schema.Schema{
-										Description: `Comments`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Comments to identify the CLI credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"credential_type": &schema.Schema{
-										Description: `Credential Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Credential type to identify the application that uses the CLI credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"description": &schema.Schema{
-										Description: `Description`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Description of the CLI credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"enable_password": &schema.Schema{
-										Description: `Enable Password`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `CLI Enable Password
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Id of the CLI Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_tenant_id": &schema.Schema{
-										Description: `Instance Tenant Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Tenant Id of CLI Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_uuid": &schema.Schema{
-										Description: `Instance Uuid`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Uuid of CLI Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"password": &schema.Schema{
-										Description: `Password`,
-										Type:        schema.TypeString,
-										Sensitive:   true,
-										Computed:    true,
+										Description: `CLI Password
+`,
+										Type:      schema.TypeString,
+										Sensitive: true,
+										Computed:  true,
 									},
 									"username": &schema.Schema{
-										Description: `Username`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `CLI Username
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -109,56 +118,66 @@ Request Body for more information.
 								Schema: map[string]*schema.Schema{
 
 									"comments": &schema.Schema{
-										Description: `Comments`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Comments to identify the HTTP(S) Read credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"credential_type": &schema.Schema{
-										Description: `Credential Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Credential type to identify the application that uses the HTTP(S) Read credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"description": &schema.Schema{
-										Description: `Description`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Description for HTTP(S) Read Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Id of the HTTP(S) Read Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_tenant_id": &schema.Schema{
-										Description: `Instance Tenant Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Tenant Id of HTTP(S) Read Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_uuid": &schema.Schema{
-										Description: `Instance Uuid`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Uuid of HTTP(S) Read Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"password": &schema.Schema{
-										Description: `Password`,
-										Type:        schema.TypeString,
-										Sensitive:   true,
-										Computed:    true,
+										Description: `HTTP(S) Read Password
+`,
+										Type:      schema.TypeString,
+										Sensitive: true,
+										Computed:  true,
 									},
 									"port": &schema.Schema{
-										Description: `Port`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `HTTP(S) Port
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 									"secure": &schema.Schema{
-										Description: `Secure`,
+										Description: `Flag for HTTP(S) Read
+`,
 										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"username": &schema.Schema{
-										Description: `Username`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `HTTP(S) Read Username
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -170,56 +189,66 @@ Request Body for more information.
 								Schema: map[string]*schema.Schema{
 
 									"comments": &schema.Schema{
-										Description: `Comments`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Comments to identify the HTTP(S) Write credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"credential_type": &schema.Schema{
-										Description: `Credential Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Credential type to identify the application that uses the HTTP(S) Write credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"description": &schema.Schema{
-										Description: `Description`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Description for HTTP(S) Write Credetntials
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Id of the HTTP(S) Write Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_tenant_id": &schema.Schema{
-										Description: `Instance Tenant Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Tenant Id of HTTP(S) Write Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_uuid": &schema.Schema{
-										Description: `Instance Uuid`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Uuid of HTTP(S) Write Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"password": &schema.Schema{
-										Description: `Password`,
-										Type:        schema.TypeString,
-										Sensitive:   true,
-										Computed:    true,
+										Description: `HTTP(S) Write Password
+`,
+										Type:      schema.TypeString,
+										Sensitive: true,
+										Computed:  true,
 									},
 									"port": &schema.Schema{
-										Description: `Port`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `HTTP(S) Port
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 									"secure": &schema.Schema{
-										Description: `Secure`,
+										Description: `Flag for HTTP(S) Write
+`,
 										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"username": &schema.Schema{
-										Description: `Username`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `HTTP(S) Write Username
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -231,39 +260,46 @@ Request Body for more information.
 								Schema: map[string]*schema.Schema{
 
 									"comments": &schema.Schema{
-										Description: `Comments`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Comments to identify the SNMP Read credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"credential_type": &schema.Schema{
-										Description: `Credential Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Credential type to identify the application that uses the SNMP Read credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"description": &schema.Schema{
-										Description: `Description`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Description for Snmp RO community
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Id of the SNMP Read Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_tenant_id": &schema.Schema{
-										Description: `Instance Tenant Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Tenant Id of SNMP Read Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_uuid": &schema.Schema{
-										Description: `Instance Uuid`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Uuid of SNMP Read Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"read_community": &schema.Schema{
-										Description: `Read Community`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Snmp RO community
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -275,39 +311,46 @@ Request Body for more information.
 								Schema: map[string]*schema.Schema{
 
 									"comments": &schema.Schema{
-										Description: `Comments`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Comments to identify the SNMP Write credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"credential_type": &schema.Schema{
-										Description: `Credential Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Credential type to identify the application that uses the SNMP Write credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"description": &schema.Schema{
-										Description: `Description`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Description for Snmp RW community
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Id of SNMP Write Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_tenant_id": &schema.Schema{
-										Description: `Instance Tenant Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Tenant Id of SNMP Write Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_uuid": &schema.Schema{
-										Description: `Instance Uuid`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Uuid of SNMP Write Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"write_community": &schema.Schema{
-										Description: `Write Community`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Snmp RW community
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -319,64 +362,76 @@ Request Body for more information.
 								Schema: map[string]*schema.Schema{
 
 									"auth_password": &schema.Schema{
-										Description: `Auth Password`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Auth Password for SNMP V3
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"auth_type": &schema.Schema{
-										Description: `Auth Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `SNMP auth protocol. SHA' or 'MD5' 
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"comments": &schema.Schema{
-										Description: `Comments`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Comments to identify the SNMP V3 credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"credential_type": &schema.Schema{
-										Description: `Credential Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Credential type to identify the application that uses the SNMP V3 credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"description": &schema.Schema{
-										Description: `Description`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Description for Snmp V3 Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Id of the SNMP V3 Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_tenant_id": &schema.Schema{
-										Description: `Instance Tenant Id`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Tenant Id of SNMP V3 Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"instance_uuid": &schema.Schema{
-										Description: `Instance Uuid`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Instance Tenant Id of SNMP V3 Credential
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"privacy_password": &schema.Schema{
-										Description: `Privacy Password`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Privacy Password for SNMP privacy
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"privacy_type": &schema.Schema{
-										Description: `Privacy Type`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `SNMP privacy protocol. 'AES128','AES192','AES256' 
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"snmp_mode": &schema.Schema{
-										Description: `Snmp Mode`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `Mode of SNMP. 'AUTHPRIV' or 'AUTHNOPRIV' or 'NOAUTHNOPRIV'
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"username": &schema.Schema{
-										Description: `Username`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										Description: `SNMP V3 Username
+`,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -399,35 +454,40 @@ Request Body for more information.
 								Schema: map[string]*schema.Schema{
 
 									"description": &schema.Schema{
-										Description: `Description`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Description for CLI credential
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"enable_password": &schema.Schema{
-										Description: `Enable Password`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `CLI Enable Password
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Id of the CLI Credential in UUID format
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"password": &schema.Schema{
-										Description: `Password`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Sensitive:   true,
-										Computed:    true,
+										Description: `CLI Password
+`,
+										Type:      schema.TypeString,
+										Optional:  true,
+										Sensitive: true,
+										Computed:  true,
 									},
 									"username": &schema.Schema{
-										Description: `Username`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `CLI Username
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -439,36 +499,41 @@ Request Body for more information.
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+									"description": &schema.Schema{
+										Description: `Description for HTTP(S) Read Credentials
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
-									"name": &schema.Schema{
-										Description: `Name`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+									"id": &schema.Schema{
+										Description: `Id of the HTTP(S) Read Credential in UUID format
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"password": &schema.Schema{
-										Description: `Password`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Sensitive:   true,
-										Computed:    true,
+										Description: `HTTP(S) Read Password
+`,
+										Type:      schema.TypeString,
+										Optional:  true,
+										Sensitive: true,
+										Computed:  true,
 									},
 									"port": &schema.Schema{
-										Description: `Port`,
-										Type:        schema.TypeInt,
-										Optional:    true,
-										Computed:    true,
+										Description: `HTTP(S) Port
+`,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"username": &schema.Schema{
-										Description: `Username`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `HTTP(S) Read Username
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -480,36 +545,41 @@ Request Body for more information.
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+									"description": &schema.Schema{
+										Description: `Description for HTTP(S) Write Credentials
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
-									"name": &schema.Schema{
-										Description: `Name`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+									"id": &schema.Schema{
+										Description: `Id of the HTTP(S) Read Credential in UUID format
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"password": &schema.Schema{
-										Description: `Password`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Sensitive:   true,
-										Computed:    true,
+										Description: `HTTP(S) Write Password
+`,
+										Type:      schema.TypeString,
+										Optional:  true,
+										Sensitive: true,
+										Computed:  true,
 									},
 									"port": &schema.Schema{
-										Description: `Port`,
-										Type:        schema.TypeInt,
-										Optional:    true,
-										Computed:    true,
+										Description: `HTTP(S) Port
+`,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"username": &schema.Schema{
-										Description: `Username`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `HTTP(S) Write Username
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -528,22 +598,25 @@ Request Body for more information.
 								Schema: map[string]*schema.Schema{
 
 									"description": &schema.Schema{
-										Description: `Description`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Description for Snmp RO community
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Id of the SNMP Read Credential in UUID format
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"read_community": &schema.Schema{
-										Description: `Read Community`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Snmp RO community
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -556,22 +629,25 @@ Request Body for more information.
 								Schema: map[string]*schema.Schema{
 
 									"description": &schema.Schema{
-										Description: `Description`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Description for Snmp RW community
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Id of the SNMP Write Credential in UUID format
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"write_community": &schema.Schema{
-										Description: `Write Community`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Snmp RW community
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -584,52 +660,60 @@ Request Body for more information.
 								Schema: map[string]*schema.Schema{
 
 									"auth_password": &schema.Schema{
-										Description: `Auth Password`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Auth Password for SNMP
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"auth_type": &schema.Schema{
-										Description: `Auth Type`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `SNMP auth protocol. SHA' or 'MD5' 
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"description": &schema.Schema{
-										Description: `Description`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Description for Snmp V3 Credential
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"id": &schema.Schema{
-										Description: `Id`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Id of the SNMP V3 Credential in UUID format
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"privacy_password": &schema.Schema{
-										Description: `Privacy Password`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Privacy Password for SNMP privacy
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"privacy_type": &schema.Schema{
-										Description: `Privacy Type`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `SNMP privacy protocol. 'AES128','AES192','AES256' 
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"snmp_mode": &schema.Schema{
-										Description: `Snmp Mode`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `Mode of SNMP. 'AUTHPRIV' or 'AUTHNOPRIV' or 'NOAUTHNOPRIV'
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"username": &schema.Schema{
-										Description: `Username`,
-										Type:        schema.TypeString,
-										Optional:    true,
-										Computed:    true,
+										Description: `SNMP V3 Username
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -1086,8 +1170,8 @@ func expandRequestGlobalCredentialV2CreateGlobalCredentialsV2HTTPSReadArray(ctx 
 
 func expandRequestGlobalCredentialV2CreateGlobalCredentialsV2HTTPSRead(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateGlobalCredentialsV2HTTPSRead {
 	request := dnacentersdkgo.RequestDiscoveryCreateGlobalCredentialsV2HTTPSRead{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username")))) {
 		request.Username = interfaceToString(v)
@@ -1129,8 +1213,8 @@ func expandRequestGlobalCredentialV2CreateGlobalCredentialsV2HTTPSWriteArray(ctx
 
 func expandRequestGlobalCredentialV2CreateGlobalCredentialsV2HTTPSWrite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateGlobalCredentialsV2HTTPSWrite {
 	request := dnacentersdkgo.RequestDiscoveryCreateGlobalCredentialsV2HTTPSWrite{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username")))) {
 		request.Username = interfaceToString(v)
@@ -1264,8 +1348,8 @@ func expandRequestGlobalCredentialV2UpdateGlobalCredentialsV2SNMPV3(ctx context.
 
 func expandRequestGlobalCredentialV2UpdateGlobalCredentialsV2HTTPSRead(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryUpdateGlobalCredentialsV2HTTPSRead {
 	request := dnacentersdkgo.RequestDiscoveryUpdateGlobalCredentialsV2HTTPSRead{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username")))) {
 		request.Username = interfaceToString(v)
@@ -1287,8 +1371,8 @@ func expandRequestGlobalCredentialV2UpdateGlobalCredentialsV2HTTPSRead(ctx conte
 
 func expandRequestGlobalCredentialV2UpdateGlobalCredentialsV2HTTPSWrite(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryUpdateGlobalCredentialsV2HTTPSWrite {
 	request := dnacentersdkgo.RequestDiscoveryUpdateGlobalCredentialsV2HTTPSWrite{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username")))) {
 		request.Username = interfaceToString(v)

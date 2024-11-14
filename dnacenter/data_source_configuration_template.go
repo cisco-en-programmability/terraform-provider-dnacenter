@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -1411,7 +1411,7 @@ func dataSourceConfigurationTemplateRead(ctx context.Context, d *schema.Resource
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsTheTemplatesAvailable", err,
+				"Failure when executing 2 GetsTheTemplatesAvailable", err,
 				"Failure at GetsTheTemplatesAvailable, unexpected response", ""))
 			return diags
 		}
@@ -1446,7 +1446,7 @@ func dataSourceConfigurationTemplateRead(ctx context.Context, d *schema.Resource
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetsDetailsOfAGivenTemplate", err,
+				"Failure when executing 2 GetsDetailsOfAGivenTemplate", err,
 				"Failure at GetsDetailsOfAGivenTemplate, unexpected response", ""))
 			return diags
 		}

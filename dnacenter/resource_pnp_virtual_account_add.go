@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -114,47 +114,6 @@ the new profile
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-						"sync_result": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"sync_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"device_sn_list": &schema.Schema{
-													Description: `Device Sn List`,
-													Type:        schema.TypeList,
-													Computed:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"sync_type": &schema.Schema{
-													Description: `Sync Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
-									},
-									"sync_msg": &schema.Schema{
-										Description: `Sync Msg`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-								},
-							},
-						},
-						"sync_result_str": &schema.Schema{
-							Description: `Sync Result Str`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
 						"sync_start_time": &schema.Schema{
 							Description: `Sync Start Time`,
 							Type:        schema.TypeFloat,
@@ -167,11 +126,6 @@ the new profile
 						},
 						"tenant_id": &schema.Schema{
 							Description: `Tenant Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"token": &schema.Schema{
-							Description: `Token`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -224,12 +178,24 @@ the new profile
 								Schema: map[string]*schema.Schema{
 
 									"address_fqdn": &schema.Schema{
+										Description: `Required when cluster is configured with fully qualified domain name (FQDN)
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
 										Computed: true,
 									},
 									"address_ip_v4": &schema.Schema{
+										Description: `Required when cluster is configured with IPv4
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										ForceNew: true,
+										Computed: true,
+									},
+									"address_ip_v6": &schema.Schema{
+										Description: `Required when cluster is configured with IPv6
+`,
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
@@ -328,6 +294,8 @@ the new profile
 							},
 						},
 						"sync_result_str": &schema.Schema{
+							Description: `Represent internal state and SHOULD not be used or relied upon. (Deprecated)
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
@@ -340,18 +308,24 @@ the new profile
 							Computed: true,
 						},
 						"sync_status": &schema.Schema{
+							Description: `Represent internal state and SHOULD not be used or relied upon. (Deprecated)
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
 							Computed: true,
 						},
 						"tenant_id": &schema.Schema{
+							Description: `Represent internal state and SHOULD not be used or relied upon. (Deprecated)
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
 							Computed: true,
 						},
 						"token": &schema.Schema{
+							Description: `Represent internal state and SHOULD not be used or relied upon. (Deprecated)
+`,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
@@ -376,25 +350,20 @@ func resourcePnpVirtualAccountAddCreate(ctx context.Context, d *schema.ResourceD
 
 	request1 := expandRequestPnpVirtualAccountAddAddVirtualAccount(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.DeviceOnboardingPnp.AddVirtualAccount(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.DeviceOnboardingPnp.AddVirtualAccount(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing AddVirtualAccount", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	//Analizar verificacion.
 
 	vItem1 := flattenDeviceOnboardingPnpAddVirtualAccountItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
@@ -473,6 +442,9 @@ func expandRequestPnpVirtualAccountAddAddVirtualAccountProfile(ctx context.Conte
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".address_ip_v4")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".address_ip_v4")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".address_ip_v4")))) {
 		request.AddressIPV4 = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".address_ip_v6")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".address_ip_v6")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".address_ip_v6")))) {
+		request.AddressIPV6 = interfaceToString(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cert")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cert")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cert")))) {
 		request.Cert = interfaceToString(v)
 	}
@@ -543,11 +515,8 @@ func flattenDeviceOnboardingPnpAddVirtualAccountItem(item *dnacentersdkgo.Respon
 	respItem := make(map[string]interface{})
 	respItem["virtual_account_id"] = item.VirtualAccountID
 	respItem["auto_sync_period"] = item.AutoSyncPeriod
-	respItem["sync_result_str"] = item.SyncResultStr
 	respItem["profile"] = flattenDeviceOnboardingPnpAddVirtualAccountItemProfile(item.Profile)
 	respItem["cco_user"] = item.CcoUser
-	respItem["sync_result"] = flattenDeviceOnboardingPnpAddVirtualAccountItemSyncResult(item.SyncResult)
-	respItem["token"] = item.Token
 	respItem["sync_start_time"] = item.SyncStartTime
 	respItem["last_sync"] = item.LastSync
 	respItem["tenant_id"] = item.TenantID
@@ -577,32 +546,4 @@ func flattenDeviceOnboardingPnpAddVirtualAccountItemProfile(item *dnacentersdkgo
 		respItem,
 	}
 
-}
-
-func flattenDeviceOnboardingPnpAddVirtualAccountItemSyncResult(item *dnacentersdkgo.ResponseDeviceOnboardingPnpAddVirtualAccountSyncResult) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["sync_list"] = flattenDeviceOnboardingPnpAddVirtualAccountItemSyncResultSyncList(item.SyncList)
-	respItem["sync_msg"] = item.SyncMsg
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
-}
-
-func flattenDeviceOnboardingPnpAddVirtualAccountItemSyncResultSyncList(items *[]dnacentersdkgo.ResponseDeviceOnboardingPnpAddVirtualAccountSyncResultSyncList) []map[string]interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["sync_type"] = item.SyncType
-		respItem["device_sn_list"] = item.DeviceSnList
-		respItems = append(respItems, respItem)
-	}
-	return respItems
 }

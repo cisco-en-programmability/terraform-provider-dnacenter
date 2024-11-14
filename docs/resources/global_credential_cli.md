@@ -50,31 +50,31 @@ output "dnacenter_global_credential_cli_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) Array of RequestDiscoveryCreateCLICredentials (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) Array of RequestDiscoveryCreateCLICredentials (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **enable_password** (String)
-- **id** (String) The ID of this resource.
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
-- **password** (String, Sensitive)
-- **username** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `enable_password` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `password` (String, Sensitive)
+- `username` (String)
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
 
 
 <a id="nestedatt--item"></a>
@@ -82,12 +82,19 @@ Optional:
 
 Read-Only:
 
-- **comments** (String)
-- **credential_type** (String)
-- **description** (String)
-- **id** (String)
-- **instance_tenant_id** (String)
-- **instance_uuid** (String)
+- `comments` (String)
+- `credential_type` (String)
+- `description` (String)
+- `id` (String)
+- `instance_tenant_id` (String)
+- `instance_uuid` (String)
+- `netconf_port` (String)
+- `password` (String)
+- `port` (String)
+- `read_community` (String)
+- `secure` (String)
+- `username` (String)
+- `write_community` (String)
 
 ## Import
 

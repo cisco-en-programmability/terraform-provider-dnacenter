@@ -4,7 +4,7 @@ data "dnacenter_site_health" "example" {
   limit     = 1
   offset    = 1
   site_type = "string"
-  timestamp = "string"
+  timestamp = 1.0
 }
 
 output "dnacenter_site_health_example" {

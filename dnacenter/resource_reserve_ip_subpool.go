@@ -4,12 +4,11 @@ import (
 	"context"
 	"errors"
 	"reflect"
-	"strings"
 	"time"
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -233,7 +232,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Optional: true,
 						},
 						"ipv4_dhcp_servers": &schema.Schema{
-							Description: `IPv4 input for dhcp server ip example: 1.1.1.1
+							Description: `IPv4 input for dhcp server ip example: ["1.1.1.1"]
 `,
 							Type:     schema.TypeList,
 							Optional: true,
@@ -243,7 +242,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							},
 						},
 						"ipv4_dns_servers": &schema.Schema{
-							Description: `IPv4 input for dns server ip example: 4.4.4.4
+							Description: `IPv4 input for dns server ip example: ["4.4.4.4"]
 `,
 							Type:     schema.TypeList,
 							Optional: true,
@@ -283,7 +282,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Computed: true,
 						},
 						"ipv4_subnet": &schema.Schema{
-							Description: `IPv4 Subnet address, example: 175.175.0.0
+							Description: `IPv4 Subnet address, example: 175.175.0.0. Either ipv4Subnet or ipv4TotalHost needs to be passed if creating IPv4 subpool.
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -297,7 +296,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Computed: true,
 						},
 						"ipv6_address_space": &schema.Schema{
-							Description: `If the value is false only ipv4 input are required, otherwise both ipv6 and ipv4 are required
+							Description: `If the value is omitted or false only ipv4 input are required, otherwise both ipv6 and ipv4 are required
 `,
 							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
@@ -306,7 +305,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Computed:     true,
 						},
 						"ipv6_dhcp_servers": &schema.Schema{
-							Description: `IPv6 format dhcp server as input example : 2001:db8::1234
+							Description: `IPv6 format dhcp server as input example : ["2001:db8::1234"]
 `,
 							Type:     schema.TypeList,
 							Optional: true,
@@ -316,7 +315,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							},
 						},
 						"ipv6_dns_servers": &schema.Schema{
-							Description: `IPv6 format dns server input example: 2001:db8::1234
+							Description: `IPv6 format dns server input example: ["2001:db8::1234"]
 `,
 							Type:     schema.TypeList,
 							Optional: true,
@@ -356,7 +355,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Computed: true,
 						},
 						"ipv6_subnet": &schema.Schema{
-							Description: `IPv6 Subnet address, example :2001:db8:85a3:0:100::
+							Description: `IPv6 Subnet address, example :2001:db8:85a3:0:100::. Either ipv6Subnet or ipv6TotalHost needs to be passed if creating IPv6 subpool.
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -377,7 +376,7 @@ func resourceReserveIPSubpool() *schema.Resource {
 							Computed: true,
 						},
 						"site_id": &schema.Schema{
-							Description: `siteId path parameter. Site id of site to update sub pool.
+							Description: `siteId path parameter. Site id to reserve the ip sub pool.
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -478,15 +477,16 @@ func resourceReserveIPSubpoolCreate(ctx context.Context, d *schema.ResourceData,
 				"Failure when executing ReserveIPSubpool", err))
 			return diags
 		} else {
-			if strings.Contains(response2.BapiSyncResponse, "FailureReason:") {
-				err1 := errors.New(response2.BapiError)
-				log.Printf("[DEBUG] Error %s", response2.BapiSyncResponse)
-				diags = append(diags, diagError(
-					"Failure when executing ReserveIPSubpool", err1))
-				return diags
-			}
+			// if strings.Contains(response2.BapiSyncResponse, "FailureReason:") {
+			err1 := errors.New(response2.BapiError)
+			// log.Printf("[DEBUG] Error %s", response2.BapiSyncResponse)
+			diags = append(diags, diagError(
+				"Failure when executing ReserveIPSubpool", err1))
+			return diags
+			// }
 		}
 	}
+
 	resourceMap := make(map[string]string)
 	resourceMap["site_id"] = vvSiteID
 	resourceMap["name"] = vvName
@@ -631,6 +631,7 @@ func resourceReserveIPSubpoolUpdate(ctx context.Context, d *schema.ResourceData,
 				return diags
 			}
 		}
+
 	}
 
 	return resourceReserveIPSubpoolRead(ctx, d, m)
@@ -788,10 +789,6 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_address_space")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_address_space")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_address_space")))) {
 		request.IPv6AddressSpace = interfaceToBoolPtr(v)
-		if request.IPv6AddressSpace == nil {
-			defaultBool := false
-			request.IPv6AddressSpace = &defaultBool
-		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_dhcp_servers")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_dhcp_servers")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_dhcp_servers")))) {
 		request.IPv4DhcpServers = interfaceToSliceString(v)
@@ -807,14 +804,12 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_prefix_length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_prefix_length")))) {
 		request.IPv6PrefixLength = interfaceToIntPtr(v)
-		if request.IPv6PrefixLength != nil {
-			if *request.IPv6PrefixLength == 0 {
-				request.IPv6PrefixLength = nil
-			}
-		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_subnet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_subnet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_subnet")))) {
 		request.IPv6Subnet = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_total_host")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_total_host")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_total_host")))) {
+		request.IPv6TotalHost = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_gate_way")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_gate_way")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_gate_way")))) {
 		request.IPv6GateWay = interfaceToString(v)
@@ -825,20 +820,12 @@ func expandRequestReserveIPSubpoolUpdateReserveIPSubpool(ctx context.Context, ke
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_dns_servers")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_dns_servers")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_dns_servers")))) {
 		request.IPv6DNSServers = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_total_host")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_total_host")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_total_host")))) {
-		request.IPv6TotalHost = interfaceToIntPtr(v)
-		if request.IPv6TotalHost != nil {
-			if *request.IPv6TotalHost == 0 {
-				request.IPv6TotalHost = nil
-			}
-		}
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".slaac_support")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".slaac_support")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".slaac_support")))) {
 		request.SLAacSupport = interfaceToBoolPtr(v)
 	}
-	// if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_gate_way")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_gate_way")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_gate_way")))) {
-	// 	request.IPv4GateWay = interfaceToString(v)
-	// }
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv4_gate_way")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv4_gate_way")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv4_gate_way")))) {
+		request.IPv4GateWay = interfaceToString(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -852,8 +839,8 @@ func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacent
 	var nResponse *dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpool
 	maxPageSize := 500
 	offset := 1
-	queryParams.Offset = offset
-	queryParams.Limit = maxPageSize
+	queryParams.Offset = float64(offset)
+	queryParams.Limit = float64(maxPageSize)
 	nResponse, _, err = client.NetworkSettings.GetReserveIPSubpool(&queryParams)
 	if err != nil {
 		return foundItem, err
@@ -875,10 +862,13 @@ func searchNetworkSettingsGetReserveIPSubpool(m interface{}, queryParams dnacent
 			}
 		}
 
-		queryParams.Limit = maxPageSize
+		queryParams.Limit = float64(maxPageSize)
 		offset += maxPageSize
-		queryParams.Offset = offset
+		queryParams.Offset = float64(offset)
 		nResponse, _, err = client.NetworkSettings.GetReserveIPSubpool(&queryParams)
+		if nResponse == nil || nResponse.Response == nil {
+			break
+		}
 	}
 	return foundItem, err
 }
@@ -894,14 +884,10 @@ func updateReserveIpPoolParameters(request *dnacentersdkgo.RequestNetworkSetting
 		if v.IPv6 != nil && *v.IPv6 {
 			if v.IPPoolName == request.Name {
 				request.Name = v.IPPoolName
-				request.IPv6DhcpServers = v.DhcpServerIPs
-				request.IPv6DNSServers = v.DNSServerIPs
 			}
 		} else {
 			if v.IPPoolName == request.Name {
 				request.Name = v.IPPoolName
-				request.IPv4DhcpServers = v.DhcpServerIPs
-				request.IPv4DNSServers = v.DNSServerIPs
 			}
 		}
 	}

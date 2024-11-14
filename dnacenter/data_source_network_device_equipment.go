@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,8 @@ func dataSourceNetworkDeviceEquipment() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Devices.
 
-- Return PowerSupply/ Fan details for the Given device
+- Return all types of equipment details like PowerSupply, Fan, Chassis, Backplane, Module, PROCESSOR, Other and SFP for
+the Given device.
 `,
 
 		ReadContext: dataSourceNetworkDeviceEquipmentRead,
@@ -46,6 +47,12 @@ func dataSourceNetworkDeviceEquipment() *schema.Resource {
 
 						"instance_uuid": &schema.Schema{
 							Description: `Instance Uuid`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"manufacturer": &schema.Schema{
+							Description: `Manufacturer`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -95,32 +102,32 @@ func dataSourceNetworkDeviceEquipmentRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ReturnPowerSupplyFanDetailsForTheGivenDevice")
+		log.Printf("[DEBUG] Selected method: GetTheDetailsOfPhysicalComponentsOfTheGivenDevice")
 		vvDeviceUUID := vDeviceUUID.(string)
-		queryParams1 := dnacentersdkgo.ReturnPowerSupplyFanDetailsForTheGivenDeviceQueryParams{}
+		queryParams1 := dnacentersdkgo.GetTheDetailsOfPhysicalComponentsOfTheGivenDeviceQueryParams{}
 
 		if okType {
 			queryParams1.Type = vType.(string)
 		}
 
-		response1, restyResp1, err := client.Devices.ReturnPowerSupplyFanDetailsForTheGivenDevice(vvDeviceUUID, &queryParams1)
+		response1, restyResp1, err := client.Devices.GetTheDetailsOfPhysicalComponentsOfTheGivenDevice(vvDeviceUUID, &queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing ReturnPowerSupplyFanDetailsForTheGivenDevice", err,
-				"Failure at ReturnPowerSupplyFanDetailsForTheGivenDevice, unexpected response", ""))
+				"Failure when executing 2 GetTheDetailsOfPhysicalComponentsOfTheGivenDevice", err,
+				"Failure at GetTheDetailsOfPhysicalComponentsOfTheGivenDevice, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenDevicesReturnPowerSupplyFanDetailsForTheGivenDeviceItems(response1.Response)
+		vItems1 := flattenDevicesGetTheDetailsOfPhysicalComponentsOfTheGivenDeviceItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting ReturnPowerSupplyFanDetailsForTheGivenDevice response",
+				"Failure when setting GetTheDetailsOfPhysicalComponentsOfTheGivenDevice response",
 				err))
 			return diags
 		}
@@ -132,7 +139,7 @@ func dataSourceNetworkDeviceEquipmentRead(ctx context.Context, d *schema.Resourc
 	return diags
 }
 
-func flattenDevicesReturnPowerSupplyFanDetailsForTheGivenDeviceItems(items *[]dnacentersdkgo.ResponseDevicesReturnPowerSupplyFanDetailsForTheGivenDeviceResponse) []map[string]interface{} {
+func flattenDevicesGetTheDetailsOfPhysicalComponentsOfTheGivenDeviceItems(items *[]dnacentersdkgo.ResponseDevicesGetTheDetailsOfPhysicalComponentsOfTheGivenDeviceResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -146,6 +153,7 @@ func flattenDevicesReturnPowerSupplyFanDetailsForTheGivenDeviceItems(items *[]dn
 		respItem["description"] = item.Description
 		respItem["instance_uuid"] = item.InstanceUUID
 		respItem["name"] = item.Name
+		respItem["manufacturer"] = item.Manufacturer
 		respItems = append(respItems, respItem)
 	}
 	return respItems

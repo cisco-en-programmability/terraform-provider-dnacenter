@@ -20,10 +20,10 @@ data "dnacenter_tag_member" "example" {
   provider                = dnacenter
   id                      = "string"
   level                   = "string"
-  limit                   = "string"
+  limit                   = 1
   member_association_type = "string"
   member_type             = "string"
-  offset                  = "string"
+  offset                  = 1
 }
 
 output "dnacenter_tag_member_example" {
@@ -42,9 +42,9 @@ output "dnacenter_tag_member_example" {
 ### Optional
 
 - `level` (String) level query parameter.
-- `limit` (String) limit query parameter. Used to Number of maximum members to return in the result
+- `limit` (Number) limit query parameter. Used to Number of maximum members to return in the result
 - `member_association_type` (String) memberAssociationType query parameter. Indicates how the member is associated with the tag. Possible values and description. 1) DYNAMIC : The member is associated to the tag through rules. 2) STATIC – The member is associated to the tag manually. 3) MIXED – The member is associated manually and also satisfies the rule defined for the tag
-- `offset` (String) offset query parameter. Used for pagination. It indicates the starting row number out of available member records
+- `offset` (Number) offset query parameter. Used for pagination. It indicates the starting row number out of available member records
 
 ### Read-Only
 
@@ -56,5 +56,3 @@ output "dnacenter_tag_member_example" {
 Read-Only:
 
 - `instance_uuid` (String)
-
-

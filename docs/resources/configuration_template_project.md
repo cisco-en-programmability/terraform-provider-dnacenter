@@ -36,7 +36,6 @@ resource "dnacenter_configuration_template_project" "example" {
       id   = "string"
       name = "string"
     }
-    templates = "string"
   }
 }
 
@@ -61,16 +60,13 @@ output "dnacenter_configuration_template_project_example" {
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
-Required:
-
-- `name` (String) Name of project
-
 Optional:
 
 - `create_time` (Number) Create time of project
 - `description` (String) Description of project
 - `id` (String) UUID of project
 - `last_update_time` (Number) Update time of project
+- `name` (String) Name of project
 - `project_id` (String) projectId path parameter. projectId(UUID) of project to be deleted
 - `tags` (Block List) (see [below for nested schema](#nestedblock--parameters--tags))
 - `templates` (Block List) List of templates within the project (see [below for nested schema](#nestedblock--parameters--templates))
@@ -378,7 +374,6 @@ Read-Only:
 - `create_time` (Number)
 - `description` (String)
 - `id` (String)
-- `is_deletable` (String)
 - `last_update_time` (Number)
 - `name` (String)
 - `tags` (List of Object) (see [below for nested schema](#nestedobjatt--item--tags))

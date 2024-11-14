@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourceRolePermissions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on User and Roles.
 
-- Get permissions for a role from Cisco DNA Center System
+- Get permissions for a role from Cisco DNA Center System.
 `,
 
 		ReadContext: dataSourceRolePermissionsRead,
@@ -74,26 +74,26 @@ func dataSourceRolePermissionsRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetPermissionsApI")
+		log.Printf("[DEBUG] Selected method: GetPermissionsAPI")
 
-		response1, restyResp1, err := client.UserandRoles.GetPermissionsApI()
+		response1, restyResp1, err := client.UserandRoles.GetPermissionsAPI()
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetPermissionsApI", err,
-				"Failure at GetPermissionsApI, unexpected response", ""))
+				"Failure when executing 2 GetPermissionsAPI", err,
+				"Failure at GetPermissionsAPI, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenUserandRolesGetPermissionsApIItem(response1.Response)
+		vItem1 := flattenUserandRolesGetPermissionsAPIItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetPermissionsApI response",
+				"Failure when setting GetPermissionsAPI response",
 				err))
 			return diags
 		}
@@ -105,18 +105,18 @@ func dataSourceRolePermissionsRead(ctx context.Context, d *schema.ResourceData, 
 	return diags
 }
 
-func flattenUserandRolesGetPermissionsApIItem(item *dnacentersdkgo.ResponseUserandRolesGetPermissionsAPIResponse) []map[string]interface{} {
+func flattenUserandRolesGetPermissionsAPIItem(item *dnacentersdkgo.ResponseUserandRolesGetPermissionsAPIResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["resource_types"] = flattenUserandRolesGetPermissionsApIItemResourceTypes(item.ResourceTypes)
+	respItem["resource_types"] = flattenUserandRolesGetPermissionsAPIItemResourceTypes(item.ResourceTypes)
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenUserandRolesGetPermissionsApIItemResourceTypes(items *[]dnacentersdkgo.ResponseUserandRolesGetPermissionsAPIResponseResourceTypes) []map[string]interface{} {
+func flattenUserandRolesGetPermissionsAPIItemResourceTypes(items *[]dnacentersdkgo.ResponseUserandRolesGetPermissionsAPIResponseResourceTypes) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

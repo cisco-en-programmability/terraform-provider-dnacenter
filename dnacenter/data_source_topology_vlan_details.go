@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourceTopologyVLANDetails() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Topology.
 
-- Returns the list of VLAN names
+- Returns the list of VLAN names that are involved in a loop as identified by the Spanning Tree Protocol
 `,
 
 		ReadContext: dataSourceTopologyVLANDetailsRead,
@@ -28,6 +28,8 @@ func dataSourceTopologyVLANDetails() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"response": &schema.Schema{
+							Description: `Lists of all available VLAN names
+`,
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Schema{
@@ -62,7 +64,7 @@ func dataSourceTopologyVLANDetailsRead(ctx context.Context, d *schema.ResourceDa
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetVLANDetails", err,
+				"Failure when executing 2 GetVLANDetails", err,
 				"Failure at GetVLANDetails, unexpected response", ""))
 			return diags
 		}

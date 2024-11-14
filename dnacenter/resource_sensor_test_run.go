@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -46,6 +46,7 @@ func resourceSensorTestRun() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -60,16 +61,12 @@ func resourceSensorTestRunCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	request1 := expandRequestSensorTestRunRunNowSensorTest(ctx, "parameters.0", d)
 
+	// has_unknown_response: True
+
 	response1, err := client.Sensors.RunNowSensorTest(request1)
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
-
 	if err != nil || response1 == nil {
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing RunNowSensorTest", err,
-			"Failure at RunNowSensorTest, unexpected response", ""))
+		d.SetId("")
 		return diags
 	}
 

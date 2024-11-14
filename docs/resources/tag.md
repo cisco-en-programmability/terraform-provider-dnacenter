@@ -30,12 +30,12 @@ resource "dnacenter_tag" "example" {
 
       member_type = "string"
       rules {
+
+        items     = ["string"]
+        name      = "string"
         operation = "string"
-        items {
-          name      = "string"
-          operation = "string"
-          value     = "string"
-        }
+        value     = "string"
+        values    = ["string"]
       }
     }
     id                 = "string"
@@ -68,22 +68,19 @@ output "dnacenter_tag_example" {
 
 Optional:
 
-- `description` (String)
+- `description` (String) description of the tag.
 - `dynamic_rules` (Block List) (see [below for nested schema](#nestedblock--parameters--dynamic_rules))
-- `instance_tenant_id` (String)
-- `name` (String)
-- `system_tag` (String)
-
-Read-Only:
-
-- `id` (String) The ID of this resource.
+- `id` (String) instanceUuid generated for the tag.
+- `instance_tenant_id` (String) instanceTenantId generated for the tag.
+- `name` (String) name of the tag.
+- `system_tag` (String) true for system created tags, false for user defined tags
 
 <a id="nestedblock--parameters--dynamic_rules"></a>
 ### Nested Schema for `parameters.dynamic_rules`
 
 Optional:
 
-- `member_type` (String)
+- `member_type` (String) memberType of the tag (e.g. networkdevice, interface)
 - `rules` (Block List) (see [below for nested schema](#nestedblock--parameters--dynamic_rules--rules))
 
 <a id="nestedblock--parameters--dynamic_rules--rules"></a>
@@ -91,17 +88,11 @@ Optional:
 
 Optional:
 
-- `items` (Block List) (see [below for nested schema](#nestedblock--parameters--dynamic_rules--rules--items))
-
-<a id="nestedblock--parameters--dynamic_rules--rules--items"></a>
-### Nested Schema for `parameters.dynamic_rules.rules.items`
-
-Optional:
-
-- `name` (String)
-- `operation` (String)
-- `value` (String)
-
+- `items` (List of String) items details,multiple rules can be defined by items(e.g. "items": [{"operation": "ILIKE", "name": "managementIpAddress", "value": "%10%"}, {"operation": "ILIKE", "name": "hostname", "value": "%NA%"} ])
+- `name` (String) name of the parameter (e.g. for interface:portName,adminStatus,speed,status,description. for networkdevice:family,series,hostname,managementIpAddress,groupNameHierarchy,softwareVersion)
+- `operation` (String) opeartion used in the rules (e.g. OR,IN,EQ,LIKE,ILIKE,AND)
+- `value` (String) value of the parameter (e.g. for portName:1/0/1,for adminStatus,status:up/down, for speed: any integer value, for description: any valid string, for family:switches, for series:C3650, for managementIpAddress:10.197.124.90, groupNameHierarchy:Global, softwareVersion: 16.9.1)
+- `values` (List of String) values of the parameter,Only one of the value or values can be used for the given parameter. (for managementIpAddress e.g. ["10.197.124.90","10.197.124.91"])
 
 
 
@@ -131,7 +122,7 @@ Read-Only:
 
 Read-Only:
 
-- `items` (String)
+- `items` (List of String)
 - `name` (String)
 - `operation` (String)
 - `value` (String)

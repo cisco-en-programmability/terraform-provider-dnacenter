@@ -8,21 +8,21 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceDeployTemplateV1() *schema.Resource {
+func resourceDeployTemplate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Configuration Templates.
 		- API to deploy a template.
 `,
 
-		CreateContext: resourceDeployTemplateV1Create,
-		ReadContext:   resourceDeployTemplateV1Read,
-		DeleteContext: resourceDeployTemplateV1Delete,
+		CreateContext: resourceDeployTemplateCreate,
+		ReadContext:   resourceDeployTemplateRead,
+		DeleteContext: resourceDeployTemplateDelete,
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
@@ -300,12 +300,12 @@ func resourceDeployTemplateV1() *schema.Resource {
 	}
 }
 
-func resourceDeployTemplateV1Create(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceDeployTemplateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
-	log.Printf("[DEBUG] Selected method 1: DeployTemplateV1")
+	log.Printf("[DEBUG] Selected method 1: DeployTemplate")
 	request1 := expandRequestConfigurationTemplateDeployDeployTemplate(ctx, "parameters.0", d)
 
 	response1, restyResp1, err := client.ConfigurationTemplates.DeployTemplate(request1)
@@ -320,8 +320,8 @@ func resourceDeployTemplateV1Create(ctx context.Context, d *schema.ResourceData,
 		}
 		err1 := errors.New(response1.DeploymentID)
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing DeployTemplateV1", err1,
-			"Failure at DeployTemplateV1, unexpected response", ""))
+			"Failure when executing DeployTemplate", err1,
+			"Failure at DeployTemplate, unexpected response", ""))
 		return diags
 	}
 
@@ -330,10 +330,10 @@ func resourceDeployTemplateV1Create(ctx context.Context, d *schema.ResourceData,
 	resourceMap["deployment_id"] = (getLastString(response1.DeploymentID))
 	d.SetId(joinResourceID(resourceMap))
 
-	return resourceDeployTemplateV1Read(ctx, d, m)
+	return resourceDeployTemplateRead(ctx, d, m)
 }
 
-func resourceDeployTemplateV1Read(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceDeployTemplateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
@@ -365,7 +365,7 @@ func resourceDeployTemplateV1Read(ctx context.Context, d *schema.ResourceData, m
 	return diags
 }
 
-func resourceDeployTemplateV1Delete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceDeployTemplateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 	return diags
 }
@@ -381,7 +381,7 @@ func expandRequestConfigurationTemplateDeployDeployTemplate(ctx context.Context,
 		request.MainTemplateID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".member_template_deployment_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_template_deployment_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_template_deployment_info")))) {
-		request.MemberTemplateDeploymentInfo = interfaceToString(v)
+		request.MemberTemplateDeploymentInfo = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".target_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".target_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".target_info")))) {
 		request.TargetInfo = expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoArray(ctx, key+".target_info", d)
@@ -466,7 +466,7 @@ func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfo(ctx contex
 		request.Params = expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoParams(ctx, key+".params", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".resource_params")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".resource_params")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".resource_params")))) {
-		request.ResourceParams = expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoResourceParams(ctx, key+".resource_params.0", d)
+		request.ResourceParams = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
@@ -487,15 +487,5 @@ func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoParams(ctx 
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-	return &request
-}
-
-func expandRequestConfigurationTemplateDeployDeployTemplateTargetInfoResourceParams(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateTargetInfoResourceParams {
-	var request dnacentersdkgo.RequestConfigurationTemplatesDeployTemplateTargetInfoResourceParams
-	request = d.Get(fixKeyAccess(key))
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-
 	return &request
 }

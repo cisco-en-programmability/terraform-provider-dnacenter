@@ -54,5 +54,3 @@ Read-Only:
 - `start_time_epoch` (Number)
 - `status` (String)
 - `time_duration` (Number)
-
-

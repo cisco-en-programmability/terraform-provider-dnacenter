@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -42,22 +42,32 @@ func resourceSNMPProperties() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
+							Description: `Id of the SNMP Property
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"instance_tenant_id": &schema.Schema{
+							Description: `[Deprecated] InstanceTenantId of the SNMP Property
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"instance_uuid": &schema.Schema{
+							Description: `Instance Uuid of the SNMP Property. It is the same as the id. It will be deprecated in future version.
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"int_value": &schema.Schema{
+							Description: `Integer Value of the SNMP 'Retry' or 'Timeout' property
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 						"system_property_name": &schema.Schema{
+							Description: `Name of the SNMP Property as 'Retry' or 'Timeout'
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -71,31 +81,40 @@ func resourceSNMPProperties() *schema.Resource {
 				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
-						},
-						"instance_tenant_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
-						},
-						"instance_uuid": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
-						},
-						"int_value": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
-						},
-						"system_property_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+						"payload": &schema.Schema{
+							Description: `Array of RequestApplicationPolicyCreateApplication`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"instance_tenant_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"instance_uuid": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"int_value": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"system_property_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -110,7 +129,7 @@ func resourceSNMPPropertiesCreate(ctx context.Context, d *schema.ResourceData, m
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
-	request1 := expandRequestSNMPPropertiesCreateUpdateSNMPProperties(ctx, "parameters", d)
+	request1 := expandRequestSNMPPropertiesCreateUpdateSNMPProperties(ctx, "parameters.0", d)
 	if request1 != nil {
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
@@ -236,13 +255,12 @@ func resourceSNMPPropertiesDelete(ctx context.Context, d *schema.ResourceData, m
 }
 func expandRequestSNMPPropertiesCreateUpdateSNMPProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestDiscoveryCreateUpdateSNMPProperties {
 	request := dnacentersdkgo.RequestDiscoveryCreateUpdateSNMPProperties{}
-	if v := expandRequestSNMPPropertiesCreateUpdateSNMPPropertiesItemArray(ctx, key, d); v != nil {
+	if v := expandRequestSNMPPropertiesCreateUpdateSNMPPropertiesItemArray(ctx, key+".payload", d); v != nil {
 		request = *v
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
-
 	return &request
 }
 
@@ -300,6 +318,7 @@ func searchDiscoveryGetSNMPProperties(m interface{}, vID string, vName string) (
 	ite, _, err = client.Discovery.GetSNMPProperties()
 	if err != nil {
 		return foundItem, err
+
 	}
 	items := ite
 	if items == nil {

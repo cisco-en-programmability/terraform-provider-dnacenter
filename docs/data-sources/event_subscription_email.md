@@ -115,5 +115,3 @@ Read-Only:
 - `name` (String)
 - `subject` (String)
 - `to_email_addresses` (List of String)
-
-

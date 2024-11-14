@@ -11,7 +11,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -22,7 +22,7 @@ func resourceDeviceConfigurationsExport() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Configuration Archive.
 
-- Export Device configurations to an encrypted zip file.
+- Export Device configurations to an encrypted zip file
 `,
 
 		CreateContext: resourceDeviceConfigurationsExportCreate,
@@ -61,22 +61,21 @@ func resourceDeviceConfigurationsExport() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"device_id": &schema.Schema{
-							Description: `Device Id`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							ForceNew:    true,
-							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
+							Description: `UUIDs of the devices for which configurations need to be exported. 
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+							Computed: true,
 						},
 						"password": &schema.Schema{
-							Description: `Password`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-							Sensitive:   true,
-							Computed:    true,
+							Description: `Password for the zip file to protect exported configurations. Must contain, at minimum 8 characters, one lowercase letter, one uppercase letter, one number, one special character(-=[];,./~!@#$%^&*()_+{}|:?). It may not contain white space or the characters <>.
+`,
+							Type:      schema.TypeString,
+							Optional:  true,
+							ForceNew:  true,
+							Sensitive: true,
+							Computed:  true,
 						},
 					},
 				},
@@ -91,11 +90,9 @@ func resourceDeviceConfigurationsExportCreate(ctx context.Context, d *schema.Res
 
 	request1 := expandRequestDeviceConfigurationsExportExportDeviceConfigurations(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.ConfigurationArchive.ExportDeviceConfigurations(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.ConfigurationArchive.ExportDeviceConfigurations(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -149,6 +146,9 @@ func resourceDeviceConfigurationsExportCreate(ctx context.Context, d *schema.Res
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenConfigurationArchiveExportDeviceConfigurationsItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -159,7 +159,6 @@ func resourceDeviceConfigurationsExportCreate(ctx context.Context, d *schema.Res
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceDeviceConfigurationsExportRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
@@ -176,11 +175,11 @@ func resourceDeviceConfigurationsExportDelete(ctx context.Context, d *schema.Res
 
 func expandRequestDeviceConfigurationsExportExportDeviceConfigurations(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestConfigurationArchiveExportDeviceConfigurations {
 	request := dnacentersdkgo.RequestConfigurationArchiveExportDeviceConfigurations{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_id")))) {
-		request.DeviceID = interfaceToSliceString(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_id")))) {
+		request.DeviceID = interfaceToString(v)
 	}
 	return &request
 }
@@ -190,8 +189,8 @@ func flattenConfigurationArchiveExportDeviceConfigurationsItem(item *dnacentersd
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["task_id"] = item.TaskID
 	respItem["url"] = item.URL
+	respItem["task_id"] = item.TaskID
 	return []map[string]interface{}{
 		respItem,
 	}

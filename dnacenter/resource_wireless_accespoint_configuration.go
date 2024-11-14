@@ -12,7 +12,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -23,7 +23,8 @@ func resourceWirelessAccespointConfiguration() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Wireless.
 
-- User can configure multiple access points with required options using this intent API
+- User can configure multiple access points with required options using this intent API. This data source action does
+not support configuration of CleanAir or SI for IOS-XE devices with version greater than or equal to 17.9
 `,
 
 		CreateContext: resourceWirelessAccespointConfigurationCreate,
@@ -68,14 +69,6 @@ func resourceWirelessAccespointConfiguration() *schema.Resource {
 							Optional:     true,
 							ForceNew:     true,
 							Computed:     true,
-						},
-						"ap_height": &schema.Schema{
-							Description: `Configure the height of the access point by setting a value between 3 and height of the floor.
-`,
-							Type:     schema.TypeFloat,
-							Optional: true,
-							ForceNew: true,
-							Computed: true,
 						},
 						"ap_list": &schema.Schema{
 							Type:     schema.TypeList,
@@ -122,16 +115,6 @@ func resourceWirelessAccespointConfiguration() *schema.Resource {
 						},
 						"configure_admin_status": &schema.Schema{
 							Description: `To change the access point's admin status, set this parameter's value to "true".
-`,
-							// Type:        schema.TypeBool,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							ForceNew:     true,
-							Computed:     true,
-						},
-						"configure_ap_height": &schema.Schema{
-							Description: `To change the access point's height, set this parameter's value to "true".
 `,
 							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
@@ -207,6 +190,16 @@ func resourceWirelessAccespointConfiguration() *schema.Resource {
 							Optional: true,
 							ForceNew: true,
 							Computed: true,
+						},
+						"is_assigned_site_as_location": &schema.Schema{
+							Description: `If AP is assigned to a site, then to assign AP location as the site name, set this parameter's value to "true".
+`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							ForceNew:     true,
+							Computed:     true,
 						},
 						"led_brightness_level": &schema.Schema{
 							Description: `Configure the access point's LED brightness level by setting a value between 1 and 8.
@@ -287,32 +280,8 @@ func resourceWirelessAccespointConfiguration() *schema.Resource {
 										ForceNew: true,
 										Computed: true,
 									},
-									"antenna_degree": &schema.Schema{
-										Description: `Configure the antenna degree on the specified radio for an access point.
-`,
-										Type:     schema.TypeInt,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
-									},
-									"antenna_elev_angle_degree": &schema.Schema{
-										Description: `Configure the antenna elevation angle on the specified radio for an access point.
-`,
-										Type:     schema.TypeInt,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
-									},
-									"antenna_elev_angle_sign": &schema.Schema{
-										Description: `Configure the antenna elevation angle direction on the specified radio for an access point: for up, set "1"; for down, set "-1".
-`,
-										Type:     schema.TypeInt,
-										Optional: true,
-										ForceNew: true,
-										Computed: true,
-									},
 									"antenna_gain": &schema.Schema{
-										Description: `Configure the antenna gain on the specified radio for an access point by setting a decimal value (in dBi).
+										Description: `Configure the antenna gain on the specified radio for an access point by setting a decimal value (in dBi). To configure "antennaGain", set "antennaPatternName" value to "other".
 `,
 										Type:     schema.TypeInt,
 										Optional: true,
@@ -320,7 +289,7 @@ func resourceWirelessAccespointConfiguration() *schema.Resource {
 										Computed: true,
 									},
 									"antenna_pattern_name": &schema.Schema{
-										Description: `Configure the antenna pattern name on the specified radio for an access point. If antenna gain needs to be configured, set this parameter's value to "other".
+										Description: `Specify the antenna name on the specified radio for an access point. The antenna name is used to calculate the gain on the radio slot.
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -352,7 +321,7 @@ func resourceWirelessAccespointConfiguration() *schema.Resource {
 										Computed: true,
 									},
 									"channel_width": &schema.Schema{
-										Description: `Configure the channel width on the specified radio for an access point: for 20 MHz, set "3"; for 40 MHz, set "4"; for 80 MHz, set "5"; and for 160 MHz, set "6".
+										Description: `Configure the channel width on the specified radio for an access point: for 20 MHz, set "3"; for 40 MHz, set "4"; for 80 MHz, set "5"; for 160 MHz, set "6", and for 320 MHz, set "7".
 `,
 										Type:     schema.TypeInt,
 										Optional: true,
@@ -387,18 +356,8 @@ func resourceWirelessAccespointConfiguration() *schema.Resource {
 										ForceNew:     true,
 										Computed:     true,
 									},
-									"configure_antenna_degree": &schema.Schema{
-										Description: `To change the antenna degree on the specified radio for an access point, set this parameter's value to "true".
-`,
-										// Type:        schema.TypeBool,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										ForceNew:     true,
-										Computed:     true,
-									},
 									"configure_antenna_pattern_name": &schema.Schema{
-										Description: `To change the antenna pattern name on the specified radio for an access point, set the value for this parameter to "true".
+										Description: `To change the antenna gain on the specified radio for an access point, set the value for this parameter to "true".
 `,
 										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
@@ -429,16 +388,6 @@ func resourceWirelessAccespointConfiguration() *schema.Resource {
 									},
 									"configure_clean_air_si": &schema.Schema{
 										Description: `To enable or disable either CleanAir or Spectrum Intelligence on the specified radio for an access point, set this parameter's value to "true".
-`,
-										// Type:        schema.TypeBool,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										ForceNew:     true,
-										Computed:     true,
-									},
-									"configure_elev_angle_degree": &schema.Schema{
-										Description: `To change the elevation angle degree on the specified radio for an access point, set this parameter's value to "true".
 `,
 										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
@@ -484,7 +433,7 @@ func resourceWirelessAccespointConfiguration() *schema.Resource {
 										Computed: true,
 									},
 									"radio_band": &schema.Schema{
-										Description: `Configure the band on the specified radio for an access point: for 2.4 GHz, set "RADIO24"; for 5 GHz, set "RADIO5".
+										Description: `Configure the band on the specified radio for an access point: for 2.4 GHz, set "RADIO24"; for 5 GHz, set "RADIO5". Any other string is invalid, including empty string
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -492,7 +441,7 @@ func resourceWirelessAccespointConfiguration() *schema.Resource {
 										Computed: true,
 									},
 									"radio_role_assignment": &schema.Schema{
-										Description: `Configure one of the following roles on the specified radio for an access point: "auto", "serving", or "monitor".
+										Description: `Configure only one of the following roles on the specified radio for an access point as "AUTO", "SERVING", or "MONITOR". Any other string is invalid, including empty string
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -577,11 +526,9 @@ func resourceWirelessAccespointConfigurationCreate(ctx context.Context, d *schem
 
 	request1 := expandRequestWirelessAccespointConfigurationConfigureAccessPoints(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.Wireless.ConfigureAccessPoints(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.Wireless.ConfigureAccessPoints(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -635,6 +582,9 @@ func resourceWirelessAccespointConfigurationCreate(ctx context.Context, d *schem
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenWirelessConfigureAccessPointsItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -645,7 +595,6 @@ func resourceWirelessAccespointConfigurationCreate(ctx context.Context, d *schem
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceWirelessAccespointConfigurationRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)
@@ -676,12 +625,6 @@ func expandRequestWirelessAccespointConfigurationConfigureAccessPoints(ctx conte
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ap_mode")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ap_mode")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ap_mode")))) {
 		request.ApMode = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".configure_ap_height")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".configure_ap_height")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".configure_ap_height")))) {
-		request.ConfigureApHeight = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ap_height")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ap_height")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ap_height")))) {
-		request.ApHeight = interfaceToFloat64Ptr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".configure_failover_priority")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".configure_failover_priority")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".configure_failover_priority")))) {
 		request.ConfigureFailoverPriority = interfaceToBoolPtr(v)
@@ -730,6 +673,9 @@ func expandRequestWirelessAccespointConfigurationConfigureAccessPoints(ctx conte
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".radio_configurations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".radio_configurations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".radio_configurations")))) {
 		request.RadioConfigurations = expandRequestWirelessAccespointConfigurationConfigureAccessPointsRadioConfigurationsArray(ctx, key+".radio_configurations", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_assigned_site_as_location")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_assigned_site_as_location")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_assigned_site_as_location")))) {
+		request.IsAssignedSiteAsLocation = interfaceToBoolPtr(v)
 	}
 	return &request
 }
@@ -828,21 +774,6 @@ func expandRequestWirelessAccespointConfigurationConfigureAccessPointsRadioConfi
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".admin_status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".admin_status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".admin_status")))) {
 		request.AdminStatus = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".configure_antenna_degree")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".configure_antenna_degree")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".configure_antenna_degree")))) {
-		request.ConfigureAntennaDegree = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".antenna_degree")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".antenna_degree")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".antenna_degree")))) {
-		request.AntennaDegree = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".configure_elev_angle_degree")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".configure_elev_angle_degree")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".configure_elev_angle_degree")))) {
-		request.ConfigureElevAngleDegree = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".antenna_elev_angle_degree")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".antenna_elev_angle_degree")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".antenna_elev_angle_degree")))) {
-		request.AntennaElevAngleDegree = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".antenna_elev_angle_sign")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".antenna_elev_angle_sign")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".antenna_elev_angle_sign")))) {
-		request.AntennaElevAngleSign = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".configure_antenna_pattern_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".configure_antenna_pattern_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".configure_antenna_pattern_name")))) {
 		request.ConfigureAntennaPatternName = interfaceToBoolPtr(v)

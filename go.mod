@@ -3,6 +3,7 @@ module terraform-provider-dnacenter
 go 1.21
 
 require (
+	github.com/cisco-en-programmability/dnacenter-go-sdk/v6 v6.0.0
 	github.com/hashicorp/terraform-plugin-docs v0.16.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.27.0
 )
@@ -75,7 +76,4 @@ require (
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
 
-require (
-	github.com/cisco-en-programmability/dnacenter-go-sdk/v5 v5.0.30
-	github.com/mattn/go-isatty v0.0.19 // indirect
-)
+require github.com/mattn/go-isatty v0.0.19 // indirect

@@ -43,5 +43,3 @@ Read-Only:
 - `instance_uuid` (String)
 - `int_value` (Number)
 - `system_property_name` (String)
-
-

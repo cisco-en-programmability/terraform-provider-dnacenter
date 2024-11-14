@@ -49,5 +49,3 @@ Read-Only:
 - `roles` (List of String)
 - `site_hierarchy` (String)
 - `status` (String)
-
-

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -83,81 +83,113 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"assembly_number": &schema.Schema{
+							Description: `Assembly number of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"assembly_revision": &schema.Schema{
+							Description: `Assembly revision of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"attribute_info": &schema.Schema{
+							Description: `Deprecated
+`,
 							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
 						"containment_entity": &schema.Schema{
+							Description: `Containment entity of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"description": &schema.Schema{
+							Description: `Description of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"entity_physical_index": &schema.Schema{
+							Description: `Entity physical index of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"id": &schema.Schema{
+							Description: `Id of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"is_field_replaceable": &schema.Schema{
+							Description: `To mention if field is replaceable
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"is_reporting_alarms_allowed": &schema.Schema{
+							Description: `To mention if reporting alarms are allowed
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"manufacturer": &schema.Schema{
+							Description: `Manufacturer of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"module_index": &schema.Schema{
+							Description: `Index of the module
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"name": &schema.Schema{
+							Description: `Name of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"operational_state_code": &schema.Schema{
+							Description: `Operational state of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"part_number": &schema.Schema{
+							Description: `Part number of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"serial_number": &schema.Schema{
+							Description: `Serial number of the modules
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"vendor_equipment_type": &schema.Schema{
+							Description: `Vendor equipment type of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -172,81 +204,113 @@ func dataSourceNetworkDeviceModule() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"assembly_number": &schema.Schema{
+							Description: `Assembly Number of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"assembly_revision": &schema.Schema{
+							Description: `Assembly Revision of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"attribute_info": &schema.Schema{
+							Description: `Deprecated
+`,
 							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
 						"containment_entity": &schema.Schema{
+							Description: `Containment Entity of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"description": &schema.Schema{
+							Description: `Description of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"entity_physical_index": &schema.Schema{
+							Description: `Entity Physical Index of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"id": &schema.Schema{
+							Description: `ID of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"is_field_replaceable": &schema.Schema{
+							Description: `To mention if field is replaceable
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"is_reporting_alarms_allowed": &schema.Schema{
+							Description: `To mention if reporting alarms are allowed
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"manufacturer": &schema.Schema{
+							Description: `Manufacturer of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"module_index": &schema.Schema{
+							Description: `Index of the module
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"name": &schema.Schema{
+							Description: `Name of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"operational_state_code": &schema.Schema{
+							Description: `Operational state of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"part_number": &schema.Schema{
+							Description: `Part number of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"serial_number": &schema.Schema{
+							Description: `Serial number of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"vendor_equipment_type": &schema.Schema{
+							Description: `Vendor euipment type of the module
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -309,7 +373,7 @@ func dataSourceNetworkDeviceModuleRead(ctx context.Context, d *schema.ResourceDa
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetModules", err,
+				"Failure when executing 2 GetModules", err,
 				"Failure at GetModules, unexpected response", ""))
 			return diags
 		}
@@ -339,7 +403,7 @@ func dataSourceNetworkDeviceModuleRead(ctx context.Context, d *schema.ResourceDa
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetModuleInfoByID", err,
+				"Failure when executing 2 GetModuleInfoByID", err,
 				"Failure at GetModuleInfoByID, unexpected response", ""))
 			return diags
 		}

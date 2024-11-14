@@ -67,5 +67,3 @@ Read-Only:
 
 - `ssm_group_range` (String)
 - `ssm_wildcard_mask` (String)
-
-

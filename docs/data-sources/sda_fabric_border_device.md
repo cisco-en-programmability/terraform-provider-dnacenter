@@ -75,7 +75,7 @@ Read-Only:
 - `name` (String)
 - `namespace` (String)
 - `network_device_id` (String)
-- `network_wide_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_wide_settings))
+- `network_widesettings` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_widesettings))
 - `other_device` (List of String)
 - `provisioning_state` (String)
 - `resource_version` (Number)
@@ -155,17 +155,17 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item--payload--network_wide_settings"></a>
-### Nested Schema for `item.payload.network_wide_settings`
+<a id="nestedobjatt--item--payload--network_widesettings"></a>
+### Nested Schema for `item.payload.network_widesettings`
 
 Read-Only:
 
 - `aaa` (List of String)
 - `cmx` (List of String)
 - `deploy_pending` (String)
-- `dhcp` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_wide_settings--dhcp))
+- `dhcp` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_widesettings--dhcp))
 - `display_name` (String)
-- `dns` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_wide_settings--dns))
+- `dns` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_widesettings--dns))
 - `id` (String)
 - `instance_id` (Number)
 - `instance_tenant_id` (String)
@@ -177,16 +177,16 @@ Read-Only:
 - `snmp` (List of String)
 - `syslogs` (List of String)
 
-<a id="nestedobjatt--item--payload--network_wide_settings--dhcp"></a>
-### Nested Schema for `item.payload.network_wide_settings.syslogs`
+<a id="nestedobjatt--item--payload--network_widesettings--dhcp"></a>
+### Nested Schema for `item.payload.network_widesettings.syslogs`
 
 Read-Only:
 
 - `id` (String)
-- `ip_address` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_wide_settings--syslogs--ip_address))
+- `ip_address` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_widesettings--syslogs--ip_address))
 
-<a id="nestedobjatt--item--payload--network_wide_settings--syslogs--ip_address"></a>
-### Nested Schema for `item.payload.network_wide_settings.syslogs.ip_address`
+<a id="nestedobjatt--item--payload--network_widesettings--syslogs--ip_address"></a>
+### Nested Schema for `item.payload.network_widesettings.syslogs.ip_address`
 
 Read-Only:
 
@@ -197,17 +197,17 @@ Read-Only:
 
 
 
-<a id="nestedobjatt--item--payload--network_wide_settings--dns"></a>
-### Nested Schema for `item.payload.network_wide_settings.syslogs`
+<a id="nestedobjatt--item--payload--network_widesettings--dns"></a>
+### Nested Schema for `item.payload.network_widesettings.syslogs`
 
 Read-Only:
 
 - `domain_name` (String)
 - `id` (String)
-- `ip` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_wide_settings--syslogs--ip))
+- `ip` (List of Object) (see [below for nested schema](#nestedobjatt--item--payload--network_widesettings--syslogs--ip))
 
-<a id="nestedobjatt--item--payload--network_wide_settings--syslogs--ip"></a>
-### Nested Schema for `item.payload.network_wide_settings.syslogs.ip`
+<a id="nestedobjatt--item--payload--network_widesettings--syslogs--ip"></a>
+### Nested Schema for `item.payload.network_widesettings.syslogs.ip`
 
 Read-Only:
 
@@ -225,5 +225,3 @@ Read-Only:
 Read-Only:
 
 - `id_ref` (String)
-
-

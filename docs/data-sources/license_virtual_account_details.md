@@ -54,5 +54,3 @@ Read-Only:
 
 - `virtual_account_id` (String)
 - `virtual_account_name` (String)
-
-

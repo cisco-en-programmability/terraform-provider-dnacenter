@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -110,7 +110,7 @@ func resourceServiceProvider() *schema.Resource {
 						},
 						"version": &schema.Schema{
 							Description: `Version`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 					},

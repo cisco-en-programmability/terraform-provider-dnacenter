@@ -9,8 +9,8 @@ terraform {
 }
 
 data "dnacenter_app_policy" "example" {
-  provider     = dnacenter
-  policy_scope = "draft_WiredTest"
+  provider = dnacenter
+  # policy_scope = "draft_WiredTest"
 }
 
 output "dnacenter_app_policy_example" {

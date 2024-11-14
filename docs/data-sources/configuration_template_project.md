@@ -665,5 +665,3 @@ Read-Only:
 - `template_errors` (String)
 - `template_id` (String)
 - `template_version` (String)
-
-

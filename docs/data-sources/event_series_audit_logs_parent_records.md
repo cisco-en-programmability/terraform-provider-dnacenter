@@ -112,5 +112,3 @@ Read-Only:
 - `type` (String)
 - `user_id` (String)
 - `version` (String)
-
-

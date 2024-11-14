@@ -1,37 +1,35 @@
 
 resource "dnacenter_event_subscription_rest" "example" {
   provider = dnacenter
+
   parameters {
-    payload {
 
+    description = "string"
+    filter {
 
-      description = "string"
-      filter {
+      categories = ["string"]
+      domains_subdomains {
 
-        categories = ["string"]
-        domains_subdomains {
-
-          domain      = "string"
-          sub_domains = ["string"]
-        }
-        event_ids  = ["string"]
-        severities = ["string"]
-        site_ids   = ["string"]
-        sources    = ["string"]
-        types      = ["string"]
+        domain      = "string"
+        sub_domains = ["string"]
       }
-      name = "string"
-      subscription_endpoints {
-
-        instance_id = "string"
-        subscription_details {
-
-          connector_type = "string"
-        }
-      }
-      subscription_id = "string"
-      version         = "string"
+      event_ids  = ["string"]
+      severities = ["string"]
+      site_ids   = ["string"]
+      sources    = ["string"]
+      types      = ["string"]
     }
+    name = "string"
+    subscription_endpoints {
+
+      instance_id = "string"
+      subscription_details {
+
+        connector_type = "string"
+      }
+    }
+    subscription_id = "string"
+    version         = "string"
   }
 }
 

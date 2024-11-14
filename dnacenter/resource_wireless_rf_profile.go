@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -19,7 +19,7 @@ func resourceWirelessRfProfile() *schema.Resource {
 
 - Create or Update RF profile
 
-- Delete RF profile(s)
+- Delete RF profile
 `,
 
 		CreateContext: resourceWirelessRfProfileCreate,
@@ -47,7 +47,6 @@ func resourceWirelessRfProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"default_rf_profile": &schema.Schema{
 							Description: `is Default Rf Profile
 `,
@@ -55,7 +54,6 @@ func resourceWirelessRfProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"enable_brown_field": &schema.Schema{
 							Description: `Enable Brown Field
 `,
@@ -63,7 +61,6 @@ func resourceWirelessRfProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"enable_custom": &schema.Schema{
 							Description: `Enable Custom
 `,
@@ -71,7 +68,6 @@ func resourceWirelessRfProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"enable_radio_type_a": &schema.Schema{
 							Description: `Enable Radio Type A
 `,
@@ -79,7 +75,6 @@ func resourceWirelessRfProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"enable_radio_type_b": &schema.Schema{
 							Description: `Enable Radio Type B
 `,
@@ -87,7 +82,6 @@ func resourceWirelessRfProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"enable_radio_type_c": &schema.Schema{
 							Description: `Enable Radio Type C (6GHz)
 `,
@@ -95,14 +89,12 @@ func resourceWirelessRfProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"name": &schema.Schema{
 							Description: `RF Profile Name
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-
 						"radio_type_a_properties": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -110,56 +102,49 @@ func resourceWirelessRfProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"data_rates": &schema.Schema{
-										Description: `Data Rates
+										Description: `Data Rates (Default : "6,9,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"mandatory_data_rates": &schema.Schema{
-										Description: `Mandatory Data Rates
+										Description: `Mandatory Data Rates (Default: "6,12,24")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"max_power_level": &schema.Schema{
-										Description: `Max Power Level
+										Description: `Max Power Level  (Default: 30)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-
 									"min_power_level": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold  (Default: -10)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-
 									"parent_profile": &schema.Schema{
-										Description: `Parent Profile
+										Description: `Parent Profile (Default : CUSTOM)
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"power_threshold_v1": &schema.Schema{
-										Description: `Power Threshold V1
+										Description: `Power Threshold  ( (Default: -70)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-
 									"radio_channels": &schema.Schema{
-										Description: `Radio Channels
+										Description: `Radio Channels (Default : "36,40,44,48,52,56,60,64,149,153,157,161")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"rx_sop_threshold": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold  (Default: "AUTO")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -167,7 +152,6 @@ func resourceWirelessRfProfile() *schema.Resource {
 								},
 							},
 						},
-
 						"radio_type_b_properties": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -175,56 +159,49 @@ func resourceWirelessRfProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"data_rates": &schema.Schema{
-										Description: `Data Rates
+										Description: `Data Rates  (Default: "9,11,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"mandatory_data_rates": &schema.Schema{
-										Description: `Mandatory Data Rates
+										Description: `Mandatory Data Rates  (Default: "12")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"max_power_level": &schema.Schema{
-										Description: `Max Power Level
+										Description: `Max Power Level  (Default: 30)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-
 									"min_power_level": &schema.Schema{
-										Description: `Min Power Level
+										Description: `Min Power Level  (Default: -10)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-
 									"parent_profile": &schema.Schema{
-										Description: `Parent Profile
+										Description: `Parent Profile (Default : CUSTOM)
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"power_threshold_v1": &schema.Schema{
-										Description: `Power Threshold V1
+										Description: `Power Threshold   (Default: -70)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-
 									"radio_channels": &schema.Schema{
-										Description: `Radio Channels
+										Description: `Radio Channels (Default : "9,11,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"rx_sop_threshold": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold (Default: "AUTO")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -232,7 +209,6 @@ func resourceWirelessRfProfile() *schema.Resource {
 								},
 							},
 						},
-
 						"radio_type_c_properties": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -240,56 +216,49 @@ func resourceWirelessRfProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"data_rates": &schema.Schema{
-										Description: `Data Rates
+										Description: `Data Rates  (Default: "6,9,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"mandatory_data_rates": &schema.Schema{
-										Description: `Mandatory Data Rates
+										Description: `Mandatory Data Rates  (Default: "6,12,24")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"max_power_level": &schema.Schema{
-										Description: `Max Power Level
+										Description: `Max Power Level  (Default: 30)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-
 									"min_power_level": &schema.Schema{
-										Description: `Min Power Level
+										Description: `Min Power Level  (Default: -10)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-
 									"parent_profile": &schema.Schema{
-										Description: `Parent Profile
+										Description: `Parent Profile (Default : CUSTOM)
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"power_threshold_v1": &schema.Schema{
-										Description: `Power Threshold V1
+										Description: `Power Threshold   (Default: -70)
 `,
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-
 									"radio_channels": &schema.Schema{
-										Description: `Radio Channels
+										Description: `Radio Channels (Default : "5,21,37,53,69,85,101,117,133,149,165,181,197,213,229")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-
 									"rx_sop_threshold": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold  (Default: "AUTO")
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -383,56 +352,56 @@ func resourceWirelessRfProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"data_rates": &schema.Schema{
-										Description: `Data Rates
+										Description: `Data Rates (Default : "6,9,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"mandatory_data_rates": &schema.Schema{
-										Description: `Mandatory Data Rates
+										Description: `Mandatory Data Rates (Default: "6,12,24")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"max_power_level": &schema.Schema{
-										Description: `Max Power Level
+										Description: `Max Power Level  (Default: 30)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
 										Computed: true,
 									},
 									"min_power_level": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold  (Default: -10)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
 										Computed: true,
 									},
 									"parent_profile": &schema.Schema{
-										Description: `Parent Profile
+										Description: `Parent Profile (Default : CUSTOM)
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"power_threshold_v1": &schema.Schema{
-										Description: `Power Threshold V1
+										Description: `Power Threshold  ( (Default: -70)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
 										Computed: true,
 									},
 									"radio_channels": &schema.Schema{
-										Description: `Radio Channels
+										Description: `Radio Channels (Default : "36,40,44,48,52,56,60,64,149,153,157,161")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"rx_sop_threshold": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold  (Default: "AUTO")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -449,56 +418,56 @@ func resourceWirelessRfProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"data_rates": &schema.Schema{
-										Description: `Data Rates
+										Description: `Data Rates  (Default: "9,11,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"mandatory_data_rates": &schema.Schema{
-										Description: `Mandatory Data Rates
+										Description: `Mandatory Data Rates  (Default: "12")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"max_power_level": &schema.Schema{
-										Description: `Max Power Level
+										Description: `Max Power Level  (Default: 30)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
 										Computed: true,
 									},
 									"min_power_level": &schema.Schema{
-										Description: `Min Power Level
+										Description: `Min Power Level  (Default: -10)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
 										Computed: true,
 									},
 									"parent_profile": &schema.Schema{
-										Description: `Parent Profile
+										Description: `Parent Profile (Default : CUSTOM)
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"power_threshold_v1": &schema.Schema{
-										Description: `Power Threshold V1
+										Description: `Power Threshold   (Default: -70)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
 										Computed: true,
 									},
 									"radio_channels": &schema.Schema{
-										Description: `Radio Channels
+										Description: `Radio Channels (Default : "9,11,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"rx_sop_threshold": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold (Default: "AUTO")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -515,56 +484,56 @@ func resourceWirelessRfProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"data_rates": &schema.Schema{
-										Description: `Data Rates
+										Description: `Data Rates  (Default: "6,9,12,18,24,36,48,54")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"mandatory_data_rates": &schema.Schema{
-										Description: `Mandatory Data Rates
+										Description: `Mandatory Data Rates  (Default: "6,12,24")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"max_power_level": &schema.Schema{
-										Description: `Max Power Level
+										Description: `Max Power Level  (Default: 30)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
 										Computed: true,
 									},
 									"min_power_level": &schema.Schema{
-										Description: `Min Power Level
+										Description: `Min Power Level  (Default: -10)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
 										Computed: true,
 									},
 									"parent_profile": &schema.Schema{
-										Description: `Parent Profile
+										Description: `Parent Profile (Default : CUSTOM)
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"power_threshold_v1": &schema.Schema{
-										Description: `Power Threshold V1
+										Description: `Power Threshold   (Default: -70)
 `,
 										Type:     schema.TypeFloat,
 										Optional: true,
 										Computed: true,
 									},
 									"radio_channels": &schema.Schema{
-										Description: `Radio Channels
+										Description: `Radio Channels (Default : "5,21,37,53,69,85,101,117,133,149,165,181,197,213,229")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"rx_sop_threshold": &schema.Schema{
-										Description: `Rx Sop Threshold
+										Description: `Rx Sop Threshold  (Default: "AUTO")
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -572,6 +541,12 @@ func resourceWirelessRfProfile() *schema.Resource {
 									},
 								},
 							},
+						},
+						"rf_profile_name": &schema.Schema{
+							Description: `rfProfileName path parameter. RF profile name to be deleted(required) *non-custom RF profile cannot be deleted
+`,
+							Type:     schema.TypeString,
+							Required: true,
 						},
 					},
 				},
@@ -678,7 +653,7 @@ func resourceWirelessRfProfileRead(ctx context.Context, d *schema.ResourceData, 
 		// 		"Failure at RetrieveRfProfiles, unexpected response", ""))
 		// 	return diags
 		// }
-		if response1 == nil || len(*response1.Response) == 0 {
+		if response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
@@ -688,14 +663,14 @@ func resourceWirelessRfProfileRead(ctx context.Context, d *schema.ResourceData, 
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenWirelessRetrieveRfProfilesItem(response1.Response)
+		vItem1 := flattenWirelessRetrieveRfProfilesItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting RetrieveRfProfiles search response",
 				err))
 			return diags
 		}
-		vParameters1 := flattenWirelessRetrieveRfProfilesItem(response1.Response)
+		vParameters1 := flattenWirelessRetrieveRfProfilesItem(response1)
 		log.Printf("[DEBUG] parameters set sent => %v", responseInterfaceToString(vParameters1))
 		if err := d.Set("parameters", vParameters1); err != nil {
 			diags = append(diags, diagError(
@@ -901,7 +876,7 @@ func expandRequestWirelessRfProfileCreateOrUpdateRfProfileRadioTypeAProperties(c
 		request.MandatoryDataRates = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".power_threshold_v1")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".power_threshold_v1")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".power_threshold_v1")))) {
-		request.PowerThresholdV1 = interfaceToFloat64Ptr(v)
+		request.PowerThreshold = interfaceToFloat64Ptr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rx_sop_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rx_sop_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rx_sop_threshold")))) {
 		request.RxSopThreshold = interfaceToString(v)
@@ -933,7 +908,7 @@ func expandRequestWirelessRfProfileCreateOrUpdateRfProfileRadioTypeBProperties(c
 		request.MandatoryDataRates = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".power_threshold_v1")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".power_threshold_v1")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".power_threshold_v1")))) {
-		request.PowerThresholdV1 = interfaceToFloat64Ptr(v)
+		request.PowerThreshold = interfaceToFloat64Ptr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rx_sop_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rx_sop_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rx_sop_threshold")))) {
 		request.RxSopThreshold = interfaceToString(v)
@@ -974,7 +949,7 @@ func expandRequestWirelessRfProfileCreateOrUpdateRfProfileRadioTypeCProperties(c
 		request.MaxPowerLevel = interfaceToFloat64Ptr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".power_threshold_v1")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".power_threshold_v1")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".power_threshold_v1")))) {
-		request.PowerThresholdV1 = interfaceToFloat64Ptr(v)
+		request.PowerThreshold = interfaceToFloat64Ptr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -982,10 +957,10 @@ func expandRequestWirelessRfProfileCreateOrUpdateRfProfileRadioTypeCProperties(c
 	return &request
 }
 
-func searchWirelessRetrieveRfProfiles(m interface{}, queryParams dnacentersdkgo.RetrieveRfProfilesQueryParams) (*dnacentersdkgo.ResponseWirelessRetrieveRfProfilesResponse, error) {
+func searchWirelessRetrieveRfProfiles(m interface{}, queryParams dnacentersdkgo.RetrieveRfProfilesQueryParams) (*dnacentersdkgo.ResponseWirelessRetrieveRfProfiles, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseWirelessRetrieveRfProfilesResponse
+	var foundItem *dnacentersdkgo.ResponseWirelessRetrieveRfProfiles
 	var ite *dnacentersdkgo.ResponseWirelessRetrieveRfProfiles
 	ite, _, err = client.Wireless.RetrieveRfProfiles(&queryParams)
 	if err != nil {
@@ -995,21 +970,17 @@ func searchWirelessRetrieveRfProfiles(m interface{}, queryParams dnacentersdkgo.
 	if ite == nil {
 		return foundItem, err
 	}
-	if ite.Response == nil {
+	if ite == nil {
 		return nil, err
 	}
 
-	items := ite
-
-	itemsCopy := *items.Response
-	for _, item := range itemsCopy {
-		// Call get by _ method and set value to foundItem and return
-		if item.Name == queryParams.RfProfileName {
-			var getItem *dnacentersdkgo.ResponseWirelessRetrieveRfProfilesResponse
-			getItem = &item
-			foundItem = getItem
-			return foundItem, err
-		}
+	// Call get by _ method and set value to foundItem and return
+	if ite.Name == queryParams.RfProfileName {
+		var getItem *dnacentersdkgo.ResponseWirelessRetrieveRfProfiles
+		getItem = ite
+		foundItem = getItem
+		return foundItem, err
 	}
+
 	return foundItem, err
 }

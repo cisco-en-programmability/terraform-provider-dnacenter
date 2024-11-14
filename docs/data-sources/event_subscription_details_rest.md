@@ -53,14 +53,21 @@ output "dnacenter_event_subscription_details_rest_example" {
 
 Read-Only:
 
+- `body` (String)
+- `connect_timeout` (Number)
 - `connector_type` (String)
 - `description` (String)
 - `headers` (List of Object) (see [below for nested schema](#nestedobjatt--items--headers))
 - `instance_id` (String)
 - `method` (String)
 - `name` (String)
+- `namespace` (String)
 - `path_params` (List of String)
+- `proxy_route` (String)
 - `query_params` (List of String)
+- `read_timeout` (Number)
+- `service_name` (String)
+- `service_port` (String)
 - `trust_cert` (String)
 - `url` (String)
 
@@ -71,5 +78,3 @@ Read-Only:
 
 - `name` (String)
 - `value` (String)
-
-

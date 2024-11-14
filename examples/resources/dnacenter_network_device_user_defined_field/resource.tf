@@ -1,6 +1,7 @@
 
 resource "dnacenter_network_device_user_defined_field" "example" {
   provider = dnacenter
+
   parameters {
 
     description = "string"

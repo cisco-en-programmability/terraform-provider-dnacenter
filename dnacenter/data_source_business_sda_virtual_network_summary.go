@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -40,6 +40,13 @@ func dataSourceBusinessSdaVirtualNetworkSummary() *schema.Resource {
 							Computed: true,
 						},
 
+						"execution_id": &schema.Schema{
+							Description: `Execution Id
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"status": &schema.Schema{
 							Description: `Status
 `,
@@ -60,6 +67,13 @@ func dataSourceBusinessSdaVirtualNetworkSummary() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"layer3_instance": &schema.Schema{
+										Description: `layer3 Instance
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+
 									"site_name_hierarchy": &schema.Schema{
 										Description: `Site Name Hierarchy
 `,
@@ -67,8 +81,29 @@ func dataSourceBusinessSdaVirtualNetworkSummary() *schema.Resource {
 										Computed: true,
 									},
 
+									"virtual_network_context_id": &schema.Schema{
+										Description: `Virtual Network Context Id
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"virtual_network_id": &schema.Schema{
+										Description: `Virtual Network Id
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
 									"virtual_network_name": &schema.Schema{
 										Description: `Virtual Network Name
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"virtual_network_status": &schema.Schema{
+										Description: `Virtual Network Status
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -103,7 +138,7 @@ func dataSourceBusinessSdaVirtualNetworkSummaryRead(ctx context.Context, d *sche
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetVirtualNetworkSummary", err,
+				"Failure when executing 2 GetVirtualNetworkSummary", err,
 				"Failure at GetVirtualNetworkSummary, unexpected response", ""))
 			return diags
 		}
@@ -134,6 +169,7 @@ func flattenSdaGetVirtualNetworkSummaryItem(item *dnacentersdkgo.ResponseSdaGetV
 	respItem["virtual_network_summary"] = flattenSdaGetVirtualNetworkSummaryItemVirtualNetworkSummary(item.VirtualNetworkSummary)
 	respItem["status"] = item.Status
 	respItem["description"] = item.Description
+	respItem["execution_id"] = item.ExecutionID
 	return []map[string]interface{}{
 		respItem,
 	}
@@ -146,8 +182,12 @@ func flattenSdaGetVirtualNetworkSummaryItemVirtualNetworkSummary(items *[]dnacen
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
+		respItem["virtual_network_context_id"] = item.VirtualNetworkContextID
+		respItem["virtual_network_id"] = item.VirtualNetworkID
 		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 		respItem["virtual_network_name"] = item.VirtualNetworkName
+		respItem["layer3_instance"] = item.Layer3Instance
+		respItem["virtual_network_status"] = item.VirtualNetworkStatus
 		respItems = append(respItems, respItem)
 	}
 	return respItems

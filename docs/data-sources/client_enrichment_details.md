@@ -257,5 +257,3 @@ Read-Only:
 - `health_type` (String)
 - `reason` (String)
 - `score` (Number)
-
-

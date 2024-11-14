@@ -137,5 +137,3 @@ Read-Only:
 - `role` (String)
 - `software_version` (String)
 - `user_id` (String)
-
-

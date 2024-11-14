@@ -95,7 +95,7 @@ Read-Only:
 
 Read-Only:
 
-- `items` (String)
+- `items` (List of String)
 - `name` (String)
 - `operation` (String)
 - `value` (String)
@@ -129,10 +129,8 @@ Read-Only:
 
 Read-Only:
 
-- `items` (String)
+- `items` (List of String)
 - `name` (String)
 - `operation` (String)
 - `value` (String)
 - `values` (List of String)
-
-

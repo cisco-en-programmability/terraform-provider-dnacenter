@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,13 +21,13 @@ func dataSourceComplianceDeviceDetailsCount() *schema.Resource {
 		ReadContext: dataSourceComplianceDeviceDetailsCountRead,
 		Schema: map[string]*schema.Schema{
 			"compliance_status": &schema.Schema{
-				Description: `complianceStatus query parameter. Compliance status can have value among 'COMPLIANT', 'NON_COMPLIANT', 'IN_PROGRESS', 'NOT_AVAILABLE', 'NOT_APPLICABLE', 'ERROR'
+				Description: `complianceStatus query parameter. Specify "Compliance status(es)" separated by commas. The Compliance status can be 'COMPLIANT', 'NON_COMPLIANT', 'IN_PROGRESS', 'NOT_AVAILABLE', 'NOT_APPLICABLE', 'ERROR'.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"compliance_type": &schema.Schema{
-				Description: `complianceType query parameter. complianceType can have any value among 'NETWORK_PROFILE', 'IMAGE', 'APPLICATION_VISIBILITY', 'FABRIC', 'PSIRT', 'RUNNING_CONFIG', 'WORKFLOW'.
+				Description: `complianceType query parameter. Specify "Compliance type(s)" separated by commas. The Compliance type can be 'APPLICATION_VISIBILITY', 'EoX', 'FABRIC', 'IMAGE', 'NETWORK_PROFILE', 'NETWORK_SETTINGS', 'PSIRT', 'RUNNING_CONFIG', 'WORKFLOW'. 
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -40,15 +40,17 @@ func dataSourceComplianceDeviceDetailsCount() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"response": &schema.Schema{
-							Description: `Response`,
-							Type:        schema.TypeFloat,
-							Computed:    true,
+							Description: `Count of all devices or devices that match the query parameters.
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
 						},
 
 						"version": &schema.Schema{
-							Description: `Version`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Version of API.
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -83,7 +85,7 @@ func dataSourceComplianceDeviceDetailsCountRead(ctx context.Context, d *schema.R
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetComplianceDetailCount", err,
+				"Failure when executing 2 GetComplianceDetailCount", err,
 				"Failure at GetComplianceDetailCount, unexpected response", ""))
 			return diags
 		}

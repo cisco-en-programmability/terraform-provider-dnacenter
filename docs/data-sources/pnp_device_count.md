@@ -18,13 +18,10 @@ It performs read operation on Device Onboarding (PnP).
 ```terraform
 data "dnacenter_pnp_device_count" "example" {
   provider           = dnacenter
-  cm_state           = ["string"]
   last_contact       = "false"
   name               = ["string"]
   onb_state          = ["string"]
   pid                = ["string"]
-  project_id         = ["string"]
-  project_name       = ["string"]
   serial_number      = ["string"]
   smart_account_id   = ["string"]
   source             = ["string"]
@@ -44,13 +41,10 @@ output "dnacenter_pnp_device_count_example" {
 
 ### Optional
 
-- `cm_state` (List of String) cmState query parameter. Device Connection Manager State
 - `last_contact` (Boolean) lastContact query parameter. Device Has Contacted lastContact > 0
 - `name` (List of String) name query parameter. Device Name
 - `onb_state` (List of String) onbState query parameter. Device Onboarding State
 - `pid` (List of String) pid query parameter. Device ProductId
-- `project_id` (List of String) projectId query parameter. Device Project Id
-- `project_name` (List of String) projectName query parameter. Device Project Name
 - `serial_number` (List of String) serialNumber query parameter. Device Serial Number
 - `smart_account_id` (List of String) smartAccountId query parameter. Device Smart Account
 - `source` (List of String) source query parameter. Device Source
@@ -70,5 +64,3 @@ output "dnacenter_pnp_device_count_example" {
 Read-Only:
 
 - `response` (Number)
-
-

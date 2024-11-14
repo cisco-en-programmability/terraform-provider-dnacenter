@@ -42,5 +42,3 @@ Read-Only:
 - `display_name` (String)
 - `is_custom_connector` (String)
 - `is_default_supported` (String)
-
-

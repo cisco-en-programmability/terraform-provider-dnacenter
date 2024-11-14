@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -63,18 +63,20 @@ func resourceBusinessSdaWirelessControllerCreate() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"device_name": &schema.Schema{
-							Description: `EWLC Device Name
+							Description: `WLC Device Name
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy
+							Description: `Fabric Site Name Hierarchy
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -89,19 +91,16 @@ func resourceBusinessSdaWirelessControllerCreateCreate(ctx context.Context, d *s
 
 	request1 := expandRequestBusinessSdaWirelessControllerCreateAddWLCToFabricDomain(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.FabricWireless.AddWLCToFabricDomain(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.FabricWireless.AddWLCToFabricDomain(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing AddWLCToFabricDomain", err,
-			"Failure at AddWLCToFabricDomain, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing AddWLCToFabricDomain", err))
 		return diags
 	}
 
@@ -121,7 +120,7 @@ func resourceBusinessSdaWirelessControllerCreateCreate(ctx context.Context, d *s
 				"Failure at GetBusinessAPIExecutionDetails, unexpected response", ""))
 			return diags
 		}
-		for statusIsPending(response2.Status) {
+		for response2.Status == "IN_PROGRESS" {
 			time.Sleep(10 * time.Second)
 			response2, restyResp1, err = client.Task.GetBusinessAPIExecutionDetails(executionId)
 			if err != nil || response2 == nil {
@@ -134,7 +133,7 @@ func resourceBusinessSdaWirelessControllerCreateCreate(ctx context.Context, d *s
 				return diags
 			}
 		}
-		if statusIsFailure(response2.Status) {
+		if response2.Status == "FAILURE" {
 			bapiError := response2.BapiError
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing AddWLCToFabricDomain", err,
@@ -149,6 +148,7 @@ func resourceBusinessSdaWirelessControllerCreateCreate(ctx context.Context, d *s
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

@@ -23,7 +23,7 @@ resource "dnacenter_deploy_template" "example" {
     target_info {
       //host_name             = "C9K-Branch-SFO"
       id = "3923aed0-16e5-4ed0-b430-ff6dcfd9c517"
-      # params = {
+      # params {
       #   int  = "g1/01/12"
       #   desc = "auto"
       # }

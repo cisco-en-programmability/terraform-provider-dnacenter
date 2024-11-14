@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,9 +21,10 @@ func dataSourceComplianceDeviceByID() *schema.Resource {
 		ReadContext: dataSourceComplianceDeviceByIDRead,
 		Schema: map[string]*schema.Schema{
 			"device_uuid": &schema.Schema{
-				Description: `deviceUuid path parameter.`,
-				Type:        schema.TypeString,
-				Required:    true,
+				Description: `deviceUuid path parameter. Device Id
+`,
+				Type:     schema.TypeString,
+				Required: true,
 			},
 
 			"item": &schema.Schema{
@@ -33,33 +34,31 @@ func dataSourceComplianceDeviceByID() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"compliance_status": &schema.Schema{
-							Description: `Compliance Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Current compliance status of the device that will be one of COMPLIANT, NON_COMPLIANT, ERROR, IN_PROGRESS, NOT_APPLICABLE, NOT_AVAILABLE, COMPLIANT_WARNING, REMEDIATION_IN_PROGRESS, or ABORTED. 
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"device_uuid": &schema.Schema{
-							Description: `Device Uuid`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `UUID of the device.
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"last_update_time": &schema.Schema{
-							Description: `Last Update Time`,
-							Type:        schema.TypeFloat,
-							Computed:    true,
-						},
-
-						"message": &schema.Schema{
-							Description: `Message`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Timestamp when the latest compliance checks ran.
+`,
+							Type:     schema.TypeFloat,
+							Computed: true,
 						},
 
 						"schedule_time": &schema.Schema{
-							Description: `Schedule Time`,
-							Type:        schema.TypeFloat,
-							Computed:    true,
+							Description: `Timestamp when the next compliance checks will run.
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -86,7 +85,7 @@ func dataSourceComplianceDeviceByIDRead(ctx context.Context, d *schema.ResourceD
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing DeviceComplianceStatus", err,
+				"Failure when executing 2 DeviceComplianceStatus", err,
 				"Failure at DeviceComplianceStatus, unexpected response", ""))
 			return diags
 		}
@@ -115,9 +114,8 @@ func flattenComplianceDeviceComplianceStatusItem(item *dnacentersdkgo.ResponseCo
 	respItem := make(map[string]interface{})
 	respItem["device_uuid"] = item.DeviceUUID
 	respItem["compliance_status"] = item.ComplianceStatus
-	respItem["message"] = item.Message
-	respItem["schedule_time"] = item.ScheduleTime
 	respItem["last_update_time"] = item.LastUpdateTime
+	respItem["schedule_time"] = item.ScheduleTime
 	return []map[string]interface{}{
 		respItem,
 	}

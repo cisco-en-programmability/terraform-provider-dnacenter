@@ -31,7 +31,7 @@ output "dnacenter_network_device_meraki_organization_example" {
 
 ### Required
 
-- `id` (String) id path parameter.
+- `id` (String) id path parameter. Device Id
 
 ### Read-Only
 
@@ -44,5 +44,3 @@ Read-Only:
 
 - `response` (List of String)
 - `version` (String)
-
-

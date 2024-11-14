@@ -1,0 +1,1 @@
+terraform import dnacenter_license_setting.example "id:=string"

@@ -82,5 +82,3 @@ Read-Only:
 - `name` (String)
 - `view_id` (String)
 - `view_info` (String)
-
-

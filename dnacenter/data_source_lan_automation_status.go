@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -31,13 +31,13 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of LAN Automation sessions to be retrieved. Limit value can range between 1 to 10.
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Starting index of the LAN Automation session. Minimum value is 1.
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 
@@ -108,6 +108,30 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 							Computed: true,
 						},
 
+						"discovery_devices": &schema.Schema{
+							Description: `Specific devices that will be LAN Automated in this session. Any other device discovered via DHCP will be attempted for a reset and reload to bring it back to the PnP agent state at the end of the LAN Automation process before process completion. The maximum supported devices that can be provided for a session is 50.
+`,
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+
+						"discovery_level": &schema.Schema{
+							Description: `Level below primary seed device upto which the new devices will be LAN Automated by this session, level + seed = tier. Supported range for level is [1-5], default level is 2.
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"discovery_timeout": &schema.Schema{
+							Description: `Discovery timeout in minutes. Until this time, the stop processing will not be triggered. Any device contacting after the provided discovery timeout will not be processed, and a device reset and reload will be attempted to bring it back to the PnP agent state before process completion. The supported timeout range is in minutes [20-10080].
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
 						"id": &schema.Schema{
 							Description: `LAN Automation session id.
 `,
@@ -115,7 +139,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 							Computed: true,
 						},
 
-						"ip_pool_list": &schema.Schema{
+						"ip_pools": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -255,6 +279,30 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 							Computed: true,
 						},
 
+						"discovery_devices": &schema.Schema{
+							Description: `Specific devices that will be LAN Automated in this session. Any other device discovered via DHCP will be attempted for a reset and reload to bring it back to the PnP agent state at the end of the LAN Automation process before process completion. The maximum supported devices that can be provided for a session is 50.
+`,
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+
+						"discovery_level": &schema.Schema{
+							Description: `Level below primary seed device upto which the new devices will be LAN Automated by this session, level + seed = tier. Supported range for level is [1-5], default level is 2.
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
+						"discovery_timeout": &schema.Schema{
+							Description: `Discovery timeout in minutes. Until this time, the stop processing will not be triggered. Any device contacting after the provided discovery timeout will not be processed, and a device reset and reload will be attempted to bring it back to the PnP agent state before process completion. The supported timeout range is in minutes [20-10080].
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+
 						"id": &schema.Schema{
 							Description: `LAN Automation session id.
 `,
@@ -262,7 +310,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 							Computed: true,
 						},
 
-						"ip_pool_list": &schema.Schema{
+						"ip_pools": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -357,10 +405,10 @@ func dataSourceLanAutomationStatusRead(ctx context.Context, d *schema.ResourceDa
 		queryParams1 := dnacentersdkgo.LanAutomationStatusQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 
 		response1, restyResp1, err := client.LanAutomation.LanAutomationStatus(&queryParams1)
@@ -370,7 +418,7 @@ func dataSourceLanAutomationStatusRead(ctx context.Context, d *schema.ResourceDa
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing LanAutomationStatus", err,
+				"Failure when executing 2 LanAutomationStatus", err,
 				"Failure at LanAutomationStatus, unexpected response", ""))
 			return diags
 		}
@@ -400,7 +448,7 @@ func dataSourceLanAutomationStatusRead(ctx context.Context, d *schema.ResourceDa
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing LanAutomationStatusByID", err,
+				"Failure when executing 2 LanAutomationStatusByID", err,
 				"Failure at LanAutomationStatusByID, unexpected response", ""))
 			return diags
 		}
@@ -432,7 +480,7 @@ func flattenLanAutomationLanAutomationStatusItems(items *[]dnacentersdkgo.Respon
 		respItem["id"] = item.ID
 		respItem["discovered_device_site_name_hierarchy"] = item.DiscoveredDeviceSiteNameHierarchy
 		respItem["primary_device_managment_ipaddress"] = item.PrimaryDeviceManagmentIPAddress
-		respItem["ip_pool_list"] = flattenLanAutomationLanAutomationStatusItemsIPPoolList(item.IPPoolList)
+		respItem["ip_pools"] = flattenLanAutomationLanAutomationStatusItemsIPPools(item.IPPools)
 		respItem["primary_device_interface_names"] = item.PrimaryDeviceInterfaceNames
 		respItem["status"] = item.Status
 		respItem["action"] = item.Action
@@ -441,12 +489,15 @@ func flattenLanAutomationLanAutomationStatusItems(items *[]dnacentersdkgo.Respon
 		respItem["peer_device_managment_ipaddress"] = item.PeerDeviceManagmentIPAddress
 		respItem["discovered_device_list"] = flattenLanAutomationLanAutomationStatusItemsDiscoveredDeviceList(item.DiscoveredDeviceList)
 		respItem["redistribute_isis_to_bgp"] = boolPtrToString(item.RedistributeIsisToBgp)
+		respItem["discovery_level"] = item.DiscoveryLevel
+		respItem["discovery_timeout"] = item.DiscoveryTimeout
+		respItem["discovery_devices"] = flattenLanAutomationLanAutomationStatusItemsDiscoveryDevices(item.DiscoveryDevices)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenLanAutomationLanAutomationStatusItemsIPPoolList(items *[]dnacentersdkgo.ResponseLanAutomationLanAutomationStatusResponseIPPoolList) []map[string]interface{} {
+func flattenLanAutomationLanAutomationStatusItemsIPPools(items *[]dnacentersdkgo.ResponseLanAutomationLanAutomationStatusResponseIPPools) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -476,6 +527,18 @@ func flattenLanAutomationLanAutomationStatusItemsDiscoveredDeviceList(items *[]d
 	return respItems
 }
 
+func flattenLanAutomationLanAutomationStatusItemsDiscoveryDevices(items *[]dnacentersdkgo.ResponseLanAutomationLanAutomationStatusResponseDiscoveryDevices) []interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []interface{}
+	for _, item := range *items {
+		respItem := item
+		respItems = append(respItems, responseInterfaceToString(respItem))
+	}
+	return respItems
+}
+
 func flattenLanAutomationLanAutomationStatusByIDItem(items *[]dnacentersdkgo.ResponseLanAutomationLanAutomationStatusByIDResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
@@ -486,7 +549,7 @@ func flattenLanAutomationLanAutomationStatusByIDItem(items *[]dnacentersdkgo.Res
 		respItem["id"] = item.ID
 		respItem["discovered_device_site_name_hierarchy"] = item.DiscoveredDeviceSiteNameHierarchy
 		respItem["primary_device_managment_ipaddress"] = item.PrimaryDeviceManagmentIPAddress
-		respItem["ip_pool_list"] = flattenLanAutomationLanAutomationStatusByIDItemIPPoolList(item.IPPoolList)
+		respItem["ip_pools"] = flattenLanAutomationLanAutomationStatusByIDItemIPPools(item.IPPools)
 		respItem["primary_device_interface_names"] = item.PrimaryDeviceInterfaceNames
 		respItem["status"] = item.Status
 		respItem["action"] = item.Action
@@ -495,12 +558,15 @@ func flattenLanAutomationLanAutomationStatusByIDItem(items *[]dnacentersdkgo.Res
 		respItem["peer_device_managment_ipaddress"] = item.PeerDeviceManagmentIPAddress
 		respItem["discovered_device_list"] = flattenLanAutomationLanAutomationStatusByIDItemDiscoveredDeviceList(item.DiscoveredDeviceList)
 		respItem["redistribute_isis_to_bgp"] = boolPtrToString(item.RedistributeIsisToBgp)
+		respItem["discovery_level"] = item.DiscoveryLevel
+		respItem["discovery_timeout"] = item.DiscoveryTimeout
+		respItem["discovery_devices"] = flattenLanAutomationLanAutomationStatusByIDItemDiscoveryDevices(item.DiscoveryDevices)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenLanAutomationLanAutomationStatusByIDItemIPPoolList(items *[]dnacentersdkgo.ResponseLanAutomationLanAutomationStatusByIDResponseIPPoolList) []map[string]interface{} {
+func flattenLanAutomationLanAutomationStatusByIDItemIPPools(items *[]dnacentersdkgo.ResponseLanAutomationLanAutomationStatusByIDResponseIPPools) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -526,6 +592,18 @@ func flattenLanAutomationLanAutomationStatusByIDItemDiscoveredDeviceList(items *
 		respItem["state"] = item.State
 		respItem["ip_address_in_use_list"] = item.IPAddressInUseList
 		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenLanAutomationLanAutomationStatusByIDItemDiscoveryDevices(items *[]dnacentersdkgo.ResponseLanAutomationLanAutomationStatusByIDResponseDiscoveryDevices) []interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []interface{}
+	for _, item := range *items {
+		respItem := item
+		respItems = append(respItems, responseInterfaceToString(respItem))
 	}
 	return respItems
 }

@@ -32,5 +32,3 @@ output "dnacenter_pnp_smart_account_domains_example" {
 
 - `id` (String) The ID of this resource.
 - `items` (List of String)
-
-

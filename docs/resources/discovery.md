@@ -26,9 +26,72 @@ by range" API.
 ```terraform
 resource "dnacenter_discovery" "example" {
   provider = dnacenter
+  item {
+
+
+
+
+
+
+
+
+
+    http_read_credential {
+
+
+
+
+
+
+
+
+
+
+
+    }
+    http_write_credential {
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
   parameters {
 
-    attribute_info            = "string"
+    attribute_info            = "------"
     cdp_level                 = 1
     device_ids                = "string"
     discovery_condition       = "string"
@@ -117,75 +180,69 @@ output "dnacenter_discovery_example" {
 
 Optional:
 
-- `attribute_info` (String)
-- `cdp_level` (Number) CDP level to which neighbor devices to be discovered
-- `device_ids` (String)
-- `discovery_condition` (String)
-- `discovery_status` (String)
-- `discovery_type` (String) Type of Discovery. 'SINGLE', 'RANGE', 'MULTI RANGE', 'CDP', 'LLDP', 'CIDR'
+- `attribute_info` (String) Deprecated
+- `cdp_level` (Number) CDP level to which neighbor devices are to be discovered
+- `device_ids` (String) Ids of the devices discovered in a discovery
+- `discovery_condition` (String) To indicate the discovery status. Available options: Complete or In Progress
+- `discovery_status` (String) Status of the discovery. Available options are: Active, Inactive, Edit
+- `discovery_type` (String) Type of the discovery. 'Single', 'Range', 'Multi Range', 'CDP', 'LLDP', 'CIDR'
 - `enable_password_list` (List of String) Enable Password of the devices to be discovered
 
 ERROR: Different types for param enablePasswordList schema.TypeList schema.TypeString
 - `global_credential_id_list` (List of String) Global Credential Ids to be used for discovery
 - `http_read_credential` (Block List) (see [below for nested schema](#nestedblock--parameters--http_read_credential))
 - `http_write_credential` (Block List) (see [below for nested schema](#nestedblock--parameters--http_write_credential))
+- `id` (String) Unique Discovery Id
 - `ip_address_list` (String) IP Address of devices to be discovered. Ex: '172.30.0.1' for SINGLE, CDP and LLDP; '72.30.0.1-172.30.0.4' for RANGE; '72.30.0.1-172.30.0.4,172.31.0.1-172.31.0.4' for MULTI RANGE; '172.30.0.1/20' for CIDR
 - `ip_filter_list` (List of String) IP Addresses of the devices to be filtered out during discovery
 
 ERROR: Different types for param ipFilterList schema.TypeList schema.TypeString
-- `is_auto_cdp` (String)
+- `is_auto_cdp` (String) Flag to mention if CDP discovery or not
 - `lldp_level` (Number) LLDP level to which neighbor devices to be discovered
 - `name` (String) Name of the discovery
 - `netconf_port` (String) Netconf Port. It will need valid SSH credentials to work
-- `num_devices` (Number)
-- `parent_discovery_id` (String)
+- `num_devices` (Number) Number of devices discovered in the discovery
+- `parent_discovery_id` (String) Parent Discovery Id from which the discovery was initiated
 - `password_list` (List of String, Sensitive) Password of the devices to be discovered
 
 ERROR: Different types for param passwordList schema.TypeList schema.TypeString
 - `preferred_mgmt_ipmethod` (String) Preferred Management IP Method.'None' or 'UseLoopBack'. Default is 'None'
 - `protocol_order` (String) Order of protocol (ssh/telnet) in which device connection will be tried. Ex: 'telnet': only telnet; 'ssh,telnet': ssh with higher order than telnet
 - `retry` (Number) Number of times to try establishing connection to device
-- `retry_count` (Number)
-- `snmp_auth_passphrase` (String) Auth Pass phrase for SNMP
+- `retry_count` (Number) Number of times to try establishing connection to device
+- `snmp_auth_passphrase` (String) Auth passphrase for SNMP
 - `snmp_auth_protocol` (String) SNMP auth protocol. SHA' or 'MD5'
 - `snmp_mode` (String) Mode of SNMP. 'AUTHPRIV' or 'AUTHNOPRIV' or 'NOAUTHNOPRIV'
 - `snmp_priv_passphrase` (String) Pass phrase for SNMP privacy
-- `snmp_priv_protocol` (String) SNMP privacy protocol. 'DES' or 'AES128'
-- `snmp_ro_community` (String) Snmp RO community of the devices to be discovered
-- `snmp_ro_community_desc` (String) Description for Snmp RO community
-- `snmp_rw_community` (String) Snmp RW community of the devices to be discovered
-- `snmp_rw_community_desc` (String) Description for Snmp RW community
+- `snmp_priv_protocol` (String) SNMP privacy protocol. 'AES128'
+- `snmp_ro_community` (String) SNMP RO community of the devices to be discovered
+- `snmp_ro_community_desc` (String) Description for SNMP RO community
+- `snmp_rw_community` (String) SNMP RW community of the devices to be discovered
+- `snmp_rw_community_desc` (String) Description for SNMP RW community
 - `snmp_user_name` (String) SNMP username of the device
 - `snmp_version` (String) Version of SNMP. v2 or v3
-- `time_out` (Number)
+- `time_out` (Number) Time to wait for device response.
 - `timeout` (Number) Time to wait for device response in seconds
-- `update_mgmt_ip` (String)
+- `update_mgmt_ip` (String) Updates Management IP if multiple IPs are available for a device. If set to true, when a device is rediscovered with a different IP, the management IP is updated. Default value is false
 - `user_name_list` (List of String) Username of the devices to be discovered
 
 ERROR: Different types for param userNameList schema.TypeList schema.TypeString
-
-Read-Only:
-
-- `id` (String) The ID of this resource.
 
 <a id="nestedblock--parameters--http_read_credential"></a>
 ### Nested Schema for `parameters.http_read_credential`
 
 Optional:
 
-- `comments` (String)
-- `credential_type` (String)
-- `description` (String)
-- `instance_tenant_id` (String)
-- `instance_uuid` (String)
+- `comments` (String) Comments to identify the credential
+- `credential_type` (String) Credential type to identify the application that uses the credential
+- `description` (String) Description of the credential
+- `id` (String) Credential Id
+- `instance_tenant_id` (String) Credential Tenant Id
+- `instance_uuid` (String) Credential Id
 - `password` (String, Sensitive) HTTP(S) password
 - `port` (Number) HTTP(S) port
 - `secure` (String) Flag for HTTPS
 - `username` (String) HTTP(S) username
-
-Read-Only:
-
-- `id` (String) The ID of this resource.
 
 
 <a id="nestedblock--parameters--http_write_credential"></a>
@@ -193,19 +250,16 @@ Read-Only:
 
 Optional:
 
-- `comments` (String)
-- `credential_type` (String)
-- `description` (String)
-- `instance_tenant_id` (String)
-- `instance_uuid` (String)
+- `comments` (String) Comments to identify the credential
+- `credential_type` (String) Credential type to identify the application that uses the credential
+- `description` (String) Description of the credential
+- `id` (String) Credential Id
+- `instance_tenant_id` (String) Credential Tenant Id
+- `instance_uuid` (String) Credential Id
 - `password` (String, Sensitive) HTTP(S) password
 - `port` (Number) HTTP(S) port
 - `secure` (String) Flag for HTTPS
 - `username` (String) HTTP(S) username
-
-Read-Only:
-
-- `id` (String) The ID of this resource.
 
 
 

@@ -18,7 +18,7 @@ It performs read operation on Clients.
 ```terraform
 data "dnacenter_client_health" "example" {
   provider  = dnacenter
-  timestamp = "string"
+  timestamp = 1.0
 }
 
 output "dnacenter_client_health_example" {
@@ -31,7 +31,7 @@ output "dnacenter_client_health_example" {
 
 ### Optional
 
-- `timestamp` (String) timestamp query parameter. Epoch time(in milliseconds) when the Client health data is required
+- `timestamp` (Number) timestamp query parameter. Epoch time(in milliseconds) when the Client health data is required
 
 ### Read-Only
 
@@ -53,11 +53,16 @@ Read-Only:
 
 - `client_count` (Number)
 - `client_unique_count` (Number)
+- `connected_to_udn_count` (Number)
+- `duid_count` (Number)
 - `endtime` (Number)
+- `maintenance_affected_client_count` (Number)
+- `random_mac_count` (Number)
 - `score_category` (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_category))
 - `score_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list))
 - `score_value` (Number)
 - `starttime` (Number)
+- `unconnected_to_udn_count` (Number)
 
 <a id="nestedobjatt--items--score_detail--score_category"></a>
 ### Nested Schema for `items.score_detail.score_category`
@@ -75,39 +80,20 @@ Read-Only:
 
 - `client_count` (Number)
 - `client_unique_count` (Number)
+- `connected_to_udn_count` (Number)
+- `duid_count` (Number)
 - `endtime` (Number)
+- `maintenance_affected_client_count` (Number)
+- `random_mac_count` (Number)
 - `score_category` (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list--score_category))
-- `score_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list--score_list))
 - `score_value` (Number)
 - `starttime` (Number)
+- `unconnected_to_udn_count` (Number)
 
 <a id="nestedobjatt--items--score_detail--score_list--score_category"></a>
-### Nested Schema for `items.score_detail.score_list.starttime`
+### Nested Schema for `items.score_detail.score_list.unconnected_to_udn_count`
 
 Read-Only:
 
 - `score_category` (String)
 - `value` (String)
-
-
-<a id="nestedobjatt--items--score_detail--score_list--score_list"></a>
-### Nested Schema for `items.score_detail.score_list.starttime`
-
-Read-Only:
-
-- `client_count` (Number)
-- `client_unique_count` (String)
-- `endtime` (Number)
-- `score_category` (List of Object) (see [below for nested schema](#nestedobjatt--items--score_detail--score_list--starttime--score_category))
-- `score_value` (Number)
-- `starttime` (Number)
-
-<a id="nestedobjatt--items--score_detail--score_list--starttime--score_category"></a>
-### Nested Schema for `items.score_detail.score_list.starttime.score_category`
-
-Read-Only:
-
-- `score_category` (String)
-- `value` (String)
-
-

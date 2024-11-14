@@ -89,5 +89,3 @@ Read-Only:
 - `log_level` (String)
 - `record` (String)
 - `time_stamp` (String)
-
-

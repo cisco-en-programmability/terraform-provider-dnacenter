@@ -4,14 +4,18 @@ page_title: "dnacenter_system_performance_historical Data Source - terraform-pro
 subcategory: ""
 description: |-
   It performs read operation on Health and Performance.
-  This data source retrieves the historical performance indicators . The data can be retrieved for the last 3 months.
+  Retrieves the average values of cluster key performance indicators (KPIs), like CPU utilization, memory utilization or
+  network rates grouped by time intervals within a specified time range. The data will be available from the past 24
+  hours.
 ---
 
 # dnacenter_system_performance_historical (Data Source)
 
 It performs read operation on Health and Performance.
 
-- This data source retrieves the historical performance indicators . The data can be retrieved for the last 3 months.
+- Retrieves the average values of cluster key performance indicators (KPIs), like CPU utilization, memory utilization or
+network rates grouped by time intervals within a specified time range. The data will be available from the past 24
+hours.
 
 ## Example Usage
 
@@ -56,8 +60,10 @@ Read-Only:
 
 Read-Only:
 
+- `cpu_avg` (String)
 - `data` (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--data))
 - `legends` (List of Object) (see [below for nested schema](#nestedobjatt--item--kpis--legends))
+- `memory_avg` (String)
 
 <a id="nestedobjatt--item--kpis--data"></a>
 ### Nested Schema for `item.kpis.data`
@@ -107,5 +113,3 @@ Read-Only:
 Read-Only:
 
 - `units` (String)
-
-

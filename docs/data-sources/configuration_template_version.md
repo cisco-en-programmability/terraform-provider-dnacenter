@@ -12,6 +12,9 @@ description: |-
 It performs read operation on Configuration Templates.
 
 - Get all the versions of template by its id
+~>**Warning:**
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
@@ -61,5 +64,3 @@ Read-Only:
 - `version` (String)
 - `version_comment` (String)
 - `version_time` (Number)
-
-

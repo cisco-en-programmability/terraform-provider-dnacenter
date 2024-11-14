@@ -11,7 +11,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -76,18 +76,20 @@ future more possible operations will be added to this API
 							ForceNew: true,
 						},
 						"operation": &schema.Schema{
-							Description: `Operation`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-							Computed:    true,
+							Description: `Operation needs to be specified as 'ClearMacAddress'.
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+							Computed: true,
 						},
 						"payload": &schema.Schema{
-							Description: `Payload`,
-							Type:        schema.TypeString, //TEST,
-							Optional:    true,
-							ForceNew:    true,
-							Computed:    true,
+							Description: `Payload is not applicable
+`,
+							Type:     schema.TypeString, //TEST,
+							Optional: true,
+							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -108,11 +110,9 @@ func resourceInterfaceOperationCreateCreate(ctx context.Context, d *schema.Resou
 	request1 := expandRequestInterfaceOperationCreateClearMacAddressTable(ctx, "parameters.0", d)
 	queryParams1 := dnacentersdkgo.ClearMacAddressTableQueryParams{}
 
-	response1, restyResp1, err := client.Devices.ClearMacAddressTable(vvInterfaceUUID, request1, &queryParams1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.Devices.ClearMacAddressTable(vvInterfaceUUID, request1, &queryParams1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -166,6 +166,9 @@ func resourceInterfaceOperationCreateCreate(ctx context.Context, d *schema.Resou
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenDevicesClearMacAddressTableItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -176,7 +179,6 @@ func resourceInterfaceOperationCreateCreate(ctx context.Context, d *schema.Resou
 
 	d.SetId(getUnixTimeString())
 	return diags
-
 }
 func resourceInterfaceOperationCreateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	//client := m.(*dnacentersdkgo.Client)

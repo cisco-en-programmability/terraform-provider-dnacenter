@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,7 +16,7 @@ func dataSourceNetworkDeviceUserDefinedField() *schema.Resource {
 		Description: `It performs read operation on Devices.
 
 - Gets existing global User Defined Fields. If no input is given, it fetches ALL the Global UDFs. Filter/search is
-supported either by UDF Id(s) or by UDF name(s), but not both.
+supported by UDF Id(s) or UDF name(s) or both.
 `,
 
 		ReadContext: dataSourceNetworkDeviceUserDefinedFieldRead,
@@ -41,21 +41,24 @@ supported either by UDF Id(s) or by UDF name(s), but not both.
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Description for UDF
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"id": &schema.Schema{
-							Description: `Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `DeviceId of the Device
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `UDF name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -90,7 +93,7 @@ func dataSourceNetworkDeviceUserDefinedFieldRead(ctx context.Context, d *schema.
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAllUserDefinedFields", err,
+				"Failure when executing 2 GetAllUserDefinedFields", err,
 				"Failure at GetAllUserDefinedFields, unexpected response", ""))
 			return diags
 		}

@@ -1,0 +1,1 @@
+terraform import dnacenter_sda_fabric_devices_layer2_handoffs_ip_transits.example "id:=string"

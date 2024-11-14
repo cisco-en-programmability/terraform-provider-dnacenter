@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -50,6 +50,8 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
+							Description: `Deprecated
+`,
 							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
@@ -61,21 +63,29 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"attribute_info": &schema.Schema{
+										Description: `Deprecated
+`,
 										Type:     schema.TypeString, //TEST,
 										Computed: true,
 									},
 
 									"id": &schema.Schema{
+										Description: `Deprecated
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"property_name": &schema.Schema{
+										Description: `Property Name of the function
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"string_value": &schema.Schema{
+										Description: `Value for the property
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -84,16 +94,22 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 						},
 
 						"function_name": &schema.Schema{
+							Description: `Name of the function
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"function_op_state": &schema.Schema{
+							Description: `Operational state of the function
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"id": &schema.Schema{
+							Description: `Id of the function
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -108,11 +124,15 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_info": &schema.Schema{
+							Description: `Deprecated
+`,
 							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
 						"device_id": &schema.Schema{
+							Description: `Device Id of the device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -124,6 +144,8 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"attribute_info": &schema.Schema{
+										Description: `Deprecated
+`,
 										Type:     schema.TypeString, //TEST,
 										Computed: true,
 									},
@@ -135,21 +157,29 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"attribute_info": &schema.Schema{
+													Description: `Deprecated
+`,
 													Type:     schema.TypeString, //TEST,
 													Computed: true,
 												},
 
 												"id": &schema.Schema{
+													Description: `Deprecated
+`,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 
 												"property_name": &schema.Schema{
+													Description: `Property Name of the function
+`,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 
 												"string_value": &schema.Schema{
+													Description: `Value for the property
+`,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -158,16 +188,22 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 									},
 
 									"function_name": &schema.Schema{
+										Description: `Name of the function
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"function_op_state": &schema.Schema{
+										Description: `Operational state of the function
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 
 									"id": &schema.Schema{
+										Description: `Id of the function
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -176,6 +212,8 @@ func dataSourceNetworkDeviceFunctionalCapability() *schema.Resource {
 						},
 
 						"id": &schema.Schema{
+							Description: `Deprecated
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -218,7 +256,7 @@ func dataSourceNetworkDeviceFunctionalCapabilityRead(ctx context.Context, d *sch
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetFunctionalCapabilityForDevices", err,
+				"Failure when executing 2 GetFunctionalCapabilityForDevices", err,
 				"Failure at GetFunctionalCapabilityForDevices, unexpected response", ""))
 			return diags
 		}
@@ -248,7 +286,7 @@ func dataSourceNetworkDeviceFunctionalCapabilityRead(ctx context.Context, d *sch
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetFunctionalCapabilityByID", err,
+				"Failure when executing 2 GetFunctionalCapabilityByID", err,
 				"Failure at GetFunctionalCapabilityByID, unexpected response", ""))
 			return diags
 		}

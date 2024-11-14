@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -22,7 +22,7 @@ address.
 		ReadContext: dataSourceIssuesRead,
 		Schema: map[string]*schema.Schema{
 			"ai_driven": &schema.Schema{
-				Description: `aiDriven query parameter. The issue's AI driven value (Yes or No)(Use only when macAddress and deviceId are not provided)
+				Description: `aiDriven query parameter. The issue's AI driven value: YES or NO (case insensitive) (Use only when macAddress and deviceId are not provided)
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -40,7 +40,7 @@ address.
 				Optional: true,
 			},
 			"issue_status": &schema.Schema{
-				Description: `issueStatus query parameter. The issue's status value (One of ACTIVE, IGNORED, RESOLVED)
+				Description: `issueStatus query parameter. The issue's status value: ACTIVE, IGNORED, RESOLVED (case insensitive)
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -52,7 +52,7 @@ address.
 				Optional: true,
 			},
 			"priority": &schema.Schema{
-				Description: `priority query parameter. The issue's priority value (One of P1, P2, P3, or P4)(Use only when macAddress and deviceId are not provided)
+				Description: `priority query parameter. The issue's priority value: P1, P2, P3, or P4 (case insensitive) (Use only when macAddress and deviceId are not provided)
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -77,76 +77,87 @@ address.
 					Schema: map[string]*schema.Schema{
 
 						"ai_driven": &schema.Schema{
-							Description: `Ai Driven`,
-							// Type:        schema.TypeBool,
+							Description: `Whether the issue is AI driven ('Yes' or 'No')
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"category": &schema.Schema{
-							Description: `Category`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Category of the issue
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"client_mac": &schema.Schema{
-							Description: `Client Mac`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `The client MAC address related to this issue
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"device_id": &schema.Schema{
-							Description: `Device Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `The device UUID where the issue occurred
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"device_role": &schema.Schema{
-							Description: `Device Role`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `The device role
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"issue_id": &schema.Schema{
-							Description: `Issue Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `The issue's unique identifier
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"issue_occurence_count": &schema.Schema{
-							Description: `Issue Occurence Count`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `Total number of instances of this issue in the query time window
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"last_occurence_time": &schema.Schema{
-							Description: `Last Occurence Time`,
-							Type:        schema.TypeInt,
-							Computed:    true,
+							Description: `The UTC timestamp of last occurence of this issue
+`,
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 
 						"name": &schema.Schema{
-							Description: `Name`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `The issue's display name
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"priority": &schema.Schema{
-							Description: `Priority`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `Priority setting of the issue
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"site_id": &schema.Schema{
-							Description: `Site Id`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `The site UUID where the issue occurred
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"status": &schema.Schema{
-							Description: `Status`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Description: `The status of the issue
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -165,8 +176,8 @@ func dataSourceIssuesRead(ctx context.Context, d *schema.ResourceData, m interfa
 	vDeviceID, okDeviceID := d.GetOk("device_id")
 	vMacAddress, okMacAddress := d.GetOk("mac_address")
 	vPriority, okPriority := d.GetOk("priority")
-	vAiDriven, okAiDriven := d.GetOk("ai_driven")
 	vIssueStatus, okIssueStatus := d.GetOk("issue_status")
+	vAiDriven, okAiDriven := d.GetOk("ai_driven")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -191,11 +202,11 @@ func dataSourceIssuesRead(ctx context.Context, d *schema.ResourceData, m interfa
 		if okPriority {
 			queryParams1.Priority = vPriority.(string)
 		}
-		if okAiDriven {
-			queryParams1.AiDriven = vAiDriven.(string)
-		}
 		if okIssueStatus {
 			queryParams1.IssueStatus = vIssueStatus.(string)
+		}
+		if okAiDriven {
+			queryParams1.AiDriven = vAiDriven.(string)
 		}
 
 		response1, restyResp1, err := client.Issues.Issues(&queryParams1)
@@ -205,7 +216,7 @@ func dataSourceIssuesRead(ctx context.Context, d *schema.ResourceData, m interfa
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing Issues", err,
+				"Failure when executing 2 Issues", err,
 				"Failure at Issues, unexpected response", ""))
 			return diags
 		}
@@ -239,7 +250,7 @@ func flattenIssuesIssuesItems(items *[]dnacentersdkgo.ResponseIssuesIssuesRespon
 		respItem["site_id"] = item.SiteID
 		respItem["device_id"] = item.DeviceID
 		respItem["device_role"] = item.DeviceRole
-		respItem["ai_driven"] = boolPtrToString(item.AiDriven)
+		respItem["ai_driven"] = item.AiDriven
 		respItem["client_mac"] = item.ClientMac
 		respItem["issue_occurence_count"] = item.IssueOccurenceCount
 		respItem["status"] = item.Status

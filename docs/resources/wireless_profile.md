@@ -4,7 +4,7 @@ page_title: "dnacenter_wireless_profile Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Wireless.
-  Delete the Wireless Profile from Cisco DNA Center whose name is provided.Updates the wireless Network Profile with updated details provided. All sites to be present in the network profile
+  Delete the Wireless Profile whose name is provided.Updates the wireless Network Profile with updated details provided. All sites to be present in the network profile
   should be provided.Creates Wireless Network Profile on Cisco DNA Center and associates sites and SSIDs to it.
 ---
 
@@ -12,7 +12,7 @@ description: |-
 
 It manages create, read, update and delete operations on Wireless.
 
-- Delete the Wireless Profile from Cisco DNA Center whose name is provided.
+- Delete the Wireless Profile whose name is provided.
 
 - Updates the wireless Network Profile with updated details provided. All sites to be present in the network profile
 should be provided.
@@ -42,7 +42,6 @@ resource "dnacenter_wireless_profile" "example" {
         interface_name      = "string"
         name                = "string"
         policy_profile_name = "string"
-        type                = "string"
         wlan_profile_name   = "string"
       }
     }
@@ -98,7 +97,6 @@ Optional:
 - `interface_name` (String) Interface Name
 - `name` (String) Ssid Name
 - `policy_profile_name` (String) Policy Profile Name
-- `type` (String) Ssid Type(enum: Enterprise/Guest)
 - `wlan_profile_name` (String) WLAN Profile Name
 
 <a id="nestedblock--parameters--profile_details--ssid_details--flex_connect"></a>

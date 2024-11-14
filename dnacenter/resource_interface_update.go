@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -112,32 +112,36 @@ Request body.
 							ForceNew: true,
 						},
 						"admin_status": &schema.Schema{
-							Description: `Admin Status`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-							Computed:    true,
+							Description: `Admin status as ('UP'/'DOWN')
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+							Computed: true,
 						},
 						"description": &schema.Schema{
-							Description: `Description`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							ForceNew:    true,
-							Computed:    true,
+							Description: `Description for the Interface
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+							Computed: true,
 						},
 						"vlan_id": &schema.Schema{
-							Description: `Vlan Id`,
-							Type:        schema.TypeInt,
-							Optional:    true,
-							ForceNew:    true,
-							Computed:    true,
+							Description: `VLAN Id to be Updated
+`,
+							Type:     schema.TypeInt,
+							Optional: true,
+							ForceNew: true,
+							Computed: true,
 						},
 						"voice_vlan_id": &schema.Schema{
-							Description: `Voice Vlan Id`,
-							Type:        schema.TypeInt,
-							Optional:    true,
-							ForceNew:    true,
-							Computed:    true,
+							Description: `Voice Vlan Id to be Updated
+`,
+							Type:     schema.TypeInt,
+							Optional: true,
+							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -158,25 +162,20 @@ func resourceInterfaceUpdateCreate(ctx context.Context, d *schema.ResourceData, 
 	request1 := expandRequestInterfaceUpdateUpdateInterfaceDetails(ctx, "parameters.0", d)
 	queryParams1 := dnacentersdkgo.UpdateInterfaceDetailsQueryParams{}
 
-	response1, restyResp1, err := client.Devices.UpdateInterfaceDetails(vvInterfaceUUID, request1, &queryParams1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.Devices.UpdateInterfaceDetails(vvInterfaceUUID, request1, &queryParams1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing UpdateInterfaceDetails", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	//Analizar verificacion.
 
 	vItem1 := flattenDevicesUpdateInterfaceDetailsItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {

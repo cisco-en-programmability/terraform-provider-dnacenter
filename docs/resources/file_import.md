@@ -4,26 +4,26 @@ page_title: "dnacenter_file_import Resource - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs create operation on File.
-  - Uploads a new file within a specific nameSpace
+  Uploads a new file within a specific nameSpace
 ---
 
 # dnacenter_file_import (Resource)
 
 It performs create operation on File.
-- Uploads a new file within a specific nameSpace
 
+- Uploads a new file within a specific nameSpace
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_file_import" "example" {
-  provider = dnacenter
+  provider   = meraki
+  name_space = "string"
   parameters {
 
-    name_space = "string"
   }
 }
 
@@ -43,6 +43,7 @@ output "dnacenter_file_import_example" {
 
 - `id` (String) The ID of this resource.
 - `item` (List of String)
+- `last_updated` (String)
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
@@ -52,5 +53,3 @@ Required:
 - `file_name` (String) File name.
 - `file_path` (String) File absolute path.
 - `name_space` (String) nameSpace path parameter.
-
-

@@ -12,7 +12,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -78,6 +78,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 							Type:        schema.TypeList,
 							Optional:    true,
 							ForceNew:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -87,31 +88,35 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"composite": &schema.Schema{
 										Description: `Is it composite template
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"containing_templates": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"composite": &schema.Schema{
 													Description: `Is it composite template
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"description": &schema.Schema{
 													Description: `Description of template
@@ -119,11 +124,13 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"device_types": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -133,6 +140,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"product_series": &schema.Schema{
 																Description: `Device series
@@ -140,6 +148,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"product_type": &schema.Schema{
 																Description: `Device type
@@ -147,6 +156,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -157,6 +167,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"language": &schema.Schema{
 													Description: `Template language (JINJA or VELOCITY)
@@ -164,6 +175,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Description: `Name of template
@@ -171,6 +183,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"project_name": &schema.Schema{
 													Description: `Project name
@@ -178,11 +191,13 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"rollback_template_params": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -192,6 +207,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"custom_order": &schema.Schema{
 																Description: `CustomOrder of template param
@@ -199,6 +215,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"data_type": &schema.Schema{
 																Description: `Datatype of template param
@@ -206,6 +223,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"default_value": &schema.Schema{
 																Description: `Default value of template param
@@ -213,6 +231,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"description": &schema.Schema{
 																Description: `Description of template param
@@ -220,6 +239,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"display_name": &schema.Schema{
 																Description: `Display name of param
@@ -227,6 +247,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"group": &schema.Schema{
 																Description: `group
@@ -234,6 +255,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"id": &schema.Schema{
 																Description: `UUID of template param
@@ -241,6 +263,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"instruction_text": &schema.Schema{
 																Description: `Instruction text for param
@@ -248,6 +271,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"key": &schema.Schema{
 																Description: `key
@@ -255,15 +279,17 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"order": &schema.Schema{
 																Description: `Order of template param
@@ -271,15 +297,17 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"parameter_name": &schema.Schema{
 																Description: `Name of template param
@@ -287,6 +315,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"provider": &schema.Schema{
 																Description: `provider
@@ -294,11 +323,13 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"range": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -308,6 +339,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"max_value": &schema.Schema{
 																			Description: `Max value of range
@@ -315,6 +347,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"min_value": &schema.Schema{
 																			Description: `Min value of range
@@ -322,6 +355,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -329,16 +363,18 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"selection": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -348,6 +384,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeList,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																			Elem: &schema.Schema{
 																				Type: schema.TypeString,
 																			},
@@ -358,6 +395,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"selection_type": &schema.Schema{
 																			Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
@@ -365,13 +403,15 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
 `,
-																			Type:     schema.TypeString,
+																			Type:     schema.TypeString, //TEST,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -383,6 +423,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -392,6 +433,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"name": &schema.Schema{
 																Description: `Name of tag
@@ -399,6 +441,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -409,11 +452,13 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"template_params": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -423,6 +468,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"custom_order": &schema.Schema{
 																Description: `CustomOrder of template param
@@ -430,6 +476,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"data_type": &schema.Schema{
 																Description: `Datatype of template param
@@ -437,6 +484,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"default_value": &schema.Schema{
 																Description: `Default value of template param
@@ -444,6 +492,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"description": &schema.Schema{
 																Description: `Description of template param
@@ -451,6 +500,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"display_name": &schema.Schema{
 																Description: `Display name of param
@@ -458,6 +508,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"group": &schema.Schema{
 																Description: `group
@@ -465,6 +516,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"id": &schema.Schema{
 																Description: `UUID of template param
@@ -472,6 +524,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"instruction_text": &schema.Schema{
 																Description: `Instruction text for param
@@ -479,6 +532,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"key": &schema.Schema{
 																Description: `key
@@ -486,15 +540,17 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"not_param": &schema.Schema{
 																Description: `Is it not a variable
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"order": &schema.Schema{
 																Description: `Order of template param
@@ -502,15 +558,17 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"param_array": &schema.Schema{
 																Description: `Is it an array
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"parameter_name": &schema.Schema{
 																Description: `Name of template param
@@ -518,6 +576,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"provider": &schema.Schema{
 																Description: `provider
@@ -525,11 +584,13 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"range": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -539,6 +600,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"max_value": &schema.Schema{
 																			Description: `Max value of range
@@ -546,6 +608,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"min_value": &schema.Schema{
 																			Description: `Min value of range
@@ -553,6 +616,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeInt,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -560,16 +624,18 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 															"required": &schema.Schema{
 																Description: `Is param required
 `,
-
+																// Type:        schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																ForceNew:     true,
+																Computed:     true,
 															},
 															"selection": &schema.Schema{
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 
@@ -579,6 +645,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeList,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																			Elem: &schema.Schema{
 																				Type: schema.TypeString,
 																			},
@@ -589,6 +656,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"selection_type": &schema.Schema{
 																			Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
@@ -596,13 +664,15 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																			Type:     schema.TypeString,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																		"selection_values": &schema.Schema{
 																			Description: `Selection values
 `,
-																			Type:     schema.TypeString,
+																			Type:     schema.TypeString, //TEST,
 																			Optional: true,
 																			ForceNew: true,
+																			Computed: true,
 																		},
 																	},
 																},
@@ -616,6 +686,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -626,15 +697,17 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeInt,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"custom_params_order": &schema.Schema{
 										Description: `Custom Params Order
 `,
-
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										ForceNew:     true,
+										Computed:     true,
 									},
 									"description": &schema.Schema{
 										Description: `Description of template
@@ -642,11 +715,13 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"device_types": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -656,6 +731,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"product_series": &schema.Schema{
 													Description: `Device series
@@ -663,6 +739,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"product_type": &schema.Schema{
 													Description: `Device type
@@ -670,6 +747,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -680,6 +758,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"id": &schema.Schema{
 										Description: `UUID of template
@@ -687,6 +766,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"language": &schema.Schema{
 										Description: `Template language (JINJA or VELOCITY)
@@ -694,6 +774,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"last_update_time": &schema.Schema{
 										Description: `Update time of template
@@ -701,6 +782,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeInt,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"latest_version_time": &schema.Schema{
 										Description: `Latest versioned template time
@@ -708,6 +790,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeInt,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"name": &schema.Schema{
 										Description: `Name of template
@@ -715,6 +798,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"parent_template_id": &schema.Schema{
 										Description: `Parent templateID
@@ -722,6 +806,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"project_id": &schema.Schema{
 										Description: `Project UUID
@@ -729,6 +814,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"project_name": &schema.Schema{
 										Description: `Project name
@@ -736,6 +822,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"rollback_template_content": &schema.Schema{
 										Description: `Rollback template content
@@ -743,11 +830,13 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"rollback_template_params": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -757,6 +846,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"custom_order": &schema.Schema{
 													Description: `CustomOrder of template param
@@ -764,6 +854,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"data_type": &schema.Schema{
 													Description: `Datatype of template param
@@ -771,6 +862,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"default_value": &schema.Schema{
 													Description: `Default value of template param
@@ -778,6 +870,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"description": &schema.Schema{
 													Description: `Description of template param
@@ -785,6 +878,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"display_name": &schema.Schema{
 													Description: `Display name of param
@@ -792,6 +886,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"group": &schema.Schema{
 													Description: `group
@@ -799,6 +894,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"id": &schema.Schema{
 													Description: `UUID of template param
@@ -806,6 +902,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"instruction_text": &schema.Schema{
 													Description: `Instruction text for param
@@ -813,6 +910,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"key": &schema.Schema{
 													Description: `key
@@ -820,15 +918,17 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"order": &schema.Schema{
 													Description: `Order of template param
@@ -836,15 +936,17 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"parameter_name": &schema.Schema{
 													Description: `Name of template param
@@ -852,6 +954,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"provider": &schema.Schema{
 													Description: `provider
@@ -859,11 +962,13 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"range": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -873,6 +978,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"max_value": &schema.Schema{
 																Description: `Max value of range
@@ -880,6 +986,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"min_value": &schema.Schema{
 																Description: `Min value of range
@@ -887,6 +994,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -894,16 +1002,18 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"selection": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -913,6 +1023,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -923,6 +1034,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"selection_type": &schema.Schema{
 																Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
@@ -930,13 +1042,15 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString,
+																Type:     schema.TypeString, //TEST,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -950,6 +1064,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"software_variant": &schema.Schema{
 										Description: `Applicable device software variant
@@ -957,6 +1072,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"software_version": &schema.Schema{
 										Description: `Applicable device software version
@@ -964,11 +1080,13 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"tags": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -978,6 +1096,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Description: `Name of tag
@@ -985,6 +1104,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -995,11 +1115,13 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 									"template_params": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -1009,6 +1131,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"custom_order": &schema.Schema{
 													Description: `CustomOrder of template param
@@ -1016,6 +1139,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"data_type": &schema.Schema{
 													Description: `Datatype of template param
@@ -1023,6 +1147,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"default_value": &schema.Schema{
 													Description: `Default value of template param
@@ -1030,6 +1155,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"description": &schema.Schema{
 													Description: `Description of template param
@@ -1037,6 +1163,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"display_name": &schema.Schema{
 													Description: `Display name of param
@@ -1044,6 +1171,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"group": &schema.Schema{
 													Description: `group
@@ -1051,6 +1179,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"id": &schema.Schema{
 													Description: `UUID of template param
@@ -1058,6 +1187,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"instruction_text": &schema.Schema{
 													Description: `Instruction text for param
@@ -1065,6 +1195,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"key": &schema.Schema{
 													Description: `key
@@ -1072,15 +1203,17 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"not_param": &schema.Schema{
 													Description: `Is it not a variable
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"order": &schema.Schema{
 													Description: `Order of template param
@@ -1088,15 +1221,17 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeInt,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"param_array": &schema.Schema{
 													Description: `Is it an array
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"parameter_name": &schema.Schema{
 													Description: `Name of template param
@@ -1104,6 +1239,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"provider": &schema.Schema{
 													Description: `provider
@@ -1111,11 +1247,13 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"range": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1125,6 +1263,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"max_value": &schema.Schema{
 																Description: `Max value of range
@@ -1132,6 +1271,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"min_value": &schema.Schema{
 																Description: `Min value of range
@@ -1139,6 +1279,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeInt,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -1146,16 +1287,18 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 												"required": &schema.Schema{
 													Description: `Is param required
 `,
-
+													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													ForceNew:     true,
+													Computed:     true,
 												},
 												"selection": &schema.Schema{
 													Type:     schema.TypeList,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -1165,6 +1308,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeList,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 																Elem: &schema.Schema{
 																	Type: schema.TypeString,
 																},
@@ -1175,6 +1319,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"selection_type": &schema.Schema{
 																Description: `Type of selection(SINGLE_SELECT or MULTI_SELECT)
@@ -1182,13 +1327,15 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 																Type:     schema.TypeString,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 															"selection_values": &schema.Schema{
 																Description: `Selection values
 `,
-																Type:     schema.TypeString,
+																Type:     schema.TypeString, //TEST,
 																Optional: true,
 																ForceNew: true,
+																Computed: true,
 															},
 														},
 													},
@@ -1200,28 +1347,25 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeList,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"rollback_template_errors": &schema.Schema{
 													Description: `Validation or design conflicts errors of rollback template
 `,
-													Type:     schema.TypeList,
+													Type:     schema.TypeString, //TEST,
 													Optional: true,
 													ForceNew: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
+													Computed: true,
 												},
 												"template_errors": &schema.Schema{
 													Description: `Validation or design conflicts errors
 `,
-													Type:     schema.TypeList,
+													Type:     schema.TypeString, //TEST,
 													Optional: true,
 													ForceNew: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
+													Computed: true,
 												},
 												"template_id": &schema.Schema{
 													Description: `UUID of template
@@ -1229,6 +1373,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 												"template_version": &schema.Schema{
 													Description: `Current version of template
@@ -1236,6 +1381,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 													Type:     schema.TypeString,
 													Optional: true,
 													ForceNew: true,
+													Computed: true,
 												},
 											},
 										},
@@ -1246,6 +1392,7 @@ func resourceConfigurationTemplateImportTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										ForceNew: true,
+										Computed: true,
 									},
 								},
 							},
@@ -1262,30 +1409,23 @@ func resourceConfigurationTemplateImportTemplateCreate(ctx context.Context, d *s
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
+
 	vProjectName := resourceItem["project_name"]
-	vDoVersion, okDoVersion := resourceItem["do_version"]
 
 	vvProjectName := vProjectName.(string)
 	request1 := expandRequestConfigurationTemplateImportTemplateImportsTheTemplatesProvided(ctx, "parameters.0", d)
 	queryParams1 := dnacentersdkgo.ImportsTheTemplatesProvidedQueryParams{}
 
-	if okDoVersion {
-		queryParams1.DoVersion = *stringToBooleanPtr(vDoVersion.(string))
-	}
+	// has_unknown_response: None
 
 	response1, restyResp1, err := client.ConfigurationTemplates.ImportsTheTemplatesProvided(vvProjectName, request1, &queryParams1)
-
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing ImportsTheTemplatesProvided", err,
-			"Failure at ImportsTheTemplatesProvided, unexpected response", ""))
+		diags = append(diags, diagError(
+			"Failure when executing ImportsTheTemplatesProvided", err))
 		return diags
 	}
 
@@ -1332,6 +1472,9 @@ func resourceConfigurationTemplateImportTemplateCreate(ctx context.Context, d *s
 		}
 	}
 
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 	vItem1 := flattenConfigurationTemplatesImportsTheTemplatesProvidedItem(response1.Response)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
@@ -1339,6 +1482,7 @@ func resourceConfigurationTemplateImportTemplateCreate(ctx context.Context, d *s
 			err))
 		return diags
 	}
+
 	d.SetId(getUnixTimeString())
 	return diags
 

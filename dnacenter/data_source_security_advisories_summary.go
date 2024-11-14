@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,21 +34,31 @@ func dataSourceSecurityAdvisoriesSummary() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"con_fig": &schema.Schema{
-										Description: `C O N F I G`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Number of advisories matched using default config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+
+									"cus_tom_con_fig": &schema.Schema{
+										Description: `Number of advisories matched using user provided config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"tot_al": &schema.Schema{
-										Description: `T O T A L`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `Sum of Config, Custom Config and Version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"ver_sio_n": &schema.Schema{
-										Description: `V E R S I O N`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `Number of advisories matched using software version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 								},
 							},
@@ -61,21 +71,31 @@ func dataSourceSecurityAdvisoriesSummary() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"con_fig": &schema.Schema{
-										Description: `C O N F I G`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Number of advisories matched using default config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+
+									"cus_tom_con_fig": &schema.Schema{
+										Description: `Number of advisories matched using user provided config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"tot_al": &schema.Schema{
-										Description: `T O T A L`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `Sum of Config, Custom Config and Version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"ver_sio_n": &schema.Schema{
-										Description: `V E R S I O N`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `Number of advisories matched using software version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 								},
 							},
@@ -88,21 +108,31 @@ func dataSourceSecurityAdvisoriesSummary() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"con_fig": &schema.Schema{
-										Description: `C O N F I G`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Number of advisories matched using default config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+
+									"cus_tom_con_fig": &schema.Schema{
+										Description: `Number of advisories matched using user provided config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"tot_al": &schema.Schema{
-										Description: `T O T A L`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Sum of Config, Custom Config and Version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"ver_sio_n": &schema.Schema{
-										Description: `V E R S I O N`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Number of advisories matched using software version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 								},
 							},
@@ -115,21 +145,31 @@ func dataSourceSecurityAdvisoriesSummary() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"con_fig": &schema.Schema{
-										Description: `C O N F I G`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Number of advisories matched using default config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+
+									"cus_tom_con_fig": &schema.Schema{
+										Description: `Number of advisories matched using user provided config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"tot_al": &schema.Schema{
-										Description: `T O T A L`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Sum of Config, Custom Config and Version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"ver_sio_n": &schema.Schema{
-										Description: `V E R S I O N`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Number of advisories matched using software version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 								},
 							},
@@ -142,21 +182,31 @@ func dataSourceSecurityAdvisoriesSummary() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"con_fig": &schema.Schema{
-										Description: `C O N F I G`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Number of advisories matched using default config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+
+									"cus_tom_con_fig": &schema.Schema{
+										Description: `Number of advisories matched using user provided config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"tot_al": &schema.Schema{
-										Description: `T O T A L`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `Sum of Config, Custom Config and Version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"ver_sio_n": &schema.Schema{
-										Description: `V E R S I O N`,
-										Type:        schema.TypeInt,
-										Computed:    true,
+										Description: `Number of advisories matched using software version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 								},
 							},
@@ -169,21 +219,31 @@ func dataSourceSecurityAdvisoriesSummary() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"con_fig": &schema.Schema{
-										Description: `C O N F I G`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Number of advisories matched using default config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+
+									"cus_tom_con_fig": &schema.Schema{
+										Description: `Number of advisories matched using user provided config
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"tot_al": &schema.Schema{
-										Description: `T O T A L`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Sum of Config, Custom Config and Version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 
 									"ver_sio_n": &schema.Schema{
-										Description: `V E R S I O N`,
-										Type:        schema.TypeFloat,
-										Computed:    true,
+										Description: `Number of advisories matched using software version
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 								},
 							},
@@ -211,7 +271,7 @@ func dataSourceSecurityAdvisoriesSummaryRead(ctx context.Context, d *schema.Reso
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAdvisoriesSummary", err,
+				"Failure when executing 2 GetAdvisoriesSummary", err,
 				"Failure at GetAdvisoriesSummary, unexpected response", ""))
 			return diags
 		}
@@ -238,30 +298,15 @@ func flattenSecurityAdvisoriesGetAdvisoriesSummaryItem(item *dnacentersdkgo.Resp
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["na"] = flattenSecurityAdvisoriesGetAdvisoriesSummaryItemNA(item.NA)
 	respItem["inf_orm_ati_ona_l"] = flattenSecurityAdvisoriesGetAdvisoriesSummaryItemINFORMATIONAL(item.INFORMATIONAL)
 	respItem["low"] = flattenSecurityAdvisoriesGetAdvisoriesSummaryItemLOW(item.LOW)
 	respItem["med_ium"] = flattenSecurityAdvisoriesGetAdvisoriesSummaryItemMEDIUM(item.MEDIUM)
 	respItem["hig_h"] = flattenSecurityAdvisoriesGetAdvisoriesSummaryItemHIGH(item.HIGH)
 	respItem["cri_tic_al"] = flattenSecurityAdvisoriesGetAdvisoriesSummaryItemCRITICaL(item.CRITICaL)
+	respItem["na"] = flattenSecurityAdvisoriesGetAdvisoriesSummaryItemNA(item.NA)
 	return []map[string]interface{}{
 		respItem,
 	}
-}
-
-func flattenSecurityAdvisoriesGetAdvisoriesSummaryItemNA(item *dnacentersdkgo.ResponseSecurityAdvisoriesGetAdvisoriesSummaryResponseNA) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["con_fig"] = item.CONFIG
-	respItem["ver_sio_n"] = item.VERSION
-	respItem["tot_al"] = item.TOTAL
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
 }
 
 func flattenSecurityAdvisoriesGetAdvisoriesSummaryItemINFORMATIONAL(item *dnacentersdkgo.ResponseSecurityAdvisoriesGetAdvisoriesSummaryResponseINFORMATIONAL) []map[string]interface{} {
@@ -270,6 +315,7 @@ func flattenSecurityAdvisoriesGetAdvisoriesSummaryItemINFORMATIONAL(item *dnacen
 	}
 	respItem := make(map[string]interface{})
 	respItem["con_fig"] = item.CONFIG
+	respItem["cus_tom_con_fig"] = item.CUSTOMCONFIG
 	respItem["ver_sio_n"] = item.VERSION
 	respItem["tot_al"] = item.TOTAL
 
@@ -285,6 +331,7 @@ func flattenSecurityAdvisoriesGetAdvisoriesSummaryItemLOW(item *dnacentersdkgo.R
 	}
 	respItem := make(map[string]interface{})
 	respItem["con_fig"] = item.CONFIG
+	respItem["cus_tom_con_fig"] = item.CUSTOMCONFIG
 	respItem["ver_sio_n"] = item.VERSION
 	respItem["tot_al"] = item.TOTAL
 
@@ -300,6 +347,7 @@ func flattenSecurityAdvisoriesGetAdvisoriesSummaryItemMEDIUM(item *dnacentersdkg
 	}
 	respItem := make(map[string]interface{})
 	respItem["con_fig"] = item.CONFIG
+	respItem["cus_tom_con_fig"] = item.CUSTOMCONFIG
 	respItem["ver_sio_n"] = item.VERSION
 	respItem["tot_al"] = item.TOTAL
 
@@ -315,6 +363,7 @@ func flattenSecurityAdvisoriesGetAdvisoriesSummaryItemHIGH(item *dnacentersdkgo.
 	}
 	respItem := make(map[string]interface{})
 	respItem["con_fig"] = item.CONFIG
+	respItem["cus_tom_con_fig"] = item.CUSTOMCONFIG
 	respItem["ver_sio_n"] = item.VERSION
 	respItem["tot_al"] = item.TOTAL
 
@@ -330,6 +379,23 @@ func flattenSecurityAdvisoriesGetAdvisoriesSummaryItemCRITICaL(item *dnacentersd
 	}
 	respItem := make(map[string]interface{})
 	respItem["con_fig"] = item.CONFIG
+	respItem["cus_tom_con_fig"] = item.CUSTOMCONFIG
+	respItem["ver_sio_n"] = item.VERSION
+	respItem["tot_al"] = item.TOTAL
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenSecurityAdvisoriesGetAdvisoriesSummaryItemNA(item *dnacentersdkgo.ResponseSecurityAdvisoriesGetAdvisoriesSummaryResponseNA) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["con_fig"] = item.CONFIG
+	respItem["cus_tom_con_fig"] = item.CUSTOMCONFIG
 	respItem["ver_sio_n"] = item.VERSION
 	respItem["tot_al"] = item.TOTAL
 

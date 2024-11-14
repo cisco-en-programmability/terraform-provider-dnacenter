@@ -5,5 +5,5 @@ data "dnacenter_license_device_license_details" "example" {
 }
 
 output "dnacenter_license_device_license_details_example" {
-  value = data.dnacenter_license_device_license_details.example.items
+  value = data.dnacenter_license_device_license_details.example.item
 }

@@ -1,0 +1,1 @@
+terraform import dnacenter_network_devices_resync_interval_settings_id.example "id:=string"

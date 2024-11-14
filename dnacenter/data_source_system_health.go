@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -169,8 +169,8 @@ func dataSourceSystemHealthRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: SystemHealthApI")
-		queryParams1 := dnacentersdkgo.SystemHealthApIQueryParams{}
+		log.Printf("[DEBUG] Selected method: SystemHealthAPI")
+		queryParams1 := dnacentersdkgo.SystemHealthAPIQueryParams{}
 
 		if okSummary {
 			queryParams1.Summary = vSummary.(bool)
@@ -188,24 +188,24 @@ func dataSourceSystemHealthRead(ctx context.Context, d *schema.ResourceData, m i
 			queryParams1.Offset = vOffset.(float64)
 		}
 
-		response1, restyResp1, err := client.HealthAndPerformance.SystemHealthApI(&queryParams1)
+		response1, restyResp1, err := client.HealthAndPerformance.SystemHealthAPI(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing SystemHealthApI", err,
-				"Failure at SystemHealthApI, unexpected response", ""))
+				"Failure when executing 2 SystemHealthAPI", err,
+				"Failure at SystemHealthAPI, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenHealthAndPerformanceSystemHealthApIItem(response1)
+		vItem1 := flattenHealthAndPerformanceSystemHealthAPIItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting SystemHealthApI response",
+				"Failure when setting SystemHealthAPI response",
 				err))
 			return diags
 		}
@@ -217,12 +217,12 @@ func dataSourceSystemHealthRead(ctx context.Context, d *schema.ResourceData, m i
 	return diags
 }
 
-func flattenHealthAndPerformanceSystemHealthApIItem(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemHealthApI) []map[string]interface{} {
+func flattenHealthAndPerformanceSystemHealthAPIItem(item *dnacentersdkgo.ResponseHealthAndPerformanceSystemHealthAPI) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["health_events"] = flattenHealthAndPerformanceSystemHealthApIItemHealthEvents(item.HealthEvents)
+	respItem["health_events"] = flattenHealthAndPerformanceSystemHealthAPIItemHealthEvents(item.HealthEvents)
 	respItem["version"] = item.Version
 	respItem["host_name"] = item.HostName
 	respItem["cimcaddress"] = item.Cimcaddress
@@ -231,7 +231,7 @@ func flattenHealthAndPerformanceSystemHealthApIItem(item *dnacentersdkgo.Respons
 	}
 }
 
-func flattenHealthAndPerformanceSystemHealthApIItemHealthEvents(items *[]dnacentersdkgo.ResponseHealthAndPerformanceSystemHealthAPIHealthEvents) []map[string]interface{} {
+func flattenHealthAndPerformanceSystemHealthAPIItemHealthEvents(items *[]dnacentersdkgo.ResponseHealthAndPerformanceSystemHealthAPIHealthEvents) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

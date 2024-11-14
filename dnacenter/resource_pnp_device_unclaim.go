@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,7 +18,7 @@ func resourcePnpDeviceUnclaim() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Device Onboarding (PnP).
 
-- Un-Claims one of more devices with specified workflow
+- Un-Claims one of more devices with specified workflow (Deprecated).
 `,
 
 		CreateContext: resourcePnpDeviceUnclaimCreate,
@@ -91,26 +91,20 @@ func resourcePnpDeviceUnclaimCreate(ctx context.Context, d *schema.ResourceData,
 
 	request1 := expandRequestPnpDeviceUnclaimUnClaimDevice(ctx, "parameters.0", d)
 
-	response1, restyResp1, err := client.DeviceOnboardingPnp.UnClaimDevice(request1)
+	// has_unknown_response: None
 
-	if request1 != nil {
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-	}
+	response1, restyResp1, err := client.DeviceOnboardingPnp.UnClaimDevice(request1)
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagError(
-			"Failure when setting CreateWebhookDestination response",
-			err))
+			"Failure when executing UnClaimDevice", err))
 		return diags
 	}
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	//REVIEW: '- Analizar como se puede comprobar la ejecucion.'
-	//Analizar verificacion.
 
 	vItem1 := flattenDeviceOnboardingPnpUnClaimDeviceItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
@@ -122,6 +116,8 @@ func resourcePnpDeviceUnclaimCreate(ctx context.Context, d *schema.ResourceData,
 
 	d.SetId(getUnixTimeString())
 	return diags
+
+	//REVIEW: '- Analizar como se puede comprobar la ejecucion.'
 
 }
 func resourcePnpDeviceUnclaimRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

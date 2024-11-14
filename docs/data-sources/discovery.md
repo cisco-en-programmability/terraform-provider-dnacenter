@@ -111,5 +111,3 @@ Read-Only:
 - `port` (Number)
 - `secure` (String)
 - `username` (String)
-
-

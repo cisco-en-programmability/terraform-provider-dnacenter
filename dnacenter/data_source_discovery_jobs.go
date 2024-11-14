@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -52,7 +52,7 @@ func dataSourceDiscoveryJobs() *schema.Resource {
 							Computed: true,
 						},
 
-						"cli_status": &schema.Schema{
+						"clistatus": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -166,7 +166,7 @@ func dataSourceDiscoveryJobsRead(ctx context.Context, d *schema.ResourceData, m 
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDiscoveryJobsByIP", err,
+				"Failure when executing 2 GetDiscoveryJobsByIP", err,
 				"Failure at GetDiscoveryJobsByIP, unexpected response", ""))
 			return diags
 		}
@@ -196,7 +196,7 @@ func flattenDiscoveryGetDiscoveryJobsByIPItems(items *[]dnacentersdkgo.ResponseD
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["attribute_info"] = flattenDiscoveryGetDiscoveryJobsByIPItemsAttributeInfo(item.AttributeInfo)
-		respItem["cli_status"] = item.CliStatus
+		respItem["clistatus"] = item.Clistatus
 		respItem["discovery_status"] = item.DiscoveryStatus
 		respItem["end_time"] = item.EndTime
 		respItem["http_status"] = item.HTTPStatus

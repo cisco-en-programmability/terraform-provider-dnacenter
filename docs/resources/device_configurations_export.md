@@ -4,27 +4,26 @@ page_title: "dnacenter_device_configurations_export Resource - terraform-provide
 subcategory: ""
 description: |-
   It performs create operation on Configuration Archive.
-  Export Device configurations to an encrypted zip file.
+  Export Device configurations to an encrypted zip file
 ---
 
 # dnacenter_device_configurations_export (Resource)
 
 It performs create operation on Configuration Archive.
 
-- Export Device configurations to an encrypted zip file.
-
+- Export Device configurations to an encrypted zip file
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_device_configurations_export" "example" {
-  provider = dnacenter
+  provider = meraki
   parameters {
 
-    device_id = ["string"]
+    device_id = "string"
     password  = "******"
   }
 }
@@ -52,8 +51,8 @@ output "dnacenter_device_configurations_export_example" {
 
 Optional:
 
-- `device_id` (List of String) Device Id
-- `password` (String, Sensitive) Password
+- `device_id` (String) UUIDs of the devices for which configurations need to be exported.
+- `password` (String, Sensitive) Password for the zip file to protect exported configurations. Must contain, at minimum 8 characters, one lowercase letter, one uppercase letter, one number, one special character(-=[];,./~!@#$%^&*()_+{}|:?). It may not contain white space or the characters <>.
 
 
 <a id="nestedatt--item"></a>
@@ -63,5 +62,3 @@ Read-Only:
 
 - `task_id` (String)
 - `url` (String)
-
-

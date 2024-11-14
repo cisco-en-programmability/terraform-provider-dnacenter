@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -151,7 +151,7 @@ func resourceEventSyslogConfig() *schema.Resource {
 						},
 						"port": &schema.Schema{
 							Description: `Port`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeInt,
 							Optional:    true,
 							Computed:    true,
 						},
@@ -251,7 +251,7 @@ func resourceEventSyslogConfigUpdate(ctx context.Context, d *schema.ResourceData
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
-	//review new resource
+
 	if d.HasChange("parameters") {
 		request1 := expandRequestEventSyslogConfigUpdateSyslogDestination(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
@@ -304,7 +304,7 @@ func expandRequestEventSyslogConfigCreateSyslogDestination(ctx context.Context, 
 		request.Protocol = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".port")))) {
-		request.Port = interfaceToString(v)
+		request.Port = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -330,7 +330,7 @@ func expandRequestEventSyslogConfigUpdateSyslogDestination(ctx context.Context, 
 		request.Protocol = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".port")))) {
-		request.Port = interfaceToString(v)
+		request.Port = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

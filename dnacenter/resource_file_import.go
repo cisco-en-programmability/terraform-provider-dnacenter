@@ -7,15 +7,17 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// resourceAction
 func resourceFileImport() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on File.
+
 - Uploads a new file within a specific nameSpace
 `,
 
@@ -23,6 +25,15 @@ func resourceFileImport() *schema.Resource {
 		ReadContext:   resourceFileImportRead,
 		DeleteContext: resourceFileImportDelete,
 		Schema: map[string]*schema.Schema{
+			"last_updated": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem:     schema.TypeString,
+			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
@@ -45,15 +56,9 @@ func resourceFileImport() *schema.Resource {
 							Description: `nameSpace path parameter.`,
 							Type:        schema.TypeString,
 							Required:    true,
+							ForceNew:    true,
 						},
 					},
-				},
-			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
 				},
 			},
 		},
@@ -70,10 +75,12 @@ func resourceFileImportCreate(ctx context.Context, d *schema.ResourceData, m int
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	vFileName := resourceItem["file_name"]
 	vFilePath := resourceItem["file_path"]
 	vNameSpace := resourceItem["name_space"]
+
 	vvNameSpace := vNameSpace.(string)
 
 	selectedMethod := 1
@@ -129,6 +136,7 @@ func resourceFileImportCreate(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+
 		d.SetId(getUnixTimeString())
 		return diags
 

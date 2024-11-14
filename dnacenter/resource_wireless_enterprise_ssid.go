@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -87,6 +87,18 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"basic_service_set_client_idle_timeout": &schema.Schema{
+										Description: `Basic Service Set ClientIdle Timeout
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
+									},
+									"client_exclusion_timeout": &schema.Schema{
+										Description: `Client Exclusion Timeout
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
+									},
 									"client_rate_limit": &schema.Schema{
 										Description: `Client Rate Limit. (in bits per second)
 `,
@@ -100,8 +112,29 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"enable_basic_service_set_max_idle": &schema.Schema{
+										Description: `Enable Basic Service Set Max Idle
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"enable_broadcast_ssi_d": &schema.Schema{
 										Description: `Enable Broadcast SSID
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"enable_client_exclusion": &schema.Schema{
+										Description: `Enable Client Exclusion
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"enable_directed_multicast_service": &schema.Schema{
+										Description: `Enable Directed MulticastService
 `,
 										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
@@ -116,6 +149,20 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 									},
 									"enable_mac_filtering": &schema.Schema{
 										Description: `Enable MAC Filtering
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"enable_neighbor_list": &schema.Schema{
+										Description: `Enable NeighborList
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"enable_session_time_out": &schema.Schema{
+										Description: `Enable Session Time Out
 `,
 										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
@@ -138,6 +185,12 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 										Description: `Is Fabric
 `,
 										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mfp_client_protection": &schema.Schema{
+										Description: `Mfp Client Protection
+`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -204,6 +257,12 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"session_time_out": &schema.Schema{
+										Description: `sessionTimeOut
+`,
+										Type:     schema.TypeFloat,
+										Computed: true,
+									},
 									"traffic_type": &schema.Schema{
 										Description: `Traffic Type
 `,
@@ -235,11 +294,31 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"aaa_override": &schema.Schema{
+							Description: `Aaa Override
+`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
+						},
+						"auth_key_mgmt": &schema.Schema{
+							Description: `Takes string inputs for the AKMs that should be set true. Possible AKM values : dot1x,dot1x_ft, dot1x_sha, psk, psk_ft, psk_sha, owe, sae, sae_ft
+`,
+							Type:     schema.TypeList,
+							Optional: true,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
 						"basic_service_set_client_idle_timeout": &schema.Schema{
-							Description: `Basic Service Set Client Idle Timeout`,
-							Type:        schema.TypeInt,
-							Optional:    true,
-							Computed:    true,
+							Description: `Basic Service Set Client Idle Timeout
+`,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"client_exclusion_timeout": &schema.Schema{
 							Description: `Client Exclusion Timeout
@@ -247,6 +326,22 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Type:     schema.TypeInt,
 							Optional: true,
 							Computed: true,
+						},
+						"client_rate_limit": &schema.Schema{
+							Description: `Client Rate Limit (in bits per second)
+`,
+							Type:     schema.TypeFloat,
+							Optional: true,
+							Computed: true,
+						},
+						"coverage_hole_detection_enable": &schema.Schema{
+							Description: `Coverage Hole Detection Enable
+`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"enable_basic_service_set_max_idle": &schema.Schema{
 							Description: `Enable Basic Service Set Max Idle 
@@ -276,7 +371,8 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Computed:     true,
 						},
 						"enable_directed_multicast_service": &schema.Schema{
-							Description: `Enable Directed Multicast Service`,
+							Description: `Enable Directed Multicast Service
+`,
 							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
@@ -302,7 +398,8 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Computed:     true,
 						},
 						"enable_neighbor_list": &schema.Schema{
-							Description: `Enable Neighbor List`,
+							Description: `Enable Neighbor List
+`,
 							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
@@ -325,11 +422,59 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"ghz24_policy": &schema.Schema{
+							Description: `Ghz24 Policy
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"ghz6_policy_client_steering": &schema.Schema{
+							Description: `Ghz6 Policy Client Steering
+`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
+						},
 						"mfp_client_protection": &schema.Schema{
-							Description: `Management Frame Protection Client`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
+							Description: `Management Frame Protection Client
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"multi_psk_settings": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"passphrase": &schema.Schema{
+										Description: `Passphrase
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"passphrase_type": &schema.Schema{
+										Description: `Passphrase Type
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"priority": &schema.Schema{
+										Description: `Priority
+`,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
 							Description: `SSID NAME
@@ -339,10 +484,11 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Computed: true,
 						},
 						"nas_options": &schema.Schema{
-							Description: `Nas Options`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							Computed:    true,
+							Description: `Nas Options
+`,
+							Type:     schema.TypeList,
+							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -354,12 +500,60 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
-						"radio_policy": &schema.Schema{
-							Description: `Radio Policy Enum (enum: Triple band operation (2.4GHz, 5GHz and 6GHz), Triple band operation with band select, 5GHz only, 2.4GHz only, 6GHz only)
+						"policy_profile_name": &schema.Schema{
+							Description: `Policy Profile Name
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"profile_name": &schema.Schema{
+							Description: `Profile Name
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"protected_management_frame": &schema.Schema{
+							Description: `(Required applicable for Security Type WPA3_PERSONAL, WPA3_ENTERPRISE, OPEN_SECURED) and (Optional, Required Applicable for Security Type WPA2_WPA3_PERSONAL and WPA2_WPA3_ENTERPRISE)
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"radio_policy": &schema.Schema{
+							Description: `Radio Policy Enum 
+`,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"rsn_cipher_suite_ccmp256": &schema.Schema{
+							Description: `Rsn Cipher Suite Ccmp256
+`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
+						},
+						"rsn_cipher_suite_gcmp128": &schema.Schema{
+							Description: `Rsn Cipher Suite Gcmp 128
+`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
+						},
+						"rsn_cipher_suite_gcmp256": &schema.Schema{
+							Description: `Rsn Cipher Suite Gcmp256
+`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"security_level": &schema.Schema{
 							Description: `Security Level
@@ -387,12 +581,6 @@ func resourceWirelessEnterpriseSSID() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
-						},
-						"protected_management_frame": &schema.Schema{
-							Description: `Protected Management Frame`,
-							Type:        schema.TypeString,
-							Computed:    true,
-							Optional:    true,
 						},
 					},
 				},
@@ -767,6 +955,7 @@ func resourceWirelessEnterpriseSSIDDelete(ctx context.Context, d *schema.Resourc
 
 	return diags
 }
+
 func expandRequestWirelessPskOverridePSKOverride(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessPSKOverride {
 	request := dnacentersdkgo.RequestWirelessPSKOverride{}
 	if v := expandRequestWirelessPskOverridePSKOverrideItemArray(ctx, key, d); v != nil {
@@ -820,6 +1009,7 @@ func expandRequestWirelessPskOverridePSKOverrideItem(ctx context.Context, key st
 
 	return &request
 }
+
 func expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSID(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateEnterpriseSSID {
 	request := dnacentersdkgo.RequestWirelessCreateEnterpriseSSID{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
@@ -879,8 +1069,84 @@ func expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSID(ctx context.Context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".nas_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".nas_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".nas_options")))) {
 		request.NasOptions = interfaceToSliceString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".profile_name")))) {
+		request.ProfileName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".policy_profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".policy_profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".policy_profile_name")))) {
+		request.PolicyProfileName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aaa_override")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aaa_override")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aaa_override")))) {
+		request.AAAOverride = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coverage_hole_detection_enable")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coverage_hole_detection_enable")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coverage_hole_detection_enable")))) {
+		request.CoverageHoleDetectionEnable = interfaceToBoolPtr(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".protected_management_frame")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".protected_management_frame")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".protected_management_frame")))) {
 		request.ProtectedManagementFrame = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".multi_psk_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".multi_psk_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".multi_psk_settings")))) {
+		request.MultipSKSettings = expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSIDMultipSKSettingsArray(ctx, key+".multi_psk_settings", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_rate_limit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_rate_limit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_rate_limit")))) {
+		request.ClientRateLimit = interfaceToFloat64Ptr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auth_key_mgmt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auth_key_mgmt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auth_key_mgmt")))) {
+		request.AuthKeyMgmt = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rsn_cipher_suite_gcmp256")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp256")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp256")))) {
+		request.RsnCipherSuiteGcmp256 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rsn_cipher_suite_ccmp256")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rsn_cipher_suite_ccmp256")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rsn_cipher_suite_ccmp256")))) {
+		request.RsnCipherSuiteCcmp256 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rsn_cipher_suite_gcmp128")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp128")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp128")))) {
+		request.RsnCipherSuiteGcmp128 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ghz6_policy_client_steering")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ghz6_policy_client_steering")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ghz6_policy_client_steering")))) {
+		request.Ghz6PolicyClientSteering = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ghz24_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ghz24_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ghz24_policy")))) {
+		request.Ghz24Policy = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSIDMultipSKSettingsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestWirelessCreateEnterpriseSSIDMultipSKSettings {
+	request := []dnacentersdkgo.RequestWirelessCreateEnterpriseSSIDMultipSKSettings{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSIDMultipSKSettings(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessEnterpriseSSIDCreateEnterpriseSSIDMultipSKSettings(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateEnterpriseSSIDMultipSKSettings {
+	request := dnacentersdkgo.RequestWirelessCreateEnterpriseSSIDMultipSKSettings{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".priority")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".priority")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".priority")))) {
+		request.Priority = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".passphrase_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".passphrase_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".passphrase_type")))) {
+		request.PassphraseType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".passphrase")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".passphrase")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".passphrase")))) {
+		request.Passphrase = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -947,8 +1213,84 @@ func expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSID(ctx context.Context
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".nas_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".nas_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".nas_options")))) {
 		request.NasOptions = interfaceToSliceString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".profile_name")))) {
+		request.ProfileName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".policy_profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".policy_profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".policy_profile_name")))) {
+		request.PolicyProfileName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aaa_override")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aaa_override")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aaa_override")))) {
+		request.AAAOverride = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coverage_hole_detection_enable")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coverage_hole_detection_enable")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coverage_hole_detection_enable")))) {
+		request.CoverageHoleDetectionEnable = interfaceToBoolPtr(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".protected_management_frame")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".protected_management_frame")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".protected_management_frame")))) {
 		request.ProtectedManagementFrame = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".multi_psk_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".multi_psk_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".multi_psk_settings")))) {
+		request.MultipSKSettings = expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSIDMultipSKSettingsArray(ctx, key+".multi_psk_settings", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_rate_limit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_rate_limit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_rate_limit")))) {
+		request.ClientRateLimit = interfaceToFloat64Ptr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auth_key_mgmt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auth_key_mgmt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auth_key_mgmt")))) {
+		request.AuthKeyMgmt = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rsn_cipher_suite_gcmp256")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp256")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp256")))) {
+		request.RsnCipherSuiteGcmp256 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rsn_cipher_suite_ccmp256")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rsn_cipher_suite_ccmp256")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rsn_cipher_suite_ccmp256")))) {
+		request.RsnCipherSuiteCcmp256 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rsn_cipher_suite_gcmp128")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp128")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rsn_cipher_suite_gcmp128")))) {
+		request.RsnCipherSuiteGcmp128 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ghz6_policy_client_steering")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ghz6_policy_client_steering")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ghz6_policy_client_steering")))) {
+		request.Ghz6PolicyClientSteering = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ghz24_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ghz24_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ghz24_policy")))) {
+		request.Ghz24Policy = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSIDMultipSKSettingsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestWirelessUpdateEnterpriseSSIDMultipSKSettings {
+	request := []dnacentersdkgo.RequestWirelessUpdateEnterpriseSSIDMultipSKSettings{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSIDMultipSKSettings(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessEnterpriseSSIDUpdateEnterpriseSSIDMultipSKSettings(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateEnterpriseSSIDMultipSKSettings {
+	request := dnacentersdkgo.RequestWirelessUpdateEnterpriseSSIDMultipSKSettings{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".priority")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".priority")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".priority")))) {
+		request.Priority = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".passphrase_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".passphrase_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".passphrase_type")))) {
+		request.PassphraseType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".passphrase")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".passphrase")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".passphrase")))) {
+		request.Passphrase = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -978,10 +1320,8 @@ func searchWirelessGetEnterpriseSSID(m interface{}, queryParams dnacentersdkgo.G
 		itemsCopy2 := *item.SSIDDetails
 		for _, item := range itemsCopy2 {
 			if item.Name == queryParams.SSIDName {
-				var getItem *dnacentersdkgo.ResponseItemWirelessGetEnterpriseSSIDSSIDDetails
-				getItem = &item
-				foundItem = getItem
-				return foundItem, err
+
+				return &item, err
 			}
 		}
 	}

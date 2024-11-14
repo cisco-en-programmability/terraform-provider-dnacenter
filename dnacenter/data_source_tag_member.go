@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,7 +34,7 @@ func dataSourceTagMember() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Used to Number of maximum members to return in the result
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"member_association_type": &schema.Schema{
@@ -52,7 +52,7 @@ func dataSourceTagMember() *schema.Resource {
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Used for pagination. It indicates the starting row number out of available member records
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 
@@ -93,10 +93,10 @@ func dataSourceTagMemberRead(ctx context.Context, d *schema.ResourceData, m inte
 		queryParams1.MemberType = vMemberType.(string)
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(string)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(string)
+			queryParams1.Limit = vLimit.(float64)
 		}
 		if okMemberAssociationType {
 			queryParams1.MemberAssociationType = vMemberAssociationType.(string)
@@ -112,7 +112,7 @@ func dataSourceTagMemberRead(ctx context.Context, d *schema.ResourceData, m inte
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTagMembersByID", err,
+				"Failure when executing 2 GetTagMembersByID", err,
 				"Failure at GetTagMembersByID, unexpected response", ""))
 			return diags
 		}

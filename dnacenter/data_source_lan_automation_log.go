@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -31,13 +31,13 @@ func dataSourceLanAutomationLog() *schema.Resource {
 			"limit": &schema.Schema{
 				Description: `limit query parameter. Number of LAN Automation sessions to be retrieved. Limit value can range between 1 to 10.
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"offset": &schema.Schema{
 				Description: `offset query parameter. Starting index of the LAN Automation session. Minimum value is 1.
 `,
-				Type:     schema.TypeInt,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 
@@ -169,10 +169,10 @@ func dataSourceLanAutomationLogRead(ctx context.Context, d *schema.ResourceData,
 		queryParams1 := dnacentersdkgo.LanAutomationLogQueryParams{}
 
 		if okOffset {
-			queryParams1.Offset = vOffset.(int)
+			queryParams1.Offset = vOffset.(float64)
 		}
 		if okLimit {
-			queryParams1.Limit = vLimit.(int)
+			queryParams1.Limit = vLimit.(float64)
 		}
 
 		response1, restyResp1, err := client.LanAutomation.LanAutomationLog(&queryParams1)
@@ -182,7 +182,7 @@ func dataSourceLanAutomationLogRead(ctx context.Context, d *schema.ResourceData,
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing LanAutomationLog", err,
+				"Failure when executing 2 LanAutomationLog", err,
 				"Failure at LanAutomationLog, unexpected response", ""))
 			return diags
 		}
@@ -212,7 +212,7 @@ func dataSourceLanAutomationLogRead(ctx context.Context, d *schema.ResourceData,
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing LanAutomationLogByID", err,
+				"Failure when executing 2 LanAutomationLogByID", err,
 				"Failure at LanAutomationLogByID, unexpected response", ""))
 			return diags
 		}

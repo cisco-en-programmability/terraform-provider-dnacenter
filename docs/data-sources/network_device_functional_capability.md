@@ -105,5 +105,3 @@ Read-Only:
 - `id` (String)
 - `property_name` (String)
 - `string_value` (String)
-
-

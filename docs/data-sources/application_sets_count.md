@@ -40,5 +40,3 @@ Read-Only:
 
 - `response` (String)
 - `version` (String)
-
-

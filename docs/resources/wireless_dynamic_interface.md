@@ -4,22 +4,23 @@ page_title: "dnacenter_wireless_dynamic_interface Resource - terraform-provider-
 subcategory: ""
 description: |-
   It manages create, read and delete operations on Wireless.
-  API to create or update an dynamic interfaceDelete a dynamic interface
+  Delete a dynamic interfaceAPI to create or update an dynamic interface
 ---
 
 # dnacenter_wireless_dynamic_interface (Resource)
 
 It manages create, read and delete operations on Wireless.
 
-- API to create or update an dynamic interface
-
 - Delete a dynamic interface
+
+- API to create or update an dynamic interface
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_wireless_dynamic_interface" "example" {
   provider = dnacenter
+
   parameters {
 
     interface_name = "string"

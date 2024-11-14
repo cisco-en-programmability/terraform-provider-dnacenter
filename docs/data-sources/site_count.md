@@ -4,14 +4,14 @@ page_title: "dnacenter_site_count Data Source - terraform-provider-dnacenter"
 subcategory: ""
 description: |-
   It performs read operation on Sites.
-  API to get site count
+  Get the site count of the specified site's sub-hierarchy (inclusive of the provided site)
 ---
 
 # dnacenter_site_count (Data Source)
 
 It performs read operation on Sites.
 
-- API to get site count
+- Get the site count of the specified site's sub-hierarchy (inclusive of the provided site)
 
 ## Example Usage
 
@@ -31,7 +31,7 @@ output "dnacenter_site_count_example" {
 
 ### Optional
 
-- `site_id` (String) siteId query parameter. Site id to retrieve site count.
+- `site_id` (String) siteId query parameter. Site instance UUID
 
 ### Read-Only
 
@@ -45,5 +45,3 @@ Read-Only:
 
 - `response` (Number)
 - `version` (String)
-
-

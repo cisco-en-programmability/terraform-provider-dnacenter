@@ -12,21 +12,19 @@ description: |-
 It performs delete operation on Wireless.
 
 - Removes SSID or WLAN from the network profile, reprovision the device(s) and deletes the SSID or WLAN from DNA Center
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_wireless_provision_ssid_delete_reprovision" "example" {
-  provider = dnacenter
+  provider            = meraki
+  managed_aplocations = "string"
+  ssid_name           = "string"
   parameters {
 
-    managed_aplocations = "string"
-    ssid_name           = "string"
-    persistbapioutput   = "false"
   }
 }
 
@@ -53,12 +51,8 @@ output "dnacenter_wireless_provision_ssid_delete_reprovision_example" {
 
 Required:
 
-- `managed_aplocations` (String) managedAPLocations path parameter.
-- `ssid_name` (String) ssidName path parameter.
-
-Optional:
-
-- `persistbapioutput` (String) Device Name
+- `managed_aplocations` (String) managedAPLocations path parameter. List of managed AP locations (Site Hierarchies). This parameter needs to be encoded as per UTF-8 encoding
+- `ssid_name` (String) ssidName path parameter. SSID Name. This parameter needs to be encoded as per UTF-8 encoding.
 
 
 <a id="nestedatt--item"></a>
@@ -69,5 +63,3 @@ Read-Only:
 - `execution_id` (String)
 - `execution_status_url` (String)
 - `message` (String)
-
-

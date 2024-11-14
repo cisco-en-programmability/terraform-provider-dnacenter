@@ -12,23 +12,22 @@ description: |-
 It performs create operation on Site Design.
 
 - Assigns unassigned devices to a site. This data source action does not move assigned devices to other sites.
-
 ~>**Warning:**
-This resource does not represent a real-world entity in Cisco DNA Center, therefore changing or deleting this resource on its own has no immediate effect.
-Instead, it is a task part of a Cisco DNA Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
+This resource does not represent a real-world entity in Cisco Catalyst Center, therefore changing or deleting this resource on its own has no immediate effect.
+Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed in DNACenter without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
 resource "dnacenter_assign_device_to_site" "example" {
-  provider = dnacenter
+  provider = meraki
+  site_id  = "string"
   parameters {
 
     device {
 
       ip = "string"
     }
-    site_id = "string"
   }
 }
 
@@ -55,7 +54,7 @@ output "dnacenter_assign_device_to_site_example" {
 
 Required:
 
-- `site_id` (String) siteId path parameter. Site id to which site the device to assign
+- `site_id` (String) siteId path parameter. Site Id where device(s) needs to be assigned
 
 Optional:
 
@@ -66,7 +65,7 @@ Optional:
 
 Optional:
 
-- `ip` (String) Device ip (eg: 10.104.240.64)
+- `ip` (String) Device IP. It can be either IPv4 or IPv6. IPV4 e.g., 10.104.240.64. IPV6 e.g., 2001:420:284:2004:4:181:500:183
 
 
 
@@ -78,5 +77,3 @@ Read-Only:
 - `execution_id` (String)
 - `execution_status_url` (String)
 - `message` (String)
-
-

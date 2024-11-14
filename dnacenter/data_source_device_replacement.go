@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -100,71 +100,113 @@ Device Replacement status, Product Family.
 					Schema: map[string]*schema.Schema{
 
 						"creation_time": &schema.Schema{
+							Description: `Date and time of marking the device for replacement
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
 						"family": &schema.Schema{
+							Description: `Faulty device family
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"faulty_device_id": &schema.Schema{
+							Description: `Unique identifier of the faulty device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"faulty_device_name": &schema.Schema{
+							Description: `Faulty device name
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"faulty_device_platform": &schema.Schema{
+							Description: `Faulty device platform
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"faulty_device_serial_number": &schema.Schema{
+							Description: `Faulty device serial number
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"id": &schema.Schema{
+							Description: `Unique identifier of the device replacement resource
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"neighbour_device_id": &schema.Schema{
+							Description: `Unique identifier of the neighbor device to create the DHCP server
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"network_readiness_task_id": &schema.Schema{
+							Description: `Unique identifier of network readiness task
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"readinesscheck_task_id": &schema.Schema{
+							Description: `Unique identifier of the readiness check task for the replacement device
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"replacement_device_platform": &schema.Schema{
+							Description: `Replacement device platform
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"replacement_device_serial_number": &schema.Schema{
+							Description: `Replacement device serial number
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"replacement_status": &schema.Schema{
+							Description: `Device Replacement status
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"replacement_time": &schema.Schema{
+							Description: `Date and time of device replacement
+`,
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
 
+						"workflow_failed_step": &schema.Schema{
+							Description: `Step in which the device replacement failed
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"workflow_id": &schema.Schema{
+							Description: `Unique identifier of the device replacement workflow
+`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -237,7 +279,7 @@ func dataSourceDeviceReplacementRead(ctx context.Context, d *schema.ResourceData
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing ReturnListOfReplacementDevicesWithReplacementDetails", err,
+				"Failure when executing 2 ReturnListOfReplacementDevicesWithReplacementDetails", err,
 				"Failure at ReturnListOfReplacementDevicesWithReplacementDetails, unexpected response", ""))
 			return diags
 		}
@@ -280,6 +322,8 @@ func flattenDeviceReplacementReturnListOfReplacementDevicesWithReplacementDetail
 		respItem["replacement_status"] = item.ReplacementStatus
 		respItem["replacement_time"] = item.ReplacementTime
 		respItem["workflow_id"] = item.WorkflowID
+		respItem["workflow_failed_step"] = item.WorkflowFailedStep
+		respItem["readinesscheck_task_id"] = item.ReadinesscheckTaskID
 		respItems = append(respItems, respItem)
 	}
 	return respItems

@@ -67,20 +67,23 @@ Read-Only:
 Read-Only:
 
 - `bulletin_headline` (String)
+- `bulletin_name` (String)
 - `bulletin_number` (String)
+- `bulletin_pid` (String)
 - `bulletin_url` (String)
-- `end_of_hardware_new_service_attachment_date` (Number)
-- `end_of_hardware_service_contract_renewal_date` (Number)
-- `end_of_last_hardware_ship_date` (Number)
-- `end_of_life_date` (Number)
-- `end_of_life_external_announcement_date` (Number)
-- `end_of_sale_date` (Number)
-- `end_of_signature_releases_date` (Number)
-- `end_of_software_maintenance_releases_date` (Number)
-- `end_of_software_vulnerability_or_security_support_date` (Number)
-- `end_of_software_vulnerability_or_security_support_date_hw` (Number)
+- `end_of_hardware_new_service_attachment_date` (String)
+- `end_of_hardware_service_contract_renewal_date` (String)
+- `end_of_last_hardware_ship_date` (String)
+- `end_of_life_date` (String)
+- `end_of_life_external_announcement_date` (String)
+- `end_of_sale_date` (String)
+- `end_of_signature_releases_date` (String)
+- `end_of_software_maintenance_releases_date` (String)
+- `end_of_software_vulnerability_or_security_support_date` (String)
+- `end_of_software_vulnerability_or_security_support_date_hw` (String)
 - `eox_alert_type` (String)
-- `last_date_of_support` (Number)
+- `eox_physical_type` (String)
+- `last_date_of_support` (String)
 - `name` (String)
 
 
@@ -91,6 +94,7 @@ Read-Only:
 Read-Only:
 
 - `alert_count` (Number)
+- `comments` (List of String)
 - `device_id` (String)
 - `last_scan_time` (Number)
 - `scan_status` (String)
@@ -102,5 +106,3 @@ Read-Only:
 Read-Only:
 
 - `eox_type` (String)
-
-

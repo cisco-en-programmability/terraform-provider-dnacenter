@@ -51,6 +51,7 @@ Read-Only:
 Read-Only:
 
 - `con_fig` (Number)
+- `cus_tom_con_fig` (Number)
 - `tot_al` (Number)
 - `ver_sio_n` (Number)
 
@@ -61,6 +62,7 @@ Read-Only:
 Read-Only:
 
 - `con_fig` (Number)
+- `cus_tom_con_fig` (Number)
 - `tot_al` (Number)
 - `ver_sio_n` (Number)
 
@@ -71,6 +73,7 @@ Read-Only:
 Read-Only:
 
 - `con_fig` (Number)
+- `cus_tom_con_fig` (Number)
 - `tot_al` (Number)
 - `ver_sio_n` (Number)
 
@@ -81,6 +84,7 @@ Read-Only:
 Read-Only:
 
 - `con_fig` (Number)
+- `cus_tom_con_fig` (Number)
 - `tot_al` (Number)
 - `ver_sio_n` (Number)
 
@@ -91,6 +95,7 @@ Read-Only:
 Read-Only:
 
 - `con_fig` (Number)
+- `cus_tom_con_fig` (Number)
 - `tot_al` (Number)
 - `ver_sio_n` (Number)
 
@@ -101,7 +106,6 @@ Read-Only:
 Read-Only:
 
 - `con_fig` (Number)
+- `cus_tom_con_fig` (Number)
 - `tot_al` (Number)
 - `ver_sio_n` (Number)
-
-

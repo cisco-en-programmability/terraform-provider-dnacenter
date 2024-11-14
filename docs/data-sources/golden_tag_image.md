@@ -53,5 +53,3 @@ Read-Only:
 - `inherited_site_id` (String)
 - `inherited_site_name` (String)
 - `tagged_golden` (String)
-
-

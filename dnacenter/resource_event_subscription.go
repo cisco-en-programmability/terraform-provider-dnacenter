@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v5/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -631,6 +631,9 @@ func resourceEventSubscriptionUpdate(ctx context.Context, d *schema.ResourceData
 				"Failure at UpdateEventSubscriptions, unexpected response", ""))
 			return diags
 		}
+
+		//TODO REVIEW
+
 	}
 
 	return resourceEventSubscriptionRead(ctx, d, m)
@@ -679,6 +682,8 @@ func resourceEventSubscriptionDelete(ctx context.Context, d *schema.ResourceData
 			"Failure at DeleteEventSubscriptions, unexpected response", ""))
 		return diags
 	}
+
+	//TODO REVIEW
 
 	// d.SetId("") is automatically called assuming delete returns no errors, but
 	// it is added here for explicitness.

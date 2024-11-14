@@ -1,9 +1,9 @@
 
 resource "dnacenter_lan_automation_delete" "example" {
   provider = dnacenter
+  id       = "string"
   parameters {
 
-    id = "string"
   }
 }
 
