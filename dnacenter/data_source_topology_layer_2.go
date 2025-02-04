@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -47,7 +48,7 @@ func dataSourceTopologyLayer2() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"additional_info": &schema.Schema{
-										Description: `Additional information about the link 
+										Description: `Additional information about the link
 `,
 										Type:     schema.TypeString, //TEST,
 										Computed: true,

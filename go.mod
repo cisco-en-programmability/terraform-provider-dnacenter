@@ -2,8 +2,10 @@ module terraform-provider-dnacenter
 
 go 1.21
 
+replace dnacenter-go-sdk v0.0.0 => /Users/joseocampo/Documents/dnacenter-go-sdk/dnacenter-go-sdk
+
 require (
-	github.com/cisco-en-programmability/dnacenter-go-sdk/v6 v6.0.0
+	dnacenter-go-sdk v0.0.0
 	github.com/hashicorp/terraform-plugin-docs v0.16.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.27.0
 )
@@ -19,10 +21,8 @@ require (
 	github.com/bgentry/speakeasy v0.1.0 // indirect
 	github.com/cloudflare/circl v1.3.9 // indirect
 	github.com/fatih/color v1.15.0 // indirect
-	github.com/go-resty/resty/v2 v2.7.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
-	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-checkpoint v0.5.0 // indirect
@@ -76,4 +76,8 @@ require (
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
 
-require github.com/mattn/go-isatty v0.0.19 // indirect
+require (
+	github.com/go-resty/resty/v2 v2.7.0 // indirect
+	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/mattn/go-isatty v0.0.19 // indirect
+)

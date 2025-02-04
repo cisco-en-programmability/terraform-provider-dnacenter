@@ -7,7 +7,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -125,7 +126,7 @@ network etc.
 										Computed: true,
 									},
 									"port_description": &schema.Schema{
-										Description: `Port information of the Switch on which the Rogue is connected. This will be filled only in case of Rogue on Wire Threat Type 
+										Description: `Port information of the Switch on which the Rogue is connected. This will be filled only in case of Rogue on Wire Threat Type
 `,
 										Type:     schema.TypeString,
 										ForceNew: true,
@@ -153,14 +154,14 @@ network etc.
 										Computed: true,
 									},
 									"switch_ip": &schema.Schema{
-										Description: `IP Address of the Switch on which the Rogue is connected. This will be filled only in case of Rogue on Wire Threat Type 
+										Description: `IP Address of the Switch on which the Rogue is connected. This will be filled only in case of Rogue on Wire Threat Type
 `,
 										Type:     schema.TypeString,
 										ForceNew: true,
 										Computed: true,
 									},
 									"switch_name": &schema.Schema{
-										Description: `Name of the Switch on which the Rogue is connected. This will be filled only in case of Rogue on Wire Threat Type 
+										Description: `Name of the Switch on which the Rogue is connected. This will be filled only in case of Rogue on Wire Threat Type
 `,
 										Type:     schema.TypeString,
 										ForceNew: true,

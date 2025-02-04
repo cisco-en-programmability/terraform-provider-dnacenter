@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,7 +35,7 @@ func dataSourceDnacaapManagementExecutionStatus() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"bapi_error": &schema.Schema{
-							Description: `Business API error message
+							Description: `Returns the error response of the original API  as a string
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -58,6 +59,20 @@ func dataSourceDnacaapManagementExecutionStatus() *schema.Resource {
 							Description: `Name of the Business API
 `,
 							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"bapi_sync_response": &schema.Schema{
+							Description: `Returns the actual response of the original API as a string
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"bapi_sync_response_json": &schema.Schema{
+							Description: `Returns the actual response of the original API  as a json
+`,
+							Type:     schema.TypeString, //TEST,
 							Computed: true,
 						},
 
@@ -170,9 +185,21 @@ func flattenTaskGetBusinessAPIExecutionDetailsItem(item *dnacentersdkgo.Response
 	respItem["end_time_epoch"] = item.EndTimeEpoch
 	respItem["time_duration"] = item.TimeDuration
 	respItem["status"] = item.Status
+	respItem["bapi_sync_response"] = item.BapiSyncResponse
+	respItem["bapi_sync_response_json"] = flattenTaskGetBusinessAPIExecutionDetailsItemBapiSyncResponseJSON(item.BapiSyncResponseJSON)
 	respItem["runtime_instance_id"] = item.RuntimeInstanceID
 	respItem["bapi_error"] = item.BapiError
 	return []map[string]interface{}{
 		respItem,
 	}
+}
+
+func flattenTaskGetBusinessAPIExecutionDetailsItemBapiSyncResponseJSON(item *dnacentersdkgo.ResponseTaskGetBusinessAPIExecutionDetailsBapiSyncResponseJSON) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
 }

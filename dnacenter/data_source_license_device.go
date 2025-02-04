@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -85,7 +86,7 @@ func dataSourceLicenseDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenLicensesSmartAccountDetailsItems(response1.Response)
+		vItems1 := flattenLicensesAccountDetailsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting SmartAccountDetails response",
@@ -98,4 +99,20 @@ func dataSourceLicenseDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	return diags
+}
+
+func flattenLicensesAccountDetailsItems(items *[]dnacentersdkgo.ResponseLicensesSmartAccountDetailsResponse) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["name"] = item.Name
+		respItem["id"] = item.ID
+		respItem["domain"] = item.Domain
+		respItem["is_active_smart_account"] = boolPtrToString(item.IsActiveSmartAccount)
+		respItems = append(respItems, respItem)
+	}
+	return respItems
 }

@@ -8,7 +8,8 @@ import (
 	"reflect"
 	"time"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -357,7 +358,7 @@ mapped to any Wireless Profile
 							Computed: true,
 						},
 						"is_posturing_enabled": &schema.Schema{
-							Description: `Applicable only for Enterprise SSIDs. When set to True, Posturing will enabled. Required to be set to True if ACL needs to be mapped for Enterprise SSID. 
+							Description: `Applicable only for Enterprise SSIDs. When set to True, Posturing will enabled. Required to be set to True if ACL needs to be mapped for Enterprise SSID.
 `,
 							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
@@ -921,7 +922,7 @@ mapped to any Wireless Profile
 							Computed:     true,
 						},
 						"is_posturing_enabled": &schema.Schema{
-							Description: `Applicable only for Enterprise SSIDs. When set to True, Posturing will enabled. Required to be set to True if ACL needs to be mapped for Enterprise SSID.  
+							Description: `Applicable only for Enterprise SSIDs. When set to True, Posturing will enabled. Required to be set to True if ACL needs to be mapped for Enterprise SSID.
 `,
 							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,

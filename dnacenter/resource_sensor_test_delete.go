@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,7 @@ func resourceSensorTestDelete() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs delete operation on Sensors.
 		- Intent API to delete an existing SENSOR test template
-	
+
 `,
 
 		CreateContext: resourceSensorTestDeleteCreate,

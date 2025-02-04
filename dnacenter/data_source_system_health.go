@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -138,7 +139,7 @@ func dataSourceSystemHealth() *schema.Resource {
 						},
 
 						"host_name": &schema.Schema{
-							Description: `Cluster name 
+							Description: `Cluster name
 `,
 							Type:     schema.TypeString,
 							Computed: true,

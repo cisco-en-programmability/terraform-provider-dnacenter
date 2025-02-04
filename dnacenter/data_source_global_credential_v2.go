@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -393,7 +394,7 @@ pass any input parameters.
 									},
 
 									"auth_type": &schema.Schema{
-										Description: `SNMP auth protocol. SHA' or 'MD5' 
+										Description: `SNMP auth protocol. SHA' or 'MD5'
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -449,7 +450,7 @@ pass any input parameters.
 									},
 
 									"privacy_type": &schema.Schema{
-										Description: `SNMP privacy protocol. 'AES128','AES192','AES256' 
+										Description: `SNMP privacy protocol. 'AES128','AES192','AES256'
 `,
 										Type:     schema.TypeString,
 										Computed: true,

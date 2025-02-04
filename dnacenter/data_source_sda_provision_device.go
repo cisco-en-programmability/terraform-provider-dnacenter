@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -47,7 +48,7 @@ func dataSourceSdaProvisionDevice() *schema.Resource {
 						},
 
 						"site_name_hierarchy": &schema.Schema{
-							Description: `Site Name Hierarchy for device location(only building / floor level) 
+							Description: `Site Name Hierarchy for device location(only building / floor level)
 `,
 							Type:     schema.TypeString,
 							Computed: true,

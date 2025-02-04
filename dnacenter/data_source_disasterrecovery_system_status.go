@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -41,7 +42,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 									},
 
 									"ip": &schema.Schema{
-										Description: `This floating virtual IP address automatically moves to and operates on the site that is currently acting as your network's active site. If the interface is enterprise, then this address manages traffic between your disaster recovery system and your Enterprise network. If the interface is management, then this address manages traffic between your disaster recovery system and your Management network.  
+										Description: `This floating virtual IP address automatically moves to and operates on the site that is currently acting as your network's active site. If the interface is enterprise, then this address manages traffic between your disaster recovery system and your Enterprise network. If the interface is management, then this address manages traffic between your disaster recovery system and your Management network.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -72,7 +73,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 									},
 
 									"side_b": &schema.Schema{
-										Description: `Other Side of the IPSec Tunnel 
+										Description: `Other Side of the IPSec Tunnel
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -180,7 +181,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 									},
 
 									"state": &schema.Schema{
-										Description: `State of the Main Site. 
+										Description: `State of the Main Site.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -291,7 +292,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 						},
 
 						"site": &schema.Schema{
-							Description: `Site of the disaster recovery system. 
+							Description: `Site of the disaster recovery system.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -324,7 +325,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 												},
 
 												"ip": &schema.Schema{
-													Description: `In case of witness, this is only an IP. 
+													Description: `In case of witness, this is only an IP.
 `,
 													Type:     schema.TypeString,
 													Computed: true,
@@ -375,7 +376,7 @@ func dataSourceDisasterrecoverySystemStatus() *schema.Resource {
 															},
 
 															"vip": &schema.Schema{
-																Description: `Is this interface an Virtual IP address or not. This is false for Witness 
+																Description: `Is this interface an Virtual IP address or not. This is false for Witness
 `,
 																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,

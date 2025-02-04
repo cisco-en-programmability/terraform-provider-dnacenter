@@ -12,7 +12,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -42,7 +43,7 @@ update, hostname update, link addition, and link deletion.
 					Schema: map[string]*schema.Schema{
 
 						"task_id": &schema.Schema{
-							Description: `Task ID 
+							Description: `Task ID
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -65,7 +66,7 @@ update, hostname update, link addition, and link deletion.
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"feature": &schema.Schema{
-							Description: `feature query parameter. Feature ID for the update. Supported feature IDs include: LOOPBACK0_IPADDRESS_UPDATE, HOSTNAME_UPDATE, LINK_ADD, and LINK_DELETE. 
+							Description: `feature query parameter. Feature ID for the update. Supported feature IDs include: LOOPBACK0_IPADDRESS_UPDATE, HOSTNAME_UPDATE, LINK_ADD, and LINK_DELETE.
 `,
 							Type:     schema.TypeString,
 							Required: true,

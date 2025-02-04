@@ -6,7 +6,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -462,7 +463,7 @@ func expandRequestIntegrationSettingsInstancesItsmUpdateItsmIntegrationSettingDa
 	return &request
 }
 
-func searchITSM(m interface{}, vName string) (foundItem *dnacentersdkgo.ResponseItemItsmIntegrationGetAllItsmIntegrationSettings, err error) {
+func searchITSM(m interface{}, vName string) (foundItem *dnacentersdkgo.ResponseItsmIntegrationGetAllItsmIntegrationSettingsData, err error) {
 	client := m.(*dnacentersdkgo.Client)
 
 	nResponse, _, err := client.ItsmIntegration.GetAllItsmIntegrationSettings()
@@ -470,7 +471,7 @@ func searchITSM(m interface{}, vName string) (foundItem *dnacentersdkgo.Response
 		return foundItem, err
 	}
 
-	for _, item := range *nResponse {
+	for _, item := range nResponse.Data {
 		if item.Name == vName {
 			return &item, err
 		}

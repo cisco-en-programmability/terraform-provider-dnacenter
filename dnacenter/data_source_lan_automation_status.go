@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -48,7 +49,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"action": &schema.Schema{
-							Description: `State (START/STOP) of the LAN Automation session. 
+							Description: `State (START/STOP) of the LAN Automation session.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -163,7 +164,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"multicast_enabled": &schema.Schema{
-							Description: `Shows whether underlay multicast is enabled or not. 
+							Description: `Shows whether underlay multicast is enabled or not.
 `,
 							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
@@ -203,7 +204,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"status": &schema.Schema{
-							Description: `Status of the LAN Automation session along with the number of discovered devices. 
+							Description: `Status of the LAN Automation session along with the number of discovered devices.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -219,7 +220,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"action": &schema.Schema{
-							Description: `State (START/STOP) of the LAN Automation session. 
+							Description: `State (START/STOP) of the LAN Automation session.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -334,7 +335,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"multicast_enabled": &schema.Schema{
-							Description: `Shows whether underlay multicast is enabled or not. 
+							Description: `Shows whether underlay multicast is enabled or not.
 `,
 							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
@@ -374,7 +375,7 @@ func dataSourceLanAutomationStatus() *schema.Resource {
 						},
 
 						"status": &schema.Schema{
-							Description: `Status of the LAN Automation session along with the number of discovered devices. 
+							Description: `Status of the LAN Automation session along with the number of discovered devices.
 `,
 							Type:     schema.TypeString,
 							Computed: true,

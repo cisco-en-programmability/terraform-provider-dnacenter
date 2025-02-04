@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -28,15 +29,28 @@ func dataSourceWirelessSettingsInterfaces() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"interface_name": &schema.Schema{
+				Description: `interfaceName query parameter. Interface Name
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"limit": &schema.Schema{
 				Description: `limit query parameter.`,
 				Type:        schema.TypeFloat,
 				Optional:    true,
 			},
 			"offset": &schema.Schema{
-				Description: `offset query parameter.`,
-				Type:        schema.TypeFloat,
-				Optional:    true,
+				Description: `offset query parameter. The first record to show for this page. The first record is numbered 1.
+`,
+				Type:     schema.TypeFloat,
+				Optional: true,
+			},
+			"vlan_id": &schema.Schema{
+				Description: `vlanId query parameter. Vlan Id
+`,
+				Type:     schema.TypeFloat,
+				Optional: true,
 			},
 
 			"item": &schema.Schema{
@@ -108,9 +122,11 @@ func dataSourceWirelessSettingsInterfacesRead(ctx context.Context, d *schema.Res
 	var diags diag.Diagnostics
 	vLimit, okLimit := d.GetOk("limit")
 	vOffset, okOffset := d.GetOk("offset")
+	vInterfaceName, okInterfaceName := d.GetOk("interface_name")
+	vVLANID, okVLANID := d.GetOk("vlan_id")
 	vID, okID := d.GetOk("id")
 
-	method1 := []bool{okLimit, okOffset}
+	method1 := []bool{okLimit, okOffset, okInterfaceName, okVLANID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
@@ -125,6 +141,12 @@ func dataSourceWirelessSettingsInterfacesRead(ctx context.Context, d *schema.Res
 		}
 		if okOffset {
 			queryParams1.Offset = vOffset.(float64)
+		}
+		if okInterfaceName {
+			queryParams1.InterfaceName = vInterfaceName.(string)
+		}
+		if okVLANID {
+			queryParams1.VLANID = vVLANID.(float64)
 		}
 
 		response1, restyResp1, err := client.Wireless.GetInterfaces(&queryParams1)

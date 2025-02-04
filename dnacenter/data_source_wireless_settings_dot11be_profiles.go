@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,7 @@ func dataSourceWirelessSettingsDot11BeProfiles() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Wireless.
 
-- This data source allows the user to get all 802.11be Profile(s) configured under Wireless Settings
+- This data source allows the user to get 802.11be Profile(s) configured under Wireless Settings
 
 - This data source allows the user to get 802.11be Profile by ID
 `,
@@ -26,6 +27,36 @@ func dataSourceWirelessSettingsDot11BeProfiles() *schema.Resource {
 				Description: `id path parameter. 802.11be Profile ID
 `,
 				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"is_mu_mimo_down_link": &schema.Schema{
+				Description: `isMuMimoDownLink query parameter. MU-MIMO Downlink
+`,
+				Type:     schema.TypeBool,
+				Optional: true,
+			},
+			"is_mu_mimo_up_link": &schema.Schema{
+				Description: `isMuMimoUpLink query parameter. MU-MIMO Uplink
+`,
+				Type:     schema.TypeBool,
+				Optional: true,
+			},
+			"is_of_dma_down_link": &schema.Schema{
+				Description: `isOfDmaDownLink query parameter. OFDMA Downlink
+`,
+				Type:     schema.TypeBool,
+				Optional: true,
+			},
+			"is_of_dma_multi_ru": &schema.Schema{
+				Description: `isOfDmaMultiRu query parameter. OFDMA Multi-RU
+`,
+				Type:     schema.TypeBool,
+				Optional: true,
+			},
+			"is_of_dma_up_link": &schema.Schema{
+				Description: `isOfDmaUpLink query parameter. OFDMA Uplink
+`,
+				Type:     schema.TypeBool,
 				Optional: true,
 			},
 			"limit": &schema.Schema{
@@ -190,17 +221,23 @@ func dataSourceWirelessSettingsDot11BeProfilesRead(ctx context.Context, d *schem
 	var diags diag.Diagnostics
 	vLimit, okLimit := d.GetOk("limit")
 	vOffset, okOffset := d.GetOk("offset")
+	vProfileName, okProfileName := d.GetOk("profile_name")
+	vIsOfDmaDownLink, okIsOfDmaDownLink := d.GetOk("is_of_dma_down_link")
+	vIsOfDmaUpLink, okIsOfDmaUpLink := d.GetOk("is_of_dma_up_link")
+	vIsMuMimoUpLink, okIsMuMimoUpLink := d.GetOk("is_mu_mimo_up_link")
+	vIsMuMimoDownLink, okIsMuMimoDownLink := d.GetOk("is_mu_mimo_down_link")
+	vIsOfDmaMultiRu, okIsOfDmaMultiRu := d.GetOk("is_of_dma_multi_ru")
 	vID, okID := d.GetOk("id")
 
-	method1 := []bool{okLimit, okOffset}
+	method1 := []bool{okLimit, okOffset, okProfileName, okIsOfDmaDownLink, okIsOfDmaUpLink, okIsMuMimoUpLink, okIsMuMimoDownLink, okIsOfDmaMultiRu}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetAll80211BeProfiles")
-		queryParams1 := dnacentersdkgo.GetAll80211BeProfilesQueryParams{}
+		log.Printf("[DEBUG] Selected method: Get80211BeProfiles")
+		queryParams1 := dnacentersdkgo.Get80211BeProfilesQueryParams{}
 
 		if okLimit {
 			queryParams1.Limit = vLimit.(float64)
@@ -208,25 +245,43 @@ func dataSourceWirelessSettingsDot11BeProfilesRead(ctx context.Context, d *schem
 		if okOffset {
 			queryParams1.Offset = vOffset.(float64)
 		}
+		if okProfileName {
+			queryParams1.ProfileName = vProfileName.(string)
+		}
+		if okIsOfDmaDownLink {
+			queryParams1.IsOfDmaDownLink = vIsOfDmaDownLink.(bool)
+		}
+		if okIsOfDmaUpLink {
+			queryParams1.IsOfDmaUpLink = vIsOfDmaUpLink.(bool)
+		}
+		if okIsMuMimoUpLink {
+			queryParams1.IsMuMimoUpLink = vIsMuMimoUpLink.(bool)
+		}
+		if okIsMuMimoDownLink {
+			queryParams1.IsMuMimoDownLink = vIsMuMimoDownLink.(bool)
+		}
+		if okIsOfDmaMultiRu {
+			queryParams1.IsOfDmaMultiRu = vIsOfDmaMultiRu.(bool)
+		}
 
-		response1, restyResp1, err := client.Wireless.GetAll80211BeProfiles(&queryParams1)
+		response1, restyResp1, err := client.Wireless.Get80211BeProfiles(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing 2 GetAll80211BeProfiles", err,
-				"Failure at GetAll80211BeProfiles, unexpected response", ""))
+				"Failure when executing 2 Get80211BeProfiles", err,
+				"Failure at Get80211BeProfiles, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenWirelessGetAll80211BeProfilesItems(response1.Response)
+		vItems1 := flattenWirelessGet80211BeProfilesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAll80211BeProfiles response",
+				"Failure when setting Get80211BeProfiles response",
 				err))
 			return diags
 		}
@@ -268,7 +323,7 @@ func dataSourceWirelessSettingsDot11BeProfilesRead(ctx context.Context, d *schem
 	return diags
 }
 
-func flattenWirelessGetAll80211BeProfilesItems(items *[]dnacentersdkgo.ResponseWirelessGetAll80211BeProfilesResponse) []map[string]interface{} {
+func flattenWirelessGet80211BeProfilesItems(items *[]dnacentersdkgo.ResponseWirelessGet80211BeProfilesResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -26,6 +27,18 @@ func dataSourceEoXStatusDevice() *schema.Resource {
 				Description: `deviceId path parameter. Device instance UUID
 `,
 				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"limit": &schema.Schema{
+				Description: `limit query parameter. The number of records to show for this page. Default is 500 if not specified. Maximum allowed limit is 500.
+`,
+				Type:     schema.TypeFloat,
+				Optional: true,
+			},
+			"offset": &schema.Schema{
+				Description: `offset query parameter. The first record to show for this page, the first record is numbered 1
+`,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 
@@ -288,18 +301,28 @@ func dataSourceEoXStatusDeviceRead(ctx context.Context, d *schema.ResourceData, 
 	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
+	vLimit, okLimit := d.GetOk("limit")
+	vOffset, okOffset := d.GetOk("offset")
 	vDeviceID, okDeviceID := d.GetOk("device_id")
 
-	method1 := []bool{}
+	method1 := []bool{okLimit, okOffset}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okDeviceID}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetEoXStatusForAllDevices")
+		log.Printf("[DEBUG] Selected method: GetEoxStatusForAllDevices")
+		queryParams1 := dnacentersdkgo.GetEoXStatusForAllDevicesQueryParams{}
 
-		response1, restyResp1, err := client.EoX.GetEoXStatusForAllDevices()
+		if okLimit {
+			queryParams1.Limit = vLimit.(float64)
+		}
+		if okOffset {
+			queryParams1.Offset = vOffset.(float64)
+		}
+
+		response1, restyResp1, err := client.EoX.GetEoXStatusForAllDevices(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

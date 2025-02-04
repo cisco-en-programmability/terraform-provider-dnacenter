@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -123,4 +124,32 @@ func dataSourceNetworkDevicesMembersAssociationsRead(ctx context.Context, d *sch
 
 	}
 	return diags
+}
+
+func flattenTagRetrieveTagsAssociatedWithNetworkDevicesItems(items *[]dnacentersdkgo.ResponseTagRetrieveTagsAssociatedWithNetworkDevicesResponse) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["id"] = item.ID
+		respItem["tags"] = flattenTagRetrieveTagsAssociatedWithNetworkDevicesItemsTags(item.Tags)
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenTagRetrieveTagsAssociatedWithNetworkDevicesItemsTags(items *[]dnacentersdkgo.ResponseTagRetrieveTagsAssociatedWithNetworkDevicesResponseTags) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["id"] = item.ID
+		respItem["name"] = item.Name
+		respItems = append(respItems, respItem)
+	}
+	return respItems
 }

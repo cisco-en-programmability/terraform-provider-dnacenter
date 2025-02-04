@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -48,7 +49,7 @@ which is optional and returns information for that particular interfaces where(o
 						},
 
 						"allocated_power": &schema.Schema{
-							Description: `Power (in Watts) allocated for a given interface 
+							Description: `Power (in Watts) allocated for a given interface
 `,
 							Type:     schema.TypeString,
 							Computed: true,

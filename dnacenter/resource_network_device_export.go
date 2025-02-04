@@ -11,7 +11,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -89,7 +90,7 @@ func resourceNetworkDeviceExport() *schema.Resource {
 							},
 						},
 						"password": &schema.Schema{
-							Description: `Password is required when the operationEnum value is 0 
+							Description: `Password is required when the operationEnum value is 0
 `,
 							Type:      schema.TypeString,
 							Optional:  true,

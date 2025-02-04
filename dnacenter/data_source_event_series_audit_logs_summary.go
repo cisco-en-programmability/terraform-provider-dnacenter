@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -63,7 +64,7 @@ func dataSourceEventSeriesAuditLogsSummary() *schema.Resource {
 				Optional: true,
 			},
 			"event_id": &schema.Schema{
-				Description: `eventId query parameter. Audit Log notification's event ID. 
+				Description: `eventId query parameter. Audit Log notification's event ID.
 `,
 				Type:     schema.TypeString,
 				Optional: true,

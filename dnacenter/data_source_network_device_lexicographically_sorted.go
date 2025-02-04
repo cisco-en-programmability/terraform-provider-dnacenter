@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -251,9 +252,12 @@ func dataSourceNetworkDeviceLexicographicallySortedRead(ctx context.Context, d *
 			queryParams1.Limit = vLimit.(int)
 		}
 
-		response1, err := client.Devices.GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute(&queryParams1)
+		response1, restyResp1, err := client.Devices.GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing 2 GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute", err,
 				"Failure at GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute, unexpected response", ""))
@@ -262,7 +266,7 @@ func dataSourceNetworkDeviceLexicographicallySortedRead(ctx context.Context, d *
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := response1.String()
+		vItem1 := flattenGetDeviceValuesThatMatchFullyOrPartiallyAnAttributeItems(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceValuesThatMatchFullyOrPartiallyAnAttribute response",
@@ -275,4 +279,16 @@ func dataSourceNetworkDeviceLexicographicallySortedRead(ctx context.Context, d *
 
 	}
 	return diags
+}
+
+func flattenGetDeviceValuesThatMatchFullyOrPartiallyAnAttributeItems(items *dnacentersdkgo.ResponseDevicesGetDeviceValuesThatMatchFullyOrPartiallyAnAttribute) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["version"] = items.Version
+	respItem["response"] = items.Response
+	return []map[string]interface{}{
+		respItem,
+	}
 }

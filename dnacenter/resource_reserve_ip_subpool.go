@@ -8,7 +8,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -552,6 +553,36 @@ func resourceReserveIPSubpoolRead(ctx context.Context, d *schema.ResourceData, m
 
 	}
 	return diags
+}
+
+func flattenNetworkSettingsGetReserveIPSubpoolParameters(item *dnacentersdkgo.RequestNetworkSettingsReserveIPSubpool) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["name"] = item.Name
+	respItem["type"] = item.Type
+	respItem["ipv6AddressSpace"] = item.IPv6AddressSpace
+	respItem["ipv4GlobalPool"] = item.IPv4GlobalPool
+	respItem["ipv4Prefix"] = item.IPv4Prefix
+	respItem["ipv4PrefixLength"] = item.IPv4PrefixLength
+	respItem["ipv4Subnet"] = item.IPv4Subnet
+	respItem["ipv4GateWay"] = item.IPv4GateWay
+	respItem["ipv4DhcpServers"] = item.IPv4DhcpServers
+	respItem["ipv4DnsServers"] = item.IPv4DNSServers
+	respItem["ipv6GlobalPool"] = item.IPv6GlobalPool
+	respItem["ipv6Prefix"] = item.IPv6Prefix
+	respItem["ipv6PrefixLength"] = item.IPv6PrefixLength
+	respItem["ipv6Subnet"] = item.IPv6Subnet
+	respItem["ipv6GateWay"] = item.IPv6GateWay
+	respItem["ipv6DhcpServers"] = item.IPv6DhcpServers
+	respItem["ipv6DnsServers"] = item.IPv6DNSServers
+	respItem["ipv4TotalHost"] = item.IPv4TotalHost
+	respItem["ipv6TotalHost"] = item.IPv6TotalHost
+	respItem["slaacSupport"] = item.SLAacSupport
+	return []map[string]interface{}{
+		respItem,
+	}
 }
 
 func resourceReserveIPSubpoolUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

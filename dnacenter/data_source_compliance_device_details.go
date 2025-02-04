@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -96,6 +97,14 @@ func dataSourceComplianceDeviceDetails() *schema.Resource {
 							Description: `Timestamp when the latest compliance checks ran.
 `,
 							Type:     schema.TypeFloat,
+							Computed: true,
+						},
+
+						"remediation_supported": &schema.Schema{
+							Description: `Indicates whether remediation is supported for this compliance type or not
+`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 
@@ -194,6 +203,7 @@ func flattenComplianceGetComplianceDetailItems(items *[]dnacentersdkgo.ResponseC
 		respItem["category"] = item.Category
 		respItem["last_update_time"] = item.LastUpdateTime
 		respItem["state"] = item.State
+		respItem["remediation_supported"] = boolPtrToString(item.RemediationSupported)
 		respItems = append(respItems, respItem)
 	}
 	return respItems

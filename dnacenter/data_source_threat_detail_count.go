@@ -7,7 +7,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -130,7 +131,7 @@ func dataSourceThreatDetailCountRead(ctx context.Context, d *schema.ResourceData
 
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-	vItem1 := flattenDevicesThreatDetailCountItem(response1)
+	vItem1 := flattenDevicesThreatDetailCountItemDataSource(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
 			"Failure when setting ThreatDetailCount response",
@@ -139,8 +140,6 @@ func dataSourceThreatDetailCountRead(ctx context.Context, d *schema.ResourceData
 	}
 
 	d.SetId(getUnixTimeString())
-	return diags
-
 	return diags
 }
 
@@ -171,4 +170,16 @@ func expandRequestThreatDetailCountThreatDetailCount(ctx context.Context, key st
 		request.IsNewThreat = interfaceToBoolPtr(v)
 	}
 	return &request
+}
+
+func flattenDevicesThreatDetailCountItemDataSource(item *dnacentersdkgo.ResponseDevicesThreatDetailCount) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["response"] = item.Response
+	respItem["version"] = item.Version
+	return []map[string]interface{}{
+		respItem,
+	}
 }

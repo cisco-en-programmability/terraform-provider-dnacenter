@@ -7,7 +7,8 @@ import (
 	"reflect"
 	"time"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -90,8 +91,59 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"broadcast_probe_response_interval": &schema.Schema{
+										Description: `Broadcast Probe Response Interval of 6 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"coverage_hole_detection_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"chd_client_level": &schema.Schema{
+													Description: `Coverage Hole Detection Client Level
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"chd_data_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Data Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"chd_exception_level": &schema.Schema{
+													Description: `Coverage Hole Detection Exception Level(%)
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"chd_voice_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Voice Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"custom_rx_sop_threshold": &schema.Schema{
+										Description: `RX-SOP threshold custom configuration of 6 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
 									"data_rates": &schema.Schema{
 										Description: `Data rates of 6 GHz radio band passed in comma separated format without any spaces. Permissible values: 6, 9, 12, 18, 24, 36, 48, 54
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"discovery_frames6_g_hz": &schema.Schema{
+										Description: `Discovery Frames of 6 GHz radio band
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -102,6 +154,27 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 										// Type:        schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
+									},
+									"fra_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"client_reset_count": &schema.Schema{
+													Description: `Client Reset Count of 6 GHz radio band
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"client_utilization_threshold": &schema.Schema{
+													Description: `Client Utilization Threshold of 6 GHz radio band
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
 									},
 									"mandatory_data_rates": &schema.Schema{
 										Description: `Mandatory data rates of 6 GHz radio band passed in comma separated format without any spaces and must be a subset of selected dataRates with maximum of 2 values. Permissible values: 6, 9, 12, 18, 24, 36, 48, 54
@@ -117,6 +190,12 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 									},
 									"max_power_level": &schema.Schema{
 										Description: `Maximum power level of 6 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"max_radio_clients": &schema.Schema{
+										Description: `Client Limit of 6 GHz radio band
 `,
 										Type:     schema.TypeInt,
 										Computed: true,
@@ -256,6 +335,13 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"psc_enforcing_enabled": &schema.Schema{
+										Description: `PSC Enforcing Enable for 6 GHz radio band
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"radio_channels": &schema.Schema{
 										Description: `DCA channels of 6 GHz radio band passed in comma separated format without any spaces. Permissible values: 1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77, 81, 85, 89, 93, 97, 101, 105, 109, 113, 117, 121, 125, 129, 133, 137, 141, 145, 149, 153, 157, 161, 165, 169, 173, 177, 181, 185, 189, 193, 197, 201, 205, 209, 213, 217, 221, 225, 229, 233
 `,
@@ -267,6 +353,47 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Computed: true,
+									},
+									"spatial_reuse_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"dot11ax_non_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"dot11ax_non_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect_min_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Min Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -283,11 +410,78 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"coverage_hole_detection_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"chd_client_level": &schema.Schema{
+													Description: `Coverage Hole Detection Client Level
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"chd_data_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Data Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"chd_exception_level": &schema.Schema{
+													Description: `Coverage Hole Detection Exception Level(%)
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"chd_voice_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Voice Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"custom_rx_sop_threshold": &schema.Schema{
+										Description: `RX-SOP threshold custom configuration of 5 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
 									"data_rates": &schema.Schema{
 										Description: `Data rates of 5 GHz radio band passed in comma separated format without any spaces. Permissible values: 6, 9, 12, 18, 24, 36, 48, 54
 `,
 										Type:     schema.TypeString,
 										Computed: true,
+									},
+									"fra_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"client_aware": &schema.Schema{
+													Description: `Client Aware of 5 GHz radio band
+`,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"client_reset": &schema.Schema{
+													Description: `Client Reset(%) of 5 GHz radio band
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"client_select": &schema.Schema{
+													Description: `Client Select(%) of 5 GHz radio band
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
 									},
 									"mandatory_data_rates": &schema.Schema{
 										Description: `Mandatory data rates of 5 GHz radio band passed in comma separated format without any spaces and must be a subset of selected dataRates with maximum of 2 values. Permissible values: 6, 9, 12, 18, 24, 36, 48, 54
@@ -297,6 +491,12 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 									},
 									"max_power_level": &schema.Schema{
 										Description: `Maximum power level of 5 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"max_radio_clients": &schema.Schema{
+										Description: `Client Limit of 5 GHz radio band
 `,
 										Type:     schema.TypeInt,
 										Computed: true,
@@ -338,6 +538,54 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"spatial_reuse_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"dot11ax_non_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"dot11ax_non_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect_min_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Min Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"zero_wait_dfs_enable": &schema.Schema{
+										Description: `Zero Wait DFS is applicable only for IOS-XE based Wireless Controllers running 17.9.1 and above versions
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 								},
 							},
 						},
@@ -347,6 +595,45 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"coverage_hole_detection_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"chd_client_level": &schema.Schema{
+													Description: `Coverage Hole Detection Client Level
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"chd_data_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Data Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"chd_exception_level": &schema.Schema{
+													Description: `Coverage Hole Detection Exception Level(%)
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"chd_voice_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Voice Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"custom_rx_sop_threshold": &schema.Schema{
+										Description: `RX-SOP threshold custom configuration of 2.4 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
 									"data_rates": &schema.Schema{
 										Description: `Data rates of 2.4 GHz radio band passed in comma separated format without any spaces. Permissible values: 1, 2, 5.5, 6, 9, 11, 12, 18, 24, 36, 48, 54
 `,
@@ -361,6 +648,12 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 									},
 									"max_power_level": &schema.Schema{
 										Description: `Maximum power level of 2.4 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"max_radio_clients": &schema.Schema{
+										Description: `Client Limit of 2.4 GHz radio band
 `,
 										Type:     schema.TypeInt,
 										Computed: true,
@@ -394,6 +687,47 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 `,
 										Type:     schema.TypeString,
 										Computed: true,
+									},
+									"spatial_reuse_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"dot11ax_non_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"dot11ax_non_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect_min_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Min Threshold
+`,
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -463,8 +797,67 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"broadcast_probe_response_interval": &schema.Schema{
+										Description: `Broadcast Probe Response Interval of 6 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"coverage_hole_detection_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"chd_client_level": &schema.Schema{
+													Description: `Coverage Hole Detection Client Level
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"chd_data_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Data Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"chd_exception_level": &schema.Schema{
+													Description: `Coverage Hole Detection Exception Level(%)
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"chd_voice_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Voice Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"custom_rx_sop_threshold": &schema.Schema{
+										Description: `RX-SOP threshold custom configuration of 6 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
 									"data_rates": &schema.Schema{
 										Description: `Data rates of 6 GHz radio band passed in comma separated format without any spaces. Permissible values: 6, 9, 12, 18, 24, 36, 48, 54
+`,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"discovery_frames6_g_hz": &schema.Schema{
+										Description: `Discovery Frames of 6 GHz radio band
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -478,6 +871,30 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
+									},
+									"fra_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"client_reset_count": &schema.Schema{
+													Description: `Client Reset Count of 6 GHz radio band
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"client_utilization_threshold": &schema.Schema{
+													Description: `Client Utilization Threshold of 6 GHz radio band
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
 									},
 									"mandatory_data_rates": &schema.Schema{
 										Description: `Mandatory data rates of 6 GHz radio band passed in comma separated format without any spaces and must be a subset of selected dataRates with maximum of 2 values. Permissible values: 6, 9, 12, 18, 24, 36, 48, 54
@@ -495,6 +912,13 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 									},
 									"max_power_level": &schema.Schema{
 										Description: `Maximum power level of 6 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"max_radio_clients": &schema.Schema{
+										Description: `Client Limit of 6 GHz radio band
 `,
 										Type:     schema.TypeInt,
 										Optional: true,
@@ -666,6 +1090,15 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 										Optional:     true,
 										Computed:     true,
 									},
+									"psc_enforcing_enabled": &schema.Schema{
+										Description: `PSC Enforcing Enable for 6 GHz radio band
+`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
+									},
 									"radio_channels": &schema.Schema{
 										Description: `DCA channels of 6 GHz radio band passed in comma separated format without any spaces. Permissible values: 1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77, 81, 85, 89, 93, 97, 101, 105, 109, 113, 117, 121, 125, 129, 133, 137, 141, 145, 149, 153, 157, 161, 165, 169, 173, 177, 181, 185, 189, 193, 197, 201, 205, 209, 213, 217, 221, 225, 229, 233
 `,
@@ -679,6 +1112,55 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
+									},
+									"spatial_reuse_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"dot11ax_non_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"dot11ax_non_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"dot11ax_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect_min_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Min Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -697,12 +1179,90 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 										Optional: true,
 										Computed: true,
 									},
+									"coverage_hole_detection_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"chd_client_level": &schema.Schema{
+													Description: `Coverage Hole Detection Client Level
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"chd_data_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Data Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"chd_exception_level": &schema.Schema{
+													Description: `Coverage Hole Detection Exception Level(%)
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"chd_voice_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Voice Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"custom_rx_sop_threshold": &schema.Schema{
+										Description: `RX-SOP threshold custom configuration of 5 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
 									"data_rates": &schema.Schema{
 										Description: `Data rates of 5 GHz radio band passed in comma separated format without any spaces. Permissible values: 6, 9, 12, 18, 24, 36, 48, 54
 `,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
+									},
+									"fra_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"client_aware": &schema.Schema{
+													Description: `Client Aware of 5 GHz radio band
+`,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"client_reset": &schema.Schema{
+													Description: `Client Reset(%) of 5 GHz radio band
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"client_select": &schema.Schema{
+													Description: `Client Select(%) of 5 GHz radio band
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
 									},
 									"mandatory_data_rates": &schema.Schema{
 										Description: `Mandatory data rates of 5 GHz radio band passed in comma separated format without any spaces and must be a subset of selected dataRates with maximum of 2 values. Permissible values: 6, 9, 12, 18, 24, 36, 48, 54
@@ -713,6 +1273,13 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 									},
 									"max_power_level": &schema.Schema{
 										Description: `Maximum power level of 5 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"max_radio_clients": &schema.Schema{
+										Description: `Client Limit of 5 GHz radio band
 `,
 										Type:     schema.TypeInt,
 										Optional: true,
@@ -762,6 +1329,64 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 										Optional: true,
 										Computed: true,
 									},
+									"spatial_reuse_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"dot11ax_non_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"dot11ax_non_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"dot11ax_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect_min_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Min Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"zero_wait_dfs_enable": &schema.Schema{
+										Description: `Zero Wait DFS is applicable only for IOS-XE based Wireless Controllers running 17.9.1 and above versions
+`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
+									},
 								},
 							},
 						},
@@ -772,6 +1397,51 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"coverage_hole_detection_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"chd_client_level": &schema.Schema{
+													Description: `Coverage Hole Detection Client Level
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"chd_data_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Data Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"chd_exception_level": &schema.Schema{
+													Description: `Coverage Hole Detection Exception Level(%)
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"chd_voice_rssi_threshold": &schema.Schema{
+													Description: `Coverage Hole Detection Voice Rssi Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"custom_rx_sop_threshold": &schema.Schema{
+										Description: `RX-SOP threshold custom configuration of 2.4 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
 									"data_rates": &schema.Schema{
 										Description: `Data rates of 2.4 GHz radio band passed in comma separated format without any spaces. Permissible values: 1, 2, 5.5, 6, 9, 11, 12, 18, 24, 36, 48, 54
 `,
@@ -788,6 +1458,13 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 									},
 									"max_power_level": &schema.Schema{
 										Description: `Maximum power level of 2.4 GHz radio band
+`,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"max_radio_clients": &schema.Schema{
+										Description: `Client Limit of 2.4 GHz radio band
 `,
 										Type:     schema.TypeInt,
 										Optional: true,
@@ -827,6 +1504,55 @@ func resourceWirelessSettingsRfProfiles() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
+									},
+									"spatial_reuse_properties": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"dot11ax_non_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"dot11ax_non_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax Non SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD
+`,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"dot11ax_srg_obss_packet_detect_max_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Max Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+												"dot11ax_srg_obss_packet_detect_min_threshold": &schema.Schema{
+													Description: `Dot11ax SRG OBSS PD Min Threshold
+`,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -1156,6 +1882,84 @@ func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeAProperties(
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".preamble_puncture")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".preamble_puncture")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".preamble_puncture")))) {
 		request.PreamblePuncture = interfaceToBoolPtr(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".zero_wait_dfs_enable")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".zero_wait_dfs_enable")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".zero_wait_dfs_enable")))) {
+		request.ZeroWaitDfsEnable = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_rx_sop_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) {
+		request.CustomRxSopThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_radio_clients")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_radio_clients")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_radio_clients")))) {
+		request.MaxRadioClients = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fra_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fra_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fra_properties")))) {
+		request.FraProperties = expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeAPropertiesFraProperties(ctx, key+".fra_properties.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coverage_hole_detection_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) {
+		request.CoverageHoleDetectionProperties = expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeAPropertiesCoverageHoleDetectionProperties(ctx, key+".coverage_hole_detection_properties.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".spatial_reuse_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) {
+		request.SpatialReuseProperties = expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeAPropertiesSpatialReuseProperties(ctx, key+".spatial_reuse_properties.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeAPropertiesFraProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateRfProfileRadioTypeAPropertiesFraProperties {
+	request := dnacentersdkgo.RequestWirelessCreateRfProfileRadioTypeAPropertiesFraProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_aware")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_aware")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_aware")))) {
+		request.ClientAware = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_select")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_select")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_select")))) {
+		request.ClientSelect = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_reset")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_reset")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_reset")))) {
+		request.ClientReset = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeAPropertiesCoverageHoleDetectionProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateRfProfileRadioTypeAPropertiesCoverageHoleDetectionProperties {
+	request := dnacentersdkgo.RequestWirelessCreateRfProfileRadioTypeAPropertiesCoverageHoleDetectionProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_client_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_client_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_client_level")))) {
+		request.ChdClientLevel = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_data_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) {
+		request.ChdDataRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_voice_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) {
+		request.ChdVoiceRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_exception_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_exception_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_exception_level")))) {
+		request.ChdExceptionLevel = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeAPropertiesSpatialReuseProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateRfProfileRadioTypeAPropertiesSpatialReuseProperties {
+	request := dnacentersdkgo.RequestWirelessCreateRfProfileRadioTypeAPropertiesSpatialReuseProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) {
+		request.Dot11AxNonSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxNonSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) {
+		request.Dot11AxSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_min_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMinThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -1187,6 +1991,61 @@ func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeBProperties(
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_power_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_power_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_power_level")))) {
 		request.MaxPowerLevel = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_rx_sop_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) {
+		request.CustomRxSopThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_radio_clients")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_radio_clients")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_radio_clients")))) {
+		request.MaxRadioClients = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coverage_hole_detection_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) {
+		request.CoverageHoleDetectionProperties = expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeBPropertiesCoverageHoleDetectionProperties(ctx, key+".coverage_hole_detection_properties.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".spatial_reuse_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) {
+		request.SpatialReuseProperties = expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeBPropertiesSpatialReuseProperties(ctx, key+".spatial_reuse_properties.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeBPropertiesCoverageHoleDetectionProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateRfProfileRadioTypeBPropertiesCoverageHoleDetectionProperties {
+	request := dnacentersdkgo.RequestWirelessCreateRfProfileRadioTypeBPropertiesCoverageHoleDetectionProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_client_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_client_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_client_level")))) {
+		request.ChdClientLevel = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_data_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) {
+		request.ChdDataRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_voice_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) {
+		request.ChdVoiceRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_exception_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_exception_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_exception_level")))) {
+		request.ChdExceptionLevel = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioTypeBPropertiesSpatialReuseProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateRfProfileRadioTypeBPropertiesSpatialReuseProperties {
+	request := dnacentersdkgo.RequestWirelessCreateRfProfileRadioTypeBPropertiesSpatialReuseProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) {
+		request.Dot11AxNonSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxNonSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) {
+		request.Dot11AxSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_min_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMinThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1234,6 +2093,30 @@ func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioType6GHzProperti
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_dbs_width")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_dbs_width")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_dbs_width")))) {
 		request.MaxDbsWidth = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_rx_sop_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) {
+		request.CustomRxSopThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_radio_clients")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_radio_clients")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_radio_clients")))) {
+		request.MaxRadioClients = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".psc_enforcing_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".psc_enforcing_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".psc_enforcing_enabled")))) {
+		request.PscEnforcingEnabled = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".discovery_frames6_g_hz")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".discovery_frames6_g_hz")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".discovery_frames6_g_hz")))) {
+		request.DiscoveryFrames6GHz = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".broadcast_probe_response_interval")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".broadcast_probe_response_interval")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".broadcast_probe_response_interval")))) {
+		request.BroadcastProbeResponseInterval = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fra_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fra_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fra_properties")))) {
+		request.FraProperties = expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioType6GHzPropertiesFraProperties(ctx, key+".fra_properties.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coverage_hole_detection_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) {
+		request.CoverageHoleDetectionProperties = expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioType6GHzPropertiesCoverageHoleDetectionProperties(ctx, key+".coverage_hole_detection_properties.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".spatial_reuse_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) {
+		request.SpatialReuseProperties = expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioType6GHzPropertiesSpatialReuseProperties(ctx, key+".spatial_reuse_properties.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1297,6 +2180,63 @@ func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioType6GHzProperti
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ofdma_multi_ru")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ofdma_multi_ru")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ofdma_multi_ru")))) {
 		request.OfdmaMultiRu = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioType6GHzPropertiesFraProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateRfProfileRadioType6GHzPropertiesFraProperties {
+	request := dnacentersdkgo.RequestWirelessCreateRfProfileRadioType6GHzPropertiesFraProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_reset_count")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_reset_count")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_reset_count")))) {
+		request.ClientResetCount = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_utilization_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_utilization_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_utilization_threshold")))) {
+		request.ClientUtilizationThreshold = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioType6GHzPropertiesCoverageHoleDetectionProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateRfProfileRadioType6GHzPropertiesCoverageHoleDetectionProperties {
+	request := dnacentersdkgo.RequestWirelessCreateRfProfileRadioType6GHzPropertiesCoverageHoleDetectionProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_client_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_client_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_client_level")))) {
+		request.ChdClientLevel = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_data_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) {
+		request.ChdDataRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_voice_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) {
+		request.ChdVoiceRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_exception_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_exception_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_exception_level")))) {
+		request.ChdExceptionLevel = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesCreateRfProfileRadioType6GHzPropertiesSpatialReuseProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessCreateRfProfileRadioType6GHzPropertiesSpatialReuseProperties {
+	request := dnacentersdkgo.RequestWirelessCreateRfProfileRadioType6GHzPropertiesSpatialReuseProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) {
+		request.Dot11AxNonSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxNonSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) {
+		request.Dot11AxSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_min_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMinThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1368,6 +2308,84 @@ func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeAProperties(
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".preamble_puncture")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".preamble_puncture")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".preamble_puncture")))) {
 		request.PreamblePuncture = interfaceToBoolPtr(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".zero_wait_dfs_enable")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".zero_wait_dfs_enable")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".zero_wait_dfs_enable")))) {
+		request.ZeroWaitDfsEnable = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_rx_sop_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) {
+		request.CustomRxSopThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_radio_clients")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_radio_clients")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_radio_clients")))) {
+		request.MaxRadioClients = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fra_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fra_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fra_properties")))) {
+		request.FraProperties = expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeAPropertiesFraProperties(ctx, key+".fra_properties.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coverage_hole_detection_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) {
+		request.CoverageHoleDetectionProperties = expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeAPropertiesCoverageHoleDetectionProperties(ctx, key+".coverage_hole_detection_properties.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".spatial_reuse_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) {
+		request.SpatialReuseProperties = expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeAPropertiesSpatialReuseProperties(ctx, key+".spatial_reuse_properties.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeAPropertiesFraProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateRfProfileRadioTypeAPropertiesFraProperties {
+	request := dnacentersdkgo.RequestWirelessUpdateRfProfileRadioTypeAPropertiesFraProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_aware")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_aware")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_aware")))) {
+		request.ClientAware = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_select")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_select")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_select")))) {
+		request.ClientSelect = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_reset")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_reset")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_reset")))) {
+		request.ClientReset = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeAPropertiesCoverageHoleDetectionProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateRfProfileRadioTypeAPropertiesCoverageHoleDetectionProperties {
+	request := dnacentersdkgo.RequestWirelessUpdateRfProfileRadioTypeAPropertiesCoverageHoleDetectionProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_client_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_client_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_client_level")))) {
+		request.ChdClientLevel = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_data_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) {
+		request.ChdDataRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_voice_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) {
+		request.ChdVoiceRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_exception_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_exception_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_exception_level")))) {
+		request.ChdExceptionLevel = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeAPropertiesSpatialReuseProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateRfProfileRadioTypeAPropertiesSpatialReuseProperties {
+	request := dnacentersdkgo.RequestWirelessUpdateRfProfileRadioTypeAPropertiesSpatialReuseProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) {
+		request.Dot11AxNonSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxNonSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) {
+		request.Dot11AxSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_min_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMinThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -1399,6 +2417,61 @@ func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeBProperties(
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_power_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_power_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_power_level")))) {
 		request.MaxPowerLevel = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_rx_sop_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) {
+		request.CustomRxSopThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_radio_clients")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_radio_clients")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_radio_clients")))) {
+		request.MaxRadioClients = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coverage_hole_detection_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) {
+		request.CoverageHoleDetectionProperties = expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeBPropertiesCoverageHoleDetectionProperties(ctx, key+".coverage_hole_detection_properties.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".spatial_reuse_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) {
+		request.SpatialReuseProperties = expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeBPropertiesSpatialReuseProperties(ctx, key+".spatial_reuse_properties.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeBPropertiesCoverageHoleDetectionProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateRfProfileRadioTypeBPropertiesCoverageHoleDetectionProperties {
+	request := dnacentersdkgo.RequestWirelessUpdateRfProfileRadioTypeBPropertiesCoverageHoleDetectionProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_client_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_client_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_client_level")))) {
+		request.ChdClientLevel = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_data_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) {
+		request.ChdDataRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_voice_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) {
+		request.ChdVoiceRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_exception_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_exception_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_exception_level")))) {
+		request.ChdExceptionLevel = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioTypeBPropertiesSpatialReuseProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateRfProfileRadioTypeBPropertiesSpatialReuseProperties {
+	request := dnacentersdkgo.RequestWirelessUpdateRfProfileRadioTypeBPropertiesSpatialReuseProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) {
+		request.Dot11AxNonSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxNonSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) {
+		request.Dot11AxSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_min_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMinThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1446,6 +2519,30 @@ func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioType6GHzProperti
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_dbs_width")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_dbs_width")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_dbs_width")))) {
 		request.MaxDbsWidth = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_rx_sop_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_rx_sop_threshold")))) {
+		request.CustomRxSopThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_radio_clients")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_radio_clients")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_radio_clients")))) {
+		request.MaxRadioClients = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".psc_enforcing_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".psc_enforcing_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".psc_enforcing_enabled")))) {
+		request.PscEnforcingEnabled = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".discovery_frames6_g_hz")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".discovery_frames6_g_hz")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".discovery_frames6_g_hz")))) {
+		request.DiscoveryFrames6GHz = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".broadcast_probe_response_interval")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".broadcast_probe_response_interval")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".broadcast_probe_response_interval")))) {
+		request.BroadcastProbeResponseInterval = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fra_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fra_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fra_properties")))) {
+		request.FraProperties = expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioType6GHzPropertiesFraProperties(ctx, key+".fra_properties.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coverage_hole_detection_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coverage_hole_detection_properties")))) {
+		request.CoverageHoleDetectionProperties = expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioType6GHzPropertiesCoverageHoleDetectionProperties(ctx, key+".coverage_hole_detection_properties.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".spatial_reuse_properties")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".spatial_reuse_properties")))) {
+		request.SpatialReuseProperties = expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioType6GHzPropertiesSpatialReuseProperties(ctx, key+".spatial_reuse_properties.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1509,6 +2606,63 @@ func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioType6GHzProperti
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ofdma_multi_ru")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ofdma_multi_ru")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ofdma_multi_ru")))) {
 		request.OfdmaMultiRu = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioType6GHzPropertiesFraProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateRfProfileRadioType6GHzPropertiesFraProperties {
+	request := dnacentersdkgo.RequestWirelessUpdateRfProfileRadioType6GHzPropertiesFraProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_reset_count")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_reset_count")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_reset_count")))) {
+		request.ClientResetCount = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".client_utilization_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".client_utilization_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".client_utilization_threshold")))) {
+		request.ClientUtilizationThreshold = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioType6GHzPropertiesCoverageHoleDetectionProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateRfProfileRadioType6GHzPropertiesCoverageHoleDetectionProperties {
+	request := dnacentersdkgo.RequestWirelessUpdateRfProfileRadioType6GHzPropertiesCoverageHoleDetectionProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_client_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_client_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_client_level")))) {
+		request.ChdClientLevel = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_data_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_data_rssi_threshold")))) {
+		request.ChdDataRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_voice_rssi_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_voice_rssi_threshold")))) {
+		request.ChdVoiceRssiThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".chd_exception_level")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".chd_exception_level")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".chd_exception_level")))) {
+		request.ChdExceptionLevel = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestWirelessSettingsRfProfilesUpdateRfProfileRadioType6GHzPropertiesSpatialReuseProperties(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestWirelessUpdateRfProfileRadioType6GHzPropertiesSpatialReuseProperties {
+	request := dnacentersdkgo.RequestWirelessUpdateRfProfileRadioType6GHzPropertiesSpatialReuseProperties{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect")))) {
+		request.Dot11AxNonSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_non_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_non_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxNonSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect")))) {
+		request.Dot11AxSrgObssPacketDetect = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_min_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_min_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMinThreshold = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dot11ax_srg_obss_packet_detect_max_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dot11ax_srg_obss_packet_detect_max_threshold")))) {
+		request.Dot11AxSrgObssPacketDetectMaxThreshold = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

@@ -12,10 +12,10 @@ resource "dnacenter_sda_fabric_sites" "example" {
 
   parameters {
     payload {
-     authentication_profile_name = "string"
+      authentication_profile_name = "string"
       id                          = "string"
       is_pub_sub_enabled          = "false"
-      site_id                     = "string" 
+      site_id                     = "string"
     }
   }
 }

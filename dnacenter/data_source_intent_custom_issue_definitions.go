@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -197,7 +198,7 @@ func dataSourceIntentCustomIssueDefinitionsRead(ctx context.Context, d *schema.R
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenIssuesGetTheCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDItem(response1.Response)
+		vItem1 := flattenIssuesGetTheIntentCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTheCustomIssueDefinitionForTheGivenCustomIssueDefinitionID response",
@@ -212,7 +213,7 @@ func dataSourceIntentCustomIssueDefinitionsRead(ctx context.Context, d *schema.R
 	return diags
 }
 
-func flattenIssuesGetTheCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDItem(item *dnacentersdkgo.ResponseIssuesGetTheCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDResponse) []map[string]interface{} {
+func flattenIssuesGetTheIntentCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDItem(item *dnacentersdkgo.ResponseIssuesGetTheCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -222,7 +223,7 @@ func flattenIssuesGetTheCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDI
 	respItem["description"] = item.Description
 	respItem["profile_id"] = item.ProfileID
 	respItem["trigger_id"] = item.TriggerID
-	respItem["rules"] = flattenIssuesGetTheCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDItemRules(item.Rules)
+	respItem["rules"] = flattenIssuesGetTheIntentCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDItemRules(item.Rules)
 	respItem["is_enabled"] = boolPtrToString(item.IsEnabled)
 	respItem["priority"] = item.Priority
 	respItem["is_deletable"] = boolPtrToString(item.IsDeletable)
@@ -234,7 +235,7 @@ func flattenIssuesGetTheCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDI
 	}
 }
 
-func flattenIssuesGetTheCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDItemRules(items *[]dnacentersdkgo.ResponseIssuesGetTheCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDResponseRules) []map[string]interface{} {
+func flattenIssuesGetTheIntentCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDItemRules(items *[]dnacentersdkgo.ResponseIssuesGetTheCustomIssueDefinitionForTheGivenCustomIssueDefinitionIDResponseRules) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

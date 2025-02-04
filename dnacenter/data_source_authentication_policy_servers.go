@@ -5,7 +5,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -53,7 +54,7 @@ func dataSourceAuthenticationPolicyServers() *schema.Resource {
 						},
 
 						"authentication_port": &schema.Schema{
-							Description: `Authentication port of RADIUS server (Default: 1812) 
+							Description: `Authentication port of RADIUS server (Default: 1812)
 `,
 							Type:     schema.TypeInt,
 							Computed: true,

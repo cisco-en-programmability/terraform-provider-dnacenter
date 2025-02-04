@@ -6,7 +6,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -359,40 +360,6 @@ func flattenSitesGetSiteItem(item *dnacentersdkgo.ResponseSitesGetSiteResponse) 
 	return respItems
 }*/
 
-func flattenSitesGetSiteItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfo, parameters []interface{}) []map[string]interface{} {
-	var respItems []map[string]interface{}
-	var parentName string
-	if parameters != nil {
-		parentName = getParametersOfLastUpdatedBuilding(parameters, "parent_name", "building")
-	} else {
-		parentName = ""
-	}
-	for _, item := range items {
-		respItem := make(map[string]interface{})
-		respItem["name_space"] = item.Namespace
-		respItem["attributes"] = []map[string]interface{}{
-			{
-				"country":              item.Attributes.Country,
-				"address":              item.Attributes.Address,
-				"latitude":             item.Attributes.Latitude,
-				"addressinheritedfrom": item.Attributes.AddressInheritedFrom,
-				"type":                 item.Attributes.Type,
-				"longitude":            item.Attributes.Longitude,
-				"offsetx":              item.Attributes.OffsetX,
-				"offsety":              item.Attributes.OffsetY,
-				"length":               item.Attributes.Length,
-				"width":                item.Attributes.Width,
-				"height":               item.Attributes.Height,
-				"rfmodel":              item.Attributes.RfModel,
-				"floorindex":           item.Attributes.FloorIndex,
-				"parent_name":          parentName,
-			},
-		}
-		respItems = append(respItems, respItem)
-	}
-	return respItems
-}
-
 func flattenSitesGetFloorItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetFloorResponseAdditionalInfo) []map[string]interface{} {
 	var respItems []map[string]interface{}
 	for _, item := range items {
@@ -436,28 +403,6 @@ func flattenSitesGetAreaItemsAdditionalInfo(items []dnacentersdkgo.ResponseSites
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-}
-
-func flattenSitesGetSiteItemsAdditionalInfoAtributes(item *dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfoAttributes) map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["country"] = item.Country
-	respItem["address"] = item.Address
-	respItem["latitude"] = item.Latitude
-	respItem["addressInheritedFrom"] = item.AddressInheritedFrom
-	respItem["type"] = item.Longitude
-	respItem["offsetX"] = item.OffsetX
-	respItem["offsetY"] = item.OffsetY
-	respItem["length"] = item.Length
-	respItem["width"] = item.Width
-	respItem["height"] = item.Height
-	respItem["rfModel"] = item.RfModel
-	respItem["rfModel"] = item.RfModel
-	respItem["floorIndex"] = item.FloorIndex
-
-	return respItem
 }
 
 func getParametersOfLastUpdatedBuilding(parameters []interface{}, searchValue string, typeSite string) string {

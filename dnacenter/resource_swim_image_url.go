@@ -12,7 +12,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -61,7 +62,7 @@ files extensions are bin, img, tar, smu, pie, aes, iso, ova, tar_gz and qcow2
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"schedule_at": &schema.Schema{
-							Description: `scheduleAt query parameter. Epoch Time (The number of milli-seconds since January 1 1970 UTC) at which the distribution should be scheduled (Optional) 
+							Description: `scheduleAt query parameter. Epoch Time (The number of milli-seconds since January 1 1970 UTC) at which the distribution should be scheduled (Optional)
 `,
 							Type:     schema.TypeString,
 							Optional: true,

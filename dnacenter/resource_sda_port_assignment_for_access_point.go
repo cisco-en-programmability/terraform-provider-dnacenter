@@ -7,7 +7,8 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	//dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "dnacenter-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -104,14 +105,14 @@ func resourceSdaPortAssignmentForAccessPoint() *schema.Resource {
 							Computed: true,
 						},
 						"data_ip_address_pool_name": &schema.Schema{
-							Description: `Ip Pool Name, that is assigned to INFRA_VN  
+							Description: `Ip Pool Name, that is assigned to INFRA_VN
 `,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"device_management_ip_address": &schema.Schema{
-							Description: `Management Ip Address of the edge device 
+							Description: `Management Ip Address of the edge device
 `,
 							Type:     schema.TypeString,
 							Optional: true,
@@ -125,7 +126,7 @@ func resourceSdaPortAssignmentForAccessPoint() *schema.Resource {
 							Computed: true,
 						},
 						"interface_name": &schema.Schema{
-							Description: `Interface Name of the edge device 
+							Description: `Interface Name of the edge device
 `,
 							Type:     schema.TypeString,
 							Optional: true,
