@@ -169,6 +169,9 @@ func dataSourceFloorsFloorIDAccessPointPositions() *schema.Resource {
 `,
 										Type:     schema.TypeList,
 										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeFloat,
+										},
 									},
 
 									"channel": &schema.Schema{

@@ -110,6 +110,9 @@ api-specs/blob/main/Assurance/CE_Cat_Center_Org-icap-1.0.0-resolved.yaml
 							Description: `Data`,
 							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeFloat,
+							},
 						},
 
 						"data_avg": &schema.Schema{

@@ -25,7 +25,6 @@ accepted in the UI for this to succeed. Please refer to the user guide at
 
 		CreateContext: resourceSecurityAdvisoriesTrialsCreate,
 		ReadContext:   resourceSecurityAdvisoriesTrialsRead,
-		UpdateContext: resourceSecurityAdvisoriesTrialsUpdate,
 		DeleteContext: resourceSecurityAdvisoriesTrialsDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -199,10 +198,6 @@ func resourceSecurityAdvisoriesTrialsRead(ctx context.Context, d *schema.Resourc
 
 	}
 	return diags
-}
-
-func resourceSecurityAdvisoriesTrialsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceSecurityAdvisoriesTrialsRead(ctx, d, m)
 }
 
 func resourceSecurityAdvisoriesTrialsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

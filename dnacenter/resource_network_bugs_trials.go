@@ -25,7 +25,6 @@ UI for this to succeed. Please refer to the user guide at
 
 		CreateContext: resourceNetworkBugsTrialsCreate,
 		ReadContext:   resourceNetworkBugsTrialsRead,
-		UpdateContext: resourceNetworkBugsTrialsUpdate,
 		DeleteContext: resourceNetworkBugsTrialsDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -93,11 +92,6 @@ UI for this to succeed. Please refer to the user guide at
 						},
 					},
 				},
-			},
-			"parameters": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -206,10 +200,6 @@ func resourceNetworkBugsTrialsRead(ctx context.Context, d *schema.ResourceData, 
 
 	}
 	return diags
-}
-
-func resourceNetworkBugsTrialsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceNetworkBugsTrialsRead(ctx, d, m)
 }
 
 func resourceNetworkBugsTrialsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

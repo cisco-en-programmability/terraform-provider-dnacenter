@@ -25,7 +25,6 @@ accepted in the UI for this to succeed. Please refer to the user guide at
 
 		CreateContext: resourceFieldNoticesTrialsCreate,
 		ReadContext:   resourceFieldNoticesTrialsRead,
-		UpdateContext: resourceFieldNoticesTrialsUpdate,
 		DeleteContext: resourceFieldNoticesTrialsDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -200,10 +199,6 @@ func resourceFieldNoticesTrialsRead(ctx context.Context, d *schema.ResourceData,
 
 	}
 	return diags
-}
-
-func resourceFieldNoticesTrialsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceFieldNoticesTrialsRead(ctx, d, m)
 }
 
 func resourceFieldNoticesTrialsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

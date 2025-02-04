@@ -160,6 +160,9 @@ center-api-specs/blob/main/Assurance/CE_Cat_Center_Org-ICAP_APIs-1.0.0-resolved.
 							Description: `Slots`,
 							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeFloat,
+							},
 						},
 
 						"status": &schema.Schema{
