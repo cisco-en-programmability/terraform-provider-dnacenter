@@ -1,7 +1,7 @@
 
 data "dnacenter_client_health" "example" {
   provider  = dnacenter
-  timestamp = "string"
+  # timestamp = "string"
 }
 
 output "dnacenter_client_health_example" {

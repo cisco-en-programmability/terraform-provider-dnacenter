@@ -14,7 +14,7 @@ provider "dnacenter" {
 data "dnacenter_applications" "example" {
   provider = dnacenter
   # limit    = 1
-  # name     = "intrinsa"
+  name     = "intrinsa"
   # offset   = 1
 }
 

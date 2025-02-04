@@ -30,7 +30,7 @@ func dataSourceApplicationsCount() *schema.Resource {
 
 						"response": &schema.Schema{
 							Description: `Response`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeFloat,
 							Computed:    true,
 						},
 

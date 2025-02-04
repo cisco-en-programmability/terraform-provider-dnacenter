@@ -179,7 +179,43 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItem := make(map[string]interface{})
 		respItem["parent_id"] = item.ParentID
 		respItem["name"] = item.Name
-		respItem["additional_info"] = item.AdditionalInfo
+		respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo, nil)
+		respItem["site_hierarchy"] = item.SiteHierarchy
+		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+		respItem["instance_tenant_id"] = item.InstanceTenantID
+		respItem["id"] = item.ID
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+func flattenSitesGetFloorItems(items *[]dnacentersdkgo.ResponseSitesGetFloorResponse) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["parent_id"] = item.ParentID
+		respItem["name"] = item.Name
+		respItem["additional_info"] = flattenSitesGetFloorItemsAdditionalInfo(item.AdditionalInfo)
+		respItem["site_hierarchy"] = item.SiteHierarchy
+		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+		respItem["instance_tenant_id"] = item.InstanceTenantID
+		respItem["id"] = item.ID
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+func flattenSitesGetAreaItems(items *[]dnacentersdkgo.ResponseSitesGetAreaResponse) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["parent_id"] = item.ParentID
+		respItem["name"] = item.Name
+		respItem["additional_info"] = flattenSitesGetAreaItemsAdditionalInfo(item.AdditionalInfo, nil)
 		respItem["site_hierarchy"] = item.SiteHierarchy
 		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 		respItem["instance_tenant_id"] = item.InstanceTenantID
@@ -343,22 +379,39 @@ func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaRespo
 
 }
 
-/*
-func flattenSitesGetSiteItem(item *dnacentersdkgo.ResponseSitesGetSiteResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
+func flattenSitesGetSiteItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfo, parameters []interface{}) []map[string]interface{} {
 	var respItems []map[string]interface{}
-
-	respItem := make(map[string]interface{})
-	respItem["parent_id"] = item.ParentID
-	respItem["name"] = item.Name
-	respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo)
-
-	respItems = append(respItems, respItem)
-
+	var parentName string
+	if parameters != nil {
+		parentName = getParametersOfLastUpdatedBuilding(parameters, "parent_name", "building")
+	} else {
+		parentName = ""
+	}
+	for _, item := range items {
+		respItem := make(map[string]interface{})
+		respItem["name_space"] = item.Namespace
+		respItem["attributes"] = []map[string]interface{}{
+			{
+				"country":              item.Attributes.Country,
+				"address":              item.Attributes.Address,
+				"latitude":             item.Attributes.Latitude,
+				"addressinheritedfrom": item.Attributes.AddressInheritedFrom,
+				"type":                 item.Attributes.Type,
+				"longitude":            item.Attributes.Longitude,
+				"offsetx":              item.Attributes.OffsetX,
+				"offsety":              item.Attributes.OffsetY,
+				"length":               item.Attributes.Length,
+				"width":                item.Attributes.Width,
+				"height":               item.Attributes.Height,
+				"rfmodel":              item.Attributes.RfModel,
+				"floorindex":           item.Attributes.FloorIndex,
+				"parent_name":          parentName,
+			},
+		}
+		respItems = append(respItems, respItem)
+	}
 	return respItems
-}*/
+}
 
 func flattenSitesGetFloorItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetFloorResponseAdditionalInfo) []map[string]interface{} {
 	var respItems []map[string]interface{}
@@ -403,6 +456,28 @@ func flattenSitesGetAreaItemsAdditionalInfo(items []dnacentersdkgo.ResponseSites
 		respItems = append(respItems, respItem)
 	}
 	return respItems
+}
+
+func flattenSitesGetSiteItemsAdditionalInfoAtributes(item *dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfoAttributes) map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["country"] = item.Country
+	respItem["address"] = item.Address
+	respItem["latitude"] = item.Latitude
+	respItem["addressInheritedFrom"] = item.AddressInheritedFrom
+	respItem["type"] = item.Longitude
+	respItem["offsetX"] = item.OffsetX
+	respItem["offsetY"] = item.OffsetY
+	respItem["length"] = item.Length
+	respItem["width"] = item.Width
+	respItem["height"] = item.Height
+	respItem["rfModel"] = item.RfModel
+	respItem["rfModel"] = item.RfModel
+	respItem["floorIndex"] = item.FloorIndex
+
+	return respItem
 }
 
 func getParametersOfLastUpdatedBuilding(parameters []interface{}, searchValue string, typeSite string) string {
