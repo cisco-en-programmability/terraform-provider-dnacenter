@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_security_rogue_additional_details_count" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     end_time     = 1609459200

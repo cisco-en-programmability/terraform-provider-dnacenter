@@ -22,7 +22,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_network_create" "example" {
-  provider = meraki
+  provider = dnacenter
   site_id  = "string"
   parameters {
 

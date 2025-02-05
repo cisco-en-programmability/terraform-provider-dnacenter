@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,7 +21,7 @@ func dataSourceTaskOperation() *schema.Resource {
 		ReadContext: dataSourceTaskOperationRead,
 		Schema: map[string]*schema.Schema{
 			"limit": &schema.Schema{
-				Description: `limit path parameter. The maximum value of {limit} supported is 500. 
+				Description: `limit path parameter. The maximum value of {limit} supported is 500.
  Base 1 indexing for {limit}, minimum value is 1
 `,
 				Type:     schema.TypeInt,

@@ -6,7 +6,7 @@ description: |-
   It performs create operation on LAN Automation.
   Invoke V2 LAN Automation Start API, which supports optional auto-stop processing feature based on the provided timeout
   or a specific device list, or both. The stop processing will be executed automatically when either of the cases is
-  satisfied, without specifically calling the stop API. The V2 API behaves similarly to V1 if no timeout or device list is
+  satisfied, without specifically calling the stop API. The V2 API behaves similarly to  if no timeout or device list is
   provided, and the user needs to call the stop API for LAN Automation stop processing. With the V2 API, the user can also
   specify the level up to which the devices can be LAN automated.
 ---
@@ -17,7 +17,7 @@ It performs create operation on LAN Automation.
 
 - Invoke V2 LAN Automation Start API, which supports optional auto-stop processing feature based on the provided timeout
 or a specific device list, or both. The stop processing will be executed automatically when either of the cases is
-satisfied, without specifically calling the stop API. The V2 API behaves similarly to V1 if no timeout or device list is
+satisfied, without specifically calling the stop API. The V2 API behaves similarly to  if no timeout or device list is
 provided, and the user needs to call the stop API for LAN Automation stop processing. With the V2 API, the user can also
 specify the level up to which the devices can be LAN automated.
 ~>**Warning:**
@@ -28,7 +28,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_lan_automation_v2" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     discovered_device_site_name_hierarchy = "string"

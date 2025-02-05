@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_configuration_template_import_template" "example" {
-  provider     = meraki
+  provider     = dnacenter
   do_version   = "false"
   project_name = "string"
   parameters {
@@ -70,7 +70,7 @@ resource "dnacenter_configuration_template_import_template" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = "------"
+          selection_values        = "string"
         }
       }
       tags {
@@ -108,7 +108,7 @@ resource "dnacenter_configuration_template_import_template" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = "------"
+          selection_values        = "string"
         }
       }
       version = "string"
@@ -161,7 +161,7 @@ resource "dnacenter_configuration_template_import_template" "example" {
         default_selected_values = ["string"]
         id                      = "string"
         selection_type          = "string"
-        selection_values        = "------"
+        selection_values        = "string"
       }
     }
     software_type    = "string"
@@ -202,13 +202,13 @@ resource "dnacenter_configuration_template_import_template" "example" {
         default_selected_values = ["string"]
         id                      = "string"
         selection_type          = "string"
-        selection_values        = "------"
+        selection_values        = "string"
       }
     }
     validation_errors {
 
-      rollback_template_errors = "------"
-      template_errors          = "------"
+      rollback_template_errors = "string"
+      template_errors          = "string"
       template_id              = "string"
       template_version         = "string"
     }
@@ -244,7 +244,7 @@ Required:
 Optional:
 
 - `do_version` (Boolean) doVersion query parameter. If this flag is true then it creates a new version of the template with the imported contents in case if the templates already exists. " If this flag is false and if template already exists, then operation fails with 'Template already exists' error
-- `payload` (Block List) Array of RequestConfigurationTemplatesImportsTheTemplatesProvidedV1 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestConfigurationTemplatesImportsTheTemplatesProvided (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`

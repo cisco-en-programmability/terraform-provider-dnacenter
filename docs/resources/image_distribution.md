@@ -22,7 +22,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_image_distribution" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     device_uuid = "string"
@@ -53,7 +53,7 @@ output "dnacenter_image_distribution_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestSoftwareImageManagementSwimTriggerSoftwareImageDistributionV1 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestSoftwareImageManagementSwimTriggerSoftwareImageDistribution (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`

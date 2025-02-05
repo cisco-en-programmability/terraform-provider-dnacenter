@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -49,7 +49,7 @@ issueAndHealthDefinitions-1.0.0-resolved.yaml
 				Optional: true,
 			},
 			"include_for_overall_health": &schema.Schema{
-				Description: `includeForOverallHealth query parameter. The inclusion status of the issue definition, either true or false. true indicates that particular health metric is included in overall health computation, otherwise false. By default it's set to true. 
+				Description: `includeForOverallHealth query parameter. The inclusion status of the issue definition, either true or false. true indicates that particular health metric is included in overall health computation, otherwise false. By default it's set to true.
 `,
 				Type:     schema.TypeBool,
 				Optional: true,

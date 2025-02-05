@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -27,7 +27,7 @@ func dataSourceComplianceDeviceByIDDetail() *schema.Resource {
 				Optional: true,
 			},
 			"compliance_type": &schema.Schema{
-				Description: `complianceType query parameter. Specify "Compliance type(s)" separated by commas. The Compliance type can be 'APPLICATION_VISIBILITY', 'EoX', 'FABRIC', 'IMAGE', 'NETWORK_PROFILE', 'NETWORK_SETTINGS', 'PSIRT', 'RUNNING_CONFIG', 'WORKFLOW'. 
+				Description: `complianceType query parameter. Specify "Compliance type(s)" separated by commas. The Compliance type can be 'APPLICATION_VISIBILITY', 'EoX', 'FABRIC', 'IMAGE', 'NETWORK_PROFILE', 'NETWORK_SETTINGS', 'PSIRT', 'RUNNING_CONFIG', 'WORKFLOW'.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -42,6 +42,18 @@ func dataSourceComplianceDeviceByIDDetail() *schema.Resource {
 				Description: `diffList query parameter. diff list [ pass true to fetch the diff list ]
 `,
 				Type:     schema.TypeBool,
+				Optional: true,
+			},
+			"remediation_supported": &schema.Schema{
+				Description: `remediationSupported query parameter. The 'remediationSupported' parameter can be set to 'true' or 'false'. The result will be a combination of both values if it is not provided.
+`,
+				Type:     schema.TypeBool,
+				Optional: true,
+			},
+			"status": &schema.Schema{
+				Description: `status query parameter. 'COMPLIANT', 'NON_COMPLIANT', 'ERROR', 'IN_PROGRESS', 'NOT_APPLICABLE', 'NOT_AVAILABLE', 'WARNING', 'REMEDIATION_IN_PROGRESS' can be the value of the compliance 'status' parameter. [COMPLIANT: Device currently meets the compliance requirements.  NON_COMPLIANT: One of the compliance requirements like Software Image, PSIRT, Network Profile, Startup vs Running, etc. are not met. ERROR: Compliance is unable to compute status due to underlying errors. IN_PROGRESS: Compliance check is in progress for the device. NOT_APPLICABLE: Device is not supported for compliance, or minimum license requirement is not met. NOT_AVAILABLE: Compliance is not available for the device. COMPLIANT_WARNING: The device is compliant with warning if the last date of support is nearing. REMEDIATION_IN_PROGRESS: Compliance remediation is in progress for the device.]
+`,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 
@@ -59,7 +71,7 @@ func dataSourceComplianceDeviceByIDDetail() *schema.Resource {
 						},
 
 						"compliance_type": &schema.Schema{
-							Description: `Compliance type corresponds to a tile on the UI that will be one of NETWORK_PROFILE, IMAGE, APPLICATION_VISIBILITY, FABRIC, PSIRT, RUNNING_CONFIG, NETWORK_SETTINGS, WORKFLOW, or EoX.  
+							Description: `Compliance type corresponds to a tile on the UI that will be one of NETWORK_PROFILE, IMAGE, APPLICATION_VISIBILITY, FABRIC, PSIRT, RUNNING_CONFIG, NETWORK_SETTINGS, WORKFLOW, or EoX.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -83,6 +95,14 @@ func dataSourceComplianceDeviceByIDDetail() *schema.Resource {
 							Description: `Timestamp of the latest compliance check that was run.
 `,
 							Type:     schema.TypeFloat,
+							Computed: true,
+						},
+
+						"remediation_supported": &schema.Schema{
+							Description: `Indicates whether remediation is supported for this compliance type or not.
+`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 
@@ -217,7 +237,7 @@ func dataSourceComplianceDeviceByIDDetail() *schema.Resource {
 												},
 
 												"configured_value": &schema.Schema{
-													Description: `Configured value i.e. running / current value. It will be empty for the template violations due to potentially large size of the template. Use a dedicated API to get the template data. 
+													Description: `Configured value i.e. running / current value. It will be empty for the template violations due to potentially large size of the template. Use a dedicated API to get the template data.
 `,
 													Type:     schema.TypeString,
 													Computed: true,
@@ -275,7 +295,7 @@ func dataSourceComplianceDeviceByIDDetail() *schema.Resource {
 												},
 
 												"intended_value": &schema.Schema{
-													Description: `Enable", Intended value. It will be empty for the template violations due to potentially large size of the template. Use a dedicated API to get the template data.  
+													Description: `Enable", Intended value. It will be empty for the template violations due to potentially large size of the template. Use a dedicated API to get the template data.
 `,
 													Type:     schema.TypeString,
 													Computed: true,
@@ -326,7 +346,7 @@ func dataSourceComplianceDeviceByIDDetail() *schema.Resource {
 									},
 
 									"source_enum": &schema.Schema{
-										Description: `Will be same as compliance type. 
+										Description: `Will be same as compliance type.
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -343,14 +363,14 @@ func dataSourceComplianceDeviceByIDDetail() *schema.Resource {
 						},
 
 						"state": &schema.Schema{
-							Description: `State of the compliance check for the compliance type, will be one of SUCCESS, FAILED, or IN_PROGRESS. 
+							Description: `State of the compliance check for the compliance type, will be one of SUCCESS, FAILED, or IN_PROGRESS.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 
 						"status": &schema.Schema{
-							Description: `Status of compliance for the compliance type, will be one of COMPLIANT, NON_COMPLIANT, ERROR, IN_PROGRESS, NOT_APPLICABLE, NOT_AVAILABLE, COMPLIANT_WARNING, REMEDIATION_IN_PROGRESS, or ABORTED. 
+							Description: `Status of compliance for the compliance type, will be one of COMPLIANT, NON_COMPLIANT, ERROR, IN_PROGRESS, NOT_APPLICABLE, NOT_AVAILABLE, COMPLIANT_WARNING, REMEDIATION_IN_PROGRESS, or ABORTED.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -377,6 +397,8 @@ func dataSourceComplianceDeviceByIDDetailRead(ctx context.Context, d *schema.Res
 	vCategory, okCategory := d.GetOk("category")
 	vComplianceType, okComplianceType := d.GetOk("compliance_type")
 	vDiffList, okDiffList := d.GetOk("diff_list")
+	vStatus, okStatus := d.GetOk("status")
+	vRemediationSupported, okRemediationSupported := d.GetOk("remediation_supported")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -392,6 +414,12 @@ func dataSourceComplianceDeviceByIDDetailRead(ctx context.Context, d *schema.Res
 		}
 		if okDiffList {
 			queryParams1.DiffList = vDiffList.(bool)
+		}
+		if okStatus {
+			queryParams1.Status = vStatus.(string)
+		}
+		if okRemediationSupported {
+			queryParams1.RemediationSupported = vRemediationSupported.(bool)
 		}
 
 		response1, restyResp1, err := client.Compliance.ComplianceDetailsOfDevice(vvDeviceUUID, &queryParams1)

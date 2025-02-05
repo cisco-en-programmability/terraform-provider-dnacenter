@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -151,7 +151,7 @@ func resourceSdaVirtualNetworkIPPool() *schema.Resource {
 							Computed:     true,
 						},
 						"is_layer2_only": &schema.Schema{
-							Description: `Layer2 Only enablement flag and default value is False 
+							Description: `Layer2 Only enablement flag and default value is False
 `,
 							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,

@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -178,7 +178,43 @@ func flattenSitesGetSiteItems(items *[]dnacentersdkgo.ResponseSitesGetSiteRespon
 		respItem := make(map[string]interface{})
 		respItem["parent_id"] = item.ParentID
 		respItem["name"] = item.Name
-		respItem["additional_info"] = item.AdditionalInfo
+		respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo, nil)
+		respItem["site_hierarchy"] = item.SiteHierarchy
+		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+		respItem["instance_tenant_id"] = item.InstanceTenantID
+		respItem["id"] = item.ID
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+func flattenSitesGetFloorItems(items *[]dnacentersdkgo.ResponseSitesGetFloorResponse) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["parent_id"] = item.ParentID
+		respItem["name"] = item.Name
+		respItem["additional_info"] = flattenSitesGetFloorItemsAdditionalInfo(item.AdditionalInfo)
+		respItem["site_hierarchy"] = item.SiteHierarchy
+		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
+		respItem["instance_tenant_id"] = item.InstanceTenantID
+		respItem["id"] = item.ID
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+func flattenSitesGetAreaItems(items *[]dnacentersdkgo.ResponseSitesGetAreaResponse) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["parent_id"] = item.ParentID
+		respItem["name"] = item.Name
+		respItem["additional_info"] = flattenSitesGetAreaItemsAdditionalInfo(item.AdditionalInfo, nil)
 		respItem["site_hierarchy"] = item.SiteHierarchy
 		respItem["site_name_hierarchy"] = item.SiteNameHierarchy
 		respItem["instance_tenant_id"] = item.InstanceTenantID
@@ -341,23 +377,6 @@ func flattenSitesGetAreaParams(items *[]dnacentersdkgo.ResponseSitesGetAreaRespo
 	return respParams
 
 }
-
-/*
-func flattenSitesGetSiteItem(item *dnacentersdkgo.ResponseSitesGetSiteResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-
-	respItem := make(map[string]interface{})
-	respItem["parent_id"] = item.ParentID
-	respItem["name"] = item.Name
-	respItem["additional_info"] = flattenSitesGetSiteItemsAdditionalInfo(item.AdditionalInfo)
-
-	respItems = append(respItems, respItem)
-
-	return respItems
-}*/
 
 func flattenSitesGetSiteItemsAdditionalInfo(items []dnacentersdkgo.ResponseSitesGetSiteResponseAdditionalInfo, parameters []interface{}) []map[string]interface{} {
 	var respItems []map[string]interface{}

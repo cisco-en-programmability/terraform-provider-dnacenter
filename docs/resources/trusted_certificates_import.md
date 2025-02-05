@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_trusted_certificates_import" "example" {
-  provider = meraki
+  provider = dnacenter
 }
 
 output "dnacenter_trusted_certificates_import_example" {

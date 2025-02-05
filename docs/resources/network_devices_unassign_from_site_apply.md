@@ -24,7 +24,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_network_devices_unassign_from_site_apply" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     device_ids = ["string"]

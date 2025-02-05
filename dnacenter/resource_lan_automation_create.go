@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -165,7 +165,7 @@ func resourceLanAutomationCreate() *schema.Resource {
 										Computed: true,
 									},
 									"redistribute_isis_to_bgp": &schema.Schema{
-										Description: `Advertise LAN Automation summary route into BGP. 
+										Description: `Advertise LAN Automation summary route into BGP.
 `,
 										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,

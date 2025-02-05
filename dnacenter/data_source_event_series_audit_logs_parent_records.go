@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -63,7 +63,7 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 				Optional: true,
 			},
 			"event_id": &schema.Schema{
-				Description: `eventId query parameter. Audit Log notification's event ID. 
+				Description: `eventId query parameter. Audit Log notification's event ID.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -93,7 +93,7 @@ func dataSourceEventSeriesAuditLogsParentRecords() *schema.Resource {
 				Optional: true,
 			},
 			"offset": &schema.Schema{
-				Description: `offset query parameter. Position of a particular Audit Log record in the data. 
+				Description: `offset query parameter. Position of a particular Audit Log record in the data.
 `,
 				Type:     schema.TypeFloat,
 				Optional: true,

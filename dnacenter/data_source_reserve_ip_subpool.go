@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -29,7 +29,7 @@ func dataSourceReserveIPSubpool() *schema.Resource {
 			"ignore_inherited_groups": &schema.Schema{
 				Description: `ignoreInheritedGroups query parameter. Ignores pools inherited from parent site. Either siteId or ignoreInheritedGroups must be passed. They can also be used together.
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeBool,
 				Optional: true,
 			},
 			"limit": &schema.Schema{
@@ -51,7 +51,7 @@ func dataSourceReserveIPSubpool() *schema.Resource {
 				Optional: true,
 			},
 			"site_id": &schema.Schema{
-				Description: `siteId query parameter. site id of site from which to retrieve associated reserve pools. Either siteId (per site queries) or ignoreInheritedGroups must be used. They can also be used together. 
+				Description: `siteId query parameter. site id of site from which to retrieve associated reserve pools. Either siteId (per site queries) or ignoreInheritedGroups must be used. They can also be used together.
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -350,60 +350,7 @@ func flattenNetworkSettingsGetReserveIPSubpoolItems(items *[]dnacentersdkgo.Resp
 	}
 	return respItems
 }
-func flattenNetworkSettingsGetReserveIPSubpoolParameters(items *dnacentersdkgo.RequestNetworkSettingsReserveIPSubpool) []map[string]interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []map[string]interface{}
-	respItem := make(map[string]interface{})
-	respItem["name"] = items.Name
-	respItem["type"] = items.Type
-	respItem["ipv6_address_space"] = boolPtrToString(items.IPv6AddressSpace)
-	respItem["ipv4_global_pool"] = items.IPv4GlobalPool
-	respItem["ipv4_prefix"] = boolPtrToString(items.IPv4Prefix)
-	respItem["ipv4_prefix_length"] = items.IPv4PrefixLength
-	respItem["ipv4_subnet"] = items.IPv4Subnet
-	respItem["ipv4_gate_way"] = items.IPv4GateWay
-	respItem["ipv4_dhcp_servers"] = items.IPv4DhcpServers
-	respItem["ipv4_dns_servers"] = items.IPv4DNSServers
-	respItem["ipv6_global_pool"] = items.IPv6GlobalPool
-	respItem["ipv6_prefix"] = boolPtrToString(items.IPv6Prefix)
-	respItem["ipv6_prefix_length"] = items.IPv6PrefixLength
-	respItem["ipv6_subnet"] = items.IPv6Subnet
-	respItem["ipv6_gate_way"] = items.IPv6GateWay
-	respItem["ipv6_dhcp_servers"] = items.IPv6DhcpServers
-	respItem["ipv6_dns_servers"] = items.IPv6DNSServers
-	respItem["ipv4_total_host"] = interfaceToIntPtr(items.IPv4TotalHost)
-	respItem["ipv6_total_host"] = interfaceToIntPtr(items.IPv6TotalHost)
-	respItem["slaac_support"] = boolPtrToString(items.SLAacSupport)
 
-	respItems = append(respItems, respItem)
-	return respItems
-}
-
-func flattenNetworkSettingsGetReserveIPSubpoolParametersDhcpServers(items []string) []interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []interface{}
-	for _, item := range items {
-		respItem := item
-		respItems = append(respItems, responseInterfaceToString(respItem))
-	}
-	return respItems
-}
-
-func flattenNetworkSettingsGetReserveIPSubpoolParametersDnsServers(items []string) []interface{} {
-	if items == nil {
-		return nil
-	}
-	var respItems []interface{}
-	for _, item := range items {
-		respItem := item
-		respItems = append(respItems, responseInterfaceToString(respItem))
-	}
-	return respItems
-}
 func flattenNetworkSettingsGetReserveIPSubpoolItemsIPPools(items *[]dnacentersdkgo.ResponseNetworkSettingsGetReserveIPSubpoolResponseIPPools) []map[string]interface{} {
 	if items == nil {
 		return nil

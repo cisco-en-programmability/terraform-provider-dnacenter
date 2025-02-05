@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -108,8 +108,22 @@ func dataSourceWirelessProfile() *schema.Resource {
 													Computed: true,
 												},
 
+												"policy_profile_name": &schema.Schema{
+													Description: `Policy Profile Name
+`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
 												"type": &schema.Schema{
 													Description: `SSID Type(enum: Enterprise/Guest)
+`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+
+												"wlan_profile_name": &schema.Schema{
+													Description: `WLAN Profile Name
 `,
 													Type:     schema.TypeString,
 													Computed: true,
@@ -211,6 +225,8 @@ func flattenWirelessGetWirelessProfileItemsProfileDetailsSSIDDetails(items *[]dn
 		respItem["enable_fabric"] = boolPtrToString(item.EnableFabric)
 		respItem["flex_connect"] = flattenWirelessGetWirelessProfileItemsProfileDetailsSSIDDetailsFlexConnect(item.FlexConnect)
 		respItem["interface_name"] = item.InterfaceName
+		respItem["wlan_profile_name"] = item.WLANProfileName
+		respItem["policy_profile_name"] = item.PolicyProfileName
 		respItems = append(respItems, respItem)
 	}
 	return respItems

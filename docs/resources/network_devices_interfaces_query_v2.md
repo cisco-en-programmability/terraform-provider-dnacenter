@@ -22,7 +22,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_network_devices_interfaces_query_v2" "example" {
-  provider  = meraki
+  provider  = dnacenter
   device_id = "string"
   parameters {
 

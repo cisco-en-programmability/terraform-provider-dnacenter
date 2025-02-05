@@ -65,11 +65,33 @@ Optional:
 - `authentication_order` (String) First authentication method.
 - `authentication_profile_name` (String) The default host authentication template (updating this field is not allowed).
 - `dot1x_to_mab_fallback_timeout` (Number) 802.1x Timeout.
-- `fabric_id` (String) ID of the fabric this authentication profile is assigned to (updating this field is not allowed).
+- `fabric_id` (String) ID of the fabric this authentication profile is assigned to (updating this field is not allowed). To update a global authentication profile, either remove this property or set its value to null.
 - `id` (String) ID of the authentication profile (updating this field is not allowed).
 - `is_bpdu_guard_enabled` (String) Enable/disable BPDU Guard. Only applicable when authenticationProfileName is set to "Closed Authentication" (defaults to true).
 - `number_of_hosts` (String) Number of Hosts.
+- `pre_auth_acl` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--pre_auth_acl))
 - `wake_on_lan` (String) Wake on LAN.
+
+<a id="nestedblock--parameters--payload--pre_auth_acl"></a>
+### Nested Schema for `parameters.payload.pre_auth_acl`
+
+Optional:
+
+- `access_contracts` (Block List) (see [below for nested schema](#nestedblock--parameters--payload--pre_auth_acl--access_contracts))
+- `description` (String) Description of this Pre-Authentication ACL.
+- `enabled` (String) Enable/disable Pre-Authentication ACL.
+- `implicit_action` (String) Implicit behaviour unless overridden (defaults to "DENY").
+
+<a id="nestedblock--parameters--payload--pre_auth_acl--access_contracts"></a>
+### Nested Schema for `parameters.payload.pre_auth_acl.access_contracts`
+
+Optional:
+
+- `action` (String) Contract behaviour.
+- `port` (String) Port for the access contract. The port can only be used once in the Access Contract list.
+- `protocol` (String) Protocol for the access contract. "TCP" and "TCP_UDP" are only allowed when the contract port is "domain".
+
+
 
 
 
@@ -85,7 +107,27 @@ Read-Only:
 - `id` (String)
 - `is_bpdu_guard_enabled` (String)
 - `number_of_hosts` (String)
+- `pre_auth_acl` (List of Object) (see [below for nested schema](#nestedobjatt--item--pre_auth_acl))
 - `wake_on_lan` (String)
+
+<a id="nestedobjatt--item--pre_auth_acl"></a>
+### Nested Schema for `item.pre_auth_acl`
+
+Read-Only:
+
+- `access_contracts` (List of Object) (see [below for nested schema](#nestedobjatt--item--pre_auth_acl--access_contracts))
+- `description` (String)
+- `enabled` (String)
+- `implicit_action` (String)
+
+<a id="nestedobjatt--item--pre_auth_acl--access_contracts"></a>
+### Nested Schema for `item.pre_auth_acl.access_contracts`
+
+Read-Only:
+
+- `action` (String)
+- `port` (String)
+- `protocol` (String)
 
 ## Import
 

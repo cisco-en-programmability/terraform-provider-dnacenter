@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -65,7 +65,7 @@ func dataSourceNetworkDeviceWirelessLan() *schema.Resource {
 						},
 
 						"flex_group_name": &schema.Schema{
-							Description: `Name of the Flex Group that Access point assigned 
+							Description: `Name of the Flex Group that Access point assigned
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -79,7 +79,7 @@ func dataSourceNetworkDeviceWirelessLan() *schema.Resource {
 						},
 
 						"instance_tenant_id": &schema.Schema{
-							Description: `TenantId of the Device 
+							Description: `TenantId of the Device
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -116,7 +116,7 @@ func dataSourceNetworkDeviceWirelessLan() *schema.Resource {
 						},
 
 						"wireless_package_installed": &schema.Schema{
-							Description: `Status of the Wireless Package on the Device 
+							Description: `Status of the Wireless Package on the Device
 `,
 							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,

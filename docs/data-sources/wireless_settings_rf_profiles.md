@@ -19,9 +19,13 @@ It performs read operation on Wireless.
 
 ```terraform
 data "dnacenter_wireless_settings_rf_profiles" "example" {
-  provider = dnacenter
-  limit    = 1
-  offset   = 1
+  provider                = dnacenter
+  enable_radio_type6_g_hz = "false"
+  enable_radio_type_a     = "false"
+  enable_radio_type_b     = "false"
+  limit                   = 1
+  offset                  = 1
+  rf_profile_name         = "string"
 }
 
 output "dnacenter_wireless_settings_rf_profiles_example" {
@@ -43,9 +47,13 @@ output "dnacenter_wireless_settings_rf_profiles_example" {
 
 ### Optional
 
+- `enable_radio_type6_g_hz` (Boolean) enableRadioType6GHz query parameter. Enable Radio Type6GHz
+- `enable_radio_type_a` (Boolean) enableRadioTypeA query parameter. Enable Radio TypeA
+- `enable_radio_type_b` (Boolean) enableRadioTypeB query parameter. Enable Radio TypeB
 - `id` (String) id path parameter. RF Profile ID
-- `limit` (Number) limit query parameter.
-- `offset` (Number) offset query parameter.
+- `limit` (Number) limit query parameter. The number of records to show for this page. Default is 500 if not specified. Maximum allowed limit is 500
+- `offset` (Number) offset query parameter. The first record to show for this page; the first record is numbered 1
+- `rf_profile_name` (String) rfProfileName query parameter. RF Profile Name
 
 ### Read-Only
 
@@ -73,19 +81,47 @@ Read-Only:
 
 Read-Only:
 
+- `broadcast_probe_response_interval` (Number)
+- `coverage_hole_detection_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type6_g_hz_properties--coverage_hole_detection_properties))
+- `custom_rx_sop_threshold` (Number)
 - `data_rates` (String)
+- `discovery_frames6_g_hz` (String)
 - `enable_standard_power_service` (String)
+- `fra_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type6_g_hz_properties--fra_properties))
 - `mandatory_data_rates` (String)
 - `max_dbs_width` (Number)
 - `max_power_level` (Number)
+- `max_radio_clients` (Number)
 - `min_dbs_width` (Number)
 - `min_power_level` (Number)
 - `multi_bssid_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type6_g_hz_properties--multi_bssid_properties))
 - `parent_profile` (String)
 - `power_threshold_v1` (Number)
 - `preamble_puncture` (String)
+- `psc_enforcing_enabled` (String)
 - `radio_channels` (String)
 - `rx_sop_threshold` (String)
+- `spatial_reuse_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type6_g_hz_properties--spatial_reuse_properties))
+
+<a id="nestedobjatt--item--radio_type6_g_hz_properties--coverage_hole_detection_properties"></a>
+### Nested Schema for `item.radio_type6_g_hz_properties.coverage_hole_detection_properties`
+
+Read-Only:
+
+- `chd_client_level` (Number)
+- `chd_data_rssi_threshold` (Number)
+- `chd_exception_level` (Number)
+- `chd_voice_rssi_threshold` (Number)
+
+
+<a id="nestedobjatt--item--radio_type6_g_hz_properties--fra_properties"></a>
+### Nested Schema for `item.radio_type6_g_hz_properties.fra_properties`
+
+Read-Only:
+
+- `client_reset_count` (Number)
+- `client_utilization_threshold` (Number)
+
 
 <a id="nestedobjatt--item--radio_type6_g_hz_properties--multi_bssid_properties"></a>
 ### Nested Schema for `item.radio_type6_g_hz_properties.multi_bssid_properties`
@@ -121,6 +157,18 @@ Read-Only:
 
 
 
+<a id="nestedobjatt--item--radio_type6_g_hz_properties--spatial_reuse_properties"></a>
+### Nested Schema for `item.radio_type6_g_hz_properties.spatial_reuse_properties`
+
+Read-Only:
+
+- `dot11ax_non_srg_obss_packet_detect` (String)
+- `dot11ax_non_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect` (String)
+- `dot11ax_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect_min_threshold` (Number)
+
+
 
 <a id="nestedobjatt--item--radio_type_a_properties"></a>
 ### Nested Schema for `item.radio_type_a_properties`
@@ -128,15 +176,54 @@ Read-Only:
 Read-Only:
 
 - `channel_width` (String)
+- `coverage_hole_detection_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type_a_properties--coverage_hole_detection_properties))
+- `custom_rx_sop_threshold` (Number)
 - `data_rates` (String)
+- `fra_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type_a_properties--fra_properties))
 - `mandatory_data_rates` (String)
 - `max_power_level` (Number)
+- `max_radio_clients` (Number)
 - `min_power_level` (Number)
 - `parent_profile` (String)
 - `power_threshold_v1` (Number)
 - `preamble_puncture` (String)
 - `radio_channels` (String)
 - `rx_sop_threshold` (String)
+- `spatial_reuse_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type_a_properties--spatial_reuse_properties))
+- `zero_wait_dfs_enable` (String)
+
+<a id="nestedobjatt--item--radio_type_a_properties--coverage_hole_detection_properties"></a>
+### Nested Schema for `item.radio_type_a_properties.coverage_hole_detection_properties`
+
+Read-Only:
+
+- `chd_client_level` (Number)
+- `chd_data_rssi_threshold` (Number)
+- `chd_exception_level` (Number)
+- `chd_voice_rssi_threshold` (Number)
+
+
+<a id="nestedobjatt--item--radio_type_a_properties--fra_properties"></a>
+### Nested Schema for `item.radio_type_a_properties.fra_properties`
+
+Read-Only:
+
+- `client_aware` (String)
+- `client_reset` (Number)
+- `client_select` (Number)
+
+
+<a id="nestedobjatt--item--radio_type_a_properties--spatial_reuse_properties"></a>
+### Nested Schema for `item.radio_type_a_properties.spatial_reuse_properties`
+
+Read-Only:
+
+- `dot11ax_non_srg_obss_packet_detect` (String)
+- `dot11ax_non_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect` (String)
+- `dot11ax_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect_min_threshold` (Number)
+
 
 
 <a id="nestedobjatt--item--radio_type_b_properties"></a>
@@ -144,14 +231,41 @@ Read-Only:
 
 Read-Only:
 
+- `coverage_hole_detection_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type_b_properties--coverage_hole_detection_properties))
+- `custom_rx_sop_threshold` (Number)
 - `data_rates` (String)
 - `mandatory_data_rates` (String)
 - `max_power_level` (Number)
+- `max_radio_clients` (Number)
 - `min_power_level` (Number)
 - `parent_profile` (String)
 - `power_threshold_v1` (Number)
 - `radio_channels` (String)
 - `rx_sop_threshold` (String)
+- `spatial_reuse_properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--radio_type_b_properties--spatial_reuse_properties))
+
+<a id="nestedobjatt--item--radio_type_b_properties--coverage_hole_detection_properties"></a>
+### Nested Schema for `item.radio_type_b_properties.coverage_hole_detection_properties`
+
+Read-Only:
+
+- `chd_client_level` (Number)
+- `chd_data_rssi_threshold` (Number)
+- `chd_exception_level` (Number)
+- `chd_voice_rssi_threshold` (Number)
+
+
+<a id="nestedobjatt--item--radio_type_b_properties--spatial_reuse_properties"></a>
+### Nested Schema for `item.radio_type_b_properties.spatial_reuse_properties`
+
+Read-Only:
+
+- `dot11ax_non_srg_obss_packet_detect` (String)
+- `dot11ax_non_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect` (String)
+- `dot11ax_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect_min_threshold` (Number)
+
 
 
 
@@ -176,19 +290,47 @@ Read-Only:
 
 Read-Only:
 
+- `broadcast_probe_response_interval` (Number)
+- `coverage_hole_detection_properties` (List of Object) (see [below for nested schema](#nestedobjatt--items--radio_type6_g_hz_properties--coverage_hole_detection_properties))
+- `custom_rx_sop_threshold` (Number)
 - `data_rates` (String)
+- `discovery_frames6_g_hz` (String)
 - `enable_standard_power_service` (String)
+- `fra_properties` (List of Object) (see [below for nested schema](#nestedobjatt--items--radio_type6_g_hz_properties--fra_properties))
 - `mandatory_data_rates` (String)
 - `max_dbs_width` (Number)
 - `max_power_level` (Number)
+- `max_radio_clients` (Number)
 - `min_dbs_width` (Number)
 - `min_power_level` (Number)
 - `multi_bssid_properties` (List of Object) (see [below for nested schema](#nestedobjatt--items--radio_type6_g_hz_properties--multi_bssid_properties))
 - `parent_profile` (String)
 - `power_threshold_v1` (Number)
 - `preamble_puncture` (String)
+- `psc_enforcing_enabled` (String)
 - `radio_channels` (String)
 - `rx_sop_threshold` (String)
+- `spatial_reuse_properties` (List of Object) (see [below for nested schema](#nestedobjatt--items--radio_type6_g_hz_properties--spatial_reuse_properties))
+
+<a id="nestedobjatt--items--radio_type6_g_hz_properties--coverage_hole_detection_properties"></a>
+### Nested Schema for `items.radio_type6_g_hz_properties.coverage_hole_detection_properties`
+
+Read-Only:
+
+- `chd_client_level` (Number)
+- `chd_data_rssi_threshold` (Number)
+- `chd_exception_level` (Number)
+- `chd_voice_rssi_threshold` (Number)
+
+
+<a id="nestedobjatt--items--radio_type6_g_hz_properties--fra_properties"></a>
+### Nested Schema for `items.radio_type6_g_hz_properties.fra_properties`
+
+Read-Only:
+
+- `client_reset_count` (Number)
+- `client_utilization_threshold` (Number)
+
 
 <a id="nestedobjatt--items--radio_type6_g_hz_properties--multi_bssid_properties"></a>
 ### Nested Schema for `items.radio_type6_g_hz_properties.multi_bssid_properties`
@@ -224,6 +366,18 @@ Read-Only:
 
 
 
+<a id="nestedobjatt--items--radio_type6_g_hz_properties--spatial_reuse_properties"></a>
+### Nested Schema for `items.radio_type6_g_hz_properties.spatial_reuse_properties`
+
+Read-Only:
+
+- `dot11ax_non_srg_obss_packet_detect` (String)
+- `dot11ax_non_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect` (String)
+- `dot11ax_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect_min_threshold` (Number)
+
+
 
 <a id="nestedobjatt--items--radio_type_a_properties"></a>
 ### Nested Schema for `items.radio_type_a_properties`
@@ -231,15 +385,54 @@ Read-Only:
 Read-Only:
 
 - `channel_width` (String)
+- `coverage_hole_detection_properties` (List of Object) (see [below for nested schema](#nestedobjatt--items--radio_type_a_properties--coverage_hole_detection_properties))
+- `custom_rx_sop_threshold` (Number)
 - `data_rates` (String)
+- `fra_properties` (List of Object) (see [below for nested schema](#nestedobjatt--items--radio_type_a_properties--fra_properties))
 - `mandatory_data_rates` (String)
 - `max_power_level` (Number)
+- `max_radio_clients` (Number)
 - `min_power_level` (Number)
 - `parent_profile` (String)
 - `power_threshold_v1` (Number)
 - `preamble_puncture` (String)
 - `radio_channels` (String)
 - `rx_sop_threshold` (String)
+- `spatial_reuse_properties` (List of Object) (see [below for nested schema](#nestedobjatt--items--radio_type_a_properties--spatial_reuse_properties))
+- `zero_wait_dfs_enable` (String)
+
+<a id="nestedobjatt--items--radio_type_a_properties--coverage_hole_detection_properties"></a>
+### Nested Schema for `items.radio_type_a_properties.coverage_hole_detection_properties`
+
+Read-Only:
+
+- `chd_client_level` (Number)
+- `chd_data_rssi_threshold` (Number)
+- `chd_exception_level` (Number)
+- `chd_voice_rssi_threshold` (Number)
+
+
+<a id="nestedobjatt--items--radio_type_a_properties--fra_properties"></a>
+### Nested Schema for `items.radio_type_a_properties.fra_properties`
+
+Read-Only:
+
+- `client_aware` (String)
+- `client_reset` (Number)
+- `client_select` (Number)
+
+
+<a id="nestedobjatt--items--radio_type_a_properties--spatial_reuse_properties"></a>
+### Nested Schema for `items.radio_type_a_properties.spatial_reuse_properties`
+
+Read-Only:
+
+- `dot11ax_non_srg_obss_packet_detect` (String)
+- `dot11ax_non_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect` (String)
+- `dot11ax_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect_min_threshold` (Number)
+
 
 
 <a id="nestedobjatt--items--radio_type_b_properties"></a>
@@ -247,11 +440,37 @@ Read-Only:
 
 Read-Only:
 
+- `coverage_hole_detection_properties` (List of Object) (see [below for nested schema](#nestedobjatt--items--radio_type_b_properties--coverage_hole_detection_properties))
+- `custom_rx_sop_threshold` (Number)
 - `data_rates` (String)
 - `mandatory_data_rates` (String)
 - `max_power_level` (Number)
+- `max_radio_clients` (Number)
 - `min_power_level` (Number)
 - `parent_profile` (String)
 - `power_threshold_v1` (Number)
 - `radio_channels` (String)
 - `rx_sop_threshold` (String)
+- `spatial_reuse_properties` (List of Object) (see [below for nested schema](#nestedobjatt--items--radio_type_b_properties--spatial_reuse_properties))
+
+<a id="nestedobjatt--items--radio_type_b_properties--coverage_hole_detection_properties"></a>
+### Nested Schema for `items.radio_type_b_properties.coverage_hole_detection_properties`
+
+Read-Only:
+
+- `chd_client_level` (Number)
+- `chd_data_rssi_threshold` (Number)
+- `chd_exception_level` (Number)
+- `chd_voice_rssi_threshold` (Number)
+
+
+<a id="nestedobjatt--items--radio_type_b_properties--spatial_reuse_properties"></a>
+### Nested Schema for `items.radio_type_b_properties.spatial_reuse_properties`
+
+Read-Only:
+
+- `dot11ax_non_srg_obss_packet_detect` (String)
+- `dot11ax_non_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect` (String)
+- `dot11ax_srg_obss_packet_detect_max_threshold` (Number)
+- `dot11ax_srg_obss_packet_detect_min_threshold` (Number)

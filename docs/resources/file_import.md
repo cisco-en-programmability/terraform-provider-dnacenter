@@ -20,7 +20,9 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_file_import" "example" {
-  provider   = meraki
+  provider   = dnacenter
+  file_name  = "string"
+  file_path  = "string"
   name_space = "string"
   parameters {
 

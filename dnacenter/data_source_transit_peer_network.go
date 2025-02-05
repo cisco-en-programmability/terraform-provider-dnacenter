@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -47,7 +47,7 @@ func dataSourceTransitPeerNetwork() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"autonomous_system_number": &schema.Schema{
-										Description: `Autonomous System Number  
+										Description: `Autonomous System Number
 `,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -76,14 +76,14 @@ func dataSourceTransitPeerNetwork() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"device_management_ip_address": &schema.Schema{
-													Description: `Device Management Ip Address 
+													Description: `Device Management Ip Address
 `,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 
 												"site_name_hierarchy": &schema.Schema{
-													Description: `Site Name Hierarchy 
+													Description: `Site Name Hierarchy
 `,
 													Type:     schema.TypeString,
 													Computed: true,

@@ -22,7 +22,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_swim_image_url" "example" {
-  provider        = meraki
+  provider        = dnacenter
   schedule_at     = "string"
   schedule_desc   = "string"
   schedule_origin = "string"
@@ -59,7 +59,7 @@ output "dnacenter_swim_image_url_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestSoftwareImageManagementSwimImportSoftwareImageViaURLV1 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestSoftwareImageManagementSwimImportSoftwareImageViaURL (see [below for nested schema](#nestedblock--parameters--payload))
 - `schedule_at` (String) scheduleAt query parameter. Epoch Time (The number of milli-seconds since January 1 1970 UTC) at which the distribution should be scheduled (Optional)
 - `schedule_desc` (String) scheduleDesc query parameter. Custom Description (Optional)
 - `schedule_origin` (String) scheduleOrigin query parameter. Originator of this call (Optional)

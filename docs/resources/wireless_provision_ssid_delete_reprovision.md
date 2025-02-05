@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_wireless_provision_ssid_delete_reprovision" "example" {
-  provider            = meraki
+  provider            = dnacenter
   managed_aplocations = "string"
   ssid_name           = "string"
   parameters {

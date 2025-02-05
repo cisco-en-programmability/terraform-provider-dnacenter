@@ -22,7 +22,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_lan_automation_update_v2" "example" {
-  provider = meraki
+  provider = dnacenter
   id       = "string"
   parameters {
 

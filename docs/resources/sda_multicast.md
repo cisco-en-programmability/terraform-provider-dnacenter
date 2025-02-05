@@ -20,7 +20,6 @@ It manages create, read and delete operations on SDA.
 ```terraform
 resource "dnacenter_sda_multicast" "example" {
   provider = dnacenter
-
   parameters {
 
     multicast_method = "string"

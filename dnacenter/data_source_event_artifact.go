@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -79,6 +79,29 @@ func dataSourceEventArtifact() *schema.Resource {
 							Description: `Cisco D N A Event Link`,
 							Type:        schema.TypeString,
 							Computed:    true,
+						},
+
+						"configs": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"is_acknowledgeable": &schema.Schema{
+										Description: `Is A C Knowledgeable`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
+									"is_alert": &schema.Schema{
+										Description: `Is Alert`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 
 						"deprecated": &schema.Schema{
@@ -361,6 +384,7 @@ func flattenEventManagementGetEventArtifactsItems(items *dnacentersdkgo.Response
 		respItem["event_templates"] = flattenEventManagementGetEventArtifactsItemsEventTemplates(item.EventTemplates)
 		respItem["is_tenant_aware"] = boolPtrToString(item.IsTenantAware)
 		respItem["supported_connector_types"] = item.SupportedConnectorTypes
+		respItem["configs"] = flattenEventManagementGetEventArtifactsItemsConfigs(item.Configs)
 		respItem["tenant_id"] = item.TenantID
 		respItems = append(respItems, respItem)
 	}
@@ -421,4 +445,18 @@ func flattenEventManagementGetEventArtifactsItemsEventTemplates(items *[]dnacent
 		respItems = append(respItems, responseInterfaceToString(respItem))
 	}
 	return respItems
+}
+
+func flattenEventManagementGetEventArtifactsItemsConfigs(item *dnacentersdkgo.ResponseItemEventManagementGetEventArtifactsConfigs) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["is_alert"] = boolPtrToString(item.IsAlert)
+	respItem["is_acknowledgeable"] = boolPtrToString(item.IsACKnowledgeable)
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
 }

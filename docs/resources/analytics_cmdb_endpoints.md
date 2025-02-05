@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_analytics_cmdb_endpoints" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     asset_tag             = "string"

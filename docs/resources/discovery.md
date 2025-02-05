@@ -26,72 +26,10 @@ by range" API.
 ```terraform
 resource "dnacenter_discovery" "example" {
   provider = dnacenter
-  item {
 
-
-
-
-
-
-
-
-
-    http_read_credential {
-
-
-
-
-
-
-
-
-
-
-
-    }
-    http_write_credential {
-
-
-
-
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  }
   parameters {
 
-    attribute_info            = "------"
+    attribute_info            = "string"
     cdp_level                 = 1
     device_ids                = "string"
     discovery_condition       = "string"

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -72,7 +72,7 @@ func dataSourceSdaProvisionDevices() *schema.Resource {
 						},
 
 						"site_id": &schema.Schema{
-							Description: `ID of the site this device is provisioned to. 
+							Description: `ID of the site this device is provisioned to.
 `,
 							Type:     schema.TypeString,
 							Computed: true,

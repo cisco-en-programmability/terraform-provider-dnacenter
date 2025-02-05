@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -223,7 +223,7 @@ should be provided.
 													Computed: true,
 												},
 												"wlan_profile_name": &schema.Schema{
-													Description: `WLAN Profile Name 
+													Description: `WLAN Profile Name
 `,
 													Type:     schema.TypeString,
 													Optional: true,

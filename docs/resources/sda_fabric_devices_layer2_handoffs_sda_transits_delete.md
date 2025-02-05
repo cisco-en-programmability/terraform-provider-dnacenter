@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_sda_fabric_devices_layer2_handoffs_sda_transits_delete" "example" {
-  provider          = meraki
+  provider          = dnacenter
   fabric_id         = "string"
   network_device_id = "string"
 }

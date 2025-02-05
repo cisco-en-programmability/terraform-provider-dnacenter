@@ -17,11 +17,13 @@ It performs read operation on Compliance.
 
 ```terraform
 data "dnacenter_compliance_device_by_id_detail" "example" {
-  provider        = dnacenter
-  category        = "string"
-  compliance_type = "string"
-  device_uuid     = "string"
-  diff_list       = "false"
+  provider              = dnacenter
+  category              = "string"
+  compliance_type       = "string"
+  device_uuid           = "string"
+  diff_list             = "false"
+  remediation_supported = "false"
+  status                = "string"
 }
 
 output "dnacenter_compliance_device_by_id_detail_example" {
@@ -41,6 +43,8 @@ output "dnacenter_compliance_device_by_id_detail_example" {
 - `category` (String) category query parameter. category can have any value among 'INTENT', 'RUNNING_CONFIG' , 'IMAGE' , 'PSIRT' , 'DESIGN_OOD' , 'EoX' , 'NETWORK_SETTINGS'
 - `compliance_type` (String) complianceType query parameter. Specify "Compliance type(s)" separated by commas. The Compliance type can be 'APPLICATION_VISIBILITY', 'EoX', 'FABRIC', 'IMAGE', 'NETWORK_PROFILE', 'NETWORK_SETTINGS', 'PSIRT', 'RUNNING_CONFIG', 'WORKFLOW'.
 - `diff_list` (Boolean) diffList query parameter. diff list [ pass true to fetch the diff list ]
+- `remediation_supported` (Boolean) remediationSupported query parameter. The 'remediationSupported' parameter can be set to 'true' or 'false'. The result will be a combination of both values if it is not provided.
+- `status` (String) status query parameter. 'COMPLIANT', 'NON_COMPLIANT', 'ERROR', 'IN_PROGRESS', 'NOT_APPLICABLE', 'NOT_AVAILABLE', 'WARNING', 'REMEDIATION_IN_PROGRESS' can be the value of the compliance 'status' parameter. [COMPLIANT: Device currently meets the compliance requirements.  NON_COMPLIANT: One of the compliance requirements like Software Image, PSIRT, Network Profile, Startup vs Running, etc. are not met. ERROR: Compliance is unable to compute status due to underlying errors. IN_PROGRESS: Compliance check is in progress for the device. NOT_APPLICABLE: Device is not supported for compliance, or minimum license requirement is not met. NOT_AVAILABLE: Compliance is not available for the device. COMPLIANT_WARNING: The device is compliant with warning if the last date of support is nearing. REMEDIATION_IN_PROGRESS: Compliance remediation is in progress for the device.]
 
 ### Read-Only
 
@@ -57,6 +61,7 @@ Read-Only:
 - `device_uuid` (String)
 - `last_sync_time` (Number)
 - `last_update_time` (Number)
+- `remediation_supported` (String)
 - `source_info_list` (List of Object) (see [below for nested schema](#nestedobjatt--items--source_info_list))
 - `state` (String)
 - `status` (String)

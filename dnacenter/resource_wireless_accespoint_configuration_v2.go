@@ -12,7 +12,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -332,7 +332,7 @@ func resourceWirelessAccespointConfigurationV2() *schema.Resource {
 										Computed:     true,
 									},
 									"antenna_cable_name": &schema.Schema{
-										Description: `Configure the antenna cable name on the specified radio for an access point. If cable loss needs to be configured, set this parameter's value to "other". 
+										Description: `Configure the antenna cable name on the specified radio for an access point. If cable loss needs to be configured, set this parameter's value to "other".
 `,
 										Type:     schema.TypeString,
 										Optional: true,

@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_image_device_activation" "example" {
-  provider          = meraki
+  provider          = dnacenter
   client_type       = "string"
   client_url        = "string"
   schedule_validate = "false"
@@ -63,7 +63,7 @@ Required:
 
 Optional:
 
-- `payload` (Block List) Array of RequestSoftwareImageManagementSwimTriggerSoftwareImageActivationV1 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestSoftwareImageManagementSwimTriggerSoftwareImageActivation (see [below for nested schema](#nestedblock--parameters--payload))
 - `schedule_validate` (Boolean) scheduleValidate query parameter. scheduleValidate, validates data before schedule (Optional)
 
 <a id="nestedblock--parameters--payload"></a>

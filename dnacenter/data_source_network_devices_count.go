@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -23,16 +23,22 @@ AssuranceNetworkDevices-1.0.2-resolved.yaml
 
 		ReadContext: dataSourceNetworkDevicesCountRead,
 		Schema: map[string]*schema.Schema{
-			"attribute": &schema.Schema{
-				Description: `attribute query parameter. The List of Network Device model attributes. This is helps to specify the interested fields in the request.
-`,
-				Type:     schema.TypeString,
-				Optional: true,
-			},
 			"end_time": &schema.Schema{
 				Description: `endTime query parameter. End time to which API queries the data set related to the resource. It must be specified in UNIX epochtime in milliseconds. Value is inclusive.
 `,
 				Type:     schema.TypeFloat,
+				Optional: true,
+			},
+			"fabric_role": &schema.Schema{
+				Description: `fabricRole query parameter. The list of fabric device role. Examples: fabricRole=BORDER, fabricRole=BORDER&fabricRole=EDGE (multiple fabric device roles with & separator)  Available values : BORDER, EDGE, MAP-SERVER, LEAF, SPINE, TRANSIT-CP, EXTENDED-NODE, WLC, UNIFIED-AP
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"fabric_site_id": &schema.Schema{
+				Description: `fabricSiteId query parameter. The fabric site Id or list to fabric site Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?fabricSiteId=fabricSiteUuid)  ?fabricSiteId=fabricSiteUuid1&fabricSiteId=fabricSiteUuid2 (multiple fabricSiteIds requested)
+`,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"family": &schema.Schema{
@@ -130,14 +136,14 @@ If *startTime* is not provided, API will default to current time.
 				Type:     schema.TypeFloat,
 				Optional: true,
 			},
-			"type": &schema.Schema{
-				Description: `type query parameter. The list of network device type This field supports wildcard (***) character-based search. Ex: **9407R** or **9407R* or *9407R**Examples:type=SwitchesCisco Catalyst 9407R Switch (single network device types )type=Cisco Catalyst 38xx stack-able ethernet switch&type=Cisco 3945 Integrated Services Router G2 (multiple Network device types with & separator)
+			"transit_network_id": &schema.Schema{
+				Description: `transitNetworkId query parameter. The Transit Network Id or list to Transit Network Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?transitNetworkId=transitNetworkId  ?transitNetworkId=transitNetworkuuid1&transitNetworkId=transitNetworkuuid1 (multiple transitNetworkIds requested)
 `,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"view": &schema.Schema{
-				Description: `view query parameter. The List of Network Device model views. Please refer to ***NetworkDeviceView*** for the supported list
+			"type": &schema.Schema{
+				Description: `type query parameter. The list of network device type This field supports wildcard (***) character-based search. Ex: *9407R* or *9407R* or *9407R* Examples:type=SwitchesCisco Catalyst 9407R Switch (single network device types )type=Cisco Catalyst 38xx stack-able ethernet switch&type=Cisco 3945 Integrated Services Router G2 (multiple Network device types with & separator)
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -180,8 +186,11 @@ func dataSourceNetworkDevicesCountRead(ctx context.Context, d *schema.ResourceDa
 	vMaintenanceMode, okMaintenanceMode := d.GetOk("maintenance_mode")
 	vSoftwareVersion, okSoftwareVersion := d.GetOk("software_version")
 	vHealthScore, okHealthScore := d.GetOk("health_score")
-	vView, okView := d.GetOk("view")
-	vAttribute, okAttribute := d.GetOk("attribute")
+	vFabricSiteID, okFabricSiteID := d.GetOk("fabric_site_id")
+	vL2Vn, okL2Vn := d.GetOk("l2_vn")
+	vL3Vn, okL3Vn := d.GetOk("l3_vn")
+	vTransitNetworkID, okTransitNetworkID := d.GetOk("transit_network_id")
+	vFabricRole, okFabricRole := d.GetOk("fabric_role")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
@@ -233,11 +242,20 @@ func dataSourceNetworkDevicesCountRead(ctx context.Context, d *schema.ResourceDa
 		if okHealthScore {
 			queryParams1.HealthScore = vHealthScore.(string)
 		}
-		if okView {
-			queryParams1.View = vView.(string)
+		if okFabricSiteID {
+			queryParams1.FabricSiteID = vFabricSiteID.(string)
 		}
-		if okAttribute {
-			queryParams1.Attribute = vAttribute.(string)
+		if okL2Vn {
+			queryParams1.L2Vn = vL2Vn.(string)
+		}
+		if okL3Vn {
+			queryParams1.L3Vn = vL3Vn.(string)
+		}
+		if okTransitNetworkID {
+			queryParams1.TransitNetworkID = vTransitNetworkID.(string)
+		}
+		if okFabricRole {
+			queryParams1.FabricRole = vFabricRole.(string)
 		}
 
 		response1, restyResp1, err := client.Devices.GetsTheTotalNetworkDeviceCountsBasedOnTheProvidedQueryParameters(&queryParams1)

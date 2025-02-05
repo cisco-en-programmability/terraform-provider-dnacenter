@@ -22,7 +22,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_wireless_provision_ssid_create_provision" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     enable_fabric = "false"

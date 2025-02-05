@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -181,7 +181,7 @@ func dataSourceProjectsDetailsV2Read(ctx context.Context, d *schema.ResourceData
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenConfigurationTemplatesGetProjectsDetailsV2Item(&response1.Response)
+		vItem1 := flattenConfigurationTemplatesGetProjectsDetailsV2Item(response1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetProjectsDetailsV2 response",
@@ -196,25 +196,23 @@ func dataSourceProjectsDetailsV2Read(ctx context.Context, d *schema.ResourceData
 	return diags
 }
 
-func flattenConfigurationTemplatesGetProjectsDetailsV2Item(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetProjectsDetailsResponse) []map[string]interface{} {
+func flattenConfigurationTemplatesGetProjectsDetailsV2Item(items *dnacentersdkgo.ResponseConfigurationTemplatesGetProjectsDetailsV2) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["create_time"] = item.CreateTime
-		respItem["description"] = item.Description
-		respItem["id"] = item.ID
-		respItem["is_deletable"] = boolPtrToString(item.IsDeletable)
-		respItem["last_update_time"] = item.LastUpdateTime
-		respItem["name"] = item.Name
-		respItem["tags"] = flattenConfigurationTemplatesGetProjectsDetailsItemTags(item.Tags)
-		respItem["templates"] = flattenConfigurationTemplatesGetProjectsDetailsItemTemplates(item.Templates)
-		respItems = append(respItems, respItem)
-	}
+	respItem := make(map[string]interface{})
+	respItem["create_time"] = items.CreateTime
+	respItem["description"] = items.Description
+	respItem["id"] = items.ID
+	respItem["is_deletable"] = boolPtrToString(items.IsDeletable)
+	respItem["last_update_time"] = items.LastUpdateTime
+	respItem["name"] = items.Name
+	respItem["tags"] = flattenConfigurationTemplatesGetProjectsDetailsItemTags(items.Tags)
+	respItem["templates"] = flattenConfigurationTemplatesGetProjectsDetailsItemTemplates(items.Templates)
 
-	return respItems
+	return []map[string]interface{}{
+		respItem,
+	}
 }
 
 func flattenConfigurationTemplatesGetProjectsDetailsItemTags(items *[]dnacentersdkgo.ResponseConfigurationTemplatesGetProjectsDetailsV2Tags) []map[string]interface{} {

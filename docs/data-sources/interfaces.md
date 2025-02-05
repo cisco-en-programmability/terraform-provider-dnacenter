@@ -9,16 +9,23 @@ description: |-
   specified returns the latest available data.
   The elements are grouped and sorted by deviceUuid first, and are then sorted by the given sort field, or by the default
   value: name.
+  The supported sorting options are:
+  name, adminStatus, description, duplexConfig, duplexOper, interfaceIfIndex,interfaceType, macAddress,mediaType,
+  operStatus, portChannelId, portMode, portType,speed, vlanId
+  This data source can paginate up to 500,000 records, please narrow matching results with additional filters beyond that
+  value. The elements are grouped and sorted by deviceUuid first, and are then sorted by the given sort field, or by the
+  default value: name.
   The supported sorting options are: name, adminStatus, description, duplexConfig,
   duplexOper,interfaceIfIndex,interfaceType, macAddress,mediaType, operStatus,portChannelId, portMode, portType,speed,
-  vlanId. For detailed information about the usage of the API, please refer to the Open API specification document
+  vlanId,pdPowerAdminMaxInWatt,pdPowerBudgetInWatt,pdPowerConsumedInWatt,pdPowerRemainingInWatt,pdMaxPowerDrawn. For
+  detailed information about the usage of the API, please refer to the Open API specification document
   https://github.com/cisco-en-programmability/catalyst-center-api-specs/blob/main/Assurance/CECatCenter_Org-
-  interfaces-1.0.2-resolved.yaml
+  interfaces-2.0.0-resolved.yaml
   Returns the interface data for the given interface instance Uuid along with the statistics data. The latest interface
   data in the specified start and end time range will be returned. When there is no start and end time specified returns
   the latest available data for the given interface Id. For detailed information about the usage of the API, please refer
   to the Open API specification document https://github.com/cisco-en-programmability/catalyst-center-api-
-  specs/blob/main/Assurance/CECatCenter_Org-interfaces-1.0.2-resolved.yaml
+  specs/blob/main/Assurance/CECatCenter_Org-interfaces-2.0.0-resolved.yaml
 ---
 
 # dnacenter_interfaces (Data Source)
@@ -31,17 +38,29 @@ specified returns the latest available data.
 The elements are grouped and sorted by deviceUuid first, and are then sorted by the given sort field, or by the default
 value: name.
 
+
+The supported sorting options are:
+name, adminStatus, description, duplexConfig, duplexOper, interfaceIfIndex,interfaceType, macAddress,mediaType,
+operStatus, portChannelId, portMode, portType,speed, vlanId
+
+
+
+This data source can paginate up to 500,000 records, please narrow matching results with additional filters beyond that
+value. The elements are grouped and sorted by deviceUuid first, and are then sorted by the given sort field, or by the
+default value: name.
+
  The supported sorting options are: name, adminStatus, description, duplexConfig,
 duplexOper,interfaceIfIndex,interfaceType, macAddress,mediaType, operStatus,portChannelId, portMode, portType,speed,
-vlanId. For detailed information about the usage of the API, please refer to the Open API specification document
+vlanId,pdPowerAdminMaxInWatt,pdPowerBudgetInWatt,pdPowerConsumedInWatt,pdPowerRemainingInWatt,pdMaxPowerDrawn. For
+detailed information about the usage of the API, please refer to the Open API specification document
 https://github.com/cisco-en-programmability/catalyst-center-api-specs/blob/main/Assurance/CE_Cat_Center_Org-
-interfaces-1.0.2-resolved.yaml
+interfaces-2.0.0-resolved.yaml
 
 - Returns the interface data for the given interface instance Uuid along with the statistics data. The latest interface
 data in the specified start and end time range will be returned. When there is no start and end time specified returns
 the latest available data for the given interface Id. For detailed information about the usage of the API, please refer
 to the Open API specification document https://github.com/cisco-en-programmability/catalyst-center-api-
-specs/blob/main/Assurance/CE_Cat_Center_Org-interfaces-1.0.2-resolved.yaml
+specs/blob/main/Assurance/CE_Cat_Center_Org-interfaces-2.0.0-resolved.yaml
 
 ## Example Usage
 
@@ -152,10 +171,16 @@ If *startTime* is not provided, API will default to current time.
 Read-Only:
 
 - `admin_status` (String)
+- `chassis_id` (Number)
+- `connected_switch_type` (String)
+- `connected_switch_uuid` (String)
 - `description` (String)
 - `duplex_config` (String)
 - `duplex_oper` (String)
+- `fast_po_e_enabled` (String)
+- `four_pair_enabled` (String)
 - `id` (String)
+- `ieee_compliant` (String)
 - `interface_if_index` (Number)
 - `interface_type` (String)
 - `ipv4_address` (String)
@@ -164,13 +189,33 @@ Read-Only:
 - `is_wan` (String)
 - `mac_addr` (String)
 - `media_type` (String)
+- `module_id` (Number)
 - `name` (String)
 - `network_device_id` (String)
 - `network_device_ip_address` (String)
 - `network_device_mac_address` (String)
 - `oper_status` (String)
+- `pd_class_signal` (String)
+- `pd_class_spare` (String)
+- `pd_connected_device_list` (List of String)
+- `pd_connected_switch` (String)
+- `pd_device_model` (String)
+- `pd_device_name` (String)
+- `pd_device_type` (String)
+- `pd_location` (String)
+- `pd_max_power_drawn` (String)
+- `pd_power_admin_max_in_watt` (String)
+- `pd_power_budget_in_watt` (String)
+- `pd_power_consumed_in_watt` (String)
+- `pd_power_remaining_in_watt` (String)
 - `peer_stack_member` (Number)
 - `peer_stack_port` (String)
+- `perpetual_po_e_enabled` (String)
+- `poe_admin_status` (String)
+- `poe_data_timestamp` (Number)
+- `poe_oper_priority` (String)
+- `poe_oper_status` (String)
+- `policing_po_e_enabled` (String)
 - `port_channel_id` (String)
 - `port_mode` (String)
 - `port_type` (String)
@@ -188,6 +233,7 @@ Read-Only:
 - `tx_error` (Number)
 - `tx_rate` (Number)
 - `tx_utilization` (Number)
+- `upoe_plus_enabled` (String)
 - `vlan_id` (String)
 
 
@@ -197,10 +243,16 @@ Read-Only:
 Read-Only:
 
 - `admin_status` (String)
+- `chassis_id` (Number)
+- `connected_switch_type` (String)
+- `connected_switch_uuid` (String)
 - `description` (String)
 - `duplex_config` (String)
 - `duplex_oper` (String)
+- `fast_po_e_enabled` (String)
+- `four_pair_enabled` (String)
 - `id` (String)
+- `ieee_compliant` (String)
 - `interface_if_index` (Number)
 - `interface_type` (String)
 - `ipv4_address` (String)
@@ -209,13 +261,33 @@ Read-Only:
 - `is_wan` (String)
 - `mac_addr` (String)
 - `media_type` (String)
+- `module_id` (Number)
 - `name` (String)
 - `network_device_id` (String)
 - `network_device_ip_address` (String)
 - `network_device_mac_address` (String)
 - `oper_status` (String)
+- `pd_class_signal` (String)
+- `pd_class_spare` (String)
+- `pd_connected_device_list` (List of String)
+- `pd_connected_switch` (String)
+- `pd_device_model` (String)
+- `pd_device_name` (String)
+- `pd_device_type` (String)
+- `pd_location` (String)
+- `pd_max_power_drawn` (String)
+- `pd_power_admin_max_in_watt` (String)
+- `pd_power_budget_in_watt` (String)
+- `pd_power_consumed_in_watt` (String)
+- `pd_power_remaining_in_watt` (String)
 - `peer_stack_member` (Number)
 - `peer_stack_port` (String)
+- `perpetual_po_e_enabled` (String)
+- `poe_admin_status` (String)
+- `poe_data_timestamp` (Number)
+- `poe_oper_priority` (String)
+- `poe_oper_status` (String)
+- `policing_po_e_enabled` (String)
 - `port_channel_id` (String)
 - `port_mode` (String)
 - `port_type` (String)
@@ -233,4 +305,5 @@ Read-Only:
 - `tx_error` (Number)
 - `tx_rate` (Number)
 - `tx_utilization` (Number)
+- `upoe_plus_enabled` (String)
 - `vlan_id` (String)

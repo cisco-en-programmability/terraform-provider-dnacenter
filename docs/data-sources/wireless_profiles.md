@@ -19,9 +19,10 @@ It performs read operation on Wireless.
 
 ```terraform
 data "dnacenter_wireless_profiles" "example" {
-  provider = dnacenter
-  limit    = 1
-  offset   = 1
+  provider              = dnacenter
+  limit                 = 1
+  offset                = 1
+  wireless_profile_name = "string"
 }
 
 output "dnacenter_wireless_profiles_example" {
@@ -45,7 +46,8 @@ output "dnacenter_wireless_profiles_example" {
 
 - `id` (String) id path parameter. Wireless Profile Id
 - `limit` (Number) limit query parameter.
-- `offset` (Number) offset query parameter.
+- `offset` (Number) offset query parameter. The first record to show for this page; the first record is numbered 1
+- `wireless_profile_name` (String) wirelessProfileName query parameter. Wireless Profile Name
 
 ### Read-Only
 
@@ -57,21 +59,35 @@ output "dnacenter_wireless_profiles_example" {
 
 Read-Only:
 
+- `additional_interfaces` (List of String)
+- `ap_zones` (List of Object) (see [below for nested schema](#nestedobjatt--item--ap_zones))
 - `id` (String)
 - `ssid_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssid_details))
 - `wireless_profile_name` (String)
+
+<a id="nestedobjatt--item--ap_zones"></a>
+### Nested Schema for `item.ap_zones`
+
+Read-Only:
+
+- `ap_zone_name` (String)
+- `rf_profile_name` (String)
+- `ssids` (List of String)
+
 
 <a id="nestedobjatt--item--ssid_details"></a>
 ### Nested Schema for `item.ssid_details`
 
 Read-Only:
 
+- `anchor_group_name` (String)
 - `dot11be_profile_id` (String)
 - `enable_fabric` (String)
 - `flex_connect` (List of Object) (see [below for nested schema](#nestedobjatt--item--ssid_details--flex_connect))
 - `interface_name` (String)
 - `policy_profile_name` (String)
 - `ssid_name` (String)
+- `vlan_group_name` (String)
 - `wlan_profile_name` (String)
 
 <a id="nestedobjatt--item--ssid_details--flex_connect"></a>
@@ -90,21 +106,35 @@ Read-Only:
 
 Read-Only:
 
+- `additional_interfaces` (List of String)
+- `ap_zones` (List of Object) (see [below for nested schema](#nestedobjatt--items--ap_zones))
 - `id` (String)
 - `ssid_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--ssid_details))
 - `wireless_profile_name` (String)
+
+<a id="nestedobjatt--items--ap_zones"></a>
+### Nested Schema for `items.ap_zones`
+
+Read-Only:
+
+- `ap_zone_name` (String)
+- `rf_profile_name` (String)
+- `ssids` (List of String)
+
 
 <a id="nestedobjatt--items--ssid_details"></a>
 ### Nested Schema for `items.ssid_details`
 
 Read-Only:
 
+- `anchor_group_name` (String)
 - `dot11be_profile_id` (String)
 - `enable_fabric` (String)
 - `flex_connect` (List of Object) (see [below for nested schema](#nestedobjatt--items--ssid_details--flex_connect))
 - `interface_name` (String)
 - `policy_profile_name` (String)
 - `ssid_name` (String)
+- `vlan_group_name` (String)
 - `wlan_profile_name` (String)
 
 <a id="nestedobjatt--items--ssid_details--flex_connect"></a>

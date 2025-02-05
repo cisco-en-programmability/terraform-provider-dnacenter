@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -198,7 +198,7 @@ func resourceWirelessSettingsDot11BeProfilesCreate(ctx context.Context, d *schem
 			return resourceWirelessSettingsDot11BeProfilesRead(ctx, d, m)
 		}
 	} else {
-		queryParamImport := dnacentersdkgo.GetAll80211BeProfilesQueryParams{}
+		queryParamImport := dnacentersdkgo.Get80211BeProfilesQueryParams{}
 
 		response2, err := searchWirelessGetAll80211BeProfiles(m, queryParamImport, vvName)
 		if response2 != nil && err == nil {
@@ -247,7 +247,7 @@ func resourceWirelessSettingsDot11BeProfilesCreate(ctx context.Context, d *schem
 			return diags
 		}
 	}
-	queryParamValidate := dnacentersdkgo.GetAll80211BeProfilesQueryParams{}
+	queryParamValidate := dnacentersdkgo.Get80211BeProfilesQueryParams{}
 	item3, err := searchWirelessGetAll80211BeProfiles(m, queryParamValidate, vvName)
 	if err != nil || item3 == nil {
 		diags = append(diags, diagErrorWithAlt(
@@ -476,14 +476,14 @@ func expandRequestWirelessSettingsDot11BeProfilesUpdate80211BeProfile(ctx contex
 	return &request
 }
 
-func searchWirelessGetAll80211BeProfiles(m interface{}, queryParams dnacentersdkgo.GetAll80211BeProfilesQueryParams, vID string) (*dnacentersdkgo.ResponseWirelessGetAll80211BeProfilesResponse, error) {
+func searchWirelessGetAll80211BeProfiles(m interface{}, queryParams dnacentersdkgo.Get80211BeProfilesQueryParams, vID string) (*dnacentersdkgo.ResponseWirelessGet80211BeProfilesResponse, error) {
 	client := m.(*dnacentersdkgo.Client)
 	var err error
-	var foundItem *dnacentersdkgo.ResponseWirelessGetAll80211BeProfilesResponse
+	var foundItem *dnacentersdkgo.ResponseWirelessGet80211BeProfilesResponse
 	// var ite *dnacentersdkgo.ResponseWirelessGetAll80211BeProfiles
 
 	queryParams.Offset = 1
-	nResponse, _, err := client.Wireless.GetAll80211BeProfiles(nil)
+	nResponse, _, err := client.Wireless.Get80211BeProfiles(nil)
 	maxPageSize := len(*nResponse.Response)
 	for len(*nResponse.Response) > 0 {
 		time.Sleep(15 * time.Second)
@@ -495,7 +495,7 @@ func searchWirelessGetAll80211BeProfiles(m interface{}, queryParams dnacentersdk
 		}
 		queryParams.Limit = float64(maxPageSize)
 		queryParams.Offset += float64(maxPageSize)
-		nResponse, _, err = client.Wireless.GetAll80211BeProfiles(&queryParams)
+		nResponse, _, err = client.Wireless.Get80211BeProfiles(&queryParams)
 		if nResponse == nil || nResponse.Response == nil {
 			break
 		}

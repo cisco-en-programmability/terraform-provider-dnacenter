@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -98,7 +98,7 @@ func dataSourceSdaMulticastDetails() *schema.Resource {
 												},
 
 												"ssm_wildcard_mask": &schema.Schema{
-													Description: `SSM Wildcard Mask 
+													Description: `SSM Wildcard Mask
 `,
 													Type:     schema.TypeString,
 													Computed: true,

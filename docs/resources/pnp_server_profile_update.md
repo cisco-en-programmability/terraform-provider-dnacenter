@@ -22,7 +22,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_pnp_server_profile_update" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     cco_user = "string"

@@ -22,7 +22,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_network_profiles_for_sites_site_assignments_bulk_delete" "example" {
-  provider   = meraki
+  provider   = dnacenter
   profile_id = "string"
   site_id    = "string"
   parameters {

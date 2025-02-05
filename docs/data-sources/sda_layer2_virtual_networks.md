@@ -60,6 +60,7 @@ Read-Only:
 - `fabric_id` (String)
 - `id` (String)
 - `is_fabric_enabled_wireless` (String)
+- `is_multiple_ip_to_mac_addresses` (String)
 - `traffic_type` (String)
 - `vlan_id` (Number)
 - `vlan_name` (String)

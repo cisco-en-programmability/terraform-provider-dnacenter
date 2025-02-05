@@ -1,8 +1,9 @@
 
 data "dnacenter_wireless_profiles" "example" {
-  provider = dnacenter
-  limit    = 1
-  offset   = 1
+  provider              = dnacenter
+  limit                 = 1
+  offset                = 1
+  wireless_profile_name = "string"
 }
 
 output "dnacenter_wireless_profiles_example" {

@@ -2,6 +2,8 @@ package dnacenter
 
 import (
 	"context"
+	"fmt"
+	"reflect"
 
 	"errors"
 
@@ -9,7 +11,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -38,7 +40,7 @@ func resourceNetworkProfilesForSitesSiteAssignmentsBulkCreate() *schema.Resource
 					Schema: map[string]*schema.Schema{
 
 						"task_id": &schema.Schema{
-							Description: `Task Id in uuid format. e.g. : 3200a44a-9186-4caf-8c32-419cd1f3d3f5 
+							Description: `Task Id in uuid format. e.g. : 3200a44a-9186-4caf-8c32-419cd1f3d3f5
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -67,11 +69,18 @@ func resourceNetworkProfilesForSitesSiteAssignmentsBulkCreate() *schema.Resource
 							Required: true,
 							ForceNew: true,
 						},
-						"type": &schema.Schema{
-							Type:     schema.TypeString, //TEST,
-							Optional: true,
-							ForceNew: true,
-							Computed: true,
+						"items": &schema.Schema{
+							Type:     schema.TypeList,
+							Required: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeString,
+										Required: true,
+										ForceNew: true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -176,13 +185,43 @@ func resourceNetworkProfilesForSitesSiteAssignmentsBulkCreateDelete(ctx context.
 
 func expandRequestNetworkProfilesForSitesSiteAssignmentsBulkCreateAssignANetworkProfileForSitesToAListOfSites(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSiteDesignAssignANetworkProfileForSitesToAListOfSites {
 	request := dnacentersdkgo.RequestSiteDesignAssignANetworkProfileForSitesToAListOfSites{}
-	request.Type = expandRequestNetworkProfilesForSitesSiteAssignmentsBulkCreateAssignANetworkProfileForSitesToAListOfSitesType(ctx, key, d)
+	request.Items = expandRequestNetworkProfilesForSitesSiteAssignmentsBulkCreateAssignANetworkProfileForSitesToAListOfSitesItems(ctx, key, d)
 	return &request
 }
 
-func expandRequestNetworkProfilesForSitesSiteAssignmentsBulkCreateAssignANetworkProfileForSitesToAListOfSitesType(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestSiteDesignAssignANetworkProfileForSitesToAListOfSitesType {
-	var request dnacentersdkgo.RequestSiteDesignAssignANetworkProfileForSitesToAListOfSitesType
-	request = d.Get(fixKeyAccess(key))
+func expandRequestNetworkProfilesForSitesSiteAssignmentsBulkCreateAssignANetworkProfileForSitesToAListOfSitesItems(ctx context.Context, key string, d *schema.ResourceData) []struct {
+	ID string `json:"id,omitempty"`
+} {
+	var request []struct {
+		ID string `json:"id,omitempty"`
+	}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestNetworkProfilesForSitesSiteAssignmentsBulkCreateAssignANetworkProfileForSitesToAListOfSitesItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	return request
+}
+
+func expandRequestNetworkProfilesForSitesSiteAssignmentsBulkCreateAssignANetworkProfileForSitesToAListOfSitesItem(ctx context.Context, key string, d *schema.ResourceData) *struct {
+	ID string `json:"id,omitempty"`
+} {
+	var request struct {
+		ID string `json:"id,omitempty"`
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
 	return &request
 }
 

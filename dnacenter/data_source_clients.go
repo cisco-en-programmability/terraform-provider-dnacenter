@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -44,7 +44,7 @@ specs/blob/main/Assurance/CE_Cat_Center_Org-clients1-1.0.0-resolved.yaml
 				Description: `connectedNetworkDeviceName query parameter. Name of the neighbor network device that client is connected to. This field supports wildcard (***) character-based search. If the value contains the (***) character, please use the /query API for regex search. Ex: **ap-25** or *ap-25** or **ap-25*
 Examples:
 *connectedNetworkDeviceName=ap-25* (single connectedNetworkDeviceName requested)
-*connectedNetworkDeviceName=ap-25&ap-34* (multiple connectedNetworkDeviceName requested)    
+*connectedNetworkDeviceName=ap-25&ap-34* (multiple connectedNetworkDeviceName requested)
 `,
 				Type:     schema.TypeString,
 				Optional: true,

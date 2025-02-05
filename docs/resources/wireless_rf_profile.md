@@ -117,7 +117,7 @@ Optional:
 - `max_power_level` (Number) Max Power Level  (Default: 30)
 - `min_power_level` (Number) Rx Sop Threshold  (Default: -10)
 - `parent_profile` (String) Parent Profile (Default : CUSTOM)
-- `power_threshold_v1` (Number) Power Threshold V1 ( (Default: -70)
+- `power_threshold_v1` (Number) Power Threshold  ( (Default: -70)
 - `radio_channels` (String) Radio Channels (Default : "36,40,44,48,52,56,60,64,149,153,157,161")
 - `rx_sop_threshold` (String) Rx Sop Threshold  (Default: "AUTO")
 
@@ -132,7 +132,7 @@ Optional:
 - `max_power_level` (Number) Max Power Level  (Default: 30)
 - `min_power_level` (Number) Min Power Level  (Default: -10)
 - `parent_profile` (String) Parent Profile (Default : CUSTOM)
-- `power_threshold_v1` (Number) Power Threshold V1  (Default: -70)
+- `power_threshold_v1` (Number) Power Threshold   (Default: -70)
 - `radio_channels` (String) Radio Channels (Default : "9,11,12,18,24,36,48,54")
 - `rx_sop_threshold` (String) Rx Sop Threshold (Default: "AUTO")
 
@@ -147,7 +147,7 @@ Optional:
 - `max_power_level` (Number) Max Power Level  (Default: 30)
 - `min_power_level` (Number) Min Power Level  (Default: -10)
 - `parent_profile` (String) Parent Profile (Default : CUSTOM)
-- `power_threshold_v1` (Number) Power Threshold V1  (Default: -70)
+- `power_threshold_v1` (Number) Power Threshold   (Default: -70)
 - `radio_channels` (String) Radio Channels (Default : "5,21,37,53,69,85,101,117,133,149,165,181,197,213,229")
 - `rx_sop_threshold` (String) Rx Sop Threshold  (Default: "AUTO")
 

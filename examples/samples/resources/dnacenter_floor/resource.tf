@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.33-beta"
+      version = "1.3.0-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -22,7 +22,7 @@ resource "dnacenter_floor" "example" {
         height       = 5
         length       = 100
         name         = "floor-1"
-        parent_name  = "Global"
+        parent_name  = "Global/Terraform-Test-JP"
         rf_model     = "Cubes And Walled Offices"
         width        = 100
       }

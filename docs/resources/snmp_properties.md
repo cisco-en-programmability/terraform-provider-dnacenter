@@ -39,7 +39,7 @@ output "dnacenter_snmp_properties_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestDiscoveryCreateUpdateSNMPPropertiesV1 (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestDiscoveryCreateUpdateSNMPProperties (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 

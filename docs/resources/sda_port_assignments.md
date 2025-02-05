@@ -51,7 +51,7 @@ output "dnacenter_sda_port_assignments_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestSdaAddPortAssignmentsV1 (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestSdaAddPortAssignments (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 

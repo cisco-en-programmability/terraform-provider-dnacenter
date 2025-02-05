@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -40,6 +40,18 @@ center-api-specs/blob/main/Assurance/CE_Cat_Center_Org-AssuranceNetworkDevices-1
 				Type:     schema.TypeFloat,
 				Optional: true,
 			},
+			"fabric_role": &schema.Schema{
+				Description: `fabricRole query parameter. The list of fabric device role. Examples: fabricRole=BORDER, fabricRole=BORDER&fabricRole=EDGE (multiple fabric device roles with & separator)  Available values : BORDER, EDGE, MAP-SERVER, LEAF, SPINE, TRANSIT-CP, EXTENDED-NODE, WLC, UNIFIED-AP
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"fabric_site_id": &schema.Schema{
+				Description: `fabricSiteId query parameter. The fabric site Id or list to fabric site Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?fabricSiteId=fabricSiteUuid)  ?fabricSiteId=fabricSiteUuid1&fabricSiteId=fabricSiteUuid2 (multiple fabricSiteIds requested)
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"family": &schema.Schema{
 				Description: `family query parameter. The list of network device family names Examples:family=Switches and Hubs (single network device family name )family=Switches and Hubs&family=Router&family=Wireless Controller (multiple Network device family names with & separator). This field is not case sensitive.
 `,
@@ -56,6 +68,18 @@ healthScore=good, healthScore=good&healthScore=fair (multiple entity healthscore
 			},
 			"id": &schema.Schema{
 				Description: `id path parameter. The device Uuid
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"l2_vn": &schema.Schema{
+				Description: `l2Vn query parameter. The L2 Virtual Network Id or list to Virtual Network Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?l2Vn=virtualNetworkId  ?l2Vn=virtualNetworkId1&l2Vn=virtualNetworkId2 (multiple virtualNetworkId's requested)
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"l3_vn": &schema.Schema{
+				Description: `l3Vn query parameter. The L3 Virtual Network Id or list to Virtual Network Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?l3Vn=virtualNetworkId  ?l3Vn=virtualNetworkId1&l3Vn=virtualNetworkId2 (multiple virtualNetworkId's requested)
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -159,6 +183,12 @@ Examples:
 If *startTime* is not provided, API will default to current time.
 `,
 				Type:     schema.TypeFloat,
+				Optional: true,
+			},
+			"transit_network_id": &schema.Schema{
+				Description: `transitNetworkId query parameter. The Transit Network Id or list to Transit Network Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?transitNetworkId=transitNetworkId  ?transitNetworkId=transitNetworkuuid1&transitNetworkId=transitNetworkuuid1 (multiple transitNetworkIds requested
+`,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"type": &schema.Schema{
@@ -494,8 +524,38 @@ If *startTime* is not provided, API will default to current time.
 										},
 									},
 
+									"fabric_site_id": &schema.Schema{
+										Description: `Fabric Site Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
 									"fabric_site_name": &schema.Schema{
 										Description: `Fabric Site Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"l2_vns": &schema.Schema{
+										Description: `L2 Vns`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"l3_vns": &schema.Schema{
+										Description: `L3 Vns`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"network_protocol": &schema.Schema{
+										Description: `Network Protocol`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
@@ -507,6 +567,213 @@ If *startTime* is not provided, API will default to current time.
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
+									},
+								},
+							},
+						},
+
+						"fabric_metrics_details": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"aaa_status_score": &schema.Schema{
+										Description: `Aaa Status Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_bgp_site_score": &schema.Schema{
+										Description: `Bgp Bgp Site Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_evpn_score": &schema.Schema{
+										Description: `Bgp Evpn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_peer_infra_vn_score": &schema.Schema{
+										Description: `Bgp Peer Infra Vn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_peer_score": &schema.Schema{
+										Description: `Bgp Peer Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_pubsub_site_score": &schema.Schema{
+										Description: `Bgp Pubsub Site Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_tcp_score": &schema.Schema{
+										Description: `Bgp Tcp Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"cts_env_data_download_score": &schema.Schema{
+										Description: `Cts Env Data Download Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabric_site_score": &schema.Schema{
+										Description: `Fabric Site Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabric_transit_score": &schema.Schema{
+										Description: `Fabric Transit Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabric_vn_score": &schema.Schema{
+										Description: `Fabric Vn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabsite_fcp_score": &schema.Schema{
+										Description: `Fabsite Fcp Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabsite_fsconn_score": &schema.Schema{
+										Description: `Fabsite Fsconn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabsite_infra_score": &schema.Schema{
+										Description: `Fabsite Infra Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"internet_avail_score": &schema.Schema{
+										Description: `Internet Avail Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"lisp_cp_conn_score": &schema.Schema{
+										Description: `Lisp Cp Conn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"lisp_transit_conn_score": &schema.Schema{
+										Description: `Lisp Transit Conn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"mcast_score": &schema.Schema{
+										Description: `Mcast Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"overall_fabric_score": &schema.Schema{
+										Description: `Overall Fabric Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"peer_score": &schema.Schema{
+										Description: `Peer Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"port_channel_score": &schema.Schema{
+										Description: `Port Channel Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"pubsub_infra_vn_score": &schema.Schema{
+										Description: `Pubsub Infra Vn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"pubsub_session_score": &schema.Schema{
+										Description: `Pubsub Session Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"pubsub_transit_conn_score": &schema.Schema{
+										Description: `Pubsub Transit Conn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"remote_internet_avail_score": &schema.Schema{
+										Description: `Remote Internet Avail Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"tcp_conn_score": &schema.Schema{
+										Description: `Tcp Conn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"transit_control_plane_score": &schema.Schema{
+										Description: `Transit Control Plane Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"transit_services_score": &schema.Schema{
+										Description: `Transit Services Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"vn_exit_score": &schema.Schema{
+										Description: `Vn Exit Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"vn_fcp_score": &schema.Schema{
+										Description: `Vn Fcp Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"vn_service_score": &schema.Schema{
+										Description: `Vn Service Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"vn_status_score": &schema.Schema{
+										Description: `Vn Status Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"vni_status_score": &schema.Schema{
+										Description: `Vni Status Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 								},
 							},
@@ -726,12 +993,6 @@ If *startTime* is not provided, API will default to current time.
 										Computed:    true,
 									},
 
-									"overall_fabric_score": &schema.Schema{
-										Description: `Overall Fabric Score`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-
 									"overall_health_score": &schema.Schema{
 										Description: `Overall Health Score`,
 										Type:        schema.TypeInt,
@@ -780,6 +1041,12 @@ If *startTime* is not provided, API will default to current time.
 						"os_type": &schema.Schema{
 							Description: `Os Type`,
 							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"physical_port_count": &schema.Schema{
+							Description: `Physical Port Count`,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 
@@ -874,6 +1141,180 @@ If *startTime* is not provided, API will default to current time.
 							Computed:    true,
 						},
 
+						"switch_poe_details": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"chassis_count": &schema.Schema{
+										Description: `Chassis Count`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"free_port_count": &schema.Schema{
+										Description: `Free Port Count`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"module_count": &schema.Schema{
+										Description: `Module Count`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"module_details": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"chassis_id": &schema.Schema{
+													Description: `Chassis Id`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"interface_power_max": &schema.Schema{
+													Description: `Interface Power Max`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_free_port_count": &schema.Schema{
+													Description: `Module Free Port Count`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_id": &schema.Schema{
+													Description: `Module Id`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"module_poe_power_allocated": &schema.Schema{
+													Description: `Module Poe Power Allocated`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"module_poe_power_consumed": &schema.Schema{
+													Description: `Module Poe Power Consumed`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_port_count": &schema.Schema{
+													Description: `Module Port Count`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_power_budget": &schema.Schema{
+													Description: `Module Power Budget`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_power_consumed": &schema.Schema{
+													Description: `Module Power Consumed`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"module_power_remaining": &schema.Schema{
+													Description: `Module Power Remaining`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"module_system_power_allocated": &schema.Schema{
+													Description: `Module System Power Allocated`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_system_power_consumed": &schema.Schema{
+													Description: `Module System Power Consumed`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"module_used_port_count": &schema.Schema{
+													Description: `Module Used Port Count`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"poe_power_allocated": &schema.Schema{
+										Description: `Poe Power Allocated`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"poe_power_consumed": &schema.Schema{
+										Description: `Poe Power Consumed`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"poe_version": &schema.Schema{
+										Description: `Poe Version`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"port_count": &schema.Schema{
+										Description: `Port Count`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"power_budget": &schema.Schema{
+										Description: `Power Budget`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"power_consumed": &schema.Schema{
+										Description: `Power Consumed`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"power_remaining": &schema.Schema{
+										Description: `Power Remaining`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"system_power_allocated": &schema.Schema{
+										Description: `System Power Allocated`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"system_power_consumed": &schema.Schema{
+										Description: `System Power Consumed`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"used_port_count": &schema.Schema{
+										Description: `Used Port Count`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
 						"tag_names": &schema.Schema{
 							Description: `Tag Names`,
 							Type:        schema.TypeList,
@@ -885,6 +1326,12 @@ If *startTime* is not provided, API will default to current time.
 
 						"up_time": &schema.Schema{
 							Description: `Up Time`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"virtual_port_count": &schema.Schema{
+							Description: `Virtual Port Count`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
@@ -1224,8 +1671,38 @@ If *startTime* is not provided, API will default to current time.
 										},
 									},
 
+									"fabric_site_id": &schema.Schema{
+										Description: `Fabric Site Id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
 									"fabric_site_name": &schema.Schema{
 										Description: `Fabric Site Name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"l2_vns": &schema.Schema{
+										Description: `L2 Vns`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"l3_vns": &schema.Schema{
+										Description: `L3 Vns`,
+										Type:        schema.TypeList,
+										Computed:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"network_protocol": &schema.Schema{
+										Description: `Network Protocol`,
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
@@ -1237,6 +1714,213 @@ If *startTime* is not provided, API will default to current time.
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
+									},
+								},
+							},
+						},
+
+						"fabric_metrics_details": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"aaa_status_score": &schema.Schema{
+										Description: `Aaa Status Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_bgp_site_score": &schema.Schema{
+										Description: `Bgp Bgp Site Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_evpn_score": &schema.Schema{
+										Description: `Bgp Evpn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_peer_infra_vn_score": &schema.Schema{
+										Description: `Bgp Peer Infra Vn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_peer_score": &schema.Schema{
+										Description: `Bgp Peer Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_pubsub_site_score": &schema.Schema{
+										Description: `Bgp Pubsub Site Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"bgp_tcp_score": &schema.Schema{
+										Description: `Bgp Tcp Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"cts_env_data_download_score": &schema.Schema{
+										Description: `Cts Env Data Download Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabric_site_score": &schema.Schema{
+										Description: `Fabric Site Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabric_transit_score": &schema.Schema{
+										Description: `Fabric Transit Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabric_vn_score": &schema.Schema{
+										Description: `Fabric Vn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabsite_fcp_score": &schema.Schema{
+										Description: `Fabsite Fcp Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabsite_fsconn_score": &schema.Schema{
+										Description: `Fabsite Fsconn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"fabsite_infra_score": &schema.Schema{
+										Description: `Fabsite Infra Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"internet_avail_score": &schema.Schema{
+										Description: `Internet Avail Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"lisp_cp_conn_score": &schema.Schema{
+										Description: `Lisp Cp Conn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"lisp_transit_conn_score": &schema.Schema{
+										Description: `Lisp Transit Conn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"mcast_score": &schema.Schema{
+										Description: `Mcast Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"overall_fabric_score": &schema.Schema{
+										Description: `Overall Fabric Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"peer_score": &schema.Schema{
+										Description: `Peer Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"port_channel_score": &schema.Schema{
+										Description: `Port Channel Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"pubsub_infra_vn_score": &schema.Schema{
+										Description: `Pubsub Infra Vn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"pubsub_session_score": &schema.Schema{
+										Description: `Pubsub Session Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"pubsub_transit_conn_score": &schema.Schema{
+										Description: `Pubsub Transit Conn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"remote_internet_avail_score": &schema.Schema{
+										Description: `Remote Internet Avail Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"tcp_conn_score": &schema.Schema{
+										Description: `Tcp Conn Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"transit_control_plane_score": &schema.Schema{
+										Description: `Transit Control Plane Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"transit_services_score": &schema.Schema{
+										Description: `Transit Services Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"vn_exit_score": &schema.Schema{
+										Description: `Vn Exit Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"vn_fcp_score": &schema.Schema{
+										Description: `Vn Fcp Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"vn_service_score": &schema.Schema{
+										Description: `Vn Service Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"vn_status_score": &schema.Schema{
+										Description: `Vn Status Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"vni_status_score": &schema.Schema{
+										Description: `Vni Status Score`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 								},
 							},
@@ -1456,12 +2140,6 @@ If *startTime* is not provided, API will default to current time.
 										Computed:    true,
 									},
 
-									"overall_fabric_score": &schema.Schema{
-										Description: `Overall Fabric Score`,
-										Type:        schema.TypeInt,
-										Computed:    true,
-									},
-
 									"overall_health_score": &schema.Schema{
 										Description: `Overall Health Score`,
 										Type:        schema.TypeInt,
@@ -1510,6 +2188,12 @@ If *startTime* is not provided, API will default to current time.
 						"os_type": &schema.Schema{
 							Description: `Os Type`,
 							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"physical_port_count": &schema.Schema{
+							Description: `Physical Port Count`,
+							Type:        schema.TypeInt,
 							Computed:    true,
 						},
 
@@ -1604,6 +2288,180 @@ If *startTime* is not provided, API will default to current time.
 							Computed:    true,
 						},
 
+						"switch_poe_details": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"chassis_count": &schema.Schema{
+										Description: `Chassis Count`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"free_port_count": &schema.Schema{
+										Description: `Free Port Count`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"module_count": &schema.Schema{
+										Description: `Module Count`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"module_details": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"chassis_id": &schema.Schema{
+													Description: `Chassis Id`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"interface_power_max": &schema.Schema{
+													Description: `Interface Power Max`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_free_port_count": &schema.Schema{
+													Description: `Module Free Port Count`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_id": &schema.Schema{
+													Description: `Module Id`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
+
+												"module_poe_power_allocated": &schema.Schema{
+													Description: `Module Poe Power Allocated`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"module_poe_power_consumed": &schema.Schema{
+													Description: `Module Poe Power Consumed`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_port_count": &schema.Schema{
+													Description: `Module Port Count`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_power_budget": &schema.Schema{
+													Description: `Module Power Budget`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_power_consumed": &schema.Schema{
+													Description: `Module Power Consumed`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"module_power_remaining": &schema.Schema{
+													Description: `Module Power Remaining`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"module_system_power_allocated": &schema.Schema{
+													Description: `Module System Power Allocated`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+
+												"module_system_power_consumed": &schema.Schema{
+													Description: `Module System Power Consumed`,
+													Type:        schema.TypeFloat,
+													Computed:    true,
+												},
+
+												"module_used_port_count": &schema.Schema{
+													Description: `Module Used Port Count`,
+													Type:        schema.TypeInt,
+													Computed:    true,
+												},
+											},
+										},
+									},
+
+									"poe_power_allocated": &schema.Schema{
+										Description: `Poe Power Allocated`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"poe_power_consumed": &schema.Schema{
+										Description: `Poe Power Consumed`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"poe_version": &schema.Schema{
+										Description: `Poe Version`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+
+									"port_count": &schema.Schema{
+										Description: `Port Count`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"power_budget": &schema.Schema{
+										Description: `Power Budget`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"power_consumed": &schema.Schema{
+										Description: `Power Consumed`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"power_remaining": &schema.Schema{
+										Description: `Power Remaining`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"system_power_allocated": &schema.Schema{
+										Description: `System Power Allocated`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+
+									"system_power_consumed": &schema.Schema{
+										Description: `System Power Consumed`,
+										Type:        schema.TypeFloat,
+										Computed:    true,
+									},
+
+									"used_port_count": &schema.Schema{
+										Description: `Used Port Count`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+								},
+							},
+						},
+
 						"tag_names": &schema.Schema{
 							Description: `Tag Names`,
 							Type:        schema.TypeList,
@@ -1615,6 +2473,12 @@ If *startTime* is not provided, API will default to current time.
 
 						"up_time": &schema.Schema{
 							Description: `Up Time`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"virtual_port_count": &schema.Schema{
+							Description: `Virtual Port Count`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
@@ -1662,8 +2526,13 @@ func dataSourceNetworkDevicesRead(ctx context.Context, d *schema.ResourceData, m
 	vHealthScore, okHealthScore := d.GetOk("health_score")
 	vView, okView := d.GetOk("view")
 	vAttribute, okAttribute := d.GetOk("attribute")
+	vFabricSiteID, okFabricSiteID := d.GetOk("fabric_site_id")
+	vL2Vn, okL2Vn := d.GetOk("l2_vn")
+	vL3Vn, okL3Vn := d.GetOk("l3_vn")
+	vTransitNetworkID, okTransitNetworkID := d.GetOk("transit_network_id")
+	vFabricRole, okFabricRole := d.GetOk("fabric_role")
 
-	method1 := []bool{okStartTime, okEndTime, okLimit, okOffset, okSortBy, okOrder, okSiteHierarchy, okSiteHierarchyID, okSiteID, okID, okManagementIPAddress, okMacAddress, okFamily, okType, okRole, okSerialNumber, okMaintenanceMode, okSoftwareVersion, okHealthScore, okView, okAttribute}
+	method1 := []bool{okStartTime, okEndTime, okLimit, okOffset, okSortBy, okOrder, okSiteHierarchy, okSiteHierarchyID, okSiteID, okID, okManagementIPAddress, okMacAddress, okFamily, okType, okRole, okSerialNumber, okMaintenanceMode, okSoftwareVersion, okHealthScore, okView, okAttribute, okFabricSiteID, okL2Vn, okL3Vn, okTransitNetworkID, okFabricRole}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okID, okStartTime, okEndTime, okView, okAttribute}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
@@ -1735,6 +2604,21 @@ func dataSourceNetworkDevicesRead(ctx context.Context, d *schema.ResourceData, m
 		}
 		if okAttribute {
 			queryParams1.Attribute = vAttribute.(string)
+		}
+		if okFabricSiteID {
+			queryParams1.FabricSiteID = vFabricSiteID.(string)
+		}
+		if okL2Vn {
+			queryParams1.L2Vn = vL2Vn.(string)
+		}
+		if okL3Vn {
+			queryParams1.L3Vn = vL3Vn.(string)
+		}
+		if okTransitNetworkID {
+			queryParams1.TransitNetworkID = vTransitNetworkID.(string)
+		}
+		if okFabricRole {
+			queryParams1.FabricRole = vFabricRole.(string)
 		}
 
 		response1, restyResp1, err := client.Devices.GetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParameters(&queryParams1)
@@ -1855,10 +2739,14 @@ func flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersI
 		respItem["wired_client_count"] = item.WiredClientCount
 		respItem["wireless_client_count"] = item.WirelessClientCount
 		respItem["port_count"] = item.PortCount
+		respItem["physical_port_count"] = item.PhysicalPortCount
+		respItem["virtual_port_count"] = item.VirtualPortCount
 		respItem["client_count"] = item.ClientCount
 		respItem["ap_details"] = flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersItemsApDetails(item.ApDetails)
 		respItem["metrics_details"] = flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersItemsMetricsDetails(item.MetricsDetails)
 		respItem["fabric_details"] = flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersItemsFabricDetails(item.FabricDetails)
+		respItem["switch_poe_details"] = flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersItemsSwitchPoeDetails(item.SwitchPoeDetails)
+		respItem["fabric_metrics_details"] = flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersItemsFabricMetricsDetails(item.FabricMetricsDetails)
 		respItem["aggregate_attributes"] = flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersItemsAggregateAttributes(item.AggregateAttributes)
 		respItems = append(respItems, respItem)
 	}
@@ -1930,7 +2818,6 @@ func flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersI
 	}
 	respItem := make(map[string]interface{})
 	respItem["overall_health_score"] = item.OverallHealthScore
-	respItem["overall_fabric_score"] = item.OverallFabricScore
 	respItem["cpu_utilization"] = item.CPUUtilization
 	respItem["cpu_score"] = item.CPUScore
 	respItem["memory_utilization"] = item.MemoryUtilization
@@ -1973,6 +2860,106 @@ func flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersI
 	respItem["fabric_role"] = item.FabricRole
 	respItem["fabric_site_name"] = item.FabricSiteName
 	respItem["transit_fabrics"] = item.TransitFabrics
+	respItem["l2_vns"] = item.L2Vns
+	respItem["l3_vns"] = item.L3Vns
+	respItem["fabric_site_id"] = item.FabricSiteID
+	respItem["network_protocol"] = item.NetworkProtocol
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersItemsSwitchPoeDetails(item *dnacentersdkgo.ResponseDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersResponseSwitchPoeDetails) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["port_count"] = item.PortCount
+	respItem["used_port_count"] = item.UsedPortCount
+	respItem["free_port_count"] = item.FreePortCount
+	respItem["power_consumed"] = item.PowerConsumed
+	respItem["poe_power_consumed"] = item.PoePowerConsumed
+	respItem["system_power_consumed"] = item.SystemPowerConsumed
+	respItem["power_budget"] = item.PowerBudget
+	respItem["poe_power_allocated"] = item.PoePowerAllocated
+	respItem["system_power_allocated"] = item.SystemPowerAllocated
+	respItem["power_remaining"] = item.PowerRemaining
+	respItem["poe_version"] = item.PoeVersion
+	respItem["chassis_count"] = item.ChassisCount
+	respItem["module_count"] = item.ModuleCount
+	respItem["module_details"] = flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersItemsSwitchPoeDetailsModuleDetails(item.ModuleDetails)
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersItemsSwitchPoeDetailsModuleDetails(items *[]dnacentersdkgo.ResponseDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersResponseSwitchPoeDetailsModuleDetails) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["module_id"] = item.ModuleID
+		respItem["chassis_id"] = item.ChassisID
+		respItem["module_port_count"] = item.ModulePortCount
+		respItem["module_used_port_count"] = item.ModuleUsedPortCount
+		respItem["module_free_port_count"] = item.ModuleFreePortCount
+		respItem["module_power_consumed"] = item.ModulePowerConsumed
+		respItem["module_poe_power_consumed"] = item.ModulePoePowerConsumed
+		respItem["module_system_power_consumed"] = item.ModuleSystemPowerConsumed
+		respItem["module_power_budget"] = item.ModulePowerBudget
+		respItem["module_poe_power_allocated"] = item.ModulePoePowerAllocated
+		respItem["module_system_power_allocated"] = item.ModuleSystemPowerAllocated
+		respItem["module_power_remaining"] = item.ModulePowerRemaining
+		respItem["interface_power_max"] = item.InterfacePowerMax
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersItemsFabricMetricsDetails(item *dnacentersdkgo.ResponseDevicesGetsTheNetworkDeviceDetailsBasedOnTheProvidedQueryParametersResponseFabricMetricsDetails) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["overall_fabric_score"] = item.OverallFabricScore
+	respItem["fabric_transit_score"] = item.FabricTransitScore
+	respItem["fabric_site_score"] = item.FabricSiteScore
+	respItem["fabric_vn_score"] = item.FabricVnScore
+	respItem["fabsite_fcp_score"] = item.FabsiteFcpScore
+	respItem["fabsite_infra_score"] = item.FabsiteInfraScore
+	respItem["fabsite_fsconn_score"] = item.FabsiteFsconnScore
+	respItem["vn_exit_score"] = item.VnExitScore
+	respItem["vn_fcp_score"] = item.VnFcpScore
+	respItem["vn_status_score"] = item.VnStatusScore
+	respItem["vn_service_score"] = item.VnServiceScore
+	respItem["transit_control_plane_score"] = item.TransitControlPlaneScore
+	respItem["transit_services_score"] = item.TransitServicesScore
+	respItem["tcp_conn_score"] = item.TCPConnScore
+	respItem["bgp_bgp_site_score"] = item.BgpBgpSiteScore
+	respItem["vni_status_score"] = item.VniStatusScore
+	respItem["pubsub_transit_conn_score"] = item.PubsubTransitConnScore
+	respItem["bgp_peer_infra_vn_score"] = item.BgpPeerInfraVnScore
+	respItem["internet_avail_score"] = item.InternetAvailScore
+	respItem["bgp_evpn_score"] = item.BgpEvpnScore
+	respItem["lisp_transit_conn_score"] = item.LispTransitConnScore
+	respItem["cts_env_data_download_score"] = item.CtsEnvDataDownloadScore
+	respItem["pubsub_infra_vn_score"] = item.PubsubInfraVnScore
+	respItem["peer_score"] = item.PeerScore
+	respItem["bgp_peer_score"] = item.BgpPeerScore
+	respItem["remote_internet_avail_score"] = item.RemoteInternetAvailScore
+	respItem["bgp_tcp_score"] = item.BgpTCPScore
+	respItem["pubsub_session_score"] = item.PubsubSessionScore
+	respItem["aaa_status_score"] = item.AAAStatusScore
+	respItem["lisp_cp_conn_score"] = item.LispCpConnScore
+	respItem["bgp_pubsub_site_score"] = item.BgpPubsubSiteScore
+	respItem["mcast_score"] = item.McastScore
+	respItem["port_channel_score"] = item.PortChannelScore
 
 	return []map[string]interface{}{
 		respItem,
@@ -2038,10 +3025,14 @@ func flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItem(item *dnacentersd
 	respItem["wired_client_count"] = item.WiredClientCount
 	respItem["wireless_client_count"] = item.WirelessClientCount
 	respItem["port_count"] = item.PortCount
+	respItem["physical_port_count"] = item.PhysicalPortCount
+	respItem["virtual_port_count"] = item.VirtualPortCount
 	respItem["client_count"] = item.ClientCount
 	respItem["ap_details"] = flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemApDetails(item.ApDetails)
 	respItem["metrics_details"] = flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemMetricsDetails(item.MetricsDetails)
 	respItem["fabric_details"] = flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemFabricDetails(item.FabricDetails)
+	respItem["switch_poe_details"] = flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemSwitchPoeDetails(item.SwitchPoeDetails)
+	respItem["fabric_metrics_details"] = flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemFabricMetricsDetails(item.FabricMetricsDetails)
 	respItem["aggregate_attributes"] = flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemAggregateAttributes(item.AggregateAttributes)
 	return []map[string]interface{}{
 		respItem,
@@ -2113,7 +3104,6 @@ func flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemMetricsDetails(ite
 	}
 	respItem := make(map[string]interface{})
 	respItem["overall_health_score"] = item.OverallHealthScore
-	respItem["overall_fabric_score"] = item.OverallFabricScore
 	respItem["cpu_utilization"] = item.CPUUtilization
 	respItem["cpu_score"] = item.CPUScore
 	respItem["memory_utilization"] = item.MemoryUtilization
@@ -2156,6 +3146,106 @@ func flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemFabricDetails(item
 	respItem["fabric_role"] = item.FabricRole
 	respItem["fabric_site_name"] = item.FabricSiteName
 	respItem["transit_fabrics"] = item.TransitFabrics
+	respItem["l2_vns"] = item.L2Vns
+	respItem["l3_vns"] = item.L3Vns
+	respItem["fabric_site_id"] = item.FabricSiteID
+	respItem["network_protocol"] = item.NetworkProtocol
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemSwitchPoeDetails(item *dnacentersdkgo.ResponseDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDResponseSwitchPoeDetails) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["port_count"] = item.PortCount
+	respItem["used_port_count"] = item.UsedPortCount
+	respItem["free_port_count"] = item.FreePortCount
+	respItem["power_consumed"] = item.PowerConsumed
+	respItem["poe_power_consumed"] = item.PoePowerConsumed
+	respItem["system_power_consumed"] = item.SystemPowerConsumed
+	respItem["power_budget"] = item.PowerBudget
+	respItem["poe_power_allocated"] = item.PoePowerAllocated
+	respItem["system_power_allocated"] = item.SystemPowerAllocated
+	respItem["power_remaining"] = item.PowerRemaining
+	respItem["poe_version"] = item.PoeVersion
+	respItem["chassis_count"] = item.ChassisCount
+	respItem["module_count"] = item.ModuleCount
+	respItem["module_details"] = flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemSwitchPoeDetailsModuleDetails(item.ModuleDetails)
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemSwitchPoeDetailsModuleDetails(items *[]dnacentersdkgo.ResponseDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDResponseSwitchPoeDetailsModuleDetails) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["module_id"] = item.ModuleID
+		respItem["chassis_id"] = item.ChassisID
+		respItem["module_port_count"] = item.ModulePortCount
+		respItem["module_used_port_count"] = item.ModuleUsedPortCount
+		respItem["module_free_port_count"] = item.ModuleFreePortCount
+		respItem["module_power_consumed"] = item.ModulePowerConsumed
+		respItem["module_poe_power_consumed"] = item.ModulePoePowerConsumed
+		respItem["module_system_power_consumed"] = item.ModuleSystemPowerConsumed
+		respItem["module_power_budget"] = item.ModulePowerBudget
+		respItem["module_poe_power_allocated"] = item.ModulePoePowerAllocated
+		respItem["module_system_power_allocated"] = item.ModuleSystemPowerAllocated
+		respItem["module_power_remaining"] = item.ModulePowerRemaining
+		respItem["interface_power_max"] = item.InterfacePowerMax
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDItemFabricMetricsDetails(item *dnacentersdkgo.ResponseDevicesGetTheDeviceDataForTheGivenDeviceIDUUIDResponseFabricMetricsDetails) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["overall_fabric_score"] = item.OverallFabricScore
+	respItem["fabric_transit_score"] = item.FabricTransitScore
+	respItem["fabric_site_score"] = item.FabricSiteScore
+	respItem["fabric_vn_score"] = item.FabricVnScore
+	respItem["fabsite_fcp_score"] = item.FabsiteFcpScore
+	respItem["fabsite_infra_score"] = item.FabsiteInfraScore
+	respItem["fabsite_fsconn_score"] = item.FabsiteFsconnScore
+	respItem["vn_exit_score"] = item.VnExitScore
+	respItem["vn_fcp_score"] = item.VnFcpScore
+	respItem["vn_status_score"] = item.VnStatusScore
+	respItem["vn_service_score"] = item.VnServiceScore
+	respItem["transit_control_plane_score"] = item.TransitControlPlaneScore
+	respItem["transit_services_score"] = item.TransitServicesScore
+	respItem["tcp_conn_score"] = item.TCPConnScore
+	respItem["bgp_bgp_site_score"] = item.BgpBgpSiteScore
+	respItem["vni_status_score"] = item.VniStatusScore
+	respItem["pubsub_transit_conn_score"] = item.PubsubTransitConnScore
+	respItem["bgp_peer_infra_vn_score"] = item.BgpPeerInfraVnScore
+	respItem["internet_avail_score"] = item.InternetAvailScore
+	respItem["bgp_evpn_score"] = item.BgpEvpnScore
+	respItem["lisp_transit_conn_score"] = item.LispTransitConnScore
+	respItem["cts_env_data_download_score"] = item.CtsEnvDataDownloadScore
+	respItem["pubsub_infra_vn_score"] = item.PubsubInfraVnScore
+	respItem["peer_score"] = item.PeerScore
+	respItem["bgp_peer_score"] = item.BgpPeerScore
+	respItem["remote_internet_avail_score"] = item.RemoteInternetAvailScore
+	respItem["bgp_tcp_score"] = item.BgpTCPScore
+	respItem["pubsub_session_score"] = item.PubsubSessionScore
+	respItem["aaa_status_score"] = item.AAAStatusScore
+	respItem["lisp_cp_conn_score"] = item.LispCpConnScore
+	respItem["bgp_pubsub_site_score"] = item.BgpPubsubSiteScore
+	respItem["mcast_score"] = item.McastScore
+	respItem["port_channel_score"] = item.PortChannelScore
 
 	return []map[string]interface{}{
 		respItem,

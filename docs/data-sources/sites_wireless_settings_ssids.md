@@ -19,10 +19,14 @@ It performs read operation on Wireless.
 
 ```terraform
 data "dnacenter_sites_wireless_settings_ssids" "example" {
-  provider = dnacenter
-  limit    = 1
-  offset   = 1
-  site_id  = "string"
+  provider    = dnacenter
+  auth_type   = "string"
+  l3auth_type = "string"
+  limit       = 1
+  offset      = 1
+  site_id     = "string"
+  ssid        = "string"
+  wlan_type   = "string"
 }
 
 output "dnacenter_sites_wireless_settings_ssids_example" {
@@ -30,10 +34,14 @@ output "dnacenter_sites_wireless_settings_ssids_example" {
 }
 
 data "dnacenter_sites_wireless_settings_ssids" "example" {
-  provider = dnacenter
-  limit    = 1
-  offset   = 1
-  site_id  = "string"
+  provider    = dnacenter
+  auth_type   = "string"
+  l3auth_type = "string"
+  limit       = 1
+  offset      = 1
+  site_id     = "string"
+  ssid        = "string"
+  wlan_type   = "string"
 }
 
 output "dnacenter_sites_wireless_settings_ssids_example" {
@@ -46,10 +54,14 @@ output "dnacenter_sites_wireless_settings_ssids_example" {
 
 ### Optional
 
-- `id` (String) id path parameter. SSID ID.
+- `auth_type` (String) authType query parameter. Auth Type
+- `id` (String) id path parameter. SSID ID
+- `l3auth_type` (String) l3authType query parameter. L3 Auth Type
 - `limit` (Number) limit query parameter.
 - `offset` (Number) offset query parameter.
 - `site_id` (String) siteId path parameter. Site UUID
+- `ssid` (String) ssid query parameter. SSID Name
+- `wlan_type` (String) wlanType query parameter. Wlan Type
 
 ### Read-Only
 
@@ -85,6 +97,8 @@ Read-Only:
 - `ingress_qos` (String)
 - `inherited_site_id` (String)
 - `inherited_site_name` (String)
+- `inherited_site_name_hierarchy` (String)
+- `inherited_site_uui_d` (String)
 - `is_ap_beacon_protection_enabled` (String)
 - `is_auth_key8021x` (String)
 - `is_auth_key8021x_plus_ft` (String)
@@ -174,6 +188,7 @@ Read-Only:
 - `ingress_qos` (String)
 - `inherited_site_id` (String)
 - `inherited_site_name` (String)
+- `inherited_site_name_hierarchy` (String)
 - `is_ap_beacon_protection_enabled` (String)
 - `is_auth_key8021x` (String)
 - `is_auth_key8021x_plus_ft` (String)

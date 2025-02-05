@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_wireless_provision_device_update" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     device_name = "string"
@@ -60,7 +60,7 @@ output "dnacenter_wireless_provision_device_update_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestWirelessProvisionUpdateV1 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestWirelessProvisionUpdate (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`

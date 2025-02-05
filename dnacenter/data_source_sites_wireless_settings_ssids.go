@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -22,8 +22,20 @@ func dataSourceSitesWirelessSettingsSSIDs() *schema.Resource {
 
 		ReadContext: dataSourceSitesWirelessSettingsSSIDsRead,
 		Schema: map[string]*schema.Schema{
+			"auth_type": &schema.Schema{
+				Description: `authType query parameter. Auth Type
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"id": &schema.Schema{
-				Description: `id path parameter. SSID ID.
+				Description: `id path parameter. SSID ID
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"l3auth_type": &schema.Schema{
+				Description: `l3authType query parameter. L3 Auth Type
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -40,6 +52,18 @@ func dataSourceSitesWirelessSettingsSSIDs() *schema.Resource {
 			},
 			"site_id": &schema.Schema{
 				Description: `siteId path parameter. Site UUID
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"ssid": &schema.Schema{
+				Description: `ssid query parameter. SSID Name
+`,
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"wlan_type": &schema.Schema{
+				Description: `wlanType query parameter. Wlan Type
 `,
 				Type:     schema.TypeString,
 				Optional: true,
@@ -232,6 +256,20 @@ func dataSourceSitesWirelessSettingsSSIDs() *schema.Resource {
 							Computed: true,
 						},
 
+						"inherited_site_name_hierarchy": &schema.Schema{
+							Description: `Inherited Site Name Hierarchy
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"inherited_site_uui_d": &schema.Schema{
+							Description: `Inherited Site UUID
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"is_ap_beacon_protection_enabled": &schema.Schema{
 							Description: `When set to true, the Access Point (AP) Beacon Protection feature is activated, enhancing the security of the network.
 `,
@@ -409,7 +447,7 @@ func dataSourceSitesWirelessSettingsSSIDs() *schema.Resource {
 						},
 
 						"is_posturing_enabled": &schema.Schema{
-							Description: `Applicable only for Enterprise SSIDs. When set to True, Posturing will enabled. Required to be set to True if ACL needs to be mapped for Enterprise SSID. 
+							Description: `Applicable only for Enterprise SSIDs. When set to True, Posturing will enabled. Required to be set to True if ACL needs to be mapped for Enterprise SSID.
 `,
 							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
@@ -818,6 +856,13 @@ func dataSourceSitesWirelessSettingsSSIDs() *schema.Resource {
 							Computed: true,
 						},
 
+						"inherited_site_name_hierarchy": &schema.Schema{
+							Description: `Inherited Site Name Hierarchy
+`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"is_ap_beacon_protection_enabled": &schema.Schema{
 							Description: `When set to true, the Access Point (AP) Beacon Protection feature is activated, enhancing the security of the network.
 `,
@@ -995,7 +1040,7 @@ func dataSourceSitesWirelessSettingsSSIDs() *schema.Resource {
 						},
 
 						"is_posturing_enabled": &schema.Schema{
-							Description: `Applicable only for Enterprise SSIDs. When set to True, Posturing will enabled. Required to be set to True if ACL needs to be mapped for Enterprise SSID. 
+							Description: `Applicable only for Enterprise SSIDs. When set to True, Posturing will enabled. Required to be set to True if ACL needs to be mapped for Enterprise SSID.
 `,
 							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
@@ -1227,9 +1272,13 @@ func dataSourceSitesWirelessSettingsSSIDsRead(ctx context.Context, d *schema.Res
 	vSiteID, okSiteID := d.GetOk("site_id")
 	vLimit, okLimit := d.GetOk("limit")
 	vOffset, okOffset := d.GetOk("offset")
+	vSSID, okSSID := d.GetOk("ssid")
+	vWLANType, okWLANType := d.GetOk("wlan_type")
+	vAuthType, okAuthType := d.GetOk("auth_type")
+	vL3AuthType, okL3AuthType := d.GetOk("l3auth_type")
 	vID, okID := d.GetOk("id")
 
-	method1 := []bool{okSiteID, okLimit, okOffset}
+	method1 := []bool{okSiteID, okLimit, okOffset, okSSID, okWLANType, okAuthType, okL3AuthType}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okSiteID, okID}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
@@ -1245,6 +1294,18 @@ func dataSourceSitesWirelessSettingsSSIDsRead(ctx context.Context, d *schema.Res
 		}
 		if okOffset {
 			queryParams1.Offset = vOffset.(float64)
+		}
+		if okSSID {
+			queryParams1.SSID = vSSID.(string)
+		}
+		if okWLANType {
+			queryParams1.WLANType = vWLANType.(string)
+		}
+		if okAuthType {
+			queryParams1.AuthType = vAuthType.(string)
+		}
+		if okL3AuthType {
+			queryParams1.L3AuthType = vL3AuthType.(string)
 		}
 
 		response1, restyResp1, err := client.Wireless.GetSSIDBySite(vvSiteID, &queryParams1)
@@ -1386,6 +1447,7 @@ func flattenWirelessGetSSIDBySiteItems(items *[]dnacentersdkgo.ResponseWirelessG
 		respItem["id"] = item.ID
 		respItem["is_random_mac_filter_enabled"] = boolPtrToString(item.IsRandomMacFilterEnabled)
 		respItem["fast_transition_over_the_distributed_system_enable"] = boolPtrToString(item.FastTransitionOverTheDistributedSystemEnable)
+		respItem["inherited_site_name_hierarchy"] = item.InheritedSiteNameHierarchy
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -1483,6 +1545,8 @@ func flattenWirelessGetSSIDByIDItem(item *dnacentersdkgo.ResponseWirelessGetSSID
 	respItem["id"] = item.ID
 	respItem["is_random_mac_filter_enabled"] = boolPtrToString(item.IsRandomMacFilterEnabled)
 	respItem["fast_transition_over_the_distributed_system_enable"] = boolPtrToString(item.FastTransitionOverTheDistributedSystemEnable)
+	respItem["inherited_site_name_hierarchy"] = item.InheritedSiteNameHierarchy
+	respItem["inherited_site_uui_d"] = item.InheritedSiteUUID
 	return []map[string]interface{}{
 		respItem,
 	}

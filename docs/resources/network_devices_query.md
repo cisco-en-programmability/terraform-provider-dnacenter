@@ -7,7 +7,7 @@ description: |-
   Gets the list of Network Devices based on the provided complex filters and aggregation functions. For detailed
   information about the usage of the API, please refer to the Open API specification document https://github.com/cisco-en-
   programmability/catalyst-center-api-specs/blob/main/Assurance/CECatCenter_Org-
-  AssuranceNetworkDevices-1.0.2-resolved.yaml
+  AssuranceNetworkDevices-2.0.1-resolved.yaml
 ---
 
 # dnacenter_network_devices_query (Resource)
@@ -26,7 +26,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_network_devices_query" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     aggregate_attributes {
@@ -134,6 +134,7 @@ Read-Only:
 - `device_series` (String)
 - `device_type` (String)
 - `fabric_details` (List of Object) (see [below for nested schema](#nestedobjatt--parameters--items--fabric_details))
+- `fabric_metrics_details` (List of Object) (see [below for nested schema](#nestedobjatt--parameters--items--fabric_metrics_details))
 - `feature_flag_list` (List of String)
 - `ha_last_reset_reason` (String)
 - `ha_status` (String)
@@ -147,6 +148,7 @@ Read-Only:
 - `metrics_details` (List of Object) (see [below for nested schema](#nestedobjatt--parameters--items--metrics_details))
 - `name` (String)
 - `os_type` (String)
+- `physical_port_count` (Number)
 - `platform_id` (String)
 - `port_count` (Number)
 - `product_vendor` (String)
@@ -162,8 +164,10 @@ Read-Only:
 - `site_id` (String)
 - `software_version` (String)
 - `stack_type` (String)
+- `switch_poe_details` (List of Object) (see [below for nested schema](#nestedobjatt--parameters--items--switch_poe_details))
 - `tag_names` (List of String)
 - `up_time` (Number)
+- `virtual_port_count` (Number)
 - `wired_client_count` (Number)
 - `wireless_client_count` (Number)
 
@@ -232,8 +236,52 @@ Read-Only:
 Read-Only:
 
 - `fabric_role` (List of String)
+- `fabric_site_id` (String)
 - `fabric_site_name` (String)
+- `l2_vns` (List of String)
+- `l3_vns` (List of String)
+- `network_protocol` (String)
 - `transit_fabrics` (List of String)
+
+
+<a id="nestedobjatt--parameters--items--fabric_metrics_details"></a>
+### Nested Schema for `parameters.items.fabric_metrics_details`
+
+Read-Only:
+
+- `aaa_status_score` (Number)
+- `bgp_bgp_site_score` (Number)
+- `bgp_evpn_score` (Number)
+- `bgp_peer_infra_vn_score` (Number)
+- `bgp_peer_score` (Number)
+- `bgp_pubsub_site_score` (Number)
+- `bgp_tcp_score` (Number)
+- `cts_env_data_download_score` (Number)
+- `fabric_site_score` (Number)
+- `fabric_transit_score` (Number)
+- `fabric_vn_score` (Number)
+- `fabsite_fcp_score` (Number)
+- `fabsite_fsconn_score` (Number)
+- `fabsite_infra_score` (Number)
+- `internet_avail_score` (Number)
+- `lisp_cp_conn_score` (Number)
+- `lisp_transit_conn_score` (Number)
+- `mcast_score` (Number)
+- `overall_fabric_score` (Number)
+- `peer_score` (Number)
+- `port_channel_score` (Number)
+- `pubsub_infra_vn_score` (Number)
+- `pubsub_session_score` (Number)
+- `pubsub_transit_conn_score` (Number)
+- `remote_internet_avail_score` (Number)
+- `tcp_conn_score` (Number)
+- `transit_control_plane_score` (Number)
+- `transit_services_score` (Number)
+- `vn_exit_score` (Number)
+- `vn_fcp_score` (Number)
+- `vn_service_score` (Number)
+- `vn_status_score` (Number)
+- `vni_status_score` (Number)
 
 
 <a id="nestedobjatt--parameters--items--metrics_details"></a>
@@ -263,10 +311,49 @@ Read-Only:
 - `memory_score` (Number)
 - `memory_utilization` (Number)
 - `noise_score` (Number)
-- `overall_fabric_score` (Number)
 - `overall_health_score` (Number)
 - `packet_pool` (Number)
 - `packet_pool_score` (Number)
 - `utilization_score` (Number)
 - `wqe_pool` (Number)
 - `wqe_pool_score` (Number)
+
+
+<a id="nestedobjatt--parameters--items--switch_poe_details"></a>
+### Nested Schema for `parameters.items.switch_poe_details`
+
+Read-Only:
+
+- `chassis_count` (Number)
+- `free_port_count` (Number)
+- `module_count` (Number)
+- `module_details` (List of Object) (see [below for nested schema](#nestedobjatt--parameters--items--switch_poe_details--module_details))
+- `poe_power_allocated` (Number)
+- `poe_power_consumed` (Number)
+- `poe_version` (String)
+- `port_count` (Number)
+- `power_budget` (Number)
+- `power_consumed` (Number)
+- `power_remaining` (Number)
+- `system_power_allocated` (Number)
+- `system_power_consumed` (Number)
+- `used_port_count` (Number)
+
+<a id="nestedobjatt--parameters--items--switch_poe_details--module_details"></a>
+### Nested Schema for `parameters.items.switch_poe_details.used_port_count`
+
+Read-Only:
+
+- `chassis_id` (String)
+- `interface_power_max` (Number)
+- `module_free_port_count` (Number)
+- `module_id` (String)
+- `module_poe_power_allocated` (Number)
+- `module_poe_power_consumed` (Number)
+- `module_port_count` (Number)
+- `module_power_budget` (Number)
+- `module_power_consumed` (Number)
+- `module_power_remaining` (Number)
+- `module_system_power_allocated` (Number)
+- `module_system_power_consumed` (Number)
+- `module_used_port_count` (Number)

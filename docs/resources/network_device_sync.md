@@ -24,7 +24,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_network_device_sync" "example" {
-  provider   = meraki
+  provider   = dnacenter
   force_sync = "false"
   parameters = ["string"]
 }
@@ -53,7 +53,7 @@ output "dnacenter_network_device_sync_example" {
 Optional:
 
 - `force_sync` (Boolean) forceSync query parameter.
-- `payload` (List of String) Array of RequestDevicesSyncDevicesV1
+- `payload` (List of String) Array of RequestDevicesSyncDevices
 
 
 <a id="nestedatt--item"></a>

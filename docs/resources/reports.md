@@ -22,59 +22,7 @@ required to configure a report.
 ```terraform
 resource "dnacenter_reports" "example" {
   provider = dnacenter
-  item {
 
-
-
-
-    executions {
-
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-    view {
-
-
-      field_groups {
-
-
-
-        fields {
-
-
-
-        }
-      }
-      filters {
-
-
-
-
-
-      }
-      format {
-
-
-
-
-      }
-
-
-
-    }
-
-
-  }
   parameters {
 
     data_category = "string"

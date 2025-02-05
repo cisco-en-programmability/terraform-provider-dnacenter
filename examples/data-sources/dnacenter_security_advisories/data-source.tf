@@ -4,5 +4,5 @@ data "dnacenter_security_advisories" "example" {
 }
 
 output "dnacenter_security_advisories_example" {
-  value = data.dnacenter_security_advisories.example.item
+  value = data.dnacenter_security_advisories.example.items
 }

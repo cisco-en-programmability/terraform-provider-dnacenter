@@ -57,11 +57,3 @@ Optional:
 Read-Only:
 
 - `units_of_measure` (String)
-
-## Import
-
-Import is supported using the following syntax:
-
-```shell
-terraform import dnacenter_floors_settings_v2.example "id:=string"
-```

@@ -47,6 +47,8 @@ Read-Only:
 - `bapi_execution_id` (String)
 - `bapi_key` (String)
 - `bapi_name` (String)
+- `bapi_sync_response` (String)
+- `bapi_sync_response_json` (String)
 - `end_time` (String)
 - `end_time_epoch` (Number)
 - `runtime_instance_id` (String)

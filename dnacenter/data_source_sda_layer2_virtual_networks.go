@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -98,6 +98,14 @@ func dataSourceSdaLayer2VirtualNetworks() *schema.Resource {
 
 						"is_fabric_enabled_wireless": &schema.Schema{
 							Description: `Set to true to enable wireless.
+`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"is_multiple_ip_to_mac_addresses": &schema.Schema{
+							Description: `Set to true to enable multiple IP-to-MAC Addresses (Wireless Bridged-Network Virtual Machine). This field will only be present on layer 2 virtual networks associated with a layer 3 virtual network.
 `,
 							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
@@ -216,6 +224,7 @@ func flattenSdaGetLayer2VirtualNetworksItems(items *[]dnacentersdkgo.ResponseSda
 		respItem["vlan_id"] = item.VLANID
 		respItem["traffic_type"] = item.TrafficType
 		respItem["is_fabric_enabled_wireless"] = boolPtrToString(item.IsFabricEnabledWireless)
+		respItem["is_multiple_ip_to_mac_addresses"] = boolPtrToString(item.IsMultipleIPToMacAddresses)
 		respItem["associated_layer3_virtual_network_name"] = item.AssociatedLayer3VirtualNetworkName
 		respItems = append(respItems, respItem)
 	}

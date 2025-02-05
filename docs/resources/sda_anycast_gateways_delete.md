@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_sda_anycast_gateways_delete" "example" {
-  provider = meraki
+  provider = dnacenter
   id       = "string"
   parameters {
 

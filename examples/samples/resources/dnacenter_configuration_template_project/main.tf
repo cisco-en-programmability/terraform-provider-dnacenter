@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.33-beta"
+      version = "1.3.0-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -23,20 +23,20 @@ resource "dnacenter_configuration_template_project" "example" {
     name             = "Cloud DayN Templates News"
     /*
       project_id = "string"
-      tags {  
+      tags {
         id = "string"
         name = "string"
       }
       templates {
-        
+
         author = "string"
         composite = "false"
         containing_templates {
-          
+
           composite = "false"
           description = "string"
           device_types {
-            
+
             product_family = "string"
             product_series = "string"
             product_type = "string"
@@ -46,7 +46,7 @@ resource "dnacenter_configuration_template_project" "example" {
           name = "string"
           project_name = "string"
           rollback_template_params {
-            
+
             binding = "string"
             custom_order = 1
             data_type = "string"
@@ -63,14 +63,14 @@ resource "dnacenter_configuration_template_project" "example" {
             parameter_name = "string"
             provider = "string"
             range {
-              
+
               id = "string"
               max_value = 1
               min_value = 1
             }
             required = "false"
             selection {
-              
+
               default_selected_values = ["string"]
               id = "string"
               selection_type = "string"
@@ -78,13 +78,13 @@ resource "dnacenter_configuration_template_project" "example" {
             }
           }
           tags {
-            
+
             id = "string"
             name = "string"
           }
           template_content = "string"
           template_params {
-            
+
             binding = "string"
             custom_order = 1
             data_type = "string"
@@ -101,14 +101,14 @@ resource "dnacenter_configuration_template_project" "example" {
             parameter_name = "string"
             provider = "string"
             range {
-              
+
               id = "string"
               max_value = 1
               min_value = 1
             }
             required = "false"
             selection {
-              
+
               default_selected_values = ["string"]
               id = "string"
               selection_type = "string"
@@ -121,7 +121,7 @@ resource "dnacenter_configuration_template_project" "example" {
         custom_params_order = "false"
         description = "string"
         device_types {
-          
+
           product_family = "string"
           product_series = "string"
           product_type = "string"
@@ -139,7 +139,7 @@ resource "dnacenter_configuration_template_project" "example" {
         project_name = "string"
         rollback_template_content = "string"
         rollback_template_params {
-          
+
           binding = "string"
           custom_order = 1
           data_type = "string"
@@ -156,14 +156,14 @@ resource "dnacenter_configuration_template_project" "example" {
           parameter_name = "string"
           provider = "string"
           range {
-            
+
             id = "string"
             max_value = 1
             min_value = 1
           }
           required = "false"
           selection {
-            
+
             default_selected_values = ["string"]
             id = "string"
             selection_type = "string"
@@ -174,13 +174,13 @@ resource "dnacenter_configuration_template_project" "example" {
         software_variant = "string"
         software_version = "string"
         tags {
-          
+
           id = "string"
           name = "string"
         }
         template_content = "string"
         template_params {
-          
+
           binding = "string"
           custom_order = 1
           data_type = "string"
@@ -197,14 +197,14 @@ resource "dnacenter_configuration_template_project" "example" {
           parameter_name = "string"
           provider = "string"
           range {
-            
+
             id = "string"
             max_value = 1
             min_value = 1
           }
           required = "false"
           selection {
-            
+
             default_selected_values = ["string"]
             id = "string"
             selection_type = "string"
@@ -212,7 +212,7 @@ resource "dnacenter_configuration_template_project" "example" {
           }
         }
         validation_errors {
-          
+
           rollback_template_errors = ["string"]
           template_errors = ["string"]
           template_id = "string"

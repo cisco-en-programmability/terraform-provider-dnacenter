@@ -63,10 +63,12 @@ Read-Only:
 - `flex_connect` (List of Object) (see [below for nested schema](#nestedobjatt--items--profile_details--ssid_details--flex_connect))
 - `interface_name` (String)
 - `name` (String)
+- `policy_profile_name` (String)
 - `type` (String)
+- `wlan_profile_name` (String)
 
 <a id="nestedobjatt--items--profile_details--ssid_details--flex_connect"></a>
-### Nested Schema for `items.profile_details.ssid_details.type`
+### Nested Schema for `items.profile_details.ssid_details.wlan_profile_name`
 
 Read-Only:
 

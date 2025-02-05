@@ -80,11 +80,15 @@ output "dnacenter_network_devices_example" {
 
 - `attribute` (String) attribute query parameter. The List of Network Device model attributes. This is helps to specify the interested fields in the request.
 - `end_time` (Number) endTime query parameter. End time to which API queries the data set related to the resource. It must be specified in UNIX epochtime in milliseconds. Value is inclusive.
+- `fabric_role` (String) fabricRole query parameter. The list of fabric device role. Examples: fabricRole=BORDER, fabricRole=BORDER&fabricRole=EDGE (multiple fabric device roles with & separator)  Available values : BORDER, EDGE, MAP-SERVER, LEAF, SPINE, TRANSIT-CP, EXTENDED-NODE, WLC, UNIFIED-AP
+- `fabric_site_id` (String) fabricSiteId query parameter. The fabric site Id or list to fabric site Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?fabricSiteId=fabricSiteUuid)  ?fabricSiteId=fabricSiteUuid1&fabricSiteId=fabricSiteUuid2 (multiple fabricSiteIds requested)
 - `family` (String) family query parameter. The list of network device family names Examples:family=Switches and Hubs (single network device family name )family=Switches and Hubs&family=Router&family=Wireless Controller (multiple Network device family names with & separator). This field is not case sensitive.
 - `health_score` (String) healthScore query parameter. The list of entity health score categories
 Examples:
 healthScore=good, healthScore=good&healthScore=fair (multiple entity healthscore values with & separator). This field is not case sensitive.
 - `id` (String) id path parameter. The device Uuid
+- `l2_vn` (String) l2Vn query parameter. The L2 Virtual Network Id or list to Virtual Network Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?l2Vn=virtualNetworkId  ?l2Vn=virtualNetworkId1&l2Vn=virtualNetworkId2 (multiple virtualNetworkId's requested)
+- `l3_vn` (String) l3Vn query parameter. The L3 Virtual Network Id or list to Virtual Network Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?l3Vn=virtualNetworkId  ?l3Vn=virtualNetworkId1&l3Vn=virtualNetworkId2 (multiple virtualNetworkId's requested)
 - `limit` (Number) limit query parameter. Maximum number of records to return
 - `mac_address` (String) macAddress query parameter. The macAddress of the network device or client This field supports wildcard (***) character-based search.  Ex: **AB:AB:AB** or *AB:AB:AB** or **AB:AB:AB* Examples:
 *macAddress=AB:AB:AB:CD:CD:CD* (single macAddress requested)
@@ -116,6 +120,7 @@ Examples:
 - `sort_by` (String) sortBy query parameter. A field within the response to sort by.
 - `start_time` (Number) startTime query parameter. Start time from which API queries the data set related to the resource. It must be specified in UNIX epochtime in milliseconds. Value is inclusive.
 If *startTime* is not provided, API will default to current time.
+- `transit_network_id` (String) transitNetworkId query parameter. The Transit Network Id or list to Transit Network Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?transitNetworkId=transitNetworkId  ?transitNetworkId=transitNetworkuuid1&transitNetworkId=transitNetworkuuid1 (multiple transitNetworkIds requested
 - `type` (String) type query parameter. The list of network device type This field supports wildcard (***) character-based search. Ex: **9407R** or **9407R* or *9407R** Examples: type=SwitchesCisco Catalyst 9407R Switch (single network device types ) type=Cisco Catalyst 38xx stack-able ethernet switch&type=Cisco 3945 Integrated Services Router G2 (multiple Network device types with & separator)
 - `view` (String) view query parameter. The List of Network Device model views. Please refer to ***NetworkDeviceView*** for the supported list
 
@@ -140,6 +145,7 @@ Read-Only:
 - `device_series` (String)
 - `device_type` (String)
 - `fabric_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--fabric_details))
+- `fabric_metrics_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--fabric_metrics_details))
 - `feature_flag_list` (List of String)
 - `ha_last_reset_reason` (String)
 - `ha_status` (String)
@@ -153,6 +159,7 @@ Read-Only:
 - `metrics_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--metrics_details))
 - `name` (String)
 - `os_type` (String)
+- `physical_port_count` (Number)
 - `platform_id` (String)
 - `port_count` (Number)
 - `product_vendor` (String)
@@ -168,8 +175,10 @@ Read-Only:
 - `site_id` (String)
 - `software_version` (String)
 - `stack_type` (String)
+- `switch_poe_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--switch_poe_details))
 - `tag_names` (List of String)
 - `up_time` (Number)
+- `virtual_port_count` (Number)
 - `wired_client_count` (Number)
 - `wireless_client_count` (Number)
 
@@ -238,8 +247,52 @@ Read-Only:
 Read-Only:
 
 - `fabric_role` (List of String)
+- `fabric_site_id` (String)
 - `fabric_site_name` (String)
+- `l2_vns` (List of String)
+- `l3_vns` (List of String)
+- `network_protocol` (String)
 - `transit_fabrics` (List of String)
+
+
+<a id="nestedobjatt--item--fabric_metrics_details"></a>
+### Nested Schema for `item.fabric_metrics_details`
+
+Read-Only:
+
+- `aaa_status_score` (Number)
+- `bgp_bgp_site_score` (Number)
+- `bgp_evpn_score` (Number)
+- `bgp_peer_infra_vn_score` (Number)
+- `bgp_peer_score` (Number)
+- `bgp_pubsub_site_score` (Number)
+- `bgp_tcp_score` (Number)
+- `cts_env_data_download_score` (Number)
+- `fabric_site_score` (Number)
+- `fabric_transit_score` (Number)
+- `fabric_vn_score` (Number)
+- `fabsite_fcp_score` (Number)
+- `fabsite_fsconn_score` (Number)
+- `fabsite_infra_score` (Number)
+- `internet_avail_score` (Number)
+- `lisp_cp_conn_score` (Number)
+- `lisp_transit_conn_score` (Number)
+- `mcast_score` (Number)
+- `overall_fabric_score` (Number)
+- `peer_score` (Number)
+- `port_channel_score` (Number)
+- `pubsub_infra_vn_score` (Number)
+- `pubsub_session_score` (Number)
+- `pubsub_transit_conn_score` (Number)
+- `remote_internet_avail_score` (Number)
+- `tcp_conn_score` (Number)
+- `transit_control_plane_score` (Number)
+- `transit_services_score` (Number)
+- `vn_exit_score` (Number)
+- `vn_fcp_score` (Number)
+- `vn_service_score` (Number)
+- `vn_status_score` (Number)
+- `vni_status_score` (Number)
 
 
 <a id="nestedobjatt--item--metrics_details"></a>
@@ -269,13 +322,53 @@ Read-Only:
 - `memory_score` (Number)
 - `memory_utilization` (Number)
 - `noise_score` (Number)
-- `overall_fabric_score` (Number)
 - `overall_health_score` (Number)
 - `packet_pool` (Number)
 - `packet_pool_score` (Number)
 - `utilization_score` (Number)
 - `wqe_pool` (Number)
 - `wqe_pool_score` (Number)
+
+
+<a id="nestedobjatt--item--switch_poe_details"></a>
+### Nested Schema for `item.switch_poe_details`
+
+Read-Only:
+
+- `chassis_count` (Number)
+- `free_port_count` (Number)
+- `module_count` (Number)
+- `module_details` (List of Object) (see [below for nested schema](#nestedobjatt--item--switch_poe_details--module_details))
+- `poe_power_allocated` (Number)
+- `poe_power_consumed` (Number)
+- `poe_version` (String)
+- `port_count` (Number)
+- `power_budget` (Number)
+- `power_consumed` (Number)
+- `power_remaining` (Number)
+- `system_power_allocated` (Number)
+- `system_power_consumed` (Number)
+- `used_port_count` (Number)
+
+<a id="nestedobjatt--item--switch_poe_details--module_details"></a>
+### Nested Schema for `item.switch_poe_details.module_details`
+
+Read-Only:
+
+- `chassis_id` (String)
+- `interface_power_max` (Number)
+- `module_free_port_count` (Number)
+- `module_id` (String)
+- `module_poe_power_allocated` (Number)
+- `module_poe_power_consumed` (Number)
+- `module_port_count` (Number)
+- `module_power_budget` (Number)
+- `module_power_consumed` (Number)
+- `module_power_remaining` (Number)
+- `module_system_power_allocated` (Number)
+- `module_system_power_consumed` (Number)
+- `module_used_port_count` (Number)
+
 
 
 
@@ -295,6 +388,7 @@ Read-Only:
 - `device_series` (String)
 - `device_type` (String)
 - `fabric_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--fabric_details))
+- `fabric_metrics_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--fabric_metrics_details))
 - `feature_flag_list` (List of String)
 - `ha_last_reset_reason` (String)
 - `ha_status` (String)
@@ -308,6 +402,7 @@ Read-Only:
 - `metrics_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--metrics_details))
 - `name` (String)
 - `os_type` (String)
+- `physical_port_count` (Number)
 - `platform_id` (String)
 - `port_count` (Number)
 - `product_vendor` (String)
@@ -323,8 +418,10 @@ Read-Only:
 - `site_id` (String)
 - `software_version` (String)
 - `stack_type` (String)
+- `switch_poe_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--switch_poe_details))
 - `tag_names` (List of String)
 - `up_time` (Number)
+- `virtual_port_count` (Number)
 - `wired_client_count` (Number)
 - `wireless_client_count` (Number)
 
@@ -393,8 +490,52 @@ Read-Only:
 Read-Only:
 
 - `fabric_role` (List of String)
+- `fabric_site_id` (String)
 - `fabric_site_name` (String)
+- `l2_vns` (List of String)
+- `l3_vns` (List of String)
+- `network_protocol` (String)
 - `transit_fabrics` (List of String)
+
+
+<a id="nestedobjatt--items--fabric_metrics_details"></a>
+### Nested Schema for `items.fabric_metrics_details`
+
+Read-Only:
+
+- `aaa_status_score` (Number)
+- `bgp_bgp_site_score` (Number)
+- `bgp_evpn_score` (Number)
+- `bgp_peer_infra_vn_score` (Number)
+- `bgp_peer_score` (Number)
+- `bgp_pubsub_site_score` (Number)
+- `bgp_tcp_score` (Number)
+- `cts_env_data_download_score` (Number)
+- `fabric_site_score` (Number)
+- `fabric_transit_score` (Number)
+- `fabric_vn_score` (Number)
+- `fabsite_fcp_score` (Number)
+- `fabsite_fsconn_score` (Number)
+- `fabsite_infra_score` (Number)
+- `internet_avail_score` (Number)
+- `lisp_cp_conn_score` (Number)
+- `lisp_transit_conn_score` (Number)
+- `mcast_score` (Number)
+- `overall_fabric_score` (Number)
+- `peer_score` (Number)
+- `port_channel_score` (Number)
+- `pubsub_infra_vn_score` (Number)
+- `pubsub_session_score` (Number)
+- `pubsub_transit_conn_score` (Number)
+- `remote_internet_avail_score` (Number)
+- `tcp_conn_score` (Number)
+- `transit_control_plane_score` (Number)
+- `transit_services_score` (Number)
+- `vn_exit_score` (Number)
+- `vn_fcp_score` (Number)
+- `vn_service_score` (Number)
+- `vn_status_score` (Number)
+- `vni_status_score` (Number)
 
 
 <a id="nestedobjatt--items--metrics_details"></a>
@@ -424,10 +565,49 @@ Read-Only:
 - `memory_score` (Number)
 - `memory_utilization` (Number)
 - `noise_score` (Number)
-- `overall_fabric_score` (Number)
 - `overall_health_score` (Number)
 - `packet_pool` (Number)
 - `packet_pool_score` (Number)
 - `utilization_score` (Number)
 - `wqe_pool` (Number)
 - `wqe_pool_score` (Number)
+
+
+<a id="nestedobjatt--items--switch_poe_details"></a>
+### Nested Schema for `items.switch_poe_details`
+
+Read-Only:
+
+- `chassis_count` (Number)
+- `free_port_count` (Number)
+- `module_count` (Number)
+- `module_details` (List of Object) (see [below for nested schema](#nestedobjatt--items--switch_poe_details--module_details))
+- `poe_power_allocated` (Number)
+- `poe_power_consumed` (Number)
+- `poe_version` (String)
+- `port_count` (Number)
+- `power_budget` (Number)
+- `power_consumed` (Number)
+- `power_remaining` (Number)
+- `system_power_allocated` (Number)
+- `system_power_consumed` (Number)
+- `used_port_count` (Number)
+
+<a id="nestedobjatt--items--switch_poe_details--module_details"></a>
+### Nested Schema for `items.switch_poe_details.module_details`
+
+Read-Only:
+
+- `chassis_id` (String)
+- `interface_power_max` (Number)
+- `module_free_port_count` (Number)
+- `module_id` (String)
+- `module_poe_power_allocated` (Number)
+- `module_poe_power_consumed` (Number)
+- `module_port_count` (Number)
+- `module_power_budget` (Number)
+- `module_power_consumed` (Number)
+- `module_power_remaining` (Number)
+- `module_system_power_allocated` (Number)
+- `module_system_power_consumed` (Number)
+- `module_used_port_count` (Number)

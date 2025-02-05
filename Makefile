@@ -3,7 +3,7 @@ HOSTNAME=hashicorp.com
 NAMESPACE=edu
 NAME=dnacenter
 BINARY=terraform-provider-${NAME}
-VERSION=1.1.33-beta
+VERSION=1.3.0-beta
 OS_ARCH=darwin_arm64
 # Change to OS_ARCH=darwin_arm64 or your current architecture
 GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
@@ -34,11 +34,11 @@ install: build
 	mv ${BINARY}_${VERSION}_${OS_ARCH} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
 
 test: fmtcheck
-	go test -i $(TEST) || exit 1                                                   
-	echo $(TEST) | xargs -t -n4 go test $(TESTARGS) -timeout=30s -parallel=4                    
+	go test -i $(TEST) || exit 1
+	echo $(TEST) | xargs -t -n4 go test $(TESTARGS) -timeout=30s -parallel=4
 
-testacc: 
-	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 120m   
+testacc:
+	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 120m
 
 fmt:
 	gofmt -w $(GOFMT_FILES)

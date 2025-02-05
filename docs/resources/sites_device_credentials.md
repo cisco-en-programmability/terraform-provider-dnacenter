@@ -22,7 +22,6 @@ used for the site.
 ```terraform
 resource "dnacenter_sites_device_credentials" "example" {
   provider = dnacenter
-
   parameters {
 
     cli_credentials_id {

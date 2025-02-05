@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -52,7 +52,7 @@ func dataSourceSdaFabricDevicesLayer2Handoffs() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"external_vlan_id": &schema.Schema{
-							Description: `External VLAN number into which the fabric is extended. 
+							Description: `External VLAN number into which the fabric is extended.
 `,
 							Type:     schema.TypeInt,
 							Computed: true,
@@ -66,7 +66,7 @@ func dataSourceSdaFabricDevicesLayer2Handoffs() *schema.Resource {
 						},
 
 						"id": &schema.Schema{
-							Description: `ID of the layer 2 handoff of a fabric device. 
+							Description: `ID of the layer 2 handoff of a fabric device.
 `,
 							Type:     schema.TypeString,
 							Computed: true,
@@ -87,7 +87,7 @@ func dataSourceSdaFabricDevicesLayer2Handoffs() *schema.Resource {
 						},
 
 						"network_device_id": &schema.Schema{
-							Description: `Network device ID of the fabric device. 
+							Description: `Network device ID of the fabric device.
 `,
 							Type:     schema.TypeString,
 							Computed: true,

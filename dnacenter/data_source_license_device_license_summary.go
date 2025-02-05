@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -64,7 +64,7 @@ func dataSourceLicenseDeviceLicenseSummary() *schema.Resource {
 			"smart_account_id": &schema.Schema{
 				Description: `smart_account_id query parameter. Id of smart account
 `,
-				Type:     schema.TypeString,
+				Type:     schema.TypeFloat,
 				Optional: true,
 			},
 			"sort_by": &schema.Schema{
@@ -383,7 +383,7 @@ func dataSourceLicenseDeviceLicenseSummaryRead(ctx context.Context, d *schema.Re
 			queryParams1.VirtualAccountName = vVirtualAccountName.(string)
 		}
 		if okSmartAccountID {
-			queryParams1.SmartAccountID = vSmartAccountID.(string)
+			queryParams1.SmartAccountID = vSmartAccountID.(float64)
 		}
 		if okDeviceUUID {
 			queryParams1.DeviceUUID = vDeviceUUID.(string)

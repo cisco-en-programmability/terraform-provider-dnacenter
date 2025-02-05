@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_event_snmp_config_create" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     auth_password     = "string"

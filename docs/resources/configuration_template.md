@@ -22,197 +22,7 @@ It manages create, read, update and delete operations on Configuration Templates
 ```terraform
 resource "dnacenter_configuration_template" "example" {
   provider = dnacenter
-  item {
 
-
-
-    containing_templates {
-
-
-
-      device_types {
-
-
-
-
-      }
-
-
-
-
-      rollback_template_params {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        range {
-
-
-
-
-        }
-
-        selection {
-
-
-
-
-
-        }
-      }
-      tags {
-
-
-
-      }
-
-      template_params {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        range {
-
-
-
-
-        }
-
-        selection {
-
-
-
-
-
-        }
-      }
-
-    }
-
-
-
-    device_types {
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-    rollback_template_params {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      range {
-
-
-
-
-      }
-
-      selection {
-
-
-
-
-
-      }
-    }
-
-
-
-    tags {
-
-
-
-    }
-
-    template_params {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      range {
-
-
-
-
-      }
-
-      selection {
-
-
-
-
-
-      }
-    }
-    validation_errors {
-
-
-
-
-
-    }
-
-  }
   parameters {
 
     author    = "string"
@@ -260,7 +70,7 @@ resource "dnacenter_configuration_template" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = "------"
+          selection_values        = "string"
         }
       }
       tags {
@@ -298,7 +108,7 @@ resource "dnacenter_configuration_template" "example" {
           default_selected_values = ["string"]
           id                      = "string"
           selection_type          = "string"
-          selection_values        = "------"
+          selection_values        = "string"
         }
       }
       version = "string"
@@ -351,7 +161,7 @@ resource "dnacenter_configuration_template" "example" {
         default_selected_values = ["string"]
         id                      = "string"
         selection_type          = "string"
-        selection_values        = "------"
+        selection_values        = "string"
       }
     }
     software_type    = "string"
@@ -393,13 +203,13 @@ resource "dnacenter_configuration_template" "example" {
         default_selected_values = ["string"]
         id                      = "string"
         selection_type          = "string"
-        selection_values        = "------"
+        selection_values        = "string"
       }
     }
     validation_errors {
 
-      rollback_template_errors = "------"
-      template_errors          = "------"
+      rollback_template_errors = "string"
+      template_errors          = "string"
       template_id              = "string"
       template_version         = "string"
     }

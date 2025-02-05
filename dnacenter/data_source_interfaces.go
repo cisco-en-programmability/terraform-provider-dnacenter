@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,17 +21,29 @@ specified returns the latest available data.
 The elements are grouped and sorted by deviceUuid first, and are then sorted by the given sort field, or by the default
 value: name.
 
+
+The supported sorting options are:
+name, adminStatus, description, duplexConfig, duplexOper, interfaceIfIndex,interfaceType, macAddress,mediaType,
+operStatus, portChannelId, portMode, portType,speed, vlanId
+
+
+
+This data source can paginate up to 500,000 records, please narrow matching results with additional filters beyond that
+value. The elements are grouped and sorted by deviceUuid first, and are then sorted by the given sort field, or by the
+default value: name.
+
  The supported sorting options are: name, adminStatus, description, duplexConfig,
 duplexOper,interfaceIfIndex,interfaceType, macAddress,mediaType, operStatus,portChannelId, portMode, portType,speed,
-vlanId. For detailed information about the usage of the API, please refer to the Open API specification document
+vlanId,pdPowerAdminMaxInWatt,pdPowerBudgetInWatt,pdPowerConsumedInWatt,pdPowerRemainingInWatt,pdMaxPowerDrawn. For
+detailed information about the usage of the API, please refer to the Open API specification document
 https://github.com/cisco-en-programmability/catalyst-center-api-specs/blob/main/Assurance/CE_Cat_Center_Org-
-interfaces-1.0.2-resolved.yaml
+interfaces-2.0.0-resolved.yaml
 
 - Returns the interface data for the given interface instance Uuid along with the statistics data. The latest interface
 data in the specified start and end time range will be returned. When there is no start and end time specified returns
 the latest available data for the given interface Id. For detailed information about the usage of the API, please refer
 to the Open API specification document https://github.com/cisco-en-programmability/catalyst-center-api-
-specs/blob/main/Assurance/CE_Cat_Center_Org-interfaces-1.0.2-resolved.yaml
+specs/blob/main/Assurance/CE_Cat_Center_Org-interfaces-2.0.0-resolved.yaml
 `,
 
 		ReadContext: dataSourceInterfacesRead,
@@ -185,6 +197,24 @@ If *startTime* is not provided, API will default to current time.
 							Computed:    true,
 						},
 
+						"chassis_id": &schema.Schema{
+							Description: `Chassis Id`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"connected_switch_type": &schema.Schema{
+							Description: `Connected Switch Type`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"connected_switch_uuid": &schema.Schema{
+							Description: `Connected Switch Uuid`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
 						"description": &schema.Schema{
 							Description: `Description`,
 							Type:        schema.TypeString,
@@ -203,10 +233,31 @@ If *startTime* is not provided, API will default to current time.
 							Computed:    true,
 						},
 
+						"fast_po_e_enabled": &schema.Schema{
+							Description: `Fast Po E Enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"four_pair_enabled": &schema.Schema{
+							Description: `Four Pair Enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"id": &schema.Schema{
 							Description: `Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
+						},
+
+						"ieee_compliant": &schema.Schema{
+							Description: `Ieee Compliant`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"interface_if_index": &schema.Schema{
@@ -262,6 +313,12 @@ If *startTime* is not provided, API will default to current time.
 							Computed:    true,
 						},
 
+						"module_id": &schema.Schema{
+							Description: `Module Id`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
 						"name": &schema.Schema{
 							Description: `Name`,
 							Type:        schema.TypeString,
@@ -292,6 +349,87 @@ If *startTime* is not provided, API will default to current time.
 							Computed:    true,
 						},
 
+						"pd_class_signal": &schema.Schema{
+							Description: `Pd Class Signal`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_class_spare": &schema.Schema{
+							Description: `Pd Class Spare`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_connected_device_list": &schema.Schema{
+							Description: `Pd Connected Device List`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+
+						"pd_connected_switch": &schema.Schema{
+							Description: `Pd Connected Switch`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_device_model": &schema.Schema{
+							Description: `Pd Device Model`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_device_name": &schema.Schema{
+							Description: `Pd Device Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_device_type": &schema.Schema{
+							Description: `Pd Device Type`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_location": &schema.Schema{
+							Description: `Pd Location`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_max_power_drawn": &schema.Schema{
+							Description: `Pd Max Power Drawn`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_power_admin_max_in_watt": &schema.Schema{
+							Description: `Pd Power Admin Max In Watt`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_power_budget_in_watt": &schema.Schema{
+							Description: `Pd Power Budget In Watt`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_power_consumed_in_watt": &schema.Schema{
+							Description: `Pd Power Consumed In Watt`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_power_remaining_in_watt": &schema.Schema{
+							Description: `Pd Power Remaining In Watt`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
 						"peer_stack_member": &schema.Schema{
 							Description: `Peer Stack Member`,
 							Type:        schema.TypeInt,
@@ -302,6 +440,44 @@ If *startTime* is not provided, API will default to current time.
 							Description: `Peer Stack Port`,
 							Type:        schema.TypeString,
 							Computed:    true,
+						},
+
+						"perpetual_po_e_enabled": &schema.Schema{
+							Description: `Perpetual Po E Enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"poe_admin_status": &schema.Schema{
+							Description: `Poe Admin Status`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"poe_data_timestamp": &schema.Schema{
+							Description: `Poe Data Timestamp`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"poe_oper_priority": &schema.Schema{
+							Description: `Poe Oper Priority`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"poe_oper_status": &schema.Schema{
+							Description: `Poe Oper Status`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"policing_po_e_enabled": &schema.Schema{
+							Description: `Policing Po E Enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"port_channel_id": &schema.Schema{
@@ -404,6 +580,13 @@ If *startTime* is not provided, API will default to current time.
 							Description: `Tx Utilization`,
 							Type:        schema.TypeFloat,
 							Computed:    true,
+						},
+
+						"upoe_plus_enabled": &schema.Schema{
+							Description: `Upoe Plus Enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"vlan_id": &schema.Schema{
@@ -427,6 +610,24 @@ If *startTime* is not provided, API will default to current time.
 							Computed:    true,
 						},
 
+						"chassis_id": &schema.Schema{
+							Description: `Chassis Id`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"connected_switch_type": &schema.Schema{
+							Description: `Connected Switch Type`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"connected_switch_uuid": &schema.Schema{
+							Description: `Connected Switch Uuid`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
 						"description": &schema.Schema{
 							Description: `Description`,
 							Type:        schema.TypeString,
@@ -445,10 +646,31 @@ If *startTime* is not provided, API will default to current time.
 							Computed:    true,
 						},
 
+						"fast_po_e_enabled": &schema.Schema{
+							Description: `Fast Po E Enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"four_pair_enabled": &schema.Schema{
+							Description: `Four Pair Enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
 						"id": &schema.Schema{
 							Description: `Id`,
 							Type:        schema.TypeString,
 							Computed:    true,
+						},
+
+						"ieee_compliant": &schema.Schema{
+							Description: `Ieee Compliant`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"interface_if_index": &schema.Schema{
@@ -504,6 +726,12 @@ If *startTime* is not provided, API will default to current time.
 							Computed:    true,
 						},
 
+						"module_id": &schema.Schema{
+							Description: `Module Id`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
 						"name": &schema.Schema{
 							Description: `Name`,
 							Type:        schema.TypeString,
@@ -534,6 +762,87 @@ If *startTime* is not provided, API will default to current time.
 							Computed:    true,
 						},
 
+						"pd_class_signal": &schema.Schema{
+							Description: `Pd Class Signal`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_class_spare": &schema.Schema{
+							Description: `Pd Class Spare`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_connected_device_list": &schema.Schema{
+							Description: `Pd Connected Device List`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+
+						"pd_connected_switch": &schema.Schema{
+							Description: `Pd Connected Switch`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_device_model": &schema.Schema{
+							Description: `Pd Device Model`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_device_name": &schema.Schema{
+							Description: `Pd Device Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_device_type": &schema.Schema{
+							Description: `Pd Device Type`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_location": &schema.Schema{
+							Description: `Pd Location`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_max_power_drawn": &schema.Schema{
+							Description: `Pd Max Power Drawn`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_power_admin_max_in_watt": &schema.Schema{
+							Description: `Pd Power Admin Max In Watt`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_power_budget_in_watt": &schema.Schema{
+							Description: `Pd Power Budget In Watt`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_power_consumed_in_watt": &schema.Schema{
+							Description: `Pd Power Consumed In Watt`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"pd_power_remaining_in_watt": &schema.Schema{
+							Description: `Pd Power Remaining In Watt`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
 						"peer_stack_member": &schema.Schema{
 							Description: `Peer Stack Member`,
 							Type:        schema.TypeInt,
@@ -544,6 +853,44 @@ If *startTime* is not provided, API will default to current time.
 							Description: `Peer Stack Port`,
 							Type:        schema.TypeString,
 							Computed:    true,
+						},
+
+						"perpetual_po_e_enabled": &schema.Schema{
+							Description: `Perpetual Po E Enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+
+						"poe_admin_status": &schema.Schema{
+							Description: `Poe Admin Status`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"poe_data_timestamp": &schema.Schema{
+							Description: `Poe Data Timestamp`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+
+						"poe_oper_priority": &schema.Schema{
+							Description: `Poe Oper Priority`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"poe_oper_status": &schema.Schema{
+							Description: `Poe Oper Status`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+
+						"policing_po_e_enabled": &schema.Schema{
+							Description: `Policing Po E Enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"port_channel_id": &schema.Schema{
@@ -646,6 +993,13 @@ If *startTime* is not provided, API will default to current time.
 							Description: `Tx Utilization`,
 							Type:        schema.TypeFloat,
 							Computed:    true,
+						},
+
+						"upoe_plus_enabled": &schema.Schema{
+							Description: `Upoe Plus Enabled`,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 
 						"vlan_id": &schema.Schema{
@@ -689,8 +1043,8 @@ func dataSourceInterfacesRead(ctx context.Context, d *schema.ResourceData, m int
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetsInterfacesAlongWithStatisticsDataFromAllNetworkDevices")
-		queryParams1 := dnacentersdkgo.GetsInterfacesAlongWithStatisticsDataFromAllNetworkDevicesQueryParams{}
+		log.Printf("[DEBUG] Selected method: GetsInterfacesAlongWithStatisticsAndPoeDataFromAllNetworkDevices")
+		queryParams1 := dnacentersdkgo.GetsInterfacesAlongWithStatisticsAndPoeDataFromAllNetworkDevicesQueryParams{}
 
 		if okStartTime {
 			queryParams1.StartTime = vStartTime.(float64)
@@ -741,7 +1095,7 @@ func dataSourceInterfacesRead(ctx context.Context, d *schema.ResourceData, m int
 			queryParams1.InterfaceName = vInterfaceName.(string)
 		}
 
-		response1, restyResp1, err := client.Devices.GetsInterfacesAlongWithStatisticsDataFromAllNetworkDevices(&queryParams1)
+		response1, restyResp1, err := client.Devices.GetsInterfacesAlongWithStatisticsAndPoeDataFromAllNetworkDevices(&queryParams1)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -770,7 +1124,7 @@ func dataSourceInterfacesRead(ctx context.Context, d *schema.ResourceData, m int
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetTheInterfaceDataForTheGivenInterfaceIDinstanceUUIDAlongWithTheStatisticsData")
 		vvID := vID.(string)
-		queryParams2 := dnacentersdkgo.GetTheInterfaceDataForTheGivenInterfaceIDinstanceUUIDAlongWithTheStatisticsDataQueryParams{}
+		queryParams2 := dnacentersdkgo.GetTheInterfaceDataForTheGivenInterfaceIDinstanceUUIDAlongWithTheStatisticsAndPoeDataQueryParams{}
 
 		if okStartTime {
 			queryParams2.StartTime = vStartTime.(float64)
@@ -785,7 +1139,7 @@ func dataSourceInterfacesRead(ctx context.Context, d *schema.ResourceData, m int
 			queryParams2.Attribute = vAttribute.(string)
 		}
 
-		response2, restyResp2, err := client.Devices.GetTheInterfaceDataForTheGivenInterfaceIDinstanceUUIDAlongWithTheStatisticsData(vvID, &queryParams2)
+		response2, restyResp2, err := client.Devices.GetTheInterfaceDataForTheGivenInterfaceIDinstanceUUIDAlongWithTheStatisticsAndPoeData(vvID, &queryParams2)
 
 		if err != nil || response2 == nil {
 			if restyResp2 != nil {
@@ -814,7 +1168,7 @@ func dataSourceInterfacesRead(ctx context.Context, d *schema.ResourceData, m int
 	return diags
 }
 
-func flattenDevicesGetsInterfacesAlongWithStatisticsDataFromAllNetworkDevicesItems(items *[]dnacentersdkgo.ResponseDevicesGetsInterfacesAlongWithStatisticsDataFromAllNetworkDevicesResponse) []map[string]interface{} {
+func flattenDevicesGetsInterfacesAlongWithStatisticsDataFromAllNetworkDevicesItems(items *[]dnacentersdkgo.ResponseDevicesGetsInterfacesAlongWithStatisticsAndPoeDataFromAllNetworkDevicesResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -859,12 +1213,39 @@ func flattenDevicesGetsInterfacesAlongWithStatisticsDataFromAllNetworkDevicesIte
 		respItem["site_name"] = item.SiteName
 		respItem["site_hierarchy"] = item.SiteHierarchy
 		respItem["site_hierarchy_id"] = item.SiteHierarchyID
+		respItem["poe_admin_status"] = item.PoeAdminStatus
+		respItem["poe_oper_status"] = item.PoeOperStatus
+		respItem["chassis_id"] = item.ChassisID
+		respItem["module_id"] = item.ModuleID
+		respItem["pd_class_signal"] = item.PdClassSignal
+		respItem["pd_class_spare"] = item.PdClassSpare
+		respItem["pd_device_type"] = item.PdDeviceType
+		respItem["pd_device_model"] = item.PdDeviceModel
+		respItem["pd_power_admin_max_in_watt"] = item.PdPowerAdminMaxInWatt
+		respItem["pd_power_budget_in_watt"] = item.PdPowerBudgetInWatt
+		respItem["pd_power_consumed_in_watt"] = item.PdPowerConsumedInWatt
+		respItem["pd_power_remaining_in_watt"] = item.PdPowerRemainingInWatt
+		respItem["pd_max_power_drawn"] = item.PdMaxPowerDrawn
+		respItem["pd_connected_device_list"] = item.PdConnectedDeviceList
+		respItem["poe_oper_priority"] = item.PoeOperPriority
+		respItem["fast_po_e_enabled"] = boolPtrToString(item.FastPoEEnabled)
+		respItem["perpetual_po_e_enabled"] = boolPtrToString(item.PerpetualPoEEnabled)
+		respItem["policing_po_e_enabled"] = boolPtrToString(item.PolicingPoEEnabled)
+		respItem["upoe_plus_enabled"] = boolPtrToString(item.UpoePlusEnabled)
+		respItem["four_pair_enabled"] = boolPtrToString(item.FourPairEnabled)
+		respItem["poe_data_timestamp"] = item.PoeDataTimestamp
+		respItem["pd_location"] = item.PdLocation
+		respItem["pd_device_name"] = item.PdDeviceName
+		respItem["pd_connected_switch"] = item.PdConnectedSwitch
+		respItem["connected_switch_uuid"] = item.ConnectedSwitchUUID
+		respItem["ieee_compliant"] = boolPtrToString(item.IeeeCompliant)
+		respItem["connected_switch_type"] = item.ConnectedSwitchType
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenDevicesGetTheInterfaceDataForTheGivenInterfaceIDinstanceUUIDAlongWithTheStatisticsDataItem(item *dnacentersdkgo.ResponseDevicesGetTheInterfaceDataForTheGivenInterfaceIDinstanceUUIDAlongWithTheStatisticsDataResponse) []map[string]interface{} {
+func flattenDevicesGetTheInterfaceDataForTheGivenInterfaceIDinstanceUUIDAlongWithTheStatisticsDataItem(item *dnacentersdkgo.ResponseDevicesGetTheInterfaceDataForTheGivenInterfaceIDinstanceUUIDAlongWithTheStatisticsAndPoeDataResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -907,6 +1288,33 @@ func flattenDevicesGetTheInterfaceDataForTheGivenInterfaceIDinstanceUUIDAlongWit
 	respItem["site_name"] = item.SiteName
 	respItem["site_hierarchy"] = item.SiteHierarchy
 	respItem["site_hierarchy_id"] = item.SiteHierarchyID
+	respItem["poe_admin_status"] = item.PoeAdminStatus
+	respItem["poe_oper_status"] = item.PoeOperStatus
+	respItem["chassis_id"] = item.ChassisID
+	respItem["module_id"] = item.ModuleID
+	respItem["pd_class_signal"] = item.PdClassSignal
+	respItem["pd_class_spare"] = item.PdClassSpare
+	respItem["pd_device_type"] = item.PdDeviceType
+	respItem["pd_device_model"] = item.PdDeviceModel
+	respItem["pd_power_admin_max_in_watt"] = item.PdPowerAdminMaxInWatt
+	respItem["pd_power_budget_in_watt"] = item.PdPowerBudgetInWatt
+	respItem["pd_power_consumed_in_watt"] = item.PdPowerConsumedInWatt
+	respItem["pd_power_remaining_in_watt"] = item.PdPowerRemainingInWatt
+	respItem["pd_max_power_drawn"] = item.PdMaxPowerDrawn
+	respItem["pd_connected_device_list"] = item.PdConnectedDeviceList
+	respItem["poe_oper_priority"] = item.PoeOperPriority
+	respItem["fast_po_e_enabled"] = boolPtrToString(item.FastPoEEnabled)
+	respItem["perpetual_po_e_enabled"] = boolPtrToString(item.PerpetualPoEEnabled)
+	respItem["policing_po_e_enabled"] = boolPtrToString(item.PolicingPoEEnabled)
+	respItem["upoe_plus_enabled"] = boolPtrToString(item.UpoePlusEnabled)
+	respItem["four_pair_enabled"] = boolPtrToString(item.FourPairEnabled)
+	respItem["poe_data_timestamp"] = item.PoeDataTimestamp
+	respItem["pd_location"] = item.PdLocation
+	respItem["pd_device_name"] = item.PdDeviceName
+	respItem["pd_connected_switch"] = item.PdConnectedSwitch
+	respItem["connected_switch_uuid"] = item.ConnectedSwitchUUID
+	respItem["ieee_compliant"] = boolPtrToString(item.IeeeCompliant)
+	respItem["connected_switch_type"] = item.ConnectedSwitchType
 	return []map[string]interface{}{
 		respItem,
 	}

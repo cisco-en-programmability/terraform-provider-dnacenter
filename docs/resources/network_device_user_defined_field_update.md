@@ -24,7 +24,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_network_device_user_defined_field_update" "example" {
-  provider  = meraki
+  provider  = dnacenter
   device_id = "string"
   parameters {
 
@@ -60,7 +60,7 @@ Required:
 
 Optional:
 
-- `payload` (Block List) Array of RequestDevicesAddUserDefinedFieldToDeviceV1 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestDevicesAddUserDefinedFieldToDevice (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`

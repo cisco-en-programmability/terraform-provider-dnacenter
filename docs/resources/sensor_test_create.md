@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_sensor_test_create" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     ap_coverage {
@@ -138,7 +138,7 @@ resource "dnacenter_sensor_test_create" "example" {
       switch_serial_number      = "string"
       switch_uuid               = "string"
       target_a_ps               = ["string"]
-      test_mac_addresses        = "------"
+      test_mac_addresses        = "string"
       wired_application_message = "string"
       wired_application_status  = "string"
       xor_sensor                = "false"

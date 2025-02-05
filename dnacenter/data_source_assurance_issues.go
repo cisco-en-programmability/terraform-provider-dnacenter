@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -268,7 +268,7 @@ If *startTime* is not provided, API will default to current time.
 			},
 			"view": &schema.Schema{
 				Description: `view query parameter. The name of the View. Each view represents a specific data set. Please refer to the *IssuesView* Model for supported views. View is predefined set of attributes supported by the API. Only the attributes related to the given view will be part of the API response along with default attributes. If multiple views are provided, then response will contain attributes from all those views. If no views are specified, all attributes will be returned.
-| View Name | Included Attributes | | --| --| | *update* | updatedTime, updatedBy | | *site* | siteName, siteHierarchy, siteId, siteHierarchyId | Examples: *view=update* (single view requested) *view=update&view=site* (multiple views requested)       
+| View Name | Included Attributes | | --| --| | *update* | updatedTime, updatedBy | | *site* | siteName, siteHierarchy, siteId, siteHierarchyId | Examples: *view=update* (single view requested) *view=update&view=site* (multiple views requested)
 `,
 				Type:     schema.TypeString,
 				Optional: true,

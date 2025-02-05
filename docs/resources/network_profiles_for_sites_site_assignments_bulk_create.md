@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_network_profiles_for_sites_site_assignments_bulk_create" "example" {
-  provider   = meraki
+  provider   = dnacenter
   profile_id = "string"
   parameters {
 
@@ -51,11 +51,16 @@ output "dnacenter_network_profiles_for_sites_site_assignments_bulk_create_exampl
 
 Required:
 
+- `items` (Block List, Min: 1) (see [below for nested schema](#nestedblock--parameters--items))
 - `profile_id` (String) profileId path parameter. The *id* of the network profile, retrievable from *GET /intent/api/v1/networkProfilesForSites*
 
-Optional:
+<a id="nestedblock--parameters--items"></a>
+### Nested Schema for `parameters.items`
 
-- `type` (String)
+Read-Only:
+
+- `id` (String) The ID of this resource.
+
 
 
 <a id="nestedatt--item"></a>

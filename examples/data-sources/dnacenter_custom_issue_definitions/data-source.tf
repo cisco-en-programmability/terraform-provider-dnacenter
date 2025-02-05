@@ -18,3 +18,13 @@ data "dnacenter_custom_issue_definitions" "example" {
 output "dnacenter_custom_issue_definitions_example" {
   value = data.dnacenter_custom_issue_definitions.example.items
 }
+
+data "dnacenter_custom_issue_definitions" "example" {
+  provider    = dnacenter
+  id          = "string"
+  xca_lle_rid = "string"
+}
+
+output "dnacenter_custom_issue_definitions_example" {
+  value = data.dnacenter_custom_issue_definitions.example.item
+}

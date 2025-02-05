@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v6/sdk"
+	dnacentersdkgo "github.com/cisco-en-programmability/dnacenter-go-sdk/v7/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -84,6 +84,61 @@ func resourceSdaAuthenticationProfiles() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"pre_auth_acl": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"access_contracts": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"action": &schema.Schema{
+													Description: `Contract behaviour.
+`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"port": &schema.Schema{
+													Description: `Port for the access contract.
+`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"protocol": &schema.Schema{
+													Description: `Protocol for the access contract.
+`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"description": &schema.Schema{
+										Description: `Description of this Pre-Authentication ACL.
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"enabled": &schema.Schema{
+										Description: `Enable/disable Pre-Authentication ACL.
+`,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"implicit_action": &schema.Schema{
+										Description: `Implicit behaviour unless overridden.
+`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"wake_on_lan": &schema.Schema{
 							Description: `Wake on LAN.
 `,
@@ -131,7 +186,7 @@ func resourceSdaAuthenticationProfiles() *schema.Resource {
 										Computed: true,
 									},
 									"fabric_id": &schema.Schema{
-										Description: `ID of the fabric this authentication profile is assigned to (updating this field is not allowed).
+										Description: `ID of the fabric this authentication profile is assigned to (updating this field is not allowed). To update a global authentication profile, either remove this property or set its value to null.
 `,
 										Type:     schema.TypeString,
 										Optional: true,
@@ -159,6 +214,70 @@ func resourceSdaAuthenticationProfiles() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
+									},
+									"pre_auth_acl": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"access_contracts": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"action": &schema.Schema{
+																Description: `Contract behaviour.
+`,
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+															"port": &schema.Schema{
+																Description: `Port for the access contract. The port can only be used once in the Access Contract list.
+`,
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+															"protocol": &schema.Schema{
+																Description: `Protocol for the access contract. "TCP" and "TCP_UDP" are only allowed when the contract port is "domain".
+`,
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"description": &schema.Schema{
+													Description: `Description of this Pre-Authentication ACL.
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"enabled": &schema.Schema{
+													Description: `Enable/disable Pre-Authentication ACL.
+`,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"implicit_action": &schema.Schema{
+													Description: `Implicit behaviour unless overridden (defaults to "DENY").
+`,
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
 									},
 									"wake_on_lan": &schema.Schema{
 										Description: `Wake on LAN.
@@ -360,6 +479,69 @@ func expandRequestSdaAuthenticationProfilesUpdateAuthenticationProfileItem(ctx c
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_bpdu_guard_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_bpdu_guard_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_bpdu_guard_enabled")))) {
 		request.IsBpduGuardEnabled = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".pre_auth_acl")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".pre_auth_acl")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".pre_auth_acl")))) {
+		request.PreAuthACL = expandRequestSdaAuthenticationProfilesUpdateAuthenticationProfileItemPreAuthACL(ctx, key+".pre_auth_acl.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaAuthenticationProfilesUpdateAuthenticationProfileItemPreAuthACL(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaUpdateAuthenticationProfilePreAuthACL {
+	request := dnacentersdkgo.RequestItemSdaUpdateAuthenticationProfilePreAuthACL{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enabled")))) {
+		request.Enabled = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".implicit_action")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".implicit_action")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".implicit_action")))) {
+		request.ImplicitAction = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".access_contracts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".access_contracts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".access_contracts")))) {
+		request.AccessContracts = expandRequestSdaAuthenticationProfilesUpdateAuthenticationProfileItemPreAuthACLAccessContractsArray(ctx, key+".access_contracts", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaAuthenticationProfilesUpdateAuthenticationProfileItemPreAuthACLAccessContractsArray(ctx context.Context, key string, d *schema.ResourceData) *[]dnacentersdkgo.RequestItemSdaUpdateAuthenticationProfilePreAuthACLAccessContracts {
+	request := []dnacentersdkgo.RequestItemSdaUpdateAuthenticationProfilePreAuthACLAccessContracts{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSdaAuthenticationProfilesUpdateAuthenticationProfileItemPreAuthACLAccessContracts(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSdaAuthenticationProfilesUpdateAuthenticationProfileItemPreAuthACLAccessContracts(ctx context.Context, key string, d *schema.ResourceData) *dnacentersdkgo.RequestItemSdaUpdateAuthenticationProfilePreAuthACLAccessContracts {
+	request := dnacentersdkgo.RequestItemSdaUpdateAuthenticationProfilePreAuthACLAccessContracts{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".action")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".action")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".action")))) {
+		request.Action = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".protocol")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".protocol")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".protocol")))) {
+		request.Protocol = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".port")))) {
+		request.Port = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

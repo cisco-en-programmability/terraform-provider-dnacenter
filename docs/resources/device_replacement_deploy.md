@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_device_replacement_deploy" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     faulty_device_serial_number      = "string"

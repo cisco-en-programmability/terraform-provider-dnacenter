@@ -4,14 +4,14 @@ page_title: "dnacenter_sda_virtual_network Data Source - terraform-provider-dnac
 subcategory: ""
 description: |-
   It performs read operation on SDA.
-  Get virtual network with scalable groups
+  Get virtual network (VN) from SDA Fabric
 ---
 
 # dnacenter_sda_virtual_network (Data Source)
 
 It performs read operation on SDA.
 
-- Get virtual network with scalable groups
+- Get virtual network (VN) from SDA Fabric
 
 ## Example Usage
 
@@ -32,6 +32,7 @@ output "dnacenter_sda_virtual_network_example" {
 
 ### Required
 
+- `site_name_hierarchy` (String) siteNameHierarchy query parameter.
 - `virtual_network_name` (String) virtualNetworkName query parameter.
 
 ### Read-Only
@@ -46,9 +47,11 @@ Read-Only:
 
 - `description` (String)
 - `execution_id` (String)
-- `is_guest_virtual_network` (String)
-- `scalable_group_names` (List of String)
+- `fabric_name` (String)
+- `is_default_vn` (String)
+- `is_infra_vn` (String)
+- `site_name_hierarchy` (String)
 - `status` (String)
-- `v_manage_vpn_id` (String)
 - `virtual_network_context_id` (String)
+- `virtual_network_id` (String)
 - `virtual_network_name` (String)
