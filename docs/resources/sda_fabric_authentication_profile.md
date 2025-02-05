@@ -44,7 +44,7 @@ output "dnacenter_sda_fabric_authentication_profile_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabricV1 (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestSdaAddDefaultAuthenticationTemplateInSDAFabric (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 

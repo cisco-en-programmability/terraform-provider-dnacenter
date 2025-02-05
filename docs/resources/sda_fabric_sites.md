@@ -42,7 +42,7 @@ output "dnacenter_sda_fabric_sites_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestSdaAddFabricSiteV1 (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestSdaAddFabricSite (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 

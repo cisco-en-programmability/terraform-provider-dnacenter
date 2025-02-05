@@ -26,7 +26,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_clients_trend_analytics_id" "example" {
-  provider    = meraki
+  provider    = dnacenter
   id          = "string"
   xca_lle_rid = "string"
   parameters {

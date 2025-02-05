@@ -38,7 +38,7 @@ output "dnacenter_security_threats_rogue_allowed_list_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestDevicesAddAllowedMacAddressV1 (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestDevicesAddAllowedMacAddress (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 

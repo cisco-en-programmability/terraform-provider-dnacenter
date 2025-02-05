@@ -26,7 +26,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_network_devices_issues_remediation_provision" "example" {
-  provider = meraki
+  provider = dnacenter
   id       = "string"
   parameters {
 

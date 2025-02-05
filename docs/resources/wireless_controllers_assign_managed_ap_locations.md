@@ -24,7 +24,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_wireless_controllers_assign_managed_ap_locations" "example" {
-  provider  = meraki
+  provider  = dnacenter
   device_id = "string"
   parameters {
 

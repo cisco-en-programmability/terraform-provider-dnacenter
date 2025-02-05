@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_global_credential_update" "example" {
-  provider             = meraki
+  provider             = dnacenter
   global_credential_id = "string"
   parameters {
 

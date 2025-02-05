@@ -26,7 +26,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_assurance_issues_update" "example" {
-  provider        = meraki
+  provider        = dnacenter
   accept_language = "string"
   id              = "string"
   xca_lle_rid     = "string"

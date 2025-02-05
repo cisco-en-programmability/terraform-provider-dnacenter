@@ -1,1 +1,0 @@
-terraform import dnacenter_global_credential_snmpv3.example "id:=string"

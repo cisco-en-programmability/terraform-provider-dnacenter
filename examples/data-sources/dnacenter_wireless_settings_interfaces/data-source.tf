@@ -1,8 +1,10 @@
 
 data "dnacenter_wireless_settings_interfaces" "example" {
-  provider = dnacenter
-  limit    = 1
-  offset   = 1
+  provider       = dnacenter
+  interface_name = "string"
+  limit          = 1
+  offset         = 1
+  vlan_id        = 1.0
 }
 
 output "dnacenter_wireless_settings_interfaces_example" {

@@ -1,9 +1,13 @@
 
 data "dnacenter_sites_wireless_settings_ssids" "example" {
-  provider = dnacenter
-  limit    = 1
-  offset   = 1
-  site_id  = "string"
+  provider    = dnacenter
+  auth_type   = "string"
+  l3auth_type = "string"
+  limit       = 1
+  offset      = 1
+  site_id     = "string"
+  ssid        = "string"
+  wlan_type   = "string"
 }
 
 output "dnacenter_sites_wireless_settings_ssids_example" {
@@ -11,10 +15,14 @@ output "dnacenter_sites_wireless_settings_ssids_example" {
 }
 
 data "dnacenter_sites_wireless_settings_ssids" "example" {
-  provider = dnacenter
-  limit    = 1
-  offset   = 1
-  site_id  = "string"
+  provider    = dnacenter
+  auth_type   = "string"
+  l3auth_type = "string"
+  limit       = 1
+  offset      = 1
+  site_id     = "string"
+  ssid        = "string"
+  wlan_type   = "string"
 }
 
 output "dnacenter_sites_wireless_settings_ssids_example" {

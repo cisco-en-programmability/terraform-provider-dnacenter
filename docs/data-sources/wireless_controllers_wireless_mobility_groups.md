@@ -4,18 +4,18 @@ page_title: "dnacenter_wireless_controllers_wireless_mobility_groups Data Source
 subcategory: ""
 description: |-
   It performs read operation on Wireless.
-  Retrieve all configured mobility groups if no Network Device Id is provided as a query parameter. If a Network Device
-  Id is given and a mobility group is configured for it, return the configured details; otherwise, return the default
-  values from the device.
+  Retrieve configured mobility groups if no Network Device Id is provided as a query parameter. If a Network Device Id
+  is given and a mobility group is configured for it, return the configured details; otherwise, return the default values
+  from the device.
 ---
 
 # dnacenter_wireless_controllers_wireless_mobility_groups (Data Source)
 
 It performs read operation on Wireless.
 
-- Retrieve all configured mobility groups if no Network Device Id is provided as a query parameter. If a Network Device
-Id is given and a mobility group is configured for it, return the configured details; otherwise, return the default
-values from the device.
+- Retrieve configured mobility groups if no Network Device Id is provided as a query parameter. If a Network Device Id
+is given and a mobility group is configured for it, return the configured details; otherwise, return the default values
+from the device.
 
 ## Example Usage
 

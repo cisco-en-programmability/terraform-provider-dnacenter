@@ -50,7 +50,7 @@ output "dnacenter_global_credential_cli_example" {
 
 ### Required
 
-- `parameters` (Block List, Min: 1, Max: 1) Array of RequestDiscoveryCreateCLICredentials (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List, Min: 1, Max: 1) Array of RequestDiscoveryCreateCliCredentials (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 

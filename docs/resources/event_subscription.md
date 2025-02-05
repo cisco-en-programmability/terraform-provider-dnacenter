@@ -64,7 +64,7 @@ output "dnacenter_event_subscription_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestEventManagementCreateEventSubscriptionsV1 (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestEventManagementCreateEventSubscriptions (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 

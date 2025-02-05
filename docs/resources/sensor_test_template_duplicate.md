@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_sensor_test_template_duplicate" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     new_template_name = "string"

@@ -47,7 +47,7 @@ output "dnacenter_sda_layer2_virtual_networks_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestSdaAddLayer2VirtualNetworksV1 (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestSdaAddLayer2VirtualNetworks (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 

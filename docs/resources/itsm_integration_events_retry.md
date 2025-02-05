@@ -24,7 +24,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_itsm_integration_events_retry" "example" {
-  provider   = meraki
+  provider   = dnacenter
   parameters = ["string"]
 }
 
@@ -51,7 +51,7 @@ output "dnacenter_itsm_integration_events_retry_example" {
 
 Optional:
 
-- `payload` (List of String) Array of RequestItsmRetryIntegrationEventsV1
+- `payload` (List of String) Array of RequestItsmRetryIntegrationEvents
 
 
 <a id="nestedatt--item"></a>

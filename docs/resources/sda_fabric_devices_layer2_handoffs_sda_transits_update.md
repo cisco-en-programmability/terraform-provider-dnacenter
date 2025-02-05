@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_sda_fabric_devices_layer2_handoffs_sda_transits_update" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     affinity_id_decider               = 1
@@ -56,7 +56,7 @@ output "dnacenter_sda_fabric_devices_layer2_handoffs_sda_transits_update_example
 
 Optional:
 
-- `payload` (Block List) Array of RequestSdaUpdateFabricDevicesLayer3HandoffsWithSdaTransitV1 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestSdaUpdateFabricDevicesLayer3HandoffsWithSdaTransit (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`

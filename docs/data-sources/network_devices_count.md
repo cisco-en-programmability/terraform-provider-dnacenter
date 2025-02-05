@@ -24,11 +24,14 @@ AssuranceNetworkDevices-1.0.2-resolved.yaml
 ```terraform
 data "dnacenter_network_devices_count" "example" {
   provider              = dnacenter
-  attribute             = "string"
   end_time              = 1609459200
+  fabric_role           = "string"
+  fabric_site_id        = "string"
   family                = "string"
   health_score          = "string"
   id                    = "string"
+  l2_vn                 = "string"
+  l3_vn                 = "string"
   mac_address           = "string"
   maintenance_mode      = "false"
   management_ip_address = "string"
@@ -39,8 +42,8 @@ data "dnacenter_network_devices_count" "example" {
   site_id               = "string"
   software_version      = "string"
   start_time            = 1609459200
+  transit_network_id    = "string"
   type                  = "string"
-  view                  = "string"
 }
 
 output "dnacenter_network_devices_count_example" {
@@ -53,8 +56,9 @@ output "dnacenter_network_devices_count_example" {
 
 ### Optional
 
-- `attribute` (String) attribute query parameter. The List of Network Device model attributes. This is helps to specify the interested fields in the request.
 - `end_time` (Number) endTime query parameter. End time to which API queries the data set related to the resource. It must be specified in UNIX epochtime in milliseconds. Value is inclusive.
+- `fabric_role` (String) fabricRole query parameter. The list of fabric device role. Examples: fabricRole=BORDER, fabricRole=BORDER&fabricRole=EDGE (multiple fabric device roles with & separator)  Available values : BORDER, EDGE, MAP-SERVER, LEAF, SPINE, TRANSIT-CP, EXTENDED-NODE, WLC, UNIFIED-AP
+- `fabric_site_id` (String) fabricSiteId query parameter. The fabric site Id or list to fabric site Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?fabricSiteId=fabricSiteUuid)  ?fabricSiteId=fabricSiteUuid1&fabricSiteId=fabricSiteUuid2 (multiple fabricSiteIds requested)
 - `family` (String) family query parameter. The list of network device family names Examples:family=Switches and Hubs (single network device family name )family=Switches and Hubs&family=Router&family=Wireless Controller (multiple Network device family names with & separator). This field is not case sensitive.
 - `health_score` (String) healthScore query parameter. The list of entity health score categories Examples:healthScore=good,healthScore=good&healthScore=fair (multiple entity healthscore values with & separator). This field is not case sensitive.
 - `id` (String) id query parameter. The list of entity Uuids. (Ex."6bef213c-19ca-4170-8375-b694e251101c") Examples: id=6bef213c-19ca-4170-8375-b694e251101c (single entity uuid requested) id=6bef213c-19ca-4170-8375-b694e251101c&id=32219612-819e-4b5e-a96b-cf22aca13dd9&id=2541e9a7-b80d-4955-8aa2-79b233318ba0 (multiple entity uuid with '&' separator)
@@ -85,8 +89,8 @@ Examples:
 - `software_version` (String) softwareVersion query parameter. The list of network device software version This field supports wildcard (***) character-based search. Ex: **17.8** or **17.8* or *17.8** Examples: softwareVersion=2.3.4.0 (single network device software version ) softwareVersion=17.9.3.23&softwareVersion=17.7.1.2&softwareVersion=*.17.7 (multiple Network device software versions with & separator)
 - `start_time` (Number) startTime query parameter. Start time from which API queries the data set related to the resource. It must be specified in UNIX epochtime in milliseconds. Value is inclusive.
 If *startTime* is not provided, API will default to current time.
-- `type` (String) type query parameter. The list of network device type This field supports wildcard (***) character-based search. Ex: **9407R** or **9407R* or *9407R**Examples:type=SwitchesCisco Catalyst 9407R Switch (single network device types )type=Cisco Catalyst 38xx stack-able ethernet switch&type=Cisco 3945 Integrated Services Router G2 (multiple Network device types with & separator)
-- `view` (String) view query parameter. The List of Network Device model views. Please refer to ***NetworkDeviceView*** for the supported list
+- `transit_network_id` (String) transitNetworkId query parameter. The Transit Network Id or list to Transit Network Ids to filter the data  This field supports wildcard asterisk (*) character search support. E.g. *uuid*, *uuid, uuid*  Examples:  *?transitNetworkId=transitNetworkId  ?transitNetworkId=transitNetworkuuid1&transitNetworkId=transitNetworkuuid1 (multiple transitNetworkIds requested)
+- `type` (String) type query parameter. The list of network device type This field supports wildcard (***) character-based search. Ex: *9407R* or *9407R* or *9407R* Examples:type=SwitchesCisco Catalyst 9407R Switch (single network device types )type=Cisco Catalyst 38xx stack-able ethernet switch&type=Cisco 3945 Integrated Services Router G2 (multiple Network device types with & separator)
 
 ### Read-Only
 

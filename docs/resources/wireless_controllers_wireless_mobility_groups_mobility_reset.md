@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_wireless_controllers_wireless_mobility_groups_mobility_reset" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     network_device_id = "string"

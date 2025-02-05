@@ -26,7 +26,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_users_external_authentication_create" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     enable = "false"

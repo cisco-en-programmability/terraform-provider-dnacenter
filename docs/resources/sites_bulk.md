@@ -22,7 +22,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_sites_bulk" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     address               = "string"
@@ -64,7 +64,7 @@ output "dnacenter_sites_bulk_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestSiteDesignCreateSitesV1 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestSiteDesignCreateSites (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`

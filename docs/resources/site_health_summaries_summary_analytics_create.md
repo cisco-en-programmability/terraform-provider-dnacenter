@@ -46,7 +46,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_site_health_summaries_summary_analytics_create" "example" {
-  provider          = meraki
+  provider          = dnacenter
   id                = "string"
   site_hierarchy    = "string"
   site_hierarchy_id = "string"

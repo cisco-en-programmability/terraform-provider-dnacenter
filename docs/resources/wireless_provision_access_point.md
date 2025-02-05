@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_wireless_provision_access_point" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     custom_ap_group_name   = "string"
@@ -55,7 +55,7 @@ output "dnacenter_wireless_provision_access_point_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestWirelessAPProvisionConnectivityV1 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestWirelessAPProvisionConnectivity (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`

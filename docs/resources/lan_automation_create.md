@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_lan_automation_create" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     discovered_device_site_name_hierarchy = "string"
@@ -63,7 +63,7 @@ output "dnacenter_lan_automation_create_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestLanAutomationLANAutomationStartV1 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestLanAutomationLANAutomationStart (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`

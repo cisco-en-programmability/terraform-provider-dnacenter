@@ -28,7 +28,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_execute_suggested_actions_commands" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     entity_type  = "string"

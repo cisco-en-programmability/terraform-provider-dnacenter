@@ -22,13 +22,13 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_interface_operation_create" "example" {
-  provider        = meraki
+  provider        = dnacenter
   deployment_mode = "string"
   interface_uuid  = "string"
   parameters {
 
     operation = "string"
-    payload   = "------"
+    payload   = "string"
   }
 }
 

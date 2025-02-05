@@ -44,7 +44,7 @@ output "dnacenter_sda_fabric_devices_layer2_handoffs_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestSdaAddFabricDevicesLayer2HandoffsV1 (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestSdaAddFabricDevicesLayer2Handoffs (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 

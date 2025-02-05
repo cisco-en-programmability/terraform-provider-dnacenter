@@ -33,7 +33,7 @@ output "dnacenter_task_operation_example" {
 
 ### Required
 
-- `limit` (Number) limit path parameter. The maximum value of {limit} supported is 500. 
+- `limit` (Number) limit path parameter. The maximum value of {limit} supported is 500.
  Base 1 indexing for {limit}, minimum value is 1
 - `offset` (Number) offset path parameter. Index, minimum value is 0
 - `operation_id` (String) operationId path parameter.

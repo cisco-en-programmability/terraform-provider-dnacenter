@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_wireless_accespoint_configuration_v2" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     admin_status = "false"

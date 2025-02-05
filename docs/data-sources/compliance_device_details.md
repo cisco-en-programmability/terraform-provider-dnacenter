@@ -57,5 +57,6 @@ Read-Only:
 - `display_name` (String)
 - `last_sync_time` (Number)
 - `last_update_time` (Number)
+- `remediation_supported` (String)
 - `state` (String)
 - `status` (String)

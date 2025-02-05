@@ -24,7 +24,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_wireless_access_points_factory_reset_request_provision" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     ap_mac_addresses     = ["string"]

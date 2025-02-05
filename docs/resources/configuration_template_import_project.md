@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_configuration_template_import_project" "example" {
-  provider   = meraki
+  provider   = dnacenter
   do_version = "false"
 }
 

@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_wireless_controllers_wireless_mobility_groups_mobility_provision" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     data_link_encryption = "false"

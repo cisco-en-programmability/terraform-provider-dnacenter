@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_app_policy_intent_create" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     create_list {

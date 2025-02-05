@@ -1,0 +1,1 @@
+terraform import dnacenter_wireless_settings_ap_authorization_lists_id.example "id:=string"

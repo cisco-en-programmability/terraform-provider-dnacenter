@@ -1,6 +1,6 @@
 
 data "dnacenter_client_health" "example" {
-  provider  = dnacenter
+  provider = dnacenter
   # timestamp = "string"
 }
 

@@ -26,7 +26,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_interfaces_query_count" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     aggregate_attributes {
@@ -42,7 +42,7 @@ resource "dnacenter_interfaces_query_count" "example" {
       key              = "string"
       logical_operator = "string"
       operator         = "string"
-      value            = "------"
+      value            = "string"
     }
     page {
 

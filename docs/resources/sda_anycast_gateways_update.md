@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_sda_anycast_gateways_update" "example" {
-  provider = meraki
+  provider = dnacenter
   parameters {
 
     fabric_id                                    = "string"
@@ -67,7 +67,7 @@ output "dnacenter_sda_anycast_gateways_update_example" {
 
 Optional:
 
-- `payload` (Block List) Array of RequestSdaUpdateAnycastGatewaysV1 (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestSdaUpdateAnycastGateways (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`

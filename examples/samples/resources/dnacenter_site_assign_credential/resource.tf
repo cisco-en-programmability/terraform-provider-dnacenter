@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.33-beta"
+      version = "1.3.0-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -21,7 +21,7 @@ resource "dnacenter_site" "example" {
             name= "test_tf_area4"
             parent_name= "string"
         }
-    
+
     */
       building {
         name        = "MyTestFinalq12"

@@ -3,7 +3,7 @@
 terraform {
   required_providers {
     dnacenter = {
-      version = "1.1.33-beta"
+      version = "1.3.0-beta"
       source  = "hashicorp.com/edu/dnacenter"
       # "hashicorp.com/edu/dnacenter" is the local built source change to "cisco-en-programmability/dnacenter" to use downloaded version from registry
     }
@@ -24,7 +24,7 @@ resource "dnacenter_pnp_global_settings" "example" {
     }
     /*
     id = "string"
-    
+
     accept_eula = "false"
     default_profile {
 

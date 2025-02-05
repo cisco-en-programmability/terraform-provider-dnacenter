@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_flexible_report_execute" "example" {
-  provider  = meraki
+  provider  = dnacenter
   report_id = "string"
   parameters {
 

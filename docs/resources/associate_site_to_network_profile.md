@@ -20,7 +20,7 @@ Instead, it is a task part of a Cisco Catalyst Center workflow. It is executed i
 
 ```terraform
 resource "dnacenter_associate_site_to_network_profile" "example" {
-  provider           = meraki
+  provider           = dnacenter
   network_profile_id = "string"
   site_id            = "string"
   parameters {

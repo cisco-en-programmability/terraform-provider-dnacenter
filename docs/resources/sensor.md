@@ -20,28 +20,7 @@ It manages create, read and delete operations on Sensors.
 ```terraform
 resource "dnacenter_sensor" "example" {
   provider = dnacenter
-  item {
 
-
-
-
-
-
-
-
-
-
-    ssh {
-
-
-
-
-
-    }
-
-
-
-  }
   parameters {
 
     ap_coverage {

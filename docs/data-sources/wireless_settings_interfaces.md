@@ -19,9 +19,11 @@ It performs read operation on Wireless.
 
 ```terraform
 data "dnacenter_wireless_settings_interfaces" "example" {
-  provider = dnacenter
-  limit    = 1
-  offset   = 1
+  provider       = dnacenter
+  interface_name = "string"
+  limit          = 1
+  offset         = 1
+  vlan_id        = 1.0
 }
 
 output "dnacenter_wireless_settings_interfaces_example" {
@@ -44,8 +46,10 @@ output "dnacenter_wireless_settings_interfaces_example" {
 ### Optional
 
 - `id` (String) id path parameter. Interface ID
+- `interface_name` (String) interfaceName query parameter. Interface Name
 - `limit` (Number) limit query parameter.
-- `offset` (Number) offset query parameter.
+- `offset` (Number) offset query parameter. The first record to show for this page. The first record is numbered 1.
+- `vlan_id` (Number) vlanId query parameter. Vlan Id
 
 ### Read-Only
 

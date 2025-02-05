@@ -62,7 +62,7 @@ output "dnacenter_event_subscription_syslog_example" {
 
 ### Optional
 
-- `parameters` (Block List) Array of RequestEventManagementCreateSyslogEventSubscriptionV1 (see [below for nested schema](#nestedblock--parameters))
+- `parameters` (Block List) Array of RequestEventManagementCreateSyslogEventSubscription (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
