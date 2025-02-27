@@ -35,56 +35,17 @@ Request body.
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
-						"properties": &schema.Schema{
-							Type:     schema.TypeList,
+						"task_id": &schema.Schema{
+							Description: `Task id
+`,
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"task_id": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"type": &schema.Schema{
-													Description: `Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
-									},
-									"url": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"type": &schema.Schema{
-													Description: `Type`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
-											},
-										},
-									},
-								},
-							},
 						},
-						"required": &schema.Schema{
-							Description: `Required`,
-							Type:        schema.TypeList,
-							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-						"type": &schema.Schema{
-							Description: `Type`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"url": &schema.Schema{
+							Description: `Task url
+`,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -224,50 +185,9 @@ func flattenDevicesUpdateInterfaceDetailsItem(item *dnacentersdkgo.ResponseDevic
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["type"] = item.Type
-	respItem["properties"] = flattenDevicesUpdateInterfaceDetailsItemProperties(item.Properties)
-	respItem["required"] = item.Required
+	respItem["task_id"] = item.TaskID
+	respItem["url"] = item.URL
 	return []map[string]interface{}{
 		respItem,
 	}
-}
-
-func flattenDevicesUpdateInterfaceDetailsItemProperties(item *dnacentersdkgo.ResponseDevicesUpdateInterfaceDetailsResponseProperties) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["task_id"] = flattenDevicesUpdateInterfaceDetailsItemPropertiesTaskID(item.TaskID)
-	respItem["url"] = flattenDevicesUpdateInterfaceDetailsItemPropertiesURL(item.URL)
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
-}
-
-func flattenDevicesUpdateInterfaceDetailsItemPropertiesTaskID(item *dnacentersdkgo.ResponseDevicesUpdateInterfaceDetailsResponsePropertiesTaskID) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["type"] = item.Type
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
-}
-
-func flattenDevicesUpdateInterfaceDetailsItemPropertiesURL(item *dnacentersdkgo.ResponseDevicesUpdateInterfaceDetailsResponsePropertiesURL) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["type"] = item.Type
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
 }
