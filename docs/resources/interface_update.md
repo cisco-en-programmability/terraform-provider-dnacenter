@@ -73,29 +73,5 @@ Optional:
 
 Read-Only:
 
-- `properties` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties))
-- `required` (List of String)
-- `type` (String)
-
-<a id="nestedobjatt--item--properties"></a>
-### Nested Schema for `item.properties`
-
-Read-Only:
-
-- `task_id` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--task_id))
-- `url` (List of Object) (see [below for nested schema](#nestedobjatt--item--properties--url))
-
-<a id="nestedobjatt--item--properties--task_id"></a>
-### Nested Schema for `item.properties.task_id`
-
-Read-Only:
-
-- `type` (String)
-
-
-<a id="nestedobjatt--item--properties--url"></a>
-### Nested Schema for `item.properties.url`
-
-Read-Only:
-
-- `type` (String)
+- `task_id` (String)
+- `url` (String)
