@@ -588,7 +588,8 @@ Request Body for more information.
 							Description: `id path parameter. Global Credential id
 `,
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Computed: true,
 						},
 						"snmp_v2c_read": &schema.Schema{
 							Type:     schema.TypeList,
@@ -726,111 +727,108 @@ Request Body for more information.
 }
 
 func resourceGlobalCredentialV2Create(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	// client := m.(*dnacentersdkgo.Client)
-
-	// var diags diag.Diagnostics
-
-	// resourceItem := *getResourceItem(d.Get("parameters"))
-	// request1 := expandRequestGlobalCredentialV2CreateGlobalCredentialsV2(ctx, "parameters.0", d)
-	// log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-
-	// //review new resource.
-	// vID := resourceItem["id"]
-	// vvID := interfaceToString(vID)
-	// item2, _, err := client.Discovery.GetAllGlobalCredentialsV2(&queryParamImport)
-	// if err == nil && item2 != nil {
-	// 	resourceMap := make(map[string]string)
-	// 	d.SetId(joinResourceID(resourceMap))
-	// 	return resourceGlobalCredentialV2Read(ctx, d, m)
-	// }
-	// resp1, restyResp1, err := client.Discovery.CreateGlobalCredentialsV2(request1)
-	// if err != nil || resp1 == nil {
-	// 	if restyResp1 != nil {
-	// 		diags = append(diags, diagErrorWithResponse(
-	// 			"Failure when executing CreateGlobalCredentialsV2", err, restyResp1.String()))
-	// 		return diags
-	// 	}
-	// 	diags = append(diags, diagError(
-	// 		"Failure when executing CreateGlobalCredentialsV2", err))
-	// 	return diags
-	// }
-	// if resp1.Response == nil {
-	// 	diags = append(diags, diagError(
-	// 		"Failure when executing CreateGlobalCredentialsV2", err))
-	// 	return diags
-	// }
-	// taskId := resp1.Response.TaskID
-	// log.Printf("[DEBUG] TASKID => %s", taskId)
-	// if taskId != "" {
-	// 	time.Sleep(5 * time.Second)
-	// 	response2, restyResp2, err := client.Task.GetTaskByID(taskId)
-	// 	if err != nil || response2 == nil {
-	// 		if restyResp2 != nil {
-	// 			log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-	// 		}
-	// 		diags = append(diags, diagErrorWithAlt(
-	// 			"Failure when executing GetTaskByID", err,
-	// 			"Failure at GetTaskByID, unexpected response", ""))
-	// 		return diags
-	// 	}
-	// 	if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
-	// 		log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
-	// 		errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
-	// 		err1 := errors.New(errorMsg)
-	// 		diags = append(diags, diagError(
-	// 			"Failure when executing CreateGlobalCredentialsV2", err1))
-	// 		return diags
-	// 	}
-	// }
-	// item3, _, err := client.Discovery.GetAllGlobalCredentialsV2(&queryParamValidate)
-	// if err != nil || item3 == nil {
-	// 	diags = append(diags, diagErrorWithAlt(
-	// 		"Failure when executing CreateGlobalCredentialsV2", err,
-	// 		"Failure at CreateGlobalCredentialsV2, unexpected response", ""))
-	// 	return diags
-	// }
-
-	// resourceMap := make(map[string]string)
-
-	// d.SetId(joinResourceID(resourceMap))
-	return resourceGlobalCredentialV2Read(ctx, d, m)
-}
-
-func resourceGlobalCredentialV2Read(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	// client := m.(*dnacentersdkgo.Client)
+	client := m.(*dnacentersdkgo.Client)
 
 	var diags diag.Diagnostics
 
-	// resourceID := d.Id()
-	// resourceMap := separateResourceID(resourceID)
+	request1 := expandRequestGlobalCredentialV2CreateGlobalCredentialsV2(ctx, "parameters.0", d)
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
-	// selectedMethod := 1
-	// if selectedMethod == 1 {
-	// 	log.Printf("[DEBUG] Selected method: GetAllGlobalCredentialsV2")
+	resp1, restyResp1, err := client.Discovery.CreateGlobalCredentialsV2(request1)
+	if err != nil || resp1 == nil {
+		if restyResp1 != nil {
+			diags = append(diags, diagErrorWithResponse(
+				"Failure when executing CreateGlobalCredentialsV2", err, restyResp1.String()))
+			return diags
+		}
+		diags = append(diags, diagError(
+			"Failure when executing CreateGlobalCredentialsV2", err))
+		return diags
+	}
+	if resp1.Response == nil {
+		diags = append(diags, diagError(
+			"Failure when executing CreateGlobalCredentialsV2", err))
+		return diags
+	}
+	taskId := resp1.Response.TaskID
+	log.Printf("[DEBUG] TASKID => %s", taskId)
+	if taskId != "" {
+		time.Sleep(5 * time.Second)
+		response2, restyResp2, err := client.Task.GetTaskByID(taskId)
+		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetTaskByID", err,
+				"Failure at GetTaskByID, unexpected response", ""))
+			return diags
+		}
+		if response2.Response != nil && response2.Response.IsError != nil && *response2.Response.IsError {
+			log.Printf("[DEBUG] Error reason %s", response2.Response.FailureReason)
+			errorMsg := response2.Response.Progress + "Failure Reason: " + response2.Response.FailureReason
+			err1 := errors.New(errorMsg)
+			diags = append(diags, diagError(
+				"Failure when executing CreateGlobalCredentialsV2", err1))
+			return diags
+		}
+	}
 
-	// 	response1, restyResp1, err := client.Discovery.GetAllGlobalCredentialsV2()
+	// FIX: Set a proper ID instead of empty map
+	// Use the task ID or a timestamp as the resource ID
+	if taskId != "" {
+		d.SetId(taskId)
+	} else {
+		// Fallback to timestamp-based ID
+		d.SetId(fmt.Sprintf("global-credential-%d", time.Now().Unix()))
+	}
 
-	// 	if err != nil || response1 == nil {
-	// 		if restyResp1 != nil {
-	// 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-	// 		}
-	// 		d.SetId("")
-	// 		return diags
-	// 	}
+	// FIX: After creation, immediately read back the credentials and set in state
+	// This ensures the state is populated correctly
+	response, _, err := client.Discovery.GetAllGlobalCredentialsV2()
+	if err == nil && response != nil && response.Response != nil {
+		// Set the actual credential data in state
+		vItem := flattenDiscoveryGetAllGlobalCredentialsV2Item(response.Response)
+		if err := d.Set("item", vItem); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting credential state after creation", err))
+		}
+	}
 
-	// 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+	return diags
+}
 
-	// 	vItem1 := flattenDiscoveryGetAllGlobalCredentialsV2Item(response1.Response)
-	// 	if err := d.Set("item", vItem1); err != nil {
-	// 		diags = append(diags, diagError(
-	// 			"Failure when setting GetAllGlobalCredentialsV2 response",
-	// 			err))
-	// 		return diags
-	// 	}
+func resourceGlobalCredentialV2Read(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*dnacentersdkgo.Client)
 
-	// 	return diags
+	var diags diag.Diagnostics
 
-	// }
+	selectedMethod := 1
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetAllGlobalCredentialsV2")
+
+		response1, restyResp1, err := client.Discovery.GetAllGlobalCredentialsV2()
+
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
+			d.SetId("")
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+		vItem1 := flattenDiscoveryGetAllGlobalCredentialsV2Item(response1.Response)
+		if err := d.Set("item", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAllGlobalCredentialsV2 response",
+				err))
+			return diags
+		}
+
+		return diags
+	}
 	return diags
 }
 
