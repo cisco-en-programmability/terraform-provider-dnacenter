@@ -531,7 +531,7 @@ func flattenNetworkSettingsGetDeviceCredentialDetailsItemHTTPRead(items *[]dnace
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["secure"] = item.Secure
+		respItem["secure"] = string(item.Secure)
 		respItem["username"] = item.Username
 		respItem["password"] = item.Password
 		respItem["port"] = item.Port
@@ -553,7 +553,7 @@ func flattenNetworkSettingsGetDeviceCredentialDetailsItemHTTPWrite(items *[]dnac
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["secure"] = item.Secure
+		respItem["secure"] = string(item.Secure)
 		respItem["username"] = item.Username
 		respItem["password"] = item.Password
 		respItem["port"] = item.Port
