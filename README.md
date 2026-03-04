@@ -1,3 +1,25 @@
+# DEPRECATION NOTICE
+Cisco is consolidating two Catalyst Center Terraform providers. This provider has been deprecated and will no longer be updated. The new provider ([CiscoDevNet/terraform-provider-catalystcenter](https://github.com/CiscoDevNet/terraform-provider-catalystcenter)) is now the official, actively maintained version.
+
+## Why is this change happening? 
+The new Terraform provider will provide more efficient operations, ongoing support, new features, and improvements, ensuring a more robust and future-proof experience for all Catalyst Center users. 
+
+## Can I continue using the old provider? 
+Yes, but the old provider will no longer receive updates or new features. We encourage you to plan a migration to the new provider.
+Bugs will be fixed on a best effort basis until June 30th, 2026.
+
+## What are the recommended migration steps? 
+1. Review Documentation: Read the new provider’s documentation carefully. Resource names and attributes are not necesarily the same.
+2. Update Configurations: Refactor your .tf files to match the new HCL format and attribute names. 
+3. Test Plans: Run terraform plan to identify required changes and resolve any errors. 
+4. Handle State: Use terraform import or state manipulation commands to align existing resources with the new provider’s resource model. 
+5. Validate Changes: Test in a non-production environment before applying changes in production. 
+
+## What happens if I don’t migrate? 
+Your existing setup will continue to function, but no new features will be available for this provider. Over time, compatibility issues may arise as Terraform and Meraki evolve.
+Bugs will be fixed on a best effort basis until June 30th, 2026.
+
+- - - 
 
 # terraform-provider-dnacenter
 
