@@ -348,7 +348,7 @@ func flattenDiscoveryGetGlobalCredentialsItems(items *[]dnacentersdkgo.ResponseD
 		respItem["privacy_password"] = item.PrivacyPassword
 		respItem["privacy_type"] = item.PrivacyType
 		respItem["snmp_mode"] = item.SNMPMode
-		respItem["secure"] = item.Secure
+		respItem["secure"] = string(item.Secure)
 		respItem["port"] = item.Port
 		respItem["comments"] = item.Comments
 		respItem["credential_type"] = item.CredentialType
